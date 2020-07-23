@@ -1,0 +1,24 @@
+--- 
+title: "Reproducible Research in R"
+subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
+date: "Created: `r format(Sys.time(), '%B %d %Y')`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [resources/refs.bib, resources/packages.bib]
+link-citations: yes
+description: "A 2-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
+apple-touch-icon: "images/apple-touch-icon.png"
+apple-touch-icon-size: 180
+favicon: "images/favicon.ico"
+url: 'https\://r-cubed-intermediate.rostools.org'
+---
+
+# Overview
+
+```{r, include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(
+    c(.packages(), "bookdown", "knitr", "rmarkdown"),
+    here::here('resources/packages.bib')
+)
+```
