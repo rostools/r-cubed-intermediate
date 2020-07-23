@@ -1,0 +1,36 @@
+Package: RCubedIntermediate
+Title: "Reproducible Research in R: An Intermediate Workshop on Modern Approaches 
+    and Workflows to Processing Data"
+Version: 0.0.0
+Authors@R: c(
+    person(given = "Luke",
+           family = "Johnston",
+           role = c("aut", "cre"),
+           email = "lwjohnst@gmail.com",
+           comment = c(ORCID = "0000-0003-4169-2616"))
+    )
+URL: https://gitlab.com/rostools/r-cubed-intermediate/issues,
+    https://r-cubed-intermediate.rostools.org
+Depends: 
+    R (>= 4.0.0)
+Imports: 
+    bookdown,
+    dplyr,
+    emo,
+    vroom,
+    here,
+    RefManageR,
+    r3 (>= 0.0.0.9000)
+Suggests: 
+    fs,
+    prodigenr,
+    tidyverse,
+    usethis,
+    xaringan,
+    xaringanthemer,
+    showtext
+Remotes: 
+    gadenbuie/xaringanthemer,
+    hadley/emo,
+    gitlab::rostools/r3
+Encoding: UTF-8
