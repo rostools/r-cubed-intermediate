@@ -16,7 +16,7 @@ and [AU CRU material](https://au-cru.github.io/site/material/),
 from the peer led and contributed lessons
 - From version 1 of the [*"Reproducible Quantitative Methods: Data analysis workflow using R"*](https://v1--dda-rcourse.netlify.com/) course
 
-The course material uses some concepts, images, and inspiration from these resources:
+The course material gets inspiration from these resources:
 
 - [R for Data Science](https://r4ds.had.co.nz/)
 - [Advanced R](https://adv-r.hadley.nz/)
