@@ -13,7 +13,7 @@ favicon: "images/favicon.ico"
 url: 'https\://r-cubed-intermediate.rostools.org'
 ---
 
-# Overview
+# Welcome
 
 ```{r, include=FALSE}
 # automatically create a bib database for R packages
@@ -22,3 +22,18 @@ knitr::write_bib(
     here::here('resources/packages.bib')
 )
 ```
+
+
+General purpose of course, why created it
+
+Description of course website
+
+How this course was created (bookdown, gitlab, gitlab ci, netlify)
+
+Where to find the source
+
+Contributing
+
+License, re-use
+
+- Put contents of LICENSE.md here and replace that file with the text for CC-BY
