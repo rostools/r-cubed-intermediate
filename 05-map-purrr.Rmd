@@ -1,0 +1,30 @@
+# Iteration with functional programming {#functionals-map}
+
+
+<!-- Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise): -->
+
+- functional programming
+    - purrr
+    - Why purrr vs *apply functions?
+        - Consistency, expectation, documentation, design.
+    - Show importing one vs many
+        - Use fs to list multiple files
+        - Talk about filesystem
+    - Possible uses:
+        - Show basic usage with paste and numbers, etc.
+        - calculating mean from df
+            - select only numeric (select where is.numeric)
+            - show off the ... here (like with na.rm)
+        - Any time you think you would use a for loop, use this.
+        - Import data, with some wrangling, for https://physionet.org/content/mmash/1.0.0/
+            - Using what we learned to wrangle all data files into one single one
+        - Run multiple models and extract only some information
+        - Run models on re-sampled sets
+        - Combining with parallel processing?
+            - Don't get them to do this, just show it.
+    - Real examples: 
+        - my webscraping of the DST etc
+        - Running multiple models
+    - Show but don't get them to do: other versions of functions in purrr
+
+Post course?

@@ -1,0 +1,28 @@
+# Importing datasets
+
+packages:
+
+- fs
+- vroom
+
+
+
+<!-- Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs) -->
+
+<!-- description of vroom -->
+
+- download datasets to use as practice?
+    - https://physionet.org/content/maternal-visceral-adipose/1.0.0/
+    - https://physionet.org/content/mmash/1.0.0/
+- use_data_raw()
+- use_data(), combined with load()
+
+- importing lots of data files
+
+- Keeping raw data raw.
+- vroom
+- csv and talk about tab-delim
+- col_*, including col_skip() (or the character version like "i", "f", "-", "D")
+- using specs to make it easier to load data and set data types (esp if large data)
+    - Start small, import only bit of dataset before loading all of it.
+

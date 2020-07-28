@@ -1,4 +1,4 @@
-# Course syllabus
+# Course syllabus {#syllabus}
 
 Reproducibility and open scientific practices are increasingly demanded of,
 and needed by, scientists and researchers in our modern research environments.
@@ -111,3 +111,16 @@ Other topics will include:
 - Structuring your code to maximize documentation and organization.
 - Saving intermediate output to reduce computing time.
 
+## General schedule
+
+The workshop is structured as a series of participatory live-coding sessions
+(instructor and learner coding together) interspersed with hands-on exercises
+and group work, using either a practice dataset or some other real-world dataset.
+There are some lectures given, mainly at the start and end of the workshop.
+The general schedule outline is shown in the below table.
+
+```{r schedule-table, echo=FALSE, message=FALSE, warning=FALSE}
+options(knitr.kable.NA = "")
+schedule <- readr::read_csv(here::here("resources/schedule.csv"))
+knitr::kable(schedule, align = "l", caption = "General schedule for the 3 days of the course.")
+```

@@ -1,0 +1,27 @@
+# Advanced data wrangling {#adv-dplyr}
+
+
+<!-- Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two small ones during exercise): -->
+
+- functional programming
+    - Q: Any one use for loops? Instead you should use functionals like map (R's
+    strength is this)
+    - talk about and introduce here
+        - weaknesses of loops, strengths of functionals
+        - naive approach to find mean (or do simple transformations) of each
+        column is to do for loop with mean of each column in dataset
+        - Images inspired from advanced R
+            - Use diagrammer graphviz?
+    - This section prepares for the functional programming session
+- deeper into dplyr
+    - tidyselect helpers
+    - across and where
+    - regular expressions?
+    - Possible uses:
+        - calculating mean
+            - summarize across is numeric (select where is.numeric)
+            - show off the ... here (like with na.rm)
+        - Any time you think you would use a for loop, use this.
+        
+- saving intermediate/final output
+

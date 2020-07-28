@@ -1,0 +1,14 @@
+# Creating your own function {#functions}
+
+<!-- Day 2 morning (8:30, lunch at 12:00 --- ~3.5 hrs, with one big break, one small one during exercise): -->
+
+- creating functions
+    - and when using tidyverse functions
+- package dependency
+    - use_package
+    - ::
+- Moving functions into own R file
+    - Then either sourcing or load_all (maybe not get into that for them)
+- debugging in functions
+    - breaks in RStudio?
+    - basics like print.
