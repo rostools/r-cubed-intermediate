@@ -1,0 +1,147 @@
+# Pre-course tasks {#pre-course}
+
+Complete everything in this pre-course tasks section and complete the survey
+at the end.
+
+## Installing the latest programs
+
+Given this is an intermediate course, you should already have R and RStudio
+installed. However, you may not have the latest versions installed.
+
+1. Have the latest version of [R](https://cloud.r-project.org/index.html)
+installed (preferably >4.0.0, but it is fine if you have at least 3.6.0).
+1. Have the latest version of [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
+installed (preferably the latest 1.3 version, but at least 1.2.5001 is fine).
+
+There are a few other things to install:
+
+1. [Git](https://git-scm.com/downloads). We'll be using Git 
+(building off of the Introduction course), so it needs to be installed.
+1. For some Windows users, you may need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/Rtools35.exe)
+in order for some R packages to be installed (which you'll do shortly).
+
+All these programs are required for the course, even Git.
+Git, which is a software program to formally manage file versions, 
+is used because of it's popularity and the amount of documentation available for it.
+Check out the online book [Happy Git with R](https://happygitwithr.com/),
+especially the "Why Git" section, to understand why we are teaching Git.
+Windows users tend to have more trouble with installing Git than macOS or Linux users.
+See the section on [Installing Git for Windows](https://happygitwithr.com/install-git.html#install-git-windows) for help.
+
+If you have administrative issues with updating R or RStudio to the latest version,
+and you have at least 3.6.0 for R and at least 1.2.5001 for RStudio, 
+it should be fine. Unfortunately, work computers may not have Git installed and
+it *is required* for the course, so please ask your IT for help if you need
+administrative permissions to installing it.
+
+Once R, RStudio, and Git have been installed, open RStudio. 
+*If at any point during these pre-course tasks you have any troubles*, 
+try as best as you can to complete the task and then let me know about the
+issues in the pre-course survey (at the end of this section). 
+If you continue having problems, indicate on the survey that you need help
+and we can try to book a quick video call to fix the problem. 
+Otherwise, if you can, come to the course earlier (15-20 min) to get help.
+
+## Installing the R packages
+
+We will be using specific R packages for the course, 
+so you will need to install them.
+A detailed walkthrough for installing the necessary packages is
+available on the [pre-course tasks for installing packages](https://r-cubed-v2.rostools.org/pre-course.html#installing-r-packages)
+section of the beginner course,
+however, you only need to install the r3 helper package in order to install
+all the necessary packages:
+
+1. Install the remotes package: `install.packages("remotes")`.
+2. Install the helper package for this course, r3: `remotes::install_gitlab("rostools/r3", upgrade = TRUE)`
+
+*Note*: When you see a command like `something::something()`,
+for example with `remotes::install_gitlab()`, you would "read" this as:
+
+> R, can you please use the install_gitlab function from the remotes package.
+
+The normal way of doing this would be to load the package with `library(remotes)` 
+and then running the command (`install_gitlab()`).
+But by using the `::`, we tell R to directly use a function from a package,
+without needing to load the package. We use this trick because we only want to
+use the `install_gitlab()` command from the remotes package and not have to load
+all the other functions from remotes.
+
+## Setting up Git
+
+Since Git has already been covered in the Introduction course, 
+we won't cover it during this course.
+If you have used or currently use Git, you can skip this section.
+If you haven't used it, please do these tasks:
+
+1. Follow the [pre-course tasks for Git and GitHub](https://r-cubed-v2.rostools.org/pre-course.html#setting-up-git-and-github)
+from the beginner's course.
+
+2. Read through the 
+[Version Control lesson](https://r-cubed-v2.rostools.org/version-control.html)
+of the beginner course.
+*You don't need to do any of the exercises or activities*.
+
+## Create an R project for the course
+
+One of the basic steps to reproducibility and modern workflows in data analysis
+is to keep everything contained in a single location.
+In RStudio, this is done with projects.
+Please read all of [Section 6.1](https://r-cubed-v2.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
+to learn about R Projects and keeping things self-contained. 
+*You don't need to do any of the exercises or activities*.
+
+There are several ways to organise a project folder.
+We’ll be using the structure from the package prodigenr. 
+The project setup can be done by either:
+
+1. Use RStudio's New Project menu item: "File -> New Project -> New Directory",
+scroll down to "Scientific Analysis Project using prodigenr" and name the project
+"LearnR3" in the Directory Name, saving it to the "Desktop" with Browse.
+2. Run the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the Console.
+
+When the RStudio Project opens up again, run these two commands in the Console:
+
+```r
+usethis::use_blank_slate()
+usethis::use_r("functions", open = FALSE)
+```
+
+## R Markdown
+
+We teach and use R Markdown because it is one of the very first steps to being
+reproducible and because it is a very powerful tool to doing data analysis.
+If you use R Markdown already, you can skip this step. Otherwise,
+please read over [the R Markdown section](https://r-cubed-v2.rostools.org/reproducible-documents.html)
+of the beginner course.
+
+## Course introduction
+
+Most of the description of the course is found in the [syllabus](syllabus.html).
+If you haven't read it, **please read it now**.
+Read over what the course will cover, 
+what we expect you to learn at the end of it,
+and what our basic assumptions are about who you are and what you know.
+The final pre-course task is a survey that asks some questions on if you've read
+and understood it.
+
+One goal of the course is to teach about open science,
+and true to our mission, we practice what we preach.
+The course material is publicly accessible (all on this website) and 
+[openly licensed](index.html#licensing) so you can use and re-use it for free!
+The material is ordered as we will cover it during the course.
+The course includes lots of hands-on exercises that you can work on.
+
+We have a [Code of Conduct](conduct.html).
+If you haven't read it, **read it now**. 
+The survey at the end will ask about Conduct.
+We want to make sure this course is a supportive 
+and safe environment for learning,
+so this Code of Conduct is important.
+
+You're almost done.
+Please fill out the [pre-course survey] to finish this assignment.
+
+[pre-course survey]: https://docs.google.com/forms/d/e/1FAIpQLSeuMe485zZXlG9uQlUgcgsWBJvpHUB_-bMVkEtA4moWK_oUoQ/viewform?usp=sf_link
+
+See you at the course!
