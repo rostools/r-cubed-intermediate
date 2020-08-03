@@ -36,4 +36,25 @@ Contributing
 
 License, re-use
 
-- Put contents of LICENSE.md here and replace that file with the text for CC-BY
+## Re-use and licensing
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+
+The course material is licensed under the
+[Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
+and the course code is licensed under a [MIT License](https://gitlab.com/rostools/r-cubed-intermediate/-/blob/master/LICENSE-MIT.md),
+so the material can be used, re-used, and modified, as long as there is attribution.
+
+Some material was taken and modified from multiple sources, including:
+
+- [UofTCoders Reproducible Quantitative Methods for EEB](https://uoftcoders.github.io/rcourse/) 
+- [Software and Data Carpentry](https://carpentries.org/) workshop material
+- [UofTCoders material](https://uoftcoders.github.io/studyGroup/lessons/)
+and [AU CRU material](https://au-cru.github.io/site/material/)
+- From version 1 of the [*"Reproducible Quantitative Methods: Data analysis workflow using R"*](https://v1--dda-rcourse.netlify.com/) course
+
+The course material also draws inspiration from these excellent resources:
+
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [Advanced R](https://adv-r.hadley.nz/)
+- [R Packages](https://r-pkgs.org/)
