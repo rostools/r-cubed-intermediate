@@ -4,6 +4,7 @@
 <!-- Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise): -->
 
 - functional programming
+    - Expand on explanation
     - purrr
     - Why purrr vs *apply functions?
         - Consistency, expectation, documentation, design.
@@ -26,5 +27,8 @@
         - my webscraping of the DST etc
         - Running multiple models
     - Show but don't get them to do: other versions of functions in purrr
+    
+- slides afterward
+    - Incorporate open and reproducible practices in coding
 
 Post course?

@@ -1,11 +1,10 @@
-# Importing datasets
+# Importing data, quickly {#import-data}
 
 packages:
 
 - fs
+    - introduce this package to get ready for later use?
 - vroom
-
-
 
 <!-- Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs) -->
 

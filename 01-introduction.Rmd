@@ -5,7 +5,7 @@
 - Slide? Motivation, why use these (short lecture?)
     - Question to them: For those that have doing data processing, does it take up 
     a lot of time? How much?
-
+    - Intro to how limited code sharing is, research on it, etc.
 
 - project structure
     - Make tree of project as how it is and how it will look like?

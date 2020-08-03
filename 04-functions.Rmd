@@ -12,3 +12,5 @@
 - debugging in functions
     - breaks in RStudio?
     - basics like print.
+
+- Use a custom function in the advanced dplyr, to link to previous?
