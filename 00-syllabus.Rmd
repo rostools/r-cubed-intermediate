@@ -92,26 +92,7 @@ And we **will not** learn:
 - the basics of using R and RStudio
 - statistics (these are already covered by most university curriculum)
 
-## General outline (still in development)
-
-The workshop is structured as a series of participatory live-coding sessions
-(instructor and learner coding together) interspersed with hands-on exercises
-and group work, using some real-world datasets.
-
-The overall topics covered will be:
-
-- Importing and cleaning multiple datasets.
-- Creating your own functions.
-- Applying functional programming (e.g. iteration).
-- Making use of more advanced features of the [tidyverse] data wrangling packages.
-
-Other topics will include:
-
-- Improving reproducibility by managing package dependencies.
-- Structuring your code to maximize documentation and organization.
-- Saving intermediate output to reduce computing time.
-
-## General schedule
+## Schedule
 
 The workshop is structured as a series of participatory live-coding sessions
 (instructor and learner coding together) interspersed with hands-on exercises
