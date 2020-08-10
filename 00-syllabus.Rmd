@@ -124,3 +124,15 @@ options(knitr.kable.NA = "")
 schedule <- readr::read_csv(here::here("resources/schedule.csv"))
 knitr::kable(schedule, align = "l", caption = "Overall course schedule for the 2 days.")
 ```
+
+## Location
+
+The course will be taking place at Aarhus University in two different buildings:
+
+- **Day 1, Sept. 8th**: Building 1264, room 209
+
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2221.4776486410537!2d10.202873315946679!3d56.16613558066591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fbf0e58f8e3%3A0xb3a37fdd519e9028!2sBartholins%20All%C3%A9%201%2C%20Building%201264%2C%208000%20Aarhus!5e0!3m2!1sen!2sdk!4v1597080458787!5m2!1sen!2sdk" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+- **Day 2, Sept. 9th**: Building 1231, room 228
+
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1320.887119945961!2d10.202654769824292!3d56.16646682802605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fbf68ccd12f%3A0x77cf8cc6f98baa58!2sWilhelm%20Meyers%20All%C3%A9%203%2C%20Building%201231%2C%208000%20Aarhus!5e0!3m2!1sen!2sdk!4v1597080711037!5m2!1sen!2sdk" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
