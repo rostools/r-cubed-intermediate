@@ -23,7 +23,7 @@ knitr::write_bib(
 )
 ```
 
-[![GitLab repository](https://img.shields.io/badge/GitLab%20repository-Source%20material-blue?style=flat&logo=gitlab)](https://gitlab.com/rostools/r-cubed-intermediate)
+[![GitLab repository](https://img.shields.io/badge/Repository-Source%20material-blue?style=flat&logo=gitlab)](https://gitlab.com/rostools/r-cubed-intermediate)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
