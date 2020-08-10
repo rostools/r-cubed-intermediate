@@ -1,4 +1,4 @@
-# Importing data, quickly {#import-data}
+# Importing data, fast! {#import-data}
 
 packages:
 
@@ -6,13 +6,14 @@ packages:
     - introduce this package to get ready for later use?
 - vroom
 
-<!-- Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs) -->
+<!-- Day 1 morning: (10:00, lunch at 12:30 --- ~2.5 hrs) -->
 
 <!-- description of vroom -->
 
 - download datasets to use as practice?
-    - https://physionet.org/content/maternal-visceral-adipose/1.0.0/
     - https://physionet.org/content/mmash/1.0.0/
+        - https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip
+        - DOI https://doi.org/10.13026/cerq-fc86
 - use_data_raw()
 - use_data(), combined with load()
 
@@ -20,8 +21,125 @@ packages:
 
 - Keeping raw data raw.
 - vroom
+    - why vroom? Super fast, can use multi-processing (parallel processing),
+    uses a thing called "alternative representation" (altrep) that allows data
+    (especially character string data) to be loaded in without taking up much 
+    memory because it doesn't directly load the data in but rather link it to
+    some internal "letter blocks" (don't need to go into this much)
 - csv and talk about tab-delim
 - col_*, including col_skip() (or the character version like "i", "f", "-", "D")
 - using specs to make it easier to load data and set data types (esp if large data)
     - Start small, import only bit of dataset before loading all of it.
+    
+## Code:
+
+```{r, eval=FALSE}
+library(here)
+usethis::use_data_raw("mmash", open = FALSE)
+# Open up and use the mmash R script.
+# TODO: Use r3 for link? r3::mmash_zip_link
+mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+```
+
+```{r, eval=FALSE}
+library(here)
+# This could be executed on gitlab-ci?
+unzip(here("data-raw/mmash-data.zip"), 
+      exdir = here("data-raw"),
+      # This unzipped into the data-raw folder
+      junkpaths = TRUE)
+unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw"))
+
+library(vroom)
+user_1 <- vroom(here("data-raw/DataPaper/user_1/user_info.csv"))
+spec(user_1)
+# Search help documentation to show what to do next (e.g. use col_types)
+user_1_fix <- vroom(
+    here("data-raw/DataPaper/user_1/user_info.csv"),
+    col_types = cols(
+        Gender = col_character(),
+        Weight = col_double(),
+        Height = col_double(),
+        Age = col_double()
+    )
+)
+
+# Error, look at file and see missing first column.
+# Search help documentation to show what to do next (e.g. use col_select -1)
+user_1_fix <- vroom(
+    here("data-raw/DataPaper/user_1/user_info.csv"),
+    col_select = -1,
+    col_types = cols(
+        Gender = col_character(),
+        Weight = col_double(),
+        Height = col_double(),
+        Age = col_double()
+    )
+)
+```
+
+Sometimes you have a dataset that's just a bit too large and sometimes
+vroom may not have enough information to guess the column data type
+or you don't want to read in all the dataset, but only specific columns
+In that case, we can do a trick: read in only first few lines of the dataset,
+use spec, fix the col_type
+
+- then fix column names based on data dictionary
+
+```{r}
+user_1_fix <- vroom(
+    here("data-raw/DataPaper/user_1/RR.csv"),
+    col_select = -1,
+    col_types = cols(
+        Gender = col_character(),
+        Weight = col_double(),
+        Height = col_double(),
+        Age = col_double()
+    )
+)
+```
+
+## Exercises
+
+using help doc and data dictionary, find how to rename columns to be more 
+descriptive of the contents of the file.
+
+```{r}
+user_1_saliva <- vroom(
+    here("data-raw/DataPaper/user_1/saliva.csv"),
+    col_select = -1)
+spec(user_1_saliva)
+
+user_1_rr_fix <- vroom(
+    here("data-raw/DataPaper/user_1/saliva.csv"),
+    col_select = -1,
+    col_type = cols(
+        ibi_s = col_double(),
+        day = col_double(),
+        time = col_time(format = "")
+    )
+)
+# Search help documentation to show how to find this stuff.
+
+user_1_rr_fix <- vroom(
+    here("data-raw/DataPaper/user_1/RR.csv"),
+    col_select = -1,
+    col_type = cols(
+        ibi_s = col_double(),
+        day = col_double(),
+        time = col_time(format = "%H:%M:%S")
+    )
+)
+```
+
+Use technique to read in actigraph and select specific cols
+and set col_types
+- keep only 
+- Look through data dictionary and rename columns to be more descriptive
+
+```{r}
+
+```
 
