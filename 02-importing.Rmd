@@ -1,14 +1,16 @@
 # Importing data, fast! {#import-data}
 
-packages:
+![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
+
+`r '<!-- '`
 
 - fs
     - introduce this package to get ready for later use?
 - vroom
 
-<!-- Day 1 morning: (10:00, lunch at 12:30 --- ~2.5 hrs) -->
+Day 1 morning: (10:00, lunch at 12:30 --- ~2.5 hrs)
 
-<!-- description of vroom -->
+description of vroom
 
 - download datasets to use as practice?
     - https://physionet.org/content/mmash/1.0.0/
@@ -143,3 +145,4 @@ and set col_types
 
 ```
 
+`r '-->'`

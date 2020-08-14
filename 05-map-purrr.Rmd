@@ -1,7 +1,10 @@
 # Iteration with functional programming {#functionals-map}
 
+![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
-<!-- Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise): -->
+`r '<!-- '`
+
+Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise):
 
 - functional programming
     - Expand on explanation
@@ -347,3 +350,5 @@ map(data_list, plot_jitter)
 # Plot the density
 map(data_list, plot_density)
 ```
+
+`r '-->'`

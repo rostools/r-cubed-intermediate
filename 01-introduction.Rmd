@@ -1,6 +1,10 @@
 # Basic setup and workflow {#intro}
 
-<!-- Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs) -->
+![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
+
+`r '<!-- '`
+
+Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs)
 
 - Slide? Motivation, why use these (short lecture?)
     - Question to them: For those that have doing data processing, does it take up 
@@ -23,3 +27,5 @@ go over basic workflow how we will do things in the course
 
 - Using R Markdown as development tool
 - Incorporate using Git in the code along session.
+
+`r '-->'`

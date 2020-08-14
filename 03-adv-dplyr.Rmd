@@ -1,7 +1,10 @@
 # Advanced data wrangling {#adv-dplyr}
 
+![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
-<!-- Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two small ones during exercise): -->
+`r '<!-- '`
+
+Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two small ones during exercise):
 
 - functional programming
     - Q: Any one use for loops? Instead you should use functionals like map (R's
@@ -61,3 +64,4 @@ A script should have an end goal.
 
 [style guide]: https://style.tidyverse.org/
 
+`r '-->'`
