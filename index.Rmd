@@ -15,7 +15,7 @@ url: 'https\://r-cubed-intermediate.rostools.org'
 
 # Welcome!
 
-```{r, include=FALSE}
+```{r, include=FALSE, eval=TRUE}
 # automatically create a bib database for R packages
 knitr::write_bib(
     c(.packages(), "bookdown", "knitr", "rmarkdown"),
