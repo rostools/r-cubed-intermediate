@@ -5,6 +5,7 @@ library(tidyverse)
 library(htmltools)
 
 knitr::opts_chunk$set(
+    eval = FALSE,
     comment = "#>",
     collapse = TRUE,
     warning = FALSE,
