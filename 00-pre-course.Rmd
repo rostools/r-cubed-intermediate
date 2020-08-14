@@ -77,35 +77,56 @@ all the other functions from remotes.
 ## Setting up Git
 
 Since Git has already been covered in the Introduction course, 
-we won't cover it during this course.
+we won't cover it during this course, but we will be using it 
+(since version control should be part of any modern data analysis workflow,
+so we can get practice using it).
 If you have used or currently use Git, you can skip this section.
 If you haven't used it, please do these tasks:
 
-1. Follow the [pre-course tasks for Git and GitHub](https://r-cubed-v2.rostools.org/pre-course.html#setting-up-git-and-github)
-from the beginner's course.
 
+1. Follow the [pre-course tasks for Git](https://r-cubed-v2.rostools.org/pre-course.html#setting-up-git-and-github)
+(not the GitHub tasks) from the beginner's course.
+Specifically, type in the RStudio Console:
+
+    ```r
+    # Typing in your name (first and last), as well as your email
+    r3::setup_git_config()
+    ```
+    
 2. Read through the 
 [Version Control lesson](https://r-cubed-v2.rostools.org/version-control.html)
 of the beginner course.
-*You don't need to do any of the exercises or activities*.
+*You don't need to do any of the exercises or activities*, 
+but can if it helps you learn or understand it better.
+
+Regardless of if you've done the steps above or not, 
+*everyone* needs to run:
+
+```r
+r3::check_setup()
+```
+
+and eventually copy and paste the output into one of the survey questions.
 
 ## Create an R project for the course
 
 One of the basic steps to reproducibility and modern workflows in data analysis
 is to keep everything contained in a single location.
 In RStudio, this is done with projects.
-Please read all of [Section 6.1](https://r-cubed-v2.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
-to learn about R Projects and keeping things self-contained. 
+Please read all of 
+[Section 6.1](https://r-cubed-v2.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
+from the beginner course to learn about R Projects 
+and keeping things self-contained. 
 *You don't need to do any of the exercises or activities*.
 
 There are several ways to organise a project folder.
 We’ll be using the structure from the package prodigenr. 
 The project setup can be done by either:
 
-1. Use RStudio's New Project menu item: "File -> New Project -> New Directory",
+1. Using RStudio's New Project menu item: "File -> New Project -> New Directory",
 scroll down to "Scientific Analysis Project using prodigenr" and name the project
 "LearnR3" in the Directory Name, saving it to the "Desktop" with Browse.
-2. Run the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the Console.
+2. Or, running the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the Console.
 
 When the RStudio Project opens up again, run these two commands in the Console:
 
@@ -118,9 +139,17 @@ usethis::use_r("functions", open = FALSE)
 
 We teach and use R Markdown because it is one of the very first steps to being
 reproducible and because it is a very powerful tool to doing data analysis.
-If you use R Markdown already, you can skip this step. Otherwise,
-please read over [the R Markdown section](https://r-cubed-v2.rostools.org/reproducible-documents.html)
+Please do these two tasks:
+
+1. Please read over the [R Markdown section](https://r-cubed-v2.rostools.org/reproducible-documents.html)
 of the beginner course.
+If you use R Markdown already, you can skip this step.
+2. Open up the `LearnR3` project,
+either by clicking the `LearnR3.Rproj` file or
+by using the "File -> Open Project" menu.
+Run the function `r3::create_rmd_doc()` in the Console
+when RStudio is in the `LearnR3` project.
+This will create a new file called `lesson.Rmd` in the `doc/` folder.
 
 ## Course introduction
 
@@ -136,8 +165,10 @@ One goal of the course is to teach about open science,
 and true to our mission, we practice what we preach.
 The course material is publicly accessible (all on this website) and 
 [openly licensed](index.html#licensing) so you can use and re-use it for free!
-The material is ordered as we will cover it during the course.
-The course includes lots of hands-on exercises that you can work on.
+The material and table of contents on the side is ordered 
+as how we will cover it during the course.
+The course includes lots of hands-on exercises that you can work on,
+of which these exercises on on this website.
 
 We have a [Code of Conduct](conduct.html).
 If you haven't read it, **read it now**. 
