@@ -58,7 +58,7 @@ Examples of unacceptable behavior by participants include:
 - violent threats or language directed against another person
 - the display of sexual or violent images
 - unwelcome sexual attention
-- nonconsensual or unwelcome physical contact
+- non-consensual or unwelcome physical contact
 - sustained disruption of talks, events or communications
 - insults or put downs
 - sexist, racist, homophobic, transphobic, ableist, or exclusionary jokes
@@ -77,7 +77,7 @@ warning the offender or expulsion from the course.
 
 Thank you for helping make this a welcoming, friendly event for all `r emo::ji("smile")`
 
-Acknowledgements: Large portions of this Code of Conduct were taken and modified
+*Acknowledgements*: Large portions of this Code of Conduct were taken and modified
 from other Codes of Conduct, specifically
 [Software Carpentry](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html)
 and [UofTCoders](https://github.com/UofTCoders/studyGroup/blob/gh-pages/codeOfConduct.md).
