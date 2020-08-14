@@ -1,7 +1,7 @@
 # Pre-course tasks {#pre-course}
 
-Complete everything in this pre-course tasks section and complete the survey
-at the end.
+Complete everything in this pre-course tasks section and 
+finish with completing the survey at the end.
 
 ## Installing the latest programs
 
