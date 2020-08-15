@@ -177,10 +177,8 @@ One goal of the course is to teach about open science,
 and true to our mission, we practice what we preach.
 The course material is publicly accessible (all on this website) and 
 [openly licensed](index.html#licensing) so you can use and re-use it for free!
-The material and table of contents on the side is ordered 
-as how we will cover it during the course.
-The course includes lots of hands-on exercises that you can work on,
-of which these exercises on on this website.
+The material and table of contents on the side is listed in the order 
+that we will cover in the course.
 
 We have a [Code of Conduct](conduct.html).
 If you haven't read it, **read it now**. 
@@ -190,8 +188,8 @@ and safe environment for learning,
 so this Code of Conduct is important.
 
 You're almost done.
-Please fill out the [pre-course survey] to finish this assignment.
+Please fill out the **[pre-course survey]** to finish this assignment.
 
-[pre-course survey]: https://docs.google.com/forms/d/e/1FAIpQLSeuMe485zZXlG9uQlUgcgsWBJvpHUB_-bMVkEtA4moWK_oUoQ/viewform?usp=sf_link
+[pre-course survey]: https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link
 
 See you at the course!
