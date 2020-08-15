@@ -147,9 +147,21 @@ If you use R Markdown already, you can skip this step.
 2. Open up the `LearnR3` project,
 either by clicking the `LearnR3.Rproj` file or
 by using the "File -> Open Project" menu.
-Run the function `r3::create_rmd_doc()` in the Console
-when RStudio is in the `LearnR3` project.
+Run the function below in the Console when RStudio is in the `LearnR3` project:
 This will create a new file called `lesson.Rmd` in the `doc/` folder.
+
+    ```r
+    r3::create_rmarkdown_doc()
+    ```
+
+After the R Markdown document is created, 
+please run this function in the Console:
+
+```r
+r3::check_project_setup()
+```
+
+And paste the output into the survey at the end.
 
 ## Course introduction
 
