@@ -59,8 +59,18 @@ section of the beginner course,
 however, you only need to install the r3 helper package in order to install
 all the necessary packages:
 
-1. Install the remotes package: `install.packages("remotes")`.
-2. Install the helper package for this course, r3: `remotes::install_gitlab("rostools/r3", upgrade = TRUE)`
+1. Install the remotes package: 
+
+    ```r
+    install.packages("remotes")
+    ```
+
+2. Install the helper package for this course, r3:
+
+    ```r
+    remotes::install_gitlab("rostools/r3", upgrade = TRUE)
+    ```
+
 
 *Note*: When you see a command like `something::something()`,
 for example with `remotes::install_gitlab()`, you would "read" this as:
@@ -85,11 +95,12 @@ If you haven't used it, please do these tasks:
 
 
 1. Follow the [pre-course tasks for Git](https://r-cubed-v2.rostools.org/pre-course.html#setting-up-git-and-github)
-(not the GitHub tasks) from the beginner's course.
+(*not* the GitHub tasks) from the beginner's course.
 Specifically, type in the RStudio Console:
 
     ```r
-    # Typing in your name (first and last), as well as your email
+    # A pop-up to type in your name (first and last), 
+    # as well as your email
     r3::setup_git_config()
     ```
     
@@ -99,8 +110,8 @@ of the beginner course.
 *You don't need to do any of the exercises or activities*, 
 but can if it helps you learn or understand it better.
 
-Regardless of if you've done the steps above or not, 
-*everyone* needs to run:
+Regardless of whether you've done the steps above or not, 
+*everyone* needs to run
 
 ```r
 r3::check_setup()
@@ -147,8 +158,8 @@ If you use R Markdown already, you can skip this step.
 2. Open up the `LearnR3` project,
 either by clicking the `LearnR3.Rproj` file or
 by using the "File -> Open Project" menu.
-Run the function below in the Console when RStudio is in the `LearnR3` project:
-This will create a new file called `lesson.Rmd` in the `doc/` folder.
+Run the function below in the Console when RStudio is in the `LearnR3` project,
+which will create a new file called `lesson.Rmd` in the `doc/` folder.
 
     ```r
     r3::create_rmarkdown_doc()
@@ -165,7 +176,7 @@ And paste the output into the survey at the end.
 
 ## Course introduction
 
-Most of the description of the course is found in the [syllabus](syllabus.html).
+Most of the course description is found in the [syllabus](syllabus.html).
 If you haven't read it, **please read it now**.
 Read over what the course will cover, 
 what we expect you to learn at the end of it,
