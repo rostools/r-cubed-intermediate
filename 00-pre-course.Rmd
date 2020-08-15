@@ -79,7 +79,7 @@ all the other functions from remotes.
 Since Git has already been covered in the Introduction course, 
 we won't cover it during this course, but we will be using it 
 (since version control should be part of any modern data analysis workflow,
-so we can get practice using it).
+we'll be using it as well).
 If you have used or currently use Git, you can skip this section.
 If you haven't used it, please do these tasks:
 
