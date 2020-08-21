@@ -330,25 +330,37 @@ user_1_saliva_data <- vroom(
     )
 ) %>% 
     # Rename the ibi_s column
+    # TODO: add a reasonable new name
     rename(index... = ibi_s)
 ```
 
-## Importing with larger datasets
+## Importing larger datasets
 
-Sometimes you have a dataset that's just a bit too large and sometimes
-vroom may not have enough information to guess the column data type
-or you don't want to read in all the dataset, but only specific columns
-In that case, we can do a trick: read in only first few lines of the dataset,
-use spec, fix the col_type
+Sometimes you may have a dataset that's just a bit too large. Sometimes vroom
+may not have enough information to guess the data type of the column.
+Or maybe there are hundreds or thousands of columns in your data
+and you only want to import specific columns.
+In these cases, we can do a trick: read in only first few lines of the dataset,
+use `spec()` and paste in the output into the `col_type` argument,
+and then keep only the columns you want to keep.
 
-- then fix column names based on data dictionary
+<!-- (use my UK Biobank analysis as example?) -->
 
-We can see from the data file size that it is fairly big.
-So, we'll use this technique to decide what we want to keep etc.
-(use my UK Biobank analysis as example)
+<!-- - then fix column names based on data dictionary -->
 
-```{r}
-user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
+Let's do this on the `RR.csv` file. 
+We can see from the file size that it is bigger than most of the other files 
+(~2Mb). So, we'll use this technique to decide what we want to keep etc. 
+First, create a new header `## Import larger datasets` and a new code chunk below it
+(with "Ctrl-Alt-I"). 
+
+Do the same thing that we've been doing, but this time we are going to use the
+argument `n_max`, which tells vroom how many rows to read into R. In this case,
+let's read in 1000 to start. This dataset, like the others, has an empty column
+that we will drop.
+
+```{r import-some-of-data-trick}
+user_1_rr_file <- here::here("data-raw/mmash/user_1/RR.csv")
 user_1_rr_data_prep <- vroom(user_1_rr_file,
                              n_max = 1000,
                              col_select = -1)
@@ -356,8 +368,9 @@ spec(user_1_rr_data_prep)
 ```
 
 Like with last time, copy and paste the output into a new use of `vroom()`.
-Remove the `.delim` line and the `...1` line. 
-Don't forget to also remove the last `,` at the end!
+Remove the `.delim` line and the `...1` line. Don't forget to also remove the
+last `,` at the end! Make sure to remove the `n_max` argument, since we want to
+import in the whole dataset.
 
 ```{r}
 user_1_rr_data <- vroom(
