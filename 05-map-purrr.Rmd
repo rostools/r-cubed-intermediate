@@ -34,6 +34,10 @@ Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small
         - Running multiple models
     - Show but don't get them to do: other versions of functions in purrr
     
+    - Include some final dplyr summarizing of results of mmash
+        - load_all workflow
+        - but use source at end
+    
 - slides afterward
     - Incorporate open and reproducible practices in coding
 
