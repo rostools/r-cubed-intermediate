@@ -385,18 +385,27 @@ user_1_rr_data <- vroom(
 )
 ```
 
-## Exercise: 
+There's a new column type: `col_time()`. To see all the other types of column 
+specifications, in the **Console** type out `col_` and then hit the Tab key. 
+You'll see other types, like `col_date`, `col_factor`, and so on.
+Right, what does the data look like?
+
+```{r}
+user_1_rr_data
+```
+
+## Exercise: Import the Actigraph data
 
 Time: 15 min
 
-Do the same this with `Actigraph.csv` dataset, which is larger than the `RR.csv`
-data. But first:
+Practice some more. Do the same thing with the `Actigraph.csv` dataset, which is
+larger than the `RR.csv` data. But first:
 
 1. Create a new header at the bottom of the `doc/lesson.Rmd` file
-and call it `## Exercise: Larger datasets`.
+and call it `## Exercise: Import the Actigraph data`.
 1. Below the header, create a new code chunk with "Ctrl-Alt-I".
 
-Use the same technique as was used for the `RR.csv` data 
+Use the same technique as we used for the `RR.csv` data 
 and read in the `Actigraph.csv` file from `user_1/`.
 
 1. Set the file path to the dataset with `here::here()`. and select specific cols
@@ -404,29 +413,41 @@ and set col_types
 - keep only 
 - Look through data dictionary and rename columns to be more descriptive
 
-```{r, echo=FALSE, eval=FALSE}
-# Search help documentation to show how to find this stuff.
+Search help documentation to show how to find this stuff.
 
-# Use first 100 or so lines to get spec
-user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
-user_1_rr_data_prep <- vroom(user_1_rr_file,
-                             n_max = 1000,
-                             col_select = -1)
-spec(user_1_rr_data_prep)
+```{r solution-import-the-actigraph-data, echo=FALSE, eval=FALSE}
+# Use first 1000 or so lines to get spec
+user_1_actigraph_file <- here::here("data-raw/mmash/user_1/Actigraph.csv")
+user_1_actigraph_data_prep <- vroom(user_1_actigraph_file,
+                                    n_max = 1000,
+                                    col_select = -1)
+spec(user_1_actigraph_data_prep)
 
-user_1_rr_data <- vroom(
-    user_1_rr_file,
+user_1_actigraph_data <- vroom(
+    user_1_actigraph_file,
     col_select = -1,
     col_types = cols(
-        ibi_s = col_double(),
+        ...1 = col_skip(),
+        Axis1 = col_double(),
+        Axis2 = col_double(),
+        Axis3 = col_double(),
+        Steps = col_double(),
+        HR = col_double(),
+        `Inclinometer Off` = col_double(),
+        `Inclinometer Standing` = col_double(),
+        `Inclinometer Sitting` = col_double(),
+        `Inclinometer Lying` = col_double(),
+        `Vector Magnitude` = col_double(),
         day = col_double(),
-        # Converts to seconds
-        time = col_time(format = "")
+        time = col_time(format = ""),
+        .delim = ","
     )
 )
 ```
 
 ## Combining datasets
+
+Include this here?
 
 ```{r}
 library(dplyr)
