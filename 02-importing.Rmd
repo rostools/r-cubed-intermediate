@@ -198,9 +198,11 @@ spec(user_1_info_data)
 ```
 
 Ok, so from this we can see that a specification is what columns are imported
-into R and what data type they are given. Next, let's see what the message
-meant about `col_types`. Let's check out the help documentation for `vroom()`
-by typing in the **Console**:
+into R and what data type they are given. For instance, we can assume that
+`col_double()` means numeric (double is how computers represent non-integer
+numbers) and `col_character()` means a character data type.
+Next, let's see what the message meant about `col_types`. Let's check out the
+help documentation for `vroom()` by typing in the **Console**:
 
 ```r
 ?vroom::vroom
