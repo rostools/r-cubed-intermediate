@@ -28,6 +28,7 @@ Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two smal
         - calculating mean
             - summarize across is numeric (select where is.numeric)
             - show off the ... here (like with na.rm)
+            - Like for the RR or actigraph
         - Any time you think you would use a for loop, use this.
         
 - saving intermediate/final output
