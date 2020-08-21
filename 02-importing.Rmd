@@ -123,7 +123,7 @@ add `library()` when we want to load other packages.
 **Take 5 minutes to read the next {{NUM}} paragraphs**.
 
 What is [vroom]? It is a package designed to load in data, specifically text-based
-data files such as csv. In R there are several packages that you can use to
+data files such as CSV. In R there are several packages that you can use to
 load in data and different types of data. We'll quickly cover those other
 packages: 
 
@@ -131,7 +131,7 @@ packages:
 - [readxl]: Others?
 - [googlesheets4]: ?
 - [fst]: ...
-- [readr]: Standard package used to load in text-based data files like csv. 
+- [readr]: Standard package used to load in text-based data files like CSV. 
 This package is included by default with tidyverse.
 - [`utils::read.delim()`][read-delim]: This function comes from the core R
 package utils and includes other functions like `utils::read.csv()`.
@@ -156,18 +156,10 @@ reduced. And since it also builds off and mimics the existing readr package, so
 any documentation and help for readr can easily be applied to vroom, since they
 are used the same. Because readr has been around for awhile and is part of the
 tidyverse, there is a large amount of support and help for using it.
-If you're curious to read about vroom more, check out the [website](TODO).
+If you're curious to learn more about vroom, check out the [website](TODO).
 
-<!-- - why vroom? Super fast, can use multi-processing (parallel processing), -->
-<!-- uses a thing called "alternative representation" (altrep) that allows data -->
-<!-- (especially character string data) to be loaded in without taking up much  -->
-<!-- memory because it doesn't directly load the data in but rather link it to -->
-<!-- some internal "letter blocks" (don't need to go into this much) -->
-
-- csv and talk about tab-delim
-
-If your data is in csv format, vroom is perfect. If not, there are other ways of
-importing data which we won't cover. The csv file format is a commonly used 
+If your data is in CSV format, vroom is perfect. If not, there are other ways of
+importing data which we won't cover. The CSV file format is a commonly used 
 format for data because it is open, readable by any computer, and doesn't
 depend on any special software to open (unlike for e.g. Excel spreadsheets).
 
@@ -184,7 +176,7 @@ user_1_info_data <- vroom(user_1_info_file)
 ```
 
 You'll see the output mention using `spec()` to use in the argument `col_types`.
-And that it has 5 columns, one called `...1`. If we look at the csv file though,
+And that it has 5 columns, one called `...1`. If we look at the CSV file though,
 we see that there are only four columns with names... but that technically 
 there is a first empty column without a column header.
 So, let's figure out what this message means. 
