@@ -10,12 +10,103 @@
 Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs)
 
 - Slide? Motivation, why use these (short lecture?)
-    - Question to them: For those that have doing data processing, does it take up 
-    a lot of time? How much?
+    - Question to them: For those that have doing data processing, 
+    does it take up a lot of time? How much?
     - Intro to how limited code sharing is, research on it, etc.
+    - First time running this intermediate course
+        - So you are also the co-creators here, your feedback will improve this
+        and we're collaborating together. You're learning, but also helping to
+        improve the material and in how we teach you. What makes sense, what is
+        confusing, and so on.
 
 - project structure
     - Make tree of project as how it is and how it will look like?
+
+Initial project structure:
+
+```
+LearnR3
+├── data
+│   └── README.md
+├── doc
+│   └── README.md
+├── R
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+├── README.md
+└── TODO.md
+```
+
+At end of this workshop:
+
+```
+LearnR3
+├── data
+│   ├── README.md
+│   └── mmash.rda
+├── data-raw
+│   ├── README.md
+│   ├── mmash-data.zip
+│   ├── mmash
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
+├── doc
+│   ├── README.md
+│   ├── lesson.html
+│   └── lesson.Rmd
+├── R
+│   ├── README.md
+│   └── functions.R
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
+```
+
+When referring to folders, end in `/`, e.g. `data/` or `doc/`.
+
+```{r}
+DiagrammeR::grViz("
+digraph {
+    A -> B [arrowhead = none]
+}
+")
+DiagrammeR::mermaid("
+graph BT
+    %%mmash.R---doc/lesson.Rmd
+    
+    subgraph Download raw data
+    data-raw/mmash.R-->data-raw/mmash/
+    data-raw/mmash.R---data-raw/MMASH.zip
+    data-raw/MMASH.zip-->data-raw/mmash/
+    end
+    
+    subgraph Workflow
+    doc/lesson.Rmd-->|Git commit|R/functions.R
+    R/functions.R-->doc/lesson.Rmd
+    end
+    
+    data-raw/mmash/-->doc/lesson.Rmd
+    
+    subgraph Create final data
+    data-raw/mmash/-->data/mmash.rda
+    R/functions.R-->data-raw/mmash.R
+    data-raw/mmash.R-->data/mmash.rda
+    end
+    
+    subgraph Work with final data
+    data/mmash.rda-->doc/lesson.Rmd
+    doc/lesson.Rmd-->doc/lesson.html
+    end
+")
+```
+
 
 go over basic workflow how we will do things in the course
 
@@ -30,5 +121,12 @@ go over basic workflow how we will do things in the course
 
 - Using R Markdown as development tool
 - Incorporate using Git in the code along session.
+
+- Talk about devtools::load_all()?
+
+## Project setup
+
+- Delete TODO.md, setup and fetch_data files
+- Fill in README a bit?
 
 `r '-->'`
