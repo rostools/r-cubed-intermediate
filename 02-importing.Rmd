@@ -313,7 +313,7 @@ Read the `?dplyr::rename` help to know how to rename columns.
 
 [snake-case]: TODO
 
-```{r solution-try-vroom, echo=FALSE, eval=FALSE}
+```{r solution-import-the-saliva-data, echo=FALSE, eval=FALSE}
 library(dplyr)
 user_1_saliva_file <- here::here("data-raw/mmash/user_1/saliva.csv")
 user_1_saliva_data_prep <- vroom(user_1_saliva_file,
