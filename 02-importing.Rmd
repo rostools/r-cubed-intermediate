@@ -7,74 +7,269 @@
 
 `r '<!-- '`
 
-- fs
-    - introduce this package to get ready for later use?
-- vroom
+- include tree here? And also diagram
 
-Day 1 morning: (10:00, lunch at 12:30 --- ~2.5 hrs)
+    
+## Learning objectives
 
-description of vroom
+1. Learn where to store your data to make it easier to process later ... 
+NOTE: what about larger datasets e.g. registers?
+1. Learn about filesystems, relative and absolute paths, and how to make use 
+of the fs package to navigate files in your project.
+1. Learn how to import and do minor cleaning with the vroom package
+1. Learn about strategies and resources to use when encountering problems when
+importing data
+    
+## The MMASH dataset
 
 - download datasets to use as practice?
     - https://physionet.org/content/mmash/1.0.0/
         - https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip
         - DOI https://doi.org/10.13026/cerq-fc86
-- use_data_raw()
-- use_data(), combined with load()
+        
+Talk about it's license (open license).
+        
+Go to website and talk about it for a bit.
 
-- importing lots of data files
-
-- Keeping raw data raw.
-- vroom
-    - why vroom? Super fast, can use multi-processing (parallel processing),
-    uses a thing called "alternative representation" (altrep) that allows data
-    (especially character string data) to be loaded in without taking up much 
-    memory because it doesn't directly load the data in but rather link it to
-    some internal "letter blocks" (don't need to go into this much)
-- csv and talk about tab-delim
-- col_*, including col_skip() (or the character version like "i", "f", "-", "D")
-- using specs to make it easier to load data and set data types (esp if large data)
-    - Start small, import only bit of dataset before loading all of it.
-    
-## Code:
 
 ```{r, eval=FALSE}
 library(here)
+# In console
 usethis::use_data_raw("mmash", open = FALSE)
 # Open up and use the mmash R script.
+```
+
+Open up and use mmash.R
+
+```{r, eval=FALSE}
 # TODO: Use r3 for link? r3::mmash_zip_link
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
+In console, because we don't need to keep original dataset,
+since it is located in the link given.
+
+```{r}
+# Only need to do this once.
+usethis::use_git_ignore("data-raw/mmash-data.zip")
+```
+
+Git commit this git ignore, then git commit the mmash.R.
+
+Have a quick look inside the zip file (they don't need to do this).
+
+- fs
+    - introduce this package to get ready for later use?
+
+Reference here::here. Show project tree and talk through from there how it works
+
+Here because we start with the original raw dataset for mmash-data.zip,
+we should record exactly how we process the data set for use.
+
+- Keeping raw data raw.
+
 ```{r, eval=FALSE}
 library(here)
-# This could be executed on gitlab-ci?
+# TODO: This could be executed on gitlab-ci?
+# Have this in the mmash.R script
 unzip(here("data-raw/mmash-data.zip"), 
       exdir = here("data-raw"),
       # This unzipped into the data-raw folder
       junkpaths = TRUE)
 unzip(here("data-raw/MMASH.zip"),
       exdir = here("data-raw"))
+fs::dir_tree() # copy this output and show as what it looks like
+fs::file_delete(here(c("data-raw/MMASH.zip", 
+                       "data-raw/SHA256SUMS.txt",
+                       "data-raw/LICENSE.txt")))
+fs::file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+fs::dir_tree() # copy this output and show as what it looks like after
+```
 
+IN console:
+
+```{r}
+usethis::use_git_ignore("data-raw/mmash/")
+fs::file_create(here("data-raw/README.md"))
+# Open up and write very briefly about license and mmash and location of data
+# Commit
+```
+
+Git commit ignore and README file.
+
+## Move to lesson.Rmd
+
+Create header `## Importing raw dataset`
+
+We'll make a new code chunk with "Ctrl-Alt-I" and call it `setup`.
+Inside the code chunk we'll load the [vroom] package with `library(vroom)`.
+It should look like this:
+
+TODO: confirm this is right link
+
+[vroom]: https://vroom.tidyverse.org 
+
+````markdown
+`r ''````{r setup}
 library(vroom)
-user_1 <- vroom(here("data-raw/DataPaper/user_1/user_info.csv"))
-spec(user_1)
-# Search help documentation to show what to do next (e.g. use col_types)
-user_1_fix <- vroom(
-    here("data-raw/DataPaper/user_1/user_info.csv"),
+`r ''````
+````
+
+This specially-named code chunk tells R to run this code chunk first whenever
+you first start running code in this R Markdown file. So it's here that we will
+add `library()` when we want to load other packages.
+
+**Take 5 minutes to read the next {{NUM}} paragraphs**.
+
+What is [vroom]? It is a package designed to load in data, specifically text-based
+data files such as csv. In R there are several packages that you can use to
+load in data and different types of data. We'll quickly cover those other
+packages: 
+
+- [haven]: For reading in SAS, SPSS, and Stata files.
+- [readxl]: Others?
+- [googlesheets4]: ?
+- [fst]: ...
+- [readr]: Standard package used to load in text-based data files like csv. 
+This package is included by default with tidyverse.
+- [`utils::read.delim()`][read-delim]: This function comes from the core R
+package utils and includes other functions like `utils::read.csv()`.
+- [`data.table::fread()`][fread]: From the [data.table]
+
+TODO: Confirm this is correct link
+[data.table]: https://rdatatable.org
+[haven]: 
+[readxl]: 
+[googlesheets4]: 
+[fst]: 
+[readr]: 
+[read-delim]: 
+[fread]: 
+
+We're using the vroom package for largely one reason: It makes use of recent
+improvements in R that allow data to be imported in very very quickly. 
+Just how fast? The vroom website has a [benchmark page](TODO) showing how fast it
+is. And for many people, loading in the data can be one of the most time-consuming
+parts of starting an analysis. Hopefully by using this package, that time can be
+reduced. And since it also builds off and mimics the existing readr package, so
+any documentation and help for readr can easily be applied to vroom, since they
+are used the same. Because readr has been around for awhile and is part of the
+tidyverse, there is a large amount of support and help for using it.
+If you're curious to read about vroom more, check out the [website](TODO).
+
+<!-- - why vroom? Super fast, can use multi-processing (parallel processing), -->
+<!-- uses a thing called "alternative representation" (altrep) that allows data -->
+<!-- (especially character string data) to be loaded in without taking up much  -->
+<!-- memory because it doesn't directly load the data in but rather link it to -->
+<!-- some internal "letter blocks" (don't need to go into this much) -->
+
+- csv and talk about tab-delim
+
+If your data is in csv format, vroom is perfect. If not, there are other ways of
+importing data which we won't cover. The csv file format is a commonly used 
+format for data because it is open, readable by any computer, and doesn't
+depend on any special software to open (unlike for e.g. Excel spreadsheets).
+
+We're switching to use `here::here()` instead of `library(here)` like we did
+in the `data-raw/mmash.R` script because in the `doc/lesson.Rmd` file
+we will mostly be doing things interactively while the script is meant to be run
+once from top to bottom. Plus, we're only using it a few times, so we don't 
+need to load all of the here package.
+
+```{r first-load-in-user-info}
+library(vroom)
+user_1_info_file <- here::here("data-raw/mmash/user_1/user_info.csv")
+user_1_info_data <- vroom(user_1_info_file)
+```
+
+You'll see the output mention using `spec()` to use in the argument `col_types`.
+And that it has 5 columns, one called `...1`. If we look at the csv file though,
+we see that there are only four columns with names... but that technically 
+there is a first empty column without a column header.
+So, let's figure out what this message means. 
+Let's go to the **Console** and type out:
+
+```r
+?vroom::spec
+```
+
+In the documentation, we see that it says:
+
+> "extracts the full column specification from a tibble..."
+
+Without seeing the output, it's not clear what "specification" means. So let's 
+use `spec()` on the dataset variable. In the **Console** again:
+
+```{r}
+spec(user_1_info_data)
+```
+
+Ok, so from this we can see that a specification is what columns are imported
+into R and what data type they are given. Next, let's see what the message
+meant about `col_types`. Let's check out the help documentation for `vroom()`
+by typing in the **Console**:
+
+```r
+?vroom::vroom
+```
+
+And if we scroll down to the explanation of `col_types`:
+
+> "One of NULL, a cols() specification, or a string. See vignette("readr") for
+more details."
+
+It says to use a "cols() specification", which is likely the output of `spec()`.
+So, let's copy and paste the output from `spec()` and paste it into the 
+`col_types` argument of `vroom()`.
+
+TODO: see if we can use anything from the vroom website
+
+```{r, eval=FALSE, error=TRUE}
+user_1_info_data <- vroom(
+    user_1_info_file,
     col_types = cols(
+        ...1 = col_double(),
         Gender = col_character(),
         Weight = col_double(),
         Height = col_double(),
-        Age = col_double()
+        Age = col_double(),
+        .delim = ","
     )
 )
+```
 
-# Error, look at file and see missing first column.
-# Search help documentation to show what to do next (e.g. use col_select -1)
-user_1_fix <- vroom(
-    here("data-raw/DataPaper/user_1/user_info.csv"),
+Hmm. An error. Ok, if we look through the message, there's the part that says: 
+
+> "The following named parsers don't match the column names: ...1"
+
+We copy and pasted, so what's going on? If you recall, the `user_info.csv`
+file has an empty column name. Looking at the [data dictionary][mmash-site]
+it doesn't seem there is any reference to this column, so it seems it isn't 
+important. Since we don't need it, let's just get rid of it when we load in 
+the dataset. But how? Let's look at the help documentation again. Go to the 
+**Console** and type out:
+
+[mmash-site]:
+
+```r
+?vroom::vroom
+```
+
+Looking at the list of arguments, there is an argument called `col_select`
+that sounds like we could use that to keep or drop columns. It says that it
+is used similar to `dplyr::select()`, which normally is used with actual column 
+names. Our column doesn't have a name, that's the problem. Next let's check the
+Example section of the help. Scrolling down, you'll eventually see:
+
+> "vroom(input_file, col_select = c(1, 3, 11))"
+
+So, it takes numbers! With dplyr::select(), using the - means to drop, so in
+this case, we could drop the first column with col_select = -1!
+
+```{r second-load-in-info-no-error}
+user_1_info_data <- vroom(
+    user_1_info_file,
     col_select = -1,
     col_types = cols(
         Gender = col_character(),
@@ -84,6 +279,52 @@ user_1_fix <- vroom(
     )
 )
 ```
+
+Amazing! We did it emo::ji("grin")
+
+We can now look at the data:
+
+```{r print-user-info-data}
+user_1_info_data
+```
+
+Why might we use spec() and col_types? Depending on the size of the dataset,
+it may take a long time to load everything, which may not be very efficient
+if you only intend to use some parts of the dataset and not all of it.
+And also, sometimes spec guesses the column types incorrectly, so using
+col_types = cols() can fix those problems.
+
+If you have a lot of columns in your dataset, then you can make use of
+col_select or cols_only() to keep only the columns you want.
+Check out the website or the help documentation for more details on how to use
+those.
+
+## Exercise: Try out loading the dataset.
+
+Time: 10 min
+
+using help doc and data dictionary, find how to rename columns to be more 
+descriptive of the contents of the file.
+
+```{r solution-try-vroom, echo=FALSE, eval=FALSE}
+library(dplyr)
+user_1_saliva_file <- here::here("data-raw/mmash/user_1/saliva.csv")
+user_1_saliva_data_prep <- vroom(user_1_saliva_file,
+                                 col_select = -1)
+spec(user_1_saliva_data_prep)
+
+user_1_saliva_data <- vroom(
+    user_1_saliva_file,
+    col_select = -1,
+    col_type = cols(
+        ibi_s = col_double(),
+        day = col_double(),
+        time = col_time(format = "")
+    )
+)
+```
+
+## Importing with larger datasets
 
 Sometimes you have a dataset that's just a bit too large and sometimes
 vroom may not have enough information to guess the column data type
@@ -93,59 +334,82 @@ use spec, fix the col_type
 
 - then fix column names based on data dictionary
 
+We can see from the data file size that it is fairly big.
+So, we'll use this technique to decide what we want to keep etc.
+(use my UK Biobank analysis as example)
+
 ```{r}
-user_1_fix <- vroom(
-    here("data-raw/DataPaper/user_1/RR.csv"),
-    col_select = -1,
-    col_types = cols(
-        Gender = col_character(),
-        Weight = col_double(),
-        Height = col_double(),
-        Age = col_double()
-    )
-)
+user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
+user_1_rr_data_prep <- vroom(user_1_rr_file,
+                             n_max = 1000,
+                             col_select = -1)
+spec(user_1_rr_data_prep)
 ```
 
-## Exercises
-
-using help doc and data dictionary, find how to rename columns to be more 
-descriptive of the contents of the file.
+Like with last time, copy and paste the output into a new use of `vroom()`.
+Remove the `.delim` line and the `...1` line. 
+Don't forget to also remove the last `,` at the end!
 
 ```{r}
-user_1_saliva <- vroom(
-    here("data-raw/DataPaper/user_1/saliva.csv"),
-    col_select = -1)
-spec(user_1_saliva)
-
-user_1_rr_fix <- vroom(
-    here("data-raw/DataPaper/user_1/saliva.csv"),
+user_1_rr_data <- vroom(
+    user_1_rr_file,
     col_select = -1,
-    col_type = cols(
+    col_types = cols(
         ibi_s = col_double(),
         day = col_double(),
+        # Converts to seconds
         time = col_time(format = "")
     )
 )
-# Search help documentation to show how to find this stuff.
-
-user_1_rr_fix <- vroom(
-    here("data-raw/DataPaper/user_1/RR.csv"),
-    col_select = -1,
-    col_type = cols(
-        ibi_s = col_double(),
-        day = col_double(),
-        time = col_time(format = "%H:%M:%S")
-    )
-)
 ```
 
-Use technique to read in actigraph and select specific cols
+## Exercise: 
+
+Time: 15 min
+
+Do the same this with `Actigraph.csv` dataset, which is larger than the `RR.csv`
+data. But first:
+
+1. Create a new header at the bottom of the `doc/lesson.Rmd` file
+and call it `## Exercise: Larger datasets`.
+1. Below the header, create a new code chunk with "Ctrl-Alt-I".
+
+Use the same technique as was used for the `RR.csv` data 
+and read in the `Actigraph.csv` file from `user_1/`.
+
+1. Set the file path to the dataset with `here::here()`. and select specific cols
 and set col_types
 - keep only 
 - Look through data dictionary and rename columns to be more descriptive
 
-```{r}
+```{r, echo=FALSE, eval=FALSE}
+# Search help documentation to show how to find this stuff.
 
+# Use first 100 or so lines to get spec
+user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
+user_1_rr_data_prep <- vroom(user_1_rr_file,
+                             n_max = 1000,
+                             col_select = -1)
+spec(user_1_rr_data_prep)
+
+user_1_rr_data <- vroom(
+    user_1_rr_file,
+    col_select = -1,
+    col_types = cols(
+        ibi_s = col_double(),
+        day = col_double(),
+        # Converts to seconds
+        time = col_time(format = "")
+    )
+)
 ```
+
+## Combining datasets
+
+```{r}
+library(dplyr)
+user_1_fix %>% bind_cols(user_1_rr_fix)
+```
+
 
 `r '-->'`
