@@ -9,7 +9,6 @@
 
 - include tree here? And also diagram
 
-    
 ## Learning objectives
 
 1. Learn where to store your data to make it easier to process later ... 
@@ -22,15 +21,16 @@ importing data
     
 ## The MMASH dataset
 
-- download datasets to use as practice?
-    - https://physionet.org/content/mmash/1.0.0/
-        - https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip
-        - DOI https://doi.org/10.13026/cerq-fc86
         
-Talk about it's license (open license).
+
+For this course, we'll be using an openly licensed dataset on monitoring sleep
+and activity (MMASH) [@Rossi2020]. A couple of things
+
+https://physionet.org/content/mmash/1.0.0/
+
+Jump down to data description
         
 Go to website and talk about it for a bit.
-
 
 ```{r, eval=FALSE}
 library(here)
@@ -98,80 +98,85 @@ fs::file_create(here("data-raw/README.md"))
 
 Git commit ignore and README file.
 
-## Move to lesson.Rmd
+## Importing in the raw data
 
-Create header `## Importing raw dataset`
+While we'll eventually come back to the `data-raw/mmash.R` script,
+for now we'll move over to the `doc/lesson.Rmd` file.
+At the bottom of the file, create a header by typing out `## Importing raw data`.
+Next, we'll make a new code chunk with "Ctrl-Alt-I" and call it `setup`.
+Inside the code chunk we'll load the [vroom][vroom-website] package with
+`library(vroom)` as well as `library(here)`. It should look like this:
 
-We'll make a new code chunk with "Ctrl-Alt-I" and call it `setup`.
-Inside the code chunk we'll load the [vroom] package with `library(vroom)`.
-It should look like this:
-
-TODO: confirm this is right link
-
-[vroom]: https://vroom.tidyverse.org 
+[vroom-website]: https://vroom.r-lib.org/index.html
 
 ````markdown
 `r ''````{r setup}
 library(vroom)
+library(here)
 `r ''````
 ````
 
-This specially-named code chunk tells R to run this code chunk first whenever
-you first start running code in this R Markdown file. So it's here that we will
-add `library()` when we want to load other packages.
+This is a specially named code chunk that tells R to run this code chunk first
+whenever you first start running code in this R Markdown file. So it's here that
+we will add `library()` functions when we want to load other packages.
 
 **Take 5 minutes to read the next {{NUM}} paragraphs**.
 
-What is [vroom]? It is a package designed to load in data, specifically text-based
-data files such as CSV. In R there are several packages that you can use to
-load in data and different types of data. We'll quickly cover those other
-packages: 
+What is [vroom]? It is a package designed to load in data, specifically
+text-based data files such as CSV. In R there are several packages that you can
+use to load in data and of different types of file formats. We won't cover
+these other packages, but you can use this as a reference for when or if you
+ever have to load other file types:
 
-- [haven]: For reading in SAS, SPSS, and Stata files.
-- [readxl]: Others?
-- [googlesheets4]: ?
-- [fst]: ...
+- [haven]: For reading (also known as importing or loading) in SAS, SPSS, and
+Stata files.
+- [readxl]: For reading in Excel spreadsheets with `.xls` or `.xlsx` file
+endings.
+- [googlesheets4]: For reading in Google Sheets from their cloud service.
 - [readr]: Standard package used to load in text-based data files like CSV. 
 This package is included by default with tidyverse.
 - [`utils::read.delim()`][read-delim]: This function comes from the core R
 package utils and includes other functions like `utils::read.csv()`.
-- [`data.table::fread()`][fread]: From the [data.table]
+- [`data.table::fread()`][fread]: From the [data.table] package, used to load
+in CSV files.
 
-TODO: Confirm this is correct link
-[data.table]: https://rdatatable.org
-[haven]: 
-[readxl]: 
-[googlesheets4]: 
-[fst]: 
-[readr]: 
-[read-delim]: 
-[fread]: 
+[data.table]: https://rdatatable.gitlab.io/data.table/
+[haven]: https://haven.tidyverse.org/
+[readxl]: https://readxl.tidyverse.org/
+[googlesheets4]: https://googlesheets4.tidyverse.org/
+[readr]: https://readr.tidyverse.org/
+[read-delim]: https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table
+[fread]: https://rdatatable.gitlab.io/data.table/reference/fread.html
 
 We're using the vroom package for largely one reason: It makes use of recent
 improvements in R that allow data to be imported in very very quickly. 
-Just how fast? The vroom website has a [benchmark page](TODO) showing how fast it
-is. And for many people, loading in the data can be one of the most time-consuming
+Just how fast? The vroom website has a [benchmark page](https://vroom.r-lib.org/articles/benchmarks.html)
+showing how fast it is. For many people, loading in the data can be one of
+the most time-consuming
 parts of starting an analysis. Hopefully by using this package, that time can be
-reduced. And since it also builds off and mimics the existing readr package, so
-any documentation and help for readr can easily be applied to vroom, since they
-are used the same. Because readr has been around for awhile and is part of the
-tidyverse, there is a large amount of support and help for using it.
-If you're curious to learn more about vroom, check out the [website](TODO).
+reduced. 
+
+The packages readr, vroom, haven, readxl, and googlesheets4 all are very
+similar in how you use them and their documentation are almost identical. So
+the skills you learn in this session with vroom can mostly be applied to 
+these other packages.
+And because readr (which the other packages are based on) has been around for
+awhile, there is a large amount of support and help for using it.
+If you're curious to learn more about vroom, check out the 
+[website][vroom-website]
 
 If your data is in CSV format, vroom is perfect. If not, there are other ways of
 importing data which we won't cover. The CSV file format is a commonly used 
 format for data because it is open, readable by any computer, and doesn't
 depend on any special software to open (unlike for e.g. Excel spreadsheets).
 
-We're switching to use `here::here()` instead of `library(here)` like we did
-in the `data-raw/mmash.R` script because in the `doc/lesson.Rmd` file
-we will mostly be doing things interactively while the script is meant to be run
-once from top to bottom. Plus, we're only using it a few times, so we don't 
-need to load all of the here package.
+```{r setup, include=FALSE}
+library(vroom)
+library(here)
+```
 
 ```{r first-load-in-user-info}
-library(vroom)
-user_1_info_file <- here::here("data-raw/mmash/user_1/user_info.csv")
+user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 user_1_info_data <- vroom(user_1_info_file)
 ```
 
@@ -244,7 +249,7 @@ important. Since we don't need it, let's just get rid of it when we load in
 the dataset. But how? Let's look at the help documentation again. Go to the 
 **Console** and type out:
 
-[mmash-site]:
+[mmash-site]: https://physionet.org/content/mmash/1.0.0/
 
 ```r
 ?vroom::vroom
@@ -291,8 +296,10 @@ And sometimes, `spec()` incorrectly guesses the column types, so using
 
 If you have a lot of columns in your dataset, then you can make use of
 `col_select` or `cols_only()` to keep only the columns you want.
-Check out the [website](TODO) or the [help documentation](TODO) for more details
-on how to use those.
+Check out vroom's website help documentation on 
+[vroom's `col_select`](https://vroom.r-lib.org/reference/vroom.html) argument
+or on [`cols_only()`](https://vroom.r-lib.org/reference/cols.html)
+for more details on how to use those.
 
 ## Exercise: Import the saliva data
 
@@ -307,15 +314,19 @@ and call it `## Exercise: Import the saliva data`.
 Begin replacing the `___` with the correct R functions or other information.
 1. Look at the [data dictionary][mmash-site] and find out what the column
 `ibi_s` means and rename the column to be something more meaningful and
-readable. Use the `rename()` function from the dplyr package to rename the
-column and use [`snake_case`][snake-case] when naming the new column.
-Read the `?dplyr::rename` help to know how to rename columns.
+readable. 
+    - Pipe `%>%` the output from `vroom()` into the `rename()` function from the
+    dplyr package to rename the column and use [`snake_case`][snake-case] when
+    naming the new column. Read the `?dplyr::rename` help to know how to rename
+    columns.
+1. Once you have the code working, use the RStudio Git interface to add and 
+commit the changes into the version history.
 
-[snake-case]: TODO
+[snake-case]: https://simple.wikipedia.org/wiki/Snake_case
 
 ```{r solution-import-the-saliva-data, echo=FALSE, eval=FALSE}
 library(dplyr)
-user_1_saliva_file <- here::here("data-raw/mmash/user_1/saliva.csv")
+user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
 user_1_saliva_data_prep <- vroom(user_1_saliva_file,
                                  col_select = -1)
 spec(user_1_saliva_data_prep)
@@ -330,8 +341,9 @@ user_1_saliva_data <- vroom(
     )
 ) %>% 
     # Rename the ibi_s column
-    # TODO: add a reasonable new name
-    rename(index... = ibi_s)
+    # ibi_s: "time in seconds between two consecutive beats."
+    # ibi_s = inter_beat_interval_seconds
+    rename(inter_beat_interval_seconds = ibi_s)
 ```
 
 ## Importing larger datasets
@@ -360,7 +372,7 @@ let's read in 1000 to start. This dataset, like the others, has an empty column
 that we will drop.
 
 ```{r import-some-of-data-trick}
-user_1_rr_file <- here::here("data-raw/mmash/user_1/RR.csv")
+user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
 user_1_rr_data_prep <- vroom(user_1_rr_file,
                              n_max = 1000,
                              col_select = -1)
@@ -408,7 +420,7 @@ and call it `## Exercise: Import the Actigraph data`.
 Use the same technique as we used for the `RR.csv` data 
 and read in the `Actigraph.csv` file from `user_1/`.
 
-1. Set the file path to the dataset with `here::here()`. and select specific cols
+1. Set the file path to the dataset with `here()`. and select specific cols
 and set col_types
 - keep only 
 - Look through data dictionary and rename columns to be more descriptive
@@ -417,7 +429,7 @@ Search help documentation to show how to find this stuff.
 
 ```{r solution-import-the-actigraph-data, echo=FALSE, eval=FALSE}
 # Use first 1000 or so lines to get spec
-user_1_actigraph_file <- here::here("data-raw/mmash/user_1/Actigraph.csv")
+user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
 user_1_actigraph_data_prep <- vroom(user_1_actigraph_file,
                                     n_max = 1000,
                                     col_select = -1)
