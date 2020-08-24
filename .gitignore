@@ -7,3 +7,4 @@ public/*
 resources/packages.bib
 *.rds
 .Rbuildignore
+resources/refs.bib.sav

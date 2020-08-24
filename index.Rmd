@@ -4,7 +4,7 @@ subtitle: "An intermediate workshop on modern approaches and workflows to proces
 date: "Updated: `r format(Sys.time(), '%B %d %Y')`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [resources/packages.bib]
+bibliography: [resources/packages.bib, resources/refs.bib]
 link-citations: yes
 description: "A 2-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
 apple-touch-icon: "images/apple-touch-icon.png"
