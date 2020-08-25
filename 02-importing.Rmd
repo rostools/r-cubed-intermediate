@@ -21,82 +21,227 @@ importing data
     
 ## The MMASH dataset
 
-        
+For this course, we're going to use an openly licensed dataset on monitoring
+sleep and activity (MMASH) [@Rossi2020]. We'll switch over to the [MMASH
+website][mmash-website] and go over:
 
-For this course, we'll be using an openly licensed dataset on monitoring sleep
-and activity (MMASH) [@Rossi2020]. A couple of things
+1. What is contained in the dataset by looking at the the Data Description.
+We'll be making use of the Data Description for the code-along as well as the
+exercises. **Take 5 min to quickly look over the Data Description and get more
+familiar with it**.
+1. The open license and the ability to re-use it. A small note: GDPR makes it
+more strict on how to share and use personal data, but it *does not prohibit
+sharing it or making it public*! GDPR and Open Data are not in conflict.
 
-https://physionet.org/content/mmash/1.0.0/
+[mmash-website]: https://physionet.org/content/mmash/1.0.0/
 
-Jump down to data description
-        
-Go to website and talk about it for a bit.
+After we have look over the MMASH website, we need to setup where we will store
+and prepare the dataset for processing. Here we'll make use of the [usethis]
+package to help setup things. usethis is an extremely useful package for managing
+R projects and I highly recommend checking out how you can use it more in your
+own work. For now, while in your `LearnR3` R Project, go to the Console pane in
+RStudio and type out:
 
-```{r, eval=FALSE}
-library(here)
-# In console
-usethis::use_data_raw("mmash", open = FALSE)
-# Open up and use the mmash R script.
+[usethis]: https://usethis.r-lib.org/
+
+```{r create-data-raw, eval=FALSE}
+usethis::use_data_raw("mmash")
 ```
 
-Open up and use mmash.R
+What this function does is create a new folder called `data-raw/` and creates
+an R script called `mmash.R` in the folder. This is where we will store the 
+raw, original MMASH data that we'll get from the website. The R script should
+have opened up for you, otherwise, go into the `data-raw/` folder and open up
+the new `mmash.R` script.
 
-```{r, eval=FALSE}
-# TODO: Use r3 for link? r3::mmash_zip_link
+The first thing we want do is create a new line at the top and type out:
+
+```{r dr-script-add-here}
+library(here)
+```
+
+The [here] package was described in the [Management of R Projects](TODO)
+of the introductory course. **Take 8 minutes to read the [section about
+here][here-r-cubed] and read the next two paragraphs**. here makes it easy to
+refer to other files in an R project.
+
+R works based on the current *working directory*, which you can see on the top 
+of the RStudio Console pane. When in an RStudio R Project, the working directory
+is the folder where the `.Rproj` file is located. When you run scripts in with
+`source()` sometimes the working directory will be where the R script is located.
+So you can encounter problems with finding files. So instead, by using `here()`,
+R knows to start searching for files from the `.Rproj`.
+
+[here]: https://here.r-lib.org/
+[here-r-cubed]: https://r-cubed-v2.rostools.org/r-project-management.html#packages-data-and-file-paths
+
+Let's use an example. Below is the folder tree. If we open up RStudio with the
+`LearnR3.Rproj` file and run code in the `data-raw/mmash.R`, R runs the commands
+assuming everything starts in the `LearnR3/` folder. But! If we run the code in 
+the `mmash.R` script by other ways (e.g. not with RStudio, not in an R Project,
+or with `source()`), R runs everything assuming it starts in the `data-raw/`.
+This can make things tricky. What `here()` does is tell R to first look for the
+`.Rproj` file and then start looking for the file we actually want.
+
+```text
+LearnR3
+├── data
+│   └── README.md
+├── data-raw
+│   └── mmash.R
+├── doc
+│   ├── lesson.Rmd
+│   └── README.md
+├── R
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
+```
+
+**Stop reading and we'll go back to coding together**. The first step we want
+to take is to download the dataset. From this material, paste this code into the
+`data-raw/mmash.R` script:
+
+```{r mmash-link}
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+```
+
+Then we're going to write out the function `download.file()` to download and
+save the zip dataset. We're going to save the zip file to
+`data-raw/mmash-data.zip` with the `destfile` argument. This code should be 
+written in the `data-raw/mmash.R` file.
+Run these lines of code to download the dataset.
+
+```{r download-data, eval=FALSE}
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
-In console, because we don't need to keep original dataset,
-since it is located in the link given.
+Because the original dataset is stored elsewhere, we don't need to keep it or 
+save it to our Git history. So we'll add the zip file to the Git ignore list.
+In the *Console*, type out and run this code. You only need to do this once.
 
-```{r}
-# Only need to do this once.
+```{r, eval=FALSE}
 usethis::use_git_ignore("data-raw/mmash-data.zip")
 ```
 
-Git commit this git ignore, then git commit the mmash.R.
+This is a good time to save the changes we've made to the Git history.
+Let's open the Git interface with either the Git icon at the top near the menu 
+bar, or with "Ctrl-Alt-M". When this opens up we'll click the checkbox beside
+the `.gitignore` and `data-raw/mmash.R` files. Then we write a commit message
+in the text box on the right, something like "Code to download data zip file".
+Click the "Commit" button and close the Git interface.
 
-Have a quick look inside the zip file (they don't need to do this).
+Alright, let's start preparing the dataset. We'll open up the zip file and look
+at what is inside (only instructor does this). Inside there is the license file,
+another file to check if the download worked correctly (the SHA file),
+and another zip of the dataset inside. Because we are starting with the original
+raw `mmash-data.zip`, we should record exactly how we process the data set for
+use. This also relates to the principal of *"keep your raw data raw"*, as in
+don't edit or touch your raw data, let R or other programming language process 
+it. This lets you have a history of what was done to the raw data.
+During data collection, programs like Excel or Google Sheets are incredibly 
+powerful. But after collection is done, don't make edits directly to the data
+unless absolutely necessary.
 
-- fs
-    - introduce this package to get ready for later use?
+A quick comment about saving your *raw* data in `data-raw/` and whether you
+should save your raw data in this folder or not. A general guideline is:
 
-Reference here::here. Show project tree and talk through from there how it works
+- central dataset that everyone uses for multiple projects, then don't save
+it and only include R code that extracts the relevant data from the central 
+location.
+- Small-ish data that only is for this project. Save it here.
+- Data found online. Don't save it, simply include code that downloads and
+processes it.
 
-Here because we start with the original raw dataset for mmash-data.zip,
-we should record exactly how we process the data set for use.
+Let's start unzipping the zip files. In `data-raw/mmash.R`, continue writing 
+below the `download.file()` function. We'll use the `unzip()` function
+to unzip the dataset. The main argument for `unzip()` is the zip file,
+and the other important one called `exdir` tells `unzip()` the folder we want to
+extract the files to. The argument `junkpaths` is used here because we want 
+everything extracted to the `data-raw/` folder (don't ask nor know why it's
+called "junkpaths").
 
-- Keeping raw data raw.
-
-```{r, eval=FALSE}
-library(here)
-# TODO: This could be executed on gitlab-ci?
-# Have this in the mmash.R script
+```{r unzip-main-file, eval=FALSE}
 unzip(here("data-raw/mmash-data.zip"), 
       exdir = here("data-raw"),
-      # This unzipped into the data-raw folder
       junkpaths = TRUE)
+```
+
+Next, we want to extract the new `data-raw/MMASH.zip` file. Because we want to
+keep the folder structure inside this zip file, we don't use `junkpaths`.
+
+```{r unzip-data-file, eval=FALSE}
 unzip(here("data-raw/MMASH.zip"),
       exdir = here("data-raw"))
-fs::dir_tree() # copy this output and show as what it looks like
-fs::file_delete(here(c("data-raw/MMASH.zip", 
-                       "data-raw/SHA256SUMS.txt",
-                       "data-raw/LICENSE.txt")))
-fs::file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
-fs::dir_tree() # copy this output and show as what it looks like after
 ```
 
-IN console:
+Almost done! There are several files left over that we don't need, so we'll
+also write in the script code to remove these files. We'll use the [fs] package,
+which means filesystem, to work with files. First, we delete all the files
+we originally extracted (`LICENSE.txt`, `SHA256SUMS.txt`, and `MMASH.zip`)
+by using the `file_delete()` function. Then we'll rename the new folder
+`data-raw/DataPaper/` to something more explicit like `data-raw/mmash/`
+using the `file_move()` function. So the `data-raw/` folder will initially look
+like:
 
-```{r}
+[fs]: https://fs.r-lib.org/
+
+```{r, eval=FALSE}
+dir_tree("data-raw", recurse = 1)
+```
+
+```text
+data-raw
+├── LICENSE.txt
+├── MMASH.zip
+├── SHA256SUMS.txt
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── ...
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
+
+Then we add these lines of code to the `data-raw/mmash.R` script and run them:
+
+```{r delete-rename-files, eval=FALSE}
+library(fs)
+file_delete(here(c("data-raw/MMASH.zip", 
+                   "data-raw/SHA256SUMS.txt",
+                   "data-raw/LICENSE.txt")))
+file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+```
+
+Afterward, the files and folders in `data-raw/` will look like:
+
+```text
+data-raw
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── ...
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
+
+Since we have an R script that downloads the data and processes it for us,
+we don't need to have Git track it. So, in the *Console*, type out and run
+this command:
+
+```{r ignore-mmash, eval=FALSE}
 usethis::use_git_ignore("data-raw/mmash/")
-fs::file_create(here("data-raw/README.md"))
-# Open up and write very briefly about license and mmash and location of data
-# Commit
 ```
 
-Git commit ignore and README file.
+Now that we have everything prepared, let's add and commit the changes to the 
+Git history.
 
 ## Importing in the raw data
 
