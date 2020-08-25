@@ -48,7 +48,6 @@ LearnR3
 │   ├── README.md
 │   └── mmash.rda
 ├── data-raw
-│   ├── README.md
 │   ├── mmash-data.zip
 │   ├── mmash
 │   │  ├── user_1
