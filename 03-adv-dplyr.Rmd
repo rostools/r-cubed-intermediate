@@ -7,6 +7,16 @@
 
 `r '<!-- '`
 
+## Combining datasets
+
+Include this here?
+
+```{r}
+library(dplyr)
+user_1_fix %>% bind_cols(user_1_rr_fix)
+```
+
+
 Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two small ones during exercise):
 
 - functional programming

@@ -1,13 +1,8 @@
 # Importing data, fast! {#import-data}
 
-![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
+![](https://img.shields.io/badge/document%20status-rough%20draft-red?style=flat-square)
 
-```{r, eval=TRUE, child="resources/preamble.Rmd"}
-```
-
-`r '<!-- '`
-
-- include tree here? And also diagram
+<!-- - include tree here? And also diagram -->
 
 ## Learning objectives
 
@@ -601,15 +596,3 @@ user_1_actigraph_data <- vroom(
     )
 )
 ```
-
-## Combining datasets
-
-Include this here?
-
-```{r}
-library(dplyr)
-user_1_fix %>% bind_cols(user_1_rr_fix)
-```
-
-
-`r '-->'`
