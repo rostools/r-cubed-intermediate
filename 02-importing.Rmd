@@ -545,12 +545,18 @@ Right, what does the data look like?
 user_1_rr_data
 ```
 
+To make sure everything is so far reproducible within the `lesson.Rmd` file,
+we will "Knit" the R Markdown document to output an HTML file. Click the "Knit"
+button at the top of the Source pane or by typing "Ctrl-Shift-K". If it generates
+an HTML document without problems, we know our code is at least starting to be
+reproducible.
+
 ## Exercise: Import the Actigraph data
 
 Time: 15 min
 
-Practice some more. Do the same thing with the `Actigraph.csv` dataset, which is
-larger than the `RR.csv` data. But first:
+Practice some more. Do the same thing with the `Actigraph.csv` dataset as
+we did for the `RR.csv`. But first:
 
 1. Create a new header at the bottom of the `doc/lesson.Rmd` file
 and call it `## Exercise: Import the Actigraph data`.
@@ -559,12 +565,14 @@ and call it `## Exercise: Import the Actigraph data`.
 Use the same technique as we used for the `RR.csv` data 
 and read in the `Actigraph.csv` file from `user_1/`.
 
-1. Set the file path to the dataset with `here()`. and select specific cols
-and set col_types
-- keep only 
-- Look through data dictionary and rename columns to be more descriptive
-
-Search help documentation to show how to find this stuff.
+1. Set the file path to the dataset with `here()`. 
+1. Read in a max of 1000 rows for `n_max` and exclude the first column with
+`col_select = -1`.
+1. Use `spec()` to output the column specification and paste the results into
+`col_types()`. Don't forget to remove the `...1 = col_skip()` and the 
+`.delim = ","` line from the `cols()` function.
+1. Read through the Data Description and rename the columns to be more readable
+and explicit.
 
 ```{r solution-import-the-actigraph-data, echo=FALSE, eval=FALSE}
 # Use first 1000 or so lines to get spec
@@ -578,7 +586,6 @@ user_1_actigraph_data <- vroom(
     user_1_actigraph_file,
     col_select = -1,
     col_types = cols(
-        ...1 = col_skip(),
         Axis1 = col_double(),
         Axis2 = col_double(),
         Axis3 = col_double(),
@@ -590,8 +597,9 @@ user_1_actigraph_data <- vroom(
         `Inclinometer Lying` = col_double(),
         `Vector Magnitude` = col_double(),
         day = col_double(),
-        time = col_time(format = ""),
-        .delim = ","
+        time = col_time(format = "")
     )
 )
+
+user_1_actigraph_data %>% rename_with(snakecase::to_snake_case)
 ```
