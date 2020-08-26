@@ -14,8 +14,49 @@ Include this here?
 ```{r}
 library(dplyr)
 user_1_fix %>% bind_cols(user_1_rr_fix)
+
+# %>% 
+#     rename(inter_beat_interval_seconds = ibi_s)
 ```
 
+```{r}
+library(dplyr)
+user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
+user_1_rr_data <- vroom(
+    user_1_rr_file,
+    col_select = -1,
+    col_types = cols(
+        ibi_s = col_double(),
+        day = col_double(),
+        # Converts to seconds
+        time = col_time(format = "")
+    )
+) %>% 
+    rename(inter_beat_interval_seconds = ibi_s)
+
+library(ggplot2)
+ggplot(user_1_rr_data, aes(x = time, y = inter_beat_interval_seconds)) +
+    geom_line() +
+    facet_grid(rows = vars(day))
+
+user_1_rr_data %>% 
+    group_by(day) %>% 
+    summarize(across(inter_beat_interval_seconds, 
+                     list(mean = mean, min = min, max = max)))
+
+user_1_rr_data %>% 
+    group_by(day) %>% 
+    # functional programming
+    summarize(across(inter_beat_interval_seconds, 
+                     list(mean = mean, min = min, max = max, sd = sd)))
+
+
+```
+
+
+- functionals
+- load all datasets
+- 
 
 Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two small ones during exercise):
 
