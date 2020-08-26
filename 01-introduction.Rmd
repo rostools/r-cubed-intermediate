@@ -128,4 +128,25 @@ go over basic workflow how we will do things in the course
 - Delete TODO.md, setup and fetch_data files
 - Fill in README a bit?
 
+-outline:
+    - import
+    - create functions for importing
+        - load_all
+    - functional programming: functionals and vectorization
+        - multiple files with vroom
+    - wrangling (for larger datasets and e.g. summarizing)
+        - joins
+        - reduce (FP)
+        - group_by and summarize (FP)
+        - selecting
+        - rename_with (snakecase::to_snake_case) (FP)
+        - converting to/updating existing functions
+    - more on functions
+        - debugging (print, stop)
+        - using with tidyverse
+    - saving data and summarizing final
+        - load_all
+        - across, where, tidyselect helpers
+    
+
 `r '-->'`
