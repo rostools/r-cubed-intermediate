@@ -452,8 +452,8 @@ and call it `## Exercise: Import the saliva data`.
 1. Below the header, create a new code chunk with "Ctrl-Alt-I".
 1. Copy and paste the code template below into the new code chunk.
 Begin replacing the `___` with the correct R functions or other information.
-1. Look at the [data dictionary][mmash-site] and find out what the column
-`ibi_s` means and rename the column to be something more meaningful and
+1. Look at the [data dictionary][mmash-site] and find out what the columns
+mean and rename the column to be something more meaningful and
 readable. 
     - Pipe `%>%` the output from `vroom()` into the `rename()` function from the
     dplyr package to rename the column and use [`snake_case`][snake-case] when
@@ -475,15 +475,14 @@ user_1_saliva_data <- vroom(
     user_1_saliva_file,
     col_select = -1,
     col_type = cols(
-        ibi_s = col_double(),
-        day = col_double(),
-        time = col_time(format = "")
+        SAMPLES = col_character(),
+        `Cortisol NORM` = col_double(),
+        `Melatonin NORM` = col_double()
     )
-) %>% 
-    # Rename the ibi_s column
-    # ibi_s: "time in seconds between two consecutive beats."
-    # ibi_s = inter_beat_interval_seconds
-    rename(inter_beat_interval_seconds = ibi_s)
+) %>%
+    rename(... = SAMPLES,
+           cortisol = `Cortisol NORM`,
+           melatonin = `Melatonin NORM`)
 ```
 
 ## Importing larger datasets
@@ -534,7 +533,7 @@ user_1_rr_data <- vroom(
         # Converts to seconds
         time = col_time(format = "")
     )
-)
+) 
 ```
 
 There's a new column type: `col_time()`. To see all the other types of column 
