@@ -73,37 +73,57 @@ When referring to folders, end in `/`, e.g. `data/` or `doc/`.
 ```{r}
 DiagrammeR::grViz("
 digraph {
-    A -> B [arrowhead = none]
-}
-")
-DiagrammeR::mermaid("
-graph BT
-    %%mmash.R---doc/lesson.Rmd
+    # Styling
+    graph [compound = true, nodesep = .1, ranksep = .1, rankdir = TB]
+    node [shape = rectangle, style = filled, color = lightblue]
     
-    subgraph Download raw data
-    data-raw/mmash.R-->data-raw/mmash/
-    data-raw/mmash.R---data-raw/MMASH.zip
-    data-raw/MMASH.zip-->data-raw/mmash/
-    end
+    # Nodes
+    mmash_dir [label = 'data-raw/mmash/']
+    mmash_dir_2 [label = 'data-raw/mmash/']
+    mmash_dir_3 [label = 'data-raw/mmash/']
+    mmash_r [label = 'data-raw/mmash.R']
+    mmash_r_2 [label = 'data-raw/mmash.R']
+    mmash_zip [label = 'data-raw/MMASH.zip']
+    rmd [label = 'doc/lesson.Rmd']
+    rmd_2 [label = 'doc/lesson.Rmd']
+    html [label = 'doc/lesson.html']
+    fn_r [label = 'R/functions.R']
+    fn_r_2 [label = 'R/functions.R']
+    make_fn [label = 'Create function']
+    mmash_rda [label = 'data/mmash.rda']
+    mmash_rda_2 [label = 'data/mmash.rda']
     
-    subgraph Workflow
-    doc/lesson.Rmd-->|Git commit|R/functions.R
-    R/functions.R-->doc/lesson.Rmd
-    end
+    subgraph cluster0 {
+        graph [label = 'Download\nraw data']
+        mmash_r -> mmash_dir
+        mmash_r -> mmash_zip [arrowhead = none]
+        mmash_zip -> mmash_dir
+    }
     
-    data-raw/mmash/-->doc/lesson.Rmd
+    subgraph cluster1 {
+        graph [label = 'Workflow\n ']
+        make_fn -> fn_r [label = 'cut & paste\ncommit']
+        rmd -> make_fn [len = 2, label = '   ']
+        make_fn -> rmd [len = 2, label = '   ']
+        fn_r -> rmd [label = '   load']
+        mmash_dir_2 -> rmd [label = '  import']
+    }
     
-    subgraph Create final data
-    data-raw/mmash/-->data/mmash.rda
-    R/functions.R-->data-raw/mmash.R
-    data-raw/mmash.R-->data/mmash.rda
-    end
+    subgraph cluster2 {
+        graph [label = 'Create\nfinal data'] 
+        mmash_dir_3 -> mmash_rda
+        fn_r_2 -> mmash_r_2 [label = '   load']
+        mmash_r_2 -> mmash_dir_3 [arrowhead = none]
+        mmash_r_2 -> mmash_rda
+    }
     
-    subgraph Work with final data
-    data/mmash.rda-->doc/lesson.Rmd
-    doc/lesson.Rmd-->doc/lesson.html
-    end
-")
+    subgraph cluster3 {
+        graph [label = 'Work with\nfinal data'] 
+        mmash_rda_2 -> rmd_2 [label = '  import']
+        rmd_2 -> html [label = '  knit']
+    }
+    
+}")
 ```
 
 
