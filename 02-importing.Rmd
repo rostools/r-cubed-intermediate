@@ -111,6 +111,10 @@ to take is to download the dataset. From this material, paste this code into the
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 ```
 
+> *Note*: Sometimes the PhysioNet website is slow. If that's the case,
+use `r3::mmash_data_link` instead of the link used above. In this case,
+it will look like `mmash_link <- r3::mmash_data_link`.
+
 Then we're going to write out the function `download.file()` to download and
 save the zip dataset. We're going to save the zip file to
 `data-raw/mmash-data.zip` with the `destfile` argument. This code should be 
