@@ -8,3 +8,4 @@ resources/packages.bib
 *.rds
 .Rbuildignore
 resources/refs.bib.sav
+r-cubed-intermediate.Rmd
