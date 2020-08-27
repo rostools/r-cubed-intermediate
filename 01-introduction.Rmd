@@ -22,15 +22,20 @@ Day 1 morning: (10:15, lunch at 12:15 --- ~2 hrs)
 - project structure
     - Make tree of project as how it is and how it will look like?
 
-Initial project structure:
+Both Figure \@ref(fig:diagram-overview) and the file listings in the chunks below
+gives a general overview of what we will be covering and how the workflow looks
+like overall, so you can better understand where we are and where we want to get
+to. Whenever referring to folders, end in `/`, e.g. `data/` or `doc/`.
+
+Right now, everyone's initial project structure should look like:
 
 ```
 LearnR3
-├── data
+├── data/
 │   └── README.md
-├── doc
+├── doc/
 │   └── README.md
-├── R
+├── R/
 │   └── README.md
 ├── .Rbuildignore
 ├── .gitignore
@@ -40,25 +45,25 @@ LearnR3
 └── TODO.md
 ```
 
-At end of this workshop:
+At end of this workshop, it should look something like:
 
 ```
 LearnR3
-├── data
+├── data/
 │   ├── README.md
 │   └── mmash.rda
-├── data-raw
+├── data-raw/
 │   ├── mmash-data.zip
-│   ├── mmash
+│   ├── mmash/
 │   │  ├── user_1
 │   │  ├── ...
 │   │  └── user_22
 │   └── mmash.R
-├── doc
+├── doc/
 │   ├── README.md
 │   ├── lesson.html
 │   └── lesson.Rmd
-├── R
+├── R/
 │   ├── README.md
 │   └── functions.R
 ├── .Rbuildignore
@@ -68,65 +73,17 @@ LearnR3
 └── README.md
 ```
 
-When referring to folders, end in `/`, e.g. `data/` or `doc/`.
+Our workflow will generally look like Figure \@ref(fig:diagram-overview),
+with each block representing a session.
 
-```{r}
-DiagrammeR::grViz("
-digraph {
-    # Styling
-    graph [compound = true, nodesep = .1, ranksep = .1, rankdir = TB]
-    node [shape = rectangle, style = filled, color = lightblue]
-    
-    # Nodes
-    mmash_dir [label = 'data-raw/mmash/']
-    mmash_dir_2 [label = 'data-raw/mmash/']
-    mmash_dir_3 [label = 'data-raw/mmash/']
-    mmash_r [label = 'data-raw/mmash.R']
-    mmash_r_2 [label = 'data-raw/mmash.R']
-    mmash_zip [label = 'data-raw/MMASH.zip']
-    rmd [label = 'doc/lesson.Rmd']
-    rmd_2 [label = 'doc/lesson.Rmd']
-    html [label = 'doc/lesson.html']
-    fn_r [label = 'R/functions.R']
-    fn_r_2 [label = 'R/functions.R']
-    make_fn [label = 'Create function']
-    mmash_rda [label = 'data/mmash.rda']
-    mmash_rda_2 [label = 'data/mmash.rda']
-    
-    subgraph cluster0 {
-        graph [label = 'Download\nraw data']
-        mmash_r -> mmash_dir
-        mmash_r -> mmash_zip [arrowhead = none]
-        mmash_zip -> mmash_dir
-    }
-    
-    subgraph cluster1 {
-        graph [label = 'Workflow\n ']
-        make_fn -> fn_r [label = 'cut & paste\ncommit']
-        rmd -> make_fn [len = 2, label = '   ']
-        make_fn -> rmd [len = 2, label = '   ']
-        fn_r -> rmd [label = '   load']
-        mmash_dir_2 -> rmd [label = '  import']
-    }
-    
-    subgraph cluster2 {
-        graph [label = 'Create\nfinal data'] 
-        mmash_dir_3 -> mmash_rda
-        fn_r_2 -> mmash_r_2 [label = '   load']
-        mmash_r_2 -> mmash_dir_3 [arrowhead = none]
-        mmash_r_2 -> mmash_rda
-    }
-    
-    subgraph cluster3 {
-        graph [label = 'Work with\nfinal data'] 
-        mmash_rda_2 -> rmd_2 [label = '  import']
-        rmd_2 -> html [label = '  knit']
-    }
-    
-}")
+```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering."}
+diagram_overview(0)
 ```
 
+In general, our workflow will be something like:
 
+- Make an R script (`data-raw/mmash.R`) to download the dataset (`data-raw/mmash/`)
+- Use R Markdown (`doc/lesson.Rmd)
 go over basic workflow how we will do things in the course
 
 - Create Rmd file.
