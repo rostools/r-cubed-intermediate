@@ -36,7 +36,10 @@ sharing it or making it public*! GDPR and Open Data are not in conflict.
 
 [mmash-website]: https://physionet.org/content/mmash/1.0.0/
 
-After we have look over the MMASH website, we need to setup where we will store
+> *Note*: Sometimes to PhysioNet website is slow. If that's the case,
+use **[this alternative link](resources/mmash-page.html)** instead.
+
+After we have looked over the MMASH website, we need to setup where we will store
 and prepare the dataset for processing. Here we'll make use of the [usethis]
 package to help setup things. usethis is an extremely useful package for managing
 R projects and I highly recommend checking out how you can use it more in your
