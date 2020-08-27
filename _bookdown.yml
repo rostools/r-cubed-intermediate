@@ -20,7 +20,9 @@ rmd_files:
     # - "resources.Rmd"
     # - "for-instructors.md"
     - "references.Rmd"
-before_chapter_script: "_common.R"
+before_chapter_script:
+    - "_common.R"
+    - "R/graphviz.R"
 clean:
     - "resources/packages.bib"
     - "r-cubed-intermediate.rds"
