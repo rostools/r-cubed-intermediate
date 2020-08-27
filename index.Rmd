@@ -94,3 +94,14 @@ The course material also draws inspiration from these excellent resources:
 - [R for Data Science](https://r4ds.had.co.nz/)
 - [Advanced R](https://adv-r.hadley.nz/)
 - [R Packages](https://r-pkgs.org/)
+
+The [Danish Diabetes Academy](https://www.danishdiabetesacademy.dk/) hosted,
+organized, and sponsored this course. A huge thanks to them
+for their involvement, support, and sponsorship! 
+Both [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/)
+and [Aarhus University](https://www.au.dk/) employ the instructors.
+
+![Danish Diabetes Academy](images/dda_logo.png){width=90px}
+![Steno Diabetes Center Aarhus](images/SDCA_logo.png){width=55px}
+![Aarhus University](images/au_logo_black.png){width=140px}
+
