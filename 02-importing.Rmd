@@ -61,7 +61,8 @@ The first thing we want do is create a new line at the top and type out:
 library(here)
 ```
 
-The [here] package was described in the [Management of R Projects](TODO)
+The [here] package was described in the 
+[Management of R Projects](https://r-cubed-v2.rostools.org/r-project-management.html)
 of the introductory course. **Take 8 minutes to read the [section about
 here][here-r-cubed] and read the next two paragraphs**. here makes it easy to
 refer to other files in an R project.
