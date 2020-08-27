@@ -511,8 +511,6 @@ and then keep only the columns you want to keep.
 
 <!-- (use my UK Biobank analysis as example?) -->
 
-<!-- - then fix column names based on data dictionary -->
-
 Let's do this on the `RR.csv` file. 
 We can see from the file size that it is bigger than most of the other files 
 (~2Mb). So, we'll use this technique to decide what we want to keep etc. 
