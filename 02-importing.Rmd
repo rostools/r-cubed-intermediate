@@ -4,6 +4,12 @@
 
 <!-- - include tree here? And also diagram -->
 
+Here we will cover the first block, "*Download raw data*" in Figure \@ref(fig:diagram-1)
+
+```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering."}
+diagram_overview(1)
+```
+
 ## Learning objectives
 
 1. Learn where to store your data to make it easier to process later ... 
