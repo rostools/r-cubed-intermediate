@@ -3,10 +3,13 @@
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
 ```{r, eval=TRUE, child="resources/preamble.Rmd"}
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
 `r '<!-- '`
+
+```{r}
+knitr::opts_chunk$set(eval = FALSE)
+```
 
 Here we will cover the fourth block, "*Work with final data*" in Figure \@ref(fig:diagram-overview-4)
 
