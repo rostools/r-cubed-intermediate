@@ -76,7 +76,7 @@ LearnR3
 Our workflow will generally look like Figure \@ref(fig:diagram-overview),
 with each block representing a session.
 
-```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering.", out.width="90%", fig.width=9}
+```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering.", fig.width=9}
 diagram_overview(0)
 ```
 
