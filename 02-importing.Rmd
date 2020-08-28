@@ -305,12 +305,12 @@ use to load in data and of different types of file formats. We won't cover
 these other packages, but you can use this as a reference for when or if you
 ever have to load other file types:
 
-- [haven]: For reading (also known as importing or loading) in SAS, SPSS, and
+- [haven][haven]: For reading (also known as importing or loading) in SAS, SPSS, and
 Stata files.
-- [readxl]: For reading in Excel spreadsheets with `.xls` or `.xlsx` file
+- [readxl][readxl]: For reading in Excel spreadsheets with `.xls` or `.xlsx` file
 endings.
-- [googlesheets4]: For reading in Google Sheets from their cloud service.
-- [readr]: Standard package used to load in text-based data files like CSV. 
+- [googlesheets4][googlesheets4]: For reading in Google Sheets from their cloud service.
+- [readr][readr]: Standard package used to load in text-based data files like CSV. 
 This package is included by default with tidyverse.
 - [`utils::read.delim()`][read-delim]: This function comes from the core R
 package utils and includes other functions like `utils::read.csv()`.
