@@ -126,7 +126,7 @@ on all the files, then write a message in the commit textbox saying
     - create functions for importing
         - load_all
     - functional programming: functionals and vectorization
-        - multiple files with vroom
+        - multiple files with map (for now ignoring that vroom can do it fine.)
     - wrangling (for larger datasets and e.g. summarizing)
         - joins
         - reduce (FP)
