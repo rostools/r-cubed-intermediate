@@ -22,7 +22,7 @@ rmd_files:
     - "references.Rmd"
 before_chapter_script:
     - "_common.R"
-    - "R/graphviz.R"
+    - "R/functions.R"
 clean:
     - "resources/packages.bib"
     - "r-cubed-intermediate.rds"

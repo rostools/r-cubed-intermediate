@@ -1,5 +1,30 @@
 
+#' Include a hidden, but clickable, section of details that is for instructors.
+#'
+#' @param .text Text to include in the details to instructors.
+#'
+#' @return a text surrounded by the HTML tag `details`.
+#'
+details_for_instructors <- function(.text) {
+    glue::glue("
+
+    <details><summary><strong>For instructors: Click for details</strong></summary>
+    <p>
+    {.text}
+    </p>
+    </details>
+
+    ")
+}
+
+#' Create a diagram of the overview of the course and workflow.
+#'
+#' @param section_num A number indicating which section to highlight. 0 = none.
+#'
+#' @return a DiagrammeR GraphVis object.
+#'
 diagram_overview <- function(section_num = 0) {
+    stopifnot(section_num %in% 0:4)
     colour <- rep("black", times = 5)
     thickness <- rep(1, times = 5)
     if (section_num != 0) {
