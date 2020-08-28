@@ -6,6 +6,11 @@
 ```
 
 `r '<!-- '`
+Here we will cover the first block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
+
+```{r diagram-overview-2, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
+diagram_overview(2)
+```
 
 ## Combining datasets
 

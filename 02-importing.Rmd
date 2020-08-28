@@ -4,11 +4,28 @@
 
 <!-- - include tree here? And also diagram -->
 
-Here we will cover the first block, "*Download raw data*" in Figure \@ref(fig:diagram-1)
+Here we will cover the first block, "*Download raw data*" in Figure \@ref(fig:diagram-overview-1)
 
-```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering."}
+```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
 diagram_overview(1)
 ```
+And your folder and file structure should look like:
+
+```
+LearnR3
+├── data/
+│   └── README.md
+├── doc/
+│   └── README.md
+├── R/
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
+```
+
 
 ## Learning objectives
 

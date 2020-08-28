@@ -8,6 +8,12 @@ knitr::opts_chunk$set(eval = FALSE)
 
 `r '<!-- '`
 
+Here we will cover the fourth block, "*Work with final data*" in Figure \@ref(fig:diagram-overview-4)
+
+```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
+diagram_overview(4)
+```
+
 Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise):
 
 - functional programming
