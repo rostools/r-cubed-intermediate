@@ -26,7 +26,6 @@ LearnR3
 └── README.md
 ```
 
-
 ## Learning objectives
 
 1. Learn where to store your data to make it easier to process later ... 
@@ -602,6 +601,7 @@ and read in the `Actigraph.csv` file from `user_1/`.
 `.delim = ","` line from the `cols()` function.
 1. Read through the Data Description and rename the columns to be more readable
 and explicit.
+TODO: Change this last one?
 
 ```{r solution-import-the-actigraph-data, echo=FALSE, eval=FALSE}
 # Use first 1000 or so lines to get spec
@@ -630,5 +630,6 @@ user_1_actigraph_data <- vroom(
     )
 )
 
+# This will be taught later.
 user_1_actigraph_data %>% rename_with(snakecase::to_snake_case)
 ```
