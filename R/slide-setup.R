@@ -8,7 +8,8 @@ BibOptions(
     bib.style = "numeric",
     cite.style = "numeric",
     style = "markdown",
-    max.names = 2
+    max.names = 2,
+    super = FALSE
     # hyperlink = FALSE,
 )
 bib <- ReadBib(here::here("resources/refs.bib"), check = FALSE)
