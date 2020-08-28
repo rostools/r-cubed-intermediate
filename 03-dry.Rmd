@@ -13,7 +13,7 @@ knitr::opts_chunk$set(eval = FALSE)
 
 Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
 
-```{r diagram-overview-2, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
+```{r diagram-overview-2, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(2)
 ```
 
@@ -54,16 +54,6 @@ that can be automatically loaded in for later and easy use.
 data analysis work.
 1. Continue practicing Git version control to manage changes to your files.
 
-- create functions for importing
-    - load_all
-- functional programming: functionals and vectorization
-    - multiple files with map (for now ignoring that vroom can do it fine.)
-    
-- creating functions
-    - and when using tidyverse functions
-- package dependency
-    - use_package
-    - ::
 - Moving functions into own R file
     - Then either sourcing or load_all (maybe not get into that for them)
     
@@ -92,7 +82,6 @@ While there is no minimum or maximum number of arguments you can provide for a
 function (e.g. you could have zero or dozens of arguments), its good practice
 for yourself and for others if you have as few arguments as possible to get
 the job done.
-
 
 So, the structure is:
 
@@ -286,7 +275,7 @@ import_user_info(here::here("data-raw/mmash/user_2/user_info.csv"))
 
 Awesome! It works. The final stage is adding the Roxygen documentation.
 
-```{r function-creation-step-6, eval=FALSE}
+```{r function-creation-step-6}
 #' Import MMASH user info data file.
 #'
 #' @param file_path Path to user info data file.
@@ -306,20 +295,153 @@ import_user_info <- function(file_path) {
     )
     return(info_data)
 }
-
 ```
 
-## Exercise
+A massive advantage of using functions is that if you want to make a change to all
+your code, you can very easily do it in the R function and it will change all 
+your other code too!
+
+
+## Exercise: Repeat with the saliva data
+
+Time: 15 min
 
 Now do this for the saliva importing code.
 
 ## R/ folder, load_all, and developing functions
 
+- package dependency
+    - use_package
+    - ::
+    
+A good practice to use after you've created your function is to explicitly indicate 
+which functions come from which package, since you shouldn't use `library` calls
+in your function. We do this by using the `packagename::function_name` format 
+(you don't need to do this for base R functions). Plus, let's add some
+documentation! (`Ctrl-Alt-Shift-R`).
+
+```{r explicit-function-call}
+#' Calculate mean and standard deviation by a grouping variable.
+#'
+#' @param .dataset The dataset
+#' @param .group_variable Variable to group by
+#'
+#' @return Output a data frame.
+#'
+mean_sd_by_group <- function(.dataset, .groupvar) {
+    stopifnot(is.character(.groupvar))
+    by_group_output <- .dataset %>% 
+        dplyr::select_at(dplyr::vars(.groupvar, BMI, 
+                                     TotChol, Pulse, BPSysAve, BPDiaAve)) %>% 
+        tidyr::gather(Measurement, Value, -.groupvar) %>% 
+        na.omit() %>% 
+        dplyr::group_by_at(dplyr::vars(.groupvar, Measurement)) %>% 
+        dplyr::summarise(Mean = round(mean(Value), 2),
+                  SD = round(sd(Value), 2),
+                  MeanSD = stringr::str_c(Mean, " (", SD, ")")) %>% 
+        dplyr::select(-Mean, -SD) %>% 
+        tidyr::spread(.groupvar, MeanSD)
+    return(by_group_output)
+}
+```
+
+
 ## Exercise
 
-Do this for the rest of the importing code, as well as the 
+Do this for the rest of the code you worked on previously that imported the 
+`RR.csv` and `Actigraph.csv` data.
+
+## Functional programming
+
+
+- functional programming: functionals and vectorization
+    - multiple files with map (for now ignoring that vroom can do it fine.)
+    
+        - Show basic usage with paste and numbers, etc.
+        
+        - Any time you think you would use a for loop, use this.
+        
+    - Real examples: 
+        - my webscraping of the DST etc
+        - Running multiple models
+        
+    - purrr
+    - Why purrr vs *apply functions?
+        - Consistency, expectation, documentation, design.
+    - Show importing one vs many
+        - Use fs to list multiple files
+        - Talk about filesystem
+
 
 Include this here?
+
+it's better to try to reduce your repetition (i.e. don't repeat
+yourself, DRY). Here we will get into iterations and using "[functional] programming"
+via the `map` function from the [purrr] package. Functional programming is a way 
+of making use of vectors and [vectorisation] to "loop" over things (rather than
+use `for` loops). There are several reasons why you should avoid `for` loops in
+R.
+
+1. They are computationally very slow and easily use a lot of RAM memory.
+1. They are difficult to read and debug.
+1. They aren't very *expressive*, meaning they don't state a higher "purpose",
+just that they loop over something.
+
+[purrr]: https://purrr.tidyverse.org/
+[vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
+[functional]: https://adv-r.had.co.nz/Functionals.html
+
+But functionals, like `map` and most functions inside purrr (or base R functions
+like `lapply`, `sapply`) let you ignore the tiny details and focus on doing your
+intent. You *intend* to `sum` a vector of numbers, not loop over each number and
+add to the total (as you would in a `for` loop).
+
+For the example, let's say we want to calculate the mean and SD for several
+categorical variables. We can use `map` to easily do this, by giving it a vector
+of variables and providing the function to apply to each:
+
+```{r map-on-wrangling}
+map(c("SurveyYr", "Diabetes", "Gender"),
+    # the ~ tells map the next code is all together as one argument
+    # .x says to insert the value from the first argument of map (Diabetes, etc)
+    ~mean_sd_by_group(NHANES, .x))
+```
+
+It seems deceptively simple but there is a massive amount of power from doing this
+sort of coding. Let's try with the plots.
+
+```{r map-on-plots}
+map(c("Diabetes", "Education", "HomeOwn"),
+    ~plot_scatter_by_group(NHANES, "Height", "Weight", .x))
+```
+
+What if we want to provide two things at once? We can use `map2` for that! (Note,
+the two arguments should be the same length.)
+
+```{r map2-on-plots}
+map2(c("TotChol", "Pulse"),
+    c("Diabetes", "Education"),
+    # .y is for the second argument of map
+    ~plot_scatter_by_group(NHANES, "Height", .x, .y))
+```
+
+If you want to do all combinations of two vectors, use the purrr function `cross_df()`
+to create a data.frame of the combinations. Note that, like most purrr functions,
+it takes a list as input.
+
+```{r all-combinations}
+all_combinations <- cross_df(list(
+    xvar = c("TotChol", "Pulse"),
+    groupvar = c("Diabetes", "Education")
+    ))
+all_combinations
+```
+
+```{r plot-all-combinations, eval=FALSE}
+map2(all_combinations$xvar, all_combinations$groupvar,
+    ~plot_scatter_by_group(NHANES, "BMI", .x, .y))
+```
+
 
 ```{r}
 library(vroom)
@@ -374,6 +496,20 @@ Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two smal
         - Images inspired from advanced R
             - Use diagrammer graphviz?
     - This section prepares for the functional programming session
+
+
+Using map is really useful when importing raw data that is in a standard form
+and structure. Combined with the [fs] package (fs for filesystem), this is very
+powerful. To show how to do it, let's first export NHANES into the `data/` folder.
+
+[fs]: https://fs.r-lib.org/
+
+Then we can use the `dir_ls()` (for directory list) from fs combined with the 
+`regexp` (for regular expression) argument to show all files that have
+nhanes in the name, have anything in the middle (`.*`), and end with (`$`) csv.
+
+Then we can import all at once using `map_dfr` (for map and convert to a `df`
+data.frame, stacking by `r` row):
 
 ## Misc
 

@@ -1,12 +1,10 @@
 # Importing data, fast! {#import-data}
 
-![](https://img.shields.io/badge/document%20status-rough%20draft-red?style=flat-square)
-
-<!-- - include tree here? And also diagram -->
+![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
 
 Here we will cover the first block, "*Download raw data*" in Figure \@ref(fig:diagram-overview-1)
 
-```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
+```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(1)
 ```
 And your folder and file structure should look like:

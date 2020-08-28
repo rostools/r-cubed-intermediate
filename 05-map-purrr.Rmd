@@ -13,40 +13,49 @@ knitr::opts_chunk$set(eval = FALSE)
 
 Here we will cover the fourth block, "*Work with final data*" in Figure \@ref(fig:diagram-overview-4)
 
-```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
+```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(4)
 ```
 
 Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise):
 
-- functional programming
-    - Expand on explanation
-    - purrr
-    - Why purrr vs *apply functions?
-        - Consistency, expectation, documentation, design.
-    - Show importing one vs many
-        - Use fs to list multiple files
-        - Talk about filesystem
+    - more on functions
+        - debugging (print, stop)
+        - using with tidyverse
+    - saving data and summarizing final
+        - load_all
+        - across, where, tidyselect helpers
+        
+- deeper into dplyr
+    - tidyselect helpers
+    - across and where
+    - regular expressions?
+    - joins
     - Possible uses:
-        - Show basic usage with paste and numbers, etc.
+        - calculating mean
+            - summarize across is numeric (select where is.numeric)
+            - show off the ... here (like with na.rm)
+            - Like for the RR or actigraph
+        - Any time you think you would use a for loop, use this.
+        
+- debugging in functions
+    - breaks in RStudio?
+    - basics like print.
+    
+- creating functions
+    - and when using tidyverse functions
+
+    - Possible uses:
         - calculating mean from df
             - select only numeric (select where is.numeric)
             - show off the ... here (like with na.rm)
-        - Any time you think you would use a for loop, use this.
-        - Import data, with some wrangling, for https://physionet.org/content/mmash/1.0.0/
-            - Using what we learned to wrangle all data files into one single one
         - Run multiple models and extract only some information
         - Run models on re-sampled sets
         - Combining with parallel processing?
             - Don't get them to do this, just show it.
-    - Real examples: 
-        - my webscraping of the DST etc
-        - Running multiple models
     - Show but don't get them to do: other versions of functions in purrr
     
     - Include some final dplyr summarizing of results of mmash
-        - load_all workflow
-        - but use source at end
     
 - slides afterward
     - Incorporate open and reproducible practices in coding
@@ -72,118 +81,62 @@ Show both to give example of how vroom works under the hood with imap
 ## Misc
 
 
-You notice above that we copied and pasted multiple `plot_scatter_by_group()` calls
-to create three plots. Sometimes this is ok, but often when you start doing mostly
-the same thing, it's better to try to reduce your repetition (i.e. don't repeat
-yourself, DRY). Here we will get into iterations and using "[functional] programming"
-via the `map` function from the [purrr] package. Functional programming is a way 
-of making use of vectors and [vectorisation] to "loop" over things (rather than
-use `for` loops). There are several reasons why you should avoid `for` loops in
-R.
 
-1. They are computationally very slow and easily use a lot of RAM memory.
-1. They are difficult to read and debug.
-1. They aren't very *expressive*, meaning they don't state a higher "purpose",
-just that they loop over something.
-
-[purrr]: https://purrr.tidyverse.org/
-[vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
-[functional]: https://adv-r.had.co.nz/Functionals.html
-
-But functionals, like `map` and most functions inside purrr (or base R functions
-like `lapply`, `sapply`) let you ignore the tiny details and focus on doing your
-intent. You *intend* to `sum` a vector of numbers, not loop over each number and
-add to the total (as you would in a `for` loop).
-
-For the example, let's say we want to calculate the mean and SD for several
-categorical variables. We can use `map` to easily do this, by giving it a vector
-of variables and providing the function to apply to each:
-
-```{r map-on-wrangling}
-map(c("SurveyYr", "Diabetes", "Gender"),
-    # the ~ tells map the next code is all together as one argument
-    # .x says to insert the value from the first argument of map (Diabetes, etc)
-    ~mean_sd_by_group(NHANES, .x))
+```{r add-function-arguments, error=TRUE}
+mean_sd_by_group <- function(.dataset, .groupvar) {
+    by_group_output <- .dataset %>% 
+        select(.groupvar, BMI, TotChol, Pulse, BPSysAve, BPDiaAve) %>% 
+        gather(Measurement, Value, -.groupvar) %>% 
+        na.omit() %>% 
+        group_by(.groupvar, Measurement) %>% 
+        summarise(Mean = round(mean(Value), 2),
+                  SD = round(sd(Value), 2),
+                  MeanSD = str_c(Mean, " (", SD, ")")) %>% 
+        select(-Mean, -SD) %>% 
+        spread(.groupvar, MeanSD)
+    return(by_group_output)
+}
+mean_sd_by_group(NHANES, Gender)
 ```
 
-It seems deceptively simple but there is a massive amount of power from doing this
-sort of coding. Let's try with the plots.
+What happened? We had an error. We've encountered a problem due to
+"[non-standard evaluation]" (or NSE). NSE is very commonly used in most tidyverse
+packages as well as throughout base R. It's one of the first things computer 
+scientists complain about when they use R, because it is such a foreign thing
+in other programming languages. But NSE is what allows you to use formulas (e.g.
+`y ~ x + x2` in modelling) or allows you to type out `select(Gender, BMI)`. In
+other programming languages, it would be `select("Gender", "BMI")`. It gives a lot
+of flexibility to use for doing data analysis, but can give some headaches when
+programming in R. So instead we have to use quotes instead and use the `_at()` 
+combined with `vars()` version of dplyr functions. The tidyr functions `gather`
+and `spread` don't require these changes.
 
-```{r map-on-plots}
-map(c("Diabetes", "Education", "HomeOwn"),
-    ~plot_scatter_by_group(NHANES, "Height", "Weight", .x))
+[non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
+
+```{r add-function-arguments-error, error=TRUE}
+mean_sd_by_group <- function(.dataset, .groupvar) {
+    by_group_output <- .dataset %>% 
+        select_at(vars(.groupvar, BMI, TotChol, Pulse, BPSysAve, BPDiaAve)) %>% 
+        gather(Measurement, Value, -.groupvar) %>% 
+        na.omit() %>% 
+        group_by_at(vars(.groupvar, Measurement)) %>% 
+        summarise(Mean = round(mean(Value), 2),
+                  SD = round(sd(Value), 2),
+                  MeanSD = str_c(Mean, " (", SD, ")")) %>% 
+        select(-Mean, -SD) %>% 
+        spread(.groupvar, MeanSD)
+    return(by_group_output)
+}
+mean_sd_by_group(NHANES, "Gender")
 ```
 
-What if we want to provide two things at once? We can use `map2` for that! (Note,
-the two arguments should be the same length.)
+Now we can also use other categorical variables:
 
-```{r map2-on-plots}
-map2(c("TotChol", "Pulse"),
-    c("Diabetes", "Education"),
-    # .y is for the second argument of map
-    ~plot_scatter_by_group(NHANES, "Height", .x, .y))
+```{r use-other-category-vars}
+mean_sd_by_group(NHANES, "SurveyYr")
+mean_sd_by_group(NHANES, "Diabetes")
 ```
 
-If you want to do all combinations of two vectors, use the purrr function `cross_df()`
-to create a data.frame of the combinations. Note that, like most purrr functions,
-it takes a list as input.
-
-```{r all-combinations}
-all_combinations <- cross_df(list(
-    xvar = c("TotChol", "Pulse"),
-    groupvar = c("Diabetes", "Education")
-    ))
-all_combinations
-```
-
-```{r plot-all-combinations, eval=FALSE}
-map2(all_combinations$xvar, all_combinations$groupvar,
-    ~plot_scatter_by_group(NHANES, "BMI", .x, .y))
-```
-
-Using map is really useful when importing raw data that is in a standard form
-and structure. Combined with the [fs] package (fs for filesystem), this is very
-powerful. To show how to do it, let's first export NHANES into the `data/` folder.
-
-[fs]: https://fs.r-lib.org/
-
-```{r export-nhanes, eval=FALSE}
-NHANES %>% 
-    filter(SurveyYr == "2009_10") %>% 
-    write_csv(here::here("data/nhanes-2009_10.csv"))
-
-NHANES %>% 
-    filter(SurveyYr == "2011_12") %>% 
-    write_csv(here::here("data/nhanes-2011_12.csv"))
-```
-
-Then we can use the `dir_ls()` (for directory list) from fs combined with the 
-`regexp` (for regular expression) argument to show all files that have
-nhanes in the name, have anything in the middle (`.*`), and end with (`$`) csv.
-
-```{r rename-data, echo=FALSE}
-fs::file_move(here::here("_data/"), here::here("data/"))
-```
-
-
-```{r fs-list-data-files}
-data_files <- fs::dir_ls(here::here("data/"), regexp = "nhanes-.*csv$")
-data_files
-```
-
-Then we can import all at once using `map_dfr` (for map and convert to a `df`
-data.frame, stacking by `r` row):
-
-```{r import-data}
-data_files %>% 
-    map_dfr(read_csv)
-```
-
-```{r rename-data-back, echo=FALSE}
-fs::file_move(here::here("data/"), here::here("_data/"))
-```
-
-Nifty eh?
 
 ### Easier to use parallel processing with map
 
@@ -197,175 +150,7 @@ functions from the [furrr] package.
 library(furrr)
 # Use a combination of more of your CPU or creating multiple R sessions
 plan(multiprocess)
-
-# Use parallel processing
-future_map2(all_combinations$xvar, all_combinations$groupvar,
-    ~plot_scatter_by_group(NHANES, "BMI", .x, .y))
 ```
 
-## idea Final exercise
-
-Time: Until end of session.
-
-Create a new file for this exercise:
-
-```{r final-exercise-file, eval=FALSE}
-usethis::use_r("efficiency-exercise")
-```
-
-Copy and paste the template code (further below) into the
-`R/efficiency-exercise.R` file. Simplify the below code into three functions.
-Then iterate with one `map` to read in and wrangle each dataset, followed by two
-`map` calls to create the two different plots for each dataset.
-
-```{r final-exercise, eval=FALSE}
-nhanes_2009 <- read_csv(here::here("data/nhanes-2009_10.csv"))
-
-nhanes_2009 %>% 
-    mutate(ProblemBMIs = !between(BMI, 18.5, 40)) %>% 
-    filter(!is.na(ProblemBMIs)) %>% 
-    select(Age, Poverty, Pulse, BPSysAve, BPDiaAve, TotChol,
-           SleepHrsNight, PhysActiveDays, ProblemBMIs) %>% 
-    gather(Measurement, Value, -ProblemBMIs) %>% 
-    na.omit() %>% 
-    ggplot(aes(y = Value, x = Measurement, colour = ProblemBMIs)) +
-    geom_jitter(position = position_dodge(width = 0.6)) +
-    scale_color_viridis_d(end = 0.8) +
-    labs(y = "", x = "") +
-    theme_minimal() +
-    theme(legend.position = c(0.85, 0.85)) +
-    coord_flip()
-
-nhanes_2009 %>% 
-    mutate(ProblemBMIs = !between(BMI, 18.5, 40)) %>% 
-    filter(!is.na(ProblemBMIs)) %>% 
-    select(Age, Poverty, Pulse, BPSysAve, BPDiaAve, TotChol,
-           SleepHrsNight, PhysActiveDays, ProblemBMIs) %>% 
-    gather(Measurement, Value, -ProblemBMIs) %>% 
-    na.omit() %>% 
-    ggplot(aes(x = Value, fill = ProblemBMIs)) +
-    geom_density(alpha = 0.35) +
-    facet_wrap(~Measurement, scales = "free") +
-    scale_fill_viridis_d(end = 0.8) +
-    labs(y = "", x = "") +
-    theme_minimal() +
-    theme(legend.position = c(0.85, 0.15),
-          strip.text = element_text(face = "bold")) 
-
-nhanes_2011 <- read_csv(here::here("data/nhanes-2011_12.csv"))
-    
-nhanes_2011 %>% 
-    mutate(ProblemBMIs = !between(BMI, 18.5, 40)) %>% 
-    filter(!is.na(ProblemBMIs)) %>% 
-    select(Age, Poverty, Pulse, BPSysAve, BPDiaAve, TotChol,
-           SleepHrsNight, PhysActiveDays, ProblemBMIs) %>% 
-    gather(Measurement, Value, -ProblemBMIs) %>% 
-    na.omit() %>% 
-    ggplot(aes(y = Value, x = Measurement, colour = ProblemBMIs)) +
-    geom_jitter(position = position_dodge(width = 0.6)) +
-    scale_color_viridis_d(end = 0.8) +
-    labs(y = "", x = "") +
-    theme_minimal() +
-    theme(legend.position = c(0.85, 0.85)) +
-    coord_flip()
-
-nhanes_2011 %>% 
-    mutate(ProblemBMIs = !between(BMI, 18.5, 40)) %>% 
-    filter(!is.na(ProblemBMIs)) %>% 
-    select(Age, Poverty, Pulse, BPSysAve, BPDiaAve, TotChol,
-           SleepHrsNight, PhysActiveDays, ProblemBMIs) %>% 
-    gather(Measurement, Value, -ProblemBMIs) %>% 
-    na.omit() %>% 
-    ggplot(aes(x = Value, fill = ProblemBMIs)) +
-    geom_density(alpha = 0.35) +
-    facet_wrap(~Measurement, scales = "free") +
-    scale_fill_viridis_d(end = 0.8) +
-    labs(y = "", x = "") +
-    theme_minimal() +
-    theme(legend.position = c(0.85, 0.15),
-          strip.text = element_text(face = "bold")) 
-```
-
-Use this as a template for completing the exercise:
-
-```{r final-exercise-template, eval=FALSE}
-read_mutate_gather <- function(.file_path) {
-    .file_path %>% 
-        ___
-}
-
-plot_jitter <- function(.dataset) {
-    .dataset %>% 
-        ___
-}
-
-plot_density <- function(.dataset) {
-    .dataset %>% 
-        ___
-}
-
-# Read in and wrangle each csv file 
-data_list <- 
-    c(here::here("data/nhanes-2009_10.csv"),
-      here::here("data/nhanes-2011_12.csv")) %>% 
-    # (keep as list, i.e. don't use map_dfr)
-    ___(___) 
-
-# Plot each data with jitters
-___(data_list, ___)
-
-# Plot each data with density
-___(data_list, ___)
-```
-
-If you've finished the exercise early, try using the furrr package to implement
-parallel processing on these `map` calls.
-
-```{r final-exercise-solution, echo=FALSE, eval=FALSE}
-read_mutate_gather <- function(.file_path) {
-    .file_path %>% 
-        read_csv() %>% 
-        mutate(ProblemBMIs = !between(BMI, 18.5, 40)) %>% 
-        filter(!is.na(ProblemBMIs)) %>% 
-        select(Age, Poverty, Pulse, BPSysAve, BPDiaAve, TotChol,
-               SleepHrsNight, PhysActiveDays, ProblemBMIs) %>% 
-        gather(Measurement, Value, -ProblemBMIs) %>% 
-        na.omit() 
-}
-
-plot_jitter <- function(.dataset) {
-    .dataset %>% 
-        ggplot(aes(y = Value, x = Measurement, colour = ProblemBMIs)) +
-        geom_jitter(position = position_dodge(width = 0.6)) +
-        scale_color_viridis_d(end = 0.8) +
-        labs(y = "", x = "") +
-        theme_minimal() +
-        theme(legend.position = c(0.85, 0.85)) +
-        coord_flip()
-}
-
-plot_density <- function(.dataset) {
-    .dataset %>% 
-        ggplot(aes(x = Value, fill = ProblemBMIs)) +
-        geom_density(alpha = 0.35) +
-        facet_wrap(~Measurement, scales = "free") +
-        scale_fill_viridis_d(end = 0.8) +
-        labs(y = "", x = "") +
-        theme_minimal() +
-        theme(legend.position = c(0.85, 0.15),
-              strip.text = element_text(face = "bold")) 
-}
-
-data_list <- 
-    c(here::here("data/nhanes-2009_10.csv"),
-      here::here("data/nhanes-2011_12.csv")) %>% 
-    map(read_mutate_gather) 
-
-# Plot the jitters
-map(data_list, plot_jitter)
-
-# Plot the density
-map(data_list, plot_density)
-```
 
 `r '-->'`
