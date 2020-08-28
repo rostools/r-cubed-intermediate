@@ -8,9 +8,6 @@ knitr::opts_chunk$set(
     comment = "#>",
     collapse = TRUE,
     warning = FALSE,
-    dpi = 72,
-    fig.width = 6,
-    fig.height = 6,
     fig.align = "center"
 )
 
