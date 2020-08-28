@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Welcome to the Intermediate R3 course!</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../resources/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../resources/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Welcome to the Intermediate R<sup>3</sup> course!
+
+---
+
+
+# Please do this as we get ready:
+
+&lt;!-- Introduce instructors and helpers. --&gt;
+
+
+
+- ✅ Re-install r3 `remotes::install_gitlab("rostools/r3")`
+
+---
+
+class: center, middle
+
+# Motivation for this course
+
+## How do you *exactly* do data analysis? What's the workflow?
+
+???
+
+When I started out doing research during my Masters,
+I always wondered *how* do researchers go about doing data analysis...
+what was their workflow *exactly* like. No one ever really taught that. Even
+on online tutorials, mostly pieces of code or how to use code are taught... 
+but never teaching the bigger picture... How do researchers in their daily work
+write R code and do their data analysis? 
+
+This question is why the overall workflow is the primary focus in this course
+and partly with the beginner one. I try to focus on the bigger picture and the
+overall workflow you would do for doing data analysis.
+
+So, why is it that there isn't much information on how researchers do data
+analysis?
+
+---
+
+# ...Because code sharing is almost non-existent in science
+
+--
+
+Very few papers provide code [[1](https://doi.org/10.1146/annurev-statistics-060116-054104); [2](https://doi.org/10.1007/s11306-017-1299-3)]
+
+--
+
+Why? Likely due to:
+
+- Lack of awareness and training
+- Difficulty of adoption
+- No incentive or reward
+- Little to no culture to do it
+
+
+???
+
+It's because code sharing basically doesn't exist in the vast majority of 
+scientific fields
+
+- Intro to how limited code sharing is, research on it, etc.
+
+How many have read a method in a paper and wondered how they &lt;u&gt;actually&lt;/u&gt; did it? 
+
+... you've probably realize by now, way more is done than shown in the "Methods"
+
+I definitely have in my research career.
+We want to change the culture around code by encouraging 
+and teaching how to share code and to write better code in general.
+
+---
+
+## Code sharing: From scientific principle of "reproducibility" 
+
+
+--
+
+.pull-left[
+### Replicability
+
+- ...often confused with "replicability" [[3](https://doi.org/10.3389/fninf.2017.00076)]&lt;sup&gt;1&lt;/sup&gt;
+- Repeating a study by *independently* performing another identical study
+- Difficult, usually needs funding
+- Linked to the "irreproducibility crisis"&lt;sup&gt;2&lt;/sup&gt;
+]
+
+--
+
+.pull-right[
+### Reproducibility
+
+- Generating the exact same results when using the same data and code
+- Should be easy right? Wrong, often just as hard
+- *True* reproducibility is nearly impossible
+    - Better: "Good enough reproducibility at publication"
+    - Or at least have "inspectability" [[4](https://doi.org/10.1002/2015ea000136)]
+- *Question*: If we can't even *reproduce* a studies results, how can we expect 
+to replicate it?
+]
+
+
+.footnote[
+1. Also from an American Statistical Association [statement](https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf).  
+2. Or rather "irreplicability crisis".
+]
+
+???
+
+True reproducibility means being able to re-create the results on *any* computer
+at any point in the near future. But with constant updates to software and
+computers, reproducibility quickly becomes impossible. Hence why focusing on
+being reproducible at the time of publication or at the very least focus on
+ensuring your data analysis is "inspectable", meaning that someone can come
+and read your code and understand the logic of what you are doing, even if they
+can't directly reproduce the results.
+
+---
+
+class: middle, center
+
+# These issues can be fixed by creating and nurturing a culture of openness
+
+---
+
+class: middle, center
+
+# Goal of this course? Start changing the culture by providing the training
+
+---
+
+class: center, middle
+
+# Question: 
+
+## For those that have done or are doing data processing, does it take up a lot of time? How much?
+
+???
+
+Question, mostly for my own information...
+
+---
+
+## Course setup and layout
+
+- Course is mix of:
+    - "Code-alongs" (we type and explain, you type along)
+    - Hands-on exercises
+
+- Use r3 package to help with learning
+
+- True to our mission, material publicly accessible and [openly licensed](https://r-cubed-intermediate.rostools.org/license.html)
+    - &lt;https://r-cubed-intermediate.rostools.org/&gt;
+
+---
+
+## Getting or asking for help 🙋
+
+.pull-left[
+- Put the sticky on your laptop to get help
+    - There are lots of helpers
+    - Team members, try to help out too
+]
+
+.pull-right[
+- We're all learning here!
+    - This is a supportive and safe environment
+    - Remember our [Code of Conduct](conduct.html)
+]
+
+---
+
+class: middle, center
+
+## Practice using stickies: Have you re-installed r3?
+
+---
+
+class: middle, center
+
+## Activity: Stand and arrange based on question
+
+???
+
+We're going to do a "stand and re-arrange yourself" activity based on some questions I ask.
+
+---
+
+class: middle, center
+
+## Who has not yet used R?
+
+???
+
+Go into different corners for "yes" and "no".
+
+---
+
+class: middle, center
+
+## How do you perceive your skill in R?
+
+???
+
+Along the wall, arrange to one side is "novice/basic" and other side is "advanced".
+
+---
+
+class: middle, center
+
+## Who has had formal training in specifically *coding* in R or in general?
+
+???
+
+Staying where you are, raise your hand if you would answer yes to this question.
+If it was part of a statistics course, it doesn't really count.
+
+---
+
+class: middle, center
+
+## Who has struggled with using R?
+
+???
+
+Again, staying where you are, raise your hand if you've struggled or still
+struggle with R?
+
+Ok, you can get back to your seats.
+
+---
+
+class: middle, center
+
+# First time running this intermediate course... 
+
+## So you're also co-creators! Your feedback is necessary to improve it 😁
+
+???
+
+So you are also the co-creators here, your feedback will improve this
+and we're collaborating together. You're learning, but also helping to
+improve the material and in how we teach you. What makes sense, what is
+confusing, and so on.
+
+---
+
+# References
+
+&lt;a
+name=bib-Leek2017a&gt;&lt;/a&gt;[[1]](#cite-Leek2017a)
+J. T. Leek and L. R. Jager. "Is
+Most Published Research Really
+False?" In: _Annual Review of
+Statistics and Its Application_
+4.1 (Mar. 2017), pp. 109-122.
+DOI:
+[10.1146/annurev-statistics-060116-054104](https://doi.org/10.1146%2Fannurev-statistics-060116-054104).
+
+&lt;a
+name=bib-Considine2017a&gt;&lt;/a&gt;[[2]](#cite-Considine2017a)
+E. C. Considine, G. Thomas, et
+al. "Critical Review of
+Reporting of the Data Analysis
+Step in Metabolomics". In:
+_Metabolomics_ 14.1 (Dec.
+2017). DOI:
+[10.1007/s11306-017-1299-3](https://doi.org/10.1007%2Fs11306-017-1299-3).
+
+&lt;a
+name=bib-Plesser2018a&gt;&lt;/a&gt;[[3]](#cite-Plesser2018a)
+H. E. Plesser. "Reproducibility
+Vs. Replicability: A Brief
+History of a Confused
+Terminology". In: _Frontiers in
+Neuroinformatics_ 11 (Jan.
+2018). DOI:
+[10.3389/fninf.2017.00076](https://doi.org/10.3389%2Ffninf.2017.00076).
+
+&lt;a
+name=bib-Gil2016&gt;&lt;/a&gt;[[4]](#cite-Gil2016)
+Y. Gil, C. H. David, et al.
+"Toward the Geoscience Paper of
+the Future: Best practices for
+documenting and sharing
+research from data to software
+to provenance". In: _Earth and
+Space Science_ 3.10 (Oct.
+2016), pp. 388-415. DOI:
+[10.1002/2015ea000136](https://doi.org/10.1002%2F2015ea000136).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

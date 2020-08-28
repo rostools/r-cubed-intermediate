@@ -15,22 +15,7 @@
 knitr::include_url("slides/introduction.html", height = "375px")
 ```
 
-- Slide? Motivation, why use these (short lecture?)
-    - Motivation: When I started I always wondered *how* do people go about
-    doing data analysis... what was there workflow exactly like. No one ever
-    really taught that, and even on internet tutorials it mostly taught 
-    individual code chunks and taught how to use that.. but never showing the
-    bigger picture. That's why with this course and partly with the beginner one,
-    I tried to focus on the bigger picture and the overall workflow you would
-    do for data analysis. 
-    - Question to them: For those that have doing data processing, 
-    does it take up a lot of time? How much?
-    - Intro to how limited code sharing is, research on it, etc.
-    - First time running this intermediate course
-        - So you are also the co-creators here, your feedback will improve this
-        and we're collaborating together. You're learning, but also helping to
-        improve the material and in how we teach you. What makes sense, what is
-        confusing, and so on.
+`r details_for_instructors("The slides contain speaking notes that you can view by pressing 'p' on the keyboard.")`
 
 ## Overview of workflow
 

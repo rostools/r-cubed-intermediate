@@ -1,0 +1,262 @@
+---
+title: "Welcome to the Intermediate R^3^ course!"
+output:
+    xaringan::moon_reader:
+        self_contained: false
+        lib_dir: libs
+        css: ['../resources/xaringan-themer.css', '../resources/custom.css']
+        nature:
+            ratio: "16:9"
+            highlightStyle: github
+            highlightLines: true
+            countIncrementalSlides: false
+---
+
+# Please do this as we get ready:
+
+<!-- Introduce instructors and helpers. -->
+
+```{r setup, include=FALSE}
+source(here::here("R/slide-setup.R"))
+```
+
+- `r emo::ji("check")` Re-install r3 `remotes::install_gitlab("rostools/r3")`
+
+---
+
+class: center, middle
+
+# Motivation for this course
+
+## How do you *exactly* do data analysis? What's the workflow?
+
+???
+
+When I started out doing research during my Masters,
+I always wondered *how* do researchers go about doing data analysis...
+what was their workflow *exactly* like. No one ever really taught that. Even
+on online tutorials, mostly pieces of code or how to use code are taught... 
+but never teaching the bigger picture... How do researchers in their daily work
+write R code and do their data analysis? 
+
+This question is why the overall workflow is the primary focus in this course
+and partly with the beginner one. I try to focus on the bigger picture and the
+overall workflow you would do for doing data analysis.
+
+So, why is it that there isn't much information on how researchers do data
+analysis?
+
+---
+
+# ...Because code sharing is almost non-existent in science
+
+--
+
+Very few papers provide code `r Cite(bib, c("Leek2017a", "Considine2017a"))`
+
+--
+
+Why? Likely due to:
+
+- Lack of awareness and training
+- Difficulty of adoption
+- No incentive or reward
+- Little to no culture to do it
+
+
+???
+
+It's because code sharing basically doesn't exist in the vast majority of 
+scientific fields
+
+- Intro to how limited code sharing is, research on it, etc.
+
+How many have read a method in a paper and wondered how they <u>actually</u> did it? 
+
+... you've probably realize by now, way more is done than shown in the "Methods"
+
+I definitely have in my research career.
+We want to change the culture around code by encouraging 
+and teaching how to share code and to write better code in general.
+
+---
+
+## Code sharing: From scientific principle of "reproducibility" 
+
+
+--
+
+.pull-left[
+### Replicability
+
+- ...often confused with "replicability" `r Cite(bib, "Plesser2018a")`<sup>1</sup>
+- Repeating a study by *independently* performing another identical study
+- Difficult, usually needs funding
+- Linked to the "irreproducibility crisis"<sup>2</sup>
+]
+
+--
+
+.pull-right[
+### Reproducibility
+
+- Generating the exact same results when using the same data and code
+- Should be easy right? Wrong, often just as hard
+- *True* reproducibility is nearly impossible
+    - Better: "Good enough reproducibility at publication"
+    - Or at least have "inspectability" `r Cite(bib, "Gil2016")`
+- *Question*: If we can't even *reproduce* a studies results, how can we expect 
+to replicate it?
+]
+
+
+.footnote[
+1. Also from an American Statistical Association [statement](https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf).  
+2. Or rather "irreplicability crisis".
+]
+
+???
+
+True reproducibility means being able to re-create the results on *any* computer
+at any point in the near future. But with constant updates to software and
+computers, reproducibility quickly becomes impossible. Hence why focusing on
+being reproducible at the time of publication or at the very least focus on
+ensuring your data analysis is "inspectable", meaning that someone can come
+and read your code and understand the logic of what you are doing, even if they
+can't directly reproduce the results.
+
+---
+
+class: middle, center
+
+# These issues can be fixed by creating and nurturing a culture of openness
+
+---
+
+class: middle, center
+
+# Goal of this course? Start changing the culture by providing the training
+
+---
+
+class: center, middle
+
+# Question: 
+
+## For those that have done or are doing data processing, does it take up a lot of time? How much?
+
+???
+
+Question, mostly for my own information...
+
+---
+
+## Course setup and layout
+
+- Course is mix of:
+    - "Code-alongs" (we type and explain, you type along)
+    - Hands-on exercises
+
+- Use r3 package to help with learning
+
+- True to our mission, material publicly accessible and [openly licensed](https://r-cubed-intermediate.rostools.org/license.html)
+    - <https://r-cubed-intermediate.rostools.org/>
+
+---
+
+## Getting or asking for help `r emo::ji("raising_hand_woman")`
+
+.pull-left[
+- Put the sticky on your laptop to get help
+    - There are lots of helpers
+    - Team members, try to help out too
+]
+
+.pull-right[
+- We're all learning here!
+    - This is a supportive and safe environment
+    - Remember our [Code of Conduct](conduct.html)
+]
+
+---
+
+class: middle, center
+
+## Practice using stickies: Have you re-installed r3?
+
+---
+
+class: middle, center
+
+## Activity: Stand and arrange based on question
+
+???
+
+We're going to do a "stand and re-arrange yourself" activity based on some questions I ask.
+
+---
+
+class: middle, center
+
+## Who has not yet used R?
+
+???
+
+Go into different corners for "yes" and "no".
+
+---
+
+class: middle, center
+
+## How do you perceive your skill in R?
+
+???
+
+Along the wall, arrange to one side is "novice/basic" and other side is "advanced".
+
+---
+
+class: middle, center
+
+## Who has had formal training in specifically *coding* in R or in general?
+
+???
+
+Staying where you are, raise your hand if you would answer yes to this question.
+If it was part of a statistics course, it doesn't really count.
+
+---
+
+class: middle, center
+
+## Who has struggled with using R?
+
+???
+
+Again, staying where you are, raise your hand if you've struggled or still
+struggle with R?
+
+Ok, you can get back to your seats.
+
+---
+
+class: middle, center
+
+# First time running this intermediate course... 
+
+## So you're also co-creators! Your feedback is necessary to improve it `r emo::ji("grin")`
+
+???
+
+So you are also the co-creators here, your feedback will improve this
+and we're collaborating together. You're learning, but also helping to
+improve the material and in how we teach you. What makes sense, what is
+confusing, and so on.
+
+---
+
+# References
+
+```{r refs, results="asis", echo=FALSE}
+PrintBibliography(bib)
+```
