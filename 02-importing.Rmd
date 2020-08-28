@@ -32,9 +32,10 @@ LearnR3
 NOTE: what about larger datasets e.g. registers?
 1. Learn about filesystems, relative and absolute paths, and how to make use 
 of the fs package to navigate files in your project.
-1. Learn how to import and do minor cleaning with the vroom package
+1. Learn how to import and do minor cleaning with the vroom package.
 1. Learn about strategies and resources to use when encountering problems when
-importing data
+importing data.
+1. Practice using Git version control as part of the workflow of data analysis.
     
 ## The MMASH dataset
 
