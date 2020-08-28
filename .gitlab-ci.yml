@@ -14,7 +14,7 @@ build:
     artifacts:
         paths:
             - public
-        expires_in:
+        expire_in:
             - 1 hr
 
 deploy:
