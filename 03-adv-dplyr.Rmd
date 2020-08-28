@@ -1,4 +1,4 @@
-# Advanced data wrangling {#adv-dplyr}
+# Not repeating yourself {#dry}
 
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
@@ -6,10 +6,36 @@
 ```
 
 `r '<!-- '`
+
 Here we will cover the first block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
 
 ```{r diagram-overview-2, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
 diagram_overview(2)
+```
+
+And your folder and file structure should look like:
+
+```
+LearnR3
+├── data/
+│   └── README.md
+├── data-raw/
+│   ├── mmash-data.zip
+│   ├── mmash/
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
+├── doc/
+│   ├── README.md
+│   └── lesson.Rmd
+├── R/
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
 ```
 
 ## Combining datasets
