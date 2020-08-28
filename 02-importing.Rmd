@@ -195,8 +195,14 @@ unzip(here("data-raw/mmash-data.zip"),
       junkpaths = TRUE)
 ```
 
-Next, we want to extract the new `data-raw/MMASH.zip` file. Because we want to
+Notice the indentations and spacings of the code. Like writing any language,
+code should follow a [style guide]. An easy way of following a style is by
+selecting your code and using RStudio's builtin style fixer of either
+"Ctrl-Shift-A" or "Code -> Reformat Code" menu item.
+Ok, next, we want to extract the new `data-raw/MMASH.zip` file. Because we want to
 keep the folder structure inside this zip file, we don't use `junkpaths`.
+
+[style guide]: https://style.tidyverse.org
 
 ```{r unzip-data-file, eval=FALSE}
 unzip(here("data-raw/MMASH.zip"),
