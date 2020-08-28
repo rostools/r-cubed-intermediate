@@ -36,7 +36,9 @@ diagram_overview <- function(section_num = 0) {
     digraph {
         # Styling
         graph [compound = true, nodesep = .1, ranksep = .1, rankdir = TB]
-        node [shape = rectangle, style = filled, color = lightblue]
+        node [shape = rectangle, style = filled, fixedsize = true,
+              color = lightblue, fontsize = 11, width = 2.1]
+        edge [fontsize = 10]
 
         # Nodes
         mmash_dir [label = 'data-raw/mmash/']
@@ -55,7 +57,7 @@ diagram_overview <- function(section_num = 0) {
         mmash_rda_2 [label = 'data/mmash.rda']
 
         subgraph cluster1 {
-            graph [label = 'Download\nraw data', fontsize = 16]
+            graph [label = 'Download\nraw data', fontsize = 14]
             color = ((colour[1]))
             penwidth = ((thickness[1]))
             mmash_r -> mmash_dir
@@ -64,18 +66,18 @@ diagram_overview <- function(section_num = 0) {
         }
 
         subgraph cluster2 {
-            graph [label = 'Workflow\n ', fontsize = 16]
+            graph [label = 'Workflow\n ', fontsize = 14]
             color = ((colour[2]))
             penwidth = ((thickness[2]))
-            make_fn -> fn_r [label = 'cut & paste\ncommit']
+            make_fn -> fn_r [label = '  cut & paste\ncommit']
             rmd -> make_fn [len = 2, label = '   ']
             make_fn -> rmd [len = 2, label = '   ']
             fn_r -> rmd [label = '   load']
-            mmash_dir_2 -> rmd [label = '  import']
+            mmash_dir_2 -> rmd [label = '   import']
         }
 
         subgraph cluster3 {
-            graph [label = 'Create\nfinal data', fontsize = 16]
+            graph [label = 'Create\nfinal data', fontsize = 14]
             color = ((colour[3]))
             penwidth = ((thickness[3]))
             mmash_dir_3 -> mmash_rda
@@ -85,14 +87,14 @@ diagram_overview <- function(section_num = 0) {
         }
 
         subgraph cluster4 {
-            graph [label = 'Work with\nfinal data', fontsize = 16]
+            graph [label = 'Work with\nfinal data', fontsize = 14]
             color = ((colour[4]))
             penwidth = ((thickness[4]))
-            mmash_rda_2 -> rmd_2 [label = '  import']
-            rmd_2 -> html [label = '  knit']
+            mmash_rda_2 -> rmd_2 [label = '   import']
+            rmd_2 -> html [label = '   knit']
         }
 
     }"
     graph_viz_text <- glue::glue(graphviz_template_text, .open = "((", .close = "))")
-    DiagrammeR::grViz(graph_viz_text)
+    DiagrammeR::grViz(graph_viz_text, width = 700, height = 450)
 }
