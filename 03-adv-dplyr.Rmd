@@ -11,7 +11,7 @@
 
 Include this here?
 
-```{r}
+```{r, eval=FALSE}
 library(dplyr)
 user_1_fix %>% bind_cols(user_1_rr_fix)
 
@@ -20,6 +20,8 @@ user_1_fix %>% bind_cols(user_1_rr_fix)
 ```
 
 ```{r}
+library(vroom)
+library(here)
 library(dplyr)
 user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
 user_1_rr_data <- vroom(
