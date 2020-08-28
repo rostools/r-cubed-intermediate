@@ -19,18 +19,38 @@ diagram_overview(3)
 
 Day 2 morning (8:30, lunch at 12:00 --- ~3.5 hrs, with one big break, one small one during exercise):
 
-- creating functions
-    - and when using tidyverse functions
-- package dependency
-    - use_package
-    - ::
-- Moving functions into own R file
-    - Then either sourcing or load_all (maybe not get into that for them)
 - debugging in functions
     - breaks in RStudio?
     - basics like print.
 
 - Use a custom function in the advanced dplyr, to link to previous?
+
+- deeper into dplyr
+    - tidyselect helpers
+    - across and where
+    - regular expressions?
+    - joins
+    - Possible uses:
+        - calculating mean
+            - summarize across is numeric (select where is.numeric)
+            - show off the ... here (like with na.rm)
+            - Like for the RR or actigraph
+        - Any time you think you would use a for loop, use this.
+        
+exercise:
+    - activity, calculate minutes from start and end.
+
+## Combining datasets
+
+
+```{r, eval=FALSE}
+library(dplyr)
+user_1_fix %>% bind_cols(user_1_rr_fix)
+
+# %>% 
+#     rename(inter_beat_interval_seconds = ibi_s)
+```
+
 
 ## Misc
 
