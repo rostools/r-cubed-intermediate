@@ -38,17 +38,284 @@ LearnR3
 └── README.md
 ```
 
-## Combining datasets
+## Learning objectives
+
+1. Learn what functions are in R, how to make and use them.
+1. Learn about functional programming, vectorization, and functionals,
+and how to use them to get more done with less code and less time.
+1. Learn a workflow of using R Markdown and `devtools::load_all()` (or
+"Ctrl-Shift-L" in RStudio) as a tool and process for developing functions
+that can be automatically loaded in for later and easy use.
+1. Learn what R package dependency management is and how it can simplify your
+data analysis work.
+1. Continue practicing Git version control to manage changes to your files.
+
+- create functions for importing
+    - load_all
+- functional programming: functionals and vectorization
+    - multiple files with map (for now ignoring that vroom can do it fine.)
+    
+- creating functions
+    - and when using tidyverse functions
+- package dependency
+    - use_package
+    - ::
+- Moving functions into own R file
+    - Then either sourcing or load_all (maybe not get into that for them)
+    
+## The basics of a function
+
+```{r}
+sd
+```
+
+As mentioned before, all actions in R are functions. For instance, the `+` is a
+function, `mean()` is a function, `[]` is a function, and so on. So creating
+your functions can make doing your work easier and more efficient. Making
+functions always has a basic structure of:
+
+1. Giving a name to the function (e.g. `mean`).
+2. Starting the function call using `function()`, assigning it to the name with
+`<-`. This tells R that the name is a function object.
+3. Optionally providing arguments to give to the function call, for instance
+`function(arg1, arg2, arg3)`. 
+4. Filling out the body of the function, with the arguments (if any) contained
+inside, that does some action.
+5. Optionally, but strongly encouraged, use `return` to indicate what you want 
+the function to output.
+
+While there is no minimum or maximum number of arguments you can provide for a
+function (e.g. you could have zero or dozens of arguments), its good practice
+for yourself and for others if you have as few arguments as possible to get
+the job done.
+
+
+So, the structure is:
+
+```{r function-structure, eval=FALSE}
+name <- function(arg1, arg2) {
+    # body of function
+    ... code ....
+    return(output)
+}
+```
+
+... and an example:
+
+```{r create-add-function}
+add_nums <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
+```
+
+You can use the new function by running the above code and writing out your new 
+function, with arguments to give it.
+
+```{r call-function}
+add_nums(1, 2)
+```
+
+The function name is fairly good... `add_nums` can be read as "add numbers".
+It's also good practice to add some formal documentation to the function. Use
+the "Insert Roxygen Skeleton" in the "Code" menu list (or by typing
+`Ctrl-Shift-Alt-R`) and you can add template documentation right above the
+function. It looks like:
+
+```{r roxygen-docs-1}
+#' Title
+#'
+#' @param num1 
+#' @param num2 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+add_nums <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
+```
+
+In the `Title` area, this is where you type out a brief sentence or several words 
+that describe the function. Creating a new paragraph below this line allows you 
+to add a more detailed description. The other items are:
+
+- `@param num` lines are to describe what each argument is for.
+- `@return` describes what output the function provides. Is it a data.frame? A plot? 
+What else does the output give?
+- `@export` tells R that this function should be accessible to the user of your
+package. Delete it for non-package functions.
+- `@examples` lines below this are used to show examples of how to use the function.
+Very useful when making packages, but not really in this case.
+
+```{r roxygen-docs-2}
+#' Add two numbers together.
+#'
+#' This is just an example function to show how to create one.
+#'
+#' @param num1 A number here.
+#' @param num2 A number here.
+#'
+#' @return Returns the sum of the two numbers.
+#'
+add_nums <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
+```
+
+## Making a function for vroom
+
+Now that we have a basic understanding of what a function looks like, let's
+apply it to something we're doing right now: Importing our data.
+
+Making functions is a series of steps:
+
+1. Write code that works and does what you want.
+1. Enclose it as a function with `function() { ... }`, with an appropriate and
+descriptive name.
+1. Create arguments in the function call (`function(arg1, arg2)`) with appropriate
+and descriptive names, then replace the code with the argument names where 
+appropriate. 
+1. Rename any objects created to be more generic and include the `return()`
+function at the end to indicate what the function will output.
+1. Run the function and check that it works.
+1. Add the roxygen2 documentation tags (with "Ctrl-Alt-Shift-R" or "Code -> Insert
+Roxygen Skeleton" menu item while the cursor is in the function).
+
+So, step one. Here is the code we want as a function:
+
+```{r function-creation-step-1, eval=FALSE}
+user_1_info_data <- vroom(
+    user_1_info_file,
+    col_select = -1,
+    col_types = cols(
+        Gender = col_character(),
+        Weight = col_double(),
+        Height = col_double(),
+        Age = col_double()
+    )
+)
+```
+
+Next we wrap it in the function call and give it an appropriate name. In this case,
+`import_user_info` is descriptive and meaningful. Make sure to style it correctly
+with "Ctrl-Shift-A".
+
+```{r function-creation-step-2, eval=FALSE}
+import_user_info <- function() {
+    user_1_info_data <- vroom(
+        user_1_info_file,
+        col_select = -1,
+        col_types = cols(
+            Gender = col_character(),
+            Weight = col_double(),
+            Height = col_double(),
+            Age = col_double()
+        )
+    )
+}
+```
+
+Then, we add arguments in the function and replace within the code. Here, we
+have only one thing that we would change: The file path to the dataset.
+So, a good name might be `file_path`.
+
+```{r function-creation-step-3, eval=FALSE}
+import_user_info <- function(file_path) {
+    user_1_info_data <- vroom(
+        file_path,
+        col_select = -1,
+        col_types = cols(
+            Gender = col_character(),
+            Weight = col_double(),
+            Height = col_double(),
+            Age = col_double()
+        )
+    )
+}
+```
+
+Then we clean things up by renaming `user_1_info_data` since we would like to
+also import more than just `user_1`. A nice object name would be `info_data`. 
+Add the return function at the end with the object you want your function to
+output.
+
+```{r function-creation-step-4, eval=FALSE}
+import_user_info <- function(file_path) {
+    info_data <- vroom(
+        file_path,
+        col_select = -1,
+        col_types = cols(
+            Gender = col_character(),
+            Weight = col_double(),
+            Height = col_double(),
+            Age = col_double()
+        )
+    )
+    return(info_data)
+}
+```
+
+Great! Now we need to test it out. Let's try on two datasets, `user_1` and `user_2`.
+
+```{r function-creation-step-5}
+import_user_info <- function(file_path) {
+    info_data <- vroom(
+        file_path,
+        col_select = -1,
+        col_types = cols(
+            Gender = col_character(),
+            Weight = col_double(),
+            Height = col_double(),
+            Age = col_double()
+        )
+    )
+    return(info_data)
+}
+
+import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
+import_user_info(here::here("data-raw/mmash/user_2/user_info.csv"))
+```
+
+Awesome! It works. The final stage is adding the Roxygen documentation.
+
+```{r function-creation-step-6, eval=FALSE}
+#' Import MMASH user info data file.
+#'
+#' @param file_path Path to user info data file.
+#'
+#' @return Outputs a dataframe.
+#'
+import_user_info <- function(file_path) {
+    info_data <- vroom(
+        file_path,
+        col_select = -1,
+        col_types = cols(
+            Gender = col_character(),
+            Weight = col_double(),
+            Height = col_double(),
+            Age = col_double()
+        )
+    )
+    return(info_data)
+}
+
+```
+
+## Exercise
+
+Now do this for the saliva importing code.
+
+## R/ folder, load_all, and developing functions
+
+## Exercise
+
+Do this for the rest of the importing code, as well as the 
 
 Include this here?
-
-```{r, eval=FALSE}
-library(dplyr)
-user_1_fix %>% bind_cols(user_1_rr_fix)
-
-# %>% 
-#     rename(inter_beat_interval_seconds = ibi_s)
-```
 
 ```{r}
 library(vroom)
@@ -103,19 +370,6 @@ Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two smal
         - Images inspired from advanced R
             - Use diagrammer graphviz?
     - This section prepares for the functional programming session
-- deeper into dplyr
-    - tidyselect helpers
-    - across and where
-    - regular expressions?
-    - joins
-    - Possible uses:
-        - calculating mean
-            - summarize across is numeric (select where is.numeric)
-            - show off the ... here (like with na.rm)
-            - Like for the RR or actigraph
-        - Any time you think you would use a for loop, use this.
-        
-- saving intermediate/final output
 
 ## Misc
 
