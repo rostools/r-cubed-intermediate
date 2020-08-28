@@ -1,11 +1,6 @@
 # Basic setup and workflow {#intro}
 
-![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
-
-```{r, eval=TRUE, child="resources/preamble.Rmd"}
-```
-
-`r '<!-- '`
+![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
 
 ## Introduction to course
 
@@ -81,7 +76,7 @@ LearnR3
 Our workflow will generally look like Figure \@ref(fig:diagram-overview),
 with each block representing a session.
 
-```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering."}
+```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering.", out.width="90%", fig.width=9}
 diagram_overview(0)
 ```
 
@@ -113,17 +108,19 @@ to work with files.
 
 In the **Console**, type out:
 
-```{r}
+```{r remove-extra-files, eval=FALSE}
 fs::file_delete(c("R/setup.R", "R/fetch_data.R", "TODO.md"))
 ```
 
-- Fill in README a bit?
-
+Then, let's open up the README and fix some of the TODO items.
 After cleaning everything up, now we need to use Git to add and commit all the 
 current files into the history. Open up the Git interface in RStudio with
 "Ctrl-Alt-M" or through the Git button at the top below either the "Build" or
-"Debug" menu items. The interface should open up
+"Debug" menu items. The interface should open up and we'll click the checkboxes
+on all the files, then write a message in the commit textbox saying 
+"Initial setup done". Now we're ready for the next session!
 
+<!--
 - outline:
     - import
     - create functions for importing
@@ -143,6 +140,4 @@ current files into the history. Open up the Git interface in RStudio with
     - saving data and summarizing final
         - load_all
         - across, where, tidyselect helpers
-    
-
-`r '-->'`
+-->
