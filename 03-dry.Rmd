@@ -3,6 +3,7 @@
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
 ```{r, eval=TRUE, child="resources/preamble.Rmd"}
+knitr::opts_chunk$set(eval = FALSE)
 ```
 
 `r '<!-- '`
