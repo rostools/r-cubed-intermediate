@@ -1,4 +1,4 @@
-# Not repeating yourself {#dry}
+# Save time, don't repeat yourself {#dry}
 
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
@@ -7,7 +7,7 @@
 
 `r '<!-- '`
 
-Here we will cover the first block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
+Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
 
 ```{r diagram-overview-2, fig.cap="Section of the overall workflow we will be covering.", fig.width=9}
 diagram_overview(2)
