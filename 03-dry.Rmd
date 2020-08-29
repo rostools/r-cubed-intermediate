@@ -312,251 +312,341 @@ import_user_info <- function(file_path) {
 
 A massive advantage of using functions is that if you want to make a change to all
 your code, you can very easily do it in the R function and it will change all 
-your other code too!
-
+your other code too! Now that we have a working function, let's add and commit
+it to the Git history with the RStudio Git Interface.
 
 ## Exercise: Repeat with the saliva data
 
 Time: 15 min
 
-Now do this for the saliva importing code.
+Take the code you created for importing the saliva data set from 
+Exercise \@ref(ex-import-saliva) and make it into a function. A helpful tip:
+To move around an R Markdown or R script more easily, open up the 
+"Document Outline" on the side by clicking the button in the top right corner of
+the R Markdown pane or by using `Ctrl-Shift-O`.
 
-## R/ folder, load_all, and developing functions
+1. Create a new markdown header `## Exercise for importing the saliva data`.
+1. Create a code chunk below that (`Ctrl-Alt-I`).
+1. Paste the code you used from the exercise into the code chunk and begin
+converting it into a function, like we did above.
+    - Wrap it with the `function() {...}`
+    - Make a meaningful name (e.g. `import_saliva_data`)
+    - Make an argument for the file path and replace it with the code in `vroom()`
+    - Rename the output object and include it in the `return()` function
+    - Test that it works
+    - Create the Roxygen documentation
+
+## Continuing the workflow
+
+We've created two functions. Now we need to move those functions from the 
+`doc/lesson.Rmd` file and into the `R/`. We do this for a few reasons:
+
+1. To prevent the R Markdown document from becoming incredibly long, with only
+R code.
+1. To make it easier to maintain and find things in your project.
+1. To make use of the `devtools::load_all()` functionality available with
+R Projects that are indicated as Packages.
+
+Because this project is set as a Package, we can use the `load_all()` keybinding
+`Ctrl-Shift-L` in RStudio. But first, we need to make a new file to store our
+functions. So, in the *Console*, type out and run:
+
+```{r functions-script, eval=FALSE}
+usethis::use_r("functions")
+```
+
+This creates a new file called `R/functions.R`. We will cut and paste the
+functions we created into this new file. So, cut *only* the `import_user_info()` 
+function we created in `doc/lesson.Rmd`, including the Roxygen documentation,
+and paste it into `R/functions.R`.
+
+Once we have it in there, let's test out how the `load_all()` function works.
+Let's restart our R session with either `Ctrl-Shift-F10` or from the 
+"Session -> Restart R" menu item. Move back into the `doc/lesson.Rmd`
+and go to where we wrote:
+
+```{r, eval=FALSE}
+import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
+```
+
+Then hit `Ctrl-Shift-L`. What happens? You should see a bunch of text pop up
+on the side about loading the `LearnR3` project. Ok. Try to run the
+`import_user_info()` line. What happens now? You might get an error about
+not finding the `vroom()` function. Or you might not, if you put
+`library(vroom)` in the code chunk called `setup`. If you did get an error,
+that's because R doesn't know what the `vroom()` function is.
+This is where we start getting into package dependency management.
+
+What is package dependency management? Whenever you use an R package, you 
+depend on it for your code. The informal way to show what packages you use
+is when you use the `library()` function. But what if someone else looks over your
+code? Do they have to search through all your files just to find all `library()`
+functions you used and then install those packages individually? A better way
+here is to formally indicate your package dependency so that installing
+dependencies is easy! This is done through the `DESCRIPTION` file.
+
+
+First thing we need to 
+
+
+
+R/ folder, load_all, and developing functions
 
 - package dependency
     - use_package
     - ::
+        - We do this step at the end because it can be tedious always 
+        typing out `package::`.
     
+You may have noticed from others code that people do:
+
+```{r bad-practice-library, eval=FALSE}
+add_numbers <- function(num1, num2) {
+    library(packagename)
+    ...code...
+    return(added)
+}
+```
+
+Or: 
+
+```{r bad-practice-require, eval=FALSE}
+add_numbers <- function(num1, num2) {
+    require(packagename)
+    ...code...
+    return(added)
+}
+```
+
+This is *very* **bad practice** and can have some unintended and serious
+consequences that won't give any warning or error. Instead we use `packagename::`
+to access the function from a package. We won't get into the reasons why because
+it can quickly get quite technical.
+
 A good practice to use after you've created your function is to explicitly indicate 
 which functions come from which package, since you shouldn't use `library` calls
 in your function. We do this by using the `packagename::function_name` format 
 (you don't need to do this for base R functions). Plus, let's add some
 documentation! (`Ctrl-Alt-Shift-R`).
 
-```{r explicit-function-call}
-#' Calculate mean and standard deviation by a grouping variable.
-#'
-#' @param .dataset The dataset
-#' @param .group_variable Variable to group by
-#'
-#' @return Output a data frame.
-#'
-mean_sd_by_group <- function(.dataset, .groupvar) {
-    stopifnot(is.character(.groupvar))
-    by_group_output <- .dataset %>% 
-        dplyr::select_at(dplyr::vars(.groupvar, BMI, 
-                                     TotChol, Pulse, BPSysAve, BPDiaAve)) %>% 
-        tidyr::gather(Measurement, Value, -.groupvar) %>% 
-        na.omit() %>% 
-        dplyr::group_by_at(dplyr::vars(.groupvar, Measurement)) %>% 
-        dplyr::summarise(Mean = round(mean(Value), 2),
-                  SD = round(sd(Value), 2),
-                  MeanSD = stringr::str_c(Mean, " (", SD, ")")) %>% 
-        dplyr::select(-Mean, -SD) %>% 
-        tidyr::spread(.groupvar, MeanSD)
-    return(by_group_output)
+```{r explicit-function-calls}
+import_user_info <- function(file_path) {
+    info_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            Gender = vroom::col_character(),
+            Weight = vroom::col_double(),
+            Height = vroom::col_double(),
+            Age = vroom::col_double()
+        )
+    )
+    return(info_data)
 }
 ```
 
-
 ## Exercise
+
+Time: 20 min
+
+
 
 Do this for the rest of the code you worked on previously that imported the 
 `RR.csv` and `Actigraph.csv` data.
 
 ## Functional programming
 
+**Please take 15 min to read over this section before we continue.**
+Unlike many other programming languages, R's primary strength and approach to
+programming is functional programming. So what is functional programming? It is a
+form of programming that:
 
-- functional programming: functionals and vectorization
-    - multiple files with map (for now ignoring that vroom can do it fine.)
-    
-        - Show basic usage with paste and numbers, etc.
-        
-        - Any time you think you would use a for loop, use this.
-        
-    - Real examples: 
-        - my webscraping of the DST etc
-        - Running multiple models
-        
-    - purrr
-    - Why purrr vs *apply functions?
-        - Consistency, expectation, documentation, design.
-    - Show importing one vs many
-        - Use fs to list multiple files
-        - Talk about filesystem
+- Uses functions (like `function()`)
+- Applies functions to vectors all at once (called [vectorisation]), rather than
+in a loop
+- Can use functions as input to other functions (called a [functional])
 
-
-Include this here?
-
-it's better to try to reduce your repetition (i.e. don't repeat
-yourself, DRY). Here we will get into iterations and using "[functional] programming"
-via the `map` function from the [purrr] package. Functional programming is a way 
-of making use of vectors and [vectorisation] to "loop" over things (rather than
-use `for` loops). There are several reasons why you should avoid `for` loops in
-R.
-
-1. They are computationally very slow and easily use a lot of RAM memory.
-1. They are difficult to read and debug.
-1. They aren't very *expressive*, meaning they don't state a higher "purpose",
-just that they loop over something.
-
-[purrr]: https://purrr.tidyverse.org/
 [vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
 [functional]: https://adv-r.had.co.nz/Functionals.html
 
-But functionals, like `map` and most functions inside purrr (or base R functions
-like `lapply`, `sapply`) let you ignore the tiny details and focus on doing your
-intent. You *intend* to `sum` a vector of numbers, not loop over each number and
-add to the total (as you would in a `for` loop).
+We've already covered functions. You've probably already used vectorization
+since it is one of R's big strengths. Functions like `mean()`, `sd()`,
+`sum()` are vectorized in the sense that they take a vector and do something
+to all the values in the vector at once. As a comparison, in other programming
+languages, if you wanted to calculate the sum you would need a loop:
 
-For the example, let's say we want to calculate the mean and SD for several
-categorical variables. We can use `map` to easily do this, by giving it a vector
-of variables and providing the function to apply to each:
-
-```{r map-on-wrangling}
-map(c("SurveyYr", "Diabetes", "Gender"),
-    # the ~ tells map the next code is all together as one argument
-    # .x says to insert the value from the first argument of map (Diabetes, etc)
-    ~mean_sd_by_group(NHANES, .x))
+```{r using-for-loop}
+total_sum <- 0
+# a vector
+values <- 1:10
+for (value in values) {
+    total_sum <- value + total_sum
+}
+total_sum
 ```
 
-It seems deceptively simple but there is a massive amount of power from doing this
-sort of coding. Let's try with the plots.
+But in R, you can give a function that uses vectorization the entire vector
+(e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. 
+Figure \@ref(fig:image-vectorization) shows how a function
 
-```{r map-on-plots}
-map(c("Diabetes", "Education", "HomeOwn"),
-    ~plot_scatter_by_group(NHANES, "Height", "Weight", .x))
+```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+knitr::include_graphics(here::here("images/vectorization.svg"))
 ```
 
-What if we want to provide two things at once? We can use `map2` for that! (Note,
-the two arguments should be the same length.)
-
-```{r map2-on-plots}
-map2(c("TotChol", "Pulse"),
-    c("Diabetes", "Education"),
-    # .y is for the second argument of map
-    ~plot_scatter_by_group(NHANES, "Height", .x, .y))
-```
-
-If you want to do all combinations of two vectors, use the purrr function `cross_df()`
-to create a data.frame of the combinations. Note that, like most purrr functions,
-it takes a list as input.
-
-```{r all-combinations}
-all_combinations <- cross_df(list(
-    xvar = c("TotChol", "Pulse"),
-    groupvar = c("Diabetes", "Education")
-    ))
-all_combinations
-```
-
-```{r plot-all-combinations, eval=FALSE}
-map2(all_combinations$xvar, all_combinations$groupvar,
-    ~plot_scatter_by_group(NHANES, "BMI", .x, .y))
-```
-
+So in R, you have instead the function called `sum()` that takes the entire
+vector of `values` and outputs the total sum, without needing to use a for loop.
 
 ```{r}
-library(vroom)
-library(here)
-library(dplyr)
-user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
-user_1_rr_data <- vroom(
-    user_1_rr_file,
-    col_select = -1,
-    col_types = cols(
-        ibi_s = col_double(),
-        day = col_double(),
-        # Converts to seconds
-        time = col_time(format = "")
-    )
-) %>% 
-    rename(inter_beat_interval_seconds = ibi_s)
-
-library(ggplot2)
-ggplot(user_1_rr_data, aes(x = time, y = inter_beat_interval_seconds)) +
-    geom_line() +
-    facet_grid(rows = vars(day))
-
-user_1_rr_data %>% 
-    group_by(day) %>% 
-    summarize(across(inter_beat_interval_seconds, 
-                     list(mean = mean, min = min, max = max)))
-
-user_1_rr_data %>% 
-    group_by(day) %>% 
-    # functional programming
-    summarize(across(inter_beat_interval_seconds, 
-                     list(mean = mean, min = min, max = max, sd = sd)))
-
-
+# Vectorized
+sum(values)
 ```
 
+[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
 
-- functionals
-- load all datasets
-- 
+A functional on the other hand is a function that can also use a function as
+one of its arguments. Figure \@ref(fig:image-functionals) shows how the functional
+`map()` from the [purrr] package works by taking a vector (or list), applying a 
+function to each of those items, and outputting the results from each function.
 
-Day 1 afternoon (13:15, end at 17:30 --- ~4.25 hrs, with one big break, two small ones during exercise):
+```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+knitr::include_graphics(here::here("images/functionals.svg"))
+```
 
-- functional programming
-    - Q: Any one use for loops? Instead you should use functionals like map (R's
-    strength is this)
-    - talk about and introduce here
-        - weaknesses of loops, strengths of functionals
-        - naive approach to find mean (or do simple transformations) of each
-        column is to do for loop with mean of each column in dataset
-        - Images inspired from advanced R
-            - Use diagrammer graphviz?
-    - This section prepares for the functional programming session
+[purrr]: https://purrr.tidyverse.org
 
+Here's a simple toy example to show how it works. Here we use `paste()` on each
+item of `1:5`.
 
-Using map is really useful when importing raw data that is in a standard form
-and structure. Combined with the [fs] package (fs for filesystem), this is very
-powerful. To show how to do it, let's first export NHANES into the `data/` folder.
+```{r}
+library(purrr)
+map(1:5, paste)
+```
 
-[fs]: https://fs.r-lib.org/
+You'll notice that `map()` outputs a list, with all the `[[1]]` printed. `map()`
+will always output a list. Let's say we wanted to paste together the number with
+the sentence "seconds have passed". Normally it would look like:
 
-Then we can use the `dir_ls()` (for directory list) from fs combined with the 
-`regexp` (for regular expression) argument to show all files that have
-nhanes in the name, have anything in the middle (`.*`), and end with (`$`) csv.
+```{r paste-multiple}
+paste(1, "seconds have passed")
+paste(2, "seconds have passed")
+paste(3, "seconds have passed")
+paste(4, "seconds have passed")
+paste(5, "seconds have passed")
+```
 
-Then we can import all at once using `map_dfr` (for map and convert to a `df`
-data.frame, stacking by `r` row):
+With `map()`, we'd do this a bit differently. purrr uses a shortcut to allow
+you to write functions that do more things to the input vector (e.g. `1:5`).
+This shortcut is using `~` to start the function and `.x` as the replacement
+for the vector item:
 
-## Misc
+```{r}
+map(1:5, ~paste(.x, "seconds have passed"))
+```
 
-Some best practices
+This is the basics of using functionals. So, with functions, vectorization, and
+functionals, you generally should only use for loops as the very last choice you
+have. That's because R has better, more expressive, and more powerful tools to
+use instead. And while technically, using a loop let's you "not repeat
+yourself", it's a lot of typing and code to express a simple idea: *Do an action
+on each of these items*. So using functionals let's you repeat yourself 
+less `r emo::ji("smile")`
 
-Here are a few tips for being efficient. Also check out the resources at the 
-bottom for more places to learn about being efficient.
+So what does functionals have to do with what we are doing now? Well, our 
+`import_user_info()` function only takes in one data file. But we have right now
+22 files. We can use functionals to load in all the datasets at once!
+**Ok, stop reading and we'll go over this again before continuing with the
+coding.**
 
-- Aggressively keep your code as simple and concise as you can. The less code
-you have to write, debug, and maintain, the better. If you repeat code, stop and
-think how to not repeat it. You will save time in the end by taking time to think
-and plan.
-- Try to always think in terms of wrangling data as data.frames. There is a lot
-of power and utility from structure most things as data.frames. (e.g. "how can I
-get the dataframe to the form I need to make a figure?")
-- Keep learning. Keep reading books and help documentation. Keep taking courses
-and workshops. And start teaching R to others! *hint hint* :wink: Seriously, it's
-a great way for you to learn as it challenges you to know what you are talking 
-about and teaching!
-- When encountering a difficult problem, think about how to solve it, then try
-to find R packages or functions that do your problem for you. You may hear some
-poeple say "oh, don't bother with R packages, do everything in base R"... don't 
-listen to them. Do you build a computer from scratch everytime you want to do
-any type of work? Or a car when you want to drive somewhere? No, you don't. Make
-use of other people's hard work to make tools that simplify your life.
-- Use a [style guide] and create descriptive object names. Follow the [principles of tidy tools]
-when creating functions and code.
-- Split up your analyses steps into individual files (e.g. "model" file, "plot"
-file). Then `source` those files as needed or save the output in `data/` to use 
-it in other files.
-- Try not to have R scripts be too long (e.g. more than 500 lines of code). Keep
-script sizes as small as necessary and as specific as possible (have a single purpose).
-A script should have an end goal.
+The first thing we have to do to use the `map()` functional is to get a list
+of all the dataset files available to us. We turn back to use fs, which has
+a function called `dir_ls()` that finds files of a certain pattern.
+In our case, the pattern is `user_info.csv`. Let's go back into our
+`doc/lesson.Rmd` file, create a new header called `## Using map`, and
+create a code chunk below it. Then, go to the `setup` code chunk at the top
+and add to fs and purrr packages to the list of other packages.
 
-[style guide]: https://style.tidyverse.org/
+The `dir_ls()` function takes the path that we want to search (`data-raw/mmash/`)
 
-`r '-->'`
+```{r list-user-info-files}
+user_info_files <- dir_ls(here("data-raw/mmash/"), 
+                          regexp = "user_info.csv", 
+                          recurse = TRUE)
+```
+
+Then let's see what the output looks like. For the website, we are only showing
+the first 3 files.
+
+```{r list-files-head, eval=FALSE}
+# Your output will look a bit different
+user_info_files
+```
+
+```{r list-files-for-book, echo=FALSE}
+head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
+```
+
+Alright, we now have all the files ready to give to `map()`. So let's try it!
+
+```{r}
+user_info_list <- map(user_info_files, import_user_info)
+```
+
+Remember, that `map()` always outputs a list, so when we look into this object,
+it will give us 22 tibbles (data.frames). Here we'll only show the first one:
+
+```{r}
+user_info_list[[1]]
+```
+
+This is great because with one line of code we imported all these datasets!
+But we're missing an important bit of information: The user ID. 
+A powerful feature of the purrr package is that it has other functions to
+make working with functionals easier. We know `map()` always outputs a list.
+What if you want to output a character vector instead? There is a function
+called `map_chr()` for that. There are several others that give an output based 
+on the ending of `map_`:
+
+- `map_int()` outputs an integer.
+- `map_dbl()` outputs a numeric value, called a "double" in programming.
+- `map_dfr()` outputs a data frame, combining by row (`r`).
+- `map_dfc()` outputs a data frame, combining by column (`c`).
+
+The `map_dfr()` looks like the one we want, since we want all these datasets
+together as one. If we look at the help for it:
+
+```r
+?map_dfr
+```
+
+We see that it has an argument `.id`, which we can use to create a new column
+that sets the user ID, or in this case, the file path to the dataset, which
+has the user ID information in it. So, let's use it and create a new column
+called `file_path_id`.
+
+```{r}
+user_info_df <- map_dfr(user_info_files, import_user_info,
+                        .id = "file_path_id")
+```
+
+Your `file_path_id` variable will look different. Don't worry, we're going to
+tidy up the `file_path_id` variable later.
+
+```{r, eval=FALSE}
+user_info_df
+```
+
+```{r show-data-for-book, echo=FALSE}
+user_info_df %>% 
+    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id))
+```
+
+<!-- - Real examples:  -->
+<!--     - my webscraping of the DST etc -->
+<!--     - Running multiple models -->
+
+## Exercise: Use functionals for the other datasets
+
+Time: 20 min
+
+Use the `map_dfr()` functional on each of the `saliva.csv`, `RR.csv`, and
+`Actigraph.csv` datasets.
