@@ -45,29 +45,37 @@ LearnR3
 
 ## Learning objectives
 
-1. Learn what functions are in R, how to make and use them.
+1. Learn what functions are in R, how to create and use them.
 1. Learn about functional programming, vectorization, and functionals,
 and how to use them to get more done with less code and less time.
 1. Learn a workflow of using R Markdown and `devtools::load_all()` (or
-"Ctrl-Shift-L" in RStudio) as a tool and process for developing functions
+`Ctrl-Shift-L` in RStudio) as a tool and process for developing functions
 that can be automatically loaded in for later and easy use.
 1. Learn what R package dependency management is and how it can simplify your
 data analysis work.
-1. Continue practicing Git version control to manage changes to your files.
+1. Continue practising Git version control to manage changes to your files.
 
-- Moving functions into own R file
-    - Then either sourcing or load_all (maybe not get into that for them)
-    
 ## The basics of a function
+
+As mentioned before, all actions in R are functions. For instance, the `+` is a
+function, `mean()` is a function, `[]` is a function, and so on. Because R
+is open source, that means anyone can see how things work underneath.
+So, if we want to see what a function does underneath, we type out the
+function name without the `()` into the Console and run it. 
+If we do it with the function `sd()` which calculates the standard deviation,
+we see:
 
 ```{r}
 sd
 ```
 
-As mentioned before, all actions in R are functions. For instance, the `+` is a
-function, `mean()` is a function, `[]` is a function, and so on. So creating
-your functions can make doing your work easier and more efficient. Making
-functions always has a basic structure of:
+How you calculate the standard deviation is the square root of the variance.
+In this code, the `var()` is inside the `sqrt()` function, which is exactly what
+it should be.
+
+So, if you learn how to create your own functions, it can make doing your work
+easier and more efficient because you don't have to repeat yourself later.
+Making functions always has a basic structure of:
 
 1. Giving a name to the function (e.g. `mean`).
 2. Starting the function call using `function()`, assigning it to the name with
