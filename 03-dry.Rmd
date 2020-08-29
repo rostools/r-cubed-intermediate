@@ -2,13 +2,14 @@
 
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
-```{r, eval=TRUE, child="resources/preamble.Rmd"}
+```{r setup, include=FALSE}
+library(here)
+library(fs)
+library(dplyr)
+library(purrr)
 ```
 
-`r '<!-- '`
-
-```{r}
-knitr::opts_chunk$set(eval = FALSE)
+```{r, eval=TRUE, child="resources/preamble.Rmd"}
 ```
 
 Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
