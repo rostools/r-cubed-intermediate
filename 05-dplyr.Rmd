@@ -74,6 +74,32 @@ Two solutions:
 Show both to give example of how vroom works under the hood with imap 
 
 ```{r}
+library(vroom)
+library(here)
+library(dplyr)
+user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
+user_1_rr_data <- vroom(
+    user_1_rr_file,
+    col_select = -1,
+    col_types = cols(
+        ibi_s = col_double(),
+        day = col_double(),
+        # Converts to seconds
+        time = col_time(format = "")
+    )
+) %>% 
+    rename(inter_beat_interval_seconds = ibi_s)
+
+user_1_rr_data %>% 
+    group_by(day) %>% 
+    summarize(across(inter_beat_interval_seconds, 
+                     list(mean = mean, min = min, max = max)))
+
+user_1_rr_data %>% 
+    group_by(day) %>% 
+    # functional programming
+    summarize(across(inter_beat_interval_seconds, 
+                     list(mean = mean, min = min, max = max, sd = sd)))
 
 ```
 
