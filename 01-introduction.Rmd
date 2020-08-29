@@ -86,7 +86,7 @@ Our workflow and process will be something like:
 - Use R Markdown (`doc/lesson.Rmd`) to write and test out code, convert it into
 a function, test it, and then move it into `R/functions.R`.
 - We use RStudio's built-in functionality to run everything in the `R/` folder
-with "Ctrl-Shift-L" (only available when "Tools -> Project Options -> Build
+with `Ctrl-Shift-L` (only available when "Tools -> Project Options -> Build
 Tools" is set as "Package").
 - Replace the old code with the new function in the R Markdown document
 (`doc/lesson.Rmd`).
@@ -115,7 +115,7 @@ fs::file_delete(c("R/setup.R", "R/fetch_data.R", "TODO.md"))
 Then, let's open up the README and fix some of the TODO items.
 After cleaning everything up, now we need to use Git to add and commit all the 
 current files into the history. Open up the Git interface in RStudio with
-"Ctrl-Alt-M" or through the Git button at the top below either the "Build" or
+`Ctrl-Alt-M` or through the Git button at the top below either the "Build" or
 "Debug" menu items. The interface should open up and we'll click the checkboxes
 on all the files, then write a message in the commit textbox saying 
 "Initial setup done". Now we're ready for the next session!
