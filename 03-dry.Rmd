@@ -89,23 +89,23 @@ the function to output.
 
 While there is no minimum or maximum number of arguments you can provide for a
 function (e.g. you could have zero or dozens of arguments), its good practice
-for yourself and for others if you have as few arguments as possible to get
-the job done.
-
-So, the structure is:
+for yourself and for others to have as few arguments as possible to get the job
+done. So, the structure is:
 
 ```{r function-structure, eval=FALSE}
 name <- function(arg1, arg2) {
     # body of function
-    ... code ....
+    output <- ... code ....
     return(output)
 }
 ```
 
-... and an example:
+Let's write a simple example. First, create a new Markdown header called 
+`## Making a function` and create a code chunk below that with `Ctrl-Alt-I`.
+Then, inside the function, let's write this code out:
 
 ```{r create-add-function}
-add_nums <- function(num1, num2) {
+add_numbers <- function(num1, num2) {
     added <- num1 + num2
     return(added)
 }
@@ -115,12 +115,13 @@ You can use the new function by running the above code and writing out your new
 function, with arguments to give it.
 
 ```{r call-function}
-add_nums(1, 2)
+add_numbers(1, 2)
 ```
 
-The function name is fairly good... `add_nums` can be read as "add numbers".
-It's also good practice to add some formal documentation to the function. Use
-the "Insert Roxygen Skeleton" in the "Code" menu list (or by typing
+The function name is fairly good... `add_numbers` is read as "add numbers".
+While we generally want to write code that describes what it does by reading it,
+it's also good practice to add some formal documentation to the function. Use
+the "Insert Roxygen Skeleton" in the "Code" menu (or by typing
 `Ctrl-Shift-Alt-R`) and you can add template documentation right above the
 function. It looks like:
 
@@ -144,18 +145,17 @@ In the `Title` area, this is where you type out a brief sentence or several word
 that describe the function. Creating a new paragraph below this line allows you 
 to add a more detailed description. The other items are:
 
-- `@param num` lines are to describe what each argument is for.
-- `@return` describes what output the function provides. Is it a data.frame? A plot? 
-What else does the output give?
-- `@export` tells R that this function should be accessible to the user of your
-package. Delete it for non-package functions.
-- `@examples` lines below this are used to show examples of how to use the function.
-Very useful when making packages, but not really in this case.
+- `@param num`: These lines describe what each argument is for and what to give it.
+- `@return`: This describes what output the function gives. Is it a data.frame?
+A plot? What else does the output give?
+- `@export`: Tells R that this function should be accessible to the user of your
+package. Since we aren't making packages, delete it.
+- `@examples`: Any lines below this are used to show examples of how to use the
+function. This is very useful when making packages, but not really in this case.
+So we'll delete it. Let's write out some documentation for this function:
 
 ```{r roxygen-docs-2}
 #' Add two numbers together.
-#'
-#' This is just an example function to show how to create one.
 #'
 #' @param num1 A number here.
 #' @param num2 A number here.
@@ -168,6 +168,9 @@ add_nums <- function(num1, num2) {
 }
 ```
 
+Once we've created that, let's open up the Git Interface (`Ctrl-Alt-M`) and add
+and commit these changes to our history.
+
 ## Making a function for vroom
 
 Now that we have a basic understanding of what a function looks like, let's
@@ -176,18 +179,19 @@ apply it to something we're doing right now: Importing our data.
 Making functions is a series of steps:
 
 1. Write code that works and does what you want.
-1. Enclose it as a function with `function() { ... }`, with an appropriate and
-descriptive name.
+1. Enclose it as a function with `name <- function() { ... }`, 
+with an appropriate and descriptive name.
 1. Create arguments in the function call (`function(arg1, arg2)`) with appropriate
 and descriptive names, then replace the code with the argument names where 
 appropriate. 
 1. Rename any objects created to be more generic and include the `return()`
 function at the end to indicate what the function will output.
 1. Run the function and check that it works.
-1. Add the roxygen2 documentation tags (with "Ctrl-Alt-Shift-R" or "Code -> Insert
+1. Add the roxygen2 documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
 Roxygen Skeleton" menu item while the cursor is in the function).
 
-So, step one. Here is the code we want as a function:
+So, step one. Let's take the code we wrote for importing the `user_info` data
+and convert that as a function:
 
 ```{r function-creation-step-1, eval=FALSE}
 user_1_info_data <- vroom(
@@ -204,7 +208,7 @@ user_1_info_data <- vroom(
 
 Next we wrap it in the function call and give it an appropriate name. In this case,
 `import_user_info` is descriptive and meaningful. Make sure to style it correctly
-with "Ctrl-Shift-A".
+with `Ctrl-Shift-A`.
 
 ```{r function-creation-step-2, eval=FALSE}
 import_user_info <- function() {
@@ -278,8 +282,8 @@ import_user_info <- function(file_path) {
     return(info_data)
 }
 
-import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
-import_user_info(here::here("data-raw/mmash/user_2/user_info.csv"))
+import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
+import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
 ```
 
 Awesome! It works. The final stage is adding the Roxygen documentation.
