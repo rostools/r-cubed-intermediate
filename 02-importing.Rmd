@@ -26,11 +26,12 @@ LearnR3
 
 ## Learning objectives
 
-1. Learn where to store your data to make it easier to process later ... 
-NOTE: what about larger datasets e.g. registers?
 1. Learn about filesystems, relative and absolute paths, and how to make use 
 of the fs package to navigate files in your project.
-1. Learn how to import and do minor cleaning with the vroom package.
+1. Learn where to store your raw data so that you can use
+scripts as a record of what was done to process the data before analyzing it,
+and why that's important.
+1. Learn how to import data and do minor cleaning with the vroom package.
 1. Learn about strategies and resources to use when encountering problems when
 importing data.
 1. Practice using Git version control as part of the workflow of data analysis.
@@ -153,7 +154,7 @@ usethis::use_git_ignore("data-raw/mmash-data.zip")
 
 This is a good time to save the changes we've made to the Git history.
 Let's open the Git interface with either the Git icon at the top near the menu 
-bar, or with "Ctrl-Alt-M". When this opens up we'll click the checkbox beside
+bar, or with `Ctrl-Alt-M`. When this opens up we'll click the checkbox beside
 the `.gitignore` and `data-raw/mmash.R` files. Then we write a commit message
 in the text box on the right, something like "Code to download data zip file".
 Click the "Commit" button and close the Git interface.
@@ -170,17 +171,23 @@ During data collection, programs like Excel or Google Sheets are incredibly
 powerful. But after collection is done, don't make edits directly to the data
 unless absolutely necessary.
 
-A quick comment about saving your *raw* data in `data-raw/` and whether you
-should save your raw data in this folder or not. A general guideline is:
+A quick comment about whether you should save your *raw* data in `data-raw/`.
+A general guideline is:
 
-- central dataset that everyone uses for multiple projects, then don't save
-it and only include R code that extracts the relevant data from the central 
-location.
-- Small-ish data that only is for this project. Save it here.
-- Data found online. Don't save it, simply include code that downloads and
-processes it.
+- *Do* store it to `data-raw/` if the data will only be used for the one project.
+Use the `data-raw/` R script to be the record for how you processed your data
+for final analysis work.
+- *Don't* save it to `data-raw/` if: 1) there is a central dataset that multiple
+people use for multiple projects; or 2) you got the data online. Instead, use
+the `data-raw/` R script to be the record for which website you downloaded it
+from or from which central location you extracted it from and how you processed
+it.
+- *Don't save it to a project-specific `data-raw/` folder if you will use the
+raw data for multiple projects. Instead, create a central location for the data
+*for yourself* so that you can point all other projects to it and use their
+individual `data-raw/` R scripts as the record for how you processed the raw data.
 
-Let's start unzipping the zip files. In `data-raw/mmash.R`, continue writing 
+Ok, let's start unzipping the zip files. In `data-raw/mmash.R`, continue writing 
 below the `download.file()` function. We'll use the `unzip()` function
 to unzip the dataset. The main argument for `unzip()` is the zip file,
 and the other important one called `exdir` tells `unzip()` the folder we want to
@@ -197,7 +204,7 @@ unzip(here("data-raw/mmash-data.zip"),
 Notice the indentations and spacings of the code. Like writing any language,
 code should follow a [style guide]. An easy way of following a style is by
 selecting your code and using RStudio's builtin style fixer of either
-"Ctrl-Shift-A" or "Code -> Reformat Code" menu item.
+`Ctrl-Shift-A` or "Code -> Reformat Code" menu item.
 Ok, next, we want to extract the new `data-raw/MMASH.zip` file. Because we want to
 keep the folder structure inside this zip file, we don't use `junkpaths`.
 
@@ -278,7 +285,7 @@ Git history.
 While we'll eventually come back to the `data-raw/mmash.R` script,
 for now we'll move over to the `doc/lesson.Rmd` file.
 At the bottom of the file, create a header by typing out `## Importing raw data`.
-Next, we'll make a new code chunk with "Ctrl-Alt-I" and call it `setup`.
+Next, we'll make a new code chunk with `Ctrl-Alt-I` and call it `setup`.
 Inside the code chunk we'll load the [vroom][vroom-website] package with
 `library(vroom)` as well as `library(here)`. It should look like this:
 
@@ -476,7 +483,7 @@ Check out vroom's website help documentation on
 or on [`cols_only()`](https://vroom.r-lib.org/reference/cols.html)
 for more details on how to use those.
 
-## Exercise: Import the saliva data
+## Exercise: Import the saliva data {#ex-import-saliva}
 
 Time: 15 min
 
@@ -484,7 +491,7 @@ Practice importing data files by doing the same process with the saliva data.
 
 1. Create a new header at the bottom of the `doc/lesson.Rmd` file
 and call it `## Exercise: Import the saliva data`.
-1. Below the header, create a new code chunk with "Ctrl-Alt-I".
+1. Below the header, create a new code chunk with `Ctrl-Alt-I`.
 1. Copy and paste the code template below into the new code chunk.
 Begin replacing the `___` with the correct R functions or other information.
 1. Look at the [data dictionary][mmash-site] and find out what the columns
@@ -536,7 +543,7 @@ Let's do this on the `RR.csv` file.
 We can see from the file size that it is bigger than most of the other files 
 (~2Mb). So, we'll use this technique to decide what we want to keep etc. 
 First, create a new header `## Import larger datasets` and a new code chunk below it
-(with "Ctrl-Alt-I"). 
+(with `Ctrl-Alt-I`). 
 
 Do the same thing that we've been doing, but this time we are going to use the
 argument `n_max`, which tells vroom how many rows to read into R. In this case,
@@ -580,7 +587,7 @@ user_1_rr_data
 
 To make sure everything is so far reproducible within the `lesson.Rmd` file,
 we will "Knit" the R Markdown document to output an HTML file. Click the "Knit"
-button at the top of the Source pane or by typing "Ctrl-Shift-K". If it generates
+button at the top of the Source pane or by typing `Ctrl-Shift-K`. If it generates
 an HTML document without problems, we know our code is at least starting to be
 reproducible.
 
@@ -593,7 +600,7 @@ we did for the `RR.csv`. But first:
 
 1. Create a new header at the bottom of the `doc/lesson.Rmd` file
 and call it `## Exercise: Import the Actigraph data`.
-1. Below the header, create a new code chunk with "Ctrl-Alt-I".
+1. Below the header, create a new code chunk with `Ctrl-Alt-I`.
 
 Use the same technique as we used for the `RR.csv` data 
 and read in the `Actigraph.csv` file from `user_1/`.
