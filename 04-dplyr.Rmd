@@ -1,22 +1,22 @@
-# Processing datasets, cleanly {#dplyr-1}
+# Processing datasets for cleaning {#dplyr-1}
 
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
 ```{r, eval=TRUE, child="includes/preamble.Rmd"}
 ```
 
+`r '<!-- '`
+
 ```{r}
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
-Here we will cover the third block, "*Create final data*" in Figure \@ref(fig:diagram-overview-3)
+Here we will continue making use of the "*Workflow*" block and cover the third
+block, "*Create final data*" in Figure \@ref(fig:diagram-overview-3).
 
 ```{r diagram-overview-3, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(3)
 ```
-
-`r '<!-- '`
-
 Day 2 morning (8:30, lunch at 12:00 --- ~3.5 hrs, with one big break, one small one during exercise):
 
 
@@ -32,8 +32,6 @@ Day 2 morning (8:30, lunch at 12:00 --- ~3.5 hrs, with one big break, one small 
         - selecting
         - rename_with (snakecase::to_snake_case) (FP)
         - converting to/updating existing functions
-
-
         
 exercise:
     - activity, calculate minutes from start and end.
