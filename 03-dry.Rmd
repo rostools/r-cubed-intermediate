@@ -249,7 +249,7 @@ also import more than just `user_1`. A nice object name would be `info_data`.
 Add the return function at the end with the object you want your function to
 output.
 
-```{r function-creation-step-4, eval=FALSE}
+```{r function-creation-step-4}
 import_user_info <- function(file_path) {
     info_data <- vroom(
         file_path,
@@ -265,23 +265,10 @@ import_user_info <- function(file_path) {
 }
 ```
 
-Great! Now we need to test it out. Let's try on two datasets, `user_1` and `user_2`.
+Great! Now we need to test it out. Let's try on two datasets, 
+two `user_info.csv` files in the `user_1` and `user_2` folders.
 
 ```{r function-creation-step-5}
-import_user_info <- function(file_path) {
-    info_data <- vroom(
-        file_path,
-        col_select = -1,
-        col_types = cols(
-            Gender = col_character(),
-            Weight = col_double(),
-            Height = col_double(),
-            Age = col_double()
-        )
-    )
-    return(info_data)
-}
-
 import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
 import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
 ```
@@ -293,7 +280,7 @@ Awesome! It works. The final stage is adding the Roxygen documentation.
 #'
 #' @param file_path Path to user info data file.
 #'
-#' @return Outputs a dataframe.
+#' @return Outputs a data frame.
 #'
 import_user_info <- function(file_path) {
     info_data <- vroom(
@@ -311,9 +298,9 @@ import_user_info <- function(file_path) {
 ```
 
 A massive advantage of using functions is that if you want to make a change to all
-your code, you can very easily do it in the R function and it will change all 
-your other code too! Now that we have a working function, let's add and commit
-it to the Git history with the RStudio Git Interface.
+your code, you can very easily do it by modifying the function and it will
+change all your other code too. Now that we have a working function, let's add
+and commit it to the Git history with the RStudio Git Interface.
 
 ## Exercise: Repeat with the saliva data
 
@@ -341,21 +328,21 @@ converting it into a function, like we did above.
 We've created two functions. Now we need to move those functions from the 
 `doc/lesson.Rmd` file and into the `R/`. We do this for a few reasons:
 
-1. To prevent the R Markdown document from becoming incredibly long, with only
-R code.
+1. To prevent the R Markdown document from becoming too long and having a large
+portion of R code over other text.
 1. To make it easier to maintain and find things in your project.
 1. To make use of the `devtools::load_all()` functionality available with
 R Projects that are indicated as Packages.
 
-Because this project is set as a Package, we can use the `load_all()` keybinding
-`Ctrl-Shift-L` in RStudio. But first, we need to make a new file to store our
-functions. So, in the *Console*, type out and run:
+Because this project is set as a Package, we can use the `load_all()` keyboard
+shortcut `Ctrl-Shift-L` in RStudio. But first, we need to make a new file to
+store our functions. So, in the *Console*, type out and run:
 
 ```{r functions-script, eval=FALSE}
 usethis::use_r("functions")
 ```
 
-This creates a new file called `R/functions.R`. We will cut and paste the
+This creates a new file called `R/functions.R`. Then we cut and paste the
 functions we created into this new file. So, cut *only* the `import_user_info()` 
 function we created in `doc/lesson.Rmd`, including the Roxygen documentation,
 and paste it into `R/functions.R`.
@@ -363,42 +350,83 @@ and paste it into `R/functions.R`.
 Once we have it in there, let's test out how the `load_all()` function works.
 Let's restart our R session with either `Ctrl-Shift-F10` or from the 
 "Session -> Restart R" menu item. Move back into the `doc/lesson.Rmd`
-and go to where we wrote:
+and go to where you wrote:
 
 ```{r, eval=FALSE}
-import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
+import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
 Then hit `Ctrl-Shift-L`. What happens? You should see a bunch of text pop up
 on the side about loading the `LearnR3` project. Ok. Try to run the
 `import_user_info()` line. What happens now? You might get an error about
-not finding the `vroom()` function. Or you might not, if you put
-`library(vroom)` in the code chunk called `setup`. If you did get an error,
-that's because R doesn't know what the `vroom()` function is.
-This is where we start getting into package dependency management.
+not finding the `vroom()` function. Or if you put `library(vroom)` in the code
+chunk called `setup`, you might not get an error. If you did get an error,
+that's because R doesn't know what the `vroom()` function is. This is where we
+start getting into package dependency management.
 
 What is package dependency management? Whenever you use an R package, you 
-depend on it for your code. The informal way to show what packages you use
-is when you use the `library()` function. But what if someone else looks over your
-code? Do they have to search through all your files just to find all `library()`
-functions you used and then install those packages individually? A better way
-here is to formally indicate your package dependency so that installing
-dependencies is easy! This is done through the `DESCRIPTION` file.
+depend on it for your code to work. The informal way to show what packages you use
+is by using the `library()` function. But if you come back to the project, 
+or get a new computer, or someone else is working on your project too,
+how will they know, easily, which packages you depend on?
+Do they have to search through all your files just to find all `library()`
+functions you used and then install those packages individually? A much better
+way here is to formally indicate your package dependency so that installing
+dependencies is easy. We do this by using the `DESCRIPTION` file.
 
+Open up the `DESCRIPTION` file. You may or may not see something that looks like:
 
-First thing we need to 
+```text
+Package: LearnR3
+Title: Title of Project
+Version: 0.0.0
+Authors@R: c(
+    person(given = "Luke",
+           family = "Johnston",
+           role = c("aut", "cre"),
+           email = "lwjohnst@gmail.com",
+           comment = c(ORCID = "0000-0003-4169-2616"))
+    )
+Imports: 
+    devtools
+```
 
+Notice the `Imports:` key. This is where information about packages are added.
+To quickly add a package, go to the *Console* and type out:
 
+```r
+usethis::use_package("vroom")
+```
 
-R/ folder, load_all, and developing functions
+You will see a bunch of text about adding it to `Imports`. If you look in your
+`DESCRIPTION` file now, you'll see something like:
 
-- package dependency
-    - use_package
-    - ::
-        - We do this step at the end because it can be tedious always 
-        typing out `package::`.
-    
-You may have noticed from others code that people do:
+```text
+Imports: 
+    devtools,
+    vroom
+```
+
+Now, if you or someone else wants to install all the package dependency,
+they can do that going to the *Console* and running:
+
+```r
+remotes::install_deps()
+```
+
+This function finds the `DESCRIPTION` file and installs all the packages in
+`Imports`. Let's add the other dependencies by typing in the *Console*:
+
+```r
+usethis::use_package("here")
+usethis::use_package("fs")
+```
+
+Great! Now that we've formally established package dependencies, we also need to
+formally declare which package each function comes from inside our functions.
+Before getting into the correct way, we need to quickly cover the incorrect way
+that you may or may not have seen that others have done on websites or in code.
+Sometimes people use `library()` or `require()` inside functions like:
 
 ```{r bad-practice-library, eval=FALSE}
 add_numbers <- function(num1, num2) {
@@ -419,15 +447,22 @@ add_numbers <- function(num1, num2) {
 ```
 
 This is *very* **bad practice** and can have some unintended and serious
-consequences that won't give any warning or error. Instead we use `packagename::`
-to access the function from a package. We won't get into the reasons why because
-it can quickly get quite technical.
+consequences that you might not notice or that won't give any warning or error.
+The correct way of indicating which package a function comes from is instead by
+using `packagename::`, which you've seen and used many times in this course.
+We won't get into the reasons why this is incorrect because it can quickly get
+quite technical.
 
-A good practice to use after you've created your function is to explicitly indicate 
-which functions come from which package, since you shouldn't use `library` calls
-in your function. We do this by using the `packagename::function_name` format 
-(you don't need to do this for base R functions). Plus, let's add some
-documentation! (`Ctrl-Alt-Shift-R`).
+Another reason to use `packagename::` for each function from an R package
+you use in your own function is that it explicitly tells R (and us the readers)
+where the function comes from. Because the same function name can be used by
+multiple packages, if you don't explicitly state which package the function is 
+from, R will use the function that it can find... which isn't always the function
+you *mean*.
+
+We also do this step at the end of making the function because doing it while
+we create it can be quite tedious. Alright, let's go into `R/functions.R` and
+add `vroom::` to each of the vroom functions we've used:
 
 ```{r explicit-function-calls}
 import_user_info <- function(file_path) {
@@ -445,21 +480,38 @@ import_user_info <- function(file_path) {
 }
 ```
 
-## Exercise
+Test that it works by restart the R session (`Ctrl-Shift-F10` or "Session ->
+Restart R"), loading the functions with `Ctrl-Shift-L`, and going to the
+*Console* and typing out:
+
+```r
+import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
+```
+
+It should work as expected!
+Now that we've done that, let's add and commit the changes made through the
+Git interface.
+
+## Exercise: Move and update the rest of the functions
 
 Time: 20 min
 
+Repeat this process and do this for the rest of the code you worked on
+previously that imported the `saliva.csv`, `RR.csv`, and `Actigraph.csv` data.
 
-
-Do this for the rest of the code you worked on previously that imported the 
-`RR.csv` and `Actigraph.csv` data.
+1. Convert the importing code into functions while in the `doc/lessons.Rmd` file.
+Include the Roxygen documentation and use `packagename::` to be explicit about
+where the function comes from.
+1. Move the function into `R/functions.R`.
+1. Restart R and then use `devtools::load_all()` by using `Ctrl-Shift-L` and
+test that the functions work by running them in the *Console*.
 
 ## Functional programming
 
 **Please take 15 min to read over this section before we continue.**
 Unlike many other programming languages, R's primary strength and approach to
-programming is functional programming. So what is functional programming? It is a
-form of programming that:
+programming is in functional programming. So what is functional programming? It
+is a form of programming that:
 
 - Uses functions (like `function()`)
 - Applies functions to vectors all at once (called [vectorisation]), rather than
@@ -487,14 +539,15 @@ total_sum
 
 But in R, you can give a function that uses vectorization the entire vector
 (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. 
-Figure \@ref(fig:image-vectorization) shows how a function
+Figure \@ref(fig:image-vectorization) shows how a function conceptually uses
+vectorization.
 
 ```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
 knitr::include_graphics(here::here("images/vectorization.svg"))
 ```
 
-So in R, you have instead the function called `sum()` that takes the entire
-vector of `values` and outputs the total sum, without needing to use a for loop.
+Instead, in R, there is the function called `sum()` that takes the entire
+vector of `values` and outputs the total sum, without needing a for loop.
 
 ```{r}
 # Vectorized
@@ -534,6 +587,15 @@ paste(4, "seconds have passed")
 paste(5, "seconds have passed")
 ```
 
+Or as a loop:
+
+```{r paste-multiple}
+for (num in 1:5) {
+    sec_passed <- paste(num, "seconds have passed")
+    print(sec_passed)
+}
+```
+
 With `map()`, we'd do this a bit differently. purrr uses a shortcut to allow
 you to write functions that do more things to the input vector (e.g. `1:5`).
 This shortcut is using `~` to start the function and `.x` as the replacement
@@ -544,8 +606,8 @@ map(1:5, ~paste(.x, "seconds have passed"))
 ```
 
 This is the basics of using functionals. So, with functions, vectorization, and
-functionals, you generally should only use for loops as the very last choice you
-have. That's because R has better, more expressive, and more powerful tools to
+functionals, you generally should only use for loops as the very last option.
+That's because R has better, more expressive, and more powerful tools to
 use instead. And while technically, using a loop let's you "not repeat
 yourself", it's a lot of typing and code to express a simple idea: *Do an action
 on each of these items*. So using functionals let's you repeat yourself 
@@ -557,15 +619,36 @@ So what does functionals have to do with what we are doing now? Well, our
 **Ok, stop reading and we'll go over this again before continuing with the
 coding.**
 
-The first thing we have to do to use the `map()` functional is to get a list
-of all the dataset files available to us. We turn back to use fs, which has
-a function called `dir_ls()` that finds files of a certain pattern.
-In our case, the pattern is `user_info.csv`. Let's go back into our
-`doc/lesson.Rmd` file, create a new header called `## Using map`, and
-create a code chunk below it. Then, go to the `setup` code chunk at the top
-and add to fs and purrr packages to the list of other packages.
+`r details_for_instructors("
+Go over this section briefly by reinforcing what they read. Make sure they
+understand the concept of applying something to many things at once. Doing the
+code-along should also help reinforce this concept. 
 
-The `dir_ls()` function takes the path that we want to search (`data-raw/mmash/`)
+Also highlight that the resources appendix has some links for continued learning
+for this and that the RStudio purrr cheatsheet is an amazing resource to use.
+")`
+
+The first thing we have to do is add `library(purrr)` to the `setup` code chunk
+in the `doc/lesson.Rmd` document. Then we need to add the package dependency
+by going to the *Console* and running:
+
+```r
+usethis::use_package("purrr")
+```
+
+Then, the next step to actually using the `map()` functional is to get a vector
+or list of all the dataset files available to us. We turn back to use the fs
+package, which has a function called `dir_ls()` that finds files of a certain
+pattern. In our case, the pattern is `user_info.csv`. So, let's add `library(fs)`
+to the `setup` code chunk. Then, go to the bottom of the `doc/lesson.Rmd`
+document, create a new header called `## Using map`, and create a code chunk
+below that.
+
+The `dir_ls()` function takes the path that we want to search (`data-raw/mmash/`),
+uses the argument `regexp` (short for [regular expression]) to find the pattern,
+and `recurse` to look in all subfolders.
+
+[regular expression]: https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions
 
 ```{r list-user-info-files}
 user_info_files <- dir_ls(here("data-raw/mmash/"), 
@@ -574,10 +657,9 @@ user_info_files <- dir_ls(here("data-raw/mmash/"),
 ```
 
 Then let's see what the output looks like. For the website, we are only showing
-the first 3 files.
+the first 3 files. Your output will look slightly different from this.
 
 ```{r list-files-head, eval=FALSE}
-# Your output will look a bit different
 user_info_files
 ```
 
@@ -608,8 +690,8 @@ on the ending of `map_`:
 
 - `map_int()` outputs an integer.
 - `map_dbl()` outputs a numeric value, called a "double" in programming.
-- `map_dfr()` outputs a data frame, combining by row (`r`).
-- `map_dfc()` outputs a data frame, combining by column (`c`).
+- `map_dfr()` outputs a data frame, combining the list items by row (`r`).
+- `map_dfc()` outputs a data frame, combining the list items by column (`c`).
 
 The `map_dfr()` looks like the one we want, since we want all these datasets
 together as one. If we look at the help for it:
@@ -640,13 +722,21 @@ user_info_df %>%
     mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id))
 ```
 
-<!-- - Real examples:  -->
-<!--     - my webscraping of the DST etc -->
-<!--     - Running multiple models -->
+Now that we have this working, let's add and commit the changes to the Git history.
 
-## Exercise: Use functionals for the other datasets
+## Exercise: Use functionals for importing the other datasets
 
 Time: 20 min
 
-Use the `map_dfr()` functional on each of the `saliva.csv`, `RR.csv`, and
-`Actigraph.csv` datasets.
+Inside `doc/lesson.Rmd`, use the `map_dfr()` functional on each of the
+`saliva.csv`, `RR.csv`, and `Actigraph.csv` datasets.
+
+1. Create a new header `## Exercise: Map on the other datasets` at the bottom of
+the document.
+1. Create a new code chunk below it.
+1. Using `dir_ls()` and `map_dfr()`, importing in all the individual datasets
+to be one each for the saliva, RR, and Actigraph data.
+    - You should be using three instances of `dir_ls()` and `map_dfr()`
+    for each of the three datasets.
+    - Don't forget to add the `.id` argument to `map_dfr()`
+1. Once done, add and commit what you've done.
