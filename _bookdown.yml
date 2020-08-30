@@ -26,3 +26,5 @@ before_chapter_script:
 clean:
     - "resources/packages.bib"
     - "r-cubed-intermediate.rds"
+    - "_bookdown_files/"
+    - "data-raw/mmash/"
