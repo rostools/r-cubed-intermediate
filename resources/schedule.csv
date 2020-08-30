@@ -4,19 +4,19 @@ Date and time,Session topic
 10:00,Introduction to the course
 11:00,"Importing data, fast! (with short break)"
 12:30,Lunch
-13:30,Advanced data wrangling
+13:30,"Save time, don't repeat yourself"
 14:45,Coffee break and snacks
-15:00,Advanced data wrangling (with short break)
+15:00,"Save time, don't repeat yourself (with short break)"
 17:30,End of day survey
 TBA,Dinner together
 **Day 2**,
-8:30,Creating your own functions
+8:30,"Processing datasets for cleaning"
 10:00,Coffee break and snacks
-10:15,Creating your own functions (with short break)
+10:15,"Processing datasets for cleaning (with short break)"
 12:00,Lunch
-13:00,Iteration with functional programming
+13:00,"Workflow to analyzing your tidy data"
 14:45,Coffee break and snacks
-15:00,Iteration with functional programming (with short break)
+15:00,"Workflow to analyzing your tidy data (with short break)"
 16:15,What next? Applying open and reproducible practices in real-life
 16:30,Closing remarks and end of day survey
 16:45,Farewell
