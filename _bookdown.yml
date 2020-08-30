@@ -1,8 +1,12 @@
 output_dir: "public"
 book_filename: "r-cubed-intermediate"
 delete_merged_file: true
-view: https://gitlab.com/rostools/r-cubed-intermediate/blob/master/%s
-edit: https://gitlab.com/rostools/r-cubed-intermediate/edit/master/%s
+view:
+    link: https://gitlab.com/rostools/r-cubed-intermediate/blob/master/%s
+    text: View
+edit:
+    link: https://gitlab.com/rostools/r-cubed-intermediate/edit/master/%s
+    text: Edit
 language:
   ui:
     chapter_name: ""

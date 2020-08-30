@@ -22,5 +22,5 @@ style_mono_accent(
     header_font_google = google_font("Fira Sans"),
     text_font_google = google_font("Crimson Text"),
     code_font_google = google_font("Source Code Pro"),
-    outfile = here::here("resources/xaringan-themer.css")
+    outfile = here::here("includes/xaringan-themer.css")
 )
