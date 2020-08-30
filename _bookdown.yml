@@ -21,7 +21,7 @@ rmd_files:
     - "04-dplyr.Rmd"
     - "05-dplyr.Rmd"
     - "appendix.md"
-    # - "resources.Rmd"
+    - "resources.Rmd"
     # - "for-instructors.md"
     - "references.Rmd"
 before_chapter_script:
