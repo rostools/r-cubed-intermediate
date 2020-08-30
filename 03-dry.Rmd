@@ -589,7 +589,7 @@ paste(5, "seconds have passed")
 
 Or as a loop:
 
-```{r paste-multiple}
+```{r paste-loop}
 for (num in 1:5) {
     sec_passed <- paste(num, "seconds have passed")
     print(sec_passed)
