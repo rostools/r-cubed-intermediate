@@ -1,4 +1,4 @@
-# Analyzing your tidy data {#dplyr-2}
+# Workflow to analyzing your tidy data {#dplyr-2}
 
 ![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
 
