@@ -1,15 +1,12 @@
 # Save time, don't repeat yourself {#dry}
 
-![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
+![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
 
 ```{r setup-03, include=FALSE}
 library(here)
 library(fs)
 library(dplyr)
 library(purrr)
-```
-
-```{r, eval=TRUE, child="resources/preamble.Rmd"}
 ```
 
 Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
@@ -542,7 +539,7 @@ But in R, you can give a function that uses vectorization the entire vector
 Figure \@ref(fig:image-vectorization) shows how a function conceptually uses
 vectorization.
 
-```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="40%", echo=FALSE}
 knitr::include_graphics(here::here("images/vectorization.svg"))
 ```
 
@@ -739,4 +736,4 @@ to be one each for the saliva, RR, and Actigraph data.
     - You should be using three instances of `dir_ls()` and `map_dfr()`
     for each of the three datasets.
     - Don't forget to add the `.id` argument to `map_dfr()`
-1. Once done, add and commit what you've done.
+1. Once done, add and commit what you've done to the Git history.
