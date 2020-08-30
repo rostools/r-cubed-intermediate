@@ -9,3 +9,5 @@ resources/packages.bib
 .Rbuildignore
 resources/refs.bib.sav
 r-cubed-intermediate.Rmd
+data-raw/mmash/
+data-raw/mmash.R
