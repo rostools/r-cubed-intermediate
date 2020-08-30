@@ -16,21 +16,22 @@ Depends:
 Imports: 
     bookdown,
     dplyr,
+    purrr,
     emo,
     vroom,
     here,
     DiagrammeR,
     glue,
     RefManageR,
-    fs,
-    r3 (>= 0.0.0.9000)
+    fs
 Suggests: 
     prodigenr,
     tidyverse,
     usethis,
     xaringan,
     xaringanthemer,
-    showtext
+    showtext,
+    r3 (>= 0.0.0.9000)
 Remotes: 
     gadenbuie/xaringanthemer,
     hadley/emo,
