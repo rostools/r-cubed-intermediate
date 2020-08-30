@@ -148,7 +148,7 @@ Because the original dataset is stored elsewhere, we don't need to keep it or
 save it to our Git history. So we'll add the zip file to the Git ignore list.
 In the *Console*, type out and run this code. You only need to do this once.
 
-```{r, eval=FALSE}
+```{r ignore-mmash-zip, eval=FALSE}
 usethis::use_git_ignore("data-raw/mmash-data.zip")
 ```
 
@@ -195,7 +195,7 @@ extract the files to. The argument `junkpaths` is used here because we want
 everything extracted to the `data-raw/` folder (don't ask nor know why it's
 called "junkpaths").
 
-```{r unzip-main-file, eval=FALSE}
+```{r unzip-main-file}
 unzip(here("data-raw/mmash-data.zip"), 
       exdir = here("data-raw"),
       junkpaths = TRUE)
@@ -210,7 +210,7 @@ keep the folder structure inside this zip file, we don't use `junkpaths`.
 
 [style guide]: https://style.tidyverse.org
 
-```{r unzip-data-file, eval=FALSE}
+```{r unzip-data-file}
 unzip(here("data-raw/MMASH.zip"),
       exdir = here("data-raw"))
 ```
@@ -247,7 +247,7 @@ data-raw
 
 Then we add these lines of code to the `data-raw/mmash.R` script and run them:
 
-```{r delete-rename-files, eval=FALSE}
+```{r delete-rename-files}
 library(fs)
 file_delete(here(c("data-raw/MMASH.zip", 
                    "data-raw/SHA256SUMS.txt",
@@ -273,7 +273,7 @@ Since we have an R script that downloads the data and processes it for us,
 we don't need to have Git track it. So, in the *Console*, type out and run
 this command:
 
-```{r ignore-mmash, eval=FALSE}
+```{r git-ignore-mmash, eval=FALSE}
 usethis::use_git_ignore("data-raw/mmash/")
 ```
 
@@ -352,7 +352,7 @@ importing data which we won't cover. The CSV file format is a commonly used
 format for data because it is open, readable by any computer, and doesn't
 depend on any special software to open (unlike for e.g. Excel spreadsheets).
 
-```{r setup, include=FALSE}
+```{r setup-02, include=FALSE}
 library(vroom)
 library(here)
 ```
@@ -404,9 +404,7 @@ It says to use a "cols() specification", which is likely the output of `spec()`.
 So, let's copy and paste the output from `spec()` and paste it into the 
 `col_types` argument of `vroom()`.
 
-TODO: see if we can use anything from the vroom website
-
-```{r, eval=FALSE, error=TRUE}
+```{r vroom-with-error, error=TRUE}
 user_1_info_data <- vroom(
     user_1_info_file,
     col_types = cols(
@@ -496,7 +494,7 @@ and call it `## Exercise: Import the saliva data`.
 Begin replacing the `___` with the correct R functions or other information.
 1. Look at the [data dictionary][mmash-site] and find out what the columns
 mean and rename the column to be something more meaningful and
-readable. 
+readable. TODO: Include this exercise? 
     - Pipe `%>%` the output from `vroom()` into the `rename()` function from the
     dplyr package to rename the column and use [`snake_case`][snake-case] when
     naming the new column. Read the `?dplyr::rename` help to know how to rename
