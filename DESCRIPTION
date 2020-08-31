@@ -23,7 +23,8 @@ Imports:
     DiagrammeR,
     glue,
     RefManageR,
-    fs
+    fs,
+    stringr
 Suggests: 
     prodigenr,
     tidyverse,
