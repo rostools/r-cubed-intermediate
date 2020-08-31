@@ -537,8 +537,6 @@ In these cases, we can do a trick: read in only first few lines of the dataset,
 use `spec()` and paste in the output into the `col_type` argument,
 and then keep only the columns you want to keep.
 
-<!-- (use my UK Biobank analysis as example?) -->
-
 Let's do this on the `RR.csv` file. 
 We can see from the file size that it is bigger than most of the other files 
 (~2Mb). So, we'll use this technique to decide what we want to keep etc. 
@@ -547,13 +545,13 @@ First, create a new header `## Import larger datasets` and a new code chunk belo
 
 Do the same thing that we've been doing, but this time we are going to use the
 argument `n_max`, which tells vroom how many rows to read into R. In this case,
-let's read in 1000 to start. This dataset, like the others, has an empty column
-that we will drop.
+let's read in 100, since that is the amount vroom guess until. This dataset,
+like the others, has an empty column that we will drop.
 
 ```{r import-some-of-data-trick}
 user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
 user_1_rr_data_prep <- vroom(user_1_rr_file,
-                             n_max = 1000,
+                             n_max = 100,
                              col_select = -1)
 spec(user_1_rr_data_prep)
 ```
@@ -606,7 +604,7 @@ Use the same technique as we used for the `RR.csv` data
 and read in the `Actigraph.csv` file from `user_1/`.
 
 1. Set the file path to the dataset with `here()`. 
-1. Read in a max of 1000 rows for `n_max` and exclude the first column with
+1. Read in a max of 100 rows for `n_max` and exclude the first column with
 `col_select = -1`.
 1. Use `spec()` to output the column specification and paste the results into
 `col_types()`. Don't forget to remove the `...1 = col_skip()` and the 
@@ -619,7 +617,7 @@ TODO: Change this last one?
 # Use first 1000 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
 user_1_actigraph_data_prep <- vroom(user_1_actigraph_file,
-                                    n_max = 1000,
+                                    n_max = 100,
                                     col_select = -1)
 spec(user_1_actigraph_data_prep)
 
