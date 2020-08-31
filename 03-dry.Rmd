@@ -55,6 +55,7 @@ data analysis work.
 
 ## The basics of a function
 
+**Take 5 min and read this section until it says to stop.**
 As mentioned before, all actions in R are functions. For instance, the `+` is a
 function, `mean()` is a function, `[]` is a function, and so on. Because R
 is open source, that means anyone can see how things work underneath.
@@ -98,6 +99,7 @@ name <- function(arg1, arg2) {
 }
 ```
 
+**Ok, stop here and we'll go over it together**.
 Let's write a simple example. First, create a new Markdown header called 
 `## Making a function` and create a code chunk below that with `Ctrl-Alt-I`.
 Then, inside the function, let's write this code out:
