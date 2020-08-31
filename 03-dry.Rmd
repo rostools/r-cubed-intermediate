@@ -500,6 +500,7 @@ previously that imported the `saliva.csv`, `RR.csv`, and `Actigraph.csv` data.
 1. Convert the importing code into functions while in the `doc/lessons.Rmd` file.
 Include the Roxygen documentation and use `packagename::` to be explicit about
 where the function comes from.
+    - Name the new functions `import_saliva`, `import_rr`, and `import_actigraph`.
 1. Move the function into `R/functions.R`.
 1. Restart R and then use `devtools::load_all()` by using `Ctrl-Shift-L` and
 test that the functions work by running them in the *Console*.
