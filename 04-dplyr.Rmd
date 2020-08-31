@@ -210,17 +210,63 @@ Image of joins
 full_join(user_info_df, saliva_df, by = "user_id")
 ```
 
-But we also have at least two other datasets that we've worked
+We also eventually have other datasets to join together later on. Since
+`full_join()` can only take two datasets at a time, do we then just keep 
+using `full_join()` until all the other datasets are combined?
+What if we get more data later on? Well, that's where more functional programming
+comes in. Again, we have a simple goal: For a set of data frames, join them
+all together. Here we use another functional programming concept called `reduce()`.
+Like `map()`, which "maps" a function onto a set of items, `reduce()`
+applies a function to each item of a vector or list, each time reducing the set
+of items down until only one remains: the output. Let's use our simple function
+`add_numbers()` from before and add up 1 to 5. Since `add_numbers()` only takes
+two numbers, we have to give it two numbers at a time and repeat until we reach
+5.
 
-
-
-```{r, eval=FALSE}
-library(dplyr)
-user_1_fix %>% bind_cols(user_1_rr_fix)
-
-# %>% 
-#     rename(inter_beat_interval_seconds = ibi_s)
+```{r add-numbers-function, echo=FALSE}
+add_numbers <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
 ```
 
+```{r}
+# Add from 1 to 5
+first <- add_numbers(1, 2)
+second <- add_numbers(first, 3)
+third <- add_numbers(second, 4)
+add_numbers(third, 5)
+```
+
+Instead, we can use reduce to do the same thing:
+
+```{r}
+reduce(1:5, add_numbers)
+```
+
+This Figure \@ref(fig-reduce) visually shows what is happening within `reduce()`.
+
+```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+knitr::include_graphics(here::here("images/reduce.svg"))
+```
+So, for our `full_join()`, if we put the datasets together as a list, we can
+`reduce()` them down into one dataset with `full_join()`.
+
+```{r}
+combined_data <- reduce(list(user_info_df, saliva_df), full_join)
+combined_data
+```
+
+## Renaming all columns
+
+
+Functionals don't just 
+
+```{r}
+combined_data %>% 
+    rename_with(snakecase::to_snake_case)
+```
+
+## 
 
 `r '-->'`
