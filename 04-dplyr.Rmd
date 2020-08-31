@@ -7,18 +7,46 @@
 
 `r '<!-- '`
 
-```{r}
+```{r setup-04, include=FALSE}
 knitr::opts_chunk$set(eval = FALSE)
+library(here)
+library(fs)
+library(dplyr)
+library(purrr)
 ```
 
-Here we will continue making use of the "*Workflow*" block and cover the third
+Here we will continue making use of the "*Workflow*" block as we cover the third
 block, "*Create final data*" in Figure \@ref(fig:diagram-overview-3).
 
 ```{r diagram-overview-3, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(3)
 ```
-Day 2 morning (8:30, lunch at 12:00 --- ~3.5 hrs, with one big break, one small one during exercise):
 
+And your folder and file structure should look like:
+
+```
+LearnR3
+├── data/
+│   └── README.md
+├── data-raw/
+│   ├── mmash-data.zip
+│   ├── mmash/
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
+├── doc/
+│   ├── README.md
+│   └── lesson.Rmd
+├── R/
+│   ├── functions.R
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
+```
 
 - Use a custom function in the advanced dplyr, to link to previous?
 
@@ -38,6 +66,153 @@ exercise:
 
 ## Combining datasets
 
+You'll notice a bunch of messages saying:
+
+```text
+New names:
+* NA -> ...1
+```
+
+This is vroom letting you know that a column was renamed. vroom is telling you
+this because you didn't explicitly indicate that you wanted to rename a column.
+To fix that, you need to tell vroom exactly what you want. Let's look
+at the help docs of vroom: `?vroom`. We see an argument called `.name_repair`
+that handles naming of columns. Going into the link that is provided we go
+to the `tibble::tibble()` help documentation. Scroll down to the `.name_repair`
+argument documentation and we read that it treats problematic column names.
+There are several options here, but the one I want to focus on is the comment about
+"function: apply custom name repair". This is an important one because 
+we eventually want to rename the columns to match the [style guide] by using `snake_case`.
+And there's a package to do that called [snakecase][snakecase-pkg].
+
+[snakecase-pkg]:
+
+So to remove the messages and convert the variable names to snake case, we
+would add `.name_repair = snakecase::to_snake_case` to all our functions so far.
+For now, let's focus on the `import_user_info()` we created.
+
+TODO: Get them to snakecase and name repair to all other functions.
+
+But first! We need to add the snakecase as a dependency:
+
+```r
+usethis::use_package("snakecase")
+```
+
+```{r}
+import_user_info <- function(file_path) {
+    info_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            Gender = vroom::col_character(),
+            Weight = vroom::col_double(),
+            Height = vroom::col_double(),
+            Age = vroom::col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(info_data)
+}
+
+import_saliva <- function(file_path) {
+    saliva_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            SAMPLES = vroom::col_character(),
+            `Cortisol NORM` = vroom::col_double(),
+            `Melatonin NORM` = vroom::col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(saliva_data)
+}
+
+import_multiple_files <- function(file_paths, import_function) {
+    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+                             regexp = file_paths,
+                             recurse = TRUE)
+    
+    combined_data <- purrr::map_dfr(data_files, import_function,
+                                    .id = "file_path_id")
+    return(combined_data)
+}
+
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+```
+
+replace purrr with tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+very briefly go over regexp (we used it before). This is way beyond the time 
+available in this course to begin to cover it, but see TODO: Link resources and
+a help to use for more information.
+
+```{r}
+user_info_df %>% 
+    mutate(user_id = file_path_id %>% 
+               stringr::str_extract("user_\\d\\d?")) %>% 
+    select(-file_path_id)
+```
+
+Want to find which package a function comes from: use the help doc `?functionname`
+or F1 when the cursor is over the function.
+
+```{r}
+extract_user_id <- function(imported_data) {
+    imported_data %>% 
+        dplyr::mutate(user_id = file_path_id %>% 
+                   stringr::str_extract("user_\\d\\d?")) %>% 
+        dplyr::select(-file_path_id)
+}
+```
+
+Then load all ctrl-shift-l
+```{r}
+user_info_df %>% 
+    extract_user_id()
+```
+
+
+To get it to work in all other functions, let's add this new function to the end of
+`import_multiple_files()`
+
+```{r}
+import_multiple_files <- function(file_paths, import_function) {
+    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+                             regexp = file_paths,
+                             recurse = TRUE)
+    
+    combined_data <- purrr::map_dfr(data_files, import_function,
+                                    .id = "file_path_id") %>% 
+        extract_user_id()
+    return(combined_data)
+}
+
+```
+
+## Joins
+
+There are many types of joins:
+
+- Left
+- Right
+- Full
+
+Image of joins
+
+```{r}
+full_join(user_info_df, saliva_df, by = "user_id")
+```
+
+But we also have at least two other datasets that we've worked
+
+
 
 ```{r, eval=FALSE}
 library(dplyr)
@@ -45,16 +220,6 @@ user_1_fix %>% bind_cols(user_1_rr_fix)
 
 # %>% 
 #     rename(inter_beat_interval_seconds = ibi_s)
-```
-
-
-## Misc
-
-Before we begin, create a new file for this session. Make sure you are in the
-correct R Project.
-
-```{r create-session-file, eval=FALSE}
-usethis::use_r("efficiency-session")
 ```
 
 
