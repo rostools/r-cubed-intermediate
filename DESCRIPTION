@@ -24,7 +24,8 @@ Imports:
     glue,
     RefManageR,
     fs,
-    stringr
+    stringr,
+    r3 (>= 0.0.0.9000)
 Suggests: 
     prodigenr,
     tidyverse,
@@ -32,7 +33,6 @@ Suggests:
     xaringan,
     xaringanthemer,
     showtext,
-    r3 (>= 0.0.0.9000)
 Remotes: 
     gadenbuie/xaringanthemer,
     hadley/emo,
