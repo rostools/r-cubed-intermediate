@@ -57,6 +57,9 @@ Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small
     
     - Include some final dplyr summarizing of results of mmash
     
+- Final exercise could be to do everything we've done but on `sleep.csv`
+and `questionnaire.csv`
+    
 - slides afterward
     - Incorporate open and reproducible practices in coding
 
@@ -64,32 +67,10 @@ Post course?
 
 ## Code:
 
-vroom takes file as a vector, so naively you could give it all the filenames
-and let it read them in.. but then you don't know where the data came from.
-Two solutions:
-
-- imap_dfr with fs filenames with .id = "ID"
-- vroom with id = "ID"
-
-Show both to give example of how vroom works under the hood with imap 
-
 ```{r}
 library(vroom)
 library(here)
 library(dplyr)
-user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
-user_1_rr_data <- vroom(
-    user_1_rr_file,
-    col_select = -1,
-    col_types = cols(
-        ibi_s = col_double(),
-        day = col_double(),
-        # Converts to seconds
-        time = col_time(format = "")
-    )
-) %>% 
-    rename(inter_beat_interval_seconds = ibi_s)
-
 user_1_rr_data %>% 
     group_by(day) %>% 
     summarize(across(inter_beat_interval_seconds, 
@@ -106,25 +87,6 @@ user_1_rr_data %>%
 
 ## Misc
 
-
-
-```{r add-function-arguments, error=TRUE}
-mean_sd_by_group <- function(.dataset, .groupvar) {
-    by_group_output <- .dataset %>% 
-        select(.groupvar, BMI, TotChol, Pulse, BPSysAve, BPDiaAve) %>% 
-        gather(Measurement, Value, -.groupvar) %>% 
-        na.omit() %>% 
-        group_by(.groupvar, Measurement) %>% 
-        summarise(Mean = round(mean(Value), 2),
-                  SD = round(sd(Value), 2),
-                  MeanSD = str_c(Mean, " (", SD, ")")) %>% 
-        select(-Mean, -SD) %>% 
-        spread(.groupvar, MeanSD)
-    return(by_group_output)
-}
-mean_sd_by_group(NHANES, Gender)
-```
-
 What happened? We had an error. We've encountered a problem due to
 "[non-standard evaluation]" (or NSE). NSE is very commonly used in most tidyverse
 packages as well as throughout base R. It's one of the first things computer 
@@ -139,31 +101,6 @@ and `spread` don't require these changes.
 
 [non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
 
-```{r add-function-arguments-error, error=TRUE}
-mean_sd_by_group <- function(.dataset, .groupvar) {
-    by_group_output <- .dataset %>% 
-        select_at(vars(.groupvar, BMI, TotChol, Pulse, BPSysAve, BPDiaAve)) %>% 
-        gather(Measurement, Value, -.groupvar) %>% 
-        na.omit() %>% 
-        group_by_at(vars(.groupvar, Measurement)) %>% 
-        summarise(Mean = round(mean(Value), 2),
-                  SD = round(sd(Value), 2),
-                  MeanSD = str_c(Mean, " (", SD, ")")) %>% 
-        select(-Mean, -SD) %>% 
-        spread(.groupvar, MeanSD)
-    return(by_group_output)
-}
-mean_sd_by_group(NHANES, "Gender")
-```
-
-Now we can also use other categorical variables:
-
-```{r use-other-category-vars}
-mean_sd_by_group(NHANES, "SurveyYr")
-mean_sd_by_group(NHANES, "Diabetes")
-```
-
-
 ### Easier to use parallel processing with map
 
 One big reason to get comfortable and good at using map is because you can use
@@ -176,6 +113,7 @@ functions from the [furrr] package.
 library(furrr)
 # Use a combination of more of your CPU or creating multiple R sessions
 plan(multiprocess)
+# This can't be put into the function, has to be used outside of it.
 ```
 
 
