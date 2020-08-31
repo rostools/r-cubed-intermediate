@@ -687,9 +687,18 @@ This is great because with one line of code we imported all these datasets!
 But we're missing an important bit of information: The user ID. 
 A powerful feature of the purrr package is that it has other functions to
 make working with functionals easier. We know `map()` always outputs a list.
-What if you want to output a character vector instead? There is a function
-called `map_chr()` for that. There are several others that give an output based 
-on the ending of `map_`:
+What if you want to output a character vector instead? If we check the help:
+
+```r
+?map
+```
+
+`r details_for_instructors("Go through this help documentation and talk a bit about it.")`
+
+We see that there are other functions, including a function
+called `map_chr()` that seems to output a character vector. 
+There are several others that give an output based 
+on the ending of `map_`, such as:
 
 - `map_int()` outputs an integer.
 - `map_dbl()` outputs a numeric value, called a "double" in programming.
@@ -697,13 +706,8 @@ on the ending of `map_`:
 - `map_dfc()` outputs a data frame, combining the list items by column (`c`).
 
 The `map_dfr()` looks like the one we want, since we want all these datasets
-together as one. If we look at the help for it:
-
-```r
-?map_dfr
-```
-
-We see that it has an argument `.id`, which we can use to create a new column
+together as one. If we look at the help for it,
+we see that it has an argument `.id`, which we can use to create a new column
 that sets the user ID, or in this case, the file path to the dataset, which
 has the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
