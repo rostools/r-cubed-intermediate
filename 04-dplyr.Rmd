@@ -52,141 +52,164 @@ LearnR3
 └── README.md
 ```
 
-- Use a custom function in the advanced dplyr, to link to previous?
+## Processing character data
 
-- functional programming
-    - Expand on explanation
-    
-    - wrangling (for larger datasets and e.g. summarizing)
-        - joins
-        - reduce (FP)
-        - group_by and summarize (FP)
-        - selecting
-        - rename_with (snakecase::to_snake_case) (FP)
-        - converting to/updating existing functions
-        
-exercise:
-    - activity, calculate minutes from start and end.
+**Take 8 min to read this section before we quickly go over it together**.
+When processing data, you likely will encounter and deal with cleaning up
+character data. A wonderful package to use for working with character data is
+called [stringr]. We'll use that in order to process the `file_path_id` 
+so that we can get the user ID from it. First, let's go to the `setup`
+code chunk and replace purrr with tidyverse and move `library(tidyverse)` to
+the top of the `setup` code chunk.
 
-## Combining datasets
+The main driver behind the functions in stringr are [regular expressions] (or
+[regex] for short). These expressions are powerful, very concise ways of finding
+patterns in text. We've already used them in the `dir_ls()` function with the
+`regexp` argument to find our data files.
 
-You'll notice a bunch of messages saying:
+To give an example, the regex `^.*[1-9][0-9]?` means "starting from the
+beginning of the text, find any characters one or more times and stop at a
+number from 0 to 9, include a possible other number from 0 to 9". So, using this
+on a string like `"hi there, it's 30 degrees out"`, the regex would select `"hi
+there, it's 30"`. If we break it down:
 
-```text
-New names:
-* NA -> ...1
-```
+- `^` means start of the string.
+- `.` means match any character once.
+- `*` means match the previous character one or more times.
+- `[]` means match whatever is in this brack once.
+- `0-9` means match any number from 0 to 9.
+- `?` means the previous thing may also be matched a second time.
 
-This is vroom letting you know that a column was renamed. vroom is telling you
-this because you didn't explicitly indicate that you wanted to rename a column.
-To fix that, you need to tell vroom exactly what you want. Let's look
-at the help docs of vroom: `?vroom`. We see an argument called `.name_repair`
-that handles naming of columns. Going into the link that is provided we go
-to the `tibble::tibble()` help documentation. Scroll down to the `.name_repair`
-argument documentation and we read that it treats problematic column names.
-There are several options here, but the one I want to focus on is the comment about
-"function: apply custom name repair". This is an important one because 
-we eventually want to rename the columns to match the [style guide] by using `snake_case`.
-And there's a package to do that called [snakecase][snakecase-pkg].
+Confused? Yea, regex does that to almost everyone, you aren't alone. While
+regex can be very very powerful, it can also be incredibly difficult to write
+and work with. We won't cover this anymore in this course, but two great resources
+are the [R for Data Science regex section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
+the [stringr regex page](https://stringr.tidyverse.org/articles/regular-expressions.html),
+as well as in the help doc `?regex`.
+For now, we will only use it for the simplest purposes possible:
+to extract `user_1` to `user_22` from the `file_path_id`.
+**Please stop here and we'll go over this together**.
 
-[snakecase-pkg]:
+[stringr]: https://stringr.tidyverse.org/
 
-So to remove the messages and convert the variable names to snake case, we
-would add `.name_repair = snakecase::to_snake_case` to all our functions so far.
-For now, let's focus on the `import_user_info()` we created.
+## Exercise: Brainstorm a regex that will match for the user ID
 
-TODO: Get them to snakecase and name repair to all other functions.
+Time: 5 min
 
-But first! We need to add the snakecase as a dependency:
+Discuss with your neighbour what a potential regex might be to find
+the ID in the `file_path_id`. Try not to look ahead `r emo::ji("wink")` since we
+will use this regex later on. When the time is up, we'll share possible ideas.
 
-```r
-usethis::use_package("snakecase")
-```
+## Exercise: What is the `%>%` pipe?
 
-```{r}
-import_user_info <- function(file_path) {
-    info_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            Gender = vroom::col_character(),
-            Weight = vroom::col_double(),
-            Height = vroom::col_double(),
-            Age = vroom::col_double()
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(info_data)
-}
+Time: 5 min
 
-import_saliva <- function(file_path) {
-    saliva_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            SAMPLES = vroom::col_character(),
-            `Cortisol NORM` = vroom::col_double(),
-            `Melatonin NORM` = vroom::col_double()
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(saliva_data)
-}
+`r details_for_instructors("
+Before starting this exercise, ask how many have used the pipe before.
+If everyone has, then move on to the next section.
+")`
 
-import_multiple_files <- function(file_paths, import_function) {
-    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-                             regexp = file_paths,
-                             recurse = TRUE)
-    
-    combined_data <- purrr::map_dfr(data_files, import_function,
-                                    .id = "file_path_id")
-    return(combined_data)
-}
+We haven't used the `%>%` pipe from the [magrittr] package yet, but it is used
+extensively in many R package, is the foundation of tidyverse packages,
+and will eventually be incorporated into the next version of R (rather than
+through magrittr). Because of this, we will make heavy use of it. To make sure
+everyone is on the same page please do either:
 
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-```
+[magrittr]: https://magrittr.tidyverse.org/
 
-replace purrr with tidyverse
+- If one of you or your pair doesn't know what the pipe is, take some time to 
+talk about and explain it (if you know).
+- If neither of the pair knows, please read 
+[the section on it](https://r-cubed.rostools.org/wrangling.html#chaining-functions-with-the-pipe)
+from the beginner course.
 
-```{r}
-library(tidyverse)
-```
+## Working with character columns
 
-very briefly go over regexp (we used it before). This is way beyond the time 
-available in this course to begin to cover it, but see TODO: Link resources and
-a help to use for more information.
+Now that we've talked about regex and pipes, let's start using them.
+The first thing we'll do is work with the `user_info_df` to write
+code that works, after which we will convert it into a function and move it
+into the `R/functions.R` file.
 
-```{r}
+We want to create a new column for the user ID, so we will use the `mutate()`
+function from the dplyr package. We'll use the regex `user_[0-9][0-9]?` to match
+for the user ID and we'll use the `str_extract()` function from the stringr
+package. So, in your `doc/lesson.Rmd` file, create a new header called 
+`## Using regex for user ID` at the bottom of the document, and create a new
+code chunk below that.
+
+`r details_for_instructors("
+Walk through writing this code, explain about how to use mutate, and about
+the stringr function.
+")`
+
+```{r extract-user-id, eval=FALSE}
+# Note: your file paths and data may look slightly different.
 user_info_df %>% 
-    mutate(user_id = file_path_id %>% 
-               stringr::str_extract("user_\\d\\d?")) %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?"))
+```
+
+```{r extract-user-id-eval, echo=FALSE}
+user_info_df %>% 
+    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id)) %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
+    relocate(file_path_id, user_id)
+```
+
+Since we don't need to keep the `file_path_id`, let's drop it using `select()`
+and `-`.
+
+```{r drop-file-path-id, eval=FALSE}
+user_info_df %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
     select(-file_path_id)
 ```
 
-Want to find which package a function comes from: use the help doc `?functionname`
-or F1 when the cursor is over the function.
+```{r drop-file-path-id-eval, echo=FALSE}
+user_info_df %>% 
+    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id)) %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
+    select(-file_path_id)
+```
 
-```{r}
+## Exercise: Convert this code into a function
+
+Time: 10 min
+
+We now have code that takes the data that has the `file_path_id` column
+and extracts the user ID from it. While in the `doc/lesson.Rmd` file, convert
+this code into a function, using the same process you've done previously.
+
+- Call the new function `extract_user_id` and add one argument called
+`imported_data`.
+- Don't forget to output the code into an object and then adding `return()` at
+the end or to include Roxygen documentation.
+- After writing it and testing it, move the function into `R/functions.R`.
+- Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
+`extract_user_id(user_info_df)`), load everything with `load_all()`
+(`Ctrl-Shift-L`), and run the new function.
+
+*Tip*: If you don't know what package a function comes from when you
+need to append the package when using `::`, you can find out what the package is
+by using the help documentation `?functionname` (can also be done by pressing F1
+when the cursor is over the function). The package name is at the very top left
+corner, surrounded by `{ }`.
+
+```{r solution-user-id-extract, echo=FALSE}
 extract_user_id <- function(imported_data) {
-    imported_data %>% 
-        dplyr::mutate(user_id = file_path_id %>% 
-                   stringr::str_extract("user_\\d\\d?")) %>% 
+    extracted_id <- imported_data %>% 
+        dplyr::mutate(user_id = stringr::str_extract(file_path_id, 
+                                                     "user_[0-9][0-9]?")) %>% 
         dplyr::select(-file_path_id)
+    return(extracted_id)
 }
 ```
 
-Then load all ctrl-shift-l
-```{r}
-user_info_df %>% 
-    extract_user_id()
-```
+Since we want this function to work on all data that we import, we should add it
+to `import_multiple_files()`. After you've created the function, go to the
+`import_multiple_files()` function in `R/functions.R` and use the `%>%` to
+add it after using the `map_dfr()` function. The code should look something like:
 
-
-To get it to work in all other functions, let's add this new function to the end of
-`import_multiple_files()`
-
-```{r}
+```{r add-extract-user-to-import}
 import_multiple_files <- function(file_paths, import_function) {
     data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
                              regexp = file_paths,
@@ -197,10 +220,12 @@ import_multiple_files <- function(file_paths, import_function) {
         extract_user_id()
     return(combined_data)
 }
-
 ```
 
-## Joins
+## Join datasets together
+
+The ability to join datasets together is a fundamental component of data processing
+and transformation. In our case, 
 
 There are many types of joins:
 
@@ -263,14 +288,160 @@ combined_data
 
 ## Renaming all columns
 
-
-Functionals don't just 
+Functionals appear throughout R and are especially used frequently in the
+tidyverse packages like dplyr. In order to continue processing the other datasets,
+we need to get into these other functions.
 
 ```{r}
 combined_data %>% 
     rename_with(snakecase::to_snake_case)
 ```
 
-## 
+
+```{r}
+import_rr <- function(file_path) {
+    rr_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            ibi_s = vroom::col_double(),
+            day = vroom::col_double(),
+            # Converts to seconds
+            time = vroom::col_time(format = "")
+        ),
+        .name_repair = snakecase::to_snake_case
+    ) 
+    return(rr_data)
+}
+```
+
+summarize across is also a functional in that you can give it many functions
+to use on each of the columns you want the function to work on.
+
+The across functional can also take a function when selecting the columns,
+just like with the `select()` function
+e.g. if you want to select only numeric columns you would use:
+
+```{r}
+user_info_df %>% 
+    select(is.numeric)
+```
+
+Like wise with summarize, you can use across the same way:
+
+```{r}
+user_info_df %>% 
+    summarize(across(is.numeric, mean))
+
+user_info_df %>% 
+    summarize(across(is.numeric, list(mean = mean, sd = sd)))
+```
+
+## Summarizing larger data to join
+
+We use this concept to process the other longer datasets like `RR.csv` so we can
+join them with the `user_info.csv` and other smaller datasets.
+
+```{r}
+import_multiple_files <- function(file_pattern, import_function) {
+    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+                             regexp = file_pattern,
+                             recurse = TRUE)
+    
+    combined_data <- purrr::map_dfr(data_files, import_function,
+                                    .id = "file_path_id") %>% 
+        extract_user_id()
+    return(combined_data)
+}
+library(tidyverse)
+all_rr_data <- import_multiple_files("RR.csv", import_rr)
+
+all_rr_data %>% 
+    group_by(user_id, day) %>% 
+    summarize(across(ibi_s, list(mean = mean, sd = sd)))
+```
+
+We get a message:
+
+```text
+`summarise()` regrouping output by 'user_id' (override with `.groups` argument)
+```
+
+If we look into `?summarize` to the `.groups` argument,
+we see that this argument is currently experimental. At the bottom there is a 
+message about:
+
+> In addition, a message informs you of that choice, unless the option
+"dplyr.summarise.inform" is set to FALSE, or when summarise() is called from a
+function in a package.
+
+How would we do that? By using the `options()` function. So, go to the `setup`
+code chunk and add this code to the top:
+
+TODO: Make this true to show what it puts, since this is already in _common.R
+```{r}
+options(dplyr.summarize.inform = FALSE)
+```
+
+
+
+## Exercise: activity, calculate minutes from start and end.
+
+
+## Exercise: Do same with Actigraph
+
+- Look into documentation.
+    - Rename columns to be more descriptive (e.g. what does `hr` mean? or `axis1`)
+    by using the `rename()` from dplyr. Use the help `?rename` to figure out how 
+    to use it if you don't know yet.
+- Based on the documentation, which variables would you be most interested in
+analyzing more?
+    - Keep only those columns by using `select()`.
+    - Decide which summary measure you think may be most interesting for you
+    (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`)
+- Using `group_by()` of `user_id` and `day`, summarize the variables you chose
+
+- group_by and summarize (FP)
+- selecting
+
+
+## Exercise
+
+1. Look at the [data dictionary][mmash-site] and find out what the columns
+mean and rename the column to be something more meaningful and
+readable. TODO: Include this exercise? 
+    - Pipe `%>%` the output from `vroom()` into the `rename()` function from the
+    dplyr package to rename the column and use [`snake_case`][snake-case] when
+    naming the new column. Read the `?dplyr::rename` help to know how to rename
+    columns.
+
+1. Read through the Data Description and rename the columns to be more readable
+and explicit.
+TODO: Change this last one?
+
+## Wrangling data into final form
+
+Save in data-raw script, source, and save data in data/
+
+### Easier to use parallel processing with map
+
+One big reason to get comfortable and good at using `map()` is because you can
+use parallel processing to speed up your analysis with the `future_` series of
+functions from the [furrr] package.
+
+[furrr]: https://davisvaughan.github.io/furrr/index.html
+
+```{r parallel-processing, eval=FALSE}
+library(furrr)
+# Use a combination of more of your CPU or creating multiple R sessions
+plan(multisession)
+# This can't be put into the function, has to be used outside of it.
+
+# Add this to end so it returns to original
+plan(sequential)
+```
+
+## Exercise: Add parallel processing to data-raw script.
+
 
 `r '-->'`
