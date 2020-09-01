@@ -83,7 +83,7 @@ Making functions always has a basic structure of:
 `function(arg1, arg2, arg3)`. 
 4. Filling out the body of the function, with the arguments (if any) contained
 inside, that does some action.
-5. Optionally, but strongly encouraged, use `return` to indicate what you want 
+5. Optionally, but strongly encouraged, use `return()` to indicate what you want 
 the function to output.
 
 While there is no minimum or maximum number of arguments you can provide for a
@@ -202,7 +202,8 @@ user_1_info_data <- vroom(
         Weight = col_double(),
         Height = col_double(),
         Age = col_double()
-    )
+    ),
+    .name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -220,7 +221,8 @@ import_user_info <- function() {
             Weight = col_double(),
             Height = col_double(),
             Age = col_double()
-        )
+        ),
+        .name_repair = snakecase::to_snake_case
     )
 }
 ```
@@ -239,14 +241,15 @@ import_user_info <- function(file_path) {
             Weight = col_double(),
             Height = col_double(),
             Age = col_double()
-        )
+        ),
+        .name_repair = snakecase::to_snake_case
     )
 }
 ```
 
 Then we clean things up by renaming `user_1_info_data` since we would like to
 also import more than just `user_1`. A nice object name would be `info_data`. 
-Add the return function at the end with the object you want your function to
+Add the `return()` function at the end with the object you want your function to
 output.
 
 ```{r function-creation-step-4}
@@ -259,7 +262,8 @@ import_user_info <- function(file_path) {
             Weight = col_double(),
             Height = col_double(),
             Age = col_double()
-        )
+        ),
+        .name_repair = snakecase::to_snake_case
     )
     return(info_data)
 }
@@ -291,7 +295,8 @@ import_user_info <- function(file_path) {
             Weight = col_double(),
             Height = col_double(),
             Age = col_double()
-        )
+        ),
+        .name_repair = snakecase::to_snake_case
     )
     return(info_data)
 }
@@ -420,6 +425,7 @@ This function finds the `DESCRIPTION` file and installs all the packages in
 ```r
 usethis::use_package("here")
 usethis::use_package("fs")
+usethis::use_package("snakecase")
 ```
 
 Great! Now that we've formally established package dependencies, we also need to
@@ -474,7 +480,8 @@ import_user_info <- function(file_path) {
             Weight = vroom::col_double(),
             Height = vroom::col_double(),
             Age = vroom::col_double()
-        )
+        ),
+        .name_repair = snakecase::to_snake_case
     )
     return(info_data)
 }
