@@ -101,20 +101,5 @@ and `spread` don't require these changes.
 
 [non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
 
-### Easier to use parallel processing with map
-
-One big reason to get comfortable and good at using map is because you can use
-parallel processing to speed up your analysis with the `future_` series of
-functions from the [furrr] package.
-
-[furrr]: https://davisvaughan.github.io/furrr/index.html
-
-```{r parallel-processing, eval=FALSE}
-library(furrr)
-# Use a combination of more of your CPU or creating multiple R sessions
-plan(multiprocess)
-# This can't be put into the function, has to be used outside of it.
-```
-
 
 `r '-->'`
