@@ -464,7 +464,57 @@ user_1_info_data <- vroom(
 
 Amazing! We did it `r emo::ji("grin")`
 
-We can now look at the data:
+But... we also have a new message. You may or may not see this message
+depending on the version of your packages (the most updated packages
+will show this). But it should say:
+
+```text
+New names:
+* NA -> ...1
+```
+
+This is `vroom()` letting you know that a column was renamed because
+you didn't explicitly indicate that you wanted it renamed.
+This is the empty column. Even though we excluded it with `col_select = -1`,
+that only excludes it after importing it.
+
+To remove this new message, we need to tell `vroom()` exactly how to handle
+renaming cases. Let's look at the help docs of vroom: `?vroom`. Scroll down and
+we see an argument called `.name_repair` that handles naming of columns. Going
+into the provided link takes us to the `tibble::tibble()` help documentation.
+Scroll down to the `.name_repair` argument documentation and it says that it
+treats problematic column names, of which a missing column name is definitely a
+problem. There are several options here, but the one I want to focus on is the
+comment about "function: apply custom name repair". This is an important one
+because we eventually want to rename the columns to match the [style guide] by
+using `snake_case`. And there's a package to do that called
+[snakecase][snakecase-pkg].
+
+[snakecase-pkg]: https://tazinho.github.io/snakecase/
+
+In the *Console*, type out `snakecase::` and hit Tab. You'll see a list of
+possible functions to use. We want to use the snake case one, so scroll down and
+find the `to_snake_case()`. That's the one we want to use.
+So to remove the messages and convert the variable names to snake case, we
+would add `.name_repair = snakecase::to_snake_case` to code.
+Notice the lack of `()` when using the function. We'll explain more about this
+in the next session.
+
+```{r use-name-repair}
+user_1_info_data <- vroom(
+    user_1_info_file,
+    col_select = -1,
+    col_types = cols(
+        Gender = col_character(),
+        Weight = col_double(),
+        Height = col_double(),
+        Age = col_double()
+    ),
+    .name_repair = snakecase::to_snake_case
+)
+```
+
+Ok, no more messages! We can now look at the data:
 
 ```{r print-user-info-data}
 user_1_info_data
