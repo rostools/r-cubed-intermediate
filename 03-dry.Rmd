@@ -763,6 +763,9 @@ Alright, we now have all the files ready to give to `map()`. So let's try it!
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
+
+
+
 Remember, that `map()` always outputs a list, so when we look into this object,
 it will give us 22 tibbles (data.frames). Here we'll only show the first one:
 
@@ -834,11 +837,11 @@ user_info_df <- map_dfr(user_info_files, import_user_info,
 ```
 
 For importing the other datasets, we basically only have to modify two locations
-to get this code to import the other datasets: at the `regexp` argument and
-where the `import_user_info` function is. This is the perfect chance to make a function
-that you can use for other purposes and that is itself a functional (since it
-takes a function as an input). So inside `doc/lesson.Rmd`, convert this bit of
-code into a function that works to import the other three datasets.
+to get this code to import the other datasets: at the `regexp =` argument and
+where the `import_user_info` function is. This is the perfect chance to make a
+function that you can use for other purposes and that is itself a functional
+(since it takes a function as an input). So inside `doc/lesson.Rmd`, convert
+this bit of code into a function that works to import the other three datasets.
 
 1. Create a new header `## Exercise: Map on the other datasets` at the bottom of
 the document.
@@ -846,9 +849,10 @@ the document.
 1. Repeat the steps you've taken previously to create a new function:
     - Wrap the code with `function() { ... }`
     - Name the function `import_multiple_files`
-    - Create two new arguments called `file_paths` (notice the `s`) and `import_function`
-    - Create generic intermediate objects (instead of `user_info_file` and `user_info_df`).
-    I'd recommend something like `data_files` and `combined_data`
+    - Create two new arguments called `file_pattern` and `import_function`
+    - Create generic intermediate objects (instead of `user_info_file` and
+    `user_info_df`). I'd recommend something like `data_files` and
+    `combined_data`
     - Use `return()` at the end of the function for the object you want to output
     - Create and write Roxygen documentation to describe the new function
     - Append `packagename::` to the individual functions (there are three packages
