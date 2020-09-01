@@ -8,11 +8,15 @@
 `r '<!-- '`
 
 ```{r setup-04, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+source("R/functions.R")
 library(here)
 library(fs)
 library(dplyr)
+library(stringr)
 library(purrr)
+library(vroom)
+source_session("03-dry.Rmd")
+knitr::opts_chunk$set(eval = FALSE)
 ```
 
 Here we will continue making use of the "*Workflow*" block as we cover the third
