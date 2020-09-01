@@ -734,10 +734,11 @@ document, create a new header called `## Using map`, and create a code chunk
 below that.
 
 The `dir_ls()` function takes the path that we want to search (`data-raw/mmash/`),
-uses the argument `regexp` (short for [regular expression]) to find the pattern,
-and `recurse` to look in all subfolders.
+uses the argument `regexp` (short for [regular expression][regex] or also `regex`) to find the pattern,
+and `recurse` to look in all subfolders. We'll cover regular expressions a bit
+more in next session.
 
-[regular expression]: https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions
+[regex]: https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions
 
 ```{r list-user-info-files}
 user_info_files <- dir_ls(here("data-raw/mmash/"), 
