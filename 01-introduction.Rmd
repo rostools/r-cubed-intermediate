@@ -121,25 +121,3 @@ current files into the history. Open up the Git interface in RStudio with
 "Debug" menu items. The interface should open up and we'll click the checkboxes
 on all the files, then write a message in the commit textbox saying 
 "Initial setup done". Now we're ready for the next session!
-
-<!--
-- outline:
-    - import
-    - create functions for importing
-        - load_all
-    - functional programming: functionals and vectorization
-        - multiple files with map (for now ignoring that vroom can do it fine.)
-    - wrangling (for larger datasets and e.g. summarizing)
-        - joins
-        - reduce (FP)
-        - group_by and summarize (FP)
-        - selecting
-        - rename_with (snakecase::to_snake_case) (FP)
-        - converting to/updating existing functions
-    - more on functions
-        - debugging (print, stop)
-        - using with tidyverse
-    - saving data and summarizing final
-        - load_all
-        - across, where, tidyselect helpers
--->
