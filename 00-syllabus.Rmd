@@ -72,6 +72,8 @@ If you *do not* have familiarity with these tools,
 you will need to go over the material from the introduction course beforehand
 (more details about pre-course tasks will be sent out a couple of weeks before the course).
 
+TODO: Use GitHub as well?
+
 While I have these assumptions to help focus the content of the course, if you
 have an interest in learning R but don't fit any of the above assumptions, *you
 are still welcome to attend the course*! 
