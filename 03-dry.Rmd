@@ -322,11 +322,29 @@ the R Markdown pane or by using `Ctrl-Shift-O`.
 1. Paste the code you used from the exercise into the code chunk and begin
 converting it into a function, like we did above.
     - Wrap it with the `function() {...}`
-    - Make a meaningful name (e.g. `import_saliva_data`)
+    - Make a meaningful name (e.g. `import_saliva`)
     - Make an argument for the file path and replace it with the code in `vroom()`
     - Rename the output object and include it in the `return()` function
     - Test that it works
     - Create the Roxygen documentation
+
+```{r solution-repeat-saliva, echo=FALSE}
+# Excluding the Roxygen docs.
+import_saliva <- function(file_path) {
+    saliva_data <- vroom(
+        file_path,
+        col_select = -1,
+        col_types = cols(
+            SAMPLES = col_character(),
+            `Cortisol NORM` = col_double(),
+            `Melatonin NORM` = col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(saliva_data)
+}
+```
+
 
 ## Continuing the workflow
 
@@ -504,15 +522,72 @@ Git interface.
 Time: 20 min
 
 Repeat this process and do this for the rest of the code you worked on
-previously that imported the `saliva.csv`, `RR.csv`, and `Actigraph.csv` data.
+previously that imported the `RR.csv`, and `Actigraph.csv` data. 
+
 
 1. Convert the importing code into functions while in the `doc/lessons.Rmd` file.
 Include the Roxygen documentation and use `packagename::` to be explicit about
 where the function comes from.
-    - Name the new functions `import_saliva`, `import_rr`, and `import_actigraph`.
+    - Name the new functions `import_rr` and `import_actigraph`.
 1. Move the function into `R/functions.R`.
 1. Restart R and then use `devtools::load_all()` by using `Ctrl-Shift-L` and
 test that the functions work by running them in the *Console*.
+
+Also update the `import_saliva()` function you created by being explicit about
+where the functions come from (e.g. with the `packagename::`).
+
+```{r solution-update-other-functions, echo=FALSE}
+# Excluding the Roxygen docs.
+import_saliva <- function(file_path) {
+    saliva_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            SAMPLES = vroom::col_character(),
+            `Cortisol NORM` = vroom::col_double(),
+            `Melatonin NORM` = vroom::col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(saliva_data)
+}
+import_rr <- function(file_path) {
+    rr_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            ibi_s = vroom::col_double(),
+            day = vroom::col_double(),
+            # Converts to seconds
+            time = vroom::col_time(format = "")
+        ),
+        .name_repair = snakecase::to_snake_case
+    ) 
+    return(rr_data)
+}
+import_actigraph <- function(file_path) {
+    actigraph_data <- vroom::vroom(
+        user_1_actigraph_file,
+        col_select = -1,
+        col_types = vroom::cols(
+            Axis1 = vroom::col_double(),
+            Axis2 = vroom::col_double(),
+            Axis3 = vroom::col_double(),
+            Steps = vroom::col_double(),
+            HR = vroom::col_double(),
+            `Inclinometer Off` = vroom::col_double(),
+            `Inclinometer Standing` = vroom::col_double(),
+            `Inclinometer Sitting` = vroom::col_double(),
+            `Inclinometer Lying` = vroom::col_double(),
+            `Vector Magnitude` = vroom::col_double(),
+            day = vroom::col_double(),
+            time = vroom::col_time(format = "")
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(actigraph_data)
+}
+```
 
 ## Functional programming
 
