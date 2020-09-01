@@ -576,11 +576,9 @@ user_1_saliva_data <- vroom(
         SAMPLES = col_character(),
         `Cortisol NORM` = col_double(),
         `Melatonin NORM` = col_double()
-    )
-) %>%
-    rename(... = SAMPLES,
-           cortisol = `Cortisol NORM`,
-           melatonin = `Melatonin NORM`)
+    ),
+    .name_repair = snakecase::to_snake_case
+)
 ```
 
 ## Importing larger datasets
@@ -626,7 +624,8 @@ user_1_rr_data <- vroom(
         day = col_double(),
         # Converts to seconds
         time = col_time(format = "")
-    )
+    ),
+    .name_repair = snakecase::to_snake_case
 ) 
 ```
 
