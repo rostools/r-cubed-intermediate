@@ -664,12 +664,9 @@ and read in the `Actigraph.csv` file from `user_1/`.
 1. Use `spec()` to output the column specification and paste the results into
 `col_types()`. Don't forget to remove the `...1 = col_skip()` and the 
 `.delim = ","` line from the `cols()` function.
-1. Read through the Data Description and rename the columns to be more readable
-and explicit.
-TODO: Change this last one?
 
 ```{r solution-import-the-actigraph-data, echo=FALSE, eval=FALSE}
-# Use first 1000 or so lines to get spec
+# Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
 user_1_actigraph_data_prep <- vroom(user_1_actigraph_file,
                                     n_max = 100,
@@ -692,9 +689,7 @@ user_1_actigraph_data <- vroom(
         `Vector Magnitude` = col_double(),
         day = col_double(),
         time = col_time(format = "")
-    )
+    ),
+    .name_repair = snakecase::to_snake_case
 )
-
-# This will be taught later.
-user_1_actigraph_data %>% rename_with(snakecase::to_snake_case)
 ```
