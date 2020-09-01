@@ -98,3 +98,19 @@ diagram_overview <- function(section_num = 0) {
     graph_viz_text <- glue::glue(graphviz_template_text, .open = "((", .close = "))")
     DiagrammeR::grViz(graph_viz_text, width = 700, height = 450)
 }
+
+
+#' Source session R code for use when developing later sessions.
+#'
+#' @param rmd_file Chapter Rmd file.
+#'
+#' @return Nothing. Sources the Rmd file.
+#'
+source_session <- function(rmd_file) {
+    tmp_r_file <- tempfile(fileext = ".R")
+    knitr::purl(rmd_file, output = tmp_r_file,
+                quiet = TRUE)
+    source(tmp_r_file, verbose = FALSE, echo = FALSE,
+           print. = FALSE)
+    return(invisible(NULL))
+}
