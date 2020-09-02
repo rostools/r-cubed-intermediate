@@ -1,7 +1,8 @@
+#!/usr/bin/env Rscript
 
 bookdown::clean_book(TRUE)
 # Create the course book
-bookdown::render_book('index.Rmd', 'bookdown::gitbook', quiet = TRUE)
+bookdown::render_book('index.Rmd', 'bookdown::gitbook')
 
 # Create necessary folders in public
 fs::dir_create(here::here("public", c("resources", "slides", "includes")))
