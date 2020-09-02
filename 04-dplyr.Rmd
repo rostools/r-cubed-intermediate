@@ -423,25 +423,72 @@ TODO: Change this last one?
 
 Save in data-raw script, source, and save data in data/
 
-### Easier to use parallel processing with map
+## Easily add parallel processing
 
-One big reason to get comfortable and good at using `map()` is because you can
-use parallel processing to speed up your analysis with the `future_` series of
-functions from the [furrr] package.
+**Take 8 minutes to read through this section and then move on to the last exercise**.
+One major reason to get comfortable with and good at using purrr functions like 
+`map()` is because it is relatively trivial to use parallel processing to speed
+up your analysis. Packages like [furrr] (a combination of the [future] and [purrr] package)
+have a series of functions starting with `future_` that can convert code using
+`map()` into parallel processing code by switch to `future_map()`.
+This extends to also `future_map_chr()`, `future_map_dfr()`, and so on.
+What this does is creates multiple R sessions that run code simultaneously
+and then eventually merges the results back into one R session.
+But *note*, that parallel processing is good for some things and not for others.
+If you code requires a specific sequence to run (1 relies on 2 which relies on 3),
+parallel processing is not the right tool. It also doesn't always speed up tasks.
+Creating the multiple R sessions and then merging them back takes some time,
+so if your tasks is already pretty fast, using parallel processing might actually
+make things slower.
+
+furrr works by using the function `plan()` and setting a processing strategy.
+There are really only two right now: `sequential` that you already use
+and `multisession` that runs the parallel processing.
+*Note*, the `plan()` function should **not** be put into a function. 
+It should be included in an R script (like `data-raw/mmash.R`)
+on its own. Here's an example of a 7 line R script:
 
 [furrr]: https://davisvaughan.github.io/furrr/index.html
+[future]: https://cran.r-project.org/package=future
 
 ```{r parallel-processing, eval=FALSE}
+# Add this to the top:
 library(furrr)
-# Use a combination of more of your CPU or creating multiple R sessions
 plan(multisession)
-# This can't be put into the function, has to be used outside of it.
 
-# Add this to end so it returns to original
+future_map(1:5, paste)
+
+# Add this to end so it returns to normal
 plan(sequential)
 ```
 
-## Exercise: Add parallel processing to data-raw script.
+The ending should generally have `plan(sequential)` so you tell R to switch back 
+to normal.
+
+## Exercise: Add parallel processing to your raw data processing
+
+Time: 10 min
+
+Let's compare the difference between not using parallel processing and using it.
+First:
+
+1. Open the `data-raw/mmash.R` file.
+1. Restart the R session `Ctrl-Shift-F10`.
+1. Re-run the script with `source()` by using either the button "Source" at the
+top right corner of the RStudio pane or with `Ctrl-Shift-S`.
+
+After it finishes, then:
+
+1. Add `library(furrr)` with the other `library()` functions at the top of 
+`data-raw/mmash.R`.
+1. Add `plan(multisession)` right below all the other library functions.
+1. Go to the `import_multiple_df()` function in `R/functions.R` and replace
+`purrr::map_dfr()` with `furrr::future_map_dfr`.
+1. Go back to the `data-raw/mmash.R` script and add `plan(sequential)` to the very end.
+1. Restart the R session with `Ctrl-Shift-F10`.
+1. Re-run the code with `source()` using either the button "Source" at the top
+right corner of the RStudio pane or with `Ctrl-Shift-S`. 
+
+Do you notice a difference in speed compared to before?
 
 
-`r '-->'`
