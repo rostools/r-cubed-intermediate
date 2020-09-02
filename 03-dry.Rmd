@@ -567,7 +567,7 @@ import_rr <- function(file_path) {
 }
 import_actigraph <- function(file_path) {
     actigraph_data <- vroom::vroom(
-        user_1_actigraph_file,
+        file_path,
         col_select = -1,
         col_types = vroom::cols(
             Axis1 = vroom::col_double(),
@@ -821,7 +821,7 @@ user_info_df %>%
 
 Now that we have this working, let's add and commit the changes to the Git history.
 
-## Exercise: Make a function for importing other datasets with functionals
+## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
 
 Time: 20 min
 
@@ -863,7 +863,7 @@ Then restart the R session, run `load_all()`, and test the code out in the
 *Console*.
 1. Then, write code in your `doc/lesson.Rmd` file where the function used to be
 and import in the other datasets. You should now have three new objects for all
-the imported datasets.
+the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
 1. Once done, add the changes you've made and commit them to the Git history.
 
 ```{r solution-import-multiple-files, echo=FALSE}
@@ -874,9 +874,7 @@ import_multiple_files <- function(file_pattern, import_function) {
                              recurse = TRUE)
     
     combined_data <- purrr::map_dfr(data_files, import_function,
-                                    .id = "file_path_id") %>% 
-        extract_user_id()
+                                    .id = "file_path_id")
     return(combined_data)
 }
 ```
-
