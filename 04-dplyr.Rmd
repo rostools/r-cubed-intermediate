@@ -495,6 +495,17 @@ TODO: Change this last one?
 
 Save in data-raw script, source, and save data in data/
 
+## Exercise: What other cleaned data might you create?
+
+Time: 10 min
+
+In order to meaningfully join all the datasets together, we have to calculate
+summary measures for the `RR.csv` and `Actigraph.csv` data. However,
+we also lose a lot of information and potentially interesting analyses from it.
+With your neighbour, discuss some potential ways that you might join the datasets
+to retain that information and what questions you might be interested in with
+that data.
+
 ## Easily add parallel processing
 
 **Take 8 minutes to read through this section and then move on to the last exercise**.
