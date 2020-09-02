@@ -140,11 +140,13 @@ code that works, after which we will convert it into a function and move it
 into the `R/functions.R` file.
 
 We want to create a new column for the user ID, so we will use the `mutate()`
-function from the dplyr package. We'll use the regex `user_[0-9][0-9]?` to match
+function from the [dplyr] package. We'll use the regex `user_[0-9][0-9]?` to match
 for the user ID and we'll use the `str_extract()` function from the stringr
 package. So, in your `doc/lesson.Rmd` file, create a new header called 
 `## Using regex for user ID` at the bottom of the document, and create a new
 code chunk below that.
+
+[dplyr]: https://dplyr.tidyverse.org/
 
 `r details_for_instructors("
 Walk through writing this code, explain about how to use mutate, and about
