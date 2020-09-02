@@ -215,9 +215,9 @@ to `import_multiple_files()`. After you've created the function, go to the
 add it after using the `map_dfr()` function. The code should look something like:
 
 ```{r add-extract-user-to-import}
-import_multiple_files <- function(file_paths, import_function) {
+import_multiple_files <- function(file_pattern, import_function) {
     data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-                             regexp = file_paths,
+                             regexp = file_pattern,
                              recurse = TRUE)
     
     combined_data <- purrr::map_dfr(data_files, import_function,
@@ -227,18 +227,57 @@ import_multiple_files <- function(file_paths, import_function) {
 }
 ```
 
+Re-load the functions with `load_all()` (`Ctrl-Shift-L`). Then re-run these
+pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
+update them based on the new code in the `import_multiple_files()` function.
+
+```{r}
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+rr_df <- import_multiple_files("RR.csv", import_rr)
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+```
+
 ## Join datasets together
 
 The ability to join datasets together is a fundamental component of data processing
-and transformation. In our case, 
+and transformation. In our case, we want to add the datasets together so we 
+eventually have at least one main dataset to work with.
 
-There are many types of joins:
+There are many ways to join datasets, the more common ones that are implemented
+in the dplyr package are:
+in the dplyr package are:
 
-- Left
-- Right
-- Full
+- `left_join(x, y)`: Join all rows and columns in `y` that match rows and
+columns in `x`. *Columns* that exist in `y` but not `x` are joined to `x`.
 
-Image of joins
+    ```{r image-left-join, fig.cap="Left joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
+    knitr::include_graphics(here::here("images/left-join.svg"))
+    ```
+    
+- `right_join(x, y)`: The opposite of `left_join()`. Join all rows and columns
+in `x` that match rows and columns in `y`. *Columns* that exist in `x` but not `y`
+are joined to `y`.
+
+    ```{r image-right-join, fig.cap="Right joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
+    knitr::include_graphics(here::here("images/right-join.svg"))
+    ```
+
+- `full_join(x, y)`: Join all rows and columns in `y` that match rows and
+columns in `x`. Columns *and* **rows** that exist in `y` but not `x` are joined
+to `x`. This is probably the more commonly used one, as any missing values that
+show up are probably important to look into.
+
+    ```{r image-full-join, fig.cap="Full joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
+    knitr::include_graphics(here::here("images/full-join.svg"))
+    ```
+
+[dplyr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf
+
+In our case, we want to use `full_join()`, since we want all the data from both
+datasets. This function takes two datasets and lets you indicate which column
+to join by using the `by` argument. Here, both datasets have the column `user_id`
+so we will join by them.
 
 ```{r}
 full_join(user_info_df, saliva_df, by = "user_id")
