@@ -92,6 +92,15 @@ to extract `user_1` to `user_22` from the `file_path_id`.
 
 [stringr]: https://stringr.tidyverse.org/
 
+`r details_for_instructors("
+Make sure to re-inforce that while regex is incredibly complicated, there are some
+basic things you can do with it that are quite powerful.
+
+More or less, this section is to introduce the idea and concept of regex, but not
+to really teach it since that is well beyond the scope of this course and this
+time frame.
+")`
+
 ## Exercise: Brainstorm a regex that will match for the user ID
 
 Time: 5 min
