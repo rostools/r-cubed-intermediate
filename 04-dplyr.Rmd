@@ -158,15 +158,8 @@ user_info_df %>%
 Since we don't need to keep the `file_path_id`, let's drop it using `select()`
 and `-`.
 
-```{r drop-file-path-id, eval=FALSE}
+```{r drop-file-path-id}
 user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
-    select(-file_path_id)
-```
-
-```{r drop-file-path-id-eval, echo=FALSE}
-user_info_df %>% 
-    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id)) %>% 
     mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
     select(-file_path_id)
 ```
