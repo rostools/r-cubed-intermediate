@@ -1,13 +1,11 @@
 # Processing datasets for cleaning {#dplyr-1}
 
-![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
+![](https://img.shields.io/badge/document%20status-rough%20draft-red?style=flat-square)
 
 ```{r, eval=TRUE, child="includes/preamble.Rmd"}
 ```
 
-`r '<!-- '`
-
-```{r setup-04, include=FALSE}
+```{r setup-04, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
@@ -573,5 +571,3 @@ After it finishes, then:
 right corner of the RStudio pane or with `Ctrl-Shift-S`. 
 
 Do you notice a difference in speed compared to before?
-
-`r "-->"`
