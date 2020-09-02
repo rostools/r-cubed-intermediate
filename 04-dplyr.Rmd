@@ -433,9 +433,6 @@ options(dplyr.summarize.inform = FALSE)
 
 
 
-## Exercise: activity, calculate minutes from start and end.
-
-
 ## Exercise: Do same with Actigraph
 
 - Look into documentation.
@@ -452,12 +449,39 @@ analyzing more?
 - group_by and summarize (FP)
 - selecting
 
+## Exercise: activity, calculate minutes from start and end.
+
+Time: 25 minutes
+
+- Create a new header called `## Exercise: Importing activitiy data`
+- Create a new code chunk
+- Starting from the beginning (e.g. using the `spec()` process) and write code
+that imports the `Activity.csv` file. 
+- Convert this code into a new function using the workflow you've used from this
+course.
+    - Called `import_activity`
+    - Have one argument called `file_path`, import with `import_multiple_files()`.
+    - Test that it works
+    - Move
+- Create a new column called `activity_minutes` by 
+
+- Look into the data documentation and figure out what the columns mean.
+- Based on the 
+
+```{r}
+import_activity <- function(file_path) {
+    
+}
+```
+
+
 
 ## Exercise
 
 1. Look at the [data dictionary][mmash-site] and find out what the columns
 mean and rename the column to be something more meaningful and
-readable. TODO: Include this exercise? 
+readable. 
+TODO: Include this exercise? 
     - Pipe `%>%` the output from `vroom()` into the `rename()` function from the
     dplyr package to rename the column and use [`snake_case`][snake-case] when
     naming the new column. Read the `?dplyr::rename` help to know how to rename
