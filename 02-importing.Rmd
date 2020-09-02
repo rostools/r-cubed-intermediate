@@ -406,7 +406,7 @@ It says to use a "cols() specification", which is likely the output of `spec()`.
 So, let's copy and paste the output from `spec()` and paste it into the 
 `col_types` argument of `vroom()`.
 
-```{r vroom-with-error, error=TRUE}
+```{r vroom-with-error, error=TRUE, warning=TRUE}
 user_1_info_data <- vroom(
     user_1_info_file,
     col_types = cols(
