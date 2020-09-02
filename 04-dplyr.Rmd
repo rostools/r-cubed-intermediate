@@ -403,9 +403,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     return(combined_data)
 }
 library(tidyverse)
-all_rr_data <- import_multiple_files("RR.csv", import_rr)
 
-all_rr_data %>% 
+rr_df %>% 
     group_by(user_id, day) %>% 
     summarize(across(ibi_s, list(mean = mean, sd = sd)))
 ```
