@@ -373,17 +373,17 @@ e.g. if you want to select only numeric columns you would use:
 
 ```{r}
 user_info_df %>% 
-    select(is.numeric)
+    select(where(is.numeric))
 ```
 
 Like wise with summarize, you can use across the same way:
 
 ```{r}
 user_info_df %>% 
-    summarize(across(is.numeric, mean))
+    summarize(across(where(is.numeric), mean))
 
 user_info_df %>% 
-    summarize(across(is.numeric, list(mean = mean, sd = sd)))
+    summarize(across(where(is.numeric), list(mean = mean, sd = sd)))
 ```
 
 ## Summarizing larger data to join
