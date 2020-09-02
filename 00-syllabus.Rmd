@@ -67,12 +67,10 @@ Specifically, this course targets those working in diabetes and metabolism.
 
 Considering that this is a natural extension of the [introduction to R course],
 I will be incorporating tools learned in that course, 
-including basic Git and GitHub usage as well as use of RStudio R projects.
+including basic Git usage as well as use of RStudio R projects.
 If you *do not* have familiarity with these tools,
 you will need to go over the material from the introduction course beforehand
 (more details about pre-course tasks will be sent out a couple of weeks before the course).
-
-TODO: Use GitHub as well?
 
 While I have these assumptions to help focus the content of the course, if you
 have an interest in learning R but don't fit any of the above assumptions, *you
@@ -86,7 +84,7 @@ to early-intermediate level
 - focus only on the data processing and cleaning stage of a data
 analysis project
 - teach from a reproducible research and open scientific
-perspective (e.g. by making use of Git and GitHub)
+perspective (e.g. by making use of Git)
 - be using practical, applied, and hands-on lessons and exercises
 
 And we **will not** learn:
