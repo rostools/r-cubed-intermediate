@@ -574,4 +574,4 @@ right corner of the RStudio pane or with `Ctrl-Shift-S`.
 
 Do you notice a difference in speed compared to before?
 
-
+`r "-->"`
