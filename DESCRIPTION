@@ -33,6 +33,7 @@ Suggests:
     xaringan,
     xaringanthemer,
     showtext,
+    furrr
 Remotes: 
     gadenbuie/xaringanthemer,
     hadley/emo,
