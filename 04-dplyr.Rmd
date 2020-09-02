@@ -317,7 +317,7 @@ Instead, we can use reduce to do the same thing:
 reduce(1:5, add_numbers)
 ```
 
-This Figure \@ref(fig-image-reduce) visually shows what is happening within `reduce()`.
+This Figure \@ref(fig:image-reduce) visually shows what is happening within `reduce()`.
 
 ```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
 knitr::include_graphics(here::here("images/reduce.svg"))
