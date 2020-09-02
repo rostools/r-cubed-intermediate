@@ -185,8 +185,9 @@ this code into a function, using the same process you've done previously.
 
 - Call the new function `extract_user_id` and add one argument called
 `imported_data`.
-- Don't forget to output the code into an object and then adding `return()` at
-the end or to include Roxygen documentation.
+    - Don't forget to output the code into an object and adding `return()` at
+    the end with the object inside it. 
+    - Also include Roxygen documentation.
 - After writing it and testing it, move the function into `R/functions.R`.
 - Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
 `extract_user_id(user_info_df)`), load everything with `load_all()`
