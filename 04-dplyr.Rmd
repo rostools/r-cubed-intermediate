@@ -317,11 +317,14 @@ Instead, we can use reduce to do the same thing:
 reduce(1:5, add_numbers)
 ```
 
-This Figure \@ref(fig-reduce) visually shows what is happening within `reduce()`.
+This Figure \@ref(fig-image-reduce) visually shows what is happening within `reduce()`.
 
 ```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
 knitr::include_graphics(here::here("images/reduce.svg"))
 ```
+
+[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
+
 So, for our `full_join()`, if we put the datasets together as a list, we can
 `reduce()` them down into one dataset with `full_join()`.
 
@@ -331,6 +334,8 @@ combined_data
 ```
 
 ## Renaming all columns
+
+TODO: for saliva data, need to include a day column based on samples
 
 Functionals appear throughout R and are especially used frequently in the
 tidyverse packages like dplyr. In order to continue processing the other datasets,
