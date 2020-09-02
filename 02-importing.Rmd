@@ -420,16 +420,22 @@ user_1_info_data <- vroom(
 )
 ```
 
-Hmm. An error. Ok, if we look through the message, there's the part that says: 
+Hmm. A warning and an error. Ok, if we look through the message, there's the
+part that says:
 
 > "The following named parsers don't match the column names: ...1"
+
+And the error that is:
+
+> "Invalid input type, expected 'list' actual 'NULL'"
 
 We copy and pasted, so what's going on? If you recall, the `user_info.csv`
 file has an empty column name. Looking at the [data dictionary][mmash-site]
 it doesn't seem there is any reference to this column, so it seems it isn't 
-important. Since we don't need it, let's just get rid of it when we load in 
-the dataset. But how? Let's look at the help documentation again. Go to the 
-**Console** and type out:
+important. So more than likely, vroom is complaining about this empty column 
+name and the use of `...1` to represent it. Since we don't need it, let's just
+get rid of it when we load in the dataset. But how? Let's look at the help
+documentation again. Go to the **Console** and type out:
 
 [mmash-site]: https://physionet.org/content/mmash/1.0.0/
 
