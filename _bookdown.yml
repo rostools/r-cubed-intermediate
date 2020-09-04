@@ -22,7 +22,7 @@ rmd_files:
     - "05-dplyr.Rmd"
     - "appendix.md"
     - "resources.Rmd"
-    # - "for-instructors.md"
+    - "for-instructors.md"
     - "references.Rmd"
 before_chapter_script:
     - "_common.R"
