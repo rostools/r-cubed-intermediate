@@ -11,32 +11,47 @@
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
-Here we will cover the fourth block, "*Work with final data*" in Figure \@ref(fig:diagram-overview-4)
+Here we will continue using the *Workflow* block as we cover the fourth block,
+"*Work with final data*" in Figure \@ref(fig:diagram-overview-4).
 
 ```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(4)
 ```
 
+And your folder and file structure should look like:
+
+```
+LearnR3
+├── data/
+│   ├── mmash.rda
+│   └── README.md
+├── data-raw/
+│   ├── mmash-data.zip
+│   ├── mmash/
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
+├── doc/
+│   ├── README.md
+│   └── lesson.Rmd
+├── R/
+│   ├── functions.R
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
+```
+
+
 Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise):
 
-    - more on functions
-        - debugging (print, stop)
-        - using with tidyverse
-    - saving data and summarizing final
-        - load_all
-        - across, where, tidyselect helpers
-        
 - deeper into dplyr
     - tidyselect helpers
-    - across and where
-    - regular expressions?
-    - joins
-    - Possible uses:
-        - calculating mean
-            - summarize across is numeric (select where is.numeric)
-            - show off the ... here (like with na.rm)
-            - Like for the RR or actigraph
-        - Any time you think you would use a for loop, use this.
+
+- group_by -> summarize function?
         
 - debugging in functions
     - breaks in RStudio?
@@ -45,25 +60,42 @@ Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small
 - creating functions
     - and when using tidyverse functions
 
-    - Possible uses:
-        - calculating mean from df
-            - select only numeric (select where is.numeric)
-            - show off the ... here (like with na.rm)
-        - Run multiple models and extract only some information
-        - Run models on re-sampled sets
-        - Combining with parallel processing?
-            - Don't get them to do this, just show it.
-    - Show but don't get them to do: other versions of functions in purrr
+- Possible uses:
+    - calculating mean from df
+        - select only numeric (select where is.numeric)
+        - show off the ... here (like with na.rm)
+    - Run multiple models and extract only some information
+    - Run models on re-sampled sets
+- Show but don't get them to do: other versions of functions in purrr
+
+- Count for males, females
+- max, min for age, weight, cortisol.
+- Pivot longer and wider for easier looking at these?
+- Separate with regex
+- pivot wider
+
+- Convert to function.
     
-    - Include some final dplyr summarizing of results of mmash
+- Include some final dplyr summarizing of results of mmash
     
 - Final exercise could be to do everything we've done but on `sleep.csv`
 and `questionnaire.csv`
+
+- Exercise: get them to do everything and create a second final dataset
+with only the full actigraph and RR data, joined by user, day, and time.
+
+- Exercise: Rename columsn to be more descriptive
     
 - slides afterward
     - Incorporate open and reproducible practices in coding
 
 Post course?
+
+
+- Commit everything
+- Delete all code in lesson.Rmd related to importing or cleaning the data
+- Commit changes
+- 
 
 ## Code:
 
@@ -100,6 +132,187 @@ combined with `vars()` version of dplyr functions. The tidyr functions `gather`
 and `spread` don't require these changes.
 
 [non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
+
+## Converting between wide and long data
+
+We've covered the basic "verbs" (functions) of the dplyr package.
+Now we'll get into the "pivot" functions from dplyr's companion package, tidyr. 
+There are many useful functions in the tidyr package, 
+but the pivot functions (`pivot_longer()` and `pivot_wider()`) are key ones.
+Pivoting converts wide data into long data or vice versa.
+So what is wide or long date?
+
+Wide data is data where values may repeat across columns. 
+With repeated measurements, it is often easier to enter data in wide form
+or to use wide data to present in tables.
+But there are problems with wide data, especially when it comes to analysing it. 
+For instance, wide data may look like:
+
+```{r table-example-wide, echo=FALSE}
+example_wide <- tribble(
+    ~PersonID, ~Glucose_0, ~Glucose_30, ~Glucose_60,
+    1, 5.6, 7.8, 4.5,
+    2, 4.7, 9.5, 5.3,
+    3, 5.1, 10.2, 4.2
+) 
+
+example_wide %>% 
+    knitr::kable(caption = "Example of a **wide** dataset that is useful for data entry.",
+                 align = "c")
+```
+
+However, this type of data is not *tidy* for a few reasons:
+
+1. We don't know precisely what the values represent in the glucose columns
+(though in this case we could guess, but this isn't always the case).
+Often in the wide form you need to rely a lot more on either very descriptive names
+or have a detailed data dictionary to refer to.
+1. The glucose columns all represent the same value type (glucose concentration) 
+so there is some duplication *of meaning* between columns.
+1. The column names include data in them as well (time of glucose measurement). 
+
+On the other hand, a long data form is usually better suited for almost any type of analysis
+and for visualizing, especially when doing [split-apply-combine] techniques. 
+Long form data also tends to be more *tidy* compared to wide form.
+
+```{r table-example-long, echo=FALSE}
+example_wide %>% 
+    pivot_longer(-PersonID, names_to = "MeasurementTime", values_to = "GlucoseConcentration", 
+                 names_prefix = "Glucose_") %>% 
+    mutate(MeasurementTime = as.numeric(MeasurementTime)) %>% 
+    knitr::kable(caption = "Example of a **long** dataset that is more usable for analyses and visualizing.",
+                 align = "c")
+```
+
+### Pivot from wide to long
+
+How, when, and why to pivot your data can be conceptually challenging to grasp at first. 
+Let's try out some examples and use `pivot_longer()`. 
+Like all the other functions, the first position argument to `pivot_longer()` is the data.
+The other necessary arguments (in order) are:
+
+1. `cols`: The columns to use to convert to long form. 
+The input is a vector made using `c()` that contains the column names,
+like you would use in `select()` (e.g. you can use the `select_helpers` like `starts_with()`,
+or `-` minus to exclude).
+1. `names_to`: The name of the newly created column (as a quoted character) 
+that contains the original column names.
+1. `values_to`: The name of the newly created column (as a quoted character)
+that contains the original cells of the original columns.
+
+As with everything, using an example would help clarify things.
+In the NHANES dataset, there are several columns that would be suitable for pivoting,
+because they are "messy". These are the `BP` blood pressure columns.
+Let's select the required `ID` and `SurveyYr` and the `BP` columns
+(we'll exclude the `Ave` ones for now), then we'll use `pivot_longer()`.
+Because we only want to pivot the `BP`, we need to exclude `ID` and `SurveyYr`
+from pivoting by using `-`.
+
+```{r}
+NHANES %>%
+    # Recall that - (minus) is used to exclude
+    select(ID, SurveyYr, starts_with("BP"), -ends_with("Ave")) %>% 
+    pivot_longer(c(-ID, -SurveyYr), names_to = "BPTypeAndNumber", values_to = "BloodPressure")
+```
+
+We use `-` here to tell `pivot_longer()` to *not* include 
+(to *exclude*) the columns from being converted to long form.
+We could even use `starts_with()`:
+
+```{r}
+NHANES %>%
+    # Recall that - (minus) is used to exclude
+    select(ID, SurveyYr, starts_with("BP"), -ends_with("Ave")) %>% 
+    pivot_longer(starts_with("BP"), names_to = "BPTypeAndNumber", values_to = "BloodPressure")
+```
+
+The reason that the arguments `names_to` 
+and `values_to` require quoting `""` is that these are the column names that we *will* create.
+Because they don't exist yet as columns, we need to use the quotes.
+
+### Pivot from long to wide
+
+You can also convert from long to wide, though this is less commonly done,
+as most analyses either work better or require the long form. 
+It can also be much more tricky to convert over to.
+But sometimes you may need to have a wide form for your data.
+Here you can use `pivot_wider()` function. Others have used `pivot_wider()` for creating summary tables for presentation or to capture data in a format needed by other tools. Like its opposite,
+the first position argument is the data and the other necessary arguments are:
+
+1. `id_cols`: This is optional as it will default to all column names. 
+This argument tells `pivot_wider()` to use the given columns as the identifiers
+for when converting. 
+This is where the tricky part comes in, 
+because 
+1. `names_from`: Similar to the `pivot_longer()`, 
+this is the name of the column that will make up the new columns.
+Unlike in `pivot_longer()`, 
+the column name given is *unquoted* since the column 
+*must already exist* in the dataset.
+1. `values_from`: As with above, this is the column name 
+(that exists and must be given *unquoted*) 
+for the values that will be in the new columns.
+
+Unfortunately, 
+NHANES as it is doesn't have a structure that allows us to easily convert to wide form.
+So we'll use the `table2` example from the beginning of the wrangling section:
+
+```{r}
+table2
+```
+
+This data frame is in a very long format. 
+So we could pivot `type` and `count` into the wide format:
+
+```{r}
+table2 %>% 
+    pivot_wider(names_from = type, values_from = count)
+```
+
+If we wanted to make it even wider, 
+we could include `year` and `type` in the pivoting by wrapping them with `c()`
+in the `names_from` argument:
+
+```{r}
+table2 %>% 
+    pivot_wider(names_from = c(year, type), values_from = count)
+```
+
+The key to using `pivot_wider()` is that there are uniquely identifying rows
+that allow pivoting that maintains the integrity of the data.
+Since the NHANES dataset we use is for teaching purposes,
+there are some cases where the same person is recorded multiple times in one survey year,
+which doesn't make sense and prevents us from adequately pivoting wider.
+
+## Pivot, then split-apply-combine {#pivot-sac}
+
+The real strength of pivoting is when you use it with the [split-apply-combine] method.
+For instance, if we wanted to find some simple statistics of all the columns
+by survey year and sex. 
+In this case, we would use `pivot_longer()` to convert to a long form
+and then use `group_by()` and `summarize()` to find the simple statistics.
+So let's find the mean values of some continuous variables.
+
+```{r}
+nhanes_mean_values <- NHANES %>%
+    rename(Sex = Gender) %>%
+    select(SurveyYr, Sex, BMI, Age, starts_with("BP")) %>%
+    pivot_longer(c(-SurveyYr, -Sex),
+                 names_to = "Variables",
+                 values_to = "Values") %>%
+    group_by(SurveyYr, Sex, Variables) %>% 
+    summarize(MeanValues = mean(Values, na.rm = TRUE))
+nhanes_mean_values
+```
+
+We could now use `pivot_wider()` since the structure allows for it:
+
+```{r}
+nhanes_mean_values %>% 
+    pivot_wider(names_from = Variables, values_from = MeanValues)
+```
+
+Which now gives us the mean values of the variables by sex and survey year!
 
 
 `r '-->'`
