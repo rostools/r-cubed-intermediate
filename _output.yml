@@ -1,7 +1,6 @@
 bookdown::gitbook:
     css:
         - "includes/style.css"
-        - "includes/ort.css"
     includes:
         in_header:
             - "includes/hypothesis.html"
