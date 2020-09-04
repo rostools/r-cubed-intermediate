@@ -45,9 +45,6 @@ LearnR3
 └── README.md
 ```
 
-
-Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small one during exercise):
-
 - deeper into dplyr
     - tidyselect helpers
 
@@ -73,9 +70,8 @@ Day 2 afternoon (13:15, end at 16:45 --- ~3.5 hrs, with one big break, one small
 - Pivot longer and wider for easier looking at these?
 - Separate with regex
 - pivot wider
+- Convert to function. As exercise?
 
-- Convert to function.
-    
 - Include some final dplyr summarizing of results of mmash
     
 - Final exercise could be to do everything we've done but on `sleep.csv`
