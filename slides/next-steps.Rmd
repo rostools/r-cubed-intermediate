@@ -1,0 +1,59 @@
+---
+title: "What next"
+output:
+    xaringan::moon_reader:
+        self_contained: false
+        lib_dir: libs
+        css: ['../includes/xaringan-themer.css', '../includes/custom.css']
+        nature:
+            ratio: "16:9"
+            highlightStyle: github
+            highlightLines: true
+            countIncrementalSlides: false
+---
+
+Ideas:
+
+- Show that almost no one shares code, even tho it is the simplest thing
+and makes it easier to give strength to your results
+
+- Efforts have shown reproducibility is basically none existent
+    - link in issue
+
+- If you even just do a bit in this space, you are doing something almost no one
+is doing... we always struggle to find our niche in science.. guys! This is that
+niche and its a gaping hole!
+
+- True reproducibility is actually incredibly incredibly difficult
+    - better to have "reproducibility at time of dissemination / archiving"
+    and/or inspectability
+    
+- Not going to lie.. working to being more reproducible and being more open...
+you will encounter a lot of resistance, a lot of barriers and hardship.
+    - institutions that don't provide support or adequate training to stay 
+    updated with skills and tools
+    - Research culture and incentives that care more about publishing papers
+    than it does about doing actual science, about creating tools, about
+    interacting with the and educating the public, and about teaching junior
+    researchers.
+    - A system that favours each individual person repeating the same mistakes that
+    others make because the system doesn't allow for taking the time to 
+    create tools and infrastructure that helps others out.
+
+- what you can do and how to 
+
+- If nothing else: share your code.
+    - If its ugly. that's fine! the point is you start and you get comfortable doing
+    it until it becomes second nature to share and have better code and
+    assume that others will read your code.
+    - Use OSF or figshare or Zenodo or GitHub for your code. Even if you do it
+    right when you finish that manuscript and upload it.
+    
+- Find and start building communities for this to get help, get support, and
+build collaborations.
+    - Sadly there isn't much in the way of communities here.
+    - But can help ones in your research group
+
+- Start doing code reviews within your group
+    - dispel mystery around yours and others code. can learn a lot from reading
+    others code.
