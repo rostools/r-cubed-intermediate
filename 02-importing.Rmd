@@ -54,7 +54,7 @@ sharing it or making it public*! GDPR and Open Data are not in conflict.
 
 [mmash-website]: https://physionet.org/content/mmash/1.0.0/
 
-> *Note*: Sometimes to PhysioNet website is slow. If that's the case,
+> *Note*: Sometimes the PhysioNet website is slow. If that's the case,
 use **[this alternative link](resources/mmash-page.html)** instead.
 
 After we have looked over the MMASH website, we need to setup where we will store
@@ -76,7 +76,8 @@ raw, original MMASH data that we'll get from the website. The R script should
 have opened up for you, otherwise, go into the `data-raw/` folder and open up
 the new `mmash.R` script.
 
-The first thing we want do is create a new line at the top and type out:
+The first thing we want do is delete all the code that is there by default.
+Then we'll create a new line at the top and type out:
 
 ```{r dr-script-add-here}
 library(here)
@@ -304,7 +305,7 @@ This is a specially named code chunk that tells R to run this code chunk first
 whenever you first start running code in this R Markdown file. So it's here that
 we will add `library()` functions when we want to load other packages.
 
-**Take 5 minutes to read the next {{NUM}} paragraphs**.
+**Take 5 minutes to read the next paragraphs until it says to stop**.
 
 What is [vroom]? It is a package designed to load in data, specifically
 text-based data files such as CSV. In R there are several packages that you can
@@ -353,6 +354,10 @@ If your data is in CSV format, vroom is perfect. If not, there are other ways of
 importing data which we won't cover. The CSV file format is a commonly used 
 format for data because it is open, readable by any computer, and doesn't
 depend on any special software to open (unlike for e.g. Excel spreadsheets).
+**Please stop reading and we'll go over this together**.
+
+Let's first start by creating an object that has the file path to the dataset,
+then we'll use `vroom()` to import that dataset.
 
 ```{r setup-02, include=FALSE}
 library(vroom)
