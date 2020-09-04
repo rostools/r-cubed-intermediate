@@ -1,17 +1,12 @@
 # Processing datasets for cleaning {#dplyr-1}
 
-![](https://img.shields.io/badge/document%20status-rough%20draft-red?style=flat-square)
-
-```{r, eval=TRUE, child="includes/preamble.Rmd"}
-```
+![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
 
 ```{r setup-04, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
-library(dplyr)
-library(stringr)
-library(purrr)
+library(tidyverse)
 library(vroom)
 source_session("03-dry.Rmd")
 knitr::opts_chunk$set(eval = FALSE)
@@ -76,9 +71,9 @@ there, it's 30"`. If we break it down:
 - `*` means match the previous character one or more times.
 - `[]` means match whatever is in this brack once.
 - `0-9` means match any number from 0 to 9.
-- `?` means the previous thing may also be matched a second time.
+- `?` means the previous item may or may not be matched.
 
-Confused? Yea, regex does that to almost everyone, you aren't alone. While
+Confused? Yea, regex does that to pretty much everyone, you aren't alone. While
 regex can be very very powerful, it can also be incredibly difficult to write
 and work with. We won't cover this anymore in this course, but two great resources
 are the [R for Data Science regex section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
@@ -228,6 +223,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 Re-load the functions with `load_all()` (`Ctrl-Shift-L`). Then re-run these
 pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
 update them based on the new code in the `import_multiple_files()` function.
+Something like this should already be in somewhere in your `doc/lesson.Rmd` file.
 
 ```{r}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
@@ -236,14 +232,19 @@ rr_df <- import_multiple_files("RR.csv", import_rr)
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 ```
 
+Lastly, **don't forget** to add and commit the files into the Git history.
+
 ## Join datasets together
+
+`r details_for_instructors("
+Walk through and describe these images and the different type of joins.
+")`
 
 The ability to join datasets together is a fundamental component of data processing
 and transformation. In our case, we want to add the datasets together so we 
 eventually have at least one main dataset to work with.
 
 There are many ways to join datasets, the more common ones that are implemented
-in the dplyr package are:
 in the dplyr package are:
 
 - `left_join(x, y)`: Join all rows and columns in `y` that match rows and
@@ -263,8 +264,7 @@ are joined to `y`.
 
 - `full_join(x, y)`: Join all rows and columns in `y` that match rows and
 columns in `x`. Columns *and* **rows** that exist in `y` but not `x` are joined
-to `x`. This is probably the more commonly used one, as any missing values that
-show up are probably important to look into.
+to `x`. 
 
     ```{r image-full-join, fig.cap="Full joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
     knitr::include_graphics(here::here("images/full-join.svg"))
@@ -281,6 +281,11 @@ so we will join by them.
 full_join(user_info_df, saliva_df, by = "user_id")
 ```
 
+`full_join()` is useful if we want to include all values from both datasets,
+as long as each participant ("user") had data collected from that dataset.
+When the two datasets have rows that don't match, we will get missingness in that
+row, but that's ok in this case.
+
 We also eventually have other datasets to join together later on. Since
 `full_join()` can only take two datasets at a time, do we then just keep 
 using `full_join()` until all the other datasets are combined?
@@ -293,13 +298,6 @@ of items down until only one remains: the output. Let's use our simple function
 `add_numbers()` from before and add up 1 to 5. Since `add_numbers()` only takes
 two numbers, we have to give it two numbers at a time and repeat until we reach
 5.
-
-```{r add-numbers-function, echo=FALSE}
-add_numbers <- function(num1, num2) {
-    added <- num1 + num2
-    return(added)
-}
-```
 
 ```{r}
 # Add from 1 to 5
@@ -315,7 +313,7 @@ Instead, we can use reduce to do the same thing:
 reduce(1:5, add_numbers)
 ```
 
-This Figure \@ref(fig:image-reduce) visually shows what is happening within `reduce()`.
+Figure \@ref(fig:image-reduce) visually shows what is happening within `reduce()`.
 
 ```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
 knitr::include_graphics(here::here("images/reduce.svg"))
@@ -323,175 +321,533 @@ knitr::include_graphics(here::here("images/reduce.svg"))
 
 [purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
 
-So, for our `full_join()`, if we put the datasets together as a list, we can
-`reduce()` them down into one dataset with `full_join()`.
+Since `reduce()`, like `map()`, takes either a vector or a list as an input, and
+since data frames can only be put together as a list (a data frame has vectors
+for columns and so can't be a vector itself), we need to combine the datasets
+together in a `list()` and reduce them with `full_join()`:
 
 ```{r}
 combined_data <- reduce(list(user_info_df, saliva_df), full_join)
 combined_data
 ```
 
-## Renaming all columns
+## Summarizing data prior to joining
 
-TODO: for saliva data, need to include a day column based on samples
+Functionals and vectorization are an integral component of how R works and
+they appear throughout many R's functions and packages. They are particularly
+used throughout the tidyverse packages like dplyr. Let's get into some more
+advanced features of dplyr functions that work as functionals.
 
-Functionals appear throughout R and are especially used frequently in the
-tidyverse packages like dplyr. In order to continue processing the other datasets,
-we need to get into these other functions.
+There are many "verbs" in dplyr, like `select()`, `rename()`, `mutate()`, 
+`summarize()`, and `group_by()` (covered in more detail in the 
+[Data Management and Wrangling](https://r-cubed-v2.rostools.org/wrangling.html#managing-and-working-with-data-in-r)
+session of the beginner course).
+The common usage of these verbs is through acting on and directly using the
+column names. For instance, to select only the `age` column, you would type out:
 
 ```{r}
-combined_data %>% 
-    rename_with(snakecase::to_snake_case)
+user_info_df %>% 
+    select(age)
 ```
 
-
-```{r}
-import_rr <- function(file_path) {
-    rr_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            ibi_s = vroom::col_double(),
-            day = vroom::col_double(),
-            # Converts to seconds
-            time = vroom::col_time(format = "")
-        ),
-        .name_repair = snakecase::to_snake_case
-    ) 
-    return(rr_data)
-}
-```
-
-summarize across is also a functional in that you can give it many functions
-to use on each of the columns you want the function to work on.
-
-The across functional can also take a function when selecting the columns,
-just like with the `select()` function
-e.g. if you want to select only numeric columns you would use:
+But many dplyr verbs can also take functions as input. When you combine
+with the `where()` function, you can select e.g. columns that are numeric:
 
 ```{r}
 user_info_df %>% 
     select(where(is.numeric))
 ```
 
-Like wise with summarize, you can use across the same way:
+Or, only character columns:
 
 ```{r}
 user_info_df %>% 
-    summarize(across(where(is.numeric), mean))
-
-user_info_df %>% 
-    summarize(across(where(is.numeric), list(mean = mean, sd = sd)))
+    select(where(is.character))
 ```
 
-## Summarizing larger data to join
-
-We use this concept to process the other longer datasets like `RR.csv` so we can
-join them with the `user_info.csv` and other smaller datasets.
+Likewise, with functions like `summarise()`,
+if you want to e.g. calculate the mean of a column, you would usually type out:
 
 ```{r}
-import_multiple_files <- function(file_pattern, import_function) {
-    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-                             regexp = file_pattern,
-                             recurse = TRUE)
-    
-    combined_data <- purrr::map_dfr(data_files, import_function,
-                                    .id = "file_path_id") %>% 
-        extract_user_id()
-    return(combined_data)
-}
-library(tidyverse)
+saliva_df %>% 
+    summarise(cortisol_mean = mean(cortisol_norm))
+```
 
+If you want to calculate the mean of multiple columns, you might think you'd have
+to do something like:
+
+```{r}
+saliva_df %>% 
+    summarise(cortisol_mean = mean(cortisol_norm),
+              melatonin_mean = mean(melatonin_norm))
+```
+
+But instead, there is the `across()` function that works like `map()` and allows
+you to calculate the mean across which ever columns you want. In many ways,
+`across()` is a duplicate of `map()`, particularly in the arguments you give 
+it. 
+
+**Take 2 min and read through this list**. When you look in `?across`, there are
+two main arguments and two optional ones:
+
+1. `.cols` argument: Columns you want to use. 
+    - Write column names directly and wrapped in `c()`: `c(age, weight)`.
+    - Write `tidyselect` helpers: `everything()`, `starts_with()`,
+    `contains()`, `ends_with()`
+    - Use a function wrapped in `where()`: `where(is.numeric)`,
+    `where(is.character)`
+2. `.fns`: The function to use on the `.cols`.
+    - A bare function (`mean`) applies it to each column and returns the output,
+    with the column name unchanged.
+    - A list with bare functions (`list(mean, sd)`) applies each function to
+    each column and returns the output with the column name appended with a 
+    number.
+    - A named list with bare functions (`list(average = mean, stddev = sd)`)
+    does the same as above but instead returns an output with the column names
+    appended with the name given to the function in the list.
+    - A function passed with `~` and `.x`, like in `map()`. For instance,
+    `across(c(age, weight), ~ mean(.x, na.rm = TRUE))` is used to say "put age
+    and weight, one after the other, in place of where `.x` is located" to 
+    calculate the mean for age and the mean for weight.
+3. `...` argument: Arguments to give to the functions in `.fns`. For instance,
+`across(age, mean, na.rm = TRUE)` passes the argument to remove missingness
+`na.rm` into the `mean()` function.
+4. `.names` argument: Customize the output of the column names. We won't cover 
+this argument.
+
+**Ok, stop reading and we'll cover this together**.
+
+`r details_for_instructors("
+Go over the first two arguments again, reinforcing what they read.
+")`
+
+Let's try out some examples. To calculate the mean of `cortisol_norm` like we did
+above, we'd do:
+
+```{r}
+saliva_df %>% 
+    summarise(across(cortisol_norm, mean))
+```
+
+To calculate the mean of another column:
+
+```{r}
+saliva_df %>% 
+    summarise(across(c(cortisol_norm, melatonin_norm), mean))
+```
+
+This is nice, but changing the column names so that the function name is added 
+would make reading what the column contents are clearer. That's when we would
+use "named lists", which are lists that look like:
+
+```r
+list(item_one_name = ..., item_two_name = ...)
+```
+
+So, for having a named list with mean inside `across()`, it would look like:
+
+```r
+list(mean = mean)
+# or
+list(average = mean)
+# or
+list(ave = mean)
+```
+
+Let's just stick with `list(mean = mean)`:
+    
+```{r}
+saliva_df %>% 
+    summarise(across(cortisol_norm, list(mean = mean)))
+```
+    
+If we wanted to do that for all numeric columns and also calculate `sd()`:
+
+```{r}
+saliva_df %>% 
+    summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
+```
+
+We can use these concepts and code to process the other longer datasets, like
+`RR.csv`, in a way that makes it meaningful to join them with the smaller datasets
+like `user_info.csv` or `saliva.csv`. Let's work with the `RR.csv` dataset to
+eventually join it with the others. 
+
+With the RR dataset, each participant had almost 100,000 data points recorded
+over two days of collection. So if we want to join with the other datasets,
+we need to calculate summary measures by at least `user_id` and also preferably
+by `day` as well. In this case, we need to `group_by()` these two variables
+before summarising. Let's first summarise by taking the mean of `ibi_s`
+(which is the Inter-beat interval in seconds):
+
+```{r}
 rr_df %>% 
     group_by(user_id, day) %>% 
-    summarize(across(ibi_s, list(mean = mean, sd = sd)))
+    summarise(across(ibi_s, list(mean = mean)))
 ```
 
-We get a message:
+While there are no missing values here, let's add the argument `na.rm = TRUE`
+just in case.
+
+```{r}
+rr_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean), na.rm = TRUE))
+```
+
+You might notice a message (if you have the last version of dplyr):
 
 ```text
 `summarise()` regrouping output by 'user_id' (override with `.groups` argument)
 ```
 
-If we look into `?summarize` to the `.groups` argument,
-we see that this argument is currently experimental. At the bottom there is a 
-message about:
+**Take 5 min to read this section over before we continue**.
+This message talks about regrouping, and overriding based on the `.groups`
+argument. If we look into `?summarise` to the `.groups` argument, we see that
+this argument is currently "experimental". At the bottom there is a message about:
 
 > In addition, a message informs you of that choice, unless the option
 "dplyr.summarise.inform" is set to FALSE, or when summarise() is called from a
 function in a package.
 
-How would we do that? By using the `options()` function. So, go to the `setup`
-code chunk and add this code to the top:
+So how would be go about removing this message? By putting the
+"dplyr.summarise.inform" in the `options()` function. So, go to the `setup` code
+chunk and add this code to the top:
 
-TODO: Make this true to show what it puts, since this is already in _common.R
 ```{r}
-options(dplyr.summarize.inform = FALSE)
+options(dplyr.summarise.inform = FALSE)
+```
+
+You will now no longer get the message. **Please stop reading and we will 
+continue together**.
+
+Let's also add standard deviation as another measure from the RR datasets:
+
+```{r}
+summarised_rr_df <- rr_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+summarised_rr_df
+```
+
+We now have the data in a form that would make sense to join it with the other
+datasets. So lets try it:
+
+```{r}
+reduce(list(user_info_df, saliva_df, summarised_rr_df), full_join)
+```
+
+Hmm, but wait, we now have four rows of each user, when really we should have 
+only two, one for each day. That's because `saliva_df` doesn't have a `day` column,
+instead there is a `samples` column. We'll need to add a day column in order
+to join properly with the RR dataset. 
+
+There are several ways to do this, but probably the easiest, most explicit, and
+programmatically accurate way of doing it would be with the function
+`case_when()`. This function works by providing it with a series of logic
+conditions and an associated output if the condition is true. The general form
+looks like:
+
+```r
+case_when(
+    variable1 == condition1 ~ output,
+    variable2 == condition2 ~ output,
+    # Otherwise
+    TRUE ~ final_output
+)
+```
+
+A (silly) example using age might be:
+
+```r
+case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ "young",
+    # For final condition
+    TRUE ~ NA_character_
+)
+```
+
+A quick note about `NA_character_`. With dplyr functions like `case_when()`,
+it requires you be explicit about the type of output each condition has.
+This prevents you from accidentally mixing e.g. numeric output with character
+output. This includes for missing values. Other explicit `NA` include:
+
+- `NA_real_` (numeric)
+- `NA_integer_` (integer)
+
+How this would look in a pipeline would be when it is used in `mutate()`:
+
+```{r}
+user_info_df %>% 
+    mutate(age_category = case_when(
+        age > 20 ~ "old",
+        age <= 20 ~ "young",
+        TRUE ~ NA_character_
+    ))
+```
+
+**Ok, please stop reading and we will code together again**.
+
+By using this function, we can set `"before sleep"` as day 1 and `"wake up"` as
+day 2 by creating a new column called `day` that uses the `case_when()` function.
+(We will use `NA_real_` because the other `day` columns are numeric, not integer.)
+
+```{r}
+saliva_with_day_df <- saliva_df %>% 
+    mutate(day = case_when(
+        samples == "before sleep" ~ 1,
+        samples == "wake up" ~ 2,
+        TRUE ~ NA_real_
+    ))
+saliva_with_day_df
+```
+
+Now, let's use the `reduce()` with `full_join()` again:
+
+```{r}
+reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
+```
+
+We now have two rows per participant!
+
+## Exercise: Summarise then join the Actigraph data
+
+Time: 20 min
+
+Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so 
+that you can join it with the other datasets.
+
+1. Like usual, create a new Markdown header called e.g. `## Exercise: Summarise 
+and join Actigraph` and insert a new code chunk below that.
+2. Look into the [Data Description][mmash-site] to find out what each column 
+is for.
+3. Based on the documentation, which variables would you be most interested in
+analyzing more?
+    - Keep those columns as well `user_id` and `day` by using `select()`.
+4. Decide which summary measure(s) you think may be most interesting for you
+(e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
+5. Using `group_by()` of `user_id` and `day`, summarize the variables with the
+summary functions you chose.
+6. Put this new data into an new object called e.g. `summarised_actigraph_df`
+and include it with the other datasets in the `reduce()` function.
+7. Add and commit the changes you've made into the Git history.
+
+```{r solution-summarise-actigraph, echo=FALSE, include=FALSE}
+summarised_actigraph_df <- actigraph_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(hr, list(mean = mean, sd = sd)))
 ```
 
 
-
-## Exercise: Do same with Actigraph
-
-- Look into documentation.
-    - Rename columns to be more descriptive (e.g. what does `hr` mean? or `axis1`)
-    by using the `rename()` from dplyr. Use the help `?rename` to figure out how 
-    to use it if you don't know yet.
-- Based on the documentation, which variables would you be most interested in
-analyzing more?
-    - Keep only those columns by using `select()`.
-    - Decide which summary measure you think may be most interesting for you
-    (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`)
-- Using `group_by()` of `user_id` and `day`, summarize the variables you chose
-
-- group_by and summarize (FP)
-- selecting
-
-## Exercise: activity, calculate minutes from start and end.
+## Exercise: Import and process the activity data
 
 Time: 25 minutes
 
-- Create a new header called `## Exercise: Importing activitiy data`
-- Create a new code chunk
-- Starting from the beginning (e.g. using the `spec()` process) and write code
-that imports the `Activity.csv` file. 
-- Convert this code into a new function using the workflow you've used from this
-course.
-    - Called `import_activity`
-    - Have one argument called `file_path`, import with `import_multiple_files()`.
-    - Test that it works
-    - Move
-- Create a new column called `activity_minutes` by 
+We have a few other datasets that we could join together, but would likely require
+more processing in order to appropriately join with the other datasets.
+Complete these tasks:
 
-- Look into the data documentation and figure out what the columns mean.
-- Based on the 
+1. Create a new header called `## Exercise: Importing activitiy data`
+1. Create a new code chunk below this new header.
+1. Starting the workflow from the beginning (e.g. with the `spec()` process),
+write code that imports the `Activity.csv` data into R. 
+1. Convert this code into a new function using the workflow you've used from
+this course:
+    - Call the new function `import_activity`.
+    - Include one argument called `file_path`
+    - Test that it works.
+    - Add Roxygen documentation and explicit package links (`::`) with the
+    functions.
+    - Move the newly created function into the `R/functions.R`.
+    - Use the new function in `doc/lesson.Rmd` and use `load_all()`
+    (`Ctrl-Shift-L`) to run it.
+1. Import all the `user_` datasets with `import_multiple_files()` and the
+`import_activity()` function.
+1. Pipe the results into `mutate()` and create a new column called
+`activity_seconds` by subtracting `end` and `start`.
+    - Use `?mutate` and check the examples if you don't recall how to use this
+    function.
+1. Add and commit your changes to the Git history.
 
-```{r}
+```{r solution-import-activity, echo=FALSE, include=FALSE}
 import_activity <- function(file_path) {
-    
+    activity_data <- vroom::vroom(
+        "data-raw/mmash/user_1/Activity.csv",
+        col_select = -1,
+        col_types = vroom::cols(
+            Activity = vroom::col_double(),
+            Start = vroom::col_time(format = ""),
+            End = vroom::col_time(format = ""),
+            Day = vroom::col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    ) 
+    return(activity_data)
 }
+
+activity_df <- import_multiple_files("Activity.csv", import_activity)
+
+activity_df %>% 
+    # group_by(user_id) %>% 
+    mutate(activity_duration = end - start)
 ```
 
 
+Look into the [Data Description][mmash-site] and find out what each column
+represents and what the numbers mean in the column `activity`. Then brainstorm
+with your neighbour:
 
-## Exercise
+1. The disadvantage of using numbers instead of text to describe categorical
+data like in the `activity` column.
+1. Ways you could code include this information into the dataset.
+1. How you could meaningfully join this dataset with the other datasets.
 
-1. Look at the [data dictionary][mmash-site] and find out what the columns
-mean and rename the column to be something more meaningful and
-readable. 
-TODO: Include this exercise? 
-    - Pipe `%>%` the output from `vroom()` into the `rename()` function from the
-    dplyr package to rename the column and use [`snake_case`][snake-case] when
-    naming the new column. Read the `?dplyr::rename` help to know how to rename
-    columns.
+Afterwards, we'll quickly discuss some of these ideas as a group.
 
-1. Read through the Data Description and rename the columns to be more readable
-and explicit.
-TODO: Change this last one?
+[mmash-site]: https://physionet.org/content/mmash/1.0.0/
 
 ## Wrangling data into final form
 
-Save in data-raw script, source, and save data in data/
+Now that we've got several datasets processed and joined, its now time to 
+bring it all together and put it into the `data-raw/mmash.R` script so we
+can create a final working dataset.
+
+Open up the `data-raw/mmash.R` file and let's start cutting and pasting
+the code from `doc/lesson.Rmd` related to importing and joining the
+`user_info.csv`, `saliva.csv`, `RR.csv`, and `Actigraph.csv`.
+
+The script so far should look like:
+
+```{r data-raw-mmash-script}
+library(here)
+mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+unzip(here("data-raw/mmash-data.zip"), 
+      exdir = here("data-raw"),
+      junkpaths = TRUE)
+unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw"))
+
+library(fs)
+file_delete(here(c("data-raw/MMASH.zip", 
+                   "data-raw/SHA256SUMS.txt",
+                   "data-raw/LICENSE.txt")))
+file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+```
+
+First thing to do is comment out the `download.file()` code, since
+we don't want to download it everytime we run this script. Next we'll want to do
+rearrange it so all the packages are at the top, and then add the other
+packages we'll need: tidyverse and vroom.
+
+```{r}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(here)
+```
+
+Next, we need to let this script know where to get our functions from. So right
+below the `library()` functions, add:
+
+```r
+devtools::load_all()
+```
+
+This is the code that runs when you use `Ctrl-Shift-L`.
+
+Now, find the `import_multiple_files()`, summarized RR and Actigraph data,
+saliva data with the day column, and the `reduce()` code in your
+`doc/lesson.Rmd` file and cut and paste it at the bottom of the
+`data-raw/mmash.R` script. It should now look something like:
+
+```{r data-raw-mmash-2, eval=FALSE}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(here)
+devtools::load_all()
+
+mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+unzip(here("data-raw/mmash-data.zip"), 
+      exdir = here("data-raw"),
+      junkpaths = TRUE)
+unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw"))
+
+file_delete(here(c("data-raw/MMASH.zip", 
+                   "data-raw/SHA256SUMS.txt",
+                   "data-raw/LICENSE.txt")))
+file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+rr_df <- import_multiple_files("RR.csv", import_rr)
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+
+summarised_rr_df <- rr_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+
+saliva_with_day_df <- saliva_df %>% 
+    mutate(day = case_when(
+        samples == "before sleep" ~ 1,
+        samples == "wake up" ~ 2,
+        TRUE ~ NA_real_
+    ))
+
+# Your Actigraph version will be different
+summarised_actigraph_df <- actigraph_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(hr, list(mean = mean, sd = sd)))
+
+mmash <- reduce(
+    list(
+        user_info_df,
+        saliva_with_day_df,
+        summarised_rr_df,
+        summarised_actigraph_df
+    ),
+    full_join
+)
+```
+
+Lastly, we have to save this final dataset into the `data/` folder. We'll use this
+function `usethis::use_data()` to create the folder and save the data as an `.rda`
+file. We'll add this code to the very bottom of the script:
+
+```{r, eval=FALSE}
+usethis::use_data(mmash, overwrite = TRUE)
+```
+
+We're adding `overwrite = TRUE` so every time we re-run this script, the dataset
+will be saved. If the final dataset is going to be really large, we could save
+it as a `.csv` file with:
+
+```{r, eval=FALSE}
+vroom_write(mmash, here("data/mmash.csv"))
+```
+
+And later load it in with `vroom()` (since it is so fast).
+Alright, we're finished creating this dataset! Let's generate it
+by first:
+
+- Restart the R session with `Ctrl-Shift-F10` ("Session -> Restart R").
+- Source the `data-raw/mmash.R` script with `Ctrl-Shift-S` ("Code -> Source" or
+the "Source" button in the top right corner of the script pane).
+
+We now have a final dataset to start working on! There are two ways to access
+the dataset:
+
+- Through `load_all()` (`Ctrl-Shift-L`), which automatically loads in all `.rda`
+datasets into your working session.
+- Through `load(here::here("data/mmash.rda"))`.
+
+Try out loading it. Restart the R session again, then `load_all()` and
+in the *Console* type out `mmash` and hit Enter. You will see that your dataset
+is available.
 
 ## Exercise: What other cleaned data might you create?
 
