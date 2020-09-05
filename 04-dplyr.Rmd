@@ -53,7 +53,13 @@ character data. A wonderful package to use for working with character data is
 called [stringr]. We'll use that in order to process the `file_path_id` 
 so that we can get the user ID from it. First, let's go to the `setup`
 code chunk and replace purrr with tidyverse and move `library(tidyverse)` to
-the top of the `setup` code chunk.
+the top of the `setup` code chunk. We also have to add tidyverse as a dependency.
+Because tidyverse is a large collection of packages, the recommended way to add 
+the dependency is with:
+
+```r
+usethis::use_package("tidyverse", type = "Depends")
+```
 
 The main driver behind the functions in stringr are [regular expressions] (or
 [regex] for short). These expressions are powerful, very concise ways of finding
