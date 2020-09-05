@@ -56,73 +56,145 @@ LearnR3
 └── README.md
 ```
 
-- deeper into dplyr
-    - tidyselect helpers
-
-- group_by -> summarize function?
-        
-- debugging in functions
-    - breaks in RStudio?
-    - basics like print.
-    
-- creating functions
-    - and when using tidyverse functions
-
-- Possible uses:
-    - calculating mean from df
-        - select only numeric (select where is.numeric)
-        - show off the ... here (like with na.rm)
-    - Run multiple models and extract only some information
-    - Run models on re-sampled sets
-- Show but don't get them to do: other versions of functions in purrr
-
-- Count for males, females
-- max, min for age, weight, cortisol.
-- Pivot longer and wider for easier looking at these?
-- Separate with regex
-- pivot wider
-- Convert to function. As exercise?
-
-- Include some final dplyr summarizing of results of mmash
-    
-- Final exercise could be to do everything we've done but on `sleep.csv`
-and `questionnaire.csv`
-
-- Exercise: get them to do everything and create a second final dataset
-with only the full actigraph and RR data, joined by user, day, and time.
-
-- Exercise: Rename columsn to be more descriptive
-    
-- slides afterward
-    - Incorporate open and reproducible practices in coding
-
-Post course?
-
 
 - Commit everything
 - Delete all code in lesson.Rmd related to importing or cleaning the data
 - Commit changes
-- 
+- Knit document to make sure it generates html file.
+    - going to be doing this quite a bit throughout, so need to make sure
+    it works right now.
+
+- split-apply-combine
+- group_by -> summarize function?
+    - mean, sd, max, min for age, weight, cortisol.
+- Exercise: Try out on other variables
+- but the above quickly becomes unreadable.
+- Move to longer for since the eye has an easier time scanning down then
+it does across in table formats
+- pivot longer
+- This is nice, but we now have multiple distinct items in same column
+(mean and sd), in both values and names
+    - deeper into tidyselect helpers
+- separate (tidyr)
+- pivot_wider
+
+- Convert to function. As exercise?
+    - It won't work... but that's ok.
+- debugging in functions
+    - browser function
+- creating functions
+    - and when using tidyverse functions 
+    - NSE
+
+    
+- Discussion: How to make it so we can also add any type of summary
+statistic?
+    - think for a minute about this: How to get so we can also give our
+    own custom summary statistics, like use min instead.
+
+- debugging in functions
+    - browser in RStudio?
+    - Inside talk through ways to look over code and figure things
+    out in there.
+        - e.g. list(mean = mean) is named... so we could use that in
+        ends_with
+            - use names(list(mean = mean)) to show it.
+            - use 
+
+- Exercise: Convert function to let you 
+    - This might be challenging, ask neighbour for ideas
+
+- Use function to output knitr table
+    - knit and check out how it looks
+    - It's recommended to knit to Word only when absolutely necessary
+    (e.g. emailing to co-authors for comments),
+    since Word locks the file when its open, so knitting requires a 
+    "close Word first" process, which gets annoying quickly.
+
+- Exercise: Add to function to round value of summary stat
+    - include as argument to set digit rounding?
+
+- pipe results into mutate to make table even prettier
+    - e.g. with glue::glue(mean (sd))
+    
+- filter to look into problem rows
+
+- Exercise: Rename columns to be more descriptive, remove extra columns
+    - Go back and update mmash.R file, restart R, source.
+    
+- Exercise: get them to do everything and create a second final dataset
+with only the full actigraph and RR data, joined by user, day, and time.
+
+## Final exercise: Process and join sleep and questionnaire data
+
+Time: 30 min
+
+You now have all the skills and tools needed to do everything we've
+done to import, process, and join datasets. Its time to test these
+skills and tool by applying them to the `sleep.csv` and
+`questionnaire.csv` datasets. So to these workflows to get these
+datasets into the final, merged form:
+
+- Import with the `vroom()`, `spec()`, `vroom()` workflow.
+- Convert into a function with the `doc/lesson.Rmd` to `R/function.R`,
+restart R, and `load_all()` workflow.
+- Test that the datasets join properly while in `doc/lesson.Rmd`
+then cut and paste into `data-raw/mmash.R` workflow.
+- Restart R and re-create the `data/mmash.rda` dataset by
+sourcing `data-raw/mmash.R` workflow.
+- Restart R, load the new dataset with `load_all()`
+(`Ctrl-Shift-L`), and analyze it in `doc/lesson.Rmd` workflow.
+- Add any additional cleaning code to `data-raw/mmash.R` and
+update the `data/mmash.rda` dataset whenever you find problems
+workflow.
+- Write R in code chunks in the `doc/lesson.Rmd` to further
+analyze your data and check reproducibility by often knitting to
+HTML workflow.
+    - Part of this workflow is to also write R code to output
+    in a way that looks nice in the HTML (or Word) output
+    by mostly e.g. creating tables or figures of the output.
+
+And **don't forget**, for each stage, add and commit the changes
+you've made to the files into the Git history.
+
+Other ideas:
+
+- Run multiple models and extract only some information?
+- Run models on re-sampled sets?
 
 ## Code:
 
 ```{r}
-library(vroom)
-library(here)
-library(dplyr)
-user_1_rr_data %>% 
-    group_by(day) %>% 
-    summarize(across(inter_beat_interval_seconds, 
-                     list(mean = mean, min = min, max = max)))
+test_function <- function(mmash_df, cols) {
+    mmash_df %>%
+        group_by(day) %>%
+        summarise(across(cols,
+                         list(mean = mean, sd = sd),
+                         na.rm = TRUE)) %>%
+        pivot_longer(c(contains(c("_mean", "_sd")))) %>%
+        separate(name,
+                 into = c("variable", "summary_statistic"),
+                 sep = "_") %>%
+        mutate(value = round(value, 1)) %>%
+        pivot_wider(names_from = summary_statistic, values_from = value) 
+}
 
-user_1_rr_data %>% 
-    group_by(day) %>% 
-    # functional programming
-    summarize(across(inter_beat_interval_seconds, 
-                     list(mean = mean, min = min, max = max, sd = sd)))
+test_function(mmash, c(age))
 
+
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    )) %>% 
+    pivot_longer(c(contains(c("_mean", "_sd")))) %>% 
+    separate(name, into = c("variable", "summary_statistic"), sep = "_") %>% 
+    mutate(value = round(value, 1)) %>% 
+    pivot_wider(names_from = summary_statistic, values_from = value) 
 ```
-
+## Exercise: Update the `mmash.R` script with fixes you found from EDA
 
 ## Misc
 
