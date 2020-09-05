@@ -102,7 +102,11 @@ Discuss with your neighbour what a potential regex might be to find
 the ID in the `file_path_id`. Try not to look ahead `r emo::ji("wink")` since we
 will use this regex later on. When the time is up, we'll share possible ideas.
 
-## Exercise: What is the `%>%` pipe?
+```{r solution-regex-brainstorm, echo=FALSE}
+# There is no code for this exercise.
+```
+
+## Exercise: What is the pipe?
 
 Time: 5 min
 
@@ -124,6 +128,10 @@ talk about and explain it (if you know).
 - If neither of the pair knows, please read 
 [the section on it](https://r-cubed.rostools.org/wrangling.html#chaining-functions-with-the-pipe)
 from the beginner course.
+
+```{r solution-what-is-pipe, echo=FALSE}
+# There is no code for this exercise.
+```
 
 ## Working with character columns
 
@@ -859,6 +867,10 @@ With your neighbour, discuss some potential ways that you might join the dataset
 to retain that information and what questions you might be interested in with
 that data.
 
+```{r solution-other-data-brainstorm, echo=FALSE}
+# There is no code for this exercise.
+```
+
 ## Easily add parallel processing
 
 **Take 8 minutes to read through this section and then move on to the last exercise**.
@@ -926,3 +938,6 @@ After it finishes, then:
 right corner of the RStudio pane or with `Ctrl-Shift-S`. 
 
 Do you notice a difference in speed compared to before?
+
+```{r solution-use-furrr, echo=FALSE}
+# The code for this is given in the section right before the exercise
