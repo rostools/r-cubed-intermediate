@@ -797,7 +797,7 @@ saliva_with_day_df <- saliva_df %>%
         TRUE ~ NA_real_
     ))
 
-# Your Actigraph version will be different
+# Your Actigraph code will be probably be different
 summarised_actigraph_df <- actigraph_df %>% 
     group_by(user_id, day) %>% 
     summarise(across(hr, list(mean = mean, sd = sd)))
