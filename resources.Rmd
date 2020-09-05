@@ -1,4 +1,23 @@
-# Resources for learning
+# Resources 
+
+## For this course
+
+### Potential exercise solutions
+
+These are *potential* exercise solutions of R code only.
+
+```{r all-exercise-solutions, results="asis", echo=FALSE, eval=TRUE, message=FALSE}
+library(magrittr)
+source(here::here("R/extract-solutions.R"))
+solutions <- purrr::map(
+    c("02-importing.Rmd", "03-dry.Rmd", "04-dplyr.Rmd"),
+    extract_solution_chunks
+)
+unlist(solutions) %>% 
+    cat(sep = "\n")
+```
+
+## For learning
 
 **Free online books**:
 
