@@ -665,7 +665,7 @@ this course:
 1. Import all the `user_` datasets with `import_multiple_files()` and the
 `import_activity()` function.
 1. Pipe the results into `mutate()` and create a new column called
-`activity_seconds` by subtracting `end` and `start`.
+`activity_seconds` that is based on subtracting `end` and `start`.
     - Use `?mutate` and check the examples if you don't recall how to use this
     function.
 1. Add and commit your changes to the Git history.
