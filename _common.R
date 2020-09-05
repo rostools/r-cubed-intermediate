@@ -7,7 +7,6 @@ library(htmltools)
 knitr::opts_chunk$set(
     comment = "#>",
     collapse = TRUE,
-    warning = FALSE,
     fig.align = "center"
 )
 
