@@ -7,6 +7,17 @@
 
 `r '<!-- '`
 
+```{r setup-04, include=FALSE, eval=FALSE}
+source("R/functions.R")
+library(here)
+library(fs)
+library(tidyverse)
+library(vroom)
+source_session("03-dry.Rmd")
+source_session("04-dplyr.Rmd")
+load("data/mmash.rda")
+```
+
 ```{r}
 knitr::opts_chunk$set(eval = FALSE)
 ```

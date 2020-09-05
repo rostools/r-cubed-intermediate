@@ -639,7 +639,6 @@ summarised_actigraph_df <- actigraph_df %>%
     summarise(across(hr, list(mean = mean, sd = sd)))
 ```
 
-
 ## Exercise: Import and process the activity data
 
 Time: 25 minutes
