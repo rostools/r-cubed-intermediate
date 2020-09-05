@@ -7,7 +7,7 @@
 
 `r '<!-- '`
 
-```{r setup-04, include=FALSE, eval=FALSE}
+```{r setup-05, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
@@ -56,22 +56,74 @@ LearnR3
 └── README.md
 ```
 
+## Setup for the analysis in R Markdown
 
-- Commit everything
-- Delete all code in lesson.Rmd related to importing or cleaning the data
-- Commit changes
-- Knit document to make sure it generates html file.
-    - going to be doing this quite a bit throughout, so need to make sure
-    it works right now.
+We now have a working dataset to start doing some simple analyses on in the
+R Markdown document. A recommended workflow with R Markdown is to often
+"Knit" it and make sure your analysis is reproducible (while on your computer).
+So let's first clean it up and start from the beginning again.
 
+Before we do that, make sure to add and commit all changes done in `doc/lesson.Rmd`.
+So any change that we make now we will still have the old stuff in the history
+that we can look at.
+
+Next, we'll delete everything right below the `setup` code chunk.
+This code chunk should have all the packages listed with `library()` functions.
+We'll also add another one right below them:
+
+```r
+devtools::load_all()
+```
+
+When everything has been deleted, add and commit these changes into the Git history.
+Then, we'll "Knit" our R Markdown document into HTML by using the "Knit" button
+at the top of the pane or with `Ctrl-Shift-K`. Once it creates the file, it should
+either pop up or open in the Viewer pane on the side. 
+
+As we write more R code and do some simple analyses of the data, we are going
+to be knitting often. The main reason for this is to ensure that whatever we
+are writing and done will at least be reproducible on our computer, since
+R Markdown is designed to ensure the document is reproducible.
+
+For this specific workflow and for checking reproducibility, you should output
+to HTML rather than to a Word document. While you can create a Word document by
+changing the `output: html_document` to `output: word_document` at the top in
+the YAML header, you'd only do this when you need to submit to a journal or
+need to email to co-authors for review. The reason is simple: After you generate
+the Word document from R Markdown, the Word file opens up and consequently Word
+locks the file from further edits. What that means is that every time you generate
+the Word document, you have to close it before you can generate it again,
+otherwise knitting will fail. This can get annoying very quickly (trust me),
+since you don't always remember to close the Word document. If you output to
+HTML, this won't be a problem.
+
+## 
+
+```{r}
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    )) %>% 
+    pivot_longer(c(contains(c("_mean", "_sd")))) %>% 
+    separate(name, into = c("variable", "summary_statistic"), sep = "_") %>% 
+    mutate(value = round(value, 1)) %>% 
+    pivot_wider(names_from = summary_statistic, values_from = value) 
+```
 - split-apply-combine
 - group_by -> summarize function?
     - mean, sd, max, min for age, weight, cortisol.
 - Exercise: Try out on other variables
 - but the above quickly becomes unreadable.
+
+
 - Move to longer for since the eye has an easier time scanning down then
 it does across in table formats
 - pivot longer
+- use_package(tidyr)
+
 - This is nice, but we now have multiple distinct items in same column
 (mean and sd), in both values and names
     - deeper into tidyselect helpers
@@ -80,6 +132,33 @@ it does across in table formats
 
 - Convert to function. As exercise?
     - It won't work... but that's ok.
+    
+## Exercise: Convert this code into a function
+
+Time: 15 min
+
+Using the same workflow we've been doing throughout this course,
+convert this code into a function.
+
+
+
+```{r solution-summarise-function, echo=FALSE}
+tidy_summarize_by_day <- function(data, columns) {
+    data %>%
+        group_by(day) %>%
+        summarise(across(columns,
+                         list(mean = mean, sd = sd),
+                         na.rm = TRUE)) %>%
+        pivot_longer(c(contains(c("_mean", "_sd")))) %>%
+        separate(name,
+                 into = c("variable", "summary_statistic"),
+                 sep = "_") %>%
+        mutate(value = round(value, 1)) %>%
+        pivot_wider(names_from = summary_statistic, values_from = value) 
+}
+```
+
+
 - debugging in functions
     - browser function
 - creating functions
@@ -115,12 +194,25 @@ statistic?
 - Exercise: Add to function to round value of summary stat
     - include as argument to set digit rounding?
 
+
 - pipe results into mutate to make table even prettier
     - e.g. with glue::glue(mean (sd))
     
 - filter to look into problem rows
 
-- Exercise: Rename columns to be more descriptive, remove extra columns
+## Exercise: Find and fix other issues with the data
+
+
+Based on what you find with using the ... function,
+TODO: Add the function name
+and with using `View(mmash)`, identify other things in the dataset
+that might require cleaning
+
+
+- In the `data-raw/mmash.R` script Using a combination of `filter()`
+and `mutate()`, tidy up the fully joined dataset (before saving with
+`usethis::use_data()`), and
+Rename columns to be more descriptive, remove extra columns
     - Go back and update mmash.R file, restart R, source.
 
 ## General workflow up to this point {#general-workflow}
@@ -155,7 +247,7 @@ you've made to the files into the Git history.
 
 ## Final exercise: Process and join sleep and questionnaire data
 
-Time: 20 min
+Time: 25 min
 
 There are still a few datasets that you can join in with the current
 datasets like `sleep.csv` and `questionnaire.csv`. 
@@ -190,38 +282,6 @@ Other ideas:
 - Run multiple models and extract only some information?
 - Run models on re-sampled sets?
 
-## Code:
-
-```{r}
-test_function <- function(mmash_df, cols) {
-    mmash_df %>%
-        group_by(day) %>%
-        summarise(across(cols,
-                         list(mean = mean, sd = sd),
-                         na.rm = TRUE)) %>%
-        pivot_longer(c(contains(c("_mean", "_sd")))) %>%
-        separate(name,
-                 into = c("variable", "summary_statistic"),
-                 sep = "_") %>%
-        mutate(value = round(value, 1)) %>%
-        pivot_wider(names_from = summary_statistic, values_from = value) 
-}
-
-test_function(mmash, c(age))
-
-
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(c(contains(c("_mean", "_sd")))) %>% 
-    separate(name, into = c("variable", "summary_statistic"), sep = "_") %>% 
-    mutate(value = round(value, 1)) %>% 
-    pivot_wider(names_from = summary_statistic, values_from = value) 
-```
 ## Exercise: Update the `mmash.R` script with fixes you found from EDA
 
 ## Misc
