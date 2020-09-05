@@ -462,7 +462,15 @@ list(average = mean)
 list(ave = mean)
 ```
 
-Let's just stick with `list(mean = mean)`:
+You can confirm that it is a list by using the function `names()`:
+
+```{r}
+names(list(mean = mean))
+names(list(average = mean))
+names(list(ave = mean))
+```
+
+Let's stick with `list(mean = mean)`:
     
 ```{r}
 saliva_df %>% 
@@ -941,3 +949,4 @@ Do you notice a difference in speed compared to before?
 
 ```{r solution-use-furrr, echo=FALSE}
 # The code for this is given in the section right before the exercise
+```
