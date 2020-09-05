@@ -86,6 +86,12 @@ inside, that does some action.
 5. Optionally, but strongly encouraged, use `return()` to indicate what you want 
 the function to output.
 
+`r details_for_instructors("
+Emphasize that we will be using this workflow for creating functions all the
+time throughout course and that this workflow is also what you'd use in your
+daily work.
+")`
+
 While there is no minimum or maximum number of arguments you can provide for a
 function (e.g. you could have zero or dozens of arguments), its good practice
 for yourself and for others to have as few arguments as possible to get the job
@@ -189,6 +195,12 @@ function at the end to indicate what the function will output.
 1. Run the function and check that it works.
 1. Add the roxygen2 documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
 Roxygen Skeleton" menu item while the cursor is in the function).
+
+`r details_for_instructors("
+Emphasize that we will be using this workflow for creating functions all the
+time throughout course and that this workflow is also what you'd use in your
+daily work.
+")`
 
 So, step one. Let's take the code we wrote for importing the `user_info` data
 and convert that as a function:
