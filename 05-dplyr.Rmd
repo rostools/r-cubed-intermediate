@@ -397,7 +397,7 @@ tidy_summarize_by_day <- function(data, columns) {
 }
 ```
 
-## Debugging functions in R and RStudio
+## Debugging functions
 
 - debugging in functions
     - browser()
@@ -408,6 +408,20 @@ tidy_summarize_by_day <- function(data, columns) {
 - creating functions
     - and when using tidyverse functions 
     - NSE
+    
+What happened? We had an error. We've encountered a problem due to
+"[non-standard evaluation]" (or NSE). NSE is very commonly used in most tidyverse
+packages as well as throughout base R. It's one of the first things computer 
+scientists complain about when they use R, because it is such a foreign thing
+in other programming languages. But NSE is what allows you to use formulas (e.g.
+`y ~ x + x2` in modelling) or allows you to type out `select(Gender, BMI)`. In
+other programming languages, it would be `select("Gender", "BMI")`. It gives a lot
+of flexibility to use for doing data analysis, but can give some headaches when
+programming in R. So instead we have to use quotes instead and use the `_at()` 
+combined with `vars()` version of dplyr functions. The tidyr functions `gather`
+and `spread` don't require these changes.
+
+[non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
 
 - Discussion: How to make it so we can also add any type of summary
 statistic?
@@ -441,20 +455,6 @@ statistic?
     - include as argument to set digit rounding?
     mutate(value = round(value, 1)) %>% 
     - pipe to glue as well
-
-## Exercise: Find and fix other issues with the data (Optional)
-
-- filter to look into problem rows
-
-Based on what you find with using the ... function,
-TODO: Add the function name
-and with using `View(mmash)`, identify other things in the dataset
-that might require cleaning
-- In the `data-raw/mmash.R` script Using a combination of `filter()`
-and `mutate()`, tidy up the fully joined dataset (before saving with
-`usethis::use_data()`), and
-Rename columns to be more descriptive, remove extra columns
-    - Go back and update mmash.R file, restart R, source.
 
 ## General workflow up to this point {#general-workflow}
 
@@ -517,30 +517,6 @@ datasets.
 - Name the new dataset `actigraph_rr` and save it to `data/`
 by using another `usethis::use_data()` line in the `data-raw/mmash.R`
 script.
-
-Other ideas:
-
-- Run multiple models and extract only some information?
-- Run models on re-sampled sets?
-
-## Exercise: Update the `mmash.R` script with fixes you found from EDA
-
-## Misc
-
-What happened? We had an error. We've encountered a problem due to
-"[non-standard evaluation]" (or NSE). NSE is very commonly used in most tidyverse
-packages as well as throughout base R. It's one of the first things computer 
-scientists complain about when they use R, because it is such a foreign thing
-in other programming languages. But NSE is what allows you to use formulas (e.g.
-`y ~ x + x2` in modelling) or allows you to type out `select(Gender, BMI)`. In
-other programming languages, it would be `select("Gender", "BMI")`. It gives a lot
-of flexibility to use for doing data analysis, but can give some headaches when
-programming in R. So instead we have to use quotes instead and use the `_at()` 
-combined with `vars()` version of dplyr functions. The tidyr functions `gather`
-and `spread` don't require these changes.
-
-[non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
-
 
 
 `r '-->'`
