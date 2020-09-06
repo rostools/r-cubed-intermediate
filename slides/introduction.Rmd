@@ -83,7 +83,6 @@ and teaching how to share code and to write better code in general.
 
 ## Code sharing: From scientific principle of "reproducibility" 
 
-
 --
 
 .pull-left[
@@ -102,9 +101,6 @@ and teaching how to share code and to write better code in general.
 
 - Generating the exact same results when using the same data and code
 - Should be easy right? Wrong, often just as hard
-- *True* reproducibility is nearly impossible
-    - Better: "Good enough reproducibility at publication"
-    - Or at least have "inspectability" `r Cite(bib, "Gil2016")`
 - *Question*: If we can't even *reproduce* a studies results, how can we expect 
 to replicate it?
 ]
@@ -114,16 +110,6 @@ to replicate it?
 1. Also from an American Statistical Association [statement](https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf).  
 2. Or rather "irreplicability crisis".
 ]
-
-???
-
-True reproducibility means being able to re-create the results on *any* computer
-at any point in the near future. But with constant updates to software and
-computers, reproducibility quickly becomes impossible. Hence why focusing on
-being reproducible at the time of publication or at the very least focus on
-ensuring your data analysis is "inspectable", meaning that someone can come
-and read your code and understand the logic of what you are doing, even if they
-can't directly reproduce the results.
 
 ---
 
