@@ -775,9 +775,6 @@ Alright, we now have all the files ready to give to `map()`. So let's try it!
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
-
-
-
 Remember, that `map()` always outputs a list, so when we look into this object,
 it will give us 22 tibbles (data.frames). Here we'll only show the first one:
 
