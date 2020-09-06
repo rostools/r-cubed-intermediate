@@ -4,7 +4,8 @@
 
 ### Potential exercise solutions
 
-These are *potential* exercise solutions of R code only.
+These are *potential* exercise solutions of R code only. This are mostly intended
+as a resource for after the class, not during it.
 
 ```{r all-exercise-solutions, results="asis", echo=FALSE, eval=TRUE, message=FALSE}
 library(magrittr)
