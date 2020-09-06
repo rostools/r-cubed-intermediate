@@ -231,7 +231,7 @@ Nice! But not super useful. We can exclude specific columns from pivoting
 with `-` before the column name, for instance with `user_id` and `day`. Let's
 drop the `samples` column before pivoting:
 
-```{r}
+```{r pivot-longer-example}
 mmash %>% 
     select(-samples) %>% 
     pivot_longer(c(-user_id, -day, -gender))
@@ -254,7 +254,7 @@ mmash %>%
 ```
 
 1. Look into the help documentation of `ends_with()` and use it for pivoting only
-the columns that end with `_mean` and `_sd`.
+the columns that end with `mean` and `sd`.
     - Hint: `ends_with()` is *vectorized* meaning you can give it a vector of
     column endings.
 1. After using the `pivot_longer()`, knit the R Markdown document into HTML 
@@ -269,66 +269,89 @@ mmash %>%
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
-    pivot_longer(ends_with(c("_mean", "_sd")))
-```
-
-## 
-
-```{r}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(c(contains(c("_mean", "_sd"))))
+    pivot_longer(ends_with(c("mean", "sd")))
 ```
 
 ## Pivot data to wider form
 
-- This is nice, but we now have multiple distinct items in same column
-(mean and sd), in both values and names
-    - deeper into tidyselect helpers
-- separate (tidyr)
-- pivot_wider
+After using `pivot_longer()` on the summarized data, it looks nice, but it still 
+has a problem: We have both mean and standard deviation values in the same column.
+It would be nicer if we had two columns, one for means and one for the sd values.
+We couldn't pivot to wider right now because that would put it right back from
+where we got it. So instead, we need to separate the existing `name` column
+into two columns for `name` and `summary_statistic`. We can do this when
+we use `pivot_longer()` by using the `names_to` and `names_sep` arguments:
 
-You can also convert from long to wide, though this is less commonly done,
-as most analyses either work better or require the long form. 
-It can also be much more tricky to convert over to.
-But sometimes you may need to have a wide form for your data.
-Here you can use `pivot_wider()` function. Others have used `pivot_wider()` for creating summary tables for presentation or to capture data in a format needed by other tools. Like its opposite,
-the first position argument is the data and the other necessary arguments are:
+- `names_to` can take a vector of new column names that will be created,
+meaning if you give it two new names, it will create two columns. But, when it
+has more than one new column name, it relies on you also using at least `names_sep`.
+- `names_sep`, which means "names separation", is used to tell `pivot_longer()`
+that a specific character separates two or more distinct possible columns. In
+our case, `_` separates the variable name from `mean` or `sd`.
+
+So, add these two arguments:
+
+```{r pivot-longer-separate}
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    )) %>% 
+    pivot_longer(ends_with(c("_mean", "_sd")),
+                 names_sep = "_",
+                 names_to = c("name", "summary_statistic"))
+```
+
+Now we are in a good position to pivot wider. So how does `pivot_wider()` work?
+Like its opposite `pivot_longer()`, the first position argument is the data and
+the other arguments are:
 
 1. `id_cols`: This is optional as it will default to all column names. 
 This argument tells `pivot_wider()` to use the given columns as the identifiers
-for when converting. 
-This is where the tricky part comes in, 
-because 
+for when converting. Unlike `pivot_longer()` which doesn't require some type of
+"key" or "id" column to convert to long form, the conversion to wide form
+works requires some type of "key" or "id" column because `pivot_wider()` needs
+to know which rows belong with each other.
 1. `names_from`: Similar to the `pivot_longer()`, 
-this is the name of the column that will make up the new columns.
-Unlike in `pivot_longer()`, 
-the column name given is *unquoted* since the column 
-*must already exist* in the dataset.
-1. `values_from`: As with above, this is the column name 
-(that exists and must be given *unquoted*) 
-for the values that will be in the new columns.
+this is the name of the column that has the values that will make up the new
+columns. Unlike with the `names_to` argument in `pivot_longer()` which takes a
+character string as input, the column name for `names_from` must be *unquoted*
+because you are selecting a column that already exists in the dataset.
+1. `values_from`: Same as `names_from`, this is the column name (that exists and
+must be given *unquoted*) for the values that will be in the new columns.
 
-If we wanted to make it even wider, 
-we could include `year` and `type` in the pivoting by wrapping them with `c()`
-in the `names_from` argument:
+Figure \@ref(fig:image-pivot-wider) visually shows what's happening when using
+`pivot_wider()`.
 
-```{r}
-table2 %>% 
-    pivot_wider(names_from = c(year, type), values_from = count)
+```{r image-pivot-wider, fig.cap="Pivot wider in tidyr.", out.width="70%", echo=FALSE}
+knitr::include_graphics(here::here("images/pivot-wider.svg"))
 ```
 
-The key to using `pivot_wider()` is that there are uniquely identifying rows
-that allow pivoting that maintains the integrity of the data.
-Since the NHANES dataset we use is for teaching purposes,
-there are some cases where the same person is recorded multiple times in one survey year,
-which doesn't make sense and prevents us from adequately pivoting wider.
+In our case, we want the new column names to come from `summary_statistic`
+and the values to come from `value`. Let's add it to the end of our pipe:
 
+```{r pivot-wider-summary-end}
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    )) %>% 
+    pivot_longer(ends_with(c("_mean", "_sd")),
+                 names_sep = "_",
+                 names_to = c("name", "summary_statistic")) %>% 
+    pivot_wider(names_from = summary_statistic, 
+                values_from = value) 
+```
+
+And technically, you can pivot longer and wider all at once by using some features of
+`pivot_longer()`. The only change we need to make to the `pivot_longer()` code
+is replace `"summary_statistic"` with the special setting `".value"`. Delete the
+`pivot_wider()` function and you have a longer-to-wider dataset! We didn't cover
+this first because we wanted to show how to use `pivot_wider()` on its own.
 
 ```{r}
 mmash %>% 
@@ -338,9 +361,9 @@ mmash %>%
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
-    pivot_longer(c(contains(c("_mean", "_sd")))) %>% 
-    separate(name, into = c("variable", "summary_statistic"), sep = "_") %>% 
-    pivot_wider(names_from = summary_statistic, values_from = value) 
+    pivot_longer(ends_with(c("_mean", "_sd")),
+                 names_sep = "_",
+                 names_to = c("name", ".value"))
 ```
 
 ## Exercise: Convert this code into a function
@@ -368,11 +391,9 @@ tidy_summarize_by_day <- function(data, columns) {
         dplyr::summarise(dplyr::across(columns,
                                        list(mean = mean, sd = sd),
                                        na.rm = TRUE)) %>% 
-        tidyr::pivot_longer(c(dplyr::contains(c("_mean", "_sd")))) %>%
-        tidyr::separate(name,
-                        into = c("variable", "summary_statistic"),
-                        sep = "_") %>% 
-        tidyr::pivot_wider(names_from = summary_statistic, values_from = value) 
+        tidyr::pivot_longer(dplyr::ends_with(c("_mean", "_sd")),
+                            names_to = c("name", ".value"),
+                            names_sep = "_") 
 }
 ```
 
