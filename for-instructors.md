@@ -45,6 +45,8 @@ to know where these are and to use them to help you as you go through the materi
 their pairs.
 - Exercise solutions do not need to be covered by the instructor,
 given the solution is provided already.
+    - During the exercise, copy and paste the solutions from the site into your
+    code-along R Project, so you can move to the next section quickly.
 - Try to keep the screen on your RStudio as much as possible 
 and don't switch applications often, 
 only when you need to go to the course material or to show an exercise.
