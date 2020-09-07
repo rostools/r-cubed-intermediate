@@ -779,9 +779,9 @@ This is the code that runs when you use `Ctrl-Shift-L`.
 Now, find the `import_multiple_files()`, summarized RR and Actigraph data,
 saliva data with the day column, and the `reduce()` code in your
 `doc/lesson.Rmd` file and cut and paste it at the bottom of the
-`data-raw/mmash.R` script. It should now look something like:
+`data-raw/mmash.R` script. This is what the bottom half should look like:
 
-```{r data-raw-mmash-2, eval=FALSE}
+```{r data-raw-mmash-2, eval=-c(1:17)}
 library(tidyverse)
 library(vroom)
 library(fs)
