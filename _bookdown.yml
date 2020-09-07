@@ -20,6 +20,7 @@ rmd_files:
     - "03-dry.Rmd"
     - "04-dplyr.Rmd"
     - "05-dplyr.Rmd"
+    - "06-what-next.Rmd"
     - "appendix.md"
     - "resources.Rmd"
     - "for-instructors.md"
