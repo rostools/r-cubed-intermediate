@@ -1,7 +1,5 @@
 # Save time, don't repeat yourself {#dry}
 
-![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
-
 ```{r setup-03, include=FALSE, eval=FALSE}
 library(here)
 library(fs)

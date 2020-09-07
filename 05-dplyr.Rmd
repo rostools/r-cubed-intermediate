@@ -1,12 +1,5 @@
 # Workflow to analyzing your tidy data {#dplyr-2}
 
-![](https://img.shields.io/badge/document%20status-in%20progress-red?style=flat-square)
-
-```{r, eval=TRUE, child="includes/preamble.Rmd"}
-```
-
-`r '<!-- '`
-
 ```{r setup-05, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)

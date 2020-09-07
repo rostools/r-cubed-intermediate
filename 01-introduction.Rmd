@@ -1,7 +1,5 @@
 # Basic setup and workflow {#intro}
 
-![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
-
 ## Introduction to course
 
 **[Introduction slides](slides/introduction.html)**

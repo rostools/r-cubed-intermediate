@@ -1,7 +1,5 @@
 # Processing datasets for cleaning {#dplyr-1}
 
-![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
-
 ```{r setup-04, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
