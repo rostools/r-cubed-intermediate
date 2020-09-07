@@ -527,28 +527,46 @@ Time: 20 min
 
 We've made the function so that we can include any column we want, but now
 let's make it so we can include any summary function we want, not just `mean()`
-and `sd()`. This task will be challenging, so discuss and work with your
-neighbour on completing this exercise.
+and `sd()`, as a new argument called `summary_fn`. This task will be
+*challenging*, so discuss and work with your neighbour on completing this
+exercise. Work within the debugging environment to deal with this problem.
 
-- Work within the debugging environment to fix this problem
+- *Hints*: 
+    - `list(mean = mean, ...)` is a named list, meaning you can use `names()`
+    to get a vector of the names of the list. 
+    - You will have to create an intermediate object based on the new `summary_fn`
+    argument. 
 
-- This might be challenging, ask neighbour for ideas
+```{r solution-summary-extend, echo=FALSE}
+tidy_summarise_by_day <- function(data, columns, summary_fn) {
+    fn_names <- names(summary_fn)
+    data %>%
+        dplyr::group_by(day) %>%
+        dplyr::summarise(dplyr::across({{columns}},
+                                       summary_fn,
+                                       na.rm = TRUE)) %>% 
+        tidyr::pivot_longer(dplyr::ends_with(fn_names),
+                            names_to = c("name", ".value"),
+                            names_sep = "_") 
+}
+```
 
-- Use function to output knitr table
-    - knit and check out how it looks
-        - don't add and commit the html or word output, at least not yet.
-    - It's recommended to knit to Word only when absolutely necessary
-    (e.g. emailing to co-authors for comments),
-    since Word locks the file when its open, so knitting requires a 
-    "close Word first" process, which gets annoying quickly.
+## Making prettier output in R Markdown
 
-- pipe results into mutate to make table even prettier
-    - e.g. with glue::glue(mean (sd))
-    
-- Exercise: Add to function to round value of summary stat
-    - include as argument to set digit rounding?
-    mutate(value = round(value, 1)) %>% 
-    - pipe to glue as well
+What we created is nice and all, but since we are working in an R Markdown
+document and knitting to HTML, let's make it easier for others (including
+yourself) to read the document. Let's make the output as actual tables.
+We can do that with `knitr::kable()` (meaning "knitr table"). We can even
+add a table caption with the `caption` argument.
+
+```{r}
+mmash %>% 
+    tidy_summarise_by_day(c(age, weight, height),
+                          list(mean = mean, min = min, max = max)) %>% 
+    knitr::kable(caption = "Descriptive statistics of some variables.")
+```
+
+Then knit the document and check out the HTML file. So pretty! `r emo::ji("grin")`
 
 ## General workflow up to this point {#general-workflow}
 
