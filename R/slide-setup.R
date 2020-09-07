@@ -4,7 +4,8 @@ options(htmltools.dir.version = FALSE)
 # Insert references
 library(RefManageR)
 BibOptions(
-    check.entries = FALSE,
+    match.date = "year.only",
+    check.entries = "warn",
     bib.style = "numeric",
     cite.style = "numeric",
     style = "markdown",
@@ -12,7 +13,7 @@ BibOptions(
     super = FALSE
     # hyperlink = FALSE,
 )
-bib <- ReadBib(here::here("resources/refs.bib"), check = FALSE)
+bib <- ReadBib(here::here("resources/refs.bib"))
 knitr::opts_chunk$set(echo = FALSE)
 
 # Customized theme
