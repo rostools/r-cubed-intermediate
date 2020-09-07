@@ -11,10 +11,6 @@ source_session("04-dplyr.Rmd")
 load("data/mmash.rda")
 ```
 
-```{r}
-knitr::opts_chunk$set(eval = FALSE)
-```
-
 Here we will continue using the *Workflow* block as we cover the fourth block,
 "*Work with final data*" in Figure \@ref(fig:diagram-overview-4).
 
@@ -420,7 +416,7 @@ pops up at the top of the pane saying something like:
 Activate it by running `load_all()` with `Ctrl-Shift-L`. The dot should now be
 solid red, rather than a circle. In the Console, type out and run the code:
 
-```{r}
+```{r, error=TRUE}
 tidy_summarise_by_day(mmash, age)
 ```
 
@@ -622,6 +618,3 @@ datasets.
 - Name the new dataset `actigraph_rr` and save it to `data/`
 by using another `usethis::use_data()` line in the `data-raw/mmash.R`
 script.
-
-
-`r '-->'`
