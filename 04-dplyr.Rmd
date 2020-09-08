@@ -263,7 +263,7 @@ in the dplyr package are:
 columns in `x`. *Columns* that exist in `y` but not `x` are joined to `x`.
 
     ```{r image-left-join, fig.cap="Left joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
-    knitr::include_graphics(here::here("images/left-join.svg"))
+    knitr::include_graphics(here::here("images/left-join.png"))
     ```
     
 - `right_join(x, y)`: The opposite of `left_join()`. Join all rows and columns
@@ -271,7 +271,7 @@ in `x` that match rows and columns in `y`. *Columns* that exist in `x` but not `
 are joined to `y`.
 
     ```{r image-right-join, fig.cap="Right joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
-    knitr::include_graphics(here::here("images/right-join.svg"))
+    knitr::include_graphics(here::here("images/right-join.png"))
     ```
 
 - `full_join(x, y)`: Join all rows and columns in `y` that match rows and
@@ -279,7 +279,7 @@ columns in `x`. Columns *and* **rows** that exist in `y` but not `x` are joined
 to `x`. 
 
     ```{r image-full-join, fig.cap="Full joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
-    knitr::include_graphics(here::here("images/full-join.svg"))
+    knitr::include_graphics(here::here("images/full-join.png"))
     ```
 
 [dplyr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf
@@ -328,7 +328,7 @@ reduce(1:5, add_numbers)
 Figure \@ref(fig:image-reduce) visually shows what is happening within `reduce()`.
 
 ```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
-knitr::include_graphics(here::here("images/reduce.svg"))
+knitr::include_graphics(here::here("images/reduce.png"))
 ```
 
 [purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
