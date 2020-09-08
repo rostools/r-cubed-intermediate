@@ -20,7 +20,9 @@ output:
 source(here::here("R/slide-setup.R"))
 ```
 
-- `r emo::ji("check")` Re-install r3 `remotes::install_gitlab("rostools/r3")`
+- `r emo::ji("check")` Re-install r3 `remotes::install_gitlab("rostools/r3", upgrade = TRUE, force = TRUE)`
+
+- Open your `LearnR3.Rproj` and hit `Ctrl-Shift-L` to make sure that works (if not, let us know)
 
 ---
 
