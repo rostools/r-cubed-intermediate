@@ -13,3 +13,4 @@ data-raw/mmash/
 data-raw/mmash.R
 _ignore
 data
+R/ignore.R
