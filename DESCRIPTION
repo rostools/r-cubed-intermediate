@@ -1,7 +1,7 @@
 Package: RCubedIntermediate
 Title: "Reproducible Research in R: An Intermediate Workshop on Modern Approaches 
     and Workflows to Processing Data"
-Version: 0.0.0
+Version: 0.1.0
 Authors@R: c(
     person(given = "Luke",
            family = "Johnston",
