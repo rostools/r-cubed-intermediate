@@ -17,6 +17,10 @@ class: middle
 
 # First thing: *True* reproducibility is basically impossible
 
+```{r setup, include=FALSE}
+source(here::here("R/slide-setup.R"))
+```
+
 ## Better: "reproducibility at dissemination / archiving" or "inspectability" `r Cite(bib, "Gil2016")`
 
 ???
@@ -38,7 +42,7 @@ can't directly reproduce the results.
 
 class: middle
 
-# Code sharing is abysmal across health sciences `r Cite(bib, "Considine2017a", "Rauh2019", "Evans2019", "Rauh2019a", "Hughes2019", "Peng2006a")`
+# Code sharing is abysmal across health sciences `r Cite(bib, c("Considine2017a", "Rauh2019", "Evans2019", "Rauh2019a", "Hughes2019", "Peng2006a"))`
 
 ## How can we check reproducibility if no code is given?
 

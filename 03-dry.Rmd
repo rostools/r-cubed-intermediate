@@ -1,7 +1,5 @@
 # Save time, don't repeat yourself {#dry}
 
-![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
-
 ```{r setup-03, include=FALSE, eval=FALSE}
 library(here)
 library(fs)
@@ -638,7 +636,7 @@ Figure \@ref(fig:image-vectorization) shows how a function conceptually uses
 vectorization.
 
 ```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="40%", echo=FALSE}
-knitr::include_graphics(here::here("images/vectorization.svg"))
+knitr::include_graphics(here::here("images/vectorization.png"))
 ```
 
 Instead, in R, there is the function called `sum()` that takes the entire
@@ -659,7 +657,7 @@ The name `map()` doesn't mean a geographic map, it means the mathematical meanin
 of map: To use a function on each item in a set of items.
 
 ```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
-knitr::include_graphics(here::here("images/functionals.svg"))
+knitr::include_graphics(here::here("images/functionals.png"))
 ```
 
 [purrr]: https://purrr.tidyverse.org
