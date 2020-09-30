@@ -1,42 +1,68 @@
 Package: RCubedIntermediate
-Title: "Reproducible Research in R: An Intermediate Workshop on Modern Approaches 
-    and Workflows to Processing Data"
+Title: "Reproducible Research in R: An Intermediate Workshop on
+    Modern Approaches and Workflows to Processing Data"
 Version: 0.1.0
-Authors@R: c(
-    person(given = "Luke",
-           family = "Johnston",
-           role = c("aut", "cre"),
-           email = "lwjohnst@gmail.com",
-           comment = c(ORCID = "0000-0003-4169-2616"))
-    )
-URL: https://gitlab.com/rostools/r-cubed-intermediate/issues,
-    https://r-cubed-intermediate.rostools.org
+Authors@R: 
+    c(person(given = "Luke",
+             family = "Johnston",
+             role = c("aut", "cre"),
+             email = "lwjohnst@gmail.com",
+             comment = c(ORCID = "0000-0003-4169-2616",
+                         affiliation = "Steno Diabetes Center Aarhus")),
+      person(given = "Omar",
+             family = "Silverman-Retana",
+             role = "ctb",
+             email = "omar.silverman@ph.au.dk",
+             comment = c(ORCID = "0000-0002-2744-9698",
+                         affiliation = "Steno Diabetes Center Aarhus")),
+      person(given = "Andreas",
+             family = "Eiset",
+             role = "ctb",
+             email = "eiset@ph.au.dk",
+             comment = c(ORCID = "0000-0002-5487-8359",
+                         affiliation = "Aarhus University")),
+      person(given = "Signe",
+             family = "Storgaard",
+             role = "ctb",
+             email = "sist@ph.au.dk",
+             comment = c(ORCID = "0000-0003-0014-8868"),
+                         affiliation = "Aarhus University")))
+Description: Reproducibility and open scientific practices are
+    increasingly being requested or required of scientists and
+    researchers, but training on these practices has not kept pace. This
+    course intends to help bridge that gap and covers the fundamentals and
+    workflow of data analysis in R. This repository contains the lesson,
+    lecture, and assignment material for the course, including the website
+    source files and other associated course administration files. For
+    more details on the course, check out the <a
+    href='https://r-cubed-intermediate.rostools.org'>website</a>.
+URL: https://r-cubed-intermediate.rostools.org
 Depends: 
     R (>= 4.0.0)
 Imports: 
     bookdown,
-    dplyr,
-    purrr,
-    emo,
-    vroom,
-    here,
     DiagrammeR,
-    glue,
-    RefManageR,
+    dplyr,
+    emo,
     fs,
-    stringr,
+    glue,
+    here,
+    magrittr,
+    purrr,
     r3 (>= 0.0.0.9000),
-    magrittr
+    RefManageR,
+    stringr,
+    vroom
 Suggests: 
+    furrr,
     prodigenr,
+    showtext,
     tidyverse,
     usethis,
     xaringan,
-    xaringanthemer,
-    showtext,
-    furrr
+    xaringanthemer
 Remotes: 
     gadenbuie/xaringanthemer,
-    hadley/emo,
-    gitlab::rostools/r3
+    gitlab::rostools/r3,
+    hadley/emo
 Encoding: UTF-8
