@@ -2,6 +2,7 @@
 title: "Reproducible Research in R"
 subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
 date: "Updated: `r format(Sys.time(), '%B %d %Y')`"
+author: "[Contributors: Instructors of the course](#contributors)"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [resources/packages.bib, resources/refs.bib]
@@ -83,9 +84,18 @@ to make comments and give feedback for the material.
 
 The course material is licensed under the
 [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
-and the course code is licensed under a [MIT License](https://gitlab.com/rostools/r-cubed-intermediate/-/blob/master/LICENSE-MIT.md) by Luke W. Johnston,
+and the course code is licensed under a [MIT License](https://gitlab.com/rostools/r-cubed-intermediate/-/blob/master/LICENSE-MIT.md),
 so the material can be used, re-used, and modified, 
 as long as there is attribution to this source.
+
+## Contributors {#contributors}
+
+- Luke Johnston: Brainstormed most of the course material and structure; set up
+the website; organized and coordinated the course; wrote and developed the code-along sessions; and, taught the final data analysis code-along session as well as the lectures.
+- Signe Freja Storgaard: Taught and edited the data import code-along session material.
+- Andreas Halgreen Eiset: Taught and edited the "Don't Repeat Yourself" code-along
+session material.
+- Omar Silverman: Taught and edited the processing and cleaning code-along session material.
 
 ## Acknowledgements
 
