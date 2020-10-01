@@ -29,19 +29,19 @@ repo <- repository()
 repo_version <- str_c("v", as.character(desc::desc_get_version()))
 version_tag <- tag(repo, name = repo_version, message = "Teaching material used for the Sept 8-9, 2020 course.")
 tag_files <- ls_tree(tree(lookup_commit(version_tag)))
-zip("r-cubed-intermediate.zip", tag_files)
+zip("r-cubed-intermediate.zip", str_c(tag_files$path, tag_files$name))
 
 new_record <- ZenodoRecord$new()
 pwalk(authors_df, new_record$addCreator)
-new_record$setUploadType("lesson")
+new_record$setUploadType("other")
 new_record$setTitle(str_c("r-cubed: ", lesson_title))
 new_record$setDescription(description_content)
 new_record$setLicense("cc-by")
 new_record$addRelatedIdentifier("isCompiledBy", "https://gitlab.com/rostools/r-cubed-intermediate")
-new_record$addRelatedIdentifier("isIdenticalTo", "https://gitlab.com/rostools/r-cubed-intermediate/-/tags/v0.1.0")
+new_record$addRelatedIdentifier("isIdenticalTo", "https://gitlab.com/rostools/r-cubed-intermediate/-/tags/v1.0")
 
 zenodo <- ZenodoManager$new(
-    url = "https://sandbox.zenodo.org/api",
+    url = "https://zenodo.org/api",
     logger = "INFO"
 )
 
