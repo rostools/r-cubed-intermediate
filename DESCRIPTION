@@ -1,7 +1,7 @@
 Package: RCubedIntermediate
 Title: "Reproducible Research in R: An Intermediate Workshop on
     Modern Approaches and Workflows to Processing Data"
-Version: 0.1.0
+Version: 1.0
 Authors@R: 
     c(person(given = "Luke",
              family = "Johnston",
@@ -37,6 +37,11 @@ Description: Reproducibility and open scientific practices are
     more details on the course, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
+Remotes:  
+    gadenbuie/xaringanthemer,
+    gitlab::rostools/r3,
+    hadley/emo
+Encoding: UTF-8
 Depends: 
     R (>= 4.0.0)
 Imports: 
@@ -61,8 +66,3 @@ Suggests:
     usethis,
     xaringan,
     xaringanthemer
-Remotes: 
-    gadenbuie/xaringanthemer,
-    gitlab::rostools/r3,
-    hadley/emo
-Encoding: UTF-8
