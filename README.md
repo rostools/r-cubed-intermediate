@@ -5,6 +5,7 @@
 [![pipeline status](https://gitlab.com/rostools/r-cubed-intermediate/badges/master/pipeline.svg)](https://gitlab.com/rostools/r-cubed-intermediate/-/commits/master)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4061900.svg)](https://doi.org/10.5281/zenodo.4061900)
 
 ## Description
 
