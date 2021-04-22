@@ -13,7 +13,7 @@ This has led to minimal attention, scrutiny, and rigour in describing,
 detailing, and reviewing these procedures in studies,
 and contributes to the systemic lack of code sharing among researchers.
 All together, this aspect of research is often completely hidden
-and is likely to be the source of many irreproducible results.
+and may likely to be the source of many irreproducible results.
 
 With this course, we aim to begin addressing this gap.
 Using a highly practical approach that revolves around code-along sessions
@@ -56,7 +56,7 @@ This course is designed a specific way and is ideal for you if:
 Specifically, this course targets those working in diabetes and metabolism.
 - You currently or will soon do some quantitative data analysis.
 - You either: 
-    - have taken the [introduction to R course] offered in June by the DDA,
+    - have taken the [introduction to Reproducible Research in R course],
     since this course is a natural extension to that one;
     - know a *little* to a *moderate* amount of R (or computing in general); 
     - know how to use R and have *some* familiarity with the [tidyverse] and [RStudio].
@@ -65,14 +65,14 @@ Specifically, this course targets those working in diabetes and metabolism.
 [RStudio]: https://rstudio.com/
 [introduction to R course]: https://r-cubed.rostools.org/
 
-Considering that this is a natural extension of the [introduction to R course],
-I will be incorporating tools learned in that course, 
+Considering that this is a natural extension of the [introductory r-cubed course],
+this course incorporates tools learned during that course, 
 including basic Git usage as well as use of RStudio R projects.
 If you *do not* have familiarity with these tools,
 you will need to go over the material from the introduction course beforehand
 (more details about pre-course tasks will be sent out a couple of weeks before the course).
 
-While I have these assumptions to help focus the content of the course, if you
+While having these assumptions help to focus the content of the course, if you
 have an interest in learning R but don't fit any of the above assumptions, *you
 are still welcome to attend the course*! 
 We welcome everyone, that is until the course capacity is reached.
@@ -109,15 +109,3 @@ schedule <- readr::read_csv(
 )
 knitr::kable(schedule, align = "l", caption = "Overall course schedule for the 2 days.")
 ```
-
-## Location
-
-The course will be taking place at Aarhus University in two different buildings:
-
-- **Day 1, Sept. 8th**: Building 1264, room 209
-
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2221.4776486410537!2d10.202873315946679!3d56.16613558066591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fbf0e58f8e3%3A0xb3a37fdd519e9028!2sBartholins%20All%C3%A9%201%2C%20Building%201264%2C%208000%20Aarhus!5e0!3m2!1sen!2sdk!4v1597080458787!5m2!1sen!2sdk" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-
-- **Day 2, Sept. 9th**: Building 1231, room 228
-
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1320.887119945961!2d10.202654769824292!3d56.16646682802605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fbf68ccd12f%3A0x77cf8cc6f98baa58!2sWilhelm%20Meyers%20All%C3%A9%203%2C%20Building%201231%2C%208000%20Aarhus!5e0!3m2!1sen!2sdk!4v1597080711037!5m2!1sen!2sdk" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
