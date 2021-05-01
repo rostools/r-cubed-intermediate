@@ -707,9 +707,9 @@ map(1:5, ~paste(.x, "seconds have passed"))
 This is the basics of using functionals. So, with functions, vectorization, and
 functionals, you generally should only use for loops as the very last option.
 That's because R has better, more expressive, and more powerful tools to
-use instead. And while technically, using a loop let's you "not repeat
+use instead. And while technically, using a loop lets you "not repeat
 yourself", it's a lot of typing and code to express a simple idea: *Do an action
-on each of these items*. So using functionals let's you repeat yourself 
+on each of these items*. So using functionals lets you repeat yourself 
 less `r emo::ji("smile")`
 
 So what does functionals have to do with what we are doing now? Well, our 

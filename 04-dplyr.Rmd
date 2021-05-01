@@ -120,7 +120,7 @@ If everyone has, then move on to the next section.
 ")`
 
 We haven't used the `%>%` pipe from the [magrittr] package yet, but it is used
-extensively in many R package, is the foundation of tidyverse packages,
+extensively in many R packages, is the foundation of tidyverse packages,
 and will eventually be incorporated into the next version of R (rather than
 through magrittr). Because of this, we will make heavy use of it. To make sure
 everyone is on the same page please do either:
@@ -195,8 +195,8 @@ this code into a function, using the same process you've done previously.
     - Also include Roxygen documentation.
 - After writing it and testing it, move the function into `R/functions.R`.
 - Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
-`extract_user_id(user_info_df)`), load everything with `load_all()`
-(`Ctrl-Shift-L`), and run the new function.
+`extract_user_id(user_info_df)`), restart the R session, load everything with
+`load_all()` (`Ctrl-Shift-L`), and run the new function.
 
 *Tip*: If you don't know what package a function comes from when you
 need to append the package when using `::`, you can find out what the package is
@@ -667,7 +667,7 @@ We have a few other datasets that we could join together, but would likely requi
 more processing in order to appropriately join with the other datasets.
 Complete these tasks:
 
-1. Create a new header called `## Exercise: Importing activitiy data`
+1. Create a new header called `## Exercise: Importing activity data`
 1. Create a new code chunk below this new header.
 1. Starting the workflow from the beginning (e.g. with the `spec()` process),
 write code that imports the `Activity.csv` data into R. 
@@ -719,7 +719,7 @@ with your neighbour:
 
 1. The disadvantage of using numbers instead of text to describe categorical
 data like in the `activity` column.
-1. Ways you could code include this information into the dataset.
+1. Ways you could include this information into the dataset.
 1. How you could meaningfully join this dataset with the other datasets.
 
 Afterwards, we'll quickly discuss some of these ideas as a group.
