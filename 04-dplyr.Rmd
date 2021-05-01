@@ -572,11 +572,13 @@ looks like:
 case_when(
     variable1 == condition1 ~ output,
     variable2 == condition2 ~ output,
-    # Otherwise
+    # (Optional) Otherwise
     TRUE ~ final_output
 )
 ```
 
+The optional ending is only necessary if you want a certain output if none of your
+conditions are met. By default, the final output would be a missing value.
 A (silly) example using age might be:
 
 ```r
@@ -584,26 +586,39 @@ case_when(
     age > 20 ~ "old",
     age <= 20 ~ "young",
     # For final condition
-    TRUE ~ NA_character_
+    TRUE ~ "unborn!"
 )
 ```
 
-A quick note about `NA_character_`. With dplyr functions like `case_when()`,
-it requires you be explicit about the type of output each condition has.
+If instead you want one of the conditions to be `NA`, you need to set the appropriate
+`NA` value:
+
+```r
+case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ NA_character_,
+    # For final condition
+    TRUE ~ "unborn!"
+)
+```
+
+With dplyr functions like `case_when()`,
+it requires you be explicit about the type of output each condition has since 
+all the outputs must match (e.g. all character or all numeric).
 This prevents you from accidentally mixing e.g. numeric output with character
 output. This includes for missing values. Other explicit `NA` include:
 
 - `NA_real_` (numeric)
 - `NA_integer_` (integer)
 
-How this would look in a pipeline would be when it is used in `mutate()`:
+Assuming the final output is `NA`, in a pipeline this would look like how you
+normally would use `mutate()`:
 
 ```{r}
 user_info_df %>% 
     mutate(age_category = case_when(
         age > 20 ~ "old",
-        age <= 20 ~ "young",
-        TRUE ~ NA_character_
+        age <= 20 ~ "young"
     ))
 ```
 
@@ -617,8 +632,7 @@ day 2 by creating a new column called `day` that uses the `case_when()` function
 saliva_with_day_df <- saliva_df %>% 
     mutate(day = case_when(
         samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2,
-        TRUE ~ NA_real_
+        samples == "wake up" ~ 2
     ))
 saliva_with_day_df
 ```
