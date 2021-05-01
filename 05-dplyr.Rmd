@@ -250,7 +250,7 @@ the columns that end with `mean` and `sd`.
 (`Ctrl-Shift-K` or the "Knit" button).
 1. Open up the Git interface and add and commit the changes to `doc/lesson.Rmd`.
 
-```{r solution-pivot-summary, eval=FALSE}
+```{r solution-pivot-summary, eval=FALSE, echo=FALSE}
 mmash %>% 
     group_by(day) %>% 
     summarise(across(
