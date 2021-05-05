@@ -73,7 +73,9 @@ there, it's 30"`. If we break it down:
 - `^` means start of the string.
 - `.` means match any character once.
 - `*` means match the previous character one or more times.
-- `[]` means match whatever is in this brack once.
+- `[]` means match one time for each individual character within the bracket 
+(e.g. `[user]` doesn't search for the word `user` it searches for characters,
+`u`, `s`, `e`, `r` individually, *but not* all together).
 - `0-9` means match any number from 0 to 9.
 - `?` means the previous item may or may not be matched.
 
