@@ -55,7 +55,7 @@ Smaller changes made as a Merge Request are easier to review and merge than
 bigger changes. The more targeted and specific the changes are, the better.
 3. As you make edits, commit your changes to that branch.
 4. Push the edits on that branch to the course repository.
-5. Submit a merge request of the branch into the master branch.
+5. Submit a merge request of the branch into the main branch.
 7. If you receive feedback on your pull request, make further commits to the
 branch on your cloned local copy. These will automatically be added to your merge
 request after you commit and push.

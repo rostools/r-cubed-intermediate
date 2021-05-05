@@ -75,8 +75,8 @@ comments directly on this website.
 to make comments and give feedback for the material.
 
 [hypothes.is]: https://web.hypothes.is/
-[README]: https://gitlab.com/rostools/r-cubed-intermediate/-/blob/master/README.md
-[CONTRIBUTING]: https://gitlab.com/rostools/r-cubed-intermediate/-/blob/master/CONTRIBUTING.md
+[README]: https://gitlab.com/rostools/r-cubed-intermediate/-/blob/main/README.md
+[CONTRIBUTING]: https://gitlab.com/rostools/r-cubed-intermediate/-/blob/main/CONTRIBUTING.md
 
 ## Re-use and licensing {#licensing}
 
@@ -84,7 +84,7 @@ to make comments and give feedback for the material.
 
 The course material is licensed under the
 [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
-and the course code is licensed under a [MIT License](https://gitlab.com/rostools/r-cubed-intermediate/-/blob/master/LICENSE-MIT.md),
+and the course code is licensed under a [MIT License](https://gitlab.com/rostools/r-cubed-intermediate/-/blob/main/LICENSE-MIT.md),
 so the material can be used, re-used, and modified, 
 as long as there is attribution to this source.
 
