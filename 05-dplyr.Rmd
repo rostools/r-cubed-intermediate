@@ -467,7 +467,7 @@ it only exists in the `mmash` data frame. But it works when we use it outside of
 the function, why not here?
 
 So what's happening? We've encountered a problem due to "[non-standard
-evaluation]" (or NSE). NSE is a feature of R and is used quite a lot throughout
+evaluation][nse]" (or NSE). NSE is a feature of R and is used quite a lot throughout
 R, but is especially used in the tidyverse packages. It's one of the first
 things computer scientists complain about when they use R, because it is such a
 foreign thing in other programming languages. But NSE is what allows you to use
@@ -482,7 +482,7 @@ of which is to wrap `columns` inside the `across()` function with `{{}}`. So,
 let's "Stop" the debugging, add these curly brackets to `columns`, and remove 
 the Breakpoint by clicking it (if it hasn't been removed already).
 
-[non-standard evaluation]: https://adv-r.had.co.nz/Computing-on-the-language.html
+[nse]: https://adv-r.had.co.nz/Computing-on-the-language.html
 [dplyr-programming]: https://dplyr.tidyverse.org/articles/programming.html#warm-up
 
 ```{r}

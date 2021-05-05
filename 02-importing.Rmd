@@ -556,8 +556,6 @@ Begin replacing the `___` with the correct R functions or other information.
 1. Once you have the code working, use the RStudio Git interface to add and 
 commit the changes into the version history.
 
-[snake-case]: https://simple.wikipedia.org/wiki/Snake_case
-
 ```{r exercise-template-saliva-import, eval=FALSE}
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")
 user_1_saliva_data_prep <- vroom(user_1_saliva_file,

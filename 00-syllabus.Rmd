@@ -56,16 +56,16 @@ This course is designed a specific way and is ideal for you if:
 Specifically, this course targets those working in diabetes and metabolism.
 - You currently or will soon do some quantitative data analysis.
 - You either: 
-    - have taken the [introduction to Reproducible Research in R course],
+    - have taken the [introduction to Reproducible Research in R course][r-cubed-intro],
     since this course is a natural extension to that one;
     - know a *little* to a *moderate* amount of R (or computing in general); 
     - know how to use R and have *some* familiarity with the [tidyverse] and [RStudio].
 
 [tidyverse]: https://www.tidyverse.org/
 [RStudio]: https://rstudio.com/
-[introduction to R course]: https://r-cubed.rostools.org/
+[r-cubed-intro]: https://r-cubed.rostools.org/
 
-Considering that this is a natural extension of the [introductory r-cubed course],
+Considering that this is a natural extension of the [introductory r-cubed course][r-cubed-intro],
 this course incorporates tools learned during that course, 
 including basic Git usage as well as use of RStudio R projects.
 If you *do not* have familiarity with these tools,
