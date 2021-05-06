@@ -4,6 +4,7 @@ bookdown::gitbook:
     includes:
         before_body:
             - "includes/contribute.html"
+            - "includes/wip.html"
     config:
         toc:
             before: |
