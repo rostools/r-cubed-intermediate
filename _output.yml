@@ -2,8 +2,6 @@ bookdown::gitbook:
     css:
         - "includes/style.css"
     includes:
-        in_header:
-            - "includes/hypothesis.html"
         before_body:
             - "includes/contribute.html"
     config:
