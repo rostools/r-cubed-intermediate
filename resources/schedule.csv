@@ -1,22 +1,30 @@
 Date and time,Session topic
 **Day 1**,
 9:30,Arrival; coffee and snacks
-10:00,Introduction to the course
+10:00,Introduction to the course and setup
 11:00,"Importing data, fast! (with short break)"
 12:30,Lunch
-13:30,"Save time, don't repeat yourself"
-14:45,Coffee break and snacks
-15:00,"Save time, don't repeat yourself (with short break)"
-17:30,End of day survey
-TBA,Dinner together
+13:30,"Save time, don't repeat yourself: Making functions"
+15:00,Coffee break and snacks
+15:15,Continue previous session
+16:45,End of day survey
 **Day 2**,
-8:30,"Processing datasets for cleaning"
-10:00,Coffee break and snacks
-10:15,"Processing datasets for cleaning (with short break)"
-12:00,Lunch
-13:00,"Workflow to analyzing your tidy data"
-14:45,Coffee break and snacks
-15:00,"Workflow to analyzing your tidy data (with short break)"
-16:15,What next? Applying open and reproducible practices in real-life
+9:00,"Save time, don't repeat yourself: Using functionals"
+10:15,Coffee break and snacks
+10:30,Continue previous session
+12:15,Lunch
+13:15,Processing and joining datasets for cleaning
+15:00,Coffee break and snacks
+15:15,Continue previous session
+16:45,End of day survey
+**Day 3**,
+9:00,Quickly re-arranging data with pivots
+10:15,Coffee break and snacks
+10:30,Continue previous session
+12:15,Lunch
+13:15,Group project work
+15:00,Coffee break and snacks
+15:15,Continue previous session
+16:00,What next? Applying open and reproducible practices in real-life
 16:30,Closing remarks and end of day survey
 16:45,Farewell
