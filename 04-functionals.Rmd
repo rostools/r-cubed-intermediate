@@ -43,73 +43,296 @@ LearnR3
 └── README.md
 ```
 
-## Processing character data
+## Learning objectives
 
-**Take 8 min to read this section before we quickly go over it together**.
-When processing data, you likely will encounter and deal with cleaning up
-character data. A wonderful package to use for working with character data is
-called [stringr]. We'll use that in order to process the `file_path_id` 
-so that we can get the user ID from it. First, let's go to the `setup`
-code chunk and replace purrr with tidyverse and move `library(tidyverse)` to
-the top of the `setup` code chunk. We also have to add tidyverse as a dependency.
-Because tidyverse is a large collection of packages, the recommended way to add 
-the dependency is with:
+1. Learn about functional programming, vectorization, and functionals,
+and how to use them to get more done with less code and less time.
 
-```r
-usethis::use_package("tidyverse", type = "Depends")
+## Functional programming
+
+**Please take 15 min to read over this section before we continue.**
+Unlike many other programming languages, R's primary strength and approach to
+programming is in functional programming. So what is functional programming? It
+is a form of programming that:
+
+- Uses functions (like `function()`)
+- Applies functions to vectors all at once (called [vectorisation]), rather than
+in a loop
+- Can use functions as input to other functions (called a [functional])
+
+[vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
+[functional]: https://adv-r.had.co.nz/Functionals.html
+
+We've already covered functions. You've probably already used vectorization
+since it is one of R's big strengths. Functions like `mean()`, `sd()`,
+`sum()` are vectorized in the sense that they take a vector and do something
+to all the values in the vector at once. As a comparison, in other programming
+languages, if you wanted to calculate the sum you would need a loop:
+
+```{r using-for-loop}
+total_sum <- 0
+# a vector
+values <- 1:10
+for (value in values) {
+    total_sum <- value + total_sum
+}
+total_sum
 ```
 
-The main driver behind the functions in stringr are [regular expressions] (or
-[regex] for short). These expressions are powerful, very concise ways of finding
-patterns in text. We've already used them in the `dir_ls()` function with the
-`regexp` argument to find our data files.
+But in R, you can give a function that uses vectorization the entire vector
+(e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. 
+Figure \@ref(fig:image-vectorization) shows how a function conceptually uses
+vectorization.
 
-To give an example, the regex `^.*[1-9][0-9]?` means "starting from the
-beginning of the text, find any characters one or more times and stop at a
-number from 0 to 9, include a possible other number from 0 to 9". So, using this
-on a string like `"hi there, it's 30 degrees out"`, the regex would select `"hi
-there, it's 30"`. If we break it down:
+```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="40%", echo=FALSE}
+knitr::include_graphics(here::here("images/vectorization.png"))
+```
 
-- `^` means start of the string.
-- `.` means match any character once.
-- `*` means match the previous character one or more times.
-- `[]` means match one time for each individual character within the bracket 
-(e.g. `[user]` doesn't search for the word `user` it searches for characters,
-`u`, `s`, `e`, `r` individually, *but not* all together).
-- `0-9` means match any number from 0 to 9.
-- `?` means the previous item may or may not be matched.
+Instead, in R, there is the function called `sum()` that takes the entire
+vector of `values` and outputs the total sum, without needing a for loop.
 
-Confused? Yea, regex does that to pretty much everyone, you aren't alone. While
-regex can be very very powerful, it can also be incredibly difficult to write
-and work with. We won't cover this anymore in this course, but two great resources
-are the [R for Data Science regex section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
-the [stringr regex page](https://stringr.tidyverse.org/articles/regular-expressions.html),
-as well as in the help doc `?regex`.
-For now, we will only use it for the simplest purposes possible:
-to extract `user_1` to `user_22` from the `file_path_id`.
-**Please stop here and we'll go over this together**.
+```{r}
+# Vectorized
+sum(values)
+```
 
-[stringr]: https://stringr.tidyverse.org/
+[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
+
+A functional on the other hand is a function that can also use a function as
+one of its arguments. Figure \@ref(fig:image-functionals) shows how the functional
+`map()` from the [purrr] package works by taking a vector (or list), applying a 
+function to each of those items, and outputting the results from each function.
+The name `map()` doesn't mean a geographic map, it means the mathematical meaning
+of map: To use a function on each item in a set of items.
+
+```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+knitr::include_graphics(here::here("images/functionals.png"))
+```
+
+[purrr]: https://purrr.tidyverse.org
+
+Here's a simple toy example to show how it works. Here we use `paste()` on each
+item of `1:5`.
+
+```{r}
+library(purrr)
+map(1:5, paste)
+```
+
+You'll notice that `map()` outputs a list, with all the `[[1]]` printed. `map()`
+will always output a list. Also notice that the `paste()` function is given 
+*without* the `()` brackets. Without the brackets, the function can be used
+by the `map()` functional and treated like any other object in R. 
+
+Let's say we wanted to paste together the number with the sentence "seconds have
+passed". Normally it would look like:
+
+```{r paste-multiple}
+paste(1, "seconds have passed")
+paste(2, "seconds have passed")
+paste(3, "seconds have passed")
+paste(4, "seconds have passed")
+paste(5, "seconds have passed")
+```
+
+Or as a loop:
+
+```{r paste-loop}
+for (num in 1:5) {
+    sec_passed <- paste(num, "seconds have passed")
+    print(sec_passed)
+}
+```
+
+With `map()`, we'd do this a bit differently. purrr uses a shortcut to allow
+you to write functions that do more things to the input vector (e.g. `1:5`).
+This shortcut is using `~` to start the function and `.x` as the replacement
+for the vector item:
+
+```{r}
+map(1:5, ~paste(.x, "seconds have passed"))
+```
+
+This is the basics of using functionals. So, with functions, vectorization, and
+functionals, you generally should only use for loops as the very last option.
+That's because R has better, more expressive, and more powerful tools to
+use instead. And while technically, using a loop lets you "not repeat
+yourself", it's a lot of typing and code to express a simple idea: *Do an action
+on each of these items*. So using functionals lets you repeat yourself 
+less `r emo::ji("smile")`
+
+So what does functionals have to do with what we are doing now? Well, our 
+`import_user_info()` function only takes in one data file. But we have right now
+22 files. We can use functionals to load in all the datasets at once!
+**Ok, stop reading and we'll go over this again before continuing with the
+coding.**
 
 `r details_for_instructors("
-Make sure to re-inforce that while regex is incredibly complicated, there are some
-basic things you can do with it that are quite powerful.
+Go over this section briefly by reinforcing what they read. Make sure they
+understand the concept of applying something to many things at once. Doing the
+code-along should also help reinforce this concept. 
 
-More or less, this section is to introduce the idea and concept of regex, but not
-to really teach it since that is well beyond the scope of this course and this
-time frame.
+Also highlight that the resources appendix has some links for continued learning
+for this and that the RStudio purrr cheatsheet is an amazing resource to use.
 ")`
 
-## Exercise: Brainstorm a regex that will match for the user ID
+The first thing we have to do is add `library(purrr)` to the `setup` code chunk
+in the `doc/lesson.Rmd` document. Then we need to add the package dependency
+by going to the *Console* and running:
 
-Time: 5 min
+```r
+usethis::use_package("purrr")
+```
 
-Discuss with your neighbour what a potential regex might be to find
-the ID in the `file_path_id`. Try not to look ahead `r emo::ji("wink")` since we
-will use this regex later on. When the time is up, we'll share possible ideas.
+Then, the next step to actually using the `map()` functional is to get a vector
+or list of all the dataset files available to us. We turn back to use the fs
+package, which has a function called `dir_ls()` that finds files of a certain
+pattern. In our case, the pattern is `user_info.csv`. So, let's add `library(fs)`
+to the `setup` code chunk. Then, go to the bottom of the `doc/lesson.Rmd`
+document, create a new header called `## Using map`, and create a code chunk
+below that.
 
-```{r solution-regex-brainstorm, echo=FALSE}
-# There is no code for this exercise.
+The `dir_ls()` function takes the path that we want to search (`data-raw/mmash/`),
+uses the argument `regexp` (short for [regular expression][regex] or also `regex`) to find the pattern,
+and `recurse` to look in all subfolders. We'll cover regular expressions a bit
+more in next session.
+
+[regex]: https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions
+
+```{r list-user-info-files}
+user_info_files <- dir_ls(here("data-raw/mmash/"), 
+                          regexp = "user_info.csv", 
+                          recurse = TRUE)
+```
+
+Then let's see what the output looks like. For the website, we are only showing
+the first 3 files. Your output will look slightly different from this.
+
+```{r list-files-head, eval=FALSE}
+user_info_files
+```
+
+```{r list-files-for-book, echo=FALSE}
+head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
+```
+
+Alright, we now have all the files ready to give to `map()`. So let's try it!
+
+```{r}
+user_info_list <- map(user_info_files, import_user_info)
+```
+
+Remember, that `map()` always outputs a list, so when we look into this object,
+it will give us 22 tibbles (data.frames). Here we'll only show the first one:
+
+```{r}
+user_info_list[[1]]
+```
+
+This is great because with one line of code we imported all these datasets!
+But we're missing an important bit of information: The user ID. 
+A powerful feature of the purrr package is that it has other functions to
+make working with functionals easier. We know `map()` always outputs a list.
+What if you want to output a character vector instead? If we check the help:
+
+```r
+?map
+```
+
+`r details_for_instructors("Go through this help documentation and talk a bit about it.")`
+
+We see that there are other functions, including a function
+called `map_chr()` that seems to output a character vector. 
+There are several others that give an output based 
+on the ending of `map_`, such as:
+
+- `map_int()` outputs an integer.
+- `map_dbl()` outputs a numeric value, called a "double" in programming.
+- `map_dfr()` outputs a data frame, combining the list items by row (`r`).
+- `map_dfc()` outputs a data frame, combining the list items by column (`c`).
+
+The `map_dfr()` looks like the one we want, since we want all these datasets
+together as one. If we look at the help for it,
+we see that it has an argument `.id`, which we can use to create a new column
+that sets the user ID, or in this case, the file path to the dataset, which
+has the user ID information in it. So, let's use it and create a new column
+called `file_path_id`.
+
+```{r}
+user_info_df <- map_dfr(user_info_files, import_user_info,
+                        .id = "file_path_id")
+```
+
+Your `file_path_id` variable will look different. Don't worry, we're going to
+tidy up the `file_path_id` variable later.
+
+```{r, eval=FALSE}
+user_info_df
+```
+
+```{r show-data-for-book, echo=FALSE}
+user_info_df %>% 
+    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id))
+```
+
+Now that we have this working, let's add and commit the changes to the Git history.
+
+## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
+
+Time: 20 min
+
+We need to do basically the exact same thing for the `saliva.csv`, `RR.csv`, and
+`Actigraph.csv` datasets, following this format:
+
+```{r ex-template, eval=FALSE}
+user_info_files <- dir_ls(here("data-raw/mmash/"), 
+                          regexp = "user_info.csv", 
+                          recurse = TRUE)
+user_info_df <- map_dfr(user_info_files, import_user_info,
+                        .id = "file_path_id")
+```
+
+For importing the other datasets, we basically only have to modify two locations
+to get this code to import the other datasets: at the `regexp =` argument and
+where the `import_user_info` function is. This is the perfect chance to make a
+function that you can use for other purposes and that is itself a functional
+(since it takes a function as an input). So inside `doc/lesson.Rmd`, convert
+this bit of code into a function that works to import the other three datasets.
+
+1. Create a new header `## Exercise: Map on the other datasets` at the bottom of
+the document.
+1. Create a new code chunk below it.
+1. Repeat the steps you've taken previously to create a new function:
+    - Wrap the code with `function() { ... }`
+    - Name the function `import_multiple_files`
+    - Create two new arguments called `file_pattern` and `import_function`
+    - Create generic intermediate objects (instead of `user_info_file` and
+    `user_info_df`). I'd recommend something like `data_files` and
+    `combined_data`
+    - Use `return()` at the end of the function for the object you want to output
+    - Create and write Roxygen documentation to describe the new function
+    - Append `packagename::` to the individual functions (there are three packages
+    used: fs, here, and purrr)
+    - Run it and check that it works on `saliva.csv`
+1 After it works, cut and paste the function into the `R/functions.R` file.
+Then restart the R session, run `load_all()`, and test the code out in the
+*Console*.
+1. Then, write code in your `doc/lesson.Rmd` file where the function used to be
+and import in the other datasets. You should now have three new objects for all
+the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
+1. Once done, add the changes you've made and commit them to the Git history.
+
+```{r solution-import-multiple-files, echo=FALSE}
+# Excluding the Roxygen docs.
+import_multiple_files <- function(file_pattern, import_function) {
+    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+                             regexp = file_pattern,
+                             recurse = TRUE)
+    
+    combined_data <- purrr::map_dfr(data_files, import_function,
+                                    .id = "file_path_id")
+    return(combined_data)
+}
 ```
 
 ## Exercise: What is the pipe?
@@ -139,211 +362,6 @@ from the beginner course.
 # There is no code for this exercise.
 ```
 
-## Working with character columns
-
-Now that we've talked about regex and pipes, let's start using them.
-The first thing we'll do is work with the `user_info_df` to write
-code that works, after which we will convert it into a function and move it
-into the `R/functions.R` file.
-
-We want to create a new column for the user ID, so we will use the `mutate()`
-function from the [dplyr] package. We'll use the regex `user_[0-9][0-9]?` to match
-for the user ID and we'll use the `str_extract()` function from the stringr
-package. So, in your `doc/lesson.Rmd` file, create a new header called 
-`## Using regex for user ID` at the bottom of the document, and create a new
-code chunk below that.
-
-[dplyr]: https://dplyr.tidyverse.org/
-
-`r details_for_instructors("
-Walk through writing this code, explain about how to use mutate, and about
-the stringr function.
-")`
-
-```{r extract-user-id, eval=FALSE}
-# Note: your file paths and data may look slightly different.
-user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?"))
-```
-
-```{r extract-user-id-eval, echo=FALSE}
-user_info_df %>% 
-    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id)) %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
-    relocate(file_path_id, user_id)
-```
-
-Since we don't need to keep the `file_path_id`, let's drop it using `select()`
-and `-`.
-
-```{r drop-file-path-id}
-user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
-    select(-file_path_id)
-```
-
-## Exercise: Convert this code into a function
-
-Time: 10 min
-
-We now have code that takes the data that has the `file_path_id` column
-and extracts the user ID from it. While in the `doc/lesson.Rmd` file, convert
-this code into a function, using the same process you've done previously.
-
-- Call the new function `extract_user_id` and add one argument called
-`imported_data`.
-    - Don't forget to output the code into an object and adding `return()` at
-    the end with the object inside it. 
-    - Also include Roxygen documentation.
-- After writing it and testing it, move the function into `R/functions.R`.
-- Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
-`extract_user_id(user_info_df)`), restart the R session, load everything with
-`load_all()` (`Ctrl-Shift-L`), and run the new function.
-
-*Tip*: If you don't know what package a function comes from when you
-need to append the package when using `::`, you can find out what the package is
-by using the help documentation `?functionname` (can also be done by pressing F1
-when the cursor is over the function). The package name is at the very top left
-corner, surrounded by `{ }`.
-
-```{r solution-user-id-extract, echo=FALSE}
-extract_user_id <- function(imported_data) {
-    extracted_id <- imported_data %>% 
-        dplyr::mutate(user_id = stringr::str_extract(file_path_id, 
-                                                     "user_[0-9][0-9]?")) %>% 
-        dplyr::select(-file_path_id)
-    return(extracted_id)
-}
-```
-
-Since we want this function to work on all data that we import, we should add it
-to `import_multiple_files()`. After you've created the function, go to the
-`import_multiple_files()` function in `R/functions.R` and use the `%>%` to
-add it after using the `map_dfr()` function. The code should look something like:
-
-```{r add-extract-user-to-import}
-import_multiple_files <- function(file_pattern, import_function) {
-    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-                             regexp = file_pattern,
-                             recurse = TRUE)
-    
-    combined_data <- purrr::map_dfr(data_files, import_function,
-                                    .id = "file_path_id") %>% 
-        extract_user_id()
-    return(combined_data)
-}
-```
-
-Re-load the functions with `load_all()` (`Ctrl-Shift-L`). Then re-run these
-pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
-update them based on the new code in the `import_multiple_files()` function.
-Something like this should already be in somewhere in your `doc/lesson.Rmd` file.
-
-```{r}
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-rr_df <- import_multiple_files("RR.csv", import_rr)
-actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
-```
-
-Lastly, **don't forget** to add and commit the files into the Git history.
-
-## Join datasets together
-
-`r details_for_instructors("
-Walk through and describe these images and the different type of joins.
-")`
-
-The ability to join datasets together is a fundamental component of data processing
-and transformation. In our case, we want to add the datasets together so we 
-eventually have at least one main dataset to work with.
-
-There are many ways to join datasets, the more common ones that are implemented
-in the dplyr package are:
-
-- `left_join(x, y)`: Join all rows and columns in `y` that match rows and
-columns in `x`. *Columns* that exist in `y` but not `x` are joined to `x`.
-
-    ```{r image-left-join, fig.cap="Left joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
-    knitr::include_graphics(here::here("images/left-join.png"))
-    ```
-    
-- `right_join(x, y)`: The opposite of `left_join()`. Join all rows and columns
-in `x` that match rows and columns in `y`. *Columns* that exist in `x` but not `y`
-are joined to `y`.
-
-    ```{r image-right-join, fig.cap="Right joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
-    knitr::include_graphics(here::here("images/right-join.png"))
-    ```
-
-- `full_join(x, y)`: Join all rows and columns in `y` that match rows and
-columns in `x`. Columns *and* **rows** that exist in `y` but not `x` are joined
-to `x`. 
-
-    ```{r image-full-join, fig.cap="Full joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
-    knitr::include_graphics(here::here("images/full-join.png"))
-    ```
-
-[dplyr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf
-
-In our case, we want to use `full_join()`, since we want all the data from both
-datasets. This function takes two datasets and lets you indicate which column
-to join by using the `by` argument. Here, both datasets have the column `user_id`
-so we will join by them.
-
-```{r}
-full_join(user_info_df, saliva_df, by = "user_id")
-```
-
-`full_join()` is useful if we want to include all values from both datasets,
-as long as each participant ("user") had data collected from that dataset.
-When the two datasets have rows that don't match, we will get missingness in that
-row, but that's ok in this case.
-
-We also eventually have other datasets to join together later on. Since
-`full_join()` can only take two datasets at a time, do we then just keep 
-using `full_join()` until all the other datasets are combined?
-What if we get more data later on? Well, that's where more functional programming
-comes in. Again, we have a simple goal: For a set of data frames, join them
-all together. Here we use another functional programming concept called `reduce()`.
-Like `map()`, which "maps" a function onto a set of items, `reduce()`
-applies a function to each item of a vector or list, each time reducing the set
-of items down until only one remains: the output. Let's use our simple function
-`add_numbers()` from before and add up 1 to 5. Since `add_numbers()` only takes
-two numbers, we have to give it two numbers at a time and repeat until we reach
-5.
-
-```{r}
-# Add from 1 to 5
-first <- add_numbers(1, 2)
-second <- add_numbers(first, 3)
-third <- add_numbers(second, 4)
-add_numbers(third, 5)
-```
-
-Instead, we can use reduce to do the same thing:
-
-```{r}
-reduce(1:5, add_numbers)
-```
-
-Figure \@ref(fig:image-reduce) visually shows what is happening within `reduce()`.
-
-```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
-knitr::include_graphics(here::here("images/reduce.png"))
-```
-
-[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
-
-Since `reduce()`, like `map()`, takes either a vector or a list as an input, and
-since data frames can only be put together as a list (a data frame has vectors
-for columns and so can't be a vector itself), we need to combine the datasets
-together in a `list()` and reduce them with `full_join()`:
-
-```{r}
-combined_data <- reduce(list(user_info_df, saliva_df), full_join)
-combined_data
-```
 
 ## Summarizing data prior to joining
 
@@ -552,101 +570,6 @@ summarised_rr_df <- rr_df %>%
 summarised_rr_df
 ```
 
-We now have the data in a form that would make sense to join it with the other
-datasets. So lets try it:
-
-```{r}
-reduce(list(user_info_df, saliva_df, summarised_rr_df), full_join)
-```
-
-Hmm, but wait, we now have four rows of each user, when really we should have 
-only two, one for each day. That's because `saliva_df` doesn't have a `day` column,
-instead there is a `samples` column. We'll need to add a day column in order
-to join properly with the RR dataset. 
-
-There are several ways to do this, but probably the easiest, most explicit, and
-programmatically accurate way of doing it would be with the function
-`case_when()`. This function works by providing it with a series of logic
-conditions and an associated output if the condition is true. The general form
-looks like:
-
-```r
-case_when(
-    variable1 == condition1 ~ output,
-    variable2 == condition2 ~ output,
-    # (Optional) Otherwise
-    TRUE ~ final_output
-)
-```
-
-The optional ending is only necessary if you want a certain output if none of your
-conditions are met. By default, the final output would be a missing value.
-A (silly) example using age might be:
-
-```r
-case_when(
-    age > 20 ~ "old",
-    age <= 20 ~ "young",
-    # For final condition
-    TRUE ~ "unborn!"
-)
-```
-
-If instead you want one of the conditions to be `NA`, you need to set the appropriate
-`NA` value:
-
-```r
-case_when(
-    age > 20 ~ "old",
-    age <= 20 ~ NA_character_,
-    # For final condition
-    TRUE ~ "unborn!"
-)
-```
-
-With dplyr functions like `case_when()`,
-it requires you be explicit about the type of output each condition has since 
-all the outputs must match (e.g. all character or all numeric).
-This prevents you from accidentally mixing e.g. numeric output with character
-output. This includes for missing values. Other explicit `NA` include:
-
-- `NA_real_` (numeric)
-- `NA_integer_` (integer)
-
-Assuming the final output is `NA`, in a pipeline this would look like how you
-normally would use `mutate()`:
-
-```{r}
-user_info_df %>% 
-    mutate(age_category = case_when(
-        age > 20 ~ "old",
-        age <= 20 ~ "young"
-    ))
-```
-
-**Ok, please stop reading and we will code together again**.
-
-By using this function, we can set `"before sleep"` as day 1 and `"wake up"` as
-day 2 by creating a new column called `day` that uses the `case_when()` function.
-(We will use `NA_real_` because the other `day` columns are numeric, not integer.)
-
-```{r}
-saliva_with_day_df <- saliva_df %>% 
-    mutate(day = case_when(
-        samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2
-    ))
-saliva_with_day_df
-```
-
-Now, let's use the `reduce()` with `full_join()` again:
-
-```{r}
-reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
-```
-
-We now have two rows per participant!
-
 ## Exercise: Summarise then join the Actigraph data
 
 Time: 20 min
@@ -675,226 +598,51 @@ summarised_actigraph_df <- actigraph_df %>%
     summarise(across(hr, list(mean = mean, sd = sd)))
 ```
 
-## Exercise: Import and process the activity data
+## Split-apply-combine technique
 
-Time: 25 minutes
+In the beginner course, we covered the 
+[split-apply-combine](https://r-cubed-v2.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
+approach to doing data analysis. The method is: split the data into groups,
+apply some analysis to each group, and then combine the results back together.
+You've already used this approach when summarizing the RR and Actigraph datasets
+in last session. We're going to continue using it because of its usefulness
+and power. 
 
-We have a few other datasets that we could join together, but would likely require
-more processing in order to appropriately join with the other datasets.
-Complete these tasks:
-
-1. Create a new header called `## Exercise: Importing activity data`
-1. Create a new code chunk below this new header.
-1. Starting the workflow from the beginning (e.g. with the `spec()` process),
-write code that imports the `Activity.csv` data into R. 
-1. Convert this code into a new function using the workflow you've used from
-this course:
-    - Call the new function `import_activity`.
-    - Include one argument called `file_path`
-    - Test that it works.
-    - Add Roxygen documentation and explicit package links (`::`) with the
-    functions.
-    - Move the newly created function into the `R/functions.R`.
-    - Use the new function in `doc/lesson.Rmd` and use `load_all()`
-    (`Ctrl-Shift-L`) to run it.
-1. Import all the `user_` datasets with `import_multiple_files()` and the
-`import_activity()` function.
-1. Pipe the results into `mutate()` and create a new column called
-`activity_seconds` that is based on subtracting `end` and `start`.
-    - Use `?mutate` and check the examples if you don't recall how to use this
-    function.
-1. Add and commit your changes to the Git history.
-
-```{r solution-import-activity, echo=FALSE, include=FALSE}
-import_activity <- function(file_path) {
-    activity_data <- vroom::vroom(
-        "data-raw/mmash/user_1/Activity.csv",
-        col_select = -1,
-        col_types = vroom::cols(
-            Activity = vroom::col_double(),
-            Start = vroom::col_time(format = ""),
-            End = vroom::col_time(format = ""),
-            Day = vroom::col_double()
-        ),
-        .name_repair = snakecase::to_snake_case
-    ) 
-    return(activity_data)
-}
-
-activity_df <- import_multiple_files("Activity.csv", import_activity)
-
-activity_df %>% 
-    # group_by(user_id) %>% 
-    mutate(activity_duration = end - start)
-```
-
-
-Look into the [Data Description][mmash-site] and find out what each column
-represents and what the numbers mean in the column `activity`. Then brainstorm
-with your neighbour:
-
-1. The disadvantage of using numbers instead of text to describe categorical
-data like in the `activity` column.
-1. Ways you could include this information into the dataset.
-1. How you could meaningfully join this dataset with the other datasets.
-
-Afterwards, we'll quickly discuss some of these ideas as a group.
-
-[mmash-site]: https://physionet.org/content/mmash/1.0.0/
-
-## Wrangling data into final form
-
-Now that we've got several datasets processed and joined, its now time to 
-bring it all together and put it into the `data-raw/mmash.R` script so we
-can create a final working dataset.
-
-Open up the `data-raw/mmash.R` file and let's start cutting and pasting
-the code from `doc/lesson.Rmd` related to importing and joining the
-`user_info.csv`, `saliva.csv`, `RR.csv`, and `Actigraph.csv`.
-
-The script so far should look like:
-
-```{r data-raw-mmash-script, eval=FALSE}
-library(here)
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
-unzip(here("data-raw/mmash-data.zip"), 
-      exdir = here("data-raw"),
-      junkpaths = TRUE)
-unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw"))
-
-library(fs)
-file_delete(here(c("data-raw/MMASH.zip", 
-                   "data-raw/SHA256SUMS.txt",
-                   "data-raw/LICENSE.txt")))
-file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
-```
-
-First thing to do is comment out the `download.file()` code, since
-we don't want to download it everytime we run this script. Next we'll want to do
-rearrange it so all the packages are at the top, and then add the other
-packages we'll need: tidyverse and vroom.
+Let's do some descriptive statistics. Let's find out the mean and standard 
+deviations of some variables by day. We will use `group_by()` and `summarise(across())`
+like previously. First, in `doc/lesson.Rmd` create a new header called `##
+Split-apply-combine` and make a new code chunk below it.
 
 ```{r}
-library(tidyverse)
-library(vroom)
-library(fs)
-library(here)
-```
-
-Next, we need to let this script know where to get our functions from. So right
-below the `library()` functions, add:
-
-```r
-devtools::load_all()
-```
-
-This is the code that runs when you use `Ctrl-Shift-L`.
-
-Now, find the `import_multiple_files()`, summarized RR and Actigraph data,
-saliva data with the day column, and the `reduce()` code in your
-`doc/lesson.Rmd` file and cut and paste it at the bottom of the
-`data-raw/mmash.R` script. This is what the bottom half should look like:
-
-```{r data-raw-mmash-2, eval=-c(1:17)}
-library(tidyverse)
-library(vroom)
-library(fs)
-library(here)
-devtools::load_all()
-
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
-unzip(here("data-raw/mmash-data.zip"), 
-      exdir = here("data-raw"),
-      junkpaths = TRUE)
-unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw"))
-
-file_delete(here(c("data-raw/MMASH.zip", 
-                   "data-raw/SHA256SUMS.txt",
-                   "data-raw/LICENSE.txt")))
-file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
-
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-rr_df <- import_multiple_files("RR.csv", import_rr)
-actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
-
-summarised_rr_df <- rr_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
-
-saliva_with_day_df <- saliva_df %>% 
-    mutate(day = case_when(
-        samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2,
-        TRUE ~ NA_real_
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
     ))
-
-# Your Actigraph code will be probably be different
-summarised_actigraph_df <- actigraph_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(hr, list(mean = mean, sd = sd)))
-
-mmash <- reduce(
-    list(
-        user_info_df,
-        saliva_with_day_df,
-        summarised_rr_df,
-        summarised_actigraph_df
-    ),
-    full_join
-)
 ```
 
-Lastly, we have to save this final dataset into the `data/` folder. We'll use this
-function `usethis::use_data()` to create the folder and save the data as an `.rda`
-file. We'll add this code to the very bottom of the script:
+We can see from this that there is a random day of `-29` with `NaN` for age and
+weight, as well as a missing day where mean age is 28 and mean weight is 70.
+We can always fix this at a later point, but for now, we will ignore them.
+Let's look at some other summary statistics, like `min()` and `max()`.
+We add these into the `list()` with the other statistics:
 
-```{r, eval=FALSE}
-usethis::use_data(mmash, overwrite = TRUE)
+```{r}
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd, 
+             min = min, max = max), 
+        na.rm = TRUE
+    ))
 ```
 
-We're adding `overwrite = TRUE` so every time we re-run this script, the dataset
-will be saved. If the final dataset is going to be really large, we could save
-it as a `.csv` file with:
+We could keep adding other variables and other summary statistics, but 
+you can see the dataset is quickly become harder and harder to read.
+One way we can fix this is by convert data to the long format,
+since a longer format is easier for the eye to scan than a wider format.
 
-```{r, eval=FALSE}
-vroom_write(mmash, here("data/mmash.csv"))
-```
 
-And later load it in with `vroom()` (since it is so fast).
-Alright, we're finished creating this dataset! Let's generate it
-by first:
-
-- Restart the R session with `Ctrl-Shift-F10` ("Session -> Restart R").
-- Source the `data-raw/mmash.R` script with `Ctrl-Shift-S` ("Code -> Source" or
-the "Source" button in the top right corner of the script pane).
-
-We now have a final dataset to start working on! There are two ways to access
-the dataset:
-
-- Through `load_all()` (`Ctrl-Shift-L`), which automatically loads in all `.rda`
-datasets into your working session.
-- Through `load(here::here("data/mmash.rda"))`.
-
-Try out loading it. Restart the R session again, then `load_all()` and
-in the *Console* type out `mmash` and hit Enter. You will see that your dataset
-is available.
-
-## Exercise: What other cleaned data might you create?
-
-Time: 10 min
-
-In order to meaningfully join all the datasets together, we have to calculate
-summary measures for the `RR.csv` and `Actigraph.csv` data. However,
-we also lose a lot of information and potentially interesting analyses from it.
-With your neighbour, discuss some potential ways that you might join the datasets
-to retain that information and what questions you might be interested in with
-that data.
-
-```{r solution-other-data-brainstorm, echo=FALSE}
-# There is no code for this exercise.
-```

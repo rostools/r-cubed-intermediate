@@ -45,576 +45,623 @@ LearnR3
 └── README.md
 ```
 
-## Setup for the analysis in R Markdown
+## Learning objectives
 
-We now have a working dataset to start doing some simple analyses on in the
-R Markdown document. A recommended workflow with R Markdown is to often
-"Knit" it and make sure your analysis is reproducible (while on your computer).
-So let's first clean it up and start from the beginning again.
+## Processing character data
 
-Before we do that, make sure to add and commit all changes done in `doc/lesson.Rmd`.
-So any change that we make now we will still have the old stuff in the history
-that we can look at.
+**Take 8 min to read this section before we quickly go over it together**.
+When processing data, you likely will encounter and deal with cleaning up
+character data. A wonderful package to use for working with character data is
+called [stringr]. We'll use that in order to process the `file_path_id` 
+so that we can get the user ID from it. 
 
-Next, we'll delete everything right below the `setup` code chunk.
-This code chunk should have all the packages listed with `library()` functions.
-We'll also add another one right below them:
+The main driver behind the functions in stringr are [regular expressions] (or
+[regex] for short). These expressions are powerful, very concise ways of finding
+patterns in text. We've already used them in the `dir_ls()` function with the
+`regexp` argument to find our data files.
+
+To give an example, the regex `^.*[1-9][0-9]?` means "starting from the
+beginning of the text, find any characters one or more times and stop at a
+number from 0 to 9, include a possible other number from 0 to 9". So, using this
+on a string like `"hi there, it's 30 degrees out"`, the regex would select `"hi
+there, it's 30"`. If we break it down:
+
+- `^` means start of the string.
+- `.` means match any character once.
+- `*` means match the previous character one or more times.
+- `[]` means match one time for each individual character within the bracket 
+(e.g. `[user]` doesn't search for the word `user` it searches for characters,
+`u`, `s`, `e`, `r` individually, *but not* all together).
+- `0-9` means match any number from 0 to 9.
+- `?` means the previous item may or may not be matched.
+
+Confused? Yea, regex does that to pretty much everyone, you aren't alone. While
+regex can be very very powerful, it can also be incredibly difficult to write
+and work with. We won't cover this anymore in this course, but two great resources
+are the [R for Data Science regex section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
+the [stringr regex page](https://stringr.tidyverse.org/articles/regular-expressions.html),
+as well as in the help doc `?regex`.
+For now, we will only use it for the simplest purposes possible:
+to extract `user_1` to `user_22` from the `file_path_id`.
+**Please stop here and we'll go over this together**.
+
+[stringr]: https://stringr.tidyverse.org/
+
+`r details_for_instructors("
+Make sure to re-inforce that while regex is incredibly complicated, there are some
+basic things you can do with it that are quite powerful.
+
+More or less, this section is to introduce the idea and concept of regex, but not
+to really teach it since that is well beyond the scope of this course and this
+time frame.
+")`
+
+## Exercise: Brainstorm a regex that will match for the user ID
+
+Time: 5 min
+
+Discuss with your neighbour what a potential regex might be to find
+the ID in the `file_path_id`. Try not to look ahead `r emo::ji("wink")` since we
+will use this regex later on. When the time is up, we'll share possible ideas.
+
+```{r solution-regex-brainstorm, echo=FALSE}
+# There is no code for this exercise.
+```
+
+## Working with character columns
+
+Now that we've talked about regex and pipes, let's start using them.
+The first thing we'll do is work with the `user_info_df` to write
+code that works, after which we will convert it into a function and move it
+into the `R/functions.R` file.
+
+We want to create a new column for the user ID, so we will use the `mutate()`
+function from the [dplyr] package. We'll use the regex `user_[0-9][0-9]?` to match
+for the user ID and we'll use the `str_extract()` function from the stringr
+package. So, in your `doc/lesson.Rmd` file, create a new header called 
+`## Using regex for user ID` at the bottom of the document, and create a new
+code chunk below that.
+
+[dplyr]: https://dplyr.tidyverse.org/
+
+`r details_for_instructors("
+Walk through writing this code, explain about how to use mutate, and about
+the stringr function.
+")`
+
+```{r extract-user-id, eval=FALSE}
+# Note: your file paths and data may look slightly different.
+user_info_df %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?"))
+```
+
+```{r extract-user-id-eval, echo=FALSE}
+user_info_df %>% 
+    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id)) %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
+    relocate(file_path_id, user_id)
+```
+
+Since we don't need to keep the `file_path_id`, let's drop it using `select()`
+and `-`.
+
+```{r drop-file-path-id}
+user_info_df %>% 
+    mutate(user_id = str_extract(file_path_id, "user_[0-9][0-9]?")) %>% 
+    select(-file_path_id)
+```
+
+## Exercise: Convert this code into a function
+
+Time: 10 min
+
+We now have code that takes the data that has the `file_path_id` column
+and extracts the user ID from it. While in the `doc/lesson.Rmd` file, convert
+this code into a function, using the same process you've done previously.
+
+- Call the new function `extract_user_id` and add one argument called
+`imported_data`.
+    - Don't forget to output the code into an object and adding `return()` at
+    the end with the object inside it. 
+    - Also include Roxygen documentation.
+- After writing it and testing it, move the function into `R/functions.R`.
+- Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
+`extract_user_id(user_info_df)`), restart the R session, load everything with
+`load_all()` (`Ctrl-Shift-L`), and run the new function.
+
+*Tip*: If you don't know what package a function comes from when you
+need to append the package when using `::`, you can find out what the package is
+by using the help documentation `?functionname` (can also be done by pressing F1
+when the cursor is over the function). The package name is at the very top left
+corner, surrounded by `{ }`.
+
+```{r solution-user-id-extract, echo=FALSE}
+extract_user_id <- function(imported_data) {
+    extracted_id <- imported_data %>% 
+        dplyr::mutate(user_id = stringr::str_extract(file_path_id, 
+                                                     "user_[0-9][0-9]?")) %>% 
+        dplyr::select(-file_path_id)
+    return(extracted_id)
+}
+```
+
+Since we want this function to work on all data that we import, we should add it
+to `import_multiple_files()`. After you've created the function, go to the
+`import_multiple_files()` function in `R/functions.R` and use the `%>%` to
+add it after using the `map_dfr()` function. The code should look something like:
+
+```{r add-extract-user-to-import}
+import_multiple_files <- function(file_pattern, import_function) {
+    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+                             regexp = file_pattern,
+                             recurse = TRUE)
+    
+    combined_data <- purrr::map_dfr(data_files, import_function,
+                                    .id = "file_path_id") %>% 
+        extract_user_id()
+    return(combined_data)
+}
+```
+
+Re-load the functions with `load_all()` (`Ctrl-Shift-L`). Then re-run these
+pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
+update them based on the new code in the `import_multiple_files()` function.
+Something like this should already be in somewhere in your `doc/lesson.Rmd` file.
+
+```{r}
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+rr_df <- import_multiple_files("RR.csv", import_rr)
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+```
+
+Lastly, **don't forget** to add and commit the files into the Git history.
+
+## Join datasets together
+
+`r details_for_instructors("
+Walk through and describe these images and the different type of joins.
+")`
+
+The ability to join datasets together is a fundamental component of data processing
+and transformation. In our case, we want to add the datasets together so we 
+eventually have at least one main dataset to work with.
+
+There are many ways to join datasets, the more common ones that are implemented
+in the dplyr package are:
+
+- `left_join(x, y)`: Join all rows and columns in `y` that match rows and
+columns in `x`. *Columns* that exist in `y` but not `x` are joined to `x`.
+
+    ```{r image-left-join, fig.cap="Left joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
+    knitr::include_graphics(here::here("images/left-join.png"))
+    ```
+    
+- `right_join(x, y)`: The opposite of `left_join()`. Join all rows and columns
+in `x` that match rows and columns in `y`. *Columns* that exist in `x` but not `y`
+are joined to `y`.
+
+    ```{r image-right-join, fig.cap="Right joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
+    knitr::include_graphics(here::here("images/right-join.png"))
+    ```
+
+- `full_join(x, y)`: Join all rows and columns in `y` that match rows and
+columns in `x`. Columns *and* **rows** that exist in `y` but not `x` are joined
+to `x`. 
+
+    ```{r image-full-join, fig.cap="Full joining in dplyr. Modified from the [RStudio dplyr cheatsheet][dplyr-cheatsheet].", out.width="60%", echo=FALSE}
+    knitr::include_graphics(here::here("images/full-join.png"))
+    ```
+
+[dplyr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf
+
+In our case, we want to use `full_join()`, since we want all the data from both
+datasets. This function takes two datasets and lets you indicate which column
+to join by using the `by` argument. Here, both datasets have the column `user_id`
+so we will join by them.
+
+```{r}
+full_join(user_info_df, saliva_df, by = "user_id")
+```
+
+`full_join()` is useful if we want to include all values from both datasets,
+as long as each participant ("user") had data collected from that dataset.
+When the two datasets have rows that don't match, we will get missingness in that
+row, but that's ok in this case.
+
+We also eventually have other datasets to join together later on. Since
+`full_join()` can only take two datasets at a time, do we then just keep 
+using `full_join()` until all the other datasets are combined?
+What if we get more data later on? Well, that's where more functional programming
+comes in. Again, we have a simple goal: For a set of data frames, join them
+all together. Here we use another functional programming concept called `reduce()`.
+Like `map()`, which "maps" a function onto a set of items, `reduce()`
+applies a function to each item of a vector or list, each time reducing the set
+of items down until only one remains: the output. Let's use our simple function
+`add_numbers()` from before and add up 1 to 5. Since `add_numbers()` only takes
+two numbers, we have to give it two numbers at a time and repeat until we reach
+5.
+
+```{r}
+# Add from 1 to 5
+first <- add_numbers(1, 2)
+second <- add_numbers(first, 3)
+third <- add_numbers(second, 4)
+add_numbers(third, 5)
+```
+
+Instead, we can use reduce to do the same thing:
+
+```{r}
+reduce(1:5, add_numbers)
+```
+
+Figure \@ref(fig:image-reduce) visually shows what is happening within `reduce()`.
+
+```{r image-reduce, fig.cap="A functional that iteratively uses a function on a set of items until only one output remains. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+knitr::include_graphics(here::here("images/reduce.png"))
+```
+
+[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
+
+Since `reduce()`, like `map()`, takes either a vector or a list as an input, and
+since data frames can only be put together as a list (a data frame has vectors
+for columns and so can't be a vector itself), we need to combine the datasets
+together in a `list()` and reduce them with `full_join()`:
+
+```{r}
+combined_data <- reduce(list(user_info_df, saliva_df), full_join)
+combined_data
+```
+
+
+We now have the data in a form that would make sense to join it with the other
+datasets. So lets try it:
+
+```{r}
+reduce(list(user_info_df, saliva_df, summarised_rr_df), full_join)
+```
+
+Hmm, but wait, we now have four rows of each user, when really we should have 
+only two, one for each day. That's because `saliva_df` doesn't have a `day` column,
+instead there is a `samples` column. We'll need to add a day column in order
+to join properly with the RR dataset. 
+
+There are several ways to do this, but probably the easiest, most explicit, and
+programmatically accurate way of doing it would be with the function
+`case_when()`. This function works by providing it with a series of logic
+conditions and an associated output if the condition is true. The general form
+looks like:
+
+```r
+case_when(
+    variable1 == condition1 ~ output,
+    variable2 == condition2 ~ output,
+    # (Optional) Otherwise
+    TRUE ~ final_output
+)
+```
+
+The optional ending is only necessary if you want a certain output if none of your
+conditions are met. By default, the final output would be a missing value.
+A (silly) example using age might be:
+
+```r
+case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ "young",
+    # For final condition
+    TRUE ~ "unborn!"
+)
+```
+
+If instead you want one of the conditions to be `NA`, you need to set the appropriate
+`NA` value:
+
+```r
+case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ NA_character_,
+    # For final condition
+    TRUE ~ "unborn!"
+)
+```
+
+With dplyr functions like `case_when()`,
+it requires you be explicit about the type of output each condition has since 
+all the outputs must match (e.g. all character or all numeric).
+This prevents you from accidentally mixing e.g. numeric output with character
+output. This includes for missing values. Other explicit `NA` include:
+
+- `NA_real_` (numeric)
+- `NA_integer_` (integer)
+
+Assuming the final output is `NA`, in a pipeline this would look like how you
+normally would use `mutate()`:
+
+```{r}
+user_info_df %>% 
+    mutate(age_category = case_when(
+        age > 20 ~ "old",
+        age <= 20 ~ "young"
+    ))
+```
+
+**Ok, please stop reading and we will code together again**.
+
+By using this function, we can set `"before sleep"` as day 1 and `"wake up"` as
+day 2 by creating a new column called `day` that uses the `case_when()` function.
+(We will use `NA_real_` because the other `day` columns are numeric, not integer.)
+
+```{r}
+saliva_with_day_df <- saliva_df %>% 
+    mutate(day = case_when(
+        samples == "before sleep" ~ 1,
+        samples == "wake up" ~ 2
+    ))
+saliva_with_day_df
+```
+
+## Summarizing data prior to joining
+
+TODO: Update this section
+...Now, let's use the `reduce()` with `full_join()` again:
+
+```{r}
+reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
+```
+
+We now have two rows per participant!
+
+## Exercise: Join the summarized Actigraph data
+
+Time: 20 min
+
+TODO: Update this exercise
+Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so 
+that you can join it with the other datasets.
+
+1. Like usual, create a new Markdown header called e.g. `## Exercise: Summarise 
+and join Actigraph` and insert a new code chunk below that.
+2. Look into the [Data Description][mmash-site] to find out what each column 
+is for.
+3. Based on the documentation, which variables would you be most interested in
+analyzing more?
+    - Keep those columns as well `user_id` and `day` by using `select()`.
+4. Decide which summary measure(s) you think may be most interesting for you
+(e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
+5. Using `group_by()` of `user_id` and `day`, summarize the variables with the
+summary functions you chose.
+6. Put this new data into an new object called e.g. `summarised_actigraph_df`
+and include it with the other datasets in the `reduce()` function.
+7. Add and commit the changes you've made into the Git history.
+
+```{r solution-summarise-actigraph, echo=FALSE, include=FALSE}
+summarised_actigraph_df <- actigraph_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(hr, list(mean = mean, sd = sd)))
+```
+
+## Exercise: Import and process the activity data
+
+Time: 25 minutes
+
+We have a few other datasets that we could join together, but would likely require
+more processing in order to appropriately join with the other datasets.
+Complete these tasks:
+
+1. Create a new header called `## Exercise: Importing activity data`
+1. Create a new code chunk below this new header.
+1. Starting the workflow from the beginning (e.g. with the `spec()` process),
+write code that imports the `Activity.csv` data into R. 
+1. Convert this code into a new function using the workflow you've used from
+this course:
+    - Call the new function `import_activity`.
+    - Include one argument called `file_path`
+    - Test that it works.
+    - Add Roxygen documentation and explicit package links (`::`) with the
+    functions.
+    - Move the newly created function into the `R/functions.R`.
+    - Use the new function in `doc/lesson.Rmd` and use `load_all()`
+    (`Ctrl-Shift-L`) to run it.
+1. Import all the `user_` datasets with `import_multiple_files()` and the
+`import_activity()` function.
+1. Pipe the results into `mutate()` and create a new column called
+`activity_seconds` that is based on subtracting `end` and `start`.
+    - Use `?mutate` and check the examples if you don't recall how to use this
+    function.
+1. Add and commit your changes to the Git history.
+
+```{r solution-import-activity, echo=FALSE, include=FALSE}
+import_activity <- function(file_path) {
+    activity_data <- vroom::vroom(
+        "data-raw/mmash/user_1/Activity.csv",
+        col_select = -1,
+        col_types = vroom::cols(
+            Activity = vroom::col_double(),
+            Start = vroom::col_time(format = ""),
+            End = vroom::col_time(format = ""),
+            Day = vroom::col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    ) 
+    return(activity_data)
+}
+
+activity_df <- import_multiple_files("Activity.csv", import_activity)
+
+activity_df %>% 
+    # group_by(user_id) %>% 
+    mutate(activity_duration = end - start)
+```
+
+
+Look into the [Data Description][mmash-site] and find out what each column
+represents and what the numbers mean in the column `activity`. Then brainstorm
+with your neighbour:
+
+1. The disadvantage of using numbers instead of text to describe categorical
+data like in the `activity` column.
+1. Ways you could include this information into the dataset.
+1. How you could meaningfully join this dataset with the other datasets.
+
+Afterwards, we'll quickly discuss some of these ideas as a group.
+
+[mmash-site]: https://physionet.org/content/mmash/1.0.0/
+
+## Wrangling data into final form
+
+Now that we've got several datasets processed and joined, its now time to 
+bring it all together and put it into the `data-raw/mmash.R` script so we
+can create a final working dataset.
+
+Open up the `data-raw/mmash.R` file and let's start cutting and pasting
+the code from `doc/lesson.Rmd` related to importing and joining the
+`user_info.csv`, `saliva.csv`, `RR.csv`, and `Actigraph.csv`.
+
+The script so far should look like:
+
+```{r data-raw-mmash-script, eval=FALSE}
+library(here)
+mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+unzip(here("data-raw/mmash-data.zip"), 
+      exdir = here("data-raw"),
+      junkpaths = TRUE)
+unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw"))
+
+library(fs)
+file_delete(here(c("data-raw/MMASH.zip", 
+                   "data-raw/SHA256SUMS.txt",
+                   "data-raw/LICENSE.txt")))
+file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+```
+
+First thing to do is comment out the `download.file()` code, since
+we don't want to download it everytime we run this script. Next we'll want to do
+rearrange it so all the packages are at the top, and then add the other
+packages we'll need: tidyverse and vroom.
+
+```{r}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(here)
+```
+
+Next, we need to let this script know where to get our functions from. So right
+below the `library()` functions, add:
 
 ```r
 devtools::load_all()
 ```
 
-When everything has been deleted, add and commit these changes into the Git history.
-Then, we'll "Knit" our R Markdown document into HTML by using the "Knit" button
-at the top of the pane or with `Ctrl-Shift-K`. Once it creates the file, it should
-either pop up or open in the Viewer pane on the side. 
+This is the code that runs when you use `Ctrl-Shift-L`.
 
-As we write more R code and do some simple analyses of the data, we are going
-to be knitting often. The main reason for this is to ensure that whatever we
-are writing and done will at least be reproducible on our computer, since
-R Markdown is designed to ensure the document is reproducible.
+Now, find the `import_multiple_files()`, summarized RR and Actigraph data,
+saliva data with the day column, and the `reduce()` code in your
+`doc/lesson.Rmd` file and cut and paste it at the bottom of the
+`data-raw/mmash.R` script. This is what the bottom half should look like:
 
-For this specific workflow and for checking reproducibility, you should output
-to HTML rather than to a Word document. While you can create a Word document by
-changing the `output: html_document` to `output: word_document` at the top in
-the YAML header, you'd only do this when you need to submit to a journal or
-need to email to co-authors for review. The reason is simple: After you generate
-the Word document from R Markdown, the Word file opens up and consequently Word
-locks the file from further edits. What that means is that every time you generate
-the Word document, you have to close it before you can generate it again,
-otherwise knitting will fail. This can get annoying very quickly (trust me),
-since you don't always remember to close the Word document. If you output to
-HTML, this won't be a problem.
+```{r data-raw-mmash-2, eval=-c(1:17)}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(here)
+devtools::load_all()
 
-## Split-apply-combine technique
+mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+unzip(here("data-raw/mmash-data.zip"), 
+      exdir = here("data-raw"),
+      junkpaths = TRUE)
+unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw"))
 
-In the beginner course, we covered the 
-[split-apply-combine](https://r-cubed-v2.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
-approach to doing data analysis. The method is: split the data into groups,
-apply some analysis to each group, and then combine the results back together.
-You've already used this approach when summarizing the RR and Actigraph datasets
-in last session. We're going to continue using it because of its usefulness
-and power. 
+file_delete(here(c("data-raw/MMASH.zip", 
+                   "data-raw/SHA256SUMS.txt",
+                   "data-raw/LICENSE.txt")))
+file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 
-Let's do some descriptive statistics. Let's find out the mean and standard 
-deviations of some variables by day. We will use `group_by()` and `summarise(across())`
-like previously. First, in `doc/lesson.Rmd` create a new header called `##
-Split-apply-combine` and make a new code chunk below it.
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+rr_df <- import_multiple_files("RR.csv", import_rr)
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 
-```{r}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
+summarised_rr_df <- rr_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+
+saliva_with_day_df <- saliva_df %>% 
+    mutate(day = case_when(
+        samples == "before sleep" ~ 1,
+        samples == "wake up" ~ 2,
+        TRUE ~ NA_real_
     ))
+
+# Your Actigraph code will be probably be different
+summarised_actigraph_df <- actigraph_df %>% 
+    group_by(user_id, day) %>% 
+    summarise(across(hr, list(mean = mean, sd = sd)))
+
+mmash <- reduce(
+    list(
+        user_info_df,
+        saliva_with_day_df,
+        summarised_rr_df,
+        summarised_actigraph_df
+    ),
+    full_join
+)
 ```
 
-We can see from this that there is a random day of `-29` with `NaN` for age and
-weight, as well as a missing day where mean age is 28 and mean weight is 70.
-We can always fix this at a later point, but for now, we will ignore them.
-Let's look at some other summary statistics, like `min()` and `max()`.
-We add these into the `list()` with the other statistics:
+Lastly, we have to save this final dataset into the `data/` folder. We'll use this
+function `usethis::use_data()` to create the folder and save the data as an `.rda`
+file. We'll add this code to the very bottom of the script:
 
-```{r}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd, 
-             min = min, max = max), 
-        na.rm = TRUE
-    ))
+```{r, eval=FALSE}
+usethis::use_data(mmash, overwrite = TRUE)
 ```
 
-We could keep adding other variables and other summary statistics, but 
-you can see the dataset is quickly become harder and harder to read.
-One way we can fix this is by convert data to the long format,
-since a longer format is easier for the eye to scan than a wider format.
+We're adding `overwrite = TRUE` so every time we re-run this script, the dataset
+will be saved. If the final dataset is going to be really large, we could save
+it as a `.csv` file with:
 
-## Pivot data to long format
-
-`r details_for_instructors("
-Walk through and explain this section, making use of the tables and graphs.
-")`
-
-Pivoting is an extremely useful action when working with data. Pivoting is when
-you convert data between longer forms (more rows) and wider forms (more columns).
-The [tidyr] package within tidyverse contains two wonderful functions for pivoting:
-`pivot_longer()` and `pivot_wider()`. There is a well written documentation
-on pivoting in the [tidy website][tidyr-pivoting] that can explain more about it.
-The first thing we'll use, and probably the more commonly used in general,
-is `pivot_longer()`. This function is commonly used because entering data in
-the wide form is easier and more time efficient than entering data in long form.
-For instance, if you were measuring glucose values over time in participants,
-you might enter data in like this:
-
-[tidyr]: https://tidyr.tidyverse.org/index.html
-[tidyr-pivoting]: https://tidyr.tidyverse.org/articles/pivot.html
-
-```{r table-example-wide, echo=FALSE}
-example_wide <- tribble(
-    ~person_id, ~glucose_0, ~glucose_30, ~glucose_60,
-    1, 5.6, 7.8, 4.5,
-    2, 4.7, 9.5, 5.3,
-    3, 5.1, 10.2, 4.2
-) 
-
-example_wide %>% 
-    knitr::kable(caption = "Example of a **wide** dataset that is useful for data entry.",
-                 align = "c")
+```{r, eval=FALSE}
+vroom_write(mmash, here("data/mmash.csv"))
 ```
 
-However, when it comes time to analyze the data, this wide form is very inefficient
-and difficult to computationally and statistically work with. So, we do data
-entry in wide and use functions like `pivot_longer()` to get the data ready for
-analysis. Figure \@ref(fig:image-pivot-longer) visually shows what happens when
-you pivot from wide to long.
+And later load it in with `vroom()` (since it is so fast).
+Alright, we're finished creating this dataset! Let's generate it
+by first:
 
-```{r image-pivot-longer, fig.cap="Pivot longer in tidyr. New columns are called 'name' and 'value'.", out.width="70%", echo=FALSE}
-knitr::include_graphics(here::here("images/pivot-longer.png"))
-```
+- Restart the R session with `Ctrl-Shift-F10` ("Session -> Restart R").
+- Source the `data-raw/mmash.R` script with `Ctrl-Shift-S` ("Code -> Source" or
+the "Source" button in the top right corner of the script pane).
 
-If you had, for instance, an ID column for each participant, the pivoting would 
-look like what is shown in Figure \@ref(fig:image-pivot-longer-id).
+We now have a final dataset to start working on! There are two ways to access
+the dataset:
 
-```{r image-pivot-longer-id, fig.cap="Pivot longer in tidyr, excluding an 'id' column. New columns are called 'name' and 'value', as well as the old 'id' column.", out.width="70%", echo=FALSE}
-knitr::include_graphics(here::here("images/pivot-longer-id.png"))
-```
+- Through `load_all()` (`Ctrl-Shift-L`), which automatically loads in all `.rda`
+datasets into your working session.
+- Through `load(here::here("data/mmash.rda"))`.
 
-Pivoting is a conceptually challenging thing to grasp, so don't be disheartened
-if you can't understand how it works yet. As you practice using it, you will
-understand it. With `pivot_longer()`, the first argument is the data.
-The other arguments are:
+Try out loading it. Restart the R session again, then `load_all()` and
+in the *Console* type out `mmash` and hit Enter. You will see that your dataset
+is available.
 
-1. `cols`: The columns to use to convert to long form. The input is a vector
-made using `c()` that contains the column names, like you would use in
-`select()` (e.g. you can use the `select_helpers` like `starts_with()`, or `-`
-minus to exclude).
-1. `names_to`: Optional, default is `name`. If provided, it will be the name of
-the newly created column (as a quoted character) that contains the original
-column names.
-1. `values_to`: Optional, default is `value`. Like `names_to`, sets the name of 
-the new columns.
-
-Let's try this out with `mmash`. In your `doc/lesson.Rmd` file, create a new
-header called `## Pivot longer` and create a new code chunk below that. Now we can
-start typing in our code:
-
-```{r pivot-everything-error, error=TRUE}
-mmash %>% 
-    # pivot every column
-    pivot_longer(everything())
-```
-
-Ok, this gives an error because we are mixing data types. Let's pivot only 
-numbers.
-
-```{r pivot-numeric}
-mmash %>% 
-    pivot_longer(where(is.numeric))
-```
-
-Nice! But not super useful. We can exclude specific columns from pivoting
-with `-` before the column name, for instance with `user_id` and `day`. Let's
-drop the `samples` column before pivoting:
-
-```{r pivot-longer-example}
-mmash %>% 
-    select(-samples) %>% 
-    pivot_longer(c(-user_id, -day, -gender))
-```
-
-## Exercise: Pivot your summarised results to longer form
+## Exercise: What other cleaned data might you create?
 
 Time: 10 min
 
-Use `pivot_longer()` after the `group_by()` and `summarise()` we did previously:
+In order to meaningfully join all the datasets together, we have to calculate
+summary measures for the `RR.csv` and `Actigraph.csv` data. However,
+we also lose a lot of information and potentially interesting analyses from it.
+With your neighbour, discuss some potential ways that you might join the datasets
+to retain that information and what questions you might be interested in with
+that data.
 
-```{r, eval=FALSE}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    ))
+```{r solution-other-data-brainstorm, echo=FALSE}
+# There is no code for this exercise.
 ```
-
-1. Look into the help documentation of `ends_with()` and use it for pivoting only
-the columns that end with `mean` and `sd`.
-    - Hint: `ends_with()` is *vectorized* meaning you can give it a vector of
-    column endings.
-1. After using the `pivot_longer()`, knit the R Markdown document into HTML 
-(`Ctrl-Shift-K` or the "Knit" button).
-1. Open up the Git interface and add and commit the changes to `doc/lesson.Rmd`.
-
-```{r solution-pivot-summary, eval=FALSE, echo=FALSE}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(ends_with(c("mean", "sd")))
-```
-
-## Pivot data to wider form
-
-After using `pivot_longer()` on the summarized data, it looks nice, but it still 
-has a problem: We have both mean and standard deviation values in the same column.
-It would be nicer if we had two columns, one for means and one for the sd values.
-We couldn't pivot to wider right now because that would put it right back from
-where we got it. So instead, we need to separate the existing `name` column
-into two columns for `name` and `summary_statistic`. We can do this when
-we use `pivot_longer()` by using the `names_to` and `names_sep` arguments:
-
-- `names_to` can take a vector of new column names that will be created,
-meaning if you give it two new names, it will create two columns. But, when it
-has more than one new column name, it relies on you also using at least `names_sep`.
-- `names_sep`, which means "names separation", is used to tell `pivot_longer()`
-that a specific character separates two or more distinct possible columns. In
-our case, `_` separates the variable name from `mean` or `sd`.
-
-So, add these two arguments:
-
-```{r pivot-longer-separate}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(ends_with(c("_mean", "_sd")),
-                 names_sep = "_",
-                 names_to = c("name", "summary_statistic"))
-```
-
-Now we are in a good position to pivot wider. So how does `pivot_wider()` work?
-Like its opposite `pivot_longer()`, the first position argument is the data and
-the other arguments are:
-
-1. `id_cols`: This is optional as it will default to all column names. 
-This argument tells `pivot_wider()` to use the given columns as the identifiers
-for when converting. Unlike `pivot_longer()` which doesn't require some type of
-"key" or "id" column to convert to long form, the conversion to wide form
-works requires some type of "key" or "id" column because `pivot_wider()` needs
-to know which rows belong with each other.
-1. `names_from`: Similar to the `pivot_longer()`, 
-this is the name of the column that has the values that will make up the new
-columns. Unlike with the `names_to` argument in `pivot_longer()` which takes a
-character string as input, the column name for `names_from` must be *unquoted*
-because you are selecting a column that already exists in the dataset.
-1. `values_from`: Same as `names_from`, this is the column name (that exists and
-must be given *unquoted*) for the values that will be in the new columns.
-
-Figure \@ref(fig:image-pivot-wider) visually shows what's happening when using
-`pivot_wider()`.
-
-```{r image-pivot-wider, fig.cap="Pivot wider in tidyr.", out.width="70%", echo=FALSE}
-knitr::include_graphics(here::here("images/pivot-wider.png"))
-```
-
-In our case, we want the new column names to come from `summary_statistic`
-and the values to come from `value`. Let's add it to the end of our pipe:
-
-```{r pivot-wider-summary-end}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(ends_with(c("_mean", "_sd")),
-                 names_sep = "_",
-                 names_to = c("name", "summary_statistic")) %>% 
-    pivot_wider(names_from = summary_statistic, 
-                values_from = value) 
-```
-
-And technically, you can pivot longer and wider all at once by using some features of
-`pivot_longer()`. The only change we need to make to the `pivot_longer()` code
-is replace `"summary_statistic"` with the special setting `".value"`. Delete the
-`pivot_wider()` function and you have a longer-to-wider dataset! We didn't cover
-this first because we wanted to show how to use `pivot_wider()` on its own.
-
-```{r}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(ends_with(c("_mean", "_sd")),
-                 names_sep = "_",
-                 names_to = c("name", ".value"))
-```
-
-## Exercise: Convert this code into a function
-
-Time: 15 min
-
-Using the same workflow we've been doing throughout this course,
-convert this code into a function.
-
-1. Name the function `tidy_summarise_by_day`.
-1. Create two arguments, called `data` and `columns`.
-    - To work well with the pipe, put the `data` argument first.
-1. Test it to see it work by using `age` in the `columns` argument.
-    - It won't work and will throw an error. In the next section we will cover
-    how to debug the function.
-1. Move it over into `R/functions.R`, add Roxygen documentation, and use
-explicit function calls with `packagename::`.
-    - Don't forget, use `?functionname` to find out which package the function
-    comes from.
-
-```{r solution-summarise-function, echo=FALSE}
-tidy_summarise_by_day <- function(data, columns) {
-    data %>%
-        dplyr::group_by(day) %>%
-        dplyr::summarise(dplyr::across(columns,
-                                       list(mean = mean, sd = sd),
-                                       na.rm = TRUE)) %>% 
-        tidyr::pivot_longer(dplyr::ends_with(c("_mean", "_sd")),
-                            names_to = c("name", ".value"),
-                            names_sep = "_") 
-}
-```
-
-## Debugging functions
-
-Debugging is one of those things that seems really scary and difficult, but
-once you try it and use it, is actually not as intimidating. To debug, which means
-to find and fix problems in your code, there are two ways to do it:
-
-- By typing in `browser()` at the start of your function and then re-running it
-(either by manually running it or with `Ctrl-Shift-L` to `load_all()`).
-This works for all functions in all R Project types.
-- Using RStudio's "Breakpoints" while in a Package R Project type. This can be 
-started by putting your cursor on the line in the function you want to debug and
-either:
-    - Clicking "Debug -> Toggle Breakpoints"
-    - Typing `Shift-F9`
-    - Click the empty space on the left of the line number
-    
-While `browser()` works with non-Package Projects, we're going to cover and use
-the Breakpoint approach for this course. The skills from this are directly usable
-when using `browser()`. In the `R/functions.R` file, go to the
-`tidy_summarise_by_day()` function and click the space to the left of the line
-number for the first line *inside* the function. There will be something that
-pops up at the top of the pane saying something like:
-
-> "Breakpoints will be activated when the package is built and reloaded."
-
-<!-- TODO: eventually add an image or video.. but for next year. -->
-
-Activate it by running `load_all()` with `Ctrl-Shift-L`. The dot should now be
-solid red, rather than a circle. In the Console, type out and run the code:
-
-```{r, error=TRUE}
-tidy_summarise_by_day(mmash, age)
-```
-
-You may have also already written that code previously, so you can use the up
-arrow in the Console to go back to it. After running the code, a bunch of things
-happen: 
-
-- A yellow line will highlight the code in the function, along with a green arrow
-on the left of the line number
-- The Console will now start with `Browse[1]>` will have text like `debug at ...`
-- There will be new buttons on the top of the Console like "Next", "Continue",
-and "Stop"
-- The Environment pane will be empty and will say "Traceback"
-
-<!-- TODO: Add image or video of this or extend it from previous video? -->
-<!-- TODO: Image of debugging changes, with descriptions -->
-
-We are now in debug mode. In this mode you can really investigate what is happening
-with your code and how to fix it. The way to figure out what's wrong is by running
-the code bit by bit. First let's check that the first works by highlighting
-the code (shown below) and running it.
-
-```{r, eval=FALSE}
-data
-```
-
-After highlighting and running this, we see that it works fine. Alright, next step:
-
-```{r, eval=FALSE}
-data %>%
-    dplyr::group_by(day)
-```
-
-Still is fine. Next:
-
-```{r, eval=FALSE}
-data %>%
-    dplyr::group_by(day) %>%
-    dplyr::summarise(dplyr::across(columns,
-                                   list(mean = mean, sd = sd),
-                                   na.rm = TRUE))
-```
-
-Ah, here is where the problem occurs. The argument `columns` contains the
-`age` variable we want to use in `summarise()`... but the problem is that
-R is interpreting `age` as an object that exists in the R session when in reality
-it only exists in the `mmash` data frame. But it works when we use it outside of 
-the function, why not here?
-
-So what's happening? We've encountered a problem due to "[non-standard
-evaluation][nse]" (or NSE). NSE is a feature of R and is used quite a lot throughout
-R, but is especially used in the tidyverse packages. It's one of the first
-things computer scientists complain about when they use R, because it is such a
-foreign thing in other programming languages. But NSE is what allows you to use
-formulas (e.g. `y ~ x + x2` in modeling) or allows you to type out
-`select(Gender, BMI)` or `library(purrr)`. In "standard evaluation", it
-would instead be `select("Gender", "BMI")` or `library("purrr")`. So NSE gives
-flexibility and ease of use for the user (we don't have to type quotes every
-time) when doing data analysis, but can give some headaches when programming in
-R, like with making functions. There's more detail about this on the 
-[dplyr website][dplyr-programming], which will give a few options, the simplest 
-of which is to wrap `columns` inside the `across()` function with `{{}}`. So,
-let's "Stop" the debugging, add these curly brackets to `columns`, and remove 
-the Breakpoint by clicking it (if it hasn't been removed already).
-
-[nse]: https://adv-r.had.co.nz/Computing-on-the-language.html
-[dplyr-programming]: https://dplyr.tidyverse.org/articles/programming.html#warm-up
-
-```{r}
-tidy_summarise_by_day <- function(data, columns) {
-    data %>%
-        dplyr::group_by(day) %>%
-        dplyr::summarise(dplyr::across({{columns}},
-                                       list(mean = mean, sd = sd),
-                                       na.rm = TRUE)) %>% 
-        tidyr::pivot_longer(dplyr::ends_with(c("_mean", "_sd")),
-                            names_to = c("name", ".value"),
-                            names_sep = "_") 
-}
-```
-
-Now, if we run the function again:
-
-```{r}
-tidy_summarise_by_day(mmash, age)
-```
-
-Yea! It works! If we want to include other variables:
-
-```{r}
-tidy_summarise_by_day(mmash, c(age, weight))
-```
-
-## Exercise: Extend the function to allow adding other summary statistics
-
-Time: 20 min
-
-We've made the function so that we can include any column we want, but now
-let's make it so we can include any summary function we want, not just `mean()`
-and `sd()`, as a new argument called `summary_fn`. This task will be
-*challenging*, so discuss and work with your neighbour on completing this
-exercise. Work within the debugging environment to deal with this problem.
-
-- *Hints*: 
-    - `list(mean = mean, ...)` is a named list, meaning you can use `names()`
-    to get a vector of the names of the list. 
-    - You will have to create an intermediate object based on the new `summary_fn`
-    argument. 
-
-```{r solution-summary-extend, echo=FALSE}
-tidy_summarise_by_day <- function(data, columns, summary_fn) {
-    fn_names <- names(summary_fn)
-    data %>%
-        dplyr::group_by(day) %>%
-        dplyr::summarise(dplyr::across({{columns}},
-                                       summary_fn,
-                                       na.rm = TRUE)) %>% 
-        tidyr::pivot_longer(dplyr::ends_with(fn_names),
-                            names_to = c("name", ".value"),
-                            names_sep = "_") 
-}
-```
-
-## Making prettier output in R Markdown
-
-What we created is nice and all, but since we are working in an R Markdown
-document and knitting to HTML, let's make it easier for others (including
-yourself) to read the document. Let's make the output as actual tables.
-We can do that with `knitr::kable()` (meaning "knitr table"). We can even
-add a table caption with the `caption` argument.
-
-```{r}
-mmash %>% 
-    tidy_summarise_by_day(c(age, weight, height),
-                          list(mean = mean, min = min, max = max)) %>% 
-    knitr::kable(caption = "Descriptive statistics of some variables.")
-```
-
-Then knit the document and check out the HTML file. So pretty! `r emo::ji("grin")`
-
-## General workflow up to this point {#general-workflow}
-
-You now have some skills and tools to allow you to reproducibly import,
-process, clean, join, and eventually analyze your datasets.
-For the next two exercises, you will apply these skills and tools. 
-Listed below are the general workflows we've covered and that you
-can use as a guideline to completing the following exercises:
-
-- Import with the `vroom()`, `spec()`, `vroom()` workflow.
-- Convert into a function with the `doc/lesson.Rmd` to `R/function.R`,
-restart R, and `load_all()` workflow.
-- Test that the datasets join properly while in `doc/lesson.Rmd`
-then cut and paste into `data-raw/mmash.R` workflow.
-- Restart R and re-create the `data/mmash.rda` dataset by
-sourcing `data-raw/mmash.R` workflow.
-- Restart R, load the new dataset with `load_all()`
-(`Ctrl-Shift-L`), and analyze it in `doc/lesson.Rmd` workflow.
-- Add any additional cleaning code to `data-raw/mmash.R` and
-update the `data/mmash.rda` dataset whenever you find problems
-workflow.
-- Write R in code chunks in the `doc/lesson.Rmd` to further
-analyze your data and check reproducibility by often knitting to
-HTML workflow.
-    - Part of this workflow is to also write R code to output
-    in a way that looks nice in the HTML (or Word) output
-    by mostly e.g. creating tables or figures of the output.
-
-And **don't forget**, for each stage, add and commit the changes
-you've made to the files into the Git history.
-
-## Exercise: Process and join sleep and questionnaire data
-
-Time: 25 min
-
-There are still a few datasets that you can join in with the current
-datasets like `sleep.csv` and `questionnaire.csv`. 
-Using the workflows in Section \@ref(general-workflow) as a guide,
-start from the beginning and import, process, clean, make functions,
-and join these two datasets in with the others so that they get 
-included in the `data/mmash.rda` final dataset. Afterwards, do some
-descriptive analysis using the function ...
-TODO: function name?
-
-## Exercise: Create a second dataset of only the Actigraph and RR data
-
-Time: 25 min
-
-The Actigraph and RR datasets contain a ton of interesting and useful
-data that gets destroyed when we first summarize and then join them
-with the other datasets. While we can't meaningfully join all this
-data with the other datasets, we can join them on their own.
-
-Using the workflows in Section \@ref(general-workflow) as a guide,
-start from the beginning and import, process, clean, make functions,
-and create a final dataset of only the `Actigraph.csv` and `RR.csv`
-datasets.
-
-- Join only these two datasets by `user_id`, `day`, and `time`.
-- Name the new dataset `actigraph_rr` and save it to `data/`
-by using another `usethis::use_data()` line in the `data-raw/mmash.R`
-script.
