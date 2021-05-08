@@ -63,7 +63,8 @@ This code chunk should have all the packages listed with `library()` functions.
 We'll also add another one right below them:
 
 ```r
-devtools::load_all()
+source(here("R/functions.R"))
+load(here("data/mmash.rda"))
 ```
 
 When everything has been deleted, add and commit these changes into the Git history.
@@ -398,13 +399,13 @@ can use as a guideline to completing the following exercises:
 
 - Import with the `vroom()`, `spec()`, `vroom()` workflow.
 - Convert into a function with the `doc/lesson.Rmd` to `R/function.R`,
-restart R, and `load_all()` workflow.
+restart R, and `source()` workflow.
 - Test that the datasets join properly while in `doc/lesson.Rmd`
 then cut and paste into `data-raw/mmash.R` workflow.
 - Restart R and re-create the `data/mmash.rda` dataset by
 sourcing `data-raw/mmash.R` workflow.
-- Restart R, load the new dataset with `load_all()`
-(`Ctrl-Shift-L`), and analyze it in `doc/lesson.Rmd` workflow.
+- Restart R, load the new dataset with `load()`, 
+and analyze it in `doc/lesson.Rmd` workflow.
 - Add any additional cleaning code to `data-raw/mmash.R` and
 update the `data/mmash.rda` dataset whenever you find problems
 workflow.

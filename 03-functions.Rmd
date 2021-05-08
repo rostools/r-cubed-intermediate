@@ -42,9 +42,9 @@ LearnR3
 ## Learning objectives
 
 1. Learn what functions are in R, how to create and use them.
-1. Learn a workflow of using R Markdown and `devtools::load_all()` (or
-`Ctrl-Shift-L` in RStudio) as a tool and process for developing functions
-that can be automatically loaded in for later and easy use.
+1. Learn a workflow of using R Markdown, `source()` (or
+`Ctrl-Shift-S` in RStudio), and restarting R (`Ctrl-Shift-F10`) 
+as a tool and process for developing functions that can be later easily used.
 1. Learn what R package dependency management is and how it can simplify your
 data analysis work.
 1. Continue practising Git version control to manage changes to your files.
@@ -358,17 +358,15 @@ import_saliva <- function(file_path) {
 ## Continuing the workflow
 
 We've created two functions. Now we need to move those functions from the 
-`doc/lesson.Rmd` file and into the `R/`. We do this for a few reasons:
+`doc/lesson.Rmd` file and into the `R/` folder. We do this for a few reasons:
 
 1. To prevent the R Markdown document from becoming too long and having a large
 portion of R code over other text.
 1. To make it easier to maintain and find things in your project.
-1. To make use of the `devtools::load_all()` functionality available with
-R Projects that are indicated as Packages.
+1. To make use of the `source()` function.
 
-Because this project is set as a Package, we can use the `load_all()` keyboard
-shortcut `Ctrl-Shift-L` in RStudio. But first, we need to make a new file to
-store our functions. So, in the *Console*, type out and run:
+We need to make a new file to store our functions so its easier to source them.
+So, in the *Console*, type out and run:
 
 ```{r functions-script, eval=FALSE}
 usethis::use_r("functions")
@@ -379,20 +377,19 @@ functions we created into this new file. So, cut *only* the `import_user_info()`
 function we created in `doc/lesson.Rmd`, including the Roxygen documentation,
 and paste it into `R/functions.R`.
 
-Once we have it in there, let's test out how the `load_all()` function works.
-Let's restart our R session with either `Ctrl-Shift-F10` or from the 
+Once we have it in there, let's test out the workflow.
+Restart our R session with either `Ctrl-Shift-F10` or from the 
 "Session -> Restart R" menu item. Move back into the `doc/lesson.Rmd`
-and go to where you wrote:
+and add `source(here("R/functions.R"))` to the code chunk called `setup` at the top.
+Run that line of code. Then go to where you wrote:
 
 ```{r, eval=FALSE}
 import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
-Then hit `Ctrl-Shift-L`. What happens? You should see a bunch of text pop up
-on the side about loading the `LearnR3` project. Ok. Try to run the
-`import_user_info()` line. What happens now? You might get an error about
-not finding the `vroom()` function. Or if you put `library(vroom)` in the code
-chunk called `setup`, you might not get an error. If you did get an error,
+Now run this line. What happens now? You *may* get an error about
+not finding the `vroom()` function. If you put `library(vroom)` in the `setup`
+code chunk, you might not get an error. If you did get an error,
 that's because R doesn't know what the `vroom()` function is. This is where we
 start getting into package dependency management.
 
@@ -551,7 +548,7 @@ Include the Roxygen documentation and use `packagename::` to be explicit about
 where the function comes from.
     - Name the new functions `import_rr` and `import_actigraph`.
 1. Move the function into `R/functions.R`.
-1. Restart R and then use `devtools::load_all()` by using `Ctrl-Shift-L` and
+1. Restart R, `source()` the functions file (`Ctrl-Shift-S`), and
 test that the functions work by running them in the *Console*.
 
 Also update the `import_saliva()` function you created by being explicit about
@@ -614,20 +611,13 @@ import_actigraph <- function(file_path) {
 
 Debugging is one of those things that seems really scary and difficult, but
 once you try it and use it, is actually not as intimidating. To debug, which means
-to find and fix problems in your code, there are two ways to do it:
+to find and fix problems in your code, there are several ways, the simplest of
+which is by adding the `browser()` function to the start of your function and
+then re-running the function (either by manually running it or with `Ctrl-Shift-S` to
+`source()` the file).
 
-- By typing in `browser()` at the start of your function and then re-running it
-(either by manually running it or with `Ctrl-Shift-L` to `load_all()`).
-This works for all functions in all R Project types.
-- Using RStudio's "Breakpoints" while in a Package R Project type. This can be 
-started by putting your cursor on the line in the function you want to debug and
-either:
-    - Clicking "Debug -> Toggle Breakpoints"
-    - Typing `Shift-F9`
-    - Click the empty space on the left of the line number
-    
-While `browser()` works with non-Package Projects, we're going to cover and use
-the Breakpoint approach for this course. The skills from this are directly usable
+TODO: Update this section
+The skills from this are directly usable
 when using `browser()`. In the `R/functions.R` file, go to the
 `tidy_summarise_by_day()` function and click the space to the left of the line
 number for the first line *inside* the function. There will be something that
@@ -637,8 +627,9 @@ pops up at the top of the pane saying something like:
 
 <!-- TODO: eventually add an image or video.. but for next year. -->
 
-Activate it by running `load_all()` with `Ctrl-Shift-L`. The dot should now be
-solid red, rather than a circle. In the Console, type out and run the code:
+Activate it by running `source()` with `Ctrl-Shift-S` while in the functions
+file. The dot should now be solid red, rather than a circle. In the Console,
+type out and run the code:
 
 ```{r, error=TRUE}
 tidy_summarise_by_day(mmash, age)

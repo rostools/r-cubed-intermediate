@@ -166,8 +166,8 @@ this code into a function, using the same process you've done previously.
     - Also include Roxygen documentation.
 - After writing it and testing it, move the function into `R/functions.R`.
 - Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
-`extract_user_id(user_info_df)`), restart the R session, load everything with
-`load_all()` (`Ctrl-Shift-L`), and run the new function.
+`extract_user_id(user_info_df)`), restart the R session, source everything with
+`source()` (`Ctrl-Shift-S`), and run the new function.
 
 *Tip*: If you don't know what package a function comes from when you
 need to append the package when using `::`, you can find out what the package is
@@ -203,7 +203,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 }
 ```
 
-Re-load the functions with `load_all()` (`Ctrl-Shift-L`). Then re-run these
+Re-source the functions with `source()` (`Ctrl-Shift-S`). Then re-run these
 pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
 update them based on the new code in the `import_multiple_files()` function.
 Something like this should already be in somewhere in your `doc/lesson.Rmd` file.
@@ -462,8 +462,8 @@ this course:
     - Add Roxygen documentation and explicit package links (`::`) with the
     functions.
     - Move the newly created function into the `R/functions.R`.
-    - Use the new function in `doc/lesson.Rmd` and use `load_all()`
-    (`Ctrl-Shift-L`) to run it.
+    - Use the new function in `doc/lesson.Rmd` and use `source()`
+    (`Ctrl-Shift-S`) to run it.
 1. Import all the `user_` datasets with `import_multiple_files()` and the
 `import_activity()` function.
 1. Pipe the results into `mutate()` and create a new column called
@@ -554,10 +554,10 @@ Next, we need to let this script know where to get our functions from. So right
 below the `library()` functions, add:
 
 ```r
-devtools::load_all()
+source(here("R/functions.R"))
 ```
 
-This is the code that runs when you use `Ctrl-Shift-L`.
+This is the code that runs when you use `Ctrl-Shift-S`.
 
 Now, find the `import_multiple_files()`, summarized RR and Actigraph data,
 saliva data with the day column, and the `reduce()` code in your
@@ -569,7 +569,7 @@ library(tidyverse)
 library(vroom)
 library(fs)
 library(here)
-devtools::load_all()
+source(here("R/functions.R"))
 
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
@@ -640,16 +640,9 @@ by first:
 - Source the `data-raw/mmash.R` script with `Ctrl-Shift-S` ("Code -> Source" or
 the "Source" button in the top right corner of the script pane).
 
-We now have a final dataset to start working on! There are two ways to access
-the dataset:
-
-- Through `load_all()` (`Ctrl-Shift-L`), which automatically loads in all `.rda`
-datasets into your working session.
-- Through `load(here::here("data/mmash.rda"))`.
-
-Try out loading it. Restart the R session again, then `load_all()` and
-in the *Console* type out `mmash` and hit Enter. You will see that your dataset
-is available.
+TODO: Fix this section.
+We now have a final dataset to start working on! The main way to load data is with
+`load(here::here("data/mmash.rda"))`.
 
 ## Exercise: What other cleaned data might you create?
 

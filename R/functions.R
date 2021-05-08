@@ -81,7 +81,7 @@ diagram_overview <- function(section_num = 0) {
             color = ((colour[3]))
             penwidth = ((thickness[3]))
             mmash_dir_3 -> mmash_rda
-            fn_r_2 -> mmash_r_2 [label = '   load']
+            fn_r_2 -> mmash_r_2 [label = '   source']
             mmash_r_2 -> mmash_dir_3 [arrowhead = none]
             mmash_r_2 -> mmash_rda
         }
