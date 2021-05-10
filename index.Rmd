@@ -2,12 +2,11 @@
 title: "Reproducible Research in R"
 subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
 date: "Updated: `r format(Sys.time(), '%B %d %Y')`"
-author: "[Contributors: Instructors of the course](#contributors)"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [resources/packages.bib, resources/refs.bib]
 link-citations: yes
-description: "A 2-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
+description: "A 3-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
 apple-touch-icon: "images/apple-touch-icon.png"
 apple-touch-icon-size: 180
 favicon: "images/favicon.ico"
@@ -42,8 +41,8 @@ This course was created specifically to start addressing these types of problems
 
 The course is designed as a series of participatory live-coding lessons, where
 the instructor and learner code together, and is interspersed with hands-on
-exercises using some real-world datasets. This website contains all of the
-material for the course, from reading material to exercises, to images. It is
+exercises and group work using some real-world datasets. This website contains all of the
+material for the course, from reading material to exercises to images. It is
 structured as a book, with "chapters" as lessons, given in order of appearance.
 We make heavy use of the website throughout the course
 where code-along sessions follow the material on the website nearly exactly
@@ -86,8 +85,12 @@ as long as there is attribution to this source.
 
 ## Contributors {#contributors}
 
+[Version 1](https://doi.org/10.5281/zenodo.4061900) contributors were:
+
 - Luke Johnston: Brainstormed most of the course material and structure; set up
-the website; organized and coordinated the course; wrote and developed the code-along sessions; and, taught the final data analysis code-along session as well as the lectures.
+the website; organized and coordinated the course; wrote and developed the
+code-along sessions; and, taught the final data analysis code-along session as
+well as the lectures.
 - Signe Freja Storgaard: Taught and edited the data import code-along session material.
 - Andreas Halgreen Eiset: Taught and edited the "Don't Repeat Yourself" code-along
 session material.
@@ -112,10 +115,8 @@ The course material also draws inspiration from these excellent resources:
 The [Danish Diabetes Academy](https://www.danishdiabetesacademy.dk/) hosted,
 organized, and sponsored this course. A huge thanks to them
 for their involvement, support, and sponsorship! 
-Both [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/)
-and [Aarhus University](https://www.au.dk/) employ the instructors.
+[Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/) employs Luke, who is
+the lead instructor and curriculum developer.
 
 ![Danish Diabetes Academy](images/dda_logo.png){width=90px}
 ![Steno Diabetes Center Aarhus](images/SDCA_logo.png){width=55px}
-![Aarhus University](images/au_logo_black.png){width=140px}
-
