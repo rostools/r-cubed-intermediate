@@ -33,11 +33,8 @@ LearnR3
 │   ├── README.md
 │   └── lesson.Rmd
 ├── R/
-│   ├── fetch_data.R
 │   ├── functions.R
-│   ├── setup.R
 │   └── README.md
-├── .Rbuildignore
 ├── .gitignore
 ├── DESCRIPTION
 ├── LearnR3.Rproj
@@ -66,7 +63,6 @@ LearnR3
 ├── R/
 │   ├── README.md
 │   └── functions.R
-├── .Rbuildignore
 ├── .gitignore
 ├── DESCRIPTION
 ├── LearnR3.Rproj
@@ -85,9 +81,9 @@ Our workflow and process will be something like:
 - Make an R script (`data-raw/mmash.R`) to download the dataset (`data-raw/mmash/`).
 - Use R Markdown (`doc/lesson.Rmd`) to write and test out code, convert it into
 a function, test it, and then move it into `R/functions.R`.
-- We use RStudio's built-in functionality to run everything in the `R/` folder
-with `Ctrl-Shift-L` (only available when "Tools -> Project Options -> Build
-Tools" is set as "Package").
+- We use a combination of restarting R (`Ctrl-Shift-F10` or "Session -> Restart
+R") and using `source()` (`Ctrl-Shift-S` while in `R/functions.R`) to run the
+functions inside of `R/functions.R`.
 - Replace the old code with the new function in the R Markdown document
 (`doc/lesson.Rmd`).
 - Finish building functions that prepare the dataset, use them in the cleaning
@@ -100,22 +96,26 @@ them into the Git history.
 ## Setting up our project
 
 Now that we've gone over the overview, let's get our project ready for the next
-steps. First we have a bunch of files that we won't need, so let's delete them.
-We'll be using the [fs] package, which means filesystem, throughout this course
-to work with files. 
+steps. First thing, though. Since we did all that work in the pre-course tasks
+downloading the data and unzipping it, let's first save these changes to the Git
+history. Let's open the Git interface with either the Git icon at the top near
+the menu bar, or with `Ctrl-Alt-M`. When this opens up we'll click the checkbox
+beside the `.gitignore` and `data-raw/mmash.R` files. Then we write a commit
+message in the text box on the right, something like "Code to download data zip
+file". Click the "Commit" button and close the Git interface.
+
+Next, let's delete one of the files we don't need by using the [fs] package.
 
 [fs]: https://fs.r-lib.org/
 
 In the **Console**, type out:
 
 ```{r remove-extra-files, eval=FALSE}
-fs::file_delete(c("R/setup.R", "R/fetch_data.R", "TODO.md"))
+fs::file_delete("TODO.md")
 ```
 
-Then, let's open up the README and fix some of the TODO items.
+Then, open up the `README.md` and fix some of the TODO items.
 After cleaning everything up, now we need to use Git to add and commit all the 
 current files into the history. Open up the Git interface in RStudio with
-`Ctrl-Alt-M` or through the Git button at the top below either the "Build" or
-"Debug" menu items. The interface should open up and we'll click the checkboxes
-on all the files, then write a message in the commit textbox saying 
-"Initial setup done". Now we're ready for the next session!
+`Ctrl-Alt-M` or through the Git button. Write a message in the commit textbox
+saying "Added initial files". Now we're ready for the next session!
