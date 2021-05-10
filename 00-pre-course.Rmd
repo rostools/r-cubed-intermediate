@@ -131,7 +131,11 @@ Regardless of whether you've done the steps above or not,
 r3::check_setup()
 ```
 
-and eventually copy and paste the output into one of the survey questions.
+and eventually copy and paste the output into one of the survey questions. *Note*
+that while GitHub is a natural connection to using Git, given the limited time
+available, we will not be covering using GitHub. If you want to learn about using 
+GitHub, check out the [session](https://r-cubed.rostools.org/version-control.html) 
+on it in the beginner course.
 
 ## Create an R Project
 
