@@ -20,24 +20,21 @@ Using a highly practical approach that revolves around code-along sessions
 (instructor and learner coding together), hands-on exercises, and group work,
 participants of the course will be able to:
 
-1. Learn and demonstrate what an open and reproducible data analysis
-workflow looks like.
-1. Learn and apply the fundamental tools and skills for conducting a
-reproducible and modern analysis for a research project.
-1. Apply programming techniques to process and manage data in a reproducible
-and well-documented way.
-1. Learn where to go to get help and to continue learning modern data analysis
-skills.
+1. Learn and demonstrate what an open and reproducible data processing and
+analysis workflow looks like.
+1. Learn and apply some fundamental concepts, techniques, and skills needed for
+processing and managing data in a reproducible and well-documented way.
+1. Learn where to go to get help and to continue learning modern data science
+and analysis skills.
 
 The course will enable participants to answer questions such as:
 
 - What does a modern data analysis setup and workflow look like?
-- How can I ensure that my data analysis project is reproducible?
-- How can I create pipelines that get, process, and clean my data quickly
-and that works regardless of whether there is one data file or hundreds of data files 
+- How can I create pipelines that get, process, and clean my data
+quickly and that works regardless of whether there is one data file or hundreds
 (i.e. it scales well)?
 - How can I write code that is more reproducible, readable,
-and that can be easily re-used for my future self 
+and easily re-used for my future self 
 and for my collaborators and colleagues?
 
 By the end of the course, participants will: have improved their competency in
@@ -53,7 +50,7 @@ This course is designed a specific way and is ideal for you if:
 
 - You are a researcher, preferably working in the biomedical field 
 (ranging from experimental to epidemiological).
-Specifically, this course targets those working in diabetes and metabolism.
+Specifically, this course targets those working on topics in diabetes and metabolism.
 - You currently or will soon do some quantitative data analysis.
 - You either: 
     - have taken the [introduction to Reproducible Research in R course][r-cubed-intro],
@@ -67,7 +64,7 @@ Specifically, this course targets those working in diabetes and metabolism.
 
 Considering that this is a natural extension of the [introductory r-cubed course][r-cubed-intro],
 this course incorporates tools learned during that course, 
-including basic Git usage as well as use of RStudio R projects.
+including basic Git usage as well as use of RStudio R Projects.
 If you *do not* have familiarity with these tools,
 you will need to go over the material from the introduction course beforehand
 (more details about pre-course tasks will be sent out a couple of weeks before the course).
@@ -96,7 +93,7 @@ And we **will not** learn:
 
 The workshop is structured as a series of participatory live-coding sessions
 (instructor and learner coding together) interspersed with hands-on exercises
-and group work, using either a practice dataset or some other real-world dataset.
+and group work, using a real-world dataset.
 There are some lectures given, mainly at the start and end of the workshop.
 The general schedule outline is shown in the below table.
 
@@ -107,5 +104,5 @@ schedule <- readr::read_csv(
     col_types = cols(`Date and time` = col_character(),
                      `Session topic` = col_character())
 )
-knitr::kable(schedule, align = "l", caption = "Overall course schedule for the 2 days.")
+knitr::kable(schedule, align = "l", caption = "Overall course schedule for the 3 days.")
 ```
