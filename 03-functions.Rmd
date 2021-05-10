@@ -619,7 +619,7 @@ then re-running the function (either by manually running it or with `Ctrl-Shift-
 TODO: Update this section
 The skills from this are directly usable
 when using `browser()`. In the `R/functions.R` file, go to the
-`tidy_summarise_by_day()` function and click the space to the left of the line
+... function and click the space to the left of the line
 number for the first line *inside* the function. There will be something that
 pops up at the top of the pane saying something like:
 
@@ -632,7 +632,7 @@ file. The dot should now be solid red, rather than a circle. In the Console,
 type out and run the code:
 
 ```{r, error=TRUE}
-tidy_summarise_by_day(mmash, age)
+#...
 ```
 
 You may have also already written that code previously, so you can use the up
@@ -716,6 +716,7 @@ tidy_summarise_by_day <- function(data, columns) {
 Now, if we run the function again:
 
 ```{r}
+load(here("data/mmash.rda"))
 tidy_summarise_by_day(mmash, age)
 ```
 

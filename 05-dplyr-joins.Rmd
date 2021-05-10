@@ -6,8 +6,8 @@ library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-dry.Rmd")
-source_session("04-dplyr.Rmd")
+source_session("03-functions.Rmd")
+source_session("04-functionals.Rmd")
 load("data/mmash.rda")
 ```
 
@@ -436,10 +436,7 @@ summary functions you chose.
 and include it with the other datasets in the `reduce()` function.
 7. Add and commit the changes you've made into the Git history.
 
-```{r solution-summarise-actigraph, echo=FALSE, include=FALSE}
-summarised_actigraph_df <- actigraph_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(hr, list(mean = mean, sd = sd)))
+```{r solution-TODO, echo=FALSE, include=FALSE}
 ```
 
 ## Exercise: Import and process the activity data

@@ -6,7 +6,7 @@ library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-dry.Rmd")
+source_session("03-functions.Rmd")
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
@@ -401,6 +401,7 @@ Likewise, with functions like `summarise()`,
 if you want to e.g. calculate the mean of a column, you would usually type out:
 
 ```{r}
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 saliva_df %>% 
     summarise(cortisol_mean = mean(cortisol_norm))
 ```
@@ -521,6 +522,7 @@ before summarising. Let's first summarise by taking the mean of `ibi_s`
 (which is the Inter-beat interval in seconds):
 
 ```{r}
+rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df %>% 
     group_by(user_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean)))
