@@ -1,11 +1,14 @@
 # Importing data, fast! {#import-data}
 
-Here we will cover the first block, "*Download raw data*" in Figure \@ref(fig:diagram-overview-1)
+During this session we'll be covering the first block, "*Download raw data*" in
+Figure \@ref(fig:diagram-overview-1). You already downloaded and unzipped the 
+raw data during the [pre-course](pre-course.html) tasks and here we'll continue
+the process by now importing it into R.
 
 ```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 diagram_overview(1)
 ```
-And your folder and file structure should look like:
+Right now, your folder and file structure should look like:
 
 ```
 LearnR3
@@ -17,7 +20,6 @@ LearnR3
 ├── R/
 │   ├── functions.R
 │   └── README.md
-├── .Rbuildignore
 ├── .gitignore
 ├── DESCRIPTION
 ├── LearnR3.Rproj
@@ -26,20 +28,23 @@ LearnR3
 
 ## Learning objectives
 
-1. Learn how to import data and do minor cleaning with the vroom package.
+1. Learn how to import data and do minor cleaning with the
+[vroom][vroom-website] package.
 1. Learn about strategies and resources to use when encountering problems when
-importing data.
-1. Practice using Git version control as part of the workflow of data analysis.
-    
+importing data (arguably one of the most important skills in any coding-type
+work).
+1. Practice using Git version control as part of the data analysis workflow.
 
 ## Importing in the raw data
 
-While we'll eventually come back to the `data-raw/mmash.R` script,
-for now we'll move over to the `doc/lesson.Rmd` file.
-At the bottom of the file, create a header by typing out `## Importing raw data`.
-Next, we'll make a new code chunk with `Ctrl-Alt-I` and call it `setup`.
-Inside the code chunk we'll load the [vroom][vroom-website] package with
-`library(vroom)` as well as `library(here)`. It should look like this:
+Our ultimate goal is to eventually save a working version of the raw data.
+The first step to processing data is to import it into R so we can work on it.
+So for now, we'll open up the `doc/lesson.Rmd` file so we can start building
+and testing out the code.
+At the bottom of the file, create a new header by typing out `## Importing raw data`.
+Right below the header, make a new code chunk with `Ctrl-Alt-I` and call it
+`setup`. Inside the code chunk, load the [vroom][vroom-website] package
+with `library(vroom)` as well as `library(here)`. It should look like this:
 
 [vroom-website]: https://vroom.r-lib.org/index.html
 
@@ -50,13 +55,14 @@ library(here)
 `r ''````
 ````
 
-This is a specially named code chunk that tells R to run this code chunk first
-whenever you first start running code in this R Markdown file. So it's here that
-we will add `library()` functions when we want to load other packages.
+This is a special, named code chunk that tells R to run this code chunk first
+whenever you open this R Markdown file and running code in it. It's in this `setup`
+code chunk that we will add `library()` functions when we want to load other
+packages.
 
 **Take 5 minutes to read the next paragraphs until it says to stop**.
 
-What is [vroom]? It is a package designed to load in data, specifically
+What is [vroom][vroom-website]? It is a package designed to load in data, specifically
 text-based data files such as CSV. In R there are several packages that you can
 use to load in data and of different types of file formats. We won't cover
 these other packages, but you can use this as a reference for when or if you
@@ -68,11 +74,11 @@ Stata files.
 endings.
 - [googlesheets4][googlesheets4]: For reading in Google Sheets from their cloud service.
 - [readr][readr]: Standard package used to load in text-based data files like CSV. 
-This package is included by default with tidyverse.
+This package is included by default within the tidyverse.
 - [`utils::read.delim()`][read-delim]: This function comes from the core R
 package utils and includes other functions like `utils::read.csv()`.
-- [`data.table::fread()`][fread]: From the [data.table] package, used to load
-in CSV files.
+- [`data.table::fread()`][fread]: From the [data.table] package, this function is 
+used to load in CSV files.
 
 [data.table]: https://rdatatable.gitlab.io/data.table/
 [haven]: https://haven.tidyverse.org/
@@ -97,12 +103,12 @@ these other packages.
 And because readr (which the other packages are based on) has been around for
 awhile, there is a large amount of support and help for using it.
 If you're curious to learn more about vroom, check out the 
-[website][vroom-website]
+[website][vroom-website].
 
-If your data is in CSV format, vroom is perfect. If not, there are other ways of
-importing data which we won't cover. The CSV file format is a commonly used 
-format for data because it is open, readable by any computer, and doesn't
-depend on any special software to open (unlike for e.g. Excel spreadsheets).
+If your data is in CSV format, vroom is perfect. The CSV file format is a
+commonly used format for data because it is open and transparent, readable by
+any computer, and doesn't depend on any special software to open (unlike for
+e.g. Excel spreadsheets). 
 **Please stop reading and we'll go over this together**.
 
 Let's first start by creating an object that has the file path to the dataset,
@@ -133,19 +139,19 @@ In the documentation, we see that it says:
 
 > "extracts the full column specification from a tibble..."
 
-Without seeing the output, it's not clear what "specification" means. So let's 
-use `spec()` on the dataset variable. In the **Console** again:
+Without seeing the output, it's not clear what "specification" means. Use
+`spec()` on the dataset object. In the **Console** again:
 
 ```{r}
 spec(user_1_info_data)
 ```
 
-Ok, so from this we can see that a specification is what columns are imported
-into R and what data type they are given. For instance, we can assume that
-`col_double()` means numeric (double is how computers represent non-integer
-numbers) and `col_character()` means a character data type.
-Next, let's see what the message meant about `col_types`. Let's check out the
-help documentation for `vroom()` by typing in the **Console**:
+This shows that a specification is list and description of which columns are imported
+into R and what data type they are given. For instance, `col_double()` means 
+numeric (double is how computers represent non-integer numbers) and
+`col_character()` means a character data type. Next, let's see what the message
+meant about `col_types`. Let's check out the help documentation for `vroom()` by
+typing in the **Console**:
 
 ```r
 ?vroom::vroom
@@ -157,8 +163,7 @@ And if we scroll down to the explanation of `col_types`:
 more details."
 
 It says to use a "cols() specification", which is likely the output of `spec()`.
-So, let's copy and paste the output from `spec()` and paste it into the 
-`col_types` argument of `vroom()`.
+Copy the output from `spec()` and paste it into the `col_types` argument of `vroom()`.
 
 ```{r vroom-with-error, error=TRUE, warning=TRUE}
 user_1_info_data <- vroom(
@@ -174,21 +179,16 @@ user_1_info_data <- vroom(
 )
 ```
 
-Hmm. A warning and an error. Ok, if we look through the message, there's the
-part that says:
-
-> "The following named parsers don't match the column names: ...1"
-
-And the error that is:
+Hmm. An error with the message:
 
 > "Invalid input type, expected 'list' actual 'NULL'"
 
-We copy and pasted, so what's going on? If you recall, the `user_info.csv`
+We copied and pasted, so what's going on? If you recall, the `user_info.csv`
 file has an empty column name. Looking at the [data dictionary][mmash-site]
-it doesn't seem there is any reference to this column, so it seems it isn't 
-important. So more than likely, vroom is complaining about this empty column 
-name and the use of `...1` to represent it. Since we don't need it, let's just
-get rid of it when we load in the dataset. But how? Let's look at the help
+it doesn't seem there is any reference to this column, so it likely isn't 
+important. More than likely, vroom is complaining about this empty column 
+name and the use of `...1` to represent it. We don't need it, so we'll 
+get rid of it when we load in the dataset. But how? Look at the help
 documentation again. Go to the **Console** and type out:
 
 [mmash-site]: https://physionet.org/content/mmash/1.0.0/
@@ -200,7 +200,7 @@ documentation again. Go to the **Console** and type out:
 Looking at the list of arguments, there is an argument called `col_select`
 that sounds like we could use that to keep or drop columns. It says that it
 is used similar to `dplyr::select()`, which normally is used with actual column 
-names. Our column doesn't have a name, that's the problem. Next let's check the
+names. Our column doesn't have a name, that's the problem. Next check the
 Example section of the help. Scrolling down, you'll eventually see:
 
 > `vroom(input_file, col_select = c(1, 3, 11))`
@@ -226,7 +226,7 @@ Amazing! We did it `r emo::ji("grin")`
 
 But... we also have a new message. You may or may not see this message
 depending on the version of your packages (the most updated packages
-will show this). But it should say:
+will show this). It should say:
 
 ```text
 New names:
@@ -247,7 +247,7 @@ treats problematic column names, of which a missing column name is definitely a
 problem. There are several options here, but the one I want to focus on is the
 comment about "function: apply custom name repair". This is an important one
 because we eventually want to rename the columns to match the [style guide] by
-using `snake_case`. And there's a package to do that called
+using `snake_case`, since there is a package to do that called
 [snakecase][snakecase-pkg].
 
 [snakecase-pkg]: https://tazinho.github.io/snakecase/
@@ -258,7 +258,7 @@ find the `to_snake_case()`. That's the one we want to use.
 So to remove the messages and convert the variable names to snake case, we
 would add `.name_repair = snakecase::to_snake_case` to code.
 Notice the lack of `()` when using the function. We'll explain more about this
-in the next session.
+in later sessions.
 
 ```{r use-name-repair}
 user_1_info_data <- vroom(
@@ -281,7 +281,7 @@ user_1_info_data
 ```
 
 Why might we use `spec()` and `col_types`? Depending on the size of the dataset,
-it may take a long time to load everything, which may not be very efficient
+it could take a long time to load everything, which may not be very efficient
 if you only intend to use some parts of the dataset and not all of it.
 And sometimes, `spec()` incorrectly guesses the column types, so using
 `col_types = cols()` can fix those problems.
@@ -292,6 +292,10 @@ Check out vroom's website help documentation on
 [vroom's `col_select`](https://vroom.r-lib.org/reference/vroom.html) argument
 or on [`cols_only()`](https://vroom.r-lib.org/reference/cols.html)
 for more details on how to use those.
+
+Before moving on to the exercise, add and commit the changes to the Git history
+through the RStudio Git interface with `Ctrl-Alt-M`, through the Git tab, or
+the Git button.
 
 ## Exercise: Import the saliva data {#ex-import-saliva}
 
@@ -321,7 +325,7 @@ user_1_saliva_data <- vroom(
 )
 ```
 
-```{r solution-import-the-saliva-data, echo=FALSE, eval=FALSE}
+```{r solution-import-the-saliva-data, include=FALSE, echo=TRUE, solution=TRUE}
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
 user_1_saliva_data_prep <- vroom(user_1_saliva_file,
                                  col_select = -1)
@@ -345,19 +349,19 @@ Sometimes you may have a dataset that's just a bit too large. Sometimes vroom
 may not have enough information to guess the data type of the column.
 Or maybe there are hundreds or thousands of columns in your data
 and you only want to import specific columns.
-In these cases, we can do a trick: read in only first few lines of the dataset,
+In these cases, we can do a trick: read in the first few lines of the dataset,
 use `spec()` and paste in the output into the `col_type` argument,
 and then keep only the columns you want to keep.
 
 Let's do this on the `RR.csv` file. 
 We can see from the file size that it is bigger than most of the other files 
-(~2Mb). So, we'll use this technique to decide what we want to keep etc. 
+(~2Mb). So, we'll use this technique to decide what we want to keep. 
 First, create a new header `## Import larger datasets` and a new code chunk below it
 (with `Ctrl-Alt-I`). 
 
 Do the same thing that we've been doing, but this time we are going to use the
 argument `n_max`, which tells vroom how many rows to read into R. In this case,
-let's read in 100, since that is the amount vroom guess until. This dataset,
+let's read in 100, since that is the amount vroom will guess until. This dataset,
 like the others, has an empty column that we will drop.
 
 ```{r import-some-of-data-trick}
@@ -369,7 +373,8 @@ spec(user_1_rr_data_prep)
 ```
 
 Like with last time, copy and paste the output into a new use of `vroom()`.
-Remove the `.delim` line and the `...1` line. Don't forget to also remove the
+Remove the `.delim` line and the `...1` line. Add the `.name_repair` argument
+with `snakecase::to_snake_case`. Don't forget to also remove the
 last `,` at the end! Make sure to remove the `n_max` argument, since we want to
 import in the whole dataset.
 
@@ -413,7 +418,7 @@ we did for the `RR.csv`. But first:
 and call it `## Exercise: Import the Actigraph data`.
 1. Below the header, create a new code chunk with `Ctrl-Alt-I`.
 
-Use the same technique as we used for the `RR.csv` data 
+Use the *same technique* as we used for the `RR.csv` data 
 and read in the `Actigraph.csv` file from `user_1/`.
 
 1. Set the file path to the dataset with `here()`. 
@@ -422,8 +427,12 @@ and read in the `Actigraph.csv` file from `user_1/`.
 1. Use `spec()` to output the column specification and paste the results into
 `col_types()`. Don't forget to remove the `...1 = col_skip()` and the 
 `.delim = ","` line from the `cols()` function.
+1. Knit the R Markdown document (`Ctrl-Shift-K` or the "Knit" button) to regenerate
+the HTML document.
+1. If everything works, add and commit the new changes to the Git history (`Ctrl-Alt-M`
+or with the Git button).
 
-```{r solution-import-the-actigraph-data, echo=FALSE, eval=FALSE}
+```{r solution-import-the-actigraph-data, include=FALSE, echo=TRUE, solution=TRUE}
 # Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
 user_1_actigraph_data_prep <- vroom(user_1_actigraph_file,
