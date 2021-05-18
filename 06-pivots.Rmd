@@ -1,4 +1,8 @@
-# Workflow to analyzing your tidy data {#dplyr-2}
+# Pivoting your data {#pivots}
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
 
 ```{r setup-06, include=FALSE, eval=FALSE}
 source("R/functions.R")
@@ -6,9 +10,10 @@ library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-functions.Rmd")
-source_session("04-functionals.Rmd")
-source_session("05-dplyr-joins.Rmd")
+knitr::opts_chunk$set(eval=FALSE)
+# source_session("03-functions.Rmd")
+# source_session("04-functionals.Rmd")
+# source_session("05-dplyr-joins.Rmd")
 load("data/mmash.rda")
 ```
 

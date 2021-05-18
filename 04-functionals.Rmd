@@ -1,20 +1,23 @@
 # Processing datasets for cleaning {#dplyr-1}
 
+```{r, echo=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 ```{r setup-04, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-functions.Rmd")
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(eval=FALSE)
+# source_session("03-functions.Rmd")
 ```
 
-Here we will continue making use of the "*Workflow*" block as we cover the third
-block, "*Create final data*" in Figure \@ref(fig:diagram-overview-3).
+We will continue covering the "*Workflow*" block in Figure \@ref(fig:diagram-overview-3).
 
 ```{r diagram-overview-3, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-diagram_overview(3)
+diagram_overview(2)
 ```
 
 And your folder and file structure should look like:

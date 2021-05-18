@@ -1,21 +1,26 @@
 # Workflow to analyzing your tidy data {#dplyr-2}
 
+```{r, echo=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
 ```{r setup-05, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-functions.Rmd")
-source_session("04-functionals.Rmd")
-load("data/mmash.rda")
+# source_session("03-functions.Rmd")
+# source_session("04-functionals.Rmd")
+# load("data/mmash.rda")
 ```
 
-Here we will continue using the *Workflow* block as we cover the fourth block,
-"*Work with final data*" in Figure \@ref(fig:diagram-overview-4).
+Here we will continue making use of the "*Workflow*" block as we cover the third
+block, "*Create final data*" in Figure \@ref(fig:diagram-overview-4).
 
 ```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-diagram_overview(4)
+diagram_overview(3)
 ```
 
 And your folder and file structure should look like:
