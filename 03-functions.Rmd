@@ -1,5 +1,9 @@
 # Save time, don't repeat yourself {#dry}
 
+```{r, echo=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 ```{r setup-03, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
