@@ -72,7 +72,7 @@ diagram_overview <- function(section_num = 0) {
             make_fn -> fn_r [label = '  cut & paste\ncommit']
             rmd -> make_fn [len = 2, label = '   ']
             make_fn -> rmd [len = 2, label = '   ']
-            fn_r -> rmd [label = '   load']
+            fn_r -> rmd [label = '   source']
             mmash_dir_2 -> rmd [label = '   import']
         }
 
