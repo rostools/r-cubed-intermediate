@@ -11,7 +11,8 @@ as a resource for after the class, not during it.
 library(magrittr)
 source(here::here("R/extract-solutions.R"))
 solutions <- purrr::map(
-    c("02-importing.Rmd", "03-dry.Rmd", "04-dplyr.Rmd"),
+    c("02-importing.Rmd", "03-functions.Rmd", "04-functionals.Rmd", 
+      "05-dplyr-joins.Rmd", "06-pivots.Rmd"),
     extract_solution_chunks
 )
 unlist(solutions) %>% 
