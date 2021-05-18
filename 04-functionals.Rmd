@@ -36,7 +36,6 @@ LearnR3
 ├── R/
 │   ├── functions.R
 │   └── README.md
-├── .Rbuildignore
 ├── .gitignore
 ├── DESCRIPTION
 ├── LearnR3.Rproj
