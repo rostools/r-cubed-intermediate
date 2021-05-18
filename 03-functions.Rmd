@@ -1,6 +1,7 @@
 # Save time, don't repeat yourself {#dry}
 
 ```{r setup-03, include=FALSE, eval=FALSE}
+source("R/functions.R")
 library(here)
 library(fs)
 library(dplyr)
