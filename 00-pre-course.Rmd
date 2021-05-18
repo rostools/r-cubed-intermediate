@@ -70,7 +70,7 @@ Otherwise, if you can, come to the course earlier (15-20 min) to get help.
 We will be using specific R packages for the course, 
 so you will need to install them.
 A detailed walkthrough for installing the necessary packages is
-available on the [pre-course tasks for installing packages](https://r-cubed-v2.rostools.org/pre-course.html#installing-r-packages)
+available on the [pre-course tasks for installing packages](https://r-cubed.rostools.org/pre-course.html#installing-r-packages)
 section of the beginner course,
 however, you only need to install the r3 helper package in order to install
 all the necessary packages by running these commands in the R Console:
@@ -108,7 +108,7 @@ since version control should be part of any modern data analysis workflow,.
 If you have used or currently use Git, you can skip this section.
 If you haven't used it, please do these tasks:
 
-1. Follow the [pre-course tasks for Git](https://r-cubed-v2.rostools.org/pre-course.html#setting-up-git-and-github)
+1. Follow the [pre-course tasks for Git](https://r-cubed.rostools.org/pre-course.html#setting-up-git-and-github)
 (*not* the GitHub tasks) from the beginner's course.
 Specifically, type in the RStudio Console:
 
@@ -119,7 +119,7 @@ Specifically, type in the RStudio Console:
     ```
     
 2. Read through the 
-[Version Control lesson](https://r-cubed-v2.rostools.org/version-control.html)
+[Version Control lesson](https://r-cubed.rostools.org/version-control.html)
 of the beginner course.
 *You don't need to do any of the exercises or activities*, 
 but you are welcome to do them if it will help you learn or understand it better.
@@ -143,7 +143,7 @@ One of the basic steps to reproducibility and modern workflows in data analysis
 is to keep everything contained in a single location.
 In RStudio, this is done with R Projects.
 Please read all of 
-[Section 6.1](https://r-cubed-v2.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
+[Section 6.1](https://r-cubed.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
 from the beginner course to learn about R Projects 
 and keeping things self-contained. 
 *You don't need to do any of the exercises or activities*.
@@ -157,11 +157,10 @@ scroll down to "Scientific Analysis Project using prodigenr" and name the projec
 "LearnR3" in the Directory Name, saving it to the "Desktop" with Browse.
 2. Or, running the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the Console.
 
-When the RStudio Project opens up again, run these two commands in the Console:
-
-TODO: I think these aren't necessary anymore...?
+When the RStudio Project opens up again, run these three commands in the Console:
 
 ```r
+prodigenr::setup_with_git()
 usethis::use_blank_slate()
 usethis::use_r("functions", open = FALSE)
 ```
@@ -178,7 +177,7 @@ We teach and use R Markdown because it is one of the very first steps to being
 reproducible and because it is a very powerful tool to doing data analysis.
 Please do these two tasks:
 
-1. Please read over the [R Markdown section](https://r-cubed-v2.rostools.org/reproducible-documents.html)
+1. Please read over the [R Markdown section](https://r-cubed.rostools.org/reproducible-documents.html)
 of the beginner course.
 If you use R Markdown already, you can skip this step.
 2. Open up the `LearnR3` project,
@@ -232,7 +231,7 @@ library(here)
 ```
 
 The [here] package was described in the 
-[Management of R Projects](https://r-cubed-v2.rostools.org/r-project-management.html)
+[Management of R Projects](https://r-cubed.rostools.org/r-project-management.html)
 of the introductory course and makes it easier to refer to other files in an R
 project. Read through the [section about here][here-r-cubed] in the introductory R course.
 
@@ -244,7 +243,7 @@ So you can sometimes encounter problems with finding files. So instead, when you
 `here()` R knows where to start searching for files from the `.Rproj` location.
 
 [here]: https://here.r-lib.org/
-[here-r-cubed]: https://r-cubed-v2.rostools.org/r-project-management.html#packages-data-and-file-paths
+[here-r-cubed]: https://r-cubed.rostools.org/r-project-management.html#packages-data-and-file-paths
 
 Let's use an example. Below is the tree of the folders and files you have so far. 
 If we open up RStudio with the
