@@ -321,6 +321,8 @@ and import in the other datasets. You should now have three new objects for all
 the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
 1. Once done, add the changes you've made and commit them to the Git history.
 
+TODO: This doesn't use user_id, so need to change later code to use file_path_id
+
 ```{r solution-import-multiple-files, echo=FALSE}
 # Excluding the Roxygen docs.
 import_multiple_files <- function(file_pattern, import_function) {
