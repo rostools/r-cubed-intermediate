@@ -1,16 +1,16 @@
 # Pre-course tasks {#pre-course}
 
-Complete everything in this pre-course tasks section and 
+In order to participate in this course, you must complete everything in this pre-course tasks section and 
 finish with *completing the survey* at the end. Depending on your skills and
 knowledge, these tasks could take between 3-5 hrs to finish, so we suggest
 planning a full day to complete them.
 
 ## Learning objectives
 
-In general these pre-course tasks are meant to help prepare you for the course and
+In general, these pre-course tasks are meant to help prepare you for the course and
 make sure everything is setup properly so the first session runs smoothly. However,
 some of these tasks are meant for learning as well as for general setup, so we 
-have these learning objectives defined:
+have defined the following learning objectives:
 
 1. Learn about making reproducible documents with R Markdown.
 1. Learn about filesystems, relative and absolute paths, and how to make use 
@@ -63,7 +63,7 @@ try as best as you can to complete the task and then let me know about the
 issues in the pre-course survey (at the end of this section). 
 If you continue having problems, indicate on the survey that you need help
 and we can try to book a quick video call to fix the problem. 
-Otherwise, if you can, come to the course earlier (15-20 min) to get help.
+Otherwise, if you can, come to the course earlier (15-20 min) to get help. <--**will 15 min be sufficient? Perhaps we should write 30 min ***
 
 ## Installing the R packages
 
@@ -104,7 +104,7 @@ remotes package and not have to load all the other functions as well.
 
 Since Git has already been covered in the Introduction course, 
 we won't cover it during this course, but we will be using it 
-since version control should be part of any modern data analysis workflow,.
+since version control should be part of any modern data analysis workflow.
 If you have used or currently use Git, you can skip this section.
 If you haven't used it, please do these tasks:
 
@@ -131,7 +131,7 @@ Regardless of whether you've done the steps above or not,
 r3::check_setup()
 ```
 
-and eventually copy and paste the output into one of the survey questions. *Note*
+and **eventually copy and paste the output into one of the survey questions**. *Note*
 that while GitHub is a natural connection to using Git, given the limited time
 available, we will not be covering using GitHub. If you want to learn about using 
 GitHub, check out the [session](https://r-cubed.rostools.org/version-control.html) 
@@ -143,7 +143,7 @@ One of the basic steps to reproducibility and modern workflows in data analysis
 is to keep everything contained in a single location.
 In RStudio, this is done with R Projects.
 Please read all of 
-[Section 6.1](https://r-cubed.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
+[Section 7.1](https://r-cubed.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
 from the beginner course to learn about R Projects 
 and keeping things self-contained. 
 *You don't need to do any of the exercises or activities*.
@@ -193,10 +193,10 @@ which will create a new file called `lesson.Rmd` in the `doc/` folder.
 ## Download the course data
 
 For this course, we're going to use an openly licensed dataset on monitoring
-sleep and activity (MMASH) [@Rossi2020]. Look over these tasks and than switch 
+sleep and activity (MMASH) [@Rossi2020] <--*maybe we could link directly to PubMed or remove the direct link to the Refs?**. Look over these tasks and than switch 
 over to the [MMASH website][mmash-website]:
 
-1. Look through the Data Description to familiar with the dataset and see what
+1. Look through the Data Description to get familiar with the dataset and see what
 is contained inside of it. We'll refer back to the Data Description throughout
 the course as well as in the exercises.
 1. Look over the open license that allows you to re-use it, even for research
@@ -239,7 +239,7 @@ R works based on the current *working directory*, which you can see on the top
 of the RStudio Console pane. When in an RStudio R Project, the working directory
 is the folder where the `.Rproj` file is located. When you run scripts in R with
 `source()`, sometimes the working directory will be set to where the R script is located.
-So you can sometimes encounter problems with finding files. So instead, when you use
+So you can sometimes encounter problems with finding files. Instead, when you use
 `here()` R knows where to start searching for files from the `.Rproj` location.
 
 [here]: https://here.r-lib.org/
@@ -294,7 +294,7 @@ download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 
 Because the original dataset is stored elsewhere, we don't need to keep it or 
 save it to our Git history. Add the zip file to the Git ignore list.
-In the *Console*, type out and run this code. You only need to do this once.
+In the Console pane, type out and run this code. You only need to do this once.
 
 ```{r ignore-mmash-zip, eval=FALSE}
 usethis::use_git_ignore("data-raw/mmash-data.zip")
@@ -306,7 +306,7 @@ correctly (the SHA file, which you don't need to worry about),
 and another zip file of the dataset. Because we are starting with the original
 raw `mmash-data.zip`, we should record exactly how we process the data set for
 use. This relates to the key principal of *"keep your raw data raw"*, as in
-don't edit or touch your raw data, let R or another programming language process 
+don't edit or touch your raw data; let R or another programming language process 
 it. This lets you have a history of what was done to the raw data.
 During data collection and entry, programs like Excel or Google Sheets are
 incredibly powerful. But after collection is done, don't make edits directly to
@@ -410,7 +410,7 @@ data-raw
 ```
 
 Since we have an R script that downloads the data and processes it for us,
-we don't need to have Git track it. So, in the *Console*, type out and run
+we don't need to have Git track it. So, in the Console, type out and run
 this command:
 
 ```{r git-ignore-mmash, eval=FALSE}
@@ -448,7 +448,7 @@ At this point, please run this function in the Console:
 r3::check_project_setup()
 ```
 
-And paste the output into the survey at the end.
+and paste the output into the survey at the end.
 
 ## Course introduction
 
