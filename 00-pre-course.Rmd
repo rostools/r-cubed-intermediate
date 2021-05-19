@@ -260,7 +260,7 @@ which means filesystem, and run the following code
 ```{r, eval=FALSE}
 # To print the file list.
 library(fs)
-dir_tree("data-raw", recurse = 1)
+dir_tree("~/Desktop/LearnR3", recurse = 1)
 ```
 
 ```text
