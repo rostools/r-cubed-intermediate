@@ -254,6 +254,15 @@ or with `source()`), R runs everything assuming it starts in the `data-raw/` fol
 This can make things tricky. What `here()` does is tell R to first look for the
 `.Rproj` file and then start looking for the file we actually want.
 
+To see the structure and content of a directory, we'll use the [fs] package, 
+which means filesystem, and run the following code
+
+```{r, eval=FALSE}
+# To print the file list.
+library(fs)
+dir_tree("data-raw", recurse = 1)
+```
+
 ```text
 LearnR3
 ├── data
