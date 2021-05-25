@@ -193,7 +193,7 @@ which will create a new file called `lesson.Rmd` in the `doc/` folder.
 ## Download the course data
 
 For this course, we're going to use an openly licensed dataset on monitoring
-sleep and activity (MMASH) [@Rossi2020]. Look over these tasks and than switch 
+sleep and activity (MMASH) [@Rossi2020;@Rossi2020a]. Look over these tasks and than switch 
 over to the [MMASH website][mmash-website]:
 
 1. Look through the Data Description to familiar with the dataset and see what
