@@ -53,19 +53,19 @@ for further recommendations and details on proper behaviour.
 
 Examples of unacceptable behavior by participants include:
 
-- written or verbal comments which have the effect of excluding people on the basis of membership of any specific group
-- causing someone to fear for their safety, such as through stalking, following, or intimidation
-- violent threats or language directed against another person
-- the display of sexual or violent images
-- unwelcome sexual attention
-- non-consensual or unwelcome physical contact
-- sustained disruption of talks, events or communications
-- insults or put downs
-- sexist, racist, homophobic, transphobic, ableist, or exclusionary jokes
-- excessive swearing
-- incitement to violence, suicide, or self-harm
-- continuing to initiate interaction (including photography or recording) with someone after being asked to stop
-- publication of private communication without consent
+- Written or verbal comments which have the effect of excluding people on the basis of membership of any specific group
+- Causing someone to fear for their safety, such as through stalking, following, or intimidation
+- Violent threats or language directed against another person
+- The display of sexual or violent images
+- Unwelcome sexual attention
+- Non-consensual or unwelcome physical contact
+- Sustained disruption of talks, events or communications
+- Insults or put downs
+- Sexist, racist, homophobic, transphobic, ableist, or exclusionary jokes
+- Excessive swearing
+- Incitement to violence, suicide, or self-harm
+- Continuing to initiate interaction (including photography or recording) with someone after being asked to stop
+- Publication of private communication without consent
 
 ## Consequences of Unacceptable Behavior
 

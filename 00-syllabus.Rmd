@@ -46,12 +46,12 @@ code; and know how to make modern and reproducible data analysis projects.
 
 ## Is this course for you?
 
-This course is designed a specific way and is ideal for you if:
+This course is designed in a specific way and is ideal for you if:
 
 - You are a researcher, preferably working in the biomedical field 
 (ranging from experimental to epidemiological).
 Specifically, this course targets those working on topics in diabetes and metabolism.
-- You currently or will soon do some quantitative data analysis.
+- You currently or will soon do quantitative data analysis.
 - You either: 
     - have taken the [introduction to Reproducible Research in R course][r-cubed-intro],
     since this course is a natural extension to that one;
@@ -70,24 +70,24 @@ you will need to go over the material from the introduction course beforehand
 (more details about pre-course tasks will be sent out a couple of weeks before the course).
 
 While having these assumptions help to focus the content of the course, if you
-have an interest in learning R but don't fit any of the above assumptions, *you
-are still welcome to attend the course*! 
+have an interest in learning R but don't fit any of the above assumptions, **you
+are still welcome to attend the course**! 
 We welcome everyone, that is until the course capacity is reached.
 
 During the course, we **will**:
 
-- learn how to use R, specifically those in the mid-beginner 
-to early-intermediate level
-- focus only on the data processing and cleaning stage of a data
-analysis project
-- teach from a reproducible research and open scientific
-perspective (e.g. by making use of Git)
-- be using practical, applied, and hands-on lessons and exercises
+- Learn how to use R, specifically those in the mid-beginner 
+to early-intermediate level.
+- Focus only on the data processing and cleaning stage of a data
+analysis project.
+- Teach from a reproducible research and open scientific
+perspective (e.g. by making use of Git).
+- Be using practical, applied, and hands-on lessons and exercises.
 
 And we **will not** learn:
 
-- the basics of using R and RStudio
-- statistics (these are already covered by most university curriculum)
+- The basics of using R and RStudio.
+- Statistics (these are already covered by most university curriculum).
 
 ## Schedule
 
