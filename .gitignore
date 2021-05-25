@@ -4,10 +4,10 @@
 .Ruserdata
 public/*
 *_files/*
-resources/packages.bib
+includes/packages.bib
 *.rds
 .Rbuildignore
-resources/refs.bib.sav
+includes/refs.bib.sav
 r-cubed-intermediate.Rmd
 data-raw/mmash/
 data-raw/mmash.R
