@@ -6,6 +6,7 @@ site: bookdown::bookdown_site
 documentclass: book
 bibliography: [includes/packages.bib, includes/refs.bib]
 link-citations: yes
+csl: includes/vancouver.csl
 description: "A 3-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
 apple-touch-icon: "images/apple-touch-icon.png"
 apple-touch-icon-size: 180
