@@ -103,7 +103,7 @@ Some of the material was taken and modified from multiple sources, including:
 - [UofTCoders Reproducible Quantitative Methods for EEB](https://uoftcoders.github.io/rcourse/) 
 - [Software and Data Carpentry](https://carpentries.org/) workshop material
 - [UofTCoders material](https://uoftcoders.github.io/studyGroup/lessons/)
-and [AU CRU material](https://au-cru.github.io/site/material/) <--* NB, does not work anymore!!!******
+and [AU CRU material](https://au-cru.github.io/site/)
 - From version 1 of the [*"Reproducible Quantitative Methods: Data analysis workflow using R"*](https://v1--dda-rcourse.netlify.com/) course
 
 The course material also draws inspiration from these excellent resources:

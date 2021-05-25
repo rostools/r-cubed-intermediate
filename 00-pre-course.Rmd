@@ -63,7 +63,7 @@ try as best as you can to complete the task and then let me know about the
 issues in the pre-course survey (at the end of this section). 
 If you continue having problems, indicate on the survey that you need help
 and we can try to book a quick video call to fix the problem. 
-Otherwise, if you can, come to the course earlier (15-20 min) to get help. <--**will 15 min be sufficient? Perhaps we should write 30 min ***
+Otherwise, if you can, come to the course earlier (about 20-30 min) to get help.
 
 ## Installing the R packages
 
@@ -193,7 +193,7 @@ which will create a new file called `lesson.Rmd` in the `doc/` folder.
 ## Download the course data
 
 For this course, we're going to use an openly licensed dataset on monitoring
-sleep and activity (MMASH) [@Rossi2020] <--*maybe we could link directly to PubMed or remove the direct link to the Refs?**. Look over these tasks and than switch 
+sleep and activity (MMASH) [@Rossi2020]. Look over these tasks and than switch 
 over to the [MMASH website][mmash-website]:
 
 1. Look through the Data Description to get familiar with the dataset and see what
@@ -254,13 +254,13 @@ or with `source()`), R runs everything assuming it starts in the `data-raw/` fol
 This can make things tricky. What `here()` does is tell R to first look for the
 `.Rproj` file and then start looking for the file we actually want.
 
-To see the structure and content of a directory, we'll use the [fs] package, 
-which means filesystem, and run the following code
+If you want to see the structure and content of a directory, you can use the `dir_tree()` 
+function from the [fs] package, 
+which means "filesystem", and run the following code in the R Console:
 
 ```{r, eval=FALSE}
 # To print the file list.
-library(fs)
-dir_tree("~/Desktop/LearnR3", recurse = 1)
+fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 ```
 
 ```text
@@ -315,7 +315,7 @@ correctly (the SHA file, which you don't need to worry about),
 and another zip file of the dataset. Because we are starting with the original
 raw `mmash-data.zip`, we should record exactly how we process the data set for
 use. This relates to the key principal of *"keep your raw data raw"*, as in
-don't edit or touch your raw data; let R or another programming language process 
+don't edit or touch your raw data, let R or another programming language process 
 it. This lets you have a history of what was done to the raw data.
 During data collection and entry, programs like Excel or Google Sheets are
 incredibly powerful. But after collection is done, don't make edits directly to
