@@ -29,6 +29,13 @@ Right now, everyone's initial project structure should look like:
 LearnR3
 ├── data/
 │   └── README.md
+├── data-raw/
+│   ├── mmash-data.zip
+│   ├── mmash/
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
 ├── doc/
 │   ├── README.md
 │   └── lesson.Rmd
@@ -70,7 +77,8 @@ LearnR3
 ```
 
 Our workflow will generally look like Figure \@ref(fig:diagram-overview),
-with each block representing a session.
+with each block representing one or two sessions. We've already done a bit
+of the first block, *"Download raw data"*.
 
 ```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering.", echo=FALSE}
 diagram_overview(0)
@@ -78,14 +86,15 @@ diagram_overview(0)
 
 Our workflow and process will be something like:
 
-- Make an R script (`data-raw/mmash.R`) to download the dataset (`data-raw/mmash/`).
+- Make an R script (`data-raw/mmash.R`) to download the dataset (`data-raw/mmash/`),
+which you already did in the pre-course tasks.
 - Use R Markdown (`doc/lesson.Rmd`) to write and test out code, convert it into
 a function, test it, and then move it into `R/functions.R`.
-- We use a combination of restarting R (`Ctrl-Shift-F10` or "Session -> Restart
+- Use a combination of restarting R (`Ctrl-Shift-F10` or "Session -> Restart
 R") and using `source()` (`Ctrl-Shift-S` while in `R/functions.R`) to run the
 functions inside of `R/functions.R`.
-- Replace the old code with the new function in the R Markdown document
-(`doc/lesson.Rmd`).
+- Replace the old code in the R Markdown document (`doc/lesson.Rmd`) with the
+new function.
 - Finish building functions that prepare the dataset, use them in the cleaning
 script (`data-raw/mmash.R`), run the script and save the data as an `.rda`
 file (`data/mmash.rda`).
@@ -95,16 +104,18 @@ them into the Git history.
 
 ## Setting up our project
 
+**We'll do this all together**.
 Now that we've gone over the overview, let's get our project ready for the next
-steps. First thing, though. Since we did all that work in the pre-course tasks
-downloading the data and unzipping it, let's first save these changes to the Git
-history. Let's open the Git interface with either the Git icon at the top near
-the menu bar, or with `Ctrl-Alt-M`. When this opens up we'll click the checkbox
-beside the `.gitignore` and `data-raw/mmash.R` files. Then we write a commit
-message in the text box on the right, something like "Code to download data zip
-file". Click the "Commit" button and close the Git interface.
+steps. But first, we need to do a few things. Since we did all that work in the
+pre-course tasks downloading the data and unzipping it, we need to save these
+changes to the Git history. Open the Git interface with either the Git icon at
+the top near the menu bar, or with `Ctrl-Alt-M`. When the Git inferface opens up
+we'll click the checkbox beside the `.gitignore` and `data-raw/mmash.R` files.
+Then we write a commit message in the text box on the right, something like
+"Code to download data zip file". Click the "Commit" button and close the Git
+interface.
 
-Next, let's delete one of the files we don't need by using the [fs] package.
+Next, delete one of the files we don't need by using the [fs] package.
 
 [fs]: https://fs.r-lib.org/
 
