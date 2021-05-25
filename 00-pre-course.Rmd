@@ -356,14 +356,14 @@ unzip(here("data-raw/MMASH.zip"),
 
 Almost done! There are several files left over that we don't need, so you'll
 need to write code in the script code that removes them. We'll use the [fs]
-package, which means filesystem, to work with files. Before you change any files,
+package to work with files. Before you change any files,
 the `data-raw/` folder should look something like:
 
 [fs]: https://fs.r-lib.org/
 
 ```{r, eval=FALSE}
 # You don't need to run this code, its here to show we got the file list.
-dir_tree("data-raw", recurse = 1)
+fs::dir_tree("data-raw", recurse = 1)
 ```
 
 ```text
