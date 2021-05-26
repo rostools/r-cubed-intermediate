@@ -66,7 +66,8 @@ library(here)
 This is a special, named code chunk that tells R to run this code chunk first
 whenever you open this R Markdown file and run code inside of the file.
 It's in this `setup` code chunk that we will add `library()` functions when we
-want to load other packages.
+want to load other packages. After adding this code chunk, create a new code chunk
+(`Ctrl-Alt-I`) right below it
 
 **Take 5 minutes to read the next paragraphs until it says to stop**.
 
