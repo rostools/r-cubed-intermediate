@@ -6,7 +6,6 @@ library(htmltools)
 
 knitr::opts_chunk$set(
     comment = "#>",
-    collapse = TRUE,
     warning = FALSE,
     dpi = 72,
     fig.width = 6,
