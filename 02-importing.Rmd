@@ -44,7 +44,8 @@ work).
 
 ## Importing in the raw data
 
-Our ultimate goal is to eventually save a working version of the raw data.
+The ultimate goal for the beginning phases of a data analysis project is to
+eventually save a version of the raw data that you can work on.
 The first step to processing data is to import it into R so we can work on it.
 So for now, we'll open up the `doc/lesson.Rmd` file so we can start building
 and testing out the code.
@@ -63,9 +64,9 @@ library(here)
 ````
 
 This is a special, named code chunk that tells R to run this code chunk first
-whenever you open this R Markdown file and running code in it. It's in this `setup`
-code chunk that we will add `library()` functions when we want to load other
-packages.
+whenever you open this R Markdown file and run code inside of the file.
+It's in this `setup` code chunk that we will add `library()` functions when we
+want to load other packages.
 
 **Take 5 minutes to read the next paragraphs until it says to stop**.
 
@@ -96,7 +97,7 @@ used to load in CSV files.
 [fread]: https://rdatatable.gitlab.io/data.table/reference/fread.html
 
 We're using the vroom package for largely one reason: It makes use of recent
-improvements in R that allow data to be imported in very very quickly. 
+improvements in R that allow data to be imported into R very very quickly. 
 Just how fast? The vroom website has a [benchmark page](https://vroom.r-lib.org/articles/benchmarks.html)
 showing how fast it is. For many people, loading in the data can be one of
 the most time-consuming
@@ -153,8 +154,8 @@ Without seeing the output, it's not clear what "specification" means. Use
 spec(user_1_info_data)
 ```
 
-This shows that a specification is list and description of which columns are imported
-into R and what data type they are given. For instance, `col_double()` means 
+This shows that a specification is a list and description of which columns are imported
+into R and what data types they are given. For instance, `col_double()` means 
 numeric (double is how computers represent non-integer numbers) and
 `col_character()` means a character data type. Next, let's see what the message
 meant about `col_types`. Let's check out the help documentation for `vroom()` by
@@ -169,7 +170,7 @@ And if we scroll down to the explanation of `col_types`:
 > "One of NULL, a cols() specification, or a string. See vignette("readr") for
 more details."
 
-It says to use a "cols() specification", which is likely the output of `spec()`.
+It says to use a "cols() specification", which is the output of `spec()`.
 Copy the output from `spec()` and paste it into the `col_types` argument of `vroom()`.
 
 ```{r vroom-with-error, error=TRUE, warning=TRUE}
