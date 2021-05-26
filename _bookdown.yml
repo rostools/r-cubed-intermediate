@@ -1,12 +1,6 @@
 output_dir: "public"
 book_filename: "r-cubed-intermediate"
 delete_merged_file: true
-view:
-    link: https://gitlab.com/rostools/r-cubed-intermediate/blob/main/%s
-    text: View
-edit:
-    link: https://gitlab.com/rostools/r-cubed-intermediate/edit/main/%s
-    text: Edit
 language:
   ui:
     chapter_name: ""
@@ -30,6 +24,6 @@ before_chapter_script:
     - "_common.R"
     - "R/functions.R"
 clean:
-    - "resources/packages.bib"
+    - "includes/packages.bib"
     - "r-cubed-intermediate.rds"
     - "data-raw/mmash"
