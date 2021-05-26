@@ -187,10 +187,7 @@ user_1_info_data <- vroom(
 )
 ```
 
-Hmm. An error with the message:
-
-> "Invalid input type, expected 'list' actual 'NULL'"
-
+Hmm. A warning and an error message. Let's deal with the error message first.
 We copied and pasted, so what's going on? If you recall, the `user_info.csv`
 file has an empty column name. Looking at the [data dictionary][mmash-site]
 it doesn't seem there is any reference to this column, so it likely isn't 
@@ -232,14 +229,9 @@ user_1_info_data <- vroom(
 
 Amazing! We did it `r emo::ji("grin")`
 
-But... we also have a new message. You may or may not see this message
+But... we still have the warning message. You may or may not see this message
 depending on the version of your packages (the most updated packages
-will show this). It should say:
-
-```text
-New names:
-* NA -> ...1
-```
+will show this), but you can see it in the code chunk above.
 
 This is `vroom()` letting you know that a column was renamed because
 you didn't explicitly indicate that you wanted it renamed.
@@ -260,11 +252,11 @@ using `snake_case`, since there is a package to do that called
 
 [snakecase-pkg]: https://tazinho.github.io/snakecase/
 
-In the *Console*, type out `snakecase::` and hit Tab. You'll see a list of
+In the Console, type out `snakecase::` and hit Tab. You'll see a list of
 possible functions to use. We want to use the snake case one, so scroll down and
 find the `to_snake_case()`. That's the one we want to use.
 So to remove the messages and convert the variable names to snake case, we
-would add `.name_repair = snakecase::to_snake_case` to code.
+would add `.name_repair = snakecase::to_snake_case` to the code.
 Notice the lack of `()` when using the function. We'll explain more about this
 in later sessions.
 
@@ -296,11 +288,6 @@ And sometimes, `spec()` incorrectly guesses the column types, so using
 
 If you have a lot of columns in your dataset, then you can make use of
 `col_select` or `cols_only()` to keep only the columns you want.
-Check out vroom's website help documentation on 
-[vroom's `col_select`](https://vroom.r-lib.org/reference/vroom.html) argument
-or on [`cols_only()`](https://vroom.r-lib.org/reference/cols.html)
-for more details on how to use those.
-
 Before moving on to the exercise, add and commit the changes to the Git history
 through the RStudio Git interface with `Ctrl-Alt-M`, through the Git tab, or
 the Git button.
@@ -333,7 +320,7 @@ user_1_saliva_data <- vroom(
 )
 ```
 
-```{r solution-import-the-saliva-data, include=FALSE, echo=TRUE, solution=TRUE}
+```{r solution-import-the-saliva-data, results='hide', solution=TRUE}
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
 user_1_saliva_data_prep <- vroom(user_1_saliva_file,
                                  col_select = -1)
@@ -401,9 +388,9 @@ user_1_rr_data <- vroom(
 ```
 
 There's a new column type: `col_time()`. To see all the other types of column 
-specifications, in the **Console** type out `col_` and then hit the Tab key. 
+specifications, in the Console type out `col_` and then hit the Tab key. 
 You'll see other types, like `col_date`, `col_factor`, and so on.
-Right, what does the data look like?
+Right, back to the data, what does it look like?
 
 ```{r}
 user_1_rr_data
@@ -440,7 +427,7 @@ the HTML document.
 1. If everything works, add and commit the new changes to the Git history (`Ctrl-Alt-M`
 or with the Git button).
 
-```{r solution-import-the-actigraph-data, include=FALSE, echo=TRUE, solution=TRUE}
+```{r solution-import-the-actigraph-data, results='hide', solution=TRUE}
 # Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
 user_1_actigraph_data_prep <- vroom(user_1_actigraph_file,
