@@ -38,7 +38,7 @@ Description: Reproducibility and open scientific practices are
     more details on the course, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
-Remotes:  
+Remotes: 
     gadenbuie/xaringanthemer,
     gitlab::rostools/r3,
     hadley/emo
@@ -46,6 +46,7 @@ Encoding: UTF-8
 Depends: 
     R (>= 4.0.0)
 Imports: 
+    bslib,
     bookdown,
     DiagrammeR,
     dplyr,
@@ -58,7 +59,8 @@ Imports:
     r3 (>= 0.0.0.9000),
     RefManageR,
     stringr,
-    vroom
+    vroom,
+    downlit
 Suggests: 
     furrr,
     prodigenr,
