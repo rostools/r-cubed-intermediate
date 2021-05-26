@@ -1,6 +1,6 @@
 bookdown::bs4_book:
     theme:
-        primary: "#0b5345"
+        primary: "#1e8449"
     includes:
         before_body:
             - "includes/contribute.html"
