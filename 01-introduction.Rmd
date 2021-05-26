@@ -76,12 +76,12 @@ LearnR3
 └── README.md
 ```
 
-Our workflow will generally look like Figure \@ref(fig:diagram-overview),
+Our workflow will generally look like Figure \@ref(fig:diagram-overview-0),
 with each block representing one or two sessions. We've already done a bit
 of the first block, *"Download raw data"*.
 
-```{r diagram-overview, fig.cap="Overview of the workflow we will be using and covering.", echo=FALSE}
-diagram_overview(0)
+```{r diagram-overview-0, fig.cap="Overview of the workflow we will be using and covering.", echo=FALSE}
+knitr::include_graphics("images/diagram-overview-0.svg")
 ```
 
 Our workflow and process will be something like:

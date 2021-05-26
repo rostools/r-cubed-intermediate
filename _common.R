@@ -11,7 +11,8 @@ knitr::opts_chunk$set(
     dpi = 72,
     fig.width = 6,
     fig.height = 6,
-    fig.align = "center"
+    fig.align = "center",
+    out.width = "100%"
 )
 
 knitr::knit_hooks$set(solution = function(before) {

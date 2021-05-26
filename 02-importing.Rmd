@@ -6,7 +6,7 @@ raw data during the [pre-course](pre-course.html) tasks and here we'll continue
 the process by now importing it into R.
 
 ```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-diagram_overview(1)
+knitr::include_graphics("images/diagram-overview-1.svg")
 ```
 Right now, your folder and file structure should look like:
 

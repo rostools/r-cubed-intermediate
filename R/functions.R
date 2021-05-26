@@ -37,8 +37,8 @@ diagram_overview <- function(section_num = 0) {
         # Styling
         graph [compound = true, nodesep = .1, ranksep = .1, rankdir = TB]
         node [shape = rectangle, style = filled, fixedsize = true,
-              color = lightblue, fontsize = 11, width = 2.1]
-        edge [fontsize = 10]
+              color = lightblue, fontsize = 14, width = 2.1]
+        edge [fontsize = 14]
 
         # Nodes
         mmash_dir [label = 'data-raw/mmash/']
@@ -96,7 +96,7 @@ diagram_overview <- function(section_num = 0) {
 
     }"
     graph_viz_text <- glue::glue(graphviz_template_text, .open = "((", .close = "))")
-    DiagrammeR::grViz(graph_viz_text, width = 700, height = 450)
+    DiagrammeR::grViz(graph_viz_text)
 }
 
 
