@@ -1,8 +1,9 @@
 --- 
 title: "Reproducible Research in R"
 subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
-date: "Updated: `r format(Sys.time(), '%B %d %Y')`"
+date: "`r format(Sys.time(), '%B %d %Y')`"
 site: bookdown::bookdown_site
+author: "Luke W. Johnston"
 documentclass: book
 bibliography: [includes/packages.bib, includes/refs.bib]
 link-citations: yes
