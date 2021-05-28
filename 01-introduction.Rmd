@@ -17,7 +17,7 @@ knitr::include_url("slides/introduction.html", height = "375px")
 This section provides an bigger picture view of what we will be doing,
 how we will be going about doing it, and what it will look like in the end.
 Both the folder and file structures below as well as the 
-Figure \@ref(fig:diagram-overview) show exactly what we will be doing and how
+Figure \@ref(fig:diagram-overview-0) show exactly what we will be doing and how
 it will look like at the file level (not at the R code level).
 Hopefully with this overview, you can better understand where we are and where
 we want to get to. A comment on naming: whenever folder names are given,
