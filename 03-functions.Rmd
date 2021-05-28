@@ -1,9 +1,5 @@
 # Save time, don't repeat yourself {#dry}
 
-```{r, echo=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
-```
-
 ```{r setup-03, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
@@ -81,11 +77,12 @@ Making functions always has a basic structure of:
 2. Starting the function call using `function()`, assigning it to the name with
 `<-`. This tells R that the name is a function object.
 3. Optionally providing arguments to give to the function call, for instance
-`function(arg1, arg2, arg3)`. 
+`function(argument1, argument2, argument3)`. 
 4. Filling out the body of the function, with the arguments (if any) contained
 inside, that does some action.
-5. Optionally, but strongly encouraged, use `return()` to indicate what you want 
-the function to output.
+5. Optionally, use `return()` to indicate what you want the function to output.
+For learning purposes, we'll always use `return()` to help show us what is the
+final function output.
 
 `r details_for_instructors("
 Emphasize that we will be using this workflow for creating functions all the
@@ -95,11 +92,11 @@ daily work.
 
 While there is no minimum or maximum number of arguments you can provide for a
 function (e.g. you could have zero or dozens of arguments), its good practice
-for yourself and for others to have as few arguments as possible to get the job
+for yourself and for others to have as few arguments as necessary to get the job
 done. So, the structure is:
 
 ```{r function-structure, eval=FALSE}
-name <- function(arg1, arg2) {
+name <- function(argument1, argument2) {
     # body of function
     output <- ... code ....
     return(output)
@@ -109,7 +106,7 @@ name <- function(arg1, arg2) {
 **Ok, stop here and we'll go over it together**.
 Let's write a simple example. First, create a new Markdown header called 
 `## Making a function` and create a code chunk below that with `Ctrl-Alt-I`.
-Then, inside the function, let's write this code out:
+Then, inside the function, we'll write this code out:
 
 ```{r create-add-function}
 add_numbers <- function(num1, num2) {
@@ -152,7 +149,8 @@ In the `Title` area, this is where you type out a brief sentence or several word
 that describe the function. Creating a new paragraph below this line allows you 
 to add a more detailed description. The other items are:
 
-- `@param num`: These lines describe what each argument is for and what to give it.
+- `@param num`: These lines describe what each argument (also called parameter)
+is for and what to give it.
 - `@return`: This describes what output the function gives. Is it a data.frame?
 A plot? What else does the output give?
 - `@export`: Tells R that this function should be accessible to the user of your
@@ -188,9 +186,9 @@ Making functions is a series of steps:
 1. Write code that works and does what you want.
 1. Enclose it as a function with `name <- function() { ... }`, 
 with an appropriate and descriptive name.
-1. Create arguments in the function call (`function(arg1, arg2)`) with appropriate
-and descriptive names, then replace the code with the argument names where 
-appropriate. 
+1. Create arguments in the function call (`function(argument1, argument2)`) with
+appropriate and descriptive names, then replace the code with the argument names
+where appropriate.
 1. Rename any objects created to be more generic and include the `return()`
 function at the end to indicate what the function will output.
 1. Run the function and check that it works.
@@ -330,8 +328,8 @@ To move around an R Markdown or R script more easily, open up the
 "Document Outline" on the side by clicking the button in the top right corner of
 the R Markdown pane or by using `Ctrl-Shift-O`.
 
-1. Create a new markdown header `## Exercise for importing the saliva data`.
-1. Create a code chunk below that (`Ctrl-Alt-I`).
+1. Create a new markdown header `## Exercise for importing the saliva data as a function`.
+1. Create a new code chunk below that (`Ctrl-Alt-I`).
 1. Paste the code you used from the exercise into the code chunk and begin
 converting it into a function, like we did above.
     - Wrap it with the `function() {...}`
@@ -341,8 +339,13 @@ converting it into a function, like we did above.
     - Test that it works
     - Create the Roxygen documentation
 
-```{r solution-repeat-saliva, echo=FALSE}
-# Excluding the Roxygen docs.
+```{r solution-repeat-saliva, results='hide', solution=TRUE}
+#' Import the MMASH saliva dataset.
+#'
+#' @param file_path Path to the user saliva data file.
+#'
+#' @return Outputs a data frame.
+#'
 import_saliva <- function(file_path) {
     saliva_data <- vroom(
         file_path,
@@ -357,7 +360,6 @@ import_saliva <- function(file_path) {
     return(saliva_data)
 }
 ```
-
 
 ## Continuing the workflow
 
