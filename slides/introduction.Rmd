@@ -226,6 +226,11 @@ struggle with R?
 
 Ok, you can get back to your seats.
 
+TODO: Add something like this?
+- lectures:
+    - q: Word pipeline gets thrown around a lot, but how many have encountered,
+    made, or used true pipelines? Automated from beginning to end.
+
 ---
 
 class: middle, center
