@@ -15,7 +15,7 @@ library(purrr)
 Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
 
 ```{r diagram-overview-2, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-diagram_overview(2)
+knitr::include_graphics("images/diagram-overview-2.svg")
 ```
 
 And your folder and file structure should look like:
