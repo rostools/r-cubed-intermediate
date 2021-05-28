@@ -45,14 +45,14 @@ LearnR3
 
 ## Learning objectives
 
-1. Learn what functions are in R, how to create and use them.
+1. Learn what functions are in R and how to create and use them.
 1. Learn a workflow of using R Markdown, `source()` (or
 `Ctrl-Shift-S` in RStudio), and restarting R (`Ctrl-Shift-F10`) 
-as a tool and process for developing functions that can be later easily used.
+as a tool and process for developing functions that can be later easily (re-)used.
 1. Learn what R package dependency management is and how it can simplify your
 data analysis work.
-1. Continue practising Git version control to manage changes to your files.
 1. Debugging...
+1. Continue practising Git version control to manage changes to your files.
 
 ## The basics of a function
 
