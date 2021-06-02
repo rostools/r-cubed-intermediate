@@ -456,23 +456,35 @@ usethis::use_package("fs")
 usethis::use_package("snakecase")
 ```
 
-
-...First, let's go to the `setup`
-code chunk and replace purrr with tidyverse and move `library(tidyverse)` to
-the top of the `setup` code chunk. We also have to add tidyverse as a dependency.
-Because tidyverse is a large collection of packages, the recommended way to add 
-the dependency is with:
+Since we will also make use of the tidyverse set of packages later in the
+course, we'll also add tidyverse as a dependency. Since the tidyverse is a large
+collection of packages, the recommended way to add this particular dependency is
+with:
 
 ```r
 usethis::use_package("tidyverse", type = "Depends")
 ```
 
+If you look in the `DESCRIPTION` file now, you see that the new `Depends` field 
+has been added with `tidyverse` right below it. There are fairly technical
+reasons why we need to put tidyverse in the `Depends` field that you don't need 
+to know about for this course, aside from the fact that it is a common practice
+in R projects. At least in this context, we use the `Depends` field for
+tidyverse because of one big reason: the `usethis::use_package()` function will
+complain if we try to put tidyverse in the `Imports` and it recommends putting
+it in the `Depends` field.
 
-Great! Now that we've formally established package dependencies, we also need to
-formally declare which package each function comes from inside our functions.
-Before getting into the correct way, we need to quickly cover the incorrect way
-that you may or may not have seen that others have done on websites or in code.
-Sometimes people use `library()` or `require()` inside functions like:
+```text
+Depends: 
+    tidyverse
+```
+
+Great! Now that we've formally established package dependencies in our project,
+we also need to formally declare which package each function comes from inside
+our own functions. Before getting into the correct way, we need to quickly cover
+the incorrect way that you may or may not have seen how others have done it on
+websites or in script files. Sometimes people use `library()` or `require()`
+inside functions like:
 
 ```{r bad-practice-library, eval=FALSE}
 add_numbers <- function(num1, num2) {
