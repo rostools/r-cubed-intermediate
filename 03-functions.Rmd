@@ -511,12 +511,21 @@ using `packagename::`, which you've seen and used many times in this course.
 We won't get into the reasons why this is incorrect because it can quickly get
 quite technical.
 
+`r details_for_instructors("
+You can also talk about why `require()` shouldn't be used compared to `library()`.
+The problem with `require()` is that if the package can't be loaded, it won't
+throw an error, it only *checks* if the package is available and will otherwise
+continue running the code. On the other hand, `library()` will throw an error if
+it can't find the package, which is what you expect if your code depends on a
+package.
+"`
+
 Another reason to use `packagename::` for each function from an R package
 you use in your own function is that it explicitly tells R (and us the readers)
 where the function comes from. Because the same function name can be used by
 multiple packages, if you don't explicitly state which package the function is 
-from, R will use the function that it can find... which isn't always the function
-you *mean*.
+from, R will use the function that it finds first... which isn't always the
+function you meant to use.
 
 We also do this step at the end of making the function because doing it while
 we create it can be quite tedious. Alright, let's go into `R/functions.R` and
