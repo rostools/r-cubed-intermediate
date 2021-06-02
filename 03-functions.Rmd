@@ -2,10 +2,8 @@
 
 ```{r setup-03, include=FALSE, eval=FALSE}
 source("R/functions.R")
-library(here)
-library(fs)
-library(dplyr)
-library(purrr)
+source_session("02-importing.Rmd")
+user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 ```
 
 Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-overview-2).
