@@ -376,10 +376,9 @@ So, in the *Console*, type out and run:
 usethis::use_r("functions")
 ```
 
-This creates a new file called `R/functions.R`. Then we cut and paste the
-functions we created into this new file. So, cut *only* the `import_user_info()` 
-function we created in `doc/lesson.Rmd`, including the Roxygen documentation,
-and paste it into `R/functions.R`.
+This creates a new file called `R/functions.R`. Cut and paste *only* the
+`import_user_info()` function we created in `doc/lesson.Rmd`, including the
+Roxygen documentation, and paste it into the newly created `R/functions.R`.
 
 Once we have it in there, let's test out the workflow.
 Restart our R session with either `Ctrl-Shift-F10` or from the 
@@ -401,29 +400,26 @@ What is package dependency management? Whenever you use an R package, you
 depend on it for your code to work. The informal way to show what packages you use
 is by using the `library()` function. But if you come back to the project, 
 or get a new computer, or someone else is working on your project too,
-how will they know, easily, which packages you depend on?
+how will they know which packages your project depends on?
 Do they have to search through all your files just to find all `library()`
 functions you used and then install those packages individually? A much better
 way here is to formally indicate your package dependency so that installing
-dependencies is easy. We do this by using the `DESCRIPTION` file.
+dependencies is easy. We do this by making use of the `DESCRIPTION` file.
 
 Open up the `DESCRIPTION` file. You may or may not see something that looks like:
 
 ```text
 Package: LearnR3
-Title: Title of Project
-Version: 0.0.0
-Authors@R: c(
-    person(given = "Luke",
-           family = "Johnston",
-           role = c("aut", "cre"),
-           email = "lwjohnst@gmail.com",
-           comment = c(ORCID = "0000-0003-4169-2616"))
-    )
-Imports: 
-    devtools
+Type: Project
+Version: 0.0.1
+Imports:
+    knitr,
+    rmarkdown,
+    distill
+Encoding: UTF-8
 ```
 
+If it doesn't look like this, replace all of your current text with the text above.
 Notice the `Imports:` key. This is where information about packages are added.
 To quickly add a package, go to the *Console* and type out:
 
@@ -436,12 +432,14 @@ You will see a bunch of text about adding it to `Imports`. If you look in your
 
 ```text
 Imports: 
-    devtools,
-    vroom
+    knitr,
+    rmarkdown,
+    distill,
+    usethis
 ```
 
-Now, if you or someone else wants to install all the package dependency,
-they can do that going to the *Console* and running:
+Now, if you or someone else wants to install all the packages your project
+depends on, they can do that by going to the *Console* and running:
 
 ```r
 remotes::install_deps()
@@ -549,8 +547,8 @@ import_user_info <- function(file_path) {
 ```
 
 Test that it works by restart the R session (`Ctrl-Shift-F10` or "Session ->
-Restart R"), loading the functions with `Ctrl-Shift-L`, and going to the
-*Console* and typing out:
+Restart R") and source the file with `Ctrl-Shift-S`, then go to the
+*Console* and type out:
 
 ```r
 import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
