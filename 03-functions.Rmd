@@ -577,8 +577,13 @@ test that the functions work by running them in the *Console*.
 Also update the `import_saliva()` function you created by being explicit about
 where the functions come from (e.g. with the `packagename::`).
 
-```{r solution-update-other-functions, echo=FALSE}
-# Excluding the Roxygen docs.
+```{r solution-update-other-functions, results='hide', solution=TRUE}
+#' Import the MMASH saliva dataset.
+#'
+#' @param file_path Path to the user saliva data file.
+#'
+#' @return Outputs a data frame/tibble.
+#'
 import_saliva <- function(file_path) {
     saliva_data <- vroom::vroom(
         file_path,
@@ -592,6 +597,13 @@ import_saliva <- function(file_path) {
     )
     return(saliva_data)
 }
+
+#' Import the MMASH RR dataset (heart beat-to-beat interval).
+#'
+#' @param file_path Path to the user RR data file.
+#'
+#' @return Outputs a data frame/tibble.
+#'
 import_rr <- function(file_path) {
     rr_data <- vroom::vroom(
         file_path,
@@ -606,6 +618,13 @@ import_rr <- function(file_path) {
     ) 
     return(rr_data)
 }
+
+#' Import the MMASH Actigraph dataset (accelerometer).
+#'
+#' @param file_path Path to the user Actigraph data file.
+#'
+#' @return Outputs a data frame/tibble.
+#'
 import_actigraph <- function(file_path) {
     actigraph_data <- vroom::vroom(
         file_path,
