@@ -562,9 +562,8 @@ Git interface.
 
 Time: 20 min
 
-Repeat this process and do this for the rest of the code you worked on
-previously that imported the `RR.csv`, and `Actigraph.csv` data. 
-
+Repeat this process of making functions by doing this to the rest of the code
+you worked on previously that imported the `RR.csv` and `Actigraph.csv` data.
 
 1. Convert the importing code into functions while in the `doc/lessons.Rmd` file.
 Include the Roxygen documentation and use `packagename::` to be explicit about
