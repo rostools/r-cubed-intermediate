@@ -293,7 +293,7 @@ Awesome! It works. The final stage is adding the Roxygen documentation.
 #'
 #' @param file_path Path to user info data file.
 #'
-#' @return Outputs a data frame.
+#' @return Outputs a data frame/tibble.
 #'
 import_user_info <- function(file_path) {
     info_data <- vroom(
@@ -342,7 +342,7 @@ converting it into a function, like we did above.
 #'
 #' @param file_path Path to the user saliva data file.
 #'
-#' @return Outputs a data frame.
+#' @return Outputs a data frame/tibble.
 #'
 import_saliva <- function(file_path) {
     saliva_data <- vroom(
