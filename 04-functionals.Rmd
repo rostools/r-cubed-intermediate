@@ -543,8 +543,9 @@ With the RR dataset, each participant had almost 100,000 data points recorded
 over two days of collection. So if we want to join with the other datasets,
 we need to calculate summary measures by at least `file_path_id` and also preferably
 by `day` as well. In this case, we need to `group_by()` these two variables
-before summarising. Let's first summarise by taking the mean of `ibi_s`
-(which is the inter-beat interval in seconds):
+before summarising that lets us use the split-apply-combine technique. Let's
+first summarise by taking the mean of `ibi_s` (which is the inter-beat interval
+in seconds):
 
 ```{r rr-summarised, eval=FALSE}
 rr_df <- import_multiple_files("RR.csv", import_rr)
@@ -619,6 +620,9 @@ summarised_rr_df <- rr_df %>%
 summarised_rr_df %>% 
     trim_filepath_for_book()
 ```
+
+Before continuing, switch to the Git interface and add and commit the changes so
+far.
 
 ## Exercise: Summarise the Actigraph data
 
