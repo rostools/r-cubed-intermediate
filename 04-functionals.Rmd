@@ -348,28 +348,48 @@ If everyone has, then move on to the next section.
 ")`
 
 We haven't used the `%>%` pipe from the [magrittr] package yet, but it is used
-extensively in many R packages, is the foundation of tidyverse packages,
-and will eventually be incorporated into the next version of R (rather than
-through magrittr). Because of this, we will make heavy use of it. To make sure
-everyone is on the same page please do either:
+extensively in many R packages and is the foundation of tidyverse packages.
+The function fundamentally changed how people write R code so much that
+in version 4.1 a similar function, `|>`, was added to base R. To make sure
+everyone is aware of what the pipe is, in your groups please do either task:
 
 [magrittr]: https://magrittr.tidyverse.org/
 
-- If one of you or your pair doesn't know what the pipe is, take some time to 
-talk about and explain it (if you know).
-- If neither of the pair knows, please read 
+- If one or more person in the group doesn't know what the pipe is, take some
+time to talk about and explain it (if you know).
+- If no one in the group knows, please read 
 [the section on it](https://r-cubed.rostools.org/wrangling.html#chaining-functions-with-the-pipe)
 from the beginner course.
 
-```{r solution-what-is-pipe, echo=FALSE}
-# There is no code for this exercise.
-```
+## Split-apply-combine technique and functionals
 
+`r details_for_instructors("
+Verbally cover this section before moving on to the summarizing. Let them know 
+they can read more about this in this section.
+"`
 
-## Summarizing data prior to joining
+We're taking a quick detour to briefly talk about a concept that perfectly
+illustrates how vectorization and functionals fit into doing data analysis.
+The concept is called the
+[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
+technique, which we covered in the beginner R course.
+The method is:
+
+1. Split the data into groups (e.g. diabetes status).
+2. Apply some analysis or statistics to each group (e.g. finding the mean of age).
+3. Combine the results to present them together (e.g. into a data frame that you can use
+to make a plot or table).
+
+So when you split data into multiple groups, you make a *vector* that you can 
+than apply (i.e. the *map* functional) some statistical technique to each group
+through *vectorization*. This technique works really well for a range of tasks, 
+including for our task of summarizing some of the MMASH data so we can merge
+it all into one dataset.
+
+## Summarizing data through functionals
 
 Functionals and vectorization are an integral component of how R works and
-they appear throughout many R's functions and packages. They are particularly
+they appear throughout many of R's functions and packages. They are particularly
 used throughout the tidyverse packages like dplyr. Let's get into some more
 advanced features of dplyr functions that work as functionals.
 
@@ -378,14 +398,15 @@ There are many "verbs" in dplyr, like `select()`, `rename()`, `mutate()`,
 [Data Management and Wrangling](https://r-cubed.rostools.org/wrangling.html#managing-and-working-with-data-in-r)
 session of the beginner course).
 The common usage of these verbs is through acting on and directly using the
-column names. For instance, to select only the `age` column, you would type out:
+column names (e.g. without `"` quotes around the column name). For instance, to
+select only the `age` column, you would type out:
 
 ```{r}
 user_info_df %>% 
     select(age)
 ```
 
-But many dplyr verbs can also take functions as input. When you combine
+But many dplyr verbs can also take functions as input. When you combine `select()`
 with the `where()` function, you can select e.g. columns that are numeric:
 
 ```{r}
@@ -437,10 +458,10 @@ two main arguments and two optional ones:
     with the column name unchanged.
     - A list with bare functions (`list(mean, sd)`) applies each function to
     each column and returns the output with the column name appended with a 
-    number.
+    number (e.g. `cortisol_norm_1`).
     - A named list with bare functions (`list(average = mean, stddev = sd)`)
     does the same as above but instead returns an output with the column names
-    appended with the name given to the function in the list.
+    appended with the name given to the function in the list (e.g. `cortisol_norm_average`).
     - A function passed with `~` and `.x`, like in `map()`. For instance,
     `across(c(age, weight), ~ mean(.x, na.rm = TRUE))` is used to say "put age
     and weight, one after the other, in place of where `.x` is located" to 
@@ -513,42 +534,58 @@ saliva_df %>%
 ```
 
 We can use these concepts and code to process the other longer datasets, like
-`RR.csv`, in a way that makes it meaningful to join them with the smaller datasets
-like `user_info.csv` or `saliva.csv`. Let's work with the `RR.csv` dataset to
-eventually join it with the others. 
+`RR.csv`, in a way that makes it more meaningful to eventually merge (also
+called "join") them with the smaller datasets like `user_info.csv` or
+`saliva.csv`. Let's work with the `RR.csv` dataset to eventually join it with
+the others.
 
 With the RR dataset, each participant had almost 100,000 data points recorded
 over two days of collection. So if we want to join with the other datasets,
-we need to calculate summary measures by at least `user_id` and also preferably
+we need to calculate summary measures by at least `file_path_id` and also preferably
 by `day` as well. In this case, we need to `group_by()` these two variables
 before summarising. Let's first summarise by taking the mean of `ibi_s`
-(which is the Inter-beat interval in seconds):
+(which is the inter-beat interval in seconds):
 
-```{r}
+```{r rr-summarised, eval=FALSE}
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df %>% 
-    group_by(user_id, day) %>% 
+    group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean)))
+```
+
+```{r rr-summarised-for-book, echo=FALSE}
+rr_df <- import_multiple_files("RR.csv", import_rr)
+rr_df %>% 
+    group_by(file_path_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean))) %>% 
+    trim_filepath_for_book()
 ```
 
 While there are no missing values here, let's add the argument `na.rm = TRUE`
 just in case.
 
-```{r}
+```{r rr-summarise-na-rm, eval=FALSE}
 rr_df %>% 
-    group_by(user_id, day) %>% 
+    group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean), na.rm = TRUE))
 ```
 
-You might notice a message (if you have the last version of dplyr):
+```{r rr-summarise-na-rm-for-book, echo=FALSE}
+rr_df %>% 
+    group_by(file_path_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean), na.rm = TRUE)) %>% 
+    trim_filepath_for_book()
+```
+
+You might notice a message (depending on the version of dplyr you have):
 
 ```text
-`summarise()` regrouping output by 'user_id' (override with `.groups` argument)
+`summarise()` regrouping output by 'file_path_id' (override with `.groups` argument)
 ```
 
 **Take 5 min to read this section over before we continue**.
 This message talks about regrouping, and overriding based on the `.groups`
-argument. If we look into `?summarise` to the `.groups` argument, we see that
+argument. If we look in the help `?summarise`, at the `.groups` argument, we see that
 this argument is currently "experimental". At the bottom there is a message about:
 
 > In addition, a message informs you of that choice, unless the option
@@ -557,30 +594,38 @@ function in a package.
 
 So how would be go about removing this message? By putting the
 "dplyr.summarise.inform" in the `options()` function. So, go to the `setup` code
-chunk and add this code to the top:
+chunk at the top of the document and add this code to the top:
 
 ```{r}
 options(dplyr.summarise.inform = FALSE)
 ```
 
-You will now no longer get the message. **Please stop reading and we will 
-continue together**.
+You will now no longer get the message. 
+**Please stop reading and we will continue together**.
 
 Let's also add standard deviation as another measure from the RR datasets:
 
-```{r}
+```{r rr-summarise-as-object, eval=FALSE}
 summarised_rr_df <- rr_df %>% 
-    group_by(user_id, day) %>% 
+    group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
 summarised_rr_df
 ```
 
-## Exercise: Summarise then join the Actigraph data
+```{r rr-summarise-as-object-for-book, echo=FALSE}
+summarised_rr_df <- rr_df %>% 
+    group_by(file_path_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+summarised_rr_df %>% 
+    trim_filepath_for_book()
+```
+
+## Exercise: Summarise the Actigraph data
 
 Time: 20 min
 
 Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so 
-that you can join it with the other datasets.
+that it makes it easier to join with the other datasets later.
 
 1. Like usual, create a new Markdown header called e.g. `## Exercise: Summarise 
 and join Actigraph` and insert a new code chunk below that.
@@ -588,66 +633,19 @@ and join Actigraph` and insert a new code chunk below that.
 is for.
 3. Based on the documentation, which variables would you be most interested in
 analyzing more?
-    - Keep those columns as well `user_id` and `day` by using `select()`.
+    - Keep those columns as well `file_path_id` and `day` by using `select()`.
 4. Decide which summary measure(s) you think may be most interesting for you
 (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
-5. Using `group_by()` of `user_id` and `day`, summarize the variables with the
+5. Using `group_by()` of `file_path_id` and `day`, summarize the variables with the
 summary functions you chose.
-6. Put this new data into an new object called e.g. `summarised_actigraph_df`
-and include it with the other datasets in the `reduce()` function.
-7. Add and commit the changes you've made into the Git history.
+6. Add and commit the changes you've made into the Git history.
 
-```{r solution-summarise-actigraph, echo=FALSE, include=FALSE}
+```{r solution-summarise-actigraph, results='hide', solution=TRUE}
 summarised_actigraph_df <- actigraph_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(hr, list(mean = mean, sd = sd)))
+    group_by(file_path_id, day) %>% 
+    summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
 ```
 
-## Split-apply-combine technique
 
-In the beginner course, we covered the 
-[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
-approach to doing data analysis. The method is: split the data into groups,
-apply some analysis to each group, and then combine the results back together.
-You've already used this approach when summarizing the RR and Actigraph datasets
-in last session. We're going to continue using it because of its usefulness
-and power. 
-
-Let's do some descriptive statistics. Let's find out the mean and standard 
-deviations of some variables by day. We will use `group_by()` and `summarise(across())`
-like previously. First, in `doc/lesson.Rmd` create a new header called `##
-Split-apply-combine` and make a new code chunk below it.
-
-```{r}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    ))
-```
-
-We can see from this that there is a random day of `-29` with `NaN` for age and
-weight, as well as a missing day where mean age is 28 and mean weight is 70.
-We can always fix this at a later point, but for now, we will ignore them.
-Let's look at some other summary statistics, like `min()` and `max()`.
-We add these into the `list()` with the other statistics:
-
-```{r}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd, 
-             min = min, max = max), 
-        na.rm = TRUE
-    ))
-```
-
-We could keep adding other variables and other summary statistics, but 
-you can see the dataset is quickly become harder and harder to read.
-One way we can fix this is by convert data to the long format,
-since a longer format is easier for the eye to scan than a wider format.
 
 
