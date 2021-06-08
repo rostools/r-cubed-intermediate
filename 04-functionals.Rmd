@@ -266,7 +266,7 @@ user_info_df
 
 ```{r show-data-for-book, echo=FALSE}
 user_info_df %>% 
-    mutate(file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id))
+    trim_filepath_for_book()
 ```
 
 Now that we have this working, let's add and commit the changes to the Git history.
