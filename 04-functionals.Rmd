@@ -316,10 +316,14 @@ and import in the other datasets. You should now have three new objects for all
 the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
 1. Once done, add the changes you've made and commit them to the Git history.
 
-TODO: This doesn't use user_id, so need to change later code to use file_path_id
-
 ```{r solution-import-multiple-files, results='hide', solution=TRUE}
-# Excluding the Roxygen docs.
+#' Import multiple MMASH data files and merge into one data frame.
+#'
+#' @param file_pattern Pattern for which data file to import.
+#' @param import_function Function to import the data file.
+#'
+#' @return A single data frame/tibble.
+#'
 import_multiple_files <- function(file_pattern, import_function) {
     data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
                              regexp = file_pattern,
@@ -329,6 +333,9 @@ import_multiple_files <- function(file_pattern, import_function) {
                                     .id = "file_path_id")
     return(combined_data)
 }
+
+# Try on saliva
+import_multiple_files("saliva.csv", import_saliva)
 ```
 
 ## Exercise: What is the pipe?
