@@ -636,19 +636,22 @@ Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so
 that it makes it easier to join with the other datasets later.
 
 1. Like usual, create a new Markdown header called e.g. `## Exercise: Summarise 
-and join Actigraph` and insert a new code chunk below that.
-2. Look into the [Data Description][mmash-site] to find out what each column 
+Actigraph` and insert a new code chunk below that.
+2. Import all the Actigraph data files using the `import_multiple_files()` function
+you created previously. Name the new data frame `actigraph_df`.
+3. Look into the [Data Description][mmash-site] to find out what each column 
 is for.
-3. Based on the documentation, which variables would you be most interested in
+4. Based on the documentation, which variables would you be most interested in
 analyzing more?
     - Keep those columns as well `file_path_id` and `day` by using `select()`.
-4. Decide which summary measure(s) you think may be most interesting for you
+5. Decide which summary measure(s) you think may be most interesting for you
 (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
-5. Using `group_by()` of `file_path_id` and `day`, summarize the variables with the
+6. Using `group_by()` of `file_path_id` and `day`, summarize the variables with the
 summary functions you chose.
-6. Add and commit the changes you've made into the Git history.
+7. Add and commit the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_actigraph_df <- actigraph_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
