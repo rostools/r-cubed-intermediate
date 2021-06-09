@@ -394,8 +394,10 @@ it all into one dataset.
 
 Functionals and vectorization are an integral component of how R works and
 they appear throughout many of R's functions and packages. They are particularly
-used throughout the tidyverse packages like dplyr. Let's get into some more
+used throughout the tidyverse packages like [dplyr]. Let's get into some more
 advanced features of dplyr functions that work as functionals.
+
+[dplyr]: https://dplyr.tidyverse.org/
 
 There are many "verbs" in dplyr, like `select()`, `rename()`, `mutate()`, 
 `summarize()`, and `group_by()` (covered in more detail in the 
