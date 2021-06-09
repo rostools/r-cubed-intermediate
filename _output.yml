@@ -1,6 +1,7 @@
 bookdown::bs4_book:
     theme:
-        primary: "#1e8449"
+        primary: "#cb4335" # Salmon-ish
+        # primary: "#2471a3" # Purplish-blue
     includes:
         before_body:
             - "includes/contribute.html"
