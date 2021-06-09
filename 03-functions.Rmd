@@ -509,14 +509,16 @@ using `packagename::`, which you've seen and used many times in this course.
 We won't get into the reasons why this is incorrect because it can quickly get
 quite technical.
 
-`r details_for_instructors("
+```{r, echo=FALSE, results='asis'}
+details_for_instructors("
 You can also talk about why `require()` shouldn't be used compared to `library()`.
 The problem with `require()` is that if the package can't be loaded, it won't
 throw an error, it only *checks* if the package is available and will otherwise
 continue running the code. On the other hand, `library()` will throw an error if
 it can't find the package, which is what you expect if your code depends on a
 package.
-"`
+")
+```
 
 Another reason to use `packagename::` for each function from an R package
 you use in your own function is that it explicitly tells R (and us the readers)
