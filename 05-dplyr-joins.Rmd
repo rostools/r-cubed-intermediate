@@ -1,4 +1,4 @@
-# Workflow to analyzing your tidy data {#dplyr-2}
+# Processing and joining datasets for cleaning {#dplyr-joins}
 
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(eval = FALSE)

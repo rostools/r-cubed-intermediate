@@ -1,4 +1,4 @@
-# Processing datasets for cleaning {#dplyr-1}
+# Save time, don't repeat yourself: Using functionals {#dry-functionals}
 
 ```{r setup-04, include=FALSE, eval=FALSE}
 source("R/functions.R")

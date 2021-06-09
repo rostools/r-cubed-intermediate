@@ -1,4 +1,4 @@
-# Save time, don't repeat yourself {#dry}
+# Save time, don't repeat yourself: Making functions {#dry-functions}
 
 ```{r setup-03, include=FALSE, eval=FALSE}
 source("R/functions.R")
