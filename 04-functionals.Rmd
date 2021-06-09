@@ -370,7 +370,7 @@ from the beginner course.
 `r details_for_instructors("
 Verbally cover this section before moving on to the summarizing. Let them know 
 they can read more about this in this section.
-"`
+")`
 
 We're taking a quick detour to briefly talk about a concept that perfectly
 illustrates how vectorization and functionals fit into doing data analysis.
