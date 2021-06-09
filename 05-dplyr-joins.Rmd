@@ -417,100 +417,8 @@ reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
 
 We now have two rows per participant!
 
-## Exercise: Join the summarized Actigraph data
-
-Time: 20 min
-
-TODO: Update this exercise
-Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so 
-that you can join it with the other datasets.
-
-1. Like usual, create a new Markdown header called e.g. `## Exercise: Summarise 
-and join Actigraph` and insert a new code chunk below that.
-2. Look into the [Data Description][mmash-site] to find out what each column 
-is for.
-3. Based on the documentation, which variables would you be most interested in
-analyzing more?
-    - Keep those columns as well `user_id` and `day` by using `select()`.
-4. Decide which summary measure(s) you think may be most interesting for you
-(e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
-5. Using `group_by()` of `user_id` and `day`, summarize the variables with the
-summary functions you chose.
-6. Put this new data into an new object called e.g. `summarised_actigraph_df`
-and include it with the other datasets in the `reduce()` function.
-7. Add and commit the changes you've made into the Git history.
-
-```{r solution-TODO, echo=FALSE, include=FALSE}
-```
-
-## Exercise: Import and process the activity data
-
-TODO: They had a difficult time with this.
-
-Time: 25 minutes
-
-We have a few other datasets that we could join together, but would likely require
-more processing in order to appropriately join with the other datasets.
-Complete these tasks:
-
-1. Create a new header called `## Exercise: Importing activity data`
-1. Create a new code chunk below this new header.
-1. Starting the workflow from the beginning (e.g. with the `spec()` process),
-write code that imports the `Activity.csv` data into R. 
-1. Convert this code into a new function using the workflow you've used from
-this course:
-    - Call the new function `import_activity`.
-    - Include one argument called `file_path`
-    - Test that it works.
-    - Add Roxygen documentation and explicit package links (`::`) with the
-    functions.
-    - Move the newly created function into the `R/functions.R`.
-    - Use the new function in `doc/lesson.Rmd` and use `source()`
-    (`Ctrl-Shift-S`) to run it.
-1. Import all the `user_` datasets with `import_multiple_files()` and the
-`import_activity()` function.
-1. Pipe the results into `mutate()` and create a new column called
-`activity_seconds` that is based on subtracting `end` and `start`.
-    - Use `?mutate` and check the examples if you don't recall how to use this
-    function.
-1. Add and commit your changes to the Git history.
-
-```{r solution-import-activity, echo=FALSE, include=FALSE}
-import_activity <- function(file_path) {
-    activity_data <- vroom::vroom(
-        "data-raw/mmash/user_1/Activity.csv",
-        col_select = -1,
-        col_types = vroom::cols(
-            Activity = vroom::col_double(),
-            Start = vroom::col_time(format = ""),
-            End = vroom::col_time(format = ""),
-            Day = vroom::col_double()
-        ),
-        .name_repair = snakecase::to_snake_case
-    ) 
-    return(activity_data)
-}
-
-activity_df <- import_multiple_files("Activity.csv", import_activity)
-
-activity_df %>% 
-    # group_by(user_id) %>% 
-    mutate(activity_duration = end - start)
-```
 
 
-Look into the [Data Description][mmash-site] and find out what each column
-represents and what the numbers mean in the column `activity`. Then brainstorm
-with your neighbour:
-
-1. The disadvantage of using numbers instead of text to describe categorical
-data like in the `activity` column.
-1. Ways you could include this information into the dataset.
-1. How you could meaningfully join this dataset with the other datasets.
-
-Afterwards, we'll quickly discuss some of these ideas as a group.
-
-[mmash-site]: https://physionet.org/content/mmash/1.0.0/
 
 ## Wrangling data into final form
 
@@ -663,3 +571,72 @@ that data.
 ```{r solution-other-data-brainstorm, echo=FALSE}
 # There is no code for this exercise.
 ```
+
+## Exercise: Import and process the activity data
+
+TODO: They had a difficult time with this.
+
+Time: 25 minutes
+
+We have a few other datasets that we could join together, but would likely require
+more processing in order to appropriately join with the other datasets.
+Complete these tasks:
+
+1. Create a new header called `## Exercise: Importing activity data`
+1. Create a new code chunk below this new header.
+1. Starting the workflow from the beginning (e.g. with the `spec()` process),
+write code that imports the `Activity.csv` data into R. 
+1. Convert this code into a new function using the workflow you've used from
+this course:
+    - Call the new function `import_activity`.
+    - Include one argument called `file_path`
+    - Test that it works.
+    - Add Roxygen documentation and explicit package links (`::`) with the
+    functions.
+    - Move the newly created function into the `R/functions.R`.
+    - Use the new function in `doc/lesson.Rmd` and use `source()`
+    (`Ctrl-Shift-S`) to run it.
+1. Import all the `user_` datasets with `import_multiple_files()` and the
+`import_activity()` function.
+1. Pipe the results into `mutate()` and create a new column called
+`activity_seconds` that is based on subtracting `end` and `start`.
+    - Use `?mutate` and check the examples if you don't recall how to use this
+    function.
+1. Add and commit your changes to the Git history.
+
+```{r solution-import-activity, echo=FALSE, include=FALSE}
+import_activity <- function(file_path) {
+    activity_data <- vroom::vroom(
+        "data-raw/mmash/user_1/Activity.csv",
+        col_select = -1,
+        col_types = vroom::cols(
+            Activity = vroom::col_double(),
+            Start = vroom::col_time(format = ""),
+            End = vroom::col_time(format = ""),
+            Day = vroom::col_double()
+        ),
+        .name_repair = snakecase::to_snake_case
+    ) 
+    return(activity_data)
+}
+
+activity_df <- import_multiple_files("Activity.csv", import_activity)
+
+activity_df %>% 
+    # group_by(user_id) %>% 
+    mutate(activity_duration = end - start)
+```
+
+
+Look into the [Data Description][mmash-site] and find out what each column
+represents and what the numbers mean in the column `activity`. Then brainstorm
+with your neighbour:
+
+1. The disadvantage of using numbers instead of text to describe categorical
+data like in the `activity` column.
+1. Ways you could include this information into the dataset.
+1. How you could meaningfully join this dataset with the other datasets.
+
+Afterwards, we'll quickly discuss some of these ideas as a group.
+
+[mmash-site]: https://physionet.org/content/mmash/1.0.0/
