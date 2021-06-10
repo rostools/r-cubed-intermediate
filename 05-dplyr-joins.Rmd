@@ -1,26 +1,20 @@
 # Processing and joining datasets for cleaning {#dplyr-joins}
 
-```{r, echo=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
-```
-
-
 ```{r setup-05, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-# source_session("03-functions.Rmd")
-# source_session("04-functionals.Rmd")
-# load("data/mmash.rda")
+source_session("03-functions.Rmd")
+source_session("04-functionals.Rmd")
 ```
 
-Here we will continue making use of the "*Workflow*" block as we cover the third
-block, "*Create final data*" in Figure \@ref(fig:diagram-overview-4).
+Here we will continue with the third block, "*Create final data*" in Figure
+\@ref(fig:diagram-overview-4).
 
 ```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-diagram_overview(3)
+knitr::include_graphics("images/diagram-overview-3.svg")
 ```
 
 And your folder and file structure should look like:
