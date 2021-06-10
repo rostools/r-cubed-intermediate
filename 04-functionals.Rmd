@@ -656,6 +656,7 @@ summary functions you chose. Name the summarised data frame `summarised_actigrap
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_actigraph_df <- actigraph_df %>% 
     group_by(file_path_id, day) %>% 
+    # These statistics will probably be different for you
     summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
 ```
 
