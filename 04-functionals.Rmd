@@ -649,7 +649,7 @@ analyzing more?
 5. Decide which summary measure(s) you think may be most interesting for you
 (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
 6. Using `group_by()` of `file_path_id` and `day`, summarize the variables with the
-summary functions you chose.
+summary functions you chose. Name the summarised data frame `summarised_actigraph_df`.
 7. Add and commit the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}
