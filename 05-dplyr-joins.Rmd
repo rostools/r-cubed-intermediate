@@ -466,22 +466,27 @@ Now that we've got several datasets processed and joined, its now time to
 bring it all together and put it into the `data-raw/mmash.R` script so we
 can create a final working dataset.
 
-Open up the `data-raw/mmash.R` file and let's start cutting and pasting
-the code from `doc/lesson.Rmd` related to importing and joining the
+Open up the `data-raw/mmash.R` file to get ready to start cutting and pasting
+the code from `doc/lesson.Rmd` that is related to importing and joining the
 `user_info.csv`, `saliva.csv`, `RR.csv`, and `Actigraph.csv`.
-
-The script so far should look like:
+Before you cut and paste, check that the `data-raw/mmash.R` matches the code
+below. 
 
 ```{r data-raw-mmash-script, eval=FALSE}
 library(here)
+
+# Download
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+
+# Unzip
 unzip(here("data-raw/mmash-data.zip"), 
       exdir = here("data-raw"),
       junkpaths = TRUE)
 unzip(here("data-raw/MMASH.zip"),
       exdir = here("data-raw"))
 
+# Remove/tidy up left over files
 library(fs)
 file_delete(here(c("data-raw/MMASH.zip", 
                    "data-raw/SHA256SUMS.txt",
@@ -489,10 +494,11 @@ file_delete(here(c("data-raw/MMASH.zip",
 file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 ```
 
-First thing to do is comment out the `download.file()` code, since
-we don't want to download it everytime we run this script. Next we'll want to do
-rearrange it so all the packages are at the top, and then add the other
-packages we'll need: tidyverse and vroom.
+First thing to do is comment out the `download.file()`, `unzip()`, `file_delete()`, 
+and `file_move()` code, since we don't want
+to download and unzip the data every single time we run this script. Next we'll want to
+rearrange all the `library()` package calls so they are at the top, and then add
+the other packages we'll need: tidyverse and vroom.
 
 ```{r}
 library(tidyverse)
@@ -508,14 +514,12 @@ below the `library()` functions, add:
 source(here("R/functions.R"))
 ```
 
-This is the code that runs when you use `Ctrl-Shift-S`.
+This is the code that runs when you use `Ctrl-Shift-S` (`source()`).
 
-Now, find the `import_multiple_files()`, summarized RR and Actigraph data,
-saliva data with the day column, and the `reduce()` code in your
+Now, find the code for `import_multiple_files()`, summarized RR and Actigraph
+data, saliva data with the day column, and the `reduce()` code in your
 `doc/lesson.Rmd` file and cut and paste it at the bottom of the
-`data-raw/mmash.R` script. This is what the bottom half should look like:
-
-<!-- {r data-raw-mmash-2, eval=-c(1:17)} -->
+`data-raw/mmash.R` script. This is what the script should look like now:
 
 ```{r data-raw-mmash-2, eval=FALSE}
 library(tidyverse)
@@ -529,17 +533,17 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 
 # Unzip
-unzip(here("data-raw/mmash-data.zip"), 
-      exdir = here("data-raw"),
-      junkpaths = TRUE)
-unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw"))
+# unzip(here("data-raw/mmash-data.zip"), 
+#       exdir = here("data-raw"),
+#       junkpaths = TRUE)
+# unzip(here("data-raw/MMASH.zip"),
+#       exdir = here("data-raw"))
 
 # Remove/tidy up left over files
-file_delete(here(c("data-raw/MMASH.zip", 
-                   "data-raw/SHA256SUMS.txt",
-                   "data-raw/LICENSE.txt")))
-file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+# file_delete(here(c("data-raw/MMASH.zip", 
+#                    "data-raw/SHA256SUMS.txt",
+#                    "data-raw/LICENSE.txt")))
+# file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
@@ -573,7 +577,7 @@ mmash <- reduce(
 )
 ```
 
-Lastly, we have to save this final dataset into the `data/` folder. We'll use this
+Lastly, we have to save this final dataset into the `data/` folder. We'll use the
 function `usethis::use_data()` to create the folder and save the data as an `.rda`
 file. We'll add this code to the very bottom of the script:
 
@@ -591,40 +595,37 @@ vroom_write(mmash, here("data/mmash.csv"))
 
 And later load it in with `vroom()` (since it is so fast).
 Alright, we're finished creating this dataset! Let's generate it
-by first:
+by:
 
-- Restart the R session with `Ctrl-Shift-F10` ("Session -> Restart R").
-- Source the `data-raw/mmash.R` script with `Ctrl-Shift-S` ("Code -> Source" or
+- Restarting the R session with `Ctrl-Shift-F10` ("Session -> Restart R").
+- Sourcing the `data-raw/mmash.R` script with `Ctrl-Shift-S` ("Code -> Source" or
 the "Source" button in the top right corner of the script pane).
 
-TODO: Fix this section.
-We now have a final dataset to start working on! The main way to load data is with
-`load(here::here("data/mmash.rda"))`.
+We now have a final dataset to start working on! The main way to load data is
+with `load(here::here("data/mmash.rda"))`. Lastly, add and commit all the changes,
+including adding the final `mmash.rda` data file, to the Git history. Make sure
+the `doc/lesson.Rmd` file is empty (except for the YAML header) and ready for
+the next session.
 
 ## Exercise: What other cleaned data might you create?
 
-Time: 10 min
+Time: 15 min
 
-In order to meaningfully join all the datasets together, we have to calculate
+In order to meaningfully join all the datasets together, we had to calculate
 summary measures for the `RR.csv` and `Actigraph.csv` data. However,
 we also lose a lot of information and potentially interesting analyses from it.
-With your neighbour, discuss some potential ways that you might join the datasets
+With your group, discuss some potential ways that you might join the datasets
 to retain that information and what questions you might be interested in with
-that data.
-
-```{r solution-other-data-brainstorm, echo=FALSE}
-# There is no code for this exercise.
-```
+that data. We'll discuss all the ideas afterwards.
 
 ## Exercise: Import and process the activity data
 
-TODO: They had a difficult time with this.
-
 Time: 25 minutes
 
+**This is an optional exercise if there is extra time (or to do during the group work session)**.
 We have a few other datasets that we could join together, but would likely require
 more processing in order to appropriately join with the other datasets.
-Complete these tasks:
+Complete these tasks in the `doc/lesson.Rmd` file:
 
 1. Create a new header called `## Exercise: Importing activity data`
 1. Create a new code chunk below this new header.
@@ -648,10 +649,10 @@ this course:
     function.
 1. Add and commit your changes to the Git history.
 
-```{r solution-import-activity, echo=FALSE, include=FALSE}
+```{r solution-import-activity, results='hide', solution=TRUE}
 import_activity <- function(file_path) {
     activity_data <- vroom::vroom(
-        "data-raw/mmash/user_1/Activity.csv",
+        file_path,
         col_select = -1,
         col_types = vroom::cols(
             Activity = vroom::col_double(),
@@ -667,21 +668,17 @@ import_activity <- function(file_path) {
 activity_df <- import_multiple_files("Activity.csv", import_activity)
 
 activity_df %>% 
-    # group_by(user_id) %>% 
     mutate(activity_duration = end - start)
 ```
 
 
 Look into the [Data Description][mmash-site] and find out what each column
 represents and what the numbers mean in the column `activity`. Then brainstorm
-with your neighbour:
+with your group:
 
 1. The disadvantage of using numbers instead of text to describe categorical
 data like in the `activity` column.
 1. Ways you could include this information into the dataset.
 1. How you could meaningfully join this dataset with the other datasets.
 
-Afterwards, we'll quickly discuss some of these ideas as a group.
-
 [mmash-site]: https://physionet.org/content/mmash/1.0.0/
-
