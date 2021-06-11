@@ -649,7 +649,7 @@ this course:
     function.
 1. Add and commit your changes to the Git history.
 
-```{r solution-import-activity, results='hide', solution=TRUE}
+```{r solution-import-activity, results='hide', solution=TRUE, eval=FALSE}
 import_activity <- function(file_path) {
     activity_data <- vroom::vroom(
         file_path,
