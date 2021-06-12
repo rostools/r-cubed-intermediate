@@ -1,27 +1,21 @@
 # Quickly re-arranging data with pivots {#pivots}
 
-```{r, echo=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
-```
-
 ```{r setup-06, include=FALSE, eval=FALSE}
 source("R/functions.R")
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-knitr::opts_chunk$set(eval=FALSE)
-# source_session("03-functions.Rmd")
-# source_session("04-functionals.Rmd")
-# source_session("05-dplyr-joins.Rmd")
-load("data/mmash.rda")
+source_session("03-functions.Rmd")
+source_session("04-functionals.Rmd")
+source_session("05-dplyr-joins.Rmd")
 ```
 
 Here we will continue using the *Workflow* block as we cover the fourth block,
 "*Work with final data*" in Figure \@ref(fig:diagram-overview-4).
 
 ```{r diagram-overview-5, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-diagram_overview(4)
+knitr::include_graphics("images/diagram-overview-4.svg")
 ```
 
 And your folder and file structure should look like:
