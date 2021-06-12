@@ -93,9 +93,9 @@ And we **will not** learn:
 
 The workshop is structured as a series of participatory live-coding sessions
 (instructor and learner coding together) interspersed with hands-on exercises
-and group work, using a real-world dataset.
-There are some lectures given, mainly at the start and end of the workshop.
-The general schedule outline is shown in the below table.
+and group work, using a real-world dataset or applying the skills learned to
+your own datasets. There are some lectures given, mainly at the start and end of
+the workshop. The general schedule outline is shown in the below table.
 
 ```{r schedule-table, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 options(knitr.kable.NA = "")
