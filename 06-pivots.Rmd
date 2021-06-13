@@ -47,6 +47,9 @@ LearnR3
 
 ## Learning objectives
 
+1. Using the concept of "pivoting" to arrange data from long to wide and vice versa.
+1. 
+
 ## Setup for the analysis in R Markdown
 
 We now have a working dataset to start doing some simple analyses on in the
@@ -55,12 +58,12 @@ R Markdown document. A recommended workflow with R Markdown is to often
 So let's first clean it up and start from the beginning again.
 
 Before we do that, make sure to add and commit all changes done in `doc/lesson.Rmd`.
-So any change that we make now we will still have the old stuff in the history
-that we can look at.
+By keeping changes in the history, we can go back to look at it anytime.
 
-Next, we'll delete everything right below the `setup` code chunk.
+Then, we'll delete everything from below the `setup` code chunk until the end of the file.
 This code chunk should have all the packages listed with `library()` functions.
-We'll also add another one right below them:
+We'll also add `load()` one right below them so we have access to the newly 
+merged dataset:
 
 ```r
 source(here("R/functions.R"))
@@ -74,7 +77,7 @@ either pop up or open in the Viewer pane on the side.
 
 As we write more R code and do some simple analyses of the data, we are going
 to be knitting often. The main reason for this is to ensure that whatever we
-are writing and done will at least be reproducible on our computer, since
+are writing and coding will at least be reproducible on our computer, since
 R Markdown is designed to ensure the document is reproducible.
 
 For this specific workflow and for checking reproducibility, you should output
@@ -89,12 +92,14 @@ otherwise knitting will fail. This can get annoying very quickly (trust me),
 since you don't always remember to close the Word document. If you output to
 HTML, this won't be a problem.
 
-## Pivot data to long format
+## Re-arranging data for easier summarizing
 
 `r details_for_instructors("
 Walk through and explain this section, making use of the tables and graphs.
 ")`
 
+Now that we have the final dataset to work with, we want to explore it a bit
+with some simple descriptive statistics. One powerful 
 Pivoting is an extremely useful action when working with data. Pivoting is when
 you convert data between longer forms (more rows) and wider forms (more columns).
 The [tidyr] package within tidyverse contains two wonderful functions for pivoting:
@@ -576,3 +581,42 @@ datasets.
 - Name the new dataset `actigraph_rr` and save it to `data/`
 by using another `usethis::use_data()` line in the `data-raw/mmash.R`
 script.
+
+## Misc
+
+Let's do some descriptive statistics. Let's find out the mean and standard 
+deviations of some variables by day. We will use `group_by()` and `summarise(across())`
+like previously. First, in `doc/lesson.Rmd` create a new header called `##
+Split-apply-combine` and make a new code chunk below it.
+
+```{r}
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    ))
+```
+
+We can see from this that there is a random day of `-29` with `NaN` for age and
+weight, as well as a missing day where mean age is 28 and mean weight is 70.
+We can always fix this at a later point, but for now, we will ignore them.
+Let's look at some other summary statistics, like `min()` and `max()`.
+We add these into the `list()` with the other statistics:
+
+```{r}
+mmash %>% 
+    group_by(day) %>% 
+    summarise(across(
+        c(age, weight),
+        list(mean = mean, sd = sd, 
+             min = min, max = max), 
+        na.rm = TRUE
+    ))
+```
+
+We could keep adding other variables and other summary statistics, but 
+you can see the dataset is quickly become harder and harder to read.
+One way we can fix this is by convert data to the long format,
+since a longer format is easier for the eye to scan than a wider format.
