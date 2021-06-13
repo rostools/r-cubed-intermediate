@@ -13,15 +13,17 @@ BibOptions(
     super = FALSE
     # hyperlink = FALSE,
 )
-bib <- ReadBib(here::here("resources/refs.bib"))
+bib <- ReadBib(here::here("includes/refs.bib"))
 knitr::opts_chunk$set(echo = FALSE)
 
 # Customized theme
 library(xaringanthemer)
 style_mono_accent(
-    base_color = "#2a2e44",
-    header_font_google = google_font("Fira Sans"),
-    text_font_google = google_font("Crimson Text"),
+    base_color = "#0d47a1",
+    base_font_size = "24px",
+    code_font_size = "1.2em",
+    header_font_google = google_font("Cabin"),
+    text_font_google = google_font("KoHo")
     code_font_google = google_font("Source Code Pro"),
     outfile = here::here("includes/xaringan-themer.css")
 )

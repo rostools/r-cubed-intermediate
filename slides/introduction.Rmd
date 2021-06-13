@@ -22,15 +22,15 @@ source(here::here("R/slide-setup.R"))
 
 - `r emo::ji("check")` Re-install r3 `remotes::install_gitlab("rostools/r3", upgrade = TRUE, force = TRUE)`
 
-- Open your `LearnR3.Rproj` and hit `Ctrl-Shift-L` to make sure that works (if not, let us know)
+- Open your `LearnR3.Rproj`
 
 ---
 
-class: center, middle
+class: middle
 
 # Motivation for this course
 
-## How do you *exactly* do data analysis? What's the workflow?
+## How do you *exactly* do data analysis? What's the workflow? `r emo::ji("thinking")`
 
 ???
 
@@ -41,22 +41,27 @@ on online tutorials, mostly pieces of code or how to use code are taught...
 but never teaching the bigger picture... How do researchers in their daily work
 write R code and do their data analysis? 
 
-This question is why the overall workflow is the primary focus in this course
-and partly with the beginner one. I try to focus on the bigger picture and the
-overall workflow you would do for doing data analysis.
+This question is the reason why the overall workflow is the primary focus in
+this course and partly with the beginner one. I try to focus on the bigger
+picture and the overall workflow you would do for doing data analysis.
 
 So, why is it that there isn't much information on how researchers do data
 analysis?
 
 ---
 
-# ...Because code sharing is almost non-existent in science
+class: middle
 
---
+# `r emo::ji("shrug")`...Because code sharing is almost non-existent in science
 
-Very few papers provide code `r Cite(bib, c("Leek2017a", "Considine2017a"))`
+.footnote[Very few papers provide code `r Cite(bib, c("Leek2017a", "Considine2017a"))`]
 
---
+???
+
+It's because code sharing basically doesn't exist in the vast majority of 
+scientific fields. How many have read a method in a paper and wondered how they
+actually did it?
+... you've probably realize by now, way more is done than shown in the "Methods"
 
 Why? Likely due to:
 
@@ -65,19 +70,6 @@ Why? Likely due to:
 - No incentive or reward
 - Little to no culture to do it
 
-
-???
-
-It's because code sharing basically doesn't exist in the vast majority of 
-scientific fields
-
-- Intro to how limited code sharing is, research on it, etc.
-
-How many have read a method in a paper and wondered how they <u>actually</u> did it? 
-
-... you've probably realize by now, way more is done than shown in the "Methods"
-
-I definitely have in my research career.
 We want to change the culture around code by encouraging 
 and teaching how to share code and to write better code in general.
 
@@ -102,7 +94,7 @@ and teaching how to share code and to write better code in general.
 ### Reproducibility
 
 - Generating the exact same results when using the same data and code
-- Should be easy right? Wrong, often just as hard
+- Should be easy right? Often quite hard
 - *Question*: If we can't even *reproduce* a studies results, how can we expect 
 to replicate it?
 ]
@@ -115,19 +107,19 @@ to replicate it?
 
 ---
 
-class: middle, center
+class: middle
 
 # These issues can be fixed by creating and nurturing a culture of openness
 
 ---
 
-class: middle, center
+class: middle
 
 # Goal of this course? Start changing the culture by providing the training
 
 ---
 
-class: center, middle
+class: middle
 
 # Question: 
 
@@ -139,11 +131,12 @@ Question, mostly for my own information...
 
 ---
 
-## Course setup and layout
+# Course setup and layout
 
 - Course is mix of:
     - "Code-alongs" (we type and explain, you type along)
     - Hands-on exercises
+    - Group work to help apply to your own projects
 
 - Use r3 package to help with learning
 
