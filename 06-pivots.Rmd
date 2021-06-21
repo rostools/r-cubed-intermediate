@@ -340,37 +340,6 @@ mmash %>%
     pivot_wider(names_from = day, values_from = starts_with("value_"))
 ```
 
-## Exercise: Convert this code into a function
-
-Time: 15 min
-
-Using the same workflow we've been doing throughout this course,
-convert this code into a function.
-
-1. Name the function `tidy_summarise_by_day`.
-1. Create two arguments, called `data` and `columns`.
-    - To work well with the pipe, put the `data` argument first.
-1. Test it to see it work by using `age` in the `columns` argument.
-    - It won't work and will throw an error. In the next section we will cover
-    how to debug the function.
-1. Move it over into `R/functions.R`, add Roxygen documentation, and use
-explicit function calls with `packagename::`.
-    - Don't forget, use `?functionname` to find out which package the function
-    comes from.
-
-```{r solution-summarise-function, echo=FALSE}
-tidy_summarise_by_day <- function(data, columns) {
-    data %>%
-        dplyr::group_by(day) %>%
-        dplyr::summarise(dplyr::across(columns,
-                                       list(mean = mean, sd = sd),
-                                       na.rm = TRUE)) %>% 
-        tidyr::pivot_longer(dplyr::ends_with(c("_mean", "_sd")),
-                            names_to = c("name", ".value"),
-                            names_sep = "_") 
-}
-```
-
 ## Debugging functions
 
 Debugging is one of those things that seems really scary and difficult, but
@@ -644,3 +613,28 @@ We could keep adding other variables and other summary statistics, but
 you can see the dataset is quickly become harder and harder to read.
 One way we can fix this is by convert data to the long format,
 since a longer format is easier for the eye to scan than a wider format.
+
+## Exercise:
+
+Which is better approach?
+
+```{r solution-pivot-summary, eval=FALSE, echo=FALSE}
+mmash %>% 
+    group_by(gender, day) %>% 
+    summarise(across(
+        where(is.numeric),
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    )) %>% 
+    pivot_longer(ends_with(c("mean", "sd")))
+
+mmash %>% 
+    select(-samples) %>% 
+    pivot_longer(c(-user_id, -day, -gender)) %>% 
+    group_by(gender, day, name) %>% 
+    summarise(across(
+        value,
+        list(mean = mean, sd = sd), 
+        na.rm = TRUE
+    )) 
+```
