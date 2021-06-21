@@ -627,6 +627,26 @@ summarised_rr_df %>%
     trim_filepath_for_book()
 ```
 
+Whenever you are finished with a grouping effect, it's good practice to end 
+the `group_by()` with `ungroup()`. Let's add it to the end:
+
+```{r rr-summarise-ungroup, eval=FALSE}
+summarised_rr_df <- rr_df %>% 
+    group_by(file_path_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
+    ungroup()
+summarised_rr_df
+```
+
+```{r rr-summarise-ungroup-for-book, echo=FALSE}
+summarised_rr_df <- rr_df %>% 
+    group_by(file_path_id, day) %>% 
+    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
+    ungroup()
+summarised_rr_df %>% 
+    trim_filepath_for_book()
+```
+
 Before continuing, switch to the Git interface and add and commit the changes so
 far.
 
@@ -648,16 +668,18 @@ analyzing more?
     - Keep those columns as well `file_path_id` and `day` by using `select()`.
 5. Decide which summary measure(s) you think may be most interesting for you
 (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
-6. Using `group_by()` of `file_path_id` and `day`, summarize the variables with the
+6. Using `group_by()` of `file_path_id` and `day`, summarise the variables with the
 summary functions you chose. Name the summarised data frame `summarised_actigraph_df`.
-7. Add and commit the changes you've made into the Git history.
+7. End the grouping effect with `ungroup()`.
+8. Add and commit the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_actigraph_df <- actigraph_df %>% 
     group_by(file_path_id, day) %>% 
     # These statistics will probably be different for you
-    summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
+    summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
+    ungroup()
 ```
 
 
