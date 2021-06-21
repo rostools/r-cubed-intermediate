@@ -9,6 +9,7 @@ library(vroom)
 source_session("03-functions.Rmd")
 source_session("04-functionals.Rmd")
 source_session("05-dplyr-joins.Rmd")
+load(here("data/mmash.rda"))
 ```
 
 Here we will continue using the *Workflow* block as we cover the fourth block,
