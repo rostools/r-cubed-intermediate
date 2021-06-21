@@ -152,18 +152,24 @@ knitr::include_graphics(here::here("images/pivot-longer-id.png"))
 
 Pivoting is a conceptually challenging thing to grasp, so don't be disheartened
 if you can't understand how it works yet. As you practice using it, you will
-understand it. With `pivot_longer()`, the first argument is the data.
+understand it. With `pivot_longer()`, the first argument is the data itself.
 The other arguments are:
 
 1. `cols`: The columns to use to convert to long form. The input is a vector
 made using `c()` that contains the column names, like you would use in
 `select()` (e.g. you can use the `select_helpers` like `starts_with()`, or `-`
 minus to exclude).
-1. `names_to`: Optional, default is `name`. If provided, it will be the name of
+1. `names_to`: Optional, the default is `name`. If provided, it will be the name of
 the newly created column (as a quoted character) that contains the original
 column names.
-1. `values_to`: Optional, default is `value`. Like `names_to`, sets the name of 
+1. `values_to`: Optional, the default is `value`. Like `names_to`, sets the name of 
 the new columns.
+
+The `pivot_longer()` and its opposite `pivot_wider()`, that we will cover later
+in the session, are both incredibly powerful functions. We can't show close to
+everything it can do in this course, but if you want to learn more, read up on
+the [documentation][tidyr-pivoting] for it.
+**Ok, stop reading at this point and we will go over pivoting to long again.**
 
 Let's try this out with `mmash`. In your `doc/lesson.Rmd` file, create a new
 header called `## Pivot longer` and create a new code chunk below that. Now we can
@@ -175,8 +181,8 @@ mmash %>%
     pivot_longer(everything())
 ```
 
-Ok, this gives an error because we are mixing data types. Let's pivot only 
-numbers.
+This gives us an error because we are mixing data types. We can't have character
+data and number data in the same column. Let's pivot only numbers.
 
 ```{r pivot-numeric}
 mmash %>% 
@@ -185,7 +191,7 @@ mmash %>%
 
 Nice! But not super useful. We can exclude specific columns from pivoting
 with `-` before the column name, for instance with `user_id` and `day`. Let's
-drop the `samples` column before pivoting:
+drop the `samples` column before pivoting since `day` gives us the same information:
 
 ```{r pivot-longer-example}
 mmash %>% 
@@ -193,82 +199,74 @@ mmash %>%
     pivot_longer(c(-user_id, -day, -gender))
 ```
 
-## Exercise: Pivot your summarised results to longer form
+## Exercise: Summarise your data after pivoting
 
-Time: 10 min
+Time: 15 min
 
 Use `pivot_longer()` after the `group_by()` and `summarise()` we did previously:
 
+Using the `group_by()` and `summarise()` functions we learned in 
+section \@ref(summarise-with-functionals), complete these tasks starting from 
+this code.
+
 ```{r, eval=FALSE}
 mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    ))
+    select(-samples) %>% 
+    pivot_longer(c(-user_id, -day, -gender)) %>% 
+    ___
 ```
 
-1. Look into the help documentation of `ends_with()` and use it for pivoting only
-the columns that end with `mean` and `sd`.
-    - Hint: `ends_with()` is *vectorized* meaning you can give it a vector of
-    column endings.
-1. After using the `pivot_longer()`, knit the R Markdown document into HTML 
-(`Ctrl-Shift-K` or the "Knit" button).
+1. Continuing the `%>%` from `pivot_longer()`, use `group_by()` to group the
+data by `gender`, `day`, and `name` (the long form column produced from
+`pivot_longer()`).
+1. After grouping with `group_by()`, use `summarise()` and `across()` on the
+`value` column and find the mean and standard deviation (put them into a named
+list like we did previously). Don't forget to use `na.rm = TRUE` to exclude missing
+values.
+1. Stop the grouping effect with `ungroup()`.
+1. Knit the R Markdown document into HTML (`Ctrl-Shift-K` or the "Knit" button).
 1. Open up the Git interface and add and commit the changes to `doc/lesson.Rmd`.
 
-```{r solution-pivot-summary, eval=FALSE, echo=FALSE}
+```{r solution-pivot-summary, results='hide', solution=TRUE}
 mmash %>% 
-    group_by(day) %>% 
+    select(-samples) %>% 
+    pivot_longer(c(-user_id, -day, -gender)) %>% 
+    group_by(gender, day, name) %>% 
     summarise(across(
-        c(age, weight),
+        value,
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
-    pivot_longer(ends_with(c("mean", "sd")))
+    ungroup()
 ```
 
 ## Pivot data to wider form
 
-After using `pivot_longer()` on the summarized data, it looks nice, but it still 
-has a problem: We have both mean and standard deviation values in the same column.
-It would be nicer if we had two columns, one for means and one for the sd values.
-We couldn't pivot to wider right now because that would put it right back from
-where we got it. So instead, we need to separate the existing `name` column
-into two columns for `name` and `summary_statistic`. We can do this when
-we use `pivot_longer()` by using the `names_to` and `names_sep` arguments:
+`r details_for_instructors("
+Like with the pivoting to long section, 
+let them read through this section first and than go over it again to verbally
+explain it more, making use of the graphs to help illustrate what is happening.
+Doing both reading and listening will help reinforce the concepts.
+")`
 
-- `names_to` can take a vector of new column names that will be created,
-meaning if you give it two new names, it will create two columns. But, when it
-has more than one new column name, it relies on you also using at least `names_sep`.
-- `names_sep`, which means "names separation", is used to tell `pivot_longer()`
-that a specific character separates two or more distinct possible columns. In
-our case, `_` separates the variable name from `mean` or `sd`.
+**Take 6 min to read over the sections until it says to stop, and then we'll 
+go over it again.**
 
-So, add these two arguments:
-
-```{r pivot-longer-separate}
-mmash %>% 
-    group_by(day) %>% 
-    summarise(across(
-        c(age, weight),
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    pivot_longer(ends_with(c("_mean", "_sd")),
-                 names_sep = "_",
-                 names_to = c("name", "summary_statistic"))
-```
-
-Now we are in a good position to pivot wider. So how does `pivot_wider()` work?
-Like its opposite `pivot_longer()`, the first position argument is the data and
-the other arguments are:
+After using `pivot_longer()` on the summarised data, it looks nice, but it could
+be better. Right now it is in a pretty long form, but for showing as a table,
+having columns for either `gender` or `day` would make it easier to compare the 
+mean and SD values we obtain. This is where we can use `pivot_wider()` to
+get the data wider rather than long.
+The arguments for `pivot_wider()` are very similar to those in `pivot_longer()`,
+except instead of `names_to` and `values_to`, they are called 
+`names_from` and `values_from`. Like with many R functions, the first argument
+is the data and the other arguments are:
 
 1. `id_cols`: This is optional as it will default to all column names. 
 This argument tells `pivot_wider()` to use the given columns as the identifiers
 for when converting. Unlike `pivot_longer()` which doesn't require some type of
 "key" or "id" column to convert to long form, the conversion to wide form
-works requires some type of "key" or "id" column because `pivot_wider()` needs
+requires some type of "key" or "id" column because `pivot_wider()` needs
 to know which rows belong with each other.
 1. `names_from`: Similar to the `pivot_longer()`, 
 this is the name of the column that has the values that will make up the new
