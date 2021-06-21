@@ -390,7 +390,7 @@ through *vectorization*. This technique works really well for a range of tasks,
 including for our task of summarizing some of the MMASH data so we can merge
 it all into one dataset.
 
-## Summarizing data through functionals
+## Summarizing data through functionals {#summarise-with-functionals}
 
 Functionals and vectorization are an integral component of how R works and
 they appear throughout many of R's functions and packages. They are particularly
@@ -400,7 +400,7 @@ advanced features of dplyr functions that work as functionals.
 [dplyr]: https://dplyr.tidyverse.org/
 
 There are many "verbs" in dplyr, like `select()`, `rename()`, `mutate()`, 
-`summarize()`, and `group_by()` (covered in more detail in the 
+`summarise()`, and `group_by()` (covered in more detail in the 
 [Data Management and Wrangling](https://r-cubed.rostools.org/wrangling.html#managing-and-working-with-data-in-r)
 session of the beginner course).
 The common usage of these verbs is through acting on and directly using the
