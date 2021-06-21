@@ -572,7 +572,7 @@ TODO: function name?
 Time: 25 min
 
 The Actigraph and RR datasets contain a ton of interesting and useful
-data that gets destroyed when we first summarize and then join them
+data that gets destroyed when we first summarise and then join them
 with the other datasets. While we can't meaningfully join all this
 data with the other datasets, we can join them on their own.
 
