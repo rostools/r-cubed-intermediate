@@ -96,16 +96,21 @@ HTML, this won't be a problem.
 ## Re-arranging data for easier summarizing
 
 `r details_for_instructors("
-Walk through and explain this section, making use of the tables and graphs.
+Let them read through this section and then walk through it again and explain it
+a bit more, making use of the tables and graphs. Doing both reading and listening
+again will help reinforce the concept of pivoting, which is usually quite
+difficult to grasp for those new to it.
 ")`
 
+**Take 6 min to read over the sections until it says to stop, and then we'll 
+go over it again.**
 Now that we have the final dataset to work with, we want to explore it a bit
-with some simple descriptive statistics. One powerful 
-Pivoting is an extremely useful action when working with data. Pivoting is when
+with some simple descriptive statistics. One extremely useful and powerful tool
+to summarizing data is by "pivoting" your data. Pivoting is when
 you convert data between longer forms (more rows) and wider forms (more columns).
 The [tidyr] package within tidyverse contains two wonderful functions for pivoting:
 `pivot_longer()` and `pivot_wider()`. There is a well written documentation
-on pivoting in the [tidy website][tidyr-pivoting] that can explain more about it.
+on pivoting in the [tidyr website][tidyr-pivoting] that can explain more about it.
 The first thing we'll use, and probably the more commonly used in general,
 is `pivot_longer()`. This function is commonly used because entering data in
 the wide form is easier and more time efficient than entering data in long form.
