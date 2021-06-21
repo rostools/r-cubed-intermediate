@@ -67,7 +67,7 @@ This is a special, named code chunk that tells R to run this code chunk first
 whenever you open this R Markdown file and run code inside of the file.
 It's in this `setup` code chunk that we will add `library()` functions when we
 want to load other packages. After adding this code chunk, create a new code chunk
-(`Ctrl-Alt-I`) right below it
+(`Ctrl-Alt-I`) right below it.
 
 **Take 5 minutes to read the next paragraphs until it says to stop**.
 
@@ -118,7 +118,7 @@ If your data is in CSV format, vroom is perfect. The CSV file format is a
 commonly used format for data because it is open and transparent, readable by
 any computer, and doesn't depend on any special software to open (unlike for
 e.g. Excel spreadsheets). 
-**Please stop reading and we'll go over this together**.
+**Please stop reading now and we'll go over this together**.
 
 Let's first start by creating an object that has the file path to the dataset,
 then we'll use `vroom()` to import that dataset.
@@ -253,8 +253,8 @@ using `snake_case`, since there is a package to do that called
 
 [snakecase-pkg]: https://tazinho.github.io/snakecase/
 
-In the Console, type out `snakecase::` and hit Tab. You'll see a list of
-possible functions to use. We want to use the snake case one, so scroll down and
+In the **Console**, type out `snakecase::` and hit Tab. You'll see a list of
+possible functions to use. We want to use the snakecase one, so scroll down and
 find the `to_snake_case()`. That's the one we want to use.
 So to remove the messages and convert the variable names to snake case, we
 would add `.name_repair = snakecase::to_snake_case` to the code.
@@ -389,7 +389,7 @@ user_1_rr_data <- vroom(
 ```
 
 There's a new column type: `col_time()`. To see all the other types of column 
-specifications, in the Console type out `col_` and then hit the Tab key. 
+specifications, in the **Console** type out `col_` and then hit the Tab key. 
 You'll see other types, like `col_date`, `col_factor`, and so on.
 Right, back to the data, what does it look like?
 
