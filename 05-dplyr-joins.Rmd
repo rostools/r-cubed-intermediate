@@ -516,10 +516,11 @@ source(here("R/functions.R"))
 
 This is the code that runs when you use `Ctrl-Shift-S` (`source()`).
 
-Now, find the code for `import_multiple_files()`, summarized RR and Actigraph
+Now, find the code for `import_multiple_files()`, summarised RR and Actigraph
 data, saliva data with the day column, and the `reduce()` code in your
 `doc/lesson.Rmd` file and cut and paste it at the bottom of the
-`data-raw/mmash.R` script. This is what the script should look like now:
+`data-raw/mmash.R` script. Find any `file_path_id` variables and replace
+with `user_id`. This is what the script should look like now:
 
 ```{r data-raw-mmash-2, eval=FALSE}
 library(tidyverse)
