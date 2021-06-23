@@ -176,6 +176,10 @@ Let's try this out with `mmash`. In your `doc/lesson.Rmd` file, create a new
 header called `## Pivot longer` and create a new code chunk below that. Now we can
 start typing in our code:
 
+```{r load-mmash, include=FALSE}
+load(here("data/mmash.rda"))
+```
+
 ```{r pivot-everything-error, error=TRUE}
 mmash %>% 
     # pivot every column
