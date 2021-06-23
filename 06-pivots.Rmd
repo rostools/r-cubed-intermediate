@@ -401,21 +401,28 @@ exercise. Work within the debugging environment to deal with this problem.
     - You will have to create an intermediate object based on the new `summary_fn`
     argument. 
 
-```{r solution-summary-extend, echo=FALSE}
-tidy_summarise_by_day <- function(data, columns, summary_fn) {
-    fn_names <- names(summary_fn)
+```{r solution-summary-extend, eval=FALSE, echo=FALSE}
+tidy_summarise_by_day <- function(data, summary_fn) {
     data %>%
-        dplyr::group_by(day) %>%
-        dplyr::summarise(dplyr::across({{columns}},
-                                       summary_fn,
-                                       na.rm = TRUE)) %>% 
-        tidyr::pivot_longer(dplyr::ends_with(fn_names),
-                            names_to = c("name", ".value"),
-                            names_sep = "_") 
+        select(-samples) %>%
+        pivot_longer(c(-user_id, -day, -gender)) %>%
+        group_by(gender, day, name) %>%
+        summarise(across(value,
+                         summary_fn,
+                         na.rm = TRUE)) %>%
+        drop_na(day, gender) %>%
+        pivot_wider(names_from = day, values_from = starts_with("value"))
 }
+
+mmash %>% 
+    tidy_summarise_by_day(mean) 
 ```
 
 ## Making prettier output in R Markdown
+
+`r details_for_instructors("
+Can go over this quite quickly.
+")`
 
 What we created is nice and all, but since we are working in an R Markdown
 document and knitting to HTML, let's make it easier for others (including
@@ -423,10 +430,11 @@ yourself) to read the document. Let's make the output as actual tables.
 We can do that with `knitr::kable()` (meaning "knitr table"). We can even
 add a table caption with the `caption` argument.
 
-```{r}
+```{r, eval=FALSE}
 mmash %>% 
-    tidy_summarise_by_day(c(age, weight, height),
-                          list(mean = mean, min = min, max = max)) %>% 
+    select(-melatonin_norm) %>% 
+    tidy_summarise_by_day(list(mean = mean, min = min, max = max)) %>% 
+    pivot_wider(names_from = day, values_from = starts_with("value")) %>% 
     knitr::kable(caption = "Descriptive statistics of some variables.")
 ```
 
@@ -434,33 +442,37 @@ Then knit the document and check out the HTML file. So pretty! `r emo::ji("grin"
 
 ## General workflow up to this point {#general-workflow}
 
+`r details_for_instructors("
+You can go over this point verbally, reiterating what they've learned so far.
+")`
+
 You now have some skills and tools to allow you to reproducibly import,
 process, clean, join, and eventually analyze your datasets.
 For the next two exercises, you will apply these skills and tools. 
 Listed below are the general workflows we've covered and that you
-can use as a guideline to completing the following exercises:
+can use as a guideline to completing the following exercises and group work.
 
-- Import with the `vroom()`, `spec()`, `vroom()` workflow.
-- Convert into a function with the `doc/lesson.Rmd` to `R/function.R`,
-restart R, and `source()` workflow.
-- Test that the datasets join properly while in `doc/lesson.Rmd`
-then cut and paste into `data-raw/mmash.R` workflow.
-- Restart R and re-create the `data/mmash.rda` dataset by
-sourcing `data-raw/mmash.R` workflow.
-- Restart R, load the new dataset with `load()`, 
-and analyze it in `doc/lesson.Rmd` workflow.
-- Add any additional cleaning code to `data-raw/mmash.R` and
-update the `data/mmash.rda` dataset whenever you find problems
-workflow.
-- Write R in code chunks in the `doc/lesson.Rmd` to further
+- Import with the `vroom()` to `spec()` to `vroom()` again.
+- Convert importing into a function in an R Markdown document,
+move to the `R/function.R` script, restarting R, and `source()`.
+- Test that joining datasets into a final form works properly while in
+an R Markdown document, then cut and paste into a data processing R script in the
+`data-raw/` folder.
+- Restart R and generate the `.rda` dataset in the `data/` folder by
+sourcing the R script.
+- Restart R, load the new dataset with `load()` and put it into an R Markdown 
+document.
+- Add any additional cleaning code to the data processing R script in
+`data-raw/` and update the `.rda` dataset in `data/` whenever you encounter
+problems in the dataset.
+- Write R in code chunks in an R Markdown document to further
 analyze your data and check reproducibility by often knitting to
 HTML workflow.
     - Part of this workflow is to also write R code to output
     in a way that looks nice in the HTML (or Word) output
     by mostly e.g. creating tables or figures of the output.
-
-And **don't forget**, for each stage, add and commit the changes
-you've made to the files into the Git history.
+- Use Git often by adding and committing into the history so you never lose
+stuff and can keep track of changes to your files.
 
 ## Exercise: Process and join sleep and questionnaire data
 
