@@ -307,7 +307,7 @@ Hmm, didn't work. Nothing has been pivoted to wider. That's because we are missi
 the `value_from` argument. Since we actually have the two `value_mean`
 and `value_sd` columns that have "values" in them, we need to tell `pivot_wider()`
 to use those two columns. Since `values_from` works similar to `select()`,
-we can use `starts_with()` to select the columns starting with `"values_`.
+we can use `starts_with()` to select the columns starting with `"values"`.
 
 ```{r pivot-wider-from-summarised-starts-with}
 mmash %>% 
@@ -319,7 +319,7 @@ mmash %>%
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
-    pivot_wider(names_from = day, values_from = starts_with("value_"))
+    pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
 Now we have a different problem. There are missing values in both the `day` and `gender`
@@ -338,12 +338,52 @@ mmash %>%
         na.rm = TRUE
     )) %>% 
     drop_na(day, gender) %>% 
-    pivot_wider(names_from = day, values_from = starts_with("value_"))
+    pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
-## Exercise: Extend the function to allow adding other summary statistics
+## Exercise: Convert this code into a function
 
-Time: 20 min
+Time: 15 min
+
+Using the same workflow we've been doing throughout this course,
+convert the code we just wrote above into a function.
+
+1. Name the function `tidy_summarise_by_day`.
+1. Create one argument called `data`.
+1. Test that the function works.
+1. Add Roxygen documentation and use explicit function calls with
+`packagename::`.
+    - Don't forget, use `?functionname` to find out which package the function
+    comes from.
+1. Move the newly created function over over into the `R/functions.R` file.
+1. Restart R, go into the `doc/lesson.Rmd` file and run the `setup` code chunk
+in the R Markdown document with the `source()` and `load()` commands and test
+that the function works in a code chunk at the bottom of the document.
+
+```{r solution-summarise-function, results='hide', solution=TRUE}
+#' Calculate tidy summary statistics by day.
+#'
+#' @param data The MMASH dataset.
+#'
+#' @return A data.frame/tibble.
+#'
+tidy_summarise_by_day <- function(data) {
+    data %>%
+        dplyr::select(-samples) %>%
+        tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+        dplyr::group_by(gender, day, name) %>%
+        dplyr::summarise(dplyr::across(value,
+                         list(mean = mean, sd = sd),
+                         na.rm = TRUE)) %>%
+        tidyr::drop_na(day, gender) %>%
+        tidyr::pivot_wider(names_from = day, 
+                    values_from = dplyr::starts_with("value"))
+}
+```
+
+## Exercise: Extend the function to use other statistics and to be tidier
+
+Time: 15 min
 
 We've made the function so that we can include any column we want, but now
 let's make it so we can include any summary function we want, not just `mean()`
