@@ -1,6 +1,7 @@
 # Quickly re-arranging data with pivots {#pivots}
 
 ```{r setup-06, include=FALSE, eval=FALSE}
+# Used this only during writing to run code dependent on previous chapters.
 source("R/functions.R")
 library(here)
 library(fs)
