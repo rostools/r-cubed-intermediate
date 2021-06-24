@@ -8,7 +8,7 @@
 details_for_instructors <- function(.text) {
     glue::glue("
 
-    <details><summary><strong><em>For instructors: Click for details</em></strong></summary>
+    <details><summary><strong><em>For instructors: Click for details.</em></strong></summary>
     <blockquote><p>
     {.text}
     </p></blockquote>
