@@ -11,7 +11,7 @@ source_session("04-functionals.Rmd")
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over to the
-third block, "*Create final data*" in Figure \@ref(fig:diagram-overview-4).
+third block, "*Create final data*", in Figure \@ref(fig:diagram-overview-4).
 
 ```{r diagram-overview-4, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
 knitr::include_graphics("images/diagram-overview-3.svg")
@@ -64,7 +64,7 @@ user ID from the `file_path_id` column.
 
 [stringr]: https://stringr.tidyverse.org/
 
-The main driver behind the functions in stringr are [regular expressions] (or
+The main driver behind the functions in stringr are [regular expressions][regex] (or
 [regex] for short). These expressions are powerful, very concise ways of finding
 patterns in text. Because they are so concise, though, they are also *very very
 difficult* to learn, write, and read, even for experienced users. That's because
@@ -99,7 +99,7 @@ might use to extract the user ID.
 1. Use the list below to think about how you might convert the English
 description of the text pattern to a regex. This will probably be very hard, but
 try anyway.
-    - Written a character written as is will find that character, e.g. `user`
+    - When characters are written as is, regex will find those characters, e.g. `user`
     will find only `user`.
     - Use `[]` to find one possible character of the several between the brackets.
     E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or "b". To find a range of numbers
@@ -649,7 +649,7 @@ this course:
 `import_activity()` function.
 1. Pipe the results into `mutate()` and create a new column called
 `activity_seconds` that is based on subtracting `end` and `start`.
-    - Use `?mutate` and check the examples if you don't recall how to use this
+    - Use `?mutate` and check the examples in the help document that pops up if you don't recall how to use this
     function.
 1. **Add and commit** your changes to the Git history.
 

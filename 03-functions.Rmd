@@ -198,7 +198,7 @@ where appropriate.
 1. Rename any objects created to be more generic and include the `return()`
 function at the end to indicate what the function will output.
 1. Run the function and check that it works.
-1. Add the roxygen2 documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
+1. Add the Roxygen2 documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
 Roxygen Skeleton" menu item while the cursor is in the function).
 
 `r details_for_instructors("
@@ -378,7 +378,7 @@ portion of R code over other text.
 1. To make use of the `source()` function.
 
 We need to make a new file to store our functions so its easier to source them.
-So, in the *Console*, type out and run:
+So, in the **Console**, type out and run:
 
 ```{r functions-script, eval=FALSE}
 usethis::use_r("functions")
@@ -429,7 +429,7 @@ Encoding: UTF-8
 
 If it doesn't look like this, replace all of your current text with the text above.
 Notice the `Imports:` key. This is where information about packages are added.
-To quickly add a package, go to the *Console* and type out:
+To quickly add a package, go to the **Console** and type out:
 
 ```r
 usethis::use_package("vroom")
@@ -447,14 +447,14 @@ Imports:
 ```
 
 Now, if you or someone else wants to install all the packages your project
-depends on, they can do that by going to the *Console* and running:
+depends on, they can do that by going to the **Console** and running:
 
 ```r
 remotes::install_deps()
 ```
 
 This function finds the `DESCRIPTION` file and installs all the packages in
-`Imports`. Let's add the other dependencies by typing in the *Console*:
+`Imports`. Let's add the other dependencies by typing in the **Console**:
 
 ```r
 usethis::use_package("here")
@@ -558,7 +558,7 @@ import_user_info <- function(file_path) {
 
 Test that it works by restart the R session (`Ctrl-Shift-F10` or "Session ->
 Restart R") and source the file with `Ctrl-Shift-S`, then go to the
-*Console* and type out:
+**Console** and type out:
 
 ```r
 import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
@@ -581,7 +581,7 @@ where the function comes from.
     - Name the new functions `import_rr` and `import_actigraph`.
 1. Move the function into `R/functions.R`.
 1. Restart R, `source()` the functions file (`Ctrl-Shift-S`), and
-test that the functions work by running them in the *Console*.
+test that the functions work by running them in the **Console**.
 
 Also update the `import_saliva()` function you created by being explicit about
 where the functions come from (e.g. with the `packagename::`).

@@ -176,7 +176,7 @@ for this and that the RStudio purrr cheatsheet is an amazing resource to use.
 
 The first thing we have to do is add `library(purrr)` to the `setup` code chunk
 in the `doc/lesson.Rmd` document. Then we need to add the package dependency
-by going to the *Console* and running:
+by going to the **Console** and running:
 
 ```r
 usethis::use_package("purrr")
@@ -314,7 +314,7 @@ the document.
     - Run it and check that it works on `saliva.csv`
 1. After it works, cut and paste the function into the `R/functions.R` file.
 Then restart the R session, run the line with `source(here("R/functions.R"))`, 
-and test the code out in the *Console*.
+and test the code out in the **Console**.
 1. Then, write code in your `doc/lesson.Rmd` file where the function used to be
 and import in the other datasets. You should now have three new objects for all
 the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
@@ -667,7 +667,7 @@ you created previously. Name the new data frame `actigraph_df`.
 is for.
 4. Based on the documentation, which variables would you be most interested in
 analyzing more?
-    - Keep those columns as well `file_path_id` and `day` by using `select()`.
+    - Keep those columns as well as `file_path_id` and `day` by using `select()`.
 5. Decide which summary measure(s) you think may be most interesting for you
 (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
 6. Using `group_by()` of `file_path_id` and `day`, summarise the variables with the
