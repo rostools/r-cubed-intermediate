@@ -390,7 +390,7 @@ through *vectorization*. This technique works really well for a range of tasks,
 including for our task of summarizing some of the MMASH data so we can merge
 it all into one dataset.
 
-## Summarizing data through functionals {#summarise-with-functionals}
+## Summarising data through functionals {#summarise-with-functionals}
 
 Functionals and vectorization are an integral component of how R works and
 they appear throughout many of R's functions and packages. They are particularly
