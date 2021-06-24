@@ -289,7 +289,7 @@ And sometimes, `spec()` incorrectly guesses the column types, so using
 
 If you have a lot of columns in your dataset, then you can make use of
 `col_select` or `cols_only()` to keep only the columns you want.
-Before moving on to the exercise, add and commit the changes to the Git history
+Before moving on to the exercise, **add and commit** the changes to the Git history
 through the RStudio Git interface with `Ctrl-Alt-M`, through the Git tab, or
 the Git button.
 
@@ -304,8 +304,8 @@ and call it `## Exercise: Import the saliva data`.
 1. Below the header, create a new code chunk with `Ctrl-Alt-I`.
 1. Copy and paste the code template below into the new code chunk.
 Begin replacing the `___` with the correct R functions or other information.
-1. Once you have the code working, use the RStudio Git interface to add and 
-commit the changes into the version history.
+1. Once you have the code working, use the RStudio Git interface to **add and 
+commit** the changes into the version history.
 
 ```{r exercise-template-saliva-import, eval=FALSE}
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")

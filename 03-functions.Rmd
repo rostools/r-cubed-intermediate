@@ -179,8 +179,8 @@ add_nums <- function(num1, num2) {
 }
 ```
 
-Once we've created that, let's open up the Git Interface (`Ctrl-Alt-M`) and add
-and commit these changes to our history.
+Once we've created that, let's open up the Git Interface (`Ctrl-Alt-M`) and **add
+and commit** these changes to our history.
 
 ## Making a function for vroom
 
@@ -565,7 +565,7 @@ import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
 It should work as expected!
-Now that we've done that, let's add and commit the changes made through the
+Now that we've done that, let's **add and commit** the changes made through the
 Git interface.
 
 ## Exercise: Move and update the rest of the functions

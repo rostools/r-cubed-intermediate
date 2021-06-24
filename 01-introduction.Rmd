@@ -99,7 +99,7 @@ new function.
 script (`data-raw/mmash.R`), run the script and save the data as an `.rda`
 file (`data/mmash.rda`).
 - Remove the old code from the R Markdown document (`doc/lessons.Rmd`).
-- Whenever we complete a task, we add and commit those file changes and save
+- Whenever we complete a task, we *add and commit* those file changes and save
 them into the Git history.
 
 ## Setting up our project

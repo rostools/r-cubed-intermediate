@@ -273,7 +273,7 @@ user_info_df %>%
     trim_filepath_for_book()
 ```
 
-Now that we have this working, let's add and commit the changes to the Git history.
+Now that we have this working, let's **add and commit** the changes to the Git history.
 
 ## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
 
@@ -318,7 +318,7 @@ and test the code out in the *Console*.
 1. Then, write code in your `doc/lesson.Rmd` file where the function used to be
 and import in the other datasets. You should now have three new objects for all
 the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
-1. Once done, add the changes you've made and commit them to the Git history.
+1. Once done, **add** the changes you've made and **commit** them to the Git history.
 
 ```{r solution-import-multiple-files, results='hide', solution=TRUE}
 #' Import multiple MMASH data files and merge into one data frame.
@@ -647,7 +647,7 @@ summarised_rr_df %>%
     trim_filepath_for_book()
 ```
 
-Before continuing, switch to the Git interface and add and commit the changes so
+Before continuing, switch to the Git interface and **add and commit** the changes so
 far.
 
 ## Exercise: Summarise the Actigraph data
@@ -671,7 +671,7 @@ analyzing more?
 6. Using `group_by()` of `file_path_id` and `day`, summarise the variables with the
 summary functions you chose. Name the summarised data frame `summarised_actigraph_df`.
 7. End the grouping effect with `ungroup()`.
-8. Add and commit the changes you've made into the Git history.
+8. **Add and commit** the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)

@@ -59,7 +59,7 @@ R Markdown document. A recommended workflow with R Markdown is to often
 "Knit" it and make sure your analysis is reproducible (while on your computer).
 So let's first clean it up and start from the beginning again.
 
-Before we do that, make sure to add and commit all changes done in `doc/lesson.Rmd`.
+Before we do that, make sure to **add and commit** all changes done in `doc/lesson.Rmd`.
 By keeping changes in the history, we can go back to look at it anytime.
 
 Then, we'll delete everything from below the `setup` code chunk until the end of the file.
@@ -72,7 +72,7 @@ source(here("R/functions.R"))
 load(here("data/mmash.rda"))
 ```
 
-When everything has been deleted, add and commit these changes into the Git history.
+When everything has been deleted, **add and commit** these changes into the Git history.
 Then, we'll "Knit" our R Markdown document into HTML by using the "Knit" button
 at the top of the pane or with `Ctrl-Shift-K`. Once it creates the file, it should
 either pop up or open in the Viewer pane on the side. 
@@ -230,7 +230,7 @@ list like we did previously). Don't forget to use `na.rm = TRUE` to exclude miss
 values.
 1. Stop the grouping effect with `ungroup()`.
 1. Knit the R Markdown document into HTML (`Ctrl-Shift-K` or the "Knit" button).
-1. Open up the Git interface and add and commit the changes to `doc/lesson.Rmd`.
+1. Open up the Git interface and **add and commit** the changes to `doc/lesson.Rmd`.
 
 ```{r solution-pivot-summary, results='hide', solution=TRUE}
 mmash %>% 
