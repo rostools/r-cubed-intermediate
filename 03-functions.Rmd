@@ -215,10 +215,10 @@ user_1_info_data <- vroom(
     user_1_info_file,
     col_select = -1,
     col_types = cols(
-        Gender = col_character(),
-        Weight = col_double(),
-        Height = col_double(),
-        Age = col_double()
+        gender = col_character(),
+        weight = col_double(),
+        height = col_double(),
+        age = col_double()
     ),
     .name_repair = snakecase::to_snake_case
 )
@@ -234,10 +234,10 @@ import_user_info <- function() {
         user_1_info_file,
         col_select = -1,
         col_types = cols(
-            Gender = col_character(),
-            Weight = col_double(),
-            Height = col_double(),
-            Age = col_double()
+            gender = col_character(),
+            weight = col_double(),
+            height = col_double(),
+            age = col_double()
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -254,10 +254,10 @@ import_user_info <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = cols(
-            Gender = col_character(),
-            Weight = col_double(),
-            Height = col_double(),
-            Age = col_double()
+            gender = col_character(),
+            weight = col_double(),
+            height = col_double(),
+            age = col_double()
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -275,10 +275,10 @@ import_user_info <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = cols(
-            Gender = col_character(),
-            Weight = col_double(),
-            Height = col_double(),
-            Age = col_double()
+            gender = col_character(),
+            weight = col_double(),
+            height = col_double(),
+            age = col_double(),
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -308,10 +308,10 @@ import_user_info <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = cols(
-            Gender = col_character(),
-            Weight = col_double(),
-            Height = col_double(),
-            Age = col_double()
+            gender = col_character(),
+            weight = col_double(),
+            height = col_double(),
+            age = col_double(),
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -321,8 +321,8 @@ import_user_info <- function(file_path) {
 
 A massive advantage of using functions is that if you want to make a change to all
 your code, you can very easily do it by modifying the function and it will
-change all your other code too. Now that we have a working function, let's add
-and commit it to the Git history with the RStudio Git Interface.
+change all your other code too. Now that we have a working function, let's **add
+and commit** it to the Git history with the RStudio Git Interface.
 
 ## Exercise: Repeat with the saliva data
 
@@ -357,9 +357,9 @@ import_saliva <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = cols(
-            SAMPLES = col_character(),
-            `Cortisol NORM` = col_double(),
-            `Melatonin NORM` = col_double()
+            samples = col_character(),
+            cortisol_norm = col_double(),
+            melatonin_norm = col_double()
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -545,10 +545,10 @@ import_user_info <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = vroom::cols(
-            Gender = vroom::col_character(),
-            Weight = vroom::col_double(),
-            Height = vroom::col_double(),
-            Age = vroom::col_double()
+            gender = vroom::col_character(),
+            weight = vroom::col_double(),
+            height = vroom::col_double(),
+            age = vroom::col_double()
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -598,9 +598,9 @@ import_saliva <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = vroom::cols(
-            SAMPLES = vroom::col_character(),
-            `Cortisol NORM` = vroom::col_double(),
-            `Melatonin NORM` = vroom::col_double()
+            samples = vroom::col_character(),
+            cortisol_norm = vroom::col_double(),
+            melatonin_norm = vroom::col_double()
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -639,16 +639,16 @@ import_actigraph <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = vroom::cols(
-            Axis1 = vroom::col_double(),
-            Axis2 = vroom::col_double(),
-            Axis3 = vroom::col_double(),
-            Steps = vroom::col_double(),
-            HR = vroom::col_double(),
-            `Inclinometer Off` = vroom::col_double(),
-            `Inclinometer Standing` = vroom::col_double(),
-            `Inclinometer Sitting` = vroom::col_double(),
-            `Inclinometer Lying` = vroom::col_double(),
-            `Vector Magnitude` = vroom::col_double(),
+            axis_1 = vroom::col_double(),
+            axis_2 = vroom::col_double(),
+            axis_3 = vroom::col_double(),
+            steps = vroom::col_double(),
+            hr = vroom::col_double(),
+            inclinometer_off = vroom::col_double(),
+            inclinometer_standing = vroom::col_double(),
+            inclinometer_sitting = vroom::col_double(),
+            inclinometer_lying = vroom::col_double(),
+            vector_magnitude = vroom::col_double(),
             day = vroom::col_double(),
             time = vroom::col_time(format = "")
         ),
