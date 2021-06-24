@@ -61,7 +61,7 @@ in a loop
 - Can use functions as input to other functions (called a [functional])
 
 [vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
-[functional]: https://adv-r.had.co.nz/Functionals.html
+[functional]: https://adv-r.hadley.nz/functionals.html
 
 We've already covered functions. You've definitely already used vectorization
 since it is one of R's big strengths. For instance, functions like `mean()`,
