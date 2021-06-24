@@ -96,8 +96,9 @@ When the time is up, we'll share some ideas and go over what the regex will be.
 list what is similar in the user ID between rows and what is different.
 1. Discuss and verbally describe (in English, not regex) what text pattern you
 might use to extract the user ID.
-1. Use this bit of information to think about how you might apply the English
-description as a regex. This will probably be very hard, but try anyway.
+1. Use the list below to think about how you might convert the English
+description of the text pattern to a regex. This will probably be very hard, but
+try anyway.
     - Written a character written as is will find that character, e.g. `user`
     will find only `user`.
     - Use `[]` to find one possible character of the several between the brackets.

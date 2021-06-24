@@ -395,17 +395,19 @@ it all into one dataset.
 Functionals and vectorization are an integral component of how R works and
 they appear throughout many of R's functions and packages. They are particularly
 used throughout the tidyverse packages like [dplyr]. Let's get into some more
-advanced features of dplyr functions that work as functionals.
+advanced features of dplyr functions that work as functionals. Before we continue, 
+re-run the code for getting `user_info_df` since you had restarted the R session
+previously.
 
 [dplyr]: https://dplyr.tidyverse.org/
 
 There are many "verbs" in dplyr, like `select()`, `rename()`, `mutate()`, 
 `summarise()`, and `group_by()` (covered in more detail in the 
 [Data Management and Wrangling](https://r-cubed.rostools.org/wrangling.html#managing-and-working-with-data-in-r)
-session of the beginner course).
-The common usage of these verbs is through acting on and directly using the
-column names (e.g. without `"` quotes around the column name). For instance, to
-select only the `age` column, you would type out:
+session of the beginner course). The common usage of these verbs is through
+acting on and directly using the column names (e.g. without `"` quotes around
+the column name). For instance, to select only the `age` column, you would type
+out:
 
 ```{r}
 user_info_df %>% 
