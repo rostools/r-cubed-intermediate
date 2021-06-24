@@ -18,6 +18,7 @@ rmd_files:
     - "07-what-next.Rmd"
     - "appendix.md"
     - "resources.Rmd"
+    - "extras.Rmd"
     - "for-instructors.md"
     - "references.Rmd"
 before_chapter_script:
