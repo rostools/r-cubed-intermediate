@@ -329,19 +329,19 @@ mmash %>%
 Now we have a different problem. There are missing values in both the `day` and `gender`
 columns that, at least in this case, we don't want pivoted. We can remove
 missing values with the function called `drop_na()`. Add it in the pipe
-right before `pivot_wider()`.
+right before `group_by()`.
 
 ```{r pivot-wider-from-summarised-drop-na}
 mmash %>% 
     select(-samples) %>% 
     pivot_longer(c(-user_id, -day, -gender)) %>% 
+    drop_na(day, gender) %>% 
     group_by(gender, day, name) %>% 
     summarise(across(
         value,
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
-    drop_na(day, gender) %>% 
     pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -357,12 +357,12 @@ convert the code we just wrote above into a function.
 1. Test that the function works.
 1. Add Roxygen documentation and use explicit function calls with
 `packagename::`.
-    - Don't forget, use `?functionname` to find out which package the function
-    comes from.
-1. Move the newly created function over over into the `R/functions.R` file.
+    - Don't forget, you can use `?functionname` to find out which package the
+    function comes from.
+1. Move the newly created function over into the `R/functions.R` file.
 1. Restart R, go into the `doc/lesson.Rmd` file and run the `setup` code chunk
-in the R Markdown document with the `source()` and `load()` commands and test
-that the function works in a code chunk at the bottom of the document.
+in the R Markdown document with the `source()` and `load()` commands. Then test
+that the new function works in a code chunk at the bottom of the document.
 
 ```{r solution-summarise-function, results='hide', solution=TRUE}
 #' Calculate tidy summary statistics by day.
@@ -375,11 +375,11 @@ tidy_summarise_by_day <- function(data) {
     data %>%
         dplyr::select(-samples) %>%
         tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+        tidyr::drop_na(day, gender) %>%
         dplyr::group_by(gender, day, name) %>%
         dplyr::summarise(dplyr::across(value,
                          list(mean = mean, sd = sd),
                          na.rm = TRUE)) %>%
-        tidyr::drop_na(day, gender) %>%
         tidyr::pivot_wider(names_from = day, 
                     values_from = dplyr::starts_with("value"))
 }
@@ -389,56 +389,96 @@ tidy_summarise_by_day <- function(data) {
 
 Time: 15 min
 
-We've made the function so that we can include any column we want, but now
-let's make it so we can include any summary function we want, not just `mean()`
-and `sd()`, as a new argument called `summary_fn`. This task will be
-*challenging*, so discuss and work with your neighbour on completing this
-exercise. Work within the debugging environment to deal with this problem.
+We've made the tidy summary code into a function, now let's make it so we can
+choose which summary functions to use and to make the output a bit tidier.
+These tasks will be *challenging*, so discuss and work with your group on
+completing this exercise.
 
-- *Hints*: 
-    - `list(mean = mean, ...)` is a named list, meaning you can use `names()`
-    to get a vector of the names of the list. 
-    - You will have to create an intermediate object based on the new `summary_fn`
-    argument. 
+1. First thing, let's tidy up the output. Go into the `R/functions.R` script
+to make these changes. Use the workflow of using `source()` and testing in the R
+Markdown document. Right below the `tidyr::drop_na()` function do these tasks:
+    - Just like how `summarise()` can combine with the `across()` functional to
+    do actions on multiple columns, `mutate()` can also be paired with
+    `across()`.
+    - Use the `mutate()` and `across()` combination on columns that
+    `start_with()` "value".
+    - Within `across()`, use the `round()` function and set the `digits = 2`
+    so the output gets rounded to less digits. For hints on how to do this,
+    refer to the `summarise()` function right above it as well as in
+    session \@ref(summarise-with-functionals).
+    
+2. Next, let's add a new argument to the function to allow us to use other
+summary statistics instead of only `mean()` and `sd()`. Add a new argument to
+the function and call it `summary_fn`. Try to figure out how to make the function
+output the `median()` and `max()` instead. This task is intentionally a bit vague
+to make it a challenge for you to figure this out. Use the below code as a
+reference to how the function *should* look and work.
 
-```{r solution-summary-extend, eval=FALSE, echo=FALSE}
+    ```r
+    mmash %>% 
+        tidy_summarise_by_day(median)
+    mmash %>% 
+        tidy_summarise_by_day(max)
+    mmash %>% 
+        tidy_summarise_by_day(list(median = median, max = max))
+    ```
+
+```{r solution-summary-extend, results='hide', solution=TRUE}
+#' Calculate tidy summary statistics by day.
+#'
+#' @param data The MMASH dataset.
+#'
+#' @return A data.frame/tibble.
+#'
 tidy_summarise_by_day <- function(data, summary_fn) {
     data %>%
-        select(-samples) %>%
-        pivot_longer(c(-user_id, -day, -gender)) %>%
-        group_by(gender, day, name) %>%
-        summarise(across(value,
-                         summary_fn,
-                         na.rm = TRUE)) %>%
-        drop_na(day, gender) %>%
-        pivot_wider(names_from = day, values_from = starts_with("value"))
+        dplyr::select(-samples) %>%
+        tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+        tidyr::drop_na(day, gender) %>%
+        dplyr::group_by(gender, day, name) %>%
+        dplyr::summarise(dplyr::across(
+            value,
+            # Changed from task 2.
+            summary_fn,
+            na.rm = TRUE)
+        ) %>%
+        # Changed from task 1.
+        dplyr::mutate(dplyr::across(dplyr::starts_with("value"), 
+                                    round, digits = 2)) %>% 
+        tidyr::pivot_wider(names_from = day, 
+                    values_from = dplyr::starts_with("value"))
 }
 
+# This code would be in the `doc/lesson.Rmd` file.
 mmash %>% 
-    tidy_summarise_by_day(mean) 
+    tidy_summarise_by_day(max)
+mmash %>%
+    tidy_summarise_by_day(median)
+mmash %>%
+    tidy_summarise_by_day(list(median = median, max = max))
 ```
 
 ## Making prettier output in R Markdown
 
 `r details_for_instructors("
-Can go over this quite quickly.
+Can go over this quite quickly after they've (optionally) finished the previous
+exercise.
 ")`
 
 What we created is nice and all, but since we are working in an R Markdown
 document and knitting to HTML, let's make it easier for others (including
-yourself) to read the document. Let's make the output as actual tables.
-We can do that with `knitr::kable()` (meaning "knitr table"). We can even
+yourself) to read the document. Let's make the output as an actual table.
+We can do that with `knitr::kable()` (meaning "knitr table"). We can also
 add a table caption with the `caption` argument.
 
-```{r, eval=FALSE}
+```{r knitr-table}
 mmash %>% 
-    select(-melatonin_norm) %>% 
     tidy_summarise_by_day(list(mean = mean, min = min, max = max)) %>% 
-    pivot_wider(names_from = day, values_from = starts_with("value")) %>% 
     knitr::kable(caption = "Descriptive statistics of some variables.")
 ```
 
 Then knit the document and check out the HTML file. So pretty! `r emo::ji("grin")`
+(well, there's lots of things to fix up, but its a good starting place.)
 
 ## General workflow up to this point {#general-workflow}
 
@@ -448,35 +488,37 @@ You can go over this point verbally, reiterating what they've learned so far.
 
 You now have some skills and tools to allow you to reproducibly import,
 process, clean, join, and eventually analyze your datasets.
-For the next two exercises, you will apply these skills and tools. 
 Listed below are the general workflows we've covered and that you
-can use as a guideline to completing the following exercises and group work.
+can use as a guideline to complete the following (optional) exercises and group
+work.
 
 - Import with the `vroom()` to `spec()` to `vroom()` again.
 - Convert importing into a function in an R Markdown document,
 move to the `R/function.R` script, restarting R, and `source()`.
 - Test that joining datasets into a final form works properly while in
-an R Markdown document, then cut and paste into a data processing R script in the
-`data-raw/` folder.
+an R Markdown document, then cut and paste the code into a data processing R
+script in the `data-raw/` folder (optionally this can also be done in the 
+`data-raw/` R script).
 - Restart R and generate the `.rda` dataset in the `data/` folder by
-sourcing the R script.
-- Restart R, load the new dataset with `load()` and put it into an R Markdown 
-document.
+sourcing the `data-raw/` R script.
+- Restart R, load the new dataset with `load()` and put the loading code into an
+R Markdown document.
 - Add any additional cleaning code to the data processing R script in
 `data-raw/` and update the `.rda` dataset in `data/` whenever you encounter
 problems in the dataset.
-- Write R in code chunks in an R Markdown document to further
-analyze your data and check reproducibility by often knitting to
-HTML workflow.
-    - Part of this workflow is to also write R code to output
-    in a way that looks nice in the HTML (or Word) output
-    by mostly e.g. creating tables or figures of the output.
+- Write R in code chunks in an R Markdown document to further analyze your data
+and check reproducibility by often knitting to HTML.
+    - Part of this workflow is to also write R code to output in a way that
+    looks nice in the HTML (or Word) formats by mostly creating tables or
+    figures of the R output.
 - Use Git often by adding and committing into the history so you never lose
 stuff and can keep track of changes to your files.
 
 ## Exercise: Process and join sleep and questionnaire data
 
-Time: 25 min
+Time: 30 min
+
+**This is an *optional* exercise and could also be done during the group work time.**
 
 There are still a few datasets that you can join in with the current
 datasets like `sleep.csv` and `questionnaire.csv`. 
@@ -484,17 +526,18 @@ Using the workflows in Section \@ref(general-workflow) as a guide,
 start from the beginning and import, process, clean, make functions,
 and join these two datasets in with the others so that they get 
 included in the `data/mmash.rda` final dataset. Afterwards, do some
-descriptive analysis using the function ...
-TODO: function name?
+descriptive analysis using the function `tidy_summarise_by_day()`.
 
 ## Exercise: Create a second dataset of only the Actigraph and RR data
 
-Time: 25 min
+Time: 30 min
 
-The Actigraph and RR datasets contain a ton of interesting and useful
+**This is an *optional* exercise and could also be done during the group work time.**
+
+The Actigraph and RR datasets contain a lot of interesting and useful
 data that gets destroyed when we first summarise and then join them
 with the other datasets. While we can't meaningfully join all this
-data with the other datasets, we can join them on their own.
+data with the other datasets, we can join them on their own as separate datasets.
 
 Using the workflows in Section \@ref(general-workflow) as a guide,
 start from the beginning and import, process, clean, make functions,
