@@ -101,6 +101,14 @@ name <- function(argument1, argument2) {
 }
 ```
 
+Writing your own functions can be absolutely amazing and fun and powerful...
+but you also often want to pull your hair out with frustration at errors that
+are difficult to understand and fix. The best way to deal with this is by
+debugging. Due to time and to the challenge of making meaningful debugging
+exercises (solutions to problems are very dependent on the project), read 
+Appendix \@ref(extra-material) in your own time for some instructions on
+debugging and dealing with another common problem you might encounter with R.
+
 **Ok, stop here and we'll go over it together**.
 Let's write a simple example. First, create a new Markdown header called 
 `## Making a function` and create a code chunk below that with `Ctrl-Alt-I`.
