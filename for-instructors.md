@@ -1,7 +1,5 @@
 # For Instructors
 
-![](https://img.shields.io/badge/document%20status-revising-orange?style=flat-square)
-
 ## Course details
 
 - **Instructor and helper number**: The recommended number of instructors would
