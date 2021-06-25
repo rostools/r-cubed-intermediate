@@ -653,6 +653,17 @@ this course:
     function.
 1. **Add and commit** your changes to the Git history.
 
+Look into the [Data Description][mmash-site] and find out what each column
+represents and what the numbers mean in the column `activity`. Then brainstorm
+with your group:
+
+1. The disadvantage of using numbers instead of text to describe categorical
+data like in the `activity` column.
+1. Ways you could include this information into the dataset.
+1. How you could meaningfully join this dataset with the other datasets.
+
+[mmash-site]: https://physionet.org/content/mmash/1.0.0/
+
 ```{r solution-import-activity, results='hide', solution=TRUE, eval=FALSE}
 import_activity <- function(file_path) {
     activity_data <- vroom::vroom(
@@ -674,15 +685,3 @@ activity_df <- import_multiple_files("Activity.csv", import_activity)
 activity_df %>% 
     mutate(activity_duration = end - start)
 ```
-
-
-Look into the [Data Description][mmash-site] and find out what each column
-represents and what the numbers mean in the column `activity`. Then brainstorm
-with your group:
-
-1. The disadvantage of using numbers instead of text to describe categorical
-data like in the `activity` column.
-1. Ways you could include this information into the dataset.
-1. How you could meaningfully join this dataset with the other datasets.
-
-[mmash-site]: https://physionet.org/content/mmash/1.0.0/
