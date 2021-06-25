@@ -6,13 +6,14 @@
 
 - **Instructor and helper number**: The recommended number of instructors would
 be about ~1 instructors for every 1-2 sessions, with a ratio of 1 helper
-(including instructor) for every 5 participants.
+(including instructor) for every 4-6 participants.
 
 - **First day**: During the introduction, don't forget to introduce all the
 instructors and helpers.
 
 - **End of course**: Ask if any participant would like to be involved in next
 year's teaching, or in making the material, or in being a helper.
+Also ask who would like to join some community "mailing list" (e.g. Slack).
 
 ## Instructor tips
 
