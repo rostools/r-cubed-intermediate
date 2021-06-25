@@ -23,7 +23,7 @@ style_mono_accent(
     base_font_size = "24px",
     code_font_size = "1.2em",
     header_font_google = google_font("Cabin"),
-    text_font_google = google_font("KoHo")
+    text_font_google = google_font("KoHo"),
     code_font_google = google_font("Source Code Pro"),
     outfile = here::here("includes/xaringan-themer.css")
 )
