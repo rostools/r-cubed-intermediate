@@ -62,6 +62,7 @@ test_nse <- function(data, filter_condition) {
 }
 
 CO2 %>% 
+    tibble() %>% 
     test_nse(conc > 100)
 ```
 
@@ -90,8 +91,10 @@ test_nse <- function(data, filter_condition) {
 }
 
 CO2 %>% 
+    tibble() %>% 
     test_nse(conc > 100)
 
 CO2 %>% 
+    tibble() %>% 
     test_nse(uptake < 30)
 ```
