@@ -4,7 +4,7 @@ output:
     xaringan::moon_reader:
         self_contained: false
         lib_dir: libs
-        css: ['../includes/xaringan-themer.css', '../includes/custom.css']
+        css: 'xaringan-themer.css'
         nature:
             ratio: "16:9"
             highlightStyle: github
@@ -12,7 +12,7 @@ output:
             countIncrementalSlides: false
 ---
 
-# Please do this as we get ready:
+# Welcome! Please do this as we get ready:
 
 <!-- Introduce instructors and helpers. -->
 
@@ -20,9 +20,36 @@ output:
 source(here::here("R/slide-setup.R"))
 ```
 
-- `r emo::ji("check")` Re-install r3 `remotes::install_gitlab("rostools/r3", upgrade = TRUE, force = TRUE)`
+.pull-left[
+- `r emo::ji("check")` Go to your assigned table and group (see list)
+- `r emo::ji("check")` Introduce yourself to your group members
+- `r emo::ji("check")` Open your `LearnR3.Rproj` RStudio project
+- `r emo::ji("check")` Make sure your `data-raw/` looks like the thing on the side
+    - **NO** other files should be there besides these (some of you have
+    other files and folders)
+    - If not, re-do the pre-course download data tasks and ask us for help
+]
 
-- Open your `LearnR3.Rproj`
+.pull-right[
+```{r, echo=FALSE, eval=FALSE}
+withr::with_dir("../", {fs::dir_tree("data-raw/", recurse = 1)})
+```
+
+```text
+data-raw/
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── user_11
+│   ├── ...
+│   ├── user_7
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
+
+]
 
 ---
 
@@ -59,32 +86,21 @@ class: middle
 ???
 
 It's because code sharing basically doesn't exist in the vast majority of 
-scientific fields. How many have read a method in a paper and wondered how they
-actually did it?
-... you've probably realize by now, way more is done than shown in the "Methods"
-
-Why? Likely due to:
-
-- Lack of awareness and training
-- Difficulty of adoption
-- No incentive or reward
-- Little to no culture to do it
-
-We want to change the culture around code by encouraging 
-and teaching how to share code and to write better code in general.
+scientific fields. You've probably read a methods section in a paper
+and wondered how exactly they did it.
 
 ---
 
 ## Code sharing: From scientific principle of "reproducibility" 
+
+...often confused with "replicability" `r Cite(bib, "Plesser2018a")`<sup>1</sup>
 
 --
 
 .pull-left[
 ### Replicability
 
-- ...often confused with "replicability" `r Cite(bib, "Plesser2018a")`<sup>1</sup>
 - Repeating a study by *independently* performing another identical study
-- Difficult, usually needs funding
 - Linked to the "irreproducibility crisis"<sup>2</sup>
 ]
 
@@ -94,8 +110,7 @@ and teaching how to share code and to write better code in general.
 ### Reproducibility
 
 - Generating the exact same results when using the same data and code
-- Should be easy right? Often quite hard
-- *Question*: If we can't even *reproduce* a studies results, how can we expect 
+- *Question*: If we can't even *reproduce* a study's results, how can we expect 
 to replicate it?
 ]
 
@@ -119,23 +134,11 @@ class: middle
 
 ---
 
-class: middle
-
-# Question: 
-
-## For those that have done or are doing data processing, does it take up a lot of time? How much?
-
-???
-
-Question, mostly for my own information...
-
----
-
 # Course setup and layout
 
 - Course is mix of:
     - "Code-alongs" (we type and explain, you type along)
-    - Hands-on exercises
+    - Hands-on and reading exercises
     - Group work to help apply to your own projects
 
 - Use r3 package to help with learning
@@ -143,14 +146,18 @@ Question, mostly for my own information...
 - True to our mission, material publicly accessible and [openly licensed](https://r-cubed-intermediate.rostools.org/license.html)
     - <https://r-cubed-intermediate.rostools.org/>
 
+- [Resources Appendix](https://r-cubed-intermediate.rostools.org/resources.html)
+    - Material for further learning
+    - Useful R packages to use
+
 ---
 
-## Getting or asking for help `r emo::ji("raising_hand_woman")`
+## Getting or asking for help `r emo::ji("raising_hand_woman")` `r emo::ji("raising_hand_man")`
 
 .pull-left[
 - Put the sticky on your laptop to get help
     - There are lots of helpers
-    - Team members, try to help out too
+    - Team members, help out too
 ]
 
 .pull-right[
@@ -161,9 +168,21 @@ Question, mostly for my own information...
 
 ---
 
-class: middle, center
+## Practice using stickies: Does your `data-raw/` look as this?
 
-## Practice using stickies: Have you re-installed r3?
+```text
+data-raw/
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── user_11
+│   ├── ...
+│   ├── user_7
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
 
 ---
 
@@ -217,27 +236,41 @@ class: middle, center
 Again, staying where you are, raise your hand if you've struggled or still
 struggle with R?
 
-Ok, you can get back to your seats.
+---
 
-TODO: Add something like this?
-- lectures:
-    - q: Word pipeline gets thrown around a lot, but how many have encountered,
-    made, or used true pipelines? Automated from beginning to end.
+class: middle, center
+
+## Who seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)?
+
+???
+
+More for my personal interest. The word pipeline gets thrown around a lot, but
+how many have encountered, made, or used true pipelines? Automated from
+beginning to end.
 
 ---
 
 class: middle, center
 
-# First time running this intermediate course... 
-
-## So you're also co-creators! Your feedback is necessary to improve it `r emo::ji("grin")`
+## For those that have done or are doing data processing, does it take up a lot of time? How much?
 
 ???
 
-So you are also the co-creators here, your feedback will improve this
-and we're collaborating together. You're learning, but also helping to
-improve the material and in how we teach you. What makes sense, what is
-confusing, and so on.
+Question, mostly for my own information...
+
+---
+
+class: middle, center
+
+# We are always looking to improve the course
+
+## So your feedback is so helpful and important `r emo::ji("grin")`
+
+???
+
+your feedback will improve this and we're collaborating together. You're
+learning, but also helping to improve the material and in how we teach you. What
+makes sense, what is confusing, and so on.
 
 ---
 

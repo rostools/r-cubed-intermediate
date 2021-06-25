@@ -5,7 +5,7 @@ output:
     xaringan::moon_reader:
         self_contained: false
         lib_dir: libs
-        css: ['../includes/xaringan-themer.css', '../includes/custom.css']
+        css: 'xaringan-themer.css'
         nature:
             ratio: "16:9"
             highlightStyle: github
@@ -25,6 +25,8 @@ source(here::here("R/slide-setup.R"))
 
 ???
 
+Ask if learners can put their laptop lids down, so you have their full attention.
+
 The subtitle is a bit sarcastically written for reasons I'll get to in a bit.
 
 True reproducibility means being able to re-create the results on *any* computer
@@ -42,7 +44,7 @@ can't directly reproduce the results.
 
 class: middle
 
-# Code sharing is abysmal across health sciences `r Cite(bib, c("Considine2017a", "Rauh2019", "Evans2019", "Rauh2019a", "Hughes2019", "Peng2006a"))`
+# Code sharing is abysmal across health sciences `r Cite(bib, c("Considine2017a", "Rauh2019", "Evans2019", "Rauh2019a", "Hughes2019", "Peng2006a", "Seibold2021"))`
 
 ## How can we check reproducibility if no code is given?
 
@@ -118,21 +120,19 @@ and computational era.
 
 ---
 
-## And personal barriers
+## ...and personal barriers
 
-.pull-left[
-Fear of:
+- Fear of:
+    - Fear of being scooped or ideas being stolen
+    - Not being credited for ideas
+    - Errors and public humiliation
+    - Risk to reputation
 
-- Scooping or ideas being stolen
-- Not being credited for ideas
-- Errors and public humiliation
-- Risk to reputation
-]
+--
 
-.pull-right[
 - Need to constantly stay updated
+
 - Finding better opportunities outside of academia
-]
 
 .footnote[[Tennant (2017)](https://doi.org/10.6084/m9.figshare.5383711.v1)]
 
@@ -201,6 +201,10 @@ Alternatively, you can upload it when you also finish your manuscript.
 
 - Start doing code reviews within your group
 
+- Start new projects or collaborations by:
+    - Using R, R Markdown, Git, and GitHub
+    - Aiming to share and be reproducible
+
 .footnote[Code reviews: Reviewing each others code like you would review a manuscript.]
     
 ???
@@ -233,8 +237,16 @@ Let me know if you're interested!
 
 ---
 
-# References
+# References, 1
 
-```{r refs, results="asis", echo=FALSE}
-PrintBibliography(bib)
+```{r refs-1, results="asis", echo=FALSE}
+PrintBibliography(bib, end = 5)
+```
+
+---
+
+# References, 2
+
+```{r refs-2, results="asis", echo=FALSE}
+PrintBibliography(bib, start = 6)
 ```
