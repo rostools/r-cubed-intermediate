@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 knitr::knit_hooks$set(solution = function(before) {
     if (before)
-        "<details><summary><strong>Click for the (possible) solution.</strong> Click only if you are really struggling or you are out of time for the exercise.</summary><p>"
+        "<details style='margin-bottom: 1rem'><summary><strong>Click for the (possible) solution.</strong> Click only if you are really struggling or you are out of time for the exercise.</summary><p>"
     else
         "</p></details>"
 })
