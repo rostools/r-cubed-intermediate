@@ -5,5 +5,4 @@ bookdown::bs4_book:
     includes:
         before_body:
             - "includes/contribute.html"
-            - "includes/wip.html"
     repo: "https://gitlab.com/rostools/r-cubed-intermediate"
