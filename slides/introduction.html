@@ -3,8 +3,8 @@
   <head>
     <title>Welcome to the Intermediate R3 course!</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../includes/xaringan-themer.css" type="text/css" />
-    <link rel="stylesheet" href="../includes/custom.css" type="text/css" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -15,23 +15,48 @@ class: center, middle, inverse, title-slide
 ---
 
 
-# Please do this as we get ready:
+# Welcome! Please do this as we get ready:
 
 &lt;!-- Introduce instructors and helpers. --&gt;
 
 
 
-- ✅ Re-install r3 `remotes::install_gitlab("rostools/r3", upgrade = TRUE, force = TRUE)`
+.pull-left[
+- ✅ Go to your assigned table and group (see list)
+- ✅ Introduce yourself to your group members
+- ✅ Open your `LearnR3.Rproj` RStudio project
+- ✅ Make sure your `data-raw/` looks like the thing on the side
+    - **NO** other files should be there besides these (some of you have
+    other files and folders)
+    - If not, re-do the pre-course download data tasks and ask us for help
+]
 
-- Open your `LearnR3.Rproj` and hit `Ctrl-Shift-L` to make sure that works (if not, let us know)
+.pull-right[
+
+
+```text
+data-raw/
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── user_11
+│   ├── ...
+│   ├── user_7
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
+
+]
 
 ---
 
-class: center, middle
+class: middle
 
 # Motivation for this course
 
-## How do you *exactly* do data analysis? What's the workflow?
+## How do you *exactly* do data analysis? What's the workflow? 🤔
 
 ???
 
@@ -42,58 +67,39 @@ on online tutorials, mostly pieces of code or how to use code are taught...
 but never teaching the bigger picture... How do researchers in their daily work
 write R code and do their data analysis? 
 
-This question is why the overall workflow is the primary focus in this course
-and partly with the beginner one. I try to focus on the bigger picture and the
-overall workflow you would do for doing data analysis.
+This question is the reason why the overall workflow is the primary focus in
+this course and partly with the beginner one. I try to focus on the bigger
+picture and the overall workflow you would do for doing data analysis.
 
 So, why is it that there isn't much information on how researchers do data
 analysis?
 
 ---
 
-# ...Because code sharing is almost non-existent in science
+class: middle
 
---
+# 🤷...Because code sharing is almost non-existent in science
 
-Very few papers provide code &lt;a name=cite-Leek2017a&gt;&lt;/a&gt;&lt;a name=cite-Considine2017a&gt;&lt;/a&gt;[[1](https://doi.org/10.1146/annurev-statistics-060116-054104); [2](https://doi.org/10.1007/s11306-017-1299-3)]
-
---
-
-Why? Likely due to:
-
-- Lack of awareness and training
-- Difficulty of adoption
-- No incentive or reward
-- Little to no culture to do it
-
+.footnote[Very few papers provide code [[1](https://doi.org/10.1146/annurev-statistics-060116-054104); [2](https://doi.org/10.1007/s11306-017-1299-3)]]
 
 ???
 
 It's because code sharing basically doesn't exist in the vast majority of 
-scientific fields
-
-- Intro to how limited code sharing is, research on it, etc.
-
-How many have read a method in a paper and wondered how they &lt;u&gt;actually&lt;/u&gt; did it? 
-
-... you've probably realize by now, way more is done than shown in the "Methods"
-
-I definitely have in my research career.
-We want to change the culture around code by encouraging 
-and teaching how to share code and to write better code in general.
+scientific fields. You've probably read a methods section in a paper
+and wondered how exactly they did it.
 
 ---
 
 ## Code sharing: From scientific principle of "reproducibility" 
+
+...often confused with "replicability" [[3](https://doi.org/10.3389/fninf.2017.00076)]&lt;sup&gt;1&lt;/sup&gt;
 
 --
 
 .pull-left[
 ### Replicability
 
-- ...often confused with "replicability" &lt;a name=cite-Plesser2018a&gt;&lt;/a&gt;[[3](https://doi.org/10.3389/fninf.2017.00076)]&lt;sup&gt;1&lt;/sup&gt;
 - Repeating a study by *independently* performing another identical study
-- Difficult, usually needs funding
 - Linked to the "irreproducibility crisis"&lt;sup&gt;2&lt;/sup&gt;
 ]
 
@@ -103,8 +109,7 @@ and teaching how to share code and to write better code in general.
 ### Reproducibility
 
 - Generating the exact same results when using the same data and code
-- Should be easy right? Wrong, often just as hard
-- *Question*: If we can't even *reproduce* a studies results, how can we expect 
+- *Question*: If we can't even *reproduce* a study's results, how can we expect 
 to replicate it?
 ]
 
@@ -116,49 +121,42 @@ to replicate it?
 
 ---
 
-class: middle, center
+class: middle
 
 # These issues can be fixed by creating and nurturing a culture of openness
 
 ---
 
-class: middle, center
+class: middle
 
 # Goal of this course? Start changing the culture by providing the training
 
 ---
 
-class: center, middle
-
-# Question: 
-
-## For those that have done or are doing data processing, does it take up a lot of time? How much?
-
-???
-
-Question, mostly for my own information...
-
----
-
-## Course setup and layout
+# Course setup and layout
 
 - Course is mix of:
     - "Code-alongs" (we type and explain, you type along)
-    - Hands-on exercises
+    - Hands-on and reading exercises
+    - Group work to help apply to your own projects
 
 - Use r3 package to help with learning
 
 - True to our mission, material publicly accessible and [openly licensed](https://r-cubed-intermediate.rostools.org/license.html)
     - &lt;https://r-cubed-intermediate.rostools.org/&gt;
 
+- [Resources Appendix](https://r-cubed-intermediate.rostools.org/resources.html)
+    - Material for further learning
+    - Useful R packages to use
+
 ---
 
-## Getting or asking for help 🙋
+## Getting or asking for help 🙋 🙋‍♂
 
 .pull-left[
 - Put the sticky on your laptop to get help
     - There are lots of helpers
-    - Team members, try to help out too
+    - Team members, help out too
 ]
 
 .pull-right[
@@ -169,9 +167,21 @@ Question, mostly for my own information...
 
 ---
 
-class: middle, center
+## Practice using stickies: Does your `data-raw/` look as this?
 
-## Practice using stickies: Have you re-installed r3?
+```text
+data-raw/
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── user_11
+│   ├── ...
+│   ├── user_7
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
 
 ---
 
@@ -225,51 +235,102 @@ class: middle, center
 Again, staying where you are, raise your hand if you've struggled or still
 struggle with R?
 
-Ok, you can get back to your seats.
+---
+
+class: middle, center
+
+## Who seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)?
+
+???
+
+More for my personal interest. The word pipeline gets thrown around a lot, but
+how many have encountered, made, or used true pipelines? Automated from
+beginning to end.
 
 ---
 
 class: middle, center
 
-# First time running this intermediate course... 
-
-## So you're also co-creators! Your feedback is necessary to improve it 😁
+## For those that have done or are doing data processing, does it take up a lot of time? How much?
 
 ???
 
-So you are also the co-creators here, your feedback will improve this
-and we're collaborating together. You're learning, but also helping to
-improve the material and in how we teach you. What makes sense, what is
-confusing, and so on.
+Question, mostly for my own information...
+
+---
+
+class: middle, center
+
+# We are always looking to improve the course
+
+## So your feedback is so helpful and important 😁
+
+???
+
+your feedback will improve this and we're collaborating together. You're
+learning, but also helping to improve the material and in how we teach you. What
+makes sense, what is confusing, and so on.
 
 ---
 
 # References
 
-&lt;a
-name=bib-Leek2017a&gt;&lt;/a&gt;[[1]](#cite-Leek2017a)
-J. T. Leek and L. R. Jager. "Is Most
-Published Research Really False?" In:
-_Annual Review of Statistics and Its
-Application_ 4.1 (Mar. 2017), pp. 109-122.
-DOI:
+&lt;a name=bib-Leek2017a&gt;&lt;/a&gt;[[1]](#cite-Leek2017a) J. T. Leek and L.
+R. Jager. "Is Most Published Research Really False?" In: _Annual
+Review of Statistics and Its Application_ 4.1 (Mar. 2017), pp.
+109-122. DOI:
 [10.1146/annurev-statistics-060116-054104](https://doi.org/10.1146%2Fannurev-statistics-060116-054104).
 
-&lt;a
-name=bib-Considine2017a&gt;&lt;/a&gt;[[2]](#cite-Considine2017a)
-E. C. Considine, G. Thomas, et al. "Critical
-Review of Reporting of the Data Analysis
-Step in Metabolomics". In: _Metabolomics_
-14.1 (Dec. 2017). DOI:
+&lt;a name=bib-Considine2017a&gt;&lt;/a&gt;[[2]](#cite-Considine2017a) E. C.
+Considine, G. Thomas, et al. "Critical Review of Reporting of the
+Data Analysis Step in Metabolomics". In: _Metabolomics_ 14.1 (Dec.
+2017). DOI:
 [10.1007/s11306-017-1299-3](https://doi.org/10.1007%2Fs11306-017-1299-3).
 
-&lt;a
-name=bib-Plesser2018a&gt;&lt;/a&gt;[[3]](#cite-Plesser2018a)
-H. E. Plesser. "Reproducibility Vs.
-Replicability: A Brief History of a Confused
-Terminology". In: _Frontiers in
-Neuroinformatics_ 11 (Jan. 2018). DOI:
+&lt;a name=bib-Plesser2018a&gt;&lt;/a&gt;[[3]](#cite-Plesser2018a) H. E.
+Plesser. "Reproducibility Vs. Replicability: A Brief History of a
+Confused Terminology". In: _Frontiers in Neuroinformatics_ 11 (Jan.
+2018). DOI:
 [10.3389/fninf.2017.00076](https://doi.org/10.3389%2Ffninf.2017.00076).
+
+&lt;a name=bib-Gil2016&gt;&lt;/a&gt;[[4]](#cite-Gil2016) Y. Gil, C. H. David, et
+al. "Toward the Geoscience Paper of the Future: Best practices for
+documenting and sharing research from data to software to
+provenance". In: _Earth and Space Science_ 3.10 (Oct. 2016), pp.
+388-415. DOI:
+[10.1002/2015ea000136](https://doi.org/10.1002%2F2015ea000136).
+
+&lt;a name=bib-Rauh2019&gt;&lt;/a&gt;[[5]](#cite-Rauh2019) S. Rauh, T.
+Torgerson, et al. "Reproducible and Transparent Research Practices
+in Published Neurology Research". In: _bioRxiv_ (Sep. 2019). DOI:
+[10.1101/763730](https://doi.org/10.1101%2F763730).
+
+&lt;a name=bib-Evans2019&gt;&lt;/a&gt;[[6]](#cite-Evans2019) S. Evans, I. A.
+Fladie, et al. "Evaluation of Reproducible and Transparent Research
+Practices in Sports Medicine Research: A Cross-sectional study". In:
+_bioRxiv_ (Sep. 2019). DOI:
+[10.1101/773473](https://doi.org/10.1101%2F773473).
+
+&lt;a name=bib-Rauh2019a&gt;&lt;/a&gt;[[7]](#cite-Rauh2019a) S. L. Rauh, B. S.
+Johnson, et al. "Evaluation of Reproducibility in Urology
+Publications". In: _bioRxiv_ (Sep. 2019). DOI:
+[10.1101/773945](https://doi.org/10.1101%2F773945).
+
+&lt;a name=bib-Hughes2019&gt;&lt;/a&gt;[[8]](#cite-Hughes2019) T. Hughes, A.
+Niemann, et al. "Transparent and Reproducible Research Practices in
+the Surgical Literature". In: _bioRxiv_ (Oct. 2019). DOI:
+[10.1101/779702](https://doi.org/10.1101%2F779702).
+
+&lt;a name=bib-Peng2006a&gt;&lt;/a&gt;[[9]](#cite-Peng2006a) R. D. Peng, F.
+Dominici, et al. "Reproducible Epidemiologic Research". In:
+_American Journal of Epidemiology_ 163.9 (Mar. 2006), pp. 783-789.
+DOI: [10.1093/aje/kwj093](https://doi.org/10.1093%2Faje%2Fkwj093).
+
+&lt;a name=bib-Seibold2021&gt;&lt;/a&gt;[[10]](#cite-Seibold2021) H. Seibold, S.
+Czerny, et al. "A computational reproducibility study of PLOS ONE
+articles featuring longitudinal data analyses". In: _PLOS ONE_ 16.6
+(Jun. 2021). Ed. by J. M. Wicherts, p. e0251194. DOI:
+[10.1371/journal.pone.0251194](https://doi.org/10.1371%2Fjournal.pone.0251194).
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
