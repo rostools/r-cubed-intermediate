@@ -19,7 +19,7 @@ test_debugging <- function(number) {
 
 To start the debugger, insert the `browser()` function into your function:
 
-```{r, eval=FALSe}
+```{r, eval=FALSE}
 test_debugging <- function(number) {
     browser()
     number + number
