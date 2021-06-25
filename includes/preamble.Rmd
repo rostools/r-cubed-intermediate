@@ -1,3 +1,0 @@
-
-> This section is still in development and will be posted when it is finished.
-Stay tuned!! `r emo::ji("grin")`
