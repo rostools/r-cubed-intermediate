@@ -152,7 +152,7 @@ class: middle
 
 ---
 
-## Getting or asking for help `r emo::ji("raising_hand_woman")` `r emo::ji("raising_hand_man")`
+## Getting or asking for help `r emo::ji("raising_hand_woman")`
 
 .pull-left[
 - Put the sticky on your laptop to get help
