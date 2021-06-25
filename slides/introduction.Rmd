@@ -274,8 +274,16 @@ makes sense, what is confusing, and so on.
 
 ---
 
-# References
+# References, 1
 
-```{r refs, results="asis", echo=FALSE}
-PrintBibliography(bib)
+```{r refs-1, results="asis", echo=FALSE}
+PrintBibliography(bib, end = 4)
+```
+
+---
+
+# References, 2
+
+```{r refs-2, results="asis", echo=FALSE}
+PrintBibliography(bib, start = 5)
 ```
