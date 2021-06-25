@@ -240,7 +240,7 @@ struggle with R?
 
 class: middle, center
 
-## Who seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)?
+## Who has seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)?
 
 ???
 
