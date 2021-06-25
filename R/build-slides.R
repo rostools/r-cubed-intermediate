@@ -1,12 +1,5 @@
 
-rmarkdown::render(
-    input = here::here("slides/introduction.Rmd"),
-    knit_root_dir = here::here("."),
-    quiet = TRUE
-)
+# Convert slides from Rmd to HTML -----------------------------------------
 
-rmarkdown::render(
-    input = here::here("slides/next-steps.Rmd"),
-    knit_root_dir = here::here("."),
-    quiet = TRUE
-)
+fs::dir_ls("slides", glob = "*.Rmd") |>
+    purrr::map(rmarkdown::render, quiet = TRUE)
