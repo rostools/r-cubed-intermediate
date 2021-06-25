@@ -377,14 +377,8 @@ portion of R code over other text.
 1. To make it easier to maintain and find things in your project.
 1. To make use of the `source()` function.
 
-We need to make a new file to store our functions so its easier to source them.
-So, in the **Console**, type out and run:
-
-```{r functions-script, eval=FALSE}
-usethis::use_r("functions")
-```
-
-This creates a new file called `R/functions.R`. Cut and paste *only* the
+We want to store our functions in the file `R/functions.R` script so its easier
+to source them. Cut and paste *only* the
 `import_user_info()` function we created in `doc/lesson.Rmd`, including the
 Roxygen documentation, and paste it into the newly created `R/functions.R`.
 
