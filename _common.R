@@ -32,7 +32,8 @@ BibOptions(
 
 options(knitr.table.format = "html",
         dplyr.summarise.inform = FALSE,
-        downlit.attached = c("snakecase", "vroom", "here", "prodigenr", "fs"))
+        downlit.attached = c("snakecase", "vroom", "here", "prodigenr",
+                             "fs", "dplyr", "tidyr"))
 
 set.seed(12345)
 
