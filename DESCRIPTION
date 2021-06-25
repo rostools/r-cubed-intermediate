@@ -62,6 +62,7 @@ Imports:
     vroom,
     downlit
 Suggests: 
+    withr,
     furrr,
     prodigenr,
     showtext,
