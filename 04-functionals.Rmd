@@ -84,7 +84,7 @@ But in R, you can give a function that uses vectorization the entire vector
 Figure \@ref(fig:image-vectorization) shows how a function conceptually uses
 vectorization.
 
-```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="40%", echo=FALSE}
+```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="45%", echo=FALSE}
 knitr::include_graphics(here::here("images/vectorization.png"))
 ```
 
@@ -105,7 +105,7 @@ function to each of those items, and outputting the results from each function.
 The name `map()` doesn't mean a geographic map, it is the mathematical meaning
 of map: To use a function on each item in a set of items.
 
-```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="75%", echo=FALSE}
+```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="90%", echo=FALSE}
 knitr::include_graphics(here::here("images/functionals.png"))
 ```
 

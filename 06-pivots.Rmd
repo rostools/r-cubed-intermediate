@@ -139,14 +139,14 @@ entry in wide and use functions like `pivot_longer()` to get the data ready for
 analysis. Figure \@ref(fig:image-pivot-longer) visually shows what happens when
 you pivot from wide to long.
 
-```{r image-pivot-longer, fig.cap="Pivot longer in tidyr. New columns are called 'name' and 'value'.", out.width="70%", echo=FALSE}
+```{r image-pivot-longer, fig.cap="Pivot longer in tidyr. New columns are called 'name' and 'value'.", out.width="90%", echo=FALSE}
 knitr::include_graphics(here::here("images/pivot-longer.png"))
 ```
 
 If you had, for instance, an ID column for each participant, the pivoting would 
 look like what is shown in Figure \@ref(fig:image-pivot-longer-id).
 
-```{r image-pivot-longer-id, fig.cap="Pivot longer in tidyr, excluding an 'id' column. New columns are called 'name' and 'value', as well as the old 'id' column.", out.width="70%", echo=FALSE}
+```{r image-pivot-longer-id, fig.cap="Pivot longer in tidyr, excluding an 'id' column. New columns are called 'name' and 'value', as well as the old 'id' column.", out.width="90%", echo=FALSE}
 knitr::include_graphics(here::here("images/pivot-longer-id.png"))
 ```
 
@@ -283,7 +283,7 @@ must be given *unquoted*) for the values that will be in the new columns.
 Figure \@ref(fig:image-pivot-wider) visually shows what's happening when using
 `pivot_wider()`.
 
-```{r image-pivot-wider, fig.cap="Pivot wider in tidyr.", out.width="70%", echo=FALSE}
+```{r image-pivot-wider, fig.cap="Pivot wider in tidyr.", out.width="90%", echo=FALSE}
 knitr::include_graphics(here::here("images/pivot-wider.png"))
 ```
 
