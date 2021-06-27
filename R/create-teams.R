@@ -52,9 +52,9 @@ teams_prep <- presurvey_current %>%
 # perceived skill.
 library(randomizr)
 
-set.seed(6426)
+set.seed(5)
 teams_assigned <- teams_prep %>%
-    mutate(team = (perceived_skill_score > 1) %>%
+    mutate(team = (perceived_skill_score > 4) %>%
                block_ra(conditions = team_names_final) %>%
                as.character()) %>%
     arrange(team, perceived_skill_score)
@@ -62,20 +62,19 @@ count(teams_assigned, team)
 View(teams_assigned)
 
 # Manually change if need be.
-# edit(teams_assigned)
+# teams_assigned <- edit(teams_assigned)
 
 # Assigning instructors to groups -----------------------------------------
 
 instructors <- c("Anders", "Luke", "Malene", "Stine")
 
-set.seed(99)
+set.seed(1)
 instructor_assigned_teams <- tibble(
     teams = team_names_final,
     primary = sample(instructors),
     secondary = sample(instructors)
 )
 instructor_assigned_teams
-edit(teams_assigned)
 
 instructor_assigned_teams %>%
     rename_with(str_to_sentence) %>%
