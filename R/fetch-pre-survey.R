@@ -41,7 +41,6 @@ renaming_columns <- tibble::tribble(
   "Which dates would you be available for a video call to help with the problems?", "when_available_for_help",
   "What gender do you identify with?", "gender_identity"
   )
-)
 
 presurvey <- drive_get(id = PRE_SURVEY_ID) %>%
     read_sheet() %>%
@@ -77,12 +76,12 @@ View(participants_list)
 
 # Check setup responses ---------------------------------------------------
 
-# presurvey_tidy %>%
+# presurvey_current %>%
 #     select(starts_with("check")) %>%
 #     pull(check_setup_output) %>%
 #     cat()
-#
-# presurvey_tidy %>%
+
+# presurvey_current %>%
 #     select(starts_with("check")) %>%
 #     pull(check_project_setup_output) %>%
 #     write_lines("temp.txt")
@@ -116,6 +115,3 @@ precourse_feedback <- prep_for_saving %>%
     relocate(Questions)
 
 write_csv(precourse_feedback, here::here("feedback/2021-06-precourse-feedback.csv"))
-
-
-write_csv(presurvey_feedback_data, here::here("feedback/2020-09-presurvey-feedback.csv"))
