@@ -448,7 +448,8 @@ By using the `case_when()` function, we can set `"before sleep"` as day 1 and
 saliva_with_day_df <- saliva_df %>% 
     mutate(day = case_when(
         samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2
+        samples == "wake up" ~ 2,
+        TRUE ~ NA_real_
     ))
 saliva_with_day_df
 ```
