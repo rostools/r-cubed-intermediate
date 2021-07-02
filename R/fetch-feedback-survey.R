@@ -2,6 +2,7 @@ source(here::here("R/ignore.R"))
 library(googledrive)
 library(googlesheets4)
 library(tidyverse)
+library(lubridate)
 conflicted::conflict_prefer("filter", "dplyr")
 
 # Import pre-survey data --------------------------------------------------
@@ -9,18 +10,21 @@ conflicted::conflict_prefer("filter", "dplyr")
 stop("To prevent accidental sourcing.")
 
 feedback_survey <- drive_get(id = FEEDBACK_SURVEY_ID) %>%
-    read_sheet()
+    read_sheet() %>%
+    filter(year(Timestamp) == 2021, month(Timestamp) == 6)
 
 # Any duplicate timestamps?
 any(duplicated(feedback_survey$Timestamp))
 
 # Clean up and convert to long form
 long_feedback_survey <- feedback_survey %>%
-    rename(day = `Which of the two days is the feedback for?`,
+    rename(day = `Which of the days is the feedback for?`,
            time_stamp = Timestamp) %>%
     pivot_longer(cols = -c(time_stamp, day), names_to = "question", values_to = "response") %>%
     filter(!is.na(response), !response %in% c("na", "NA", ".", "-")) %>%
-    mutate(response = str_remove_all(response, "\n"))
+    mutate(response = str_remove_all(response, "\n"),
+           question = str_remove(question, "\\.\\.\\.\\d+") %>%
+               str_replace("\\?\\?", "?"))
 
 # Keep and save the quantitative feedback
 set.seed(125643)
@@ -37,14 +41,14 @@ quantitative_feedback <- long_feedback_survey %>%
 quantitative_feedback %>%
     count(id)
 
-write_csv(quantitative_feedback, here::here("feedback/2020-09-quantitative-feedback.csv"))
+write_csv(quantitative_feedback, here::here("feedback/2021-06-quantitative.csv"))
 
 # Keep and save the general feedback
 overall_feedback <- long_feedback_survey %>%
     filter(str_detect(question, "other feedback")) %>%
     select(response)
 
-write_csv(overall_feedback, here::here("feedback/2020-09-overall-feedback.csv"))
+write_csv(overall_feedback, here::here("feedback/2021-06-overall.csv"))
 
 # Keep and save the session specific feedback
 session_feedback <- long_feedback_survey %>%
@@ -61,4 +65,4 @@ session_feedback <- long_feedback_survey %>%
     arrange(day, session) %>%
     select(-time_stamp)
 
-write_csv(session_feedback, here::here("feedback/2020-09-session-specific-feedback.csv"))
+write_csv(session_feedback, here::here("feedback/2021-06-session-specific.csv"))

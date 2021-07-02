@@ -1,0 +1,111 @@
+day,session,worked_well,could_be_improved
+Day 1,"Basic setup and workflow and Importing data, fast s","It work very welll, excellent",maybe include the fist part of excercise in the precourse
+Day 1,"Basic setup and workflow and Importing data, fast s","Good time, easy to get help",Explaining why we write everything. I need to understand why I have to write this and this and not just how to make it work.
+Day 1,"Basic setup and workflow and Importing data, fast s",Yes it was very well planned out.,Maybe also include a short intro to rstudios Import dataset click and choose as this in some cases might be the fastest and that it allows you to save the code so that you can make it reproducible
+Day 1,"Basic setup and workflow and Importing data, fast s","Overall, it was fine",NA
+Day 1,"Basic setup and workflow and Importing data, fast s",Know more packages to fast load of data.,For my level it could be done faster - though it is nice to have a slow start just to get in to it
+Day 1,"Basic setup and workflow and Importing data, fast s",Nice to have a session to make sure everyone is ready with respect to set-up before coding-sessions begin.,Emphasize in pre-course reading material/e-mail reminders for the same that first part of the course can be spent setting things up. Potentially saves some time for some people.
+Day 1,"Basic setup and workflow and Importing data, fast s",The code-along was great! Really good with several instructors; no waiting time,Pretty much perfect..
+Day 1,"Basic setup and workflow and Importing data, fast s",I liked the overview of the course and the framework for importing data,It was great
+Day 1,"Basic setup and workflow and Importing data, fast s",Very relevant tasks and interesting topics.,We spent to much time waiting for some individual technical problems.
+Day 1,"Basic setup and workflow and Importing data, fast s",It was slow enough for me to follow:),nothing
+Day 1,"Basic setup and workflow and Importing data, fast s","The code-alongs were very good, and the fact that we had to do multiple repetitions through the exercises gave time for the method to sink in.","Perhaps more info in the beginning of ""the why"" of what we were doing."
+Day 1,"Basic setup and workflow and Importing data, fast s",Really nice that we did the tap-along. Especially with Luke who made breaks frequently and asked for the blue stickers,"a little more time spent on introducing the RProject setup, how to use the different folders, why use it and is everything saved if you change computer or likewise?"
+Day 1,"Basic setup and workflow and Importing data, fast s","I was just behind from the beginning, so basically everything only worked when a ""helper"" moved me to the online R studio, but THEN it worked, with side by side help :-)","Think it was fine, but high tempo"
+Day 1,"Basic setup and workflow and Importing data, fast s",Codealong works really well,Maybe a little more pre-tasks to prepare for this crucial sessions
+Day 1,"Basic setup and workflow and Importing data, fast s",Worked well - nice slow tempo for us beginners!,NA
+Day 1,"Basic setup and workflow and Importing data, fast s",Everything,No need to repeat what we just read :-)
+Day 1,"Basic setup and workflow and Importing data, fast s",Doing exercises together and getting help,Everything was good
+Day 1,"Basic setup and workflow and Importing data, fast s","It is organized very well, I can follow step by step and practice when doing exercise. And helpers will come when I encounter problems, which is very helpful.","I would like to suggest to reduce time on doing similar exercise. It would be cool to include more info, but it is understandable due to the limited time"
+Day 1,"Basic setup and workflow and Importing data, fast s",Very nice to learn vroom and that we repeated for example git many times.,"Perhaps more ""tests"" in the precourse material to minimize the issues in the beginning of the session."
+Day 1,"Basic setup and workflow and Importing data, fast s",It is good to write the code several times to memorize. Good to learn the vroom package,I'm not sure that I know how Git works yet. It would be good to see where it is used
+Day 1,"Basic setup and workflow and Importing data, fast s",Instructions were very clear,"It would be better if everyone has done the precourse tasks, I felt that we could have saved a lot more time."
+Day 1,"Basic setup and workflow and Importing data, fast s","Generally it worked really great with code-along, and then performing very similar exercises - allowed to really try out and understand what was taught. Also, really happy with the course material and structure so far.","Very minor comment, but I think sometimes it was difficult to understand why is it of benefit to use some specific functions within the vroom package (import data -> spec -> specify the columns again)."
+Day 1,"Save time, don’t repeat yourself: Making functions",explanation and speed was fantastic,it was fine in my opinion
+Day 1,"Save time, don’t repeat yourself: Making functions","Good time, easy to get help",The same as before. Maybe making a functions that do something with the data (and not just import it) would be more interesting.
+Day 1,"Save time, don’t repeat yourself: Making functions","That we made almost the same functions over and over so that it became really clear what the ""skeleton"" of a function is",Sorry I have no ideas it worked really well :)
+Day 1,"Save time, don’t repeat yourself: Making functions","Overall, it was fine","please, try to re-write some of the exercises as it was hard to understand what is required?"
+Day 1,"Save time, don’t repeat yourself: Making functions",The control-version.,"Functions is well-known to me, but I really learning from the whole project-setup with DESCRIPTION-file and such."
+Day 1,"Save time, don’t repeat yourself: Making functions",All of it :),No comments.
+Day 1,"Save time, don’t repeat yourself: Making functions","Underlying the logic behind building functions. Everybody can read the help page, however, it is the logic behind it, that is really hard to learn",Maybe try to put it into perspective. Is this the final product? Would be nice to have a better overview of where we are in the workflow
+Day 1,"Save time, don’t repeat yourself: Making functions",The structure for making a function was really useful,worked really well
+Day 1,"Save time, don’t repeat yourself: Making functions",Again really interesting topics and things much needed.,Still a lot of waiting time. Maybe more tasks that those not experiencing problems could do in the meantime.
+Day 1,"Save time, don’t repeat yourself: Making functions",It was great getting a basic intro for making functions. The repetition of exercises was actually good,nothing
+Day 1,"Save time, don’t repeat yourself: Making functions","Again, the repetition through multiple exercises worked well",Sometimes the code-alongs were a little too fast.
+Day 1,"Save time, don’t repeat yourself: Making functions",Nice introduction to how functions work,Please please make breaks often and ask for stickers. Otherwise you (are I at least) very easily get left behind
+Day 1,"Save time, don’t repeat yourself: Making functions","Worked well, the tempo was fine",Was fine
+Day 1,"Save time, don’t repeat yourself: Making functions",I did not save time - but it worked well,"Lecture a little bit slower, but on the other hand it really pushes us to focus."
+Day 1,"Save time, don’t repeat yourself: Making functions",Code-along format works very well (again). NIce with simple examples.,"Perhaps, a couple more examples of making functions for the course data (not only for importing the data) to better understand how to build functions."
+Day 1,"Save time, don’t repeat yourself: Making functions","I generel i really like the changing between exercises, reading etc.",I hope that we will get to create more functions and not just repeat the same import function in order to understand the building of a functions better
+Day 1,"Save time, don’t repeat yourself: Making functions","The same, doing exercises together and getting help","The same, everything was good"
+Day 1,"Save time, don’t repeat yourself: Making functions",It worked well as first sessions,"It is easy to follow, but I would like to suggest to reduce time on doing exercise on similar content, it would be so good to be able to include more contents. Thanks"
+Day 1,"Save time, don’t repeat yourself: Making functions",That we continued with the example from the Importing data session,"Aircon :-)  also in the course sylabus, a description of how to get the Roxygen sceleton"
+Day 1,"Save time, don’t repeat yourself: Making functions",Nice to earn how to make functions step by step,nothing :)
+Day 1,"Save time, don’t repeat yourself: Making functions",Very helpful for future more repetitive code development,I think maybe we don't need to repeat our work for all of the import functions. I think doing one of them is enough
+Day 1,"Save time, don’t repeat yourself: Making functions","Very much the same regarding code-along + exercises. Also, simple, but really great explanation of functions - even though I have used functions before, now it seems much more intuitive and I am really excited to use them in my own script !",Everything was really well put in this session - I cannot put my finger on anything specific :)
+Day 2,Processing and joining datasets for cleaning,Explenation very comprehensive,works fine for me
+Day 2,Processing and joining datasets for cleaning,Really interesting and good assignments.,Nothing.
+Day 2,Processing and joining datasets for cleaning,"The steps are quite clear, also in general the teachers are available for questions.","I think it's designed very well, no comments for improvements yet."
+Day 2,Processing and joining datasets for cleaning,Worked well,More time
+Day 2,Processing and joining datasets for cleaning,code alongs,?
+Day 2,Processing and joining datasets for cleaning,"In general, just a really nice course day. I learned so much!",NA
+Day 2,Processing and joining datasets for cleaning,most,no idea
+Day 2,Processing and joining datasets for cleaning,"Clear presented, time enough to code along",Maybe just start the day with spending 10 min to repeat what we learned yesterday
+Day 2,Processing and joining datasets for cleaning,That I got a good introduction to the reduce function,Maybe an exercise were you have to think about which join you should make
+Day 2,Processing and joining datasets for cleaning,Good to show an illustration of the joining concepts.,Things felt a little rushed at the end.
+Day 2,Processing and joining datasets for cleaning,It was fine,"As mentioned earlier: please, just add more details on the sessions into the program as I felt little lost in exercises. Further, please try to use standard English and be more clear as it was little hard to understand the aim or what is required to perform the tasks."
+Day 2,Processing and joining datasets for cleaning,Good structure and pace.,nothing
+Day 2,Processing and joining datasets for cleaning,Getting an overview of the entire workflow and deleting a lot from the lesson.rmd file,Maybe a recap at the end of the day of the two days.
+Day 2,Processing and joining datasets for cleaning,Excercise 10.3 was a fun challenge and regex a new thing to me.,For me the spring cleaning and importing data again went too fast
+Day 2,Processing and joining datasets for cleaning,Showing examples for when something is not as it is supposed to be and how to fix it.,Going a little more into why we separate the Rmd and script file
+Day 2,Processing and joining datasets for cleaning,"Again, the packages that ease coding and gives short-cuts.",The answer is the same. Less basic about coding and more on how to project manage in R.
+Day 2,Processing and joining datasets for cleaning,Really nice to learn to joing all files to one and also the fact that some of the files needed summary stats before joining.,Not specifically for this session but I forgot to add to day 1 that it would be nice to see how to import multiple csv files to project folder (and not just from the link)..
+Day 2,Processing and joining datasets for cleaning,Clear explanations of concepts.,"Some tools used (eg. regex) feels rather advanced (I could probably not apply it on my own data without help). Nice to have the concept explained, but is there a simpler way of doing the task solved by the regex that could have been applied?"
+Day 2,Processing and joining datasets for cleaning,The text on the website and the presentation The part with erasing everything in the lesson document and cleaning up was also very good.,A bit more introduction in the code-along on the overall purpose.
+Day 2,Processing and joining datasets for cleaning,"organized well, clear and understandable","same issue, I suggest to reduce same practice or reduce time."
+Day 2,Processing and joining datasets for cleaning,"Same as above, really good material, easily understandable and useful","Again, could increase the pace a bit, as its easy to loose focus throughout the sessions"
+Day 2,Processing and joining datasets for cleaning,"Good explanations, getting help fast when needed",It was good
+Day 2,Processing and joining datasets for cleaning,good to learn about joining and also putting it in functions,"It helps seeing the overall workflow but perhaps more words on why its done like that, why deleting everything  and  using mmash and not lesson"
+Day 2,"Save time, don’t repeat yourself: Using functionals",very explanatory,maybe more time hands on excercise
+Day 2,"Save time, don’t repeat yourself: Using functionals",Good code along sessions with less waiting time than yesterday.,"More assignments for participants who complete them first; to reduce waiting time. If some participants fall behind, plenum walkthrough will let them catch up."
+Day 2,"Save time, don’t repeat yourself: Using functionals",We are all being very-well on track throughout the exericises,Maybe a bigger picture explanation before diving into each step of data processing
+Day 2,"Save time, don’t repeat yourself: Using functionals","Technical problems, but teaching was fine",More time
+Day 2,"Save time, don’t repeat yourself: Using functionals",code alongs,If first introducing the session and then perform the exercise
+Day 2,"Save time, don’t repeat yourself: Using functionals","In general, just a really nice course day. I learned so much!","I could use a shorten overview of what we have done. Like 1) Make a function to import data, 2) make a function that import multiple files, 3) import datasets, 4) make a function that extract user_id, 5) join dataset...."
+Day 2,"Save time, don’t repeat yourself: Using functionals",web material,"presentation by instructor, more structure and slower pace"
+Day 2,"Save time, don’t repeat yourself: Using functionals",intersting topic,"very difficult, hard to keep a proper pace to be able to code along. Not sure I totally understand it yet"
+Day 2,"Save time, don’t repeat yourself: Using functionals",That we wrote several functions,"More excersises where you need to ""think"" more and solve a question that is not only repetation"
+Day 2,"Save time, don’t repeat yourself: Using functionals",Great with emphasis on not moving functions to functions.R before we were sure everything worked.,NA
+Day 2,"Save time, don’t repeat yourself: Using functionals",it was fine,"please, just add more details on the sessions into the program as I felt little lost in exercises. Further, please try to use standard English and be more clear as it was little hard to understand the aim or what is required to perform the tasks."
+Day 2,"Save time, don’t repeat yourself: Using functionals",The topic was useful,"It was hard to follow. There was a lot of going back and forth between programs and there if you fell behind it was difficult to catch up. So better structure and slower, please:)"
+Day 2,"Save time, don’t repeat yourself: Using functionals",I think the explanation of map was spot on. Never really understood how it worked before.,Was good.
+Day 2,"Save time, don’t repeat yourself: Using functionals",That it was a next step from the previous day continuing with the import of data,"Online, there was a good description of the difference between loops and map, but the presentation of it was not very clear"
+Day 2,"Save time, don’t repeat yourself: Using functionals",Repeating making functions! Really git it into your fingers.,Perfect!
+Day 2,"Save time, don’t repeat yourself: Using functionals","Packages for managing data. In general, it is not the methods as much as it is seeing how a project can be set up.",The speed. Less time on how to code (as much of it is just repeating code just written) and more git and project setup.
+Day 2,"Save time, don’t repeat yourself: Using functionals",The time where we work alone with exercises.,I would like to also practise creating functions with more data analysis related issues and not just importing - in order to apply it more to my own projects.
+Day 2,"Save time, don’t repeat yourself: Using functionals",Session worked well. Even more examples would have been nice before starting eith the exercises though.,See above.
+Day 2,"Save time, don’t repeat yourself: Using functionals","The introduction to functionals was really good and also the exercises, where we had to try it out.",More time could have been spent on introduction to the tidyverse operators. Also the code-alongs went a little too fast in this section.
+Day 2,"Save time, don’t repeat yourself: Using functionals","organized well, easy to follow","I would like to suggest to reduce the similar practice, I feel it is not very necessary to use same method work on different datasets."
+Day 2,"Save time, don’t repeat yourself: Using functionals","The outline of the material was great, learned a good bit of useful workflow","It was really really slow - a lot of repetition of the same exercises, which in general is useful, but in my opinion was quite elongated this time - an exercise that was 'assigned' 15 min extended to 45 min and then additional 30 min to go through it on the screen, and then after lunch repeat some of it again"
+Day 2,"Save time, don’t repeat yourself: Using functionals","Good explanations, getting help fast when needed","Sometimes it was quite fast, I lost track what of what we are doing"
+Day 2,"Save time, don’t repeat yourself: Using functionals",using map to see import multiple files and to get introduced to functionals,nothing
+Day 3,Quickly re-arranging data with pivots,Nice explanation,do a couple of excercises as assigments (to proactice mostly)
+Day 3,Quickly re-arranging data with pivots,It was fine,similar comment like for day 1 and day 2
+Day 3,Quickly re-arranging data with pivots,presentation about what next is very good in providing perspective how this fits in the data analysis workflow in a real life situation,explanation of the last part of exercise 11.7 is a bit unclear.
+Day 3,Quickly re-arranging data with pivots,The description of what pivots does,Perhaps some additional exercises with pivots to further understand the concept.
+Day 3,Quickly re-arranging data with pivots,Good with pictures on the webpage so I could see difference between longer and wider.,It could be good to have another example of two datasets where pivot longer and wider could be used that we have to type out ourself.
+Day 3,Quickly re-arranging data with pivots,online material,session go-through
+Day 3,Quickly re-arranging data with pivots,Fun session,Even more tricks for R markdown - but that is maybe outside the course scope
+Day 3,Quickly re-arranging data with pivots,Good session and exercises.,I bit more optional exercises.
+Day 3,Quickly re-arranging data with pivots,"All of it, essentially","Would be nice if you could find out and explain why ""-29"" shows up in the day-column - or at least inform participants that it could happen so they don't get confused.Explain why ungroup() isn't necessary when using group_by() in the functions here."
+Day 3,Quickly re-arranging data with pivots,Nice with the example illustrations and explanations!,"Perhaps a bit more elaboration on the ""workflow"" of pivoting when summarizing and creating tables."
+Day 3,Quickly re-arranging data with pivots,"Good online instructions, teachers help and explanations",It was good
+Day 3,Quickly re-arranging data with pivots,The exercise was find.Good to see that you can use both pivot-longer and wider in one code.,There could perhaps have been more examples
+Day 3,Quickly re-arranging data with pivots,"Fine, I'm used to doing it with reshape, but this is easier",Ot was fine
+Day 3,Quickly re-arranging data with pivots,Learning data structure-stuff and the speed.,"Not much, I liked the pace."
+Day 3,Quickly re-arranging data with pivots,Repeating what we learned is great,more exercises
+Day 3,Quickly re-arranging data with pivots,Everything!! it was a really great and applicable session,nothing really - day 3 was very good!! Thanks so much :)
+Day 3,Quickly re-arranging data with pivots,Everything was fine,NA
+Day 3,Quickly re-arranging data with pivots,Code alongs are just amazing,It works perfect
+Day 3,Quickly re-arranging data with pivots,Very useful,"If possible standig up and looking at audience is very powerful when presenting (I know you also have to type, but maybe mixing it a bit?)"
+Day 3,Quickly re-arranging data with pivots,Easy to follow,Nothing
