@@ -6,8 +6,14 @@
 be about ~1 instructors for every 1-2 sessions, with a ratio of 1 helper
 (including instructor) for every 4-6 participants.
 
-- **First day**: During the introduction, don't forget to introduce all the
-instructors and helpers.
+- **Group work**:
+    - Have 4 learners per group, not more.
+
+- **First day**: 
+    - During the introduction, don't forget to introduce all the instructors and
+    helpers.
+    - Set up tables so that all learners can directly
+    face the projector (and not have to twist their neck).
 
 - **End of course**: Ask if any participant would like to be involved in next
 year's teaching, or in making the material, or in being a helper.
