@@ -145,7 +145,7 @@ Specifically, type in the RStudio Console:
     r3::setup_git_config()
     ```
     
-2. Read through the 
+2. **Please read** through the 
 [Version Control lesson](https://r-cubed.rostools.org/version-control.html)
 of the beginner course.
 *You don't need to do any of the exercises or activities*, 
