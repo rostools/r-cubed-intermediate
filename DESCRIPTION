@@ -25,8 +25,24 @@ Authors@R:
              family = "Storgaard",
              role = "ctb",
              email = "sist@ph.au.dk",
-             comment = c(ORCID = "0000-0003-0014-8868"),
-                         affiliation = "Aarhus University")
+             comment = c(ORCID = "0000-0003-0014-8868",
+                         affiliation = "Aarhus University"))
+      person(given = "Stine",
+             family = "Scheuer",
+             role = "ctb",
+             email = "stine.scheuer@regionh.dk",
+             comment = c(ORCID = "0000-0002-1244-9871",
+                         affiliation = "Steno Diabetes Center Copenhagen")),
+      person(given = "Malene Revsbech",
+             family = "Christiansen",
+             role = "ctb",
+             comment = c(ORCID = "0000-0002-9772-3576", 
+                         affiliation = "Københavns Universitet")),
+      person(given = "Anders Aasted",
+             family = "Isaksen",
+             role = "ctb",
+             comment = c(ORCID = "0000-0001-8457-5466", 
+                         affiliation = "Aarhus University")),
       )
 Description: Reproducibility and open scientific practices are
     increasingly being requested or required of scientists and
