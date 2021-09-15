@@ -1,11 +1,15 @@
 # Pre-course tasks {#pre-course}
 
-In order to participate in this course, you must complete everything in this pre-course tasks section and 
-finish with *completing the survey* at the end. Depending on your skills and
-knowledge, these tasks could take between **3-5 hrs to finish**, so we suggest
-planning a full day to complete them. Depending on your institution 
-and how they handle installing software on work computers,
-you also might have to contact IT very early to make sure everything is properly
+In order to participate in this course, you must complete everything in this
+pre-course tasks section and finish with *completing the survey* at the end.
+These tasks are designed to make it easier for everyone to start the course
+with everything set up. For some of the tasks, you might not understand why
+you need to do them, but you will likely understand why once the course begins.
+
+Depending on your skills and knowledge, these tasks could take between **3-5 hrs
+to finish**, so we suggest planning a full day to complete them. Depending on
+your institution and how they handle installing software on work computers, you
+also might have to contact IT very early to make sure everything is properly
 installed and setup.
 
 ## Summary of tasks
@@ -221,8 +225,14 @@ which will create a new file called `lesson.Rmd` in the `doc/` folder.
 
 ## Download the course data
 
-For this course, we're going to use an openly licensed dataset on monitoring
-sleep and activity (MMASH) [@Rossi2020;@Rossi2020a]. Look over these tasks and than switch 
+To best demonstrate the concepts in the course, we ideally should work on a real
+dataset to apply what we're going to learn. So for this course, we're going to
+use an openly licensed dataset on monitoring
+sleep and activity (MMASH) [@Rossi2020;@Rossi2020a]. To begin learning about 
+being reproducible and applying modern approaches to data analysis, 
+we're going to write and save R code to download a dataset, prepare it a bit
+so it's usable, and than save it to your computer.
+Look over these tasks and than switch 
 over to the [MMASH website][mmash-website]:
 
 1. Look through the Data Description to get familiar with the dataset and see what
