@@ -76,7 +76,8 @@ Imports:
     RefManageR,
     stringr,
     vroom,
-    downlit
+    downlit,
+    gt
 Suggests: 
     withr,
     furrr,
