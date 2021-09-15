@@ -4,5 +4,7 @@ bookdown::bs4_book:
         # primary: "#2471a3" # Purplish-blue
     includes:
         before_body:
-            - "includes/contribute.html"
-    repo: "https://gitlab.com/rostools/r-cubed-intermediate"
+            - "resources/contribute.html"
+    repo:
+        base: "https://gitlab.com/rostools/r-cubed-intermediate"
+        branch: main

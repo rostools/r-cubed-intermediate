@@ -12,17 +12,6 @@ fs::dir_create(here::here("public", c("resources", "slides")))
 slide_css <- fs::dir_ls("slides", glob = "*.css")
 fs::file_copy(slide_css, fs::path("public/", slide_css), overwrite = TRUE)
 
-html_files <- fs::dir_ls("public", glob = "*.html")
-
-html_files %>%
-    purrr::map(readr::read_lines) %>%
-    purrr::map(~ {
-        stringr::str_replace(., "fa-github", "fa-gitlab") %>%
-            stringr::str_replace("rostools/r-cubed-intermediate/(blob|edit)/master",
-                                 "rostools/r-cubed-intermediate/\\1/main")
-    }) %>%
-    purrr::iwalk(readr::write_lines)
-
 warnings()
 
 message("Finished building it.")
