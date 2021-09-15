@@ -3,7 +3,10 @@
 In order to participate in this course, you must complete everything in this pre-course tasks section and 
 finish with *completing the survey* at the end. Depending on your skills and
 knowledge, these tasks could take between 3-5 hrs to finish, so we suggest
-planning a full day to complete them.
+planning a full day to complete them. Depending on your institution 
+and how they handle installing software on work computers,
+you also might have to contact IT very early to make sure everything is properly
+installed and setup.
 
 ## Learning objectives
 
