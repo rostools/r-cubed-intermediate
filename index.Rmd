@@ -21,7 +21,7 @@ url: 'https\://r-cubed-intermediate.rostools.org'
 # automatically create a bib database for R packages
 knitr::write_bib(
     c(.packages(), "bookdown", "knitr", "rmarkdown"),
-    here::here('includes/packages.bib')
+    here::here('resources/packages.bib')
 )
 ```
 
