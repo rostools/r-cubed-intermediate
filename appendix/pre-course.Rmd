@@ -2,11 +2,30 @@
 
 In order to participate in this course, you must complete everything in this pre-course tasks section and 
 finish with *completing the survey* at the end. Depending on your skills and
-knowledge, these tasks could take between 3-5 hrs to finish, so we suggest
+knowledge, these tasks could take between **3-5 hrs to finish**, so we suggest
 planning a full day to complete them. Depending on your institution 
 and how they handle installing software on work computers,
 you also might have to contact IT very early to make sure everything is properly
 installed and setup.
+
+## Summary of tasks
+
+Here's a quick overview of the tasks you need to do. Specific details about
+them are found as you work through the tasks.
+
+1. Install R, RStudio, and Git.
+1. Install necessary packages.
+1. Configure Git on your computer.
+1. Run a check to see if everything works.
+1. Create an R Project, along with the folder and file setup.
+1. Create an R Markdown file.
+1. Writing R code to download the data.
+1. Run a check to see that everything is as expected.
+1. Read the syllabus.
+1. Read the Code of Conduct.
+1. Complete the pre-course survey.
+
+Check each section for exact details on completing these tasks.
 
 ## Learning objectives
 
