@@ -77,7 +77,8 @@ Imports:
     stringr,
     vroom,
     downlit,
-    gt
+    gt,
+    fontawesome
 Suggests: 
     withr,
     furrr,
