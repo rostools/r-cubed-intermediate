@@ -237,7 +237,10 @@ use an openly licensed dataset on monitoring
 sleep and activity (MMASH) [@Rossi2020;@Rossi2020a]. To begin learning about 
 being reproducible and applying modern approaches to data analysis, 
 we're going to write and save R code to download a dataset, prepare it a bit
-so it's usable, and than save it to your computer.
+so it's at least a little usable, and than save it to your computer.
+Why not get you to download an already cleaned and prepared dataset? Because
+in the real world, the data you get is rarely all cleaned up and ready for you,
+and this course is about learning more advanced tools to do the data wrangling.
 Look over these tasks and than switch 
 over to the [MMASH website][mmash-website]:
 
