@@ -17,17 +17,23 @@ installed and setup.
 Here's a quick overview of the tasks you need to do. Specific details about
 them are found as you work through the tasks.
 
-1. Install R, RStudio, and Git.
+1. Install R, RStudio, and Git. For some people, depending on their institution,
+this task can take the longest because you have to contact your IT to install this
+packages.
 1. Install necessary packages.
-1. Configure Git on your computer.
-1. Run a check to see if everything works.
+1. Read about Git from the introduction course and configure Git on your computer.
+If you haven't used Git before, this task could take a while because of the reading.
+1. Run a check to see if everything works (you'll later need to paste this output
+into the survey).
 1. Create an R Project, along with the folder and file setup.
 1. Create an R Markdown file.
-1. Writing R code to download the data.
-1. Run a check to see that everything is as expected.
+1. Writing R code to download the data and save it to your computer. This task
+will probably take up most of the time, maybe 30-60 minutes.
+1. Run a check to see that everything is as expected (you'll later need to paste
+this output into the survey).
 1. Read the syllabus.
 1. Read the Code of Conduct.
-1. Complete the pre-course survey.
+1. Complete the pre-course survey. This survey is pretty quick, maybe ~10 minutes.
 
 Check each section for exact details on completing these tasks.
 
