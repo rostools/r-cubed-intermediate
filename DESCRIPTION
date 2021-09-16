@@ -42,7 +42,7 @@ Authors@R:
              family = "Isaksen",
              role = "ctb",
              comment = c(ORCID = "0000-0001-8457-5466", 
-                         affiliation = "Aarhus University")),
+                         affiliation = "Aarhus University"))
       )
 Description: Reproducibility and open scientific practices are
     increasingly being requested or required of scientists and
