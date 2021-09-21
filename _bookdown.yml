@@ -20,7 +20,7 @@ rmd_files:
     - "appendix/conduct.Rmd"
     - "appendix/resources.Rmd"
     - "appendix/extras.Rmd"
-    - "appendix/for-instructors.md"
+    - "appendix/for-instructors.Rmd"
     - "appendix/references.Rmd"
 before_chapter_script:
     - "_common.R"
