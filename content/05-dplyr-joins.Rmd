@@ -214,10 +214,13 @@ extract_user_id <- function(imported_data) {
 }
 ```
 
-**Second step**: 
+## Modifying existing functions as part of the processing workflow
+
+Now that we've created a new function to extract the user ID from the file path
+variable, we need to actually use it within our processing pipeline.
 Since we want this function to work on all the datasets that we will import, 
-we should add it into the `import_multiple_files()` function. 
-Go to the `import_multiple_files()` function in `R/functions.R` and use the `%>%` to
+we need to add it to the `import_multiple_files()` function. 
+We'll go to the `import_multiple_files()` function in `R/functions.R` and use the `%>%` to
 add it after using the `map_dfr()` function. The code should look something like:
 
 ```{r add-extract-user-to-import}
@@ -228,12 +231,12 @@ import_multiple_files <- function(file_pattern, import_function) {
     
     combined_data <- purrr::map_dfr(data_files, import_function,
                                     .id = "file_path_id") %>% 
-        extract_user_id()
+        extract_user_id() # Add the function here.
     return(combined_data)
 }
 ```
 
-Re-source the functions with `source()` (`Ctrl-Shift-S`). Then re-run these
+We'll re-source the functions with `source()` (`Ctrl-Shift-S`). Then re-run these
 pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
 update them based on the new code in the `import_multiple_files()` function.
 Something like this should already be somewhere in your `doc/lesson.Rmd` file.
@@ -259,7 +262,7 @@ summarised_actigraph_df <- actigraph_df %>%
     summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
 ```
 
-**Final step**: Knit your `doc/lesson.Rmd` document to make sure everything still
+Let's knit the `doc/lesson.Rmd` document to make sure everything still
 runs fine. Then, **add and commit** all the changed files into the Git history.
 
 ## Join datasets together
