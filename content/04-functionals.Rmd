@@ -424,9 +424,15 @@ user_info_df %>%
 
 Or, only character columns:
 
-```{r}
+```{r select-where, eval=FALSE}
 user_info_df %>% 
     select(where(is.character))
+```
+
+```{r select-where-for-book, echo=FALSE}
+user_info_df %>% 
+    select(where(is.character)) %>% 
+    trim_filepath_for_book()
 ```
 
 Likewise, with functions like `summarise()`,
