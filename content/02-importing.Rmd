@@ -334,8 +334,11 @@ commit** the changes into the version history.
 
 ```{r exercise-template-saliva-import, eval=FALSE}
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")
-user_1_saliva_data_prep <- vroom(user_1_saliva_file,
-                                 col_select = ___)
+user_1_saliva_data_prep <- vroom(
+    user_1_saliva_file,
+    col_select = ___,
+    .name_repair = ___
+)
 ___(user_1_saliva_data_prep)
 
 user_1_saliva_data <- vroom(
