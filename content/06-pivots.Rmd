@@ -397,8 +397,9 @@ completing this exercise.
 
 1. First thing, let's tidy up the output. Go into the `R/functions.R` script
 to make these changes. Use the workflow of using `source()` and testing in the R
-Markdown document. Right below the `tidyr::drop_na()` function do these tasks:
-    - Just like how `summarise()` can combine with the `across()` functional to
+Markdown document. Right after the `dplyr::summarise()` function, after
+the `%>%` pipe, do these tasks:
+    - *Note*: Just like how `summarise()` can combine with the `across()` functional to
     do actions on multiple columns, `mutate()` can also be paired with
     `across()`.
     - Use the `mutate()` and `across()` combination on columns that
