@@ -352,7 +352,8 @@ Using the same workflow we've been doing throughout this course,
 convert the code we just wrote above into a function.
 
 1. Name the function `tidy_summarise_by_day`.
-1. Create one argument called `data`.
+1. Create one argument called `data`. Create a new variable inside the function
+called `daily_summary` and put it in `return()` so the function outputs it.
 1. Test that the function works.
 1. Add Roxygen documentation and use explicit function calls with
 `packagename::`.
@@ -371,7 +372,7 @@ that the new function works in a code chunk at the bottom of the document.
 #' @return A data.frame/tibble.
 #'
 tidy_summarise_by_day <- function(data) {
-    data %>%
+    daily_summary <- data %>%
         dplyr::select(-samples) %>%
         tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
         tidyr::drop_na(day, gender) %>%
@@ -381,6 +382,7 @@ tidy_summarise_by_day <- function(data) {
                          na.rm = TRUE)) %>%
         tidyr::pivot_wider(names_from = day, 
                     values_from = dplyr::starts_with("value"))
+    return(daily_summary)
 }
 ```
 
