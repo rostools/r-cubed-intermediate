@@ -1,5 +1,8 @@
 # For Instructors
 
+More guidance for instructors is also found in the 
+[introduction R course](https://r-cubed.rostools.org/).
+
 ## Course details
 
 - **Instructor and helper number**: The recommended number of instructors would
