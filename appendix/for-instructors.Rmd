@@ -1,7 +1,7 @@
 # For Instructors
 
 More guidance for instructors is also found in the 
-[introduction R course](https://r-cubed.rostools.org/).
+[introduction R course](https://r-cubed.rostools.org/for-instructors).
 
 ## Course details
 
