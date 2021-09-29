@@ -52,12 +52,15 @@ and testing out the code.
 At the bottom of the file, create a new header by typing out `## Importing raw data`.
 Right below the header, make a new code chunk with `Ctrl-Alt-I` and call it
 `setup`. Inside the code chunk, load the [vroom][vroom-website] package
-with `library(vroom)` as well as `library(here)`. It should look like this:
+with `library(vroom)` as well as `library(here)`. Since we'll also be using
+the tidyverse package, let's also add `library(tidyverse)`. 
+It should look like this:
 
 [vroom-website]: https://vroom.r-lib.org/index.html
 
 ````markdown
 `r ''````{r setup}
+library(tidyverse)
 library(vroom)
 library(here)
 `r ''````
