@@ -87,9 +87,6 @@ You have two options to take so that all code stays on the screen
             geom_point()
         ```
 
-- After exercises have been completed, get someone to tell you what to write.
-Make sure it matches approximately what the actual solution is.
-
 - If a section doesn't mention for the student to read it, that means the
 instructor should mention and talk about it. But don't read it word for word,
 instead talk about it while doing the code along. It's strongly suggested that
