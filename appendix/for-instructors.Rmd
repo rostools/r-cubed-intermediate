@@ -51,8 +51,11 @@ comments about something to focus on or reinforce for a concept. Make sure
 to know where these are and to use them to help you as you go through the material.
 - For the exercises, make sure to get the learners helping each other out in
 their pairs.
-- Exercise solutions do not need to be covered by the instructor,
-given the solution is provided already.
+- Try not to go over the time given for the exercises. If many learners
+are struggling to finish on time, make a note of it to fix or revise later and
+then go over it with everyone.
+- Exercise solutions do not need to be covered in too much detail by the
+instructor, given the solution is provided already.
     - During the exercise, copy and paste the solutions from the site into your
     code-along R Project, so you can move to the next section quickly.
 - Try to keep the screen on your RStudio as much as possible 
