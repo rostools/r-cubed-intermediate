@@ -46,21 +46,27 @@ get them to read over the section.
 Ask for any questions about what they read, 
 and if you want to elaborate you can, 
 but it's not necessary given they just read it.
+
 - There are also areas called "Details for instructors" that has notes or
 comments about something to focus on or reinforce for a concept. Make sure
 to know where these are and to use them to help you as you go through the material.
+
 - For the exercises, make sure to get the learners helping each other out in
 their pairs.
+
 - Try not to go over the time given for the exercises. If many learners
 are struggling to finish on time, make a note of it to fix or revise later and
 then go over it with everyone.
+
 - Exercise solutions do not need to be covered in too much detail by the
 instructor, given the solution is provided already.
     - During the exercise, copy and paste the solutions from the site into your
     code-along R Project, so you can move to the next section quickly.
+    
 - Try to keep the screen on your RStudio as much as possible 
 and don't switch applications often, 
 only when you need to go to the course material or to show an exercise.
+
 - Be aware of how much space you have on the projector screen 
 and don't let R code go too long. 
 You have two options to take so that all code stays on the screen
@@ -92,6 +98,8 @@ instructor should mention and talk about it. But don't read it word for word,
 instead talk about it while doing the code along. It's strongly suggested that
 you try to use your own words rather than exactly what was written. This makes
 it easier for you and makes it more engaging for the learners.
+
+- 
 
 ### Making use of the stickies
 
