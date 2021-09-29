@@ -99,7 +99,10 @@ instead talk about it while doing the code along. It's strongly suggested that
 you try to use your own words rather than exactly what was written. This makes
 it easier for you and makes it more engaging for the learners.
 
-- 
+- While doing the code-along, describe and explain what you are typing. 
+Typing alone doesn't help explain the *why*, and learners need to understand
+the why to help them reinforce the concepts and code. (It's also something
+we often get feedback on.)
 
 ### Making use of the stickies
 
