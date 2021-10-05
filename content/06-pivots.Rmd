@@ -530,6 +530,9 @@ and join these two datasets in with the others so that they get
 included in the `data/mmash.rda` final dataset. Afterwards, do some
 descriptive analysis using the function `tidy_summarise_by_day()`.
 
+**Note**: User 11 has no sleep data, so you will eventually have to drop
+user 11 from the dataset before summarizing the data.
+
 ## Exercise: Create a second dataset of only the Actigraph and RR data
 
 Time: 30 min
