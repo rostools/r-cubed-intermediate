@@ -290,9 +290,9 @@ user_info_df <- map_dfr(user_info_files, import_user_info,
                         .id = "file_path_id")
 ```
 
-For importing the other datasets, we basically only have to modify two locations
+For importing the other datasets, we have to modify the code in two locations
 to get this code to import the other datasets: at the `regexp =` argument and
-where the `import_user_info` function is. This is the perfect chance to make a
+at `import_user_info`. This is the perfect chance to make a
 function that you can use for other purposes and that is itself a functional
 (since it takes a function as an input). So inside `doc/lesson.Rmd`, convert
 this bit of code into a function that works to import the other three datasets.
@@ -303,11 +303,15 @@ the document.
 1. Repeat the steps you've taken previously to create a new function:
     - Wrap the code with `function() { ... }`
     - Name the function `import_multiple_files`
-    - Create two new arguments called `file_pattern` and `import_function`
+    - Within `function()`, set two new arguments called `file_pattern` and
+    `import_function`. 
+    - Within in the code, replace and re-write `"user_info.csv"` with
+    `file_pattern` and `import_user_info` with `import_function`.
     - Create generic intermediate objects (instead of `user_info_file` and
-    `user_info_df`). We'd recommend something like `data_files` and
-    `combined_data`
-    - Use `return()` at the end of the function for the object you want to output
+    `user_info_df`). So, replace and re-write `user_info_file` with `data_files`
+    and `user_info_df` with `combined_data`.
+    - Use `return(combined_data)` at the end of the function to output the
+    imported data frame.
     - Create and write Roxygen documentation to describe the new function
     - Append `packagename::` to the individual functions (there are three packages
     used: fs, here, and purrr)
@@ -315,9 +319,6 @@ the document.
 1. After it works, cut and paste the function into the `R/functions.R` file.
 Then restart the R session, run the line with `source(here("R/functions.R"))`, 
 and test the code out in the **Console**.
-1. Then, write code in your `doc/lesson.Rmd` file where the function used to be
-and import in the other datasets. You should now have three new objects for all
-the imported datasets, called `saliva_df`, `rr_df`, and `actigraph_df`.
 1. Once done, **add** the changes you've made and **commit** them to the Git history.
 
 ```{r solution-import-multiple-files, results='hide', solution=TRUE}
@@ -338,7 +339,7 @@ import_multiple_files <- function(file_pattern, import_function) {
     return(combined_data)
 }
 
-# Try on saliva
+# Test on saliva in the Console
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
