@@ -386,52 +386,67 @@ tidy_summarise_by_day <- function(data) {
 }
 ```
 
-## Exercise: Extend the function to use other statistics and to be tidier
+## Extending the function to use other statistics and to be tidier
 
-Time: 15 min
+Now that we've made the tidy summary code into a function, 
+let's make it more generic so we can use other summary statistics and
+to have the output be a bit tidier. For instance, it would be nice
+to be able to do something like this:
 
-We've made the tidy summary code into a function, now let's make it so we can
-choose which summary functions to use and to make the output a bit tidier.
-These tasks will be *challenging*, so discuss and work with your group on
-completing this exercise.
+```r
+mmash %>% 
+    tidy_summarise_by_day(median)
+mmash %>% 
+    tidy_summarise_by_day(max)
+mmash %>% 
+    tidy_summarise_by_day(list(median = median, max = max))
+```
 
-1. First thing, let's tidy up the output. Go into the `R/functions.R` script
-to make these changes. Use the workflow of using `source()` and testing in the R
-Markdown document. Right after the `dplyr::summarise()` function, after
-the `%>%` pipe, do these tasks:
-    - *Note*: Just like how `summarise()` can combine with the `across()` functional to
-    do actions on multiple columns, `mutate()` can also be paired with
-    `across()`.
-    - Use the `mutate()` and `across()` combination on columns that
-    `start_with()` "value".
-    - Within `across()`, use the `round()` function and set the `digits = 2`
-    so the output gets rounded to less digits. For hints on how to do this,
-    refer to the `summarise()` function right above it as well as in
-    session \@ref(summarise-with-functionals).
-    
-2. Next, let's add a new argument to the function to allow us to use other
-summary statistics instead of only `mean()` and `sd()`. Add a new argument to
-the function and call it `summary_fn`. Try to figure out how to make the function
-output the `median()` and `max()` instead. This task is intentionally a bit vague
-to make it a challenge for you to figure this out. Use the below code as a
-reference to how the function *should* look and work.
+Before we get to adding this functionality, let's first make it so the function
+has a tidier output. Specifically, we want to round the values so they are
+easier to read. Go into the `R/functions.R` script to the
+`tidy_summarize_by_day()` function. We'll create a new line right after the
+`dplyr::summarise()` function, after the `%>%` pipe.
+Since we want to round values of existing columns, we need to use `mutate()`.
+And like we used `across()` in `summarise()`, we can also use `across()`
+within `mutate()` on specific columns. In our case, we want to round columns
+that `start_with()` the word `"value"` to 2 digits.
 
-    ```r
-    mmash %>% 
-        tidy_summarise_by_day(median)
-    mmash %>% 
-        tidy_summarise_by_day(max)
-    mmash %>% 
-        tidy_summarise_by_day(list(median = median, max = max))
-    ```
+```{r rounding-summary-function-output}
+tidy_summarise_by_day <- function(data) {
+    data %>%
+        dplyr::select(-samples) %>%
+        tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+        tidyr::drop_na(day, gender) %>%
+        dplyr::group_by(gender, day, name) %>%
+        dplyr::summarise(dplyr::across(value,
+                         list(mean = mean, sd = sd),
+                         na.rm = TRUE)) %>%
+        dplyr::mutate(dplyr::across(dplyr::starts_with("value"), 
+                                    round, digits = 2)) %>% 
+        tidyr::pivot_wider(names_from = day, 
+                    values_from = dplyr::starts_with("value"))
+}
 
-```{r solution-summary-extend, results='hide', solution=TRUE}
-#' Calculate tidy summary statistics by day.
-#'
-#' @param data The MMASH dataset.
-#'
-#' @return A data.frame/tibble.
-#'
+# Source, then test out the function in the Console:
+tidy_summarise_by_day(mmash)
+```
+
+That's much easier to read with the values rounded. Now let's add the ability
+to change the summary statistics function to something else. This is a
+surprisingly easy thing so before we do that, let's take a few minutes to
+brainstorm how we can achieve this.
+
+`r details_for_instructors("
+Get the groups to chat together for about 5 minutes to think about how they'd do
+that. Ask that they don't look ahead in the text. After that, discuss some ways
+to add the functionality.
+")`
+
+Now that we've discussed this and come to a conclusion, let's update the 
+function.
+
+```{r generalize-summary-function}
 tidy_summarise_by_day <- function(data, summary_fn) {
     data %>%
         dplyr::select(-samples) %>%
@@ -440,18 +455,23 @@ tidy_summarise_by_day <- function(data, summary_fn) {
         dplyr::group_by(gender, day, name) %>%
         dplyr::summarise(dplyr::across(
             value,
-            # Changed from task 2.
             summary_fn,
             na.rm = TRUE)
         ) %>%
-        # Changed from task 1.
         dplyr::mutate(dplyr::across(dplyr::starts_with("value"), 
                                     round, digits = 2)) %>% 
         tidyr::pivot_wider(names_from = day, 
                     values_from = dplyr::starts_with("value"))
 }
 
-# This code would be in the `doc/lesson.Rmd` file.
+# Source, then test out the function in the Console:
+tidy_summarise_by_day(mmash, max)
+```
+
+Now that it works, let's add some summary statistics to the 
+`doc/lesson.Rmd` file.
+
+```{r test-tidier-summary}
 mmash %>% 
     tidy_summarise_by_day(max)
 mmash %>%
