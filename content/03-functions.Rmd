@@ -182,6 +182,17 @@ add_nums <- function(num1, num2) {
 Once we've created that, let's open up the Git Interface (`Ctrl-Alt-M`) and **add
 and commit** these changes to our history.
 
+## Exercise: Brainstorm and discuss why and what you could make as a function
+
+Time: 10 min
+
+You've the basics of making your own, custom function. Now, as a group,
+brainstorm and discuss some ways that you might make functions in your own
+work to help reduce repetition. What type of code might you make as a function
+for your own project? Do you think others, maybe in your research group, might
+use this function too? Afterwards, all the groups will briefly share what they
+thought of.
+
 ## Making a function for vroom
 
 Now that we have a basic understanding of what a function looks like, let's
@@ -568,6 +579,18 @@ import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 It should work as expected!
 Now that we've done that, let's **add and commit** the changes made through the
 Git interface.
+
+## Exercise: Discuss why tracking dependencies might help you
+
+Time: 5 min
+
+Before moving on to the next exercise, discuss with your group about:
+
+- How tracking dependencies might help you in your own work
+- Some personal experiences, if you have any, you have had where the lack of
+explicit dependencies made your work harder and more confusing.
+
+All groups will briefly share their own thoughts.
 
 ## Exercise: Move and update the rest of the functions
 

@@ -615,7 +615,7 @@ including adding the final `mmash.rda` data file, to the Git history. Make sure
 the `doc/lesson.Rmd` file is empty (except for the YAML header) and ready for
 the next session.
 
-## Exercise: What other cleaned data might you create?
+## Exercise: Brainstorm and discuss other ways of joining the datasets
 
 Time: 15 min
 

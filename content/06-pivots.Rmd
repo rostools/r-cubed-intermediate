@@ -209,6 +209,14 @@ mmash %>%
     pivot_longer(c(-user_id, -day, -gender))
 ```
 
+## Exercise: Brainstorm and discuss other ways of using pivots
+
+Time: 10 min
+
+As a group, brainstorm and discuss *as many ways as you can* on how pivoting longer
+or wider might enhance using the split-apply-combine technique. Groups will briefly
+share what they've come up with before moving on to the next exercise.
+
 ## Exercise: Summarise your data after pivoting
 
 Time: 15 min
@@ -541,6 +549,20 @@ and check reproducibility by often knitting to HTML.
     figures of the R output.
 - Use Git often by adding and committing into the history so you never lose
 stuff and can keep track of changes to your files.
+
+## Exercise: Discuss how you might use this workflow in your own work
+
+Time: 15 min
+
+We've covered quite a bit in this course and you've (hopefully) learned a lot.
+Before moving on to other exercises and the project work, discuss with your group
+how you might use this workflow (or parts of it) in your own work. What are some
+ways you might use these workflows and techniques? What challenges do you see
+might come up by using these skills and tools? Groups will briefly share what
+they've discussed before moving on to the other exercises. (side note: this
+exercise is partly to help reinforce what you've learned and also partly selfish
+since we'd love to hear how you might use these tools and some challenges that
+might come up by using them.)
 
 ## Exercise: Process and join sleep and questionnaire data
 

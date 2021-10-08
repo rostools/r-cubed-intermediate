@@ -280,6 +280,14 @@ user_info_df %>%
 
 Now that we have this working, let's **add and commit** the changes to the Git history.
 
+## Exercise: Brainstorm and discuss ways to incorporate functionals into your work
+
+Time: 10 min
+
+As a group, brainstorm and discuss as many ways as you can for how you might
+incorporate functionals like `map()` into your own work. Afterwards, all groups
+will briefly share some of what they thought of before we move on to the next exercise.
+
 ## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
 
 Time: 20 min

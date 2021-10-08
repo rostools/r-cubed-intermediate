@@ -148,6 +148,14 @@ Go over the text again, to reinforce the workflow, and the reasons why we do cer
 things.
 ")`
 
+## Exercise: Discuss the types of workflows you use
+
+Time: 15 min
+
+As a group, discuss what type of workflow you use for your own work. How does
+it compare with the others in the group? How does it compare with what has been
+described so far? Groups will briefly share what they've discussed.
+
 ## Setting up our project
 
 Now that we've gone over the overview, let's get our project ready for the next
