@@ -12,10 +12,16 @@ knitr::include_url("slides/introduction.html", height = "375px")
 
 ## Overview of workflow
 
-**Take 5 min to read over this section before we go over it together**.
+**Take 8 min to read over this section before we go over it together**.
 
-This section provides an bigger picture view of what we will be doing,
-how we will be going about doing it, and what it will look like in the end.
+This section provides an bigger picture view of what we will be doing, 
+why we want to do it, how we will be going about doing it, and what it will look
+like in the end. Firstly, what we ultimately want to do is process the MMASH
+data so that we have a single dataset to work with for later (hypothetical)
+analyses. We also want to make sure that whatever processing we do to the data
+is reproducible. So everything we'll do throughout the course is done in order
+to achieve our aim of making a single data and to make things reproducible.
+
 Both the folder and file structures below as well as the 
 Figure \@ref(fig:diagram-overview-0) show exactly what we will be doing and how
 it will look like at the file level (not at the R code level).
@@ -76,6 +82,11 @@ LearnR3
 └── README.md
 ```
 
+Why do we structure it this way? Because we want to follow some standard conventions
+in R, like having a `DESCRIPTION` file, keeping raw data in the `data-raw/` folder,
+and keeping R scripts in the `R/`. We also want to keep things structured to make
+it easier for others and ourselves to reproducible the work.
+
 Our workflow will generally look like Figure \@ref(fig:diagram-overview-0),
 with each block representing one or two sessions. We've already done a bit
 of the first block, *"Download raw data"*.
@@ -87,24 +98,58 @@ knitr::include_graphics("images/diagram-overview-0.svg")
 Our workflow and process will be something like:
 
 - Make an R script (`data-raw/mmash.R`) to download the dataset (`data-raw/mmash/`),
-which you already did in the pre-course tasks.
+which you already did in the pre-course tasks. 
+    - We do this to keep the code for downloading and processing the data
+    together with the raw data.
 - Use R Markdown (`doc/lesson.Rmd`) to write and test out code, convert it into
 a function, test it, and then move it into `R/functions.R`.
+    - We use R Markdown to prototype code because 1) it's easier from a teaching
+    perspective to interweave text and comments with code as we do the
+    code-alongs, 2) to make it easier to translate your work into a format for easy
+    dissemination (e.g. webpage, Word Doc, or PDF), and 3) because we want to
+    you to practice and reinforce skills in using and writing R Markdown since
+    it is a key component to doing reproducible research in R. Another alternative
+    way of working is to prototype ("write and test") code in a temporary R
+    script in the `R/` folder.
+    - We keep the functions in a separate file because we will frequently `source()`
+    from it as we prototype and test out code in the R Markdown file. It also 
+    creates a clear separation between "finalized" code and prototyping code.
 - Use a combination of restarting R (`Ctrl-Shift-F10` or "Session -> Restart
 R") and using `source()` (`Ctrl-Shift-S` while in `R/functions.R`) to run the
 functions inside of `R/functions.R`.
+    - We restart R because it is the only sure way there is to clearing up the
+    R workspace and starting for a "clean plate". And for reproducibility,
+    we should always aim to working from a clean plate.
 - Replace the old code in the R Markdown document (`doc/lesson.Rmd`) with the
 new function.
 - Finish building functions that prepare the dataset, use them in the cleaning
 script (`data-raw/mmash.R`), run the script and save the data as an `.rda`
 file (`data/mmash.rda`).
+    - Like with the `R/functions.R` script, we move the finalized data
+    processing code over from the R Markdown into the `data-raw/mmash.R`
+    script to have a clear separation of completed code and prototyping code.
 - Remove the old code from the R Markdown document (`doc/lessons.Rmd`).
+    - Once we've finished prototyping code and moved it over into a more "final"
+    location, we remove left over code because it isn't necessary and we don't
+    want our files to be littered with left over code. Again, like with restarting
+    R often, we want to work from a clean plate.
 - Whenever we complete a task, we *add and commit* those file changes and save
 them into the Git history.
+    - We use Git because it is the best way of keeping track of what was done to
+    your files, when, and why. It keeps your work transparent and makes it easier
+    to share your code by uploading to GitHub. Using version control should be
+    a standard practice to doing better science since it fits with the philosophy
+    of doing science.
+
+**Stop reading here**.
+
+`r details_for_instructors("
+Go over the text again, to reinforce the workflow, and the reasons why we do certain
+things.
+")`
 
 ## Setting up our project
 
-**We'll do this all together**.
 Now that we've gone over the overview, let's get our project ready for the next
 steps. But first, we need to do a few things. Since we did all that work in the
 pre-course tasks downloading the data and unzipping it, we need to save these
