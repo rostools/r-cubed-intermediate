@@ -218,7 +218,8 @@ user_1_info_data <- vroom(
         gender = col_character(),
         weight = col_double(),
         height = col_double(),
-        age = col_double()
+        age = col_double(),
+        .delim = ","
     ),
     .name_repair = snakecase::to_snake_case
 )
@@ -237,7 +238,8 @@ import_user_info <- function() {
             gender = col_character(),
             weight = col_double(),
             height = col_double(),
-            age = col_double()
+            age = col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -257,7 +259,8 @@ import_user_info <- function(file_path) {
             gender = col_character(),
             weight = col_double(),
             height = col_double(),
-            age = col_double()
+            age = col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -279,6 +282,7 @@ import_user_info <- function(file_path) {
             weight = col_double(),
             height = col_double(),
             age = col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -312,6 +316,7 @@ import_user_info <- function(file_path) {
             weight = col_double(),
             height = col_double(),
             age = col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -359,7 +364,8 @@ import_saliva <- function(file_path) {
         col_types = cols(
             samples = col_character(),
             cortisol_norm = col_double(),
-            melatonin_norm = col_double()
+            melatonin_norm = col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -542,7 +548,8 @@ import_user_info <- function(file_path) {
             gender = vroom::col_character(),
             weight = vroom::col_double(),
             height = vroom::col_double(),
-            age = vroom::col_double()
+            age = vroom::col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -594,7 +601,8 @@ import_saliva <- function(file_path) {
         col_types = vroom::cols(
             samples = vroom::col_character(),
             cortisol_norm = vroom::col_double(),
-            melatonin_norm = vroom::col_double()
+            melatonin_norm = vroom::col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )
@@ -615,7 +623,8 @@ import_rr <- function(file_path) {
             ibi_s = vroom::col_double(),
             day = vroom::col_double(),
             # Converts to seconds
-            time = vroom::col_time(format = "")
+            time = vroom::col_time(format = ""),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     ) 
@@ -644,7 +653,8 @@ import_actigraph <- function(file_path) {
             inclinometer_lying = vroom::col_double(),
             vector_magnitude = vroom::col_double(),
             day = vroom::col_double(),
-            time = vroom::col_time(format = "")
+            time = vroom::col_time(format = ""),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     )

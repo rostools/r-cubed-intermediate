@@ -226,7 +226,8 @@ user_1_info_data <- vroom(
         Gender = col_character(),
         Weight = col_double(),
         Height = col_double(),
-        Age = col_double()
+        Age = col_double(),
+        .delim = ","
     )
 )
 ```
@@ -296,12 +297,12 @@ user_1_info_data <- vroom(
         gender = col_character(),
         weight = col_double(),
         height = col_double(),
-        age = col_double()
+        age = col_double(),
+        .delim = ","
     ),
     .name_repair = snakecase::to_snake_case
 )
 ```
-
 
 That fixed it! No more messages or warnings! We can now look at the data:
 
@@ -406,7 +407,7 @@ spec(user_1_rr_data_prep)
 ```
 
 Like with last time, copy and paste the output into a new use of `vroom()`.
-Remove the `.delim` line and the `...1` line. Add the `.name_repair` argument
+Remove the `...1` line. Add the `.name_repair` argument
 with `snakecase::to_snake_case`. Don't forget to also remove the
 last `,` at the end! Make sure to remove the `n_max` argument, since we want to
 import in the whole dataset.
@@ -458,8 +459,8 @@ and read in the `Actigraph.csv` file from `user_1/`.
 1. Read in a max of 100 rows for `n_max` and exclude the first column with
 `col_select = -1`.
 1. Use `spec()` to output the column specification and paste the results into
-`col_types()`. Don't forget to remove the `...1 = col_skip()` and the 
-`.delim = ","` line from the `cols()` function.
+`col_types()`. Don't forget to remove the `...1 = col_skip()` (or `NA = col_skip()`)
+line from the `cols()` function.
 1. Knit the R Markdown document (`Ctrl-Shift-K` or the "Knit" button) to regenerate
 the HTML document.
 1. If everything works, **add and commit** the new changes to the Git history (`Ctrl-Alt-M`

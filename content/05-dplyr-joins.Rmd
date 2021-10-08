@@ -674,10 +674,11 @@ import_activity <- function(file_path) {
         file_path,
         col_select = -1,
         col_types = vroom::cols(
-            Activity = vroom::col_double(),
-            Start = vroom::col_time(format = ""),
-            End = vroom::col_time(format = ""),
-            Day = vroom::col_double()
+            activity = vroom::col_double(),
+            start = vroom::col_time(format = ""),
+            end = vroom::col_time(format = ""),
+            day = vroom::col_double(),
+            .delim = ","
         ),
         .name_repair = snakecase::to_snake_case
     ) 
