@@ -13,7 +13,7 @@ BibOptions(
     super = FALSE
     # hyperlink = FALSE,
 )
-bib <- ReadBib(here::here("includes/refs.bib"))
+bib <- ReadBib(here::here("resources/refs.bib"))
 knitr::opts_chunk$set(echo = FALSE)
 
 # Customized theme
