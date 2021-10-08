@@ -47,6 +47,12 @@ LearnR3
 └── README.md
 ```
 
+
+`r details_for_instructors("
+Briefly go over the bigger picture (found in the introduction section) and
+remind everyone the 'what' and 'why' of what we are doing.
+")`
+
 ## Learning objectives
 
 1. Using the concept of "pivoting" to arrange data from long to wide and vice versa.

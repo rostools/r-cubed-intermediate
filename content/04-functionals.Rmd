@@ -40,6 +40,11 @@ LearnR3
 └── README.md
 ```
 
+`r details_for_instructors("
+Briefly go over the bigger picture (found in the introduction section) and
+remind everyone the 'what' and 'why' of what we are doing.
+")`
+
 ## Learning objectives
 
 1. Learn about and apply functional programming, vectorization, and functionals
