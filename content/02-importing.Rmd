@@ -239,9 +239,9 @@ depending on the version of your packages (the most updated packages
 will show this), but you can see it in the code chunk above.
 
 This is `vroom()` letting you know that a column was renamed because
-you didn't explicitly indicate that you wanted it renamed.
-This is the empty column. Even though we excluded it with `col_select = -1`,
-that only excludes it after importing it.
+it found an empty column with no column name and is letting you know it had
+to rename it. Even though we excluded it with `col_select = -1`,
+that only excludes it after reading the column names, before importing the data.
 
 To remove this new message, we need to tell `vroom()` exactly how to handle
 renaming cases. Let's look at the help docs of vroom: `?vroom`. Scroll down and
@@ -512,3 +512,4 @@ the data you need
 - Fix column names to match a style using `.name_repair =` argument in `vroom()`
 - For very large datasets, importing in the first 100-1000 rows using `n_max =`
 to test that importing works fine before importing the full dataset
+
