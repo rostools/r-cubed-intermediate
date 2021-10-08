@@ -39,6 +39,16 @@ previous session.
 
 ### Throughout the sessions
 
+- At the start of the session, except for the first one, quickly review what was
+covered in the previous sessions. Doing this can help remind the learners
+where they are at in the course and to reinforce what they learned previously.
+
+- At the beginning of the morning sessions and occasionally throughout the session,
+refer back to the big picture of why we are doing what we are doing
+
+- After reading exercises/activities, briefly go over the content again and,
+where relevant, emphasize the *why* of it.
+
 - For most of the sessions,
 there are sections that tell the participants to read on their own.
 Know beforehand where these sections are and
