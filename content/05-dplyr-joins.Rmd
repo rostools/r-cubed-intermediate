@@ -689,3 +689,19 @@ activity_df <- import_multiple_files("Activity.csv", import_activity)
 activity_df %>% 
     mutate(activity_duration = end - start)
 ```
+
+## Summary
+
+`r details_for_instructors("
+Quickly cover this before finishing the session and when starting the next session.
+")`
+
+- While very difficult to learn and use, regular expressions (regex or regexp) 
+are incredibly powerfully at processing character data
+- Use `left_join()`, `right_join()`, and `full_join()` to join two datasets
+together
+- Use the functional `reduce()` to iteratively apply a function to a set of
+items in order to end up with one item (e.g. join more than two datasets into
+one final dataset)
+- Use `case_when()` instead of nesting multiple "if else" conditions whenever
+you need to do slightly more complicated conditionals

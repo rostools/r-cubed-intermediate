@@ -693,6 +693,19 @@ summarised_actigraph_df <- actigraph_df %>%
     ungroup()
 ```
 
+## Summary
 
+`r details_for_instructors("
+Quickly cover this before finishing the session and when starting the next session.
+")`
 
-
+- R is a functional programming language: 
+    - It uses functions that take an input, do an action, and give an output
+    - It uses vectorisation that apply a function to multiple items (in a vector)
+    all at once rather than using loops
+    - It uses functionals that allow functions to use other functions as input
+- Use the purrr package and its function `map()` when you want to repeat a function
+on multiple items at once
+- Use `group_by()`, `summarise()`, and `across()` followed by `ungroup()` to use
+the split-apply-combine technique when needing to do an action on groups within
+the data (e.g. calculate the mean age between education groups)

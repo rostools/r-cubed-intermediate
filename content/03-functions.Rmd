@@ -651,3 +651,20 @@ import_actigraph <- function(file_path) {
     return(actigraph_data)
 }
 ```
+
+## Summary
+
+`r details_for_instructors("
+Quickly cover this before finishing the session and when starting the next session.
+")`
+
+- Functions in R are anything that does an action
+- Functions have five components:
+    - The three required ones are the function call with `function() { }`, the
+    function body between the `{ }`, and an output (usually set with `return()`)
+    - The two optional ones are assigning the function to a named object with `<-`
+    and the function arguments put within `function()`
+- Write function documentation by using Roxygen
+- Use `use_package()` for the `DESCRIPTION` file as well as `packagename::functionname()`
+to explicit state the packages your function depends on
+    - Don't use `library()` or `require()` *within* your function

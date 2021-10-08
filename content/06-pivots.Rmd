@@ -573,3 +573,13 @@ datasets.
 - Name the new dataset `actigraph_rr` and save it to `data/`
 by using another `usethis::use_data()` line in the `data-raw/mmash.R`
 script.
+
+## Summary
+
+`r details_for_instructors("
+Quickly cover this before finishing the session and when starting the next session.
+")`
+
+- Data is usually structured to varying degrees as wide or long format
+    - Use `pivot_longer()` to convert from wide to long
+    - Use `pivot_wider()` to convert from long to wide

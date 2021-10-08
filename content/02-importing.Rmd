@@ -496,3 +496,18 @@ user_1_actigraph_data <- vroom(
     .name_repair = snakecase::to_snake_case
 )
 ```
+
+## Summary
+
+`r details_for_instructors("
+Quickly cover this before finishing the session and when starting the next session.
+")`
+
+- Use the appropriate package when importing a specific data file (e.g. for `.xlsx` use readxl)
+- Use `vroom()` for fast importing of plain text type files (e.g. csv)
+- Use `spec()` to diagnose importing issues
+- Use `col_types =` and `col_select = ` arguments in `vroom()` to import only
+the data you need
+- Fix column names to match a style using `.name_repair =` argument in `vroom()`
+- For very large datasets, importing in the first 100-1000 rows using `n_max =`
+to test that importing works fine before importing the full dataset
