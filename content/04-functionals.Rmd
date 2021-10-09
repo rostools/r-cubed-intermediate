@@ -497,7 +497,7 @@ with the `where()` function, you can select different variables. The `where()` f
 tibble::tribble(
     ~'What it selects', ~Example, ~Function,
     'Select variables where a function returns TRUE', 'Select variables that have data as character (`is.character`)', '`where()`',
-    'Select all variables', 'Select all variables in "user_info_df"', 'everything()',
+    'Select all variables', 'Select all variables in `user_info_df`', '`everything()`',
     'Select variables that contains matching string', 'Select variables that contains the string "user_info"', 'contains()',
     'Select variables that ends with suffix', 'Select all CSV files with ".csv"', 'ends_with()'
     ) %>% 
