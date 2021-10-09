@@ -63,7 +63,7 @@ programming is in functional programming. So what is it? It is programming that:
 - Uses functions (like `function()`)
 - Applies functions to vectors all at once (called [vectorisation]), rather than
 in a loop
-- Can use functions as input to other functions (called a [functional])
+- Can use functions as input to other functions (called a [functional]), rather than having to create your own loop to do it
 
 [vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
 [functional]: https://adv-r.hadley.nz/functionals.html
@@ -71,8 +71,22 @@ in a loop
 We've already covered functions. You've definitely already used vectorization
 since it is one of R's big strengths. For instance, functions like `mean()`,
 `sd()`, `sum()` are vectorized in that you give them a vector of numbers and they
-do something to all the values in the vector at once. As a comparison, in other
-programming languages, if you wanted to calculate the sum you would need a loop:
+do something to all the values in the vector at once. In vectorized functions, you can give the function an entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. Figure \@ref(fig:image-vectorization) shows how a function conceptually uses vectorization.
+
+```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="45%", echo=FALSE}
+knitr::include_graphics(here::here("images/vectorization.png"))
+```
+
+For example, in R, there is a vectorized function called `sum()` that takes the entire vector of `values` and outputs the total sum, without needing a for loop.
+
+```{r}
+# Vectorized
+sum(values)
+```
+
+[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
+
+As a comparison, in other programming languages, if you wanted to calculate the sum you would need a loop:
 
 ```{r using-for-loop}
 total_sum <- 0
@@ -83,25 +97,6 @@ for (value in values) {
 }
 total_sum
 ```
-
-But in R, you can give a function that uses vectorization the entire vector
-(e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. 
-Figure \@ref(fig:image-vectorization) shows how a function conceptually uses
-vectorization.
-
-```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="45%", echo=FALSE}
-knitr::include_graphics(here::here("images/vectorization.png"))
-```
-
-Instead, in R, there is the function called `sum()` that takes the entire
-vector of `values` and outputs the total sum, without needing a for loop.
-
-```{r}
-# Vectorized
-sum(values)
-```
-
-[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
 
 A functional on the other hand is a function that can also use a function as
 one of its arguments. Figure \@ref(fig:image-functionals) shows how the functional
@@ -149,10 +144,13 @@ for (num in 1:5) {
 }
 ```
 
-With `map()`, we'd do this a bit differently. purrr uses a shortcut to allow
-you to write functions that do more things to the input vector (e.g. `1:5`).
-This shortcut is using `~` to start the function and `.x` as the replacement
-for the vector item:
+With `map()`, we'd do this a bit differently. purrr allows us to create anonymous functions (functions that are used once and disappear after usage) to extend its capabilities. Anonymous functions are created by writing `function(x)` followed by the function definition inside of `map()`. Using `map()` with an anonymous function allows us to do more things to the input vector (e.g. `1:5`). Here is an example:
+
+```{r}
+map(1:5, function(x) paste(x, "seconds have passed"))
+```
+
+As this is quite verbose, purr supports the use of a syntax shortcut to write anonymous functions. This shortcut is using `~` to start the function and `.x` as the replacement for the vector item. `.x` is used instead of `x` in order to avoid potential name collisions in functions where `x` is an function argument (for example in `aes()`, where `x` can be used to define the x-axis mapping for a graph). Here is the same example as above, now using the `~` shortcut:
 
 ```{r}
 map(1:5, ~paste(.x, "seconds have passed"))
@@ -162,13 +160,7 @@ This is the basics of using functionals. Functions, vectorization, and
 functionals provide expressive and powerful approaches to a simple task:
 *Doing an action on each item in a set of items*. And while technically using a
 for loop lets you "not repeat yourself", they tend to be more error prone
-and harder to write and read compared to these other tools.
-
-But what does functionals have to do with what we are doing now? Well, our 
-`import_user_info()` function only takes in one data file. But we have 
-22 files that we could load all at once if we used functionals.
-**Ok, stop reading and we'll go over this again before continuing with the
-coding.**
+and harder to write and read compared to these other tools. **Ok, stop reading and we'll go over this again before continuing with the coding.**
 
 `r details_for_instructors("
 Go over this section briefly by reinforcing what they read. Make sure they
@@ -178,6 +170,75 @@ code-along should also help reinforce this concept.
 Also highlight that the resources appendix has some links for continued learning
 for this and that the RStudio purrr cheatsheet is an amazing resource to use.
 ")`
+
+The concept of functional programming can be difficult to grasp. As an alternative to the above explanation, one could also explain functional programming in relation to what it enables. For example, imagine that you have a vector and would like to investigate whether any given number inside this vector is above 5. This can be accomplished using a variety of programming styles. First, we could create a function to check whether a given number is above 5, and manually check each element of the vector:
+
+```{r eval=FALSE}
+# Create vector of 10 numbers
+numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+# Function to check if a number is above 5
+over_five <- function(number) {
+    if(number > 5) {
+        return(TRUE)
+    } else {
+        return(FALSE)
+    }
+}
+
+# Check each element
+over_five(numbers[[1]])
+over_five(numbers[[2]])
+over_five(numbers[[3]])
+over_five(numbers[[4]])
+over_five(numbers[[5]])
+over_five(numbers[[6]])
+over_five(numbers[[7]])
+over_five(numbers[[8]])
+over_five(numbers[[9]])
+over_five(numbers[[10]])
+```
+
+Such an approach is verbose, not "functional" in style, and very inflexible. Imagine if the vector had contained 100 numbers instead of 10. In such a case, it would have been unreasonable to manually check each element. As an alternative we could accomplish the same by using a for loop:
+
+```{r eval=FALSE}
+# Create list to contain answer/output
+output <- vector("list", length = length(numbers))
+
+# For loop
+for(itterator in seq_along(numbers)) {
+    output[[itterator]] <- over_five(numbers[[itterator]])
+}
+```
+
+A loop allows us to do exactly the same, however, with more precise and shorter code. Additionally, a for loop can handle a vector of any length.
+
+Still, writing loops for simple operations does not equate to functional programming. In this case, replacing the for loop with a the functional `map()`, would make the code more precise, and akin to functional programming:
+
+```{r eval=FALSE}
+# Functional
+map(numbers, over_five)
+```
+
+Our code is now more functional, however, there is still room for improvement. For example, the `over_five()` function is rather specific and we are very unlikely to use this function anywhere else in our code. Hence, it would be a good idea to remove and replace `over_five()` with a anonymous function (with or without using the `~` shortcut):
+
+```{r eval=FALSE}
+# Anonymous function
+map(numbers, function(x) if(x > 5) TRUE else FALSE)
+
+# Anonymous function (with shortcut)
+map(numbers, ~if(.x > 5) TRUE else FALSE)
+```
+
+Lastly, our code does not incorporate any form for vectorization. The for loop we created, runs code sequentially, where only one value is evaluated at a time. Vectorization would allow us to perform this check in parallel. To incorporate vectorization we could either create a vectorized function ourselves (this is quite difficult and complex) or find an existing function that is already vectorized. In this case, the function `if_else()` is already vectorised, so we'll use that:
+
+```{r eval=FALSE}
+map(numbers, ~if_else(.x > 5, TRUE, FALSE))
+```
+
+But what does functionals have to do with what we are doing now? Well, our 
+`import_user_info()` function only takes in one data file. But we have 
+22 files that we could load all at once if we used functionals.
 
 The first thing we have to do is add `library(purrr)` to the `setup` code chunk
 in the `doc/lesson.Rmd` document. Then we need to add the package dependency
@@ -429,7 +490,20 @@ user_info_df %>%
 ```
 
 But many dplyr verbs can also take functions as input. When you combine `select()`
-with the `where()` function, you can select e.g. columns that are numeric:
+with the `where()` function, you can select different variables. The `where()` function is a `tidyselect` helper, a set of functions that make it easier to select variables. Some additional helper functions include:
+
+```{r echo=FALSE}
+tibble::tribble(
+    ~'What it selects', ~Example, ~Function,
+    'Select variables where a function returns TRUE', 'Select only variables that is of character type (is.character)', 'where()',
+    'Select all variables', 'Select all variables in "user_info_df"', 'everything()',
+    'Select variables that contains matching string', 'Select variables that contains the string "user_info"', 'contains()',
+    'Select variables that ends with suffix', 'Select all CSV files with ".csv"', 'ends_with()'
+    ) %>% 
+    knitr::kable(caption = "Common tidyselect helper functions and some of their use cases.")
+```
+
+Lets select columns that are numeric:
 
 ```{r}
 user_info_df %>% 
