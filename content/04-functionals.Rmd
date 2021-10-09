@@ -504,7 +504,7 @@ tibble::tribble(
     knitr::kable(caption = "Common tidyselect helper functions and some of their use cases.")
 ```
 
-Lets select columns that are numeric:
+Let's select columns that are numeric:
 
 ```{r}
 user_info_df %>% 
