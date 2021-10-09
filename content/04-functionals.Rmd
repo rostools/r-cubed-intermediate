@@ -83,6 +83,7 @@ knitr::include_graphics(here::here("images/vectorization.png"))
 For example, in R, there is a vectorized function called `sum()` that takes the entire vector of `values` and outputs the total sum, without needing a for loop.
 
 ```{r}
+values <- 1:10
 # Vectorized
 sum(values)
 ```
