@@ -214,7 +214,7 @@ output
 
 This for loop is taking each item from numbers, using `over_five()` on it, and then saving the output into the object `output`. So this loop allows us to do the same as we did manually, but more precisely and with less code. If the vector has more items or less, it doesn't matter to the for loop since it will run no matter the length.
 
-Still, writing loops for simple operations does not equate to functional programming. In this case, replacing the for loop with a the functional `map()`, would make the code more precise, and akin to functional programming:
+For some situations, for loops are the perfect solution. However, they are not R's strength, but rather functional programming is. In this case, we replace the for loop with the functional `map()`, which would make the code shorter and more robust.
 
 ```{r eval=FALSE}
 # Functional
