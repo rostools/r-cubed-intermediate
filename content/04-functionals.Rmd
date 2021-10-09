@@ -201,7 +201,7 @@ over_five(numbers[10])
 
 Such an approach is verbose, not "functional" in style, and very inflexible. Imagine if the vector had contained 100 numbers instead of 10. In such a case, it would have been unreasonable to manually check each element. As an alternative we could accomplish the same by using a for loop:
 
-```{r eval=FALSE}
+```{r}
 # Initialize a vector to capture the output in the for loop
 output <- vector("logical", length = length(numbers))
 
