@@ -212,7 +212,7 @@ for(item in seq_along(numbers)) {
 output
 ```
 
-A loop allows us to do exactly the same, however, with more precise and shorter code. Additionally, a for loop can handle a vector of any length.
+This for loop is taking each item from numbers, using `over_five()` on it, and then saving the output into the object `output`. So this loop allows us to do the same as we did manually, but more precisely and with less code. If the vector has more items or less, it doesn't matter to the for loop since it will run no matter the length.
 
 Still, writing loops for simple operations does not equate to functional programming. In this case, replacing the for loop with a the functional `map()`, would make the code more precise, and akin to functional programming:
 
