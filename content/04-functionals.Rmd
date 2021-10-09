@@ -216,7 +216,7 @@ This for loop is taking each item from numbers, using `over_five()` on it, and t
 
 For some situations, for loops are the perfect solution. However, they are not R's strength, but rather functional programming is. In this case, we replace the for loop with the functional `map()`, which would make the code shorter and more robust.
 
-```{r eval=FALSE}
+```{r}
 # Functional
 map(numbers, over_five)
 ```
