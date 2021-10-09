@@ -173,7 +173,7 @@ for this and that the RStudio purrr cheatsheet is an amazing resource to use.
 
 The concept of functional programming can be difficult to grasp. As an alternative to the above explanation, one could also explain functional programming in relation to what it enables. For example, imagine that you have a vector and would like to investigate whether any given number inside this vector is above 5. This can be accomplished using a variety of programming styles. First, we could create a function to check whether a given number is above 5, and manually check each element of the vector:
 
-```{r eval=FALSE}
+```{r}
 # Create vector of 10 numbers
 numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
