@@ -461,7 +461,7 @@ Imports:
     knitr,
     rmarkdown,
     distill,
-    usethis
+    vroom
 ```
 
 Now, if you or someone else wants to install all the packages your project
