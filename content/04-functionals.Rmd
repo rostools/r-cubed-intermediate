@@ -221,7 +221,7 @@ For some situations, for loops are the perfect solution. However, they are not R
 map(numbers, over_five)
 ```
 
-Our code is now more functional, however, there is still room for improvement. For example, the `over_five()` function is rather specific and we are very unlikely to use this function anywhere else in our code. Hence, it would be a good idea to remove and replace `over_five()` with a anonymous function (with or without using the `~` shortcut):
+This works great as is, but sometimes you might not need to create a new function to use inside of `map()`. Instead we could use an anonymous function with either `function()` or `~`.
 
 ```{r eval=FALSE}
 # Anonymous function
