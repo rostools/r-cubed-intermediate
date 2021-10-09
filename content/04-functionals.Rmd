@@ -62,8 +62,11 @@ programming is in functional programming. So what is it? It is programming that:
 
 - Uses functions (like `function()`)
 - Applies functions to vectors all at once (called [vectorisation]), rather than
-in a loop
-- Can use functions as input to other functions (called a [functional]), rather than having to create your own loop to do it
+one at a time
+    - Vectors are multiple items, like a sequence of numbers from 1 to 5, that are
+    bundled together, for instance a column for body weight in a dataset is a vector 
+    of numbers
+- Can use functions as input to other functions to then output a vector (called a [functional]) 
 
 [vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
 [functional]: https://adv-r.hadley.nz/functionals.html

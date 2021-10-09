@@ -51,9 +51,15 @@ data analysis work.
 ## The basics of a function
 
 **Take 5 min and read this section until it says to stop.**
-As mentioned before, all actions in R are functions. For instance, the `+` is a
-function, `mean()` is a function, `[]` is a function, and so on. Because R
-is open source, that means anyone can see how things work underneath.
+We've mentioned functions multiple times, but what is a function?
+At its core, a function in R is anything that does an action. A function is
+a bundled sequence of steps that achieve a specific action.
+For instance, the `+` (to add) is a function, `mean()` is a function, `[]` (to
+subset or extract) is a function, and so on. In simple terms, functions are made of
+a function call, its arguments, and the function body: 
+`function(argument1, argument2) { ...body with R code... }`.
+
+Because R is open source, anyone can see how things work underneath.
 So, if we want to see what a function does underneath, we type out the
 function name without the `()` into the Console and run it. 
 If we do it with the function `sd()` which calculates the standard deviation,
@@ -63,7 +69,8 @@ we see:
 sd
 ```
 
-How you calculate the standard deviation is the square root of the variance.
+Here you see `sd()` as the arguments `x` and `na.rm`. Within the function body
+is how it calculates the standard deviation, which is the square root of the variance.
 In this code, the `var()` is inside the `sqrt()` function, which is exactly what
 it should be.
 
