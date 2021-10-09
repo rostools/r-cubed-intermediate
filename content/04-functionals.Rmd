@@ -187,16 +187,16 @@ over_five <- function(number) {
 }
 
 # Check each element
-over_five(numbers[[1]])
-over_five(numbers[[2]])
-over_five(numbers[[3]])
-over_five(numbers[[4]])
-over_five(numbers[[5]])
-over_five(numbers[[6]])
-over_five(numbers[[7]])
-over_five(numbers[[8]])
-over_five(numbers[[9]])
-over_five(numbers[[10]])
+over_five(numbers[1])
+over_five(numbers[2])
+over_five(numbers[3])
+over_five(numbers[4])
+over_five(numbers[5])
+over_five(numbers[6])
+over_five(numbers[7])
+over_five(numbers[8])
+over_five(numbers[9])
+over_five(numbers[10])
 ```
 
 Such an approach is verbose, not "functional" in style, and very inflexible. Imagine if the vector had contained 100 numbers instead of 10. In such a case, it would have been unreasonable to manually check each element. As an alternative we could accomplish the same by using a for loop:
