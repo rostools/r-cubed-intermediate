@@ -608,7 +608,8 @@ where the function comes from.
 test that the functions work by running them in the **Console**.
 
 Also update the `import_saliva()` function you created by being explicit about
-where the functions come from (e.g. with the `packagename::`).
+where the functions come from (e.g. with the `packagename::`). Afterwards,
+**add and commit** the changes to the Git history.
 
 ```{r solution-update-other-functions, results='hide', solution=TRUE}
 #' Import the MMASH saliva dataset.
@@ -684,6 +685,30 @@ import_actigraph <- function(file_path) {
     return(actigraph_data)
 }
 ```
+
+## Updating processing script and clean up R Markdown document
+
+**We'll do this all together**.
+Now that we have some functions that import some of the datasets, let's add them
+to the `data-raw/mmash.R` script and then *completely* clean up the R Markdown.
+Open up the `data-raw/mmash.R` script, go to the very bottom of the script,
+and let's add the importing functions to the script:
+
+```{r add-import-functions-to-data-raw-script, eval=FALSE}
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+rr_df <- import_multiple_files("RR.csv", import_rr)
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+```
+
+Save the file and open up the `doc/lesson.Rmd` document. Since we've done
+a decent amount of prototyping and testing code out for importing the data,
+we should clean up the R Markdown file so we aren't littering. So, delete **all**
+the text and code *below* the `setup` code chunk at the top. After it has been
+deleted, add and commit the changes to the Git history. Why do we delete everything?
+Because it keeps things cleaner and makes it easier to look through
+the file. And because we use Git, nothing is truly gone so you can always go back
+to the text later.
 
 ## Summary
 
