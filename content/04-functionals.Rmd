@@ -150,7 +150,7 @@ With `map()`, we'd do this a bit differently. purrr allows us to create anonymou
 map(1:5, function(x) paste(x, "seconds have passed"))
 ```
 
-As this is quite verbose, purr supports the use of a syntax shortcut to write anonymous functions. This shortcut is using `~` to start the function and `.x` as the replacement for the vector item. `.x` is used instead of `x` in order to avoid potential name collisions in functions where `x` is an function argument (for example in `aes()`, where `x` can be used to define the x-axis mapping for a graph). Here is the same example as above, now using the `~` shortcut:
+As this is quite verbose, purrr supports the use of a syntax shortcut to write anonymous functions. This shortcut is using `~` (tilde) to start the function and `.x` as the replacement for the vector item. `.x` is used instead of `x` in order to avoid potential name collisions in functions where `x` is an function argument (for example in `ggplot2::aes()`, where `x` can be used to define the x-axis mapping for a graph). Here is the same example as above, now using the `~` shortcut:
 
 ```{r}
 map(1:5, ~paste(.x, "seconds have passed"))
