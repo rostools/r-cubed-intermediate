@@ -756,6 +756,7 @@ summarised_rr_df <- rr_df %>%
 summarised_rr_df %>% 
     trim_filepath_for_book()
 ```
+Un-grouping the data with `ungroup()` does not provide any visual indication of what is happening. However, in the background, it removes certain metadata that the `group_by()` function added.
 
 Before continuing, switch to the Git interface and **add and commit** the changes so
 far.
