@@ -223,7 +223,7 @@ map(numbers, over_five)
 
 This works great as is, but sometimes you might not need to create a new function to use inside of `map()`. Instead we could use an anonymous function with either `function()` or `~`.
 
-```{r eval=FALSE}
+```{r}
 # Anonymous function
 map(numbers, function(x) if(x > 5) TRUE else FALSE)
 
