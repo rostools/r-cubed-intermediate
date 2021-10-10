@@ -419,12 +419,14 @@ the `data-raw/` folder should look something like:
 [fs]: https://fs.r-lib.org/
 
 ```{r, eval=FALSE}
-# You don't need to run this code, its here to show we got the file list.
+# You don't need to run this code, 
+# its here to show how we got the file list.
 fs::dir_tree("data-raw", recurse = 1)
 ```
 
 ```text
 data-raw
+├── README.md
 ├── LICENSE.txt
 ├── MMASH.zip
 ├── SHA256SUMS.txt
@@ -456,6 +458,7 @@ Afterwards, the files and folders in `data-raw/` will look like:
 
 ```text
 data-raw
+├── README.md
 ├── mmash
 │   ├── user_1
 │   ├── user_10
