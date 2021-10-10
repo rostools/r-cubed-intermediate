@@ -209,7 +209,7 @@ where appropriate.
 1. Rename any objects created to be more generic and include the `return()`
 function at the end to indicate what the function will output.
 1. Run the function and check that it works.
-1. Add the Roxygen2 documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
+1. Add the Roxygen documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
 Roxygen Skeleton" menu item while the cursor is in the function).
 
 `r details_for_instructors("
