@@ -6,7 +6,7 @@ stop("To prevent accidentally sourcing.")
 # Create team names -------------------------------------------------------
 
 # Create random team names
-set.seed(3628979)
+set.seed(214)
 team_prefix <- tibble(adjective = praise::praise_parts$adjective) %>%
     filter(nchar(adjective) <= 7) %>%
     pull(adjective) %>%
@@ -25,7 +25,8 @@ team_names <- glue::glue("Team{team_prefix}{team_suffix}") %>%
     as.character()
 
 # Choose number of teams based on number of instructors (one instructor per team)
-team_names_final <- team_names[c(4, 6, 36, 41)]
+# ~6 groups
+team_names_final <- team_names[c(7, 2, 6, 39, 11, 8)]
 
 # Put participants into teams ---------------------------------------------
 
@@ -52,7 +53,7 @@ teams_prep <- presurvey_current %>%
 # perceived skill.
 library(randomizr)
 
-set.seed(5)
+set.seed(31)
 teams_assigned <- teams_prep %>%
     mutate(team = (perceived_skill_score > 4) %>%
                block_ra(conditions = team_names_final) %>%
@@ -64,15 +65,22 @@ View(teams_assigned)
 # Manually change if need be.
 # teams_assigned <- edit(teams_assigned)
 
+# To paste and use to write teams and names on paper
+teams_assigned %>%
+    select(team, full_name) %>%
+    arrange(team, full_name) %>%
+    glue::glue_data("- {team}: {full_name}") %>%
+    clipr::write_clip()
+
 # Assigning instructors to groups -----------------------------------------
 
-instructors <- c("Anders", "Luke", "Malene", "Stine")
+instructors <- c("Anders", "Luke", "Malene", "Mario")
 
-set.seed(1)
+set.seed(156)
 instructor_assigned_teams <- tibble(
     teams = team_names_final,
-    primary = sample(instructors),
-    secondary = sample(instructors)
+    primary = sample(rep(instructors, times = 2), 6),
+    secondary = sample(rep(instructors, times = 2), 6)
 )
 instructor_assigned_teams
 
