@@ -96,6 +96,14 @@ well as the lectures.
 session material.
 - Omar Silverman: Taught and edited the processing and cleaning code-along session material.
 
+Version 2 contributors were:
+
+- Luke Johnston: Same as in version 1.
+- Anders Aasted Isaksen: Taught, reviewed, and edited functionals session.
+- Malene Revsbech Christiansen: Taught, reviewed, and edited the functions
+session.
+- Stine Scheuer: Taught, reviewed, and edited the pivoting session.
+
 ## Acknowledgements
 
 The course material draws inspiration from these excellent resources:
