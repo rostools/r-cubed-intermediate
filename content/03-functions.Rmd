@@ -443,7 +443,7 @@ Notice the `Imports:` key. This is where information about packages are added.
 To quickly add a package, go to the **Console** and type out:
 
 ```r
-usethis::use_package("usethis")
+usethis::use_package("vroom")
 ```
 
 You will see a bunch of text about adding it to `Imports`. If you look in your
@@ -454,7 +454,7 @@ Imports:
     knitr,
     rmarkdown,
     distill,
-    usethis
+    vroom
 ```
 
 Now, if you or someone else wants to install all the packages your project
@@ -471,7 +471,6 @@ This function finds the `DESCRIPTION` file and installs all the packages in
 usethis::use_package("here")
 usethis::use_package("fs")
 usethis::use_package("snakecase")
-usethis::use_package("vroom")
 ```
 
 Since we will also make use of the tidyverse set of packages later in the
