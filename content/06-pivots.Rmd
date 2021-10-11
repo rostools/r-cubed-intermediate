@@ -20,7 +20,7 @@ Here we will continue using the *Workflow* block as we cover the fourth block,
 knitr::include_graphics("images/diagram-overview-4.svg")
 ```
 
-And your folder and file structure should look like:
+And your folder and file structure should look like (use `fs::dir_tree(recurse = 2)` if you want to check using R):
 
 ```
 LearnR3

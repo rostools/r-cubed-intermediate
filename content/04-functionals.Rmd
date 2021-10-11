@@ -15,7 +15,7 @@ We will continue covering the "*Workflow*" block in Figure \@ref(fig:diagram-ove
 knitr::include_graphics("images/diagram-overview-3.svg")
 ```
 
-And your folder and file structure should look like:
+And your folder and file structure should look like (use `fs::dir_tree(recurse = 2)` if you want to check using R):
 
 ```
 LearnR3
@@ -242,12 +242,6 @@ map(numbers, function(x) if(x > 5) TRUE else FALSE)
 map(numbers, ~if(.x > 5) TRUE else FALSE)
 ```
 
-Lastly, our code does not incorporate any form for vectorization. The for loop we created, runs code sequentially, where only one value is evaluated at a time. Vectorization would allow us to perform this check in parallel. To incorporate vectorization we could either create a vectorized function ourselves (this is quite difficult and complex) or find an existing function that is already vectorized. In this case, the function `if_else()` is already vectorised, so we'll use that:
-
-```{r eval=FALSE}
-map(numbers, ~if_else(.x > 5, TRUE, FALSE))
-```
-
 But what does functionals have to do with what we are doing now? Well, our 
 `import_user_info()` function only takes in one data file. But we have 
 22 files that we could load all at once if we used functionals.
@@ -394,7 +388,7 @@ the document.
     - Name the function `import_multiple_files`
     - Within `function()`, set two new arguments called `file_pattern` and
     `import_function`. 
-    - Within in the code, replace and re-write `"user_info.csv"` with
+    - Within the code, replace and re-write `"user_info.csv"` with
     `file_pattern` and `import_user_info` with `import_function`.
     - Create generic intermediate objects (instead of `user_info_file` and
     `user_info_df`). So, replace and re-write `user_info_file` with `data_files`
