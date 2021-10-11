@@ -12,7 +12,7 @@ Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-ov
 knitr::include_graphics("images/diagram-overview-2.svg")
 ```
 
-And your folder and file structure should look like:
+And your folder and file structure should look like (use `fs::dir_tree(recurse = 2)` if you want to check using R):
 
 ```
 LearnR3
@@ -46,7 +46,6 @@ LearnR3
 as a tool and process for developing functions that can be later easily (re-)used.
 1. Learn what R package dependency management is and how it can simplify your
 data analysis work.
-1. Debugging...
 1. Continue practising Git version control to manage changes to your files.
 
 ## The basics of a function
