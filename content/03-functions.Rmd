@@ -152,7 +152,7 @@ function. It looks like:
 #' @export
 #'
 #' @examples
-add_nums <- function(num1, num2) {
+add_numbers <- function(num1, num2) {
     added <- num1 + num2
     return(added)
 }
@@ -180,7 +180,7 @@ So we'll delete it. Let's write out some documentation for this function:
 #'
 #' @return Returns the sum of the two numbers.
 #'
-add_nums <- function(num1, num2) {
+add_numbers <- function(num1, num2) {
     added <- num1 + num2
     return(added)
 }
