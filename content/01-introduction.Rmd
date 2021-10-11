@@ -12,7 +12,7 @@ knitr::include_url("slides/introduction.html", height = "375px")
 
 ## Overview of workflow
 
-**Take 8 min to read over this section before we go over it together**.
+**Take 10 min to read over this section before we go over it together**.
 
 This section provides an bigger picture view of what we will be doing, 
 why we want to do it, how we will be going about doing it, and what it will look
@@ -36,6 +36,7 @@ LearnR3
 ├── data/
 │   └── README.md
 ├── data-raw/
+│   ├── README.md
 │   ├── mmash-data.zip
 │   ├── mmash/
 │   │  ├── user_1
@@ -63,6 +64,7 @@ LearnR3
 │   ├── README.md
 │   └── mmash.rda
 ├── data-raw/
+│   ├── README.md
 │   ├── mmash-data.zip
 │   ├── mmash/
 │   │  ├── user_1

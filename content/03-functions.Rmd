@@ -12,13 +12,14 @@ Here we will cover the second block, "*Workflow*" in Figure \@ref(fig:diagram-ov
 knitr::include_graphics("images/diagram-overview-2.svg")
 ```
 
-And your folder and file structure should look like:
+And your folder and file structure should look like (use `fs::dir_tree(recurse = 2)` if you want to check using R):
 
 ```
 LearnR3
 ├── data/
 │   └── README.md
 ├── data-raw/
+│   ├── README.md
 │   ├── mmash-data.zip
 │   ├── mmash/
 │   │  ├── user_1
@@ -45,15 +46,20 @@ LearnR3
 as a tool and process for developing functions that can be later easily (re-)used.
 1. Learn what R package dependency management is and how it can simplify your
 data analysis work.
-1. Debugging...
 1. Continue practising Git version control to manage changes to your files.
 
 ## The basics of a function
 
 **Take 5 min and read this section until it says to stop.**
-As mentioned before, all actions in R are functions. For instance, the `+` is a
-function, `mean()` is a function, `[]` is a function, and so on. Because R
-is open source, that means anyone can see how things work underneath.
+We've mentioned functions multiple times, but what is a function?
+At its core, a function in R is anything that does an action. A function is
+a bundled sequence of steps that achieve a specific action.
+For instance, the `+` (to add) is a function, `mean()` is a function, `[]` (to
+subset or extract) is a function, and so on. In simple terms, functions are made of
+a function call, its arguments, and the function body: 
+`function(argument1, argument2) { ...body with R code... }`.
+
+Because R is open source, anyone can see how things work underneath.
 So, if we want to see what a function does underneath, we type out the
 function name without the `()` into the Console and run it. 
 If we do it with the function `sd()` which calculates the standard deviation,
@@ -63,7 +69,8 @@ we see:
 sd
 ```
 
-How you calculate the standard deviation is the square root of the variance.
+Here you see `sd()` as the arguments `x` and `na.rm`. Within the function body
+is how it calculates the standard deviation, which is the square root of the variance.
 In this code, the `var()` is inside the `sqrt()` function, which is exactly what
 it should be.
 
@@ -608,7 +615,8 @@ where the function comes from.
 test that the functions work by running them in the **Console**.
 
 Also update the `import_saliva()` function you created by being explicit about
-where the functions come from (e.g. with the `packagename::`).
+where the functions come from (e.g. with the `packagename::`). Afterwards,
+**add and commit** the changes to the Git history.
 
 ```{r solution-update-other-functions, results='hide', solution=TRUE}
 #' Import the MMASH saliva dataset.
@@ -684,6 +692,30 @@ import_actigraph <- function(file_path) {
     return(actigraph_data)
 }
 ```
+
+## Updating processing script and clean up R Markdown document
+
+**We'll do this all together**.
+Now that we have some functions that import some of the datasets, let's add them
+to the `data-raw/mmash.R` script and then *completely* clean up the R Markdown.
+Open up the `data-raw/mmash.R` script, go to the very bottom of the script,
+and let's add the importing functions to the script:
+
+```{r add-import-functions-to-data-raw-script, eval=FALSE}
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+rr_df <- import_multiple_files("RR.csv", import_rr)
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+```
+
+Save the file and open up the `doc/lesson.Rmd` document. Since we've done
+a decent amount of prototyping and testing code out for importing the data,
+we should clean up the R Markdown file so we aren't littering. So, delete **all**
+the text and code *below* the `setup` code chunk at the top. After it has been
+deleted, add and commit the changes to the Git history. Why do we delete everything?
+Because it keeps things cleaner and makes it easier to look through
+the file. And because we use Git, nothing is truly gone so you can always go back
+to the text later.
 
 ## Summary
 

@@ -37,6 +37,7 @@ withr::with_dir("../", {fs::dir_tree("data-raw/", recurse = 1)})
 
 ```text
 data-raw/
+├── README.md
 ├── mmash
 │   ├── user_1
 │   ├── user_10
@@ -138,13 +139,15 @@ class: middle
 
 - Course is mix of:
     - "Code-alongs" (we type and explain, you type along)
-    - Hands-on and reading exercises
-    - Group work to help apply to your own projects
+    - Hands-on coding, discussing, and reading exercises
+    - Project work to either help apply to your own projects or practice on
+    another dataset
 
 - Use r3 package to help with learning
 
-- True to our mission, material publicly accessible and [openly licensed](https://r-cubed-intermediate.rostools.org/license.html)
-    - <https://r-cubed-intermediate.rostools.org/>
+- True to our mission, material publicly accessible and 
+[openly licensed](https://r-cubed-intermediate.rostools.org/license.html)
+(<https://r-cubed-intermediate.rostools.org/>)
 
 - [Resources Appendix](https://r-cubed-intermediate.rostools.org/resources.html)
     - Material for further learning
@@ -172,6 +175,7 @@ class: middle
 
 ```text
 data-raw/
+├── README.md
 ├── mmash
 │   ├── user_1
 │   ├── user_10
@@ -193,16 +197,6 @@ class: middle, center
 ???
 
 We're going to do a "stand and re-arrange yourself" activity based on some questions I ask.
-
----
-
-class: middle, center
-
-## Who has not yet used R?
-
-???
-
-Go into different corners for "yes" and "no".
 
 ---
 
@@ -235,6 +229,12 @@ class: middle, center
 
 Again, staying where you are, raise your hand if you've struggled or still
 struggle with R?
+
+---
+
+class: middle, center
+
+# Now back to your seat
 
 ---
 
@@ -277,7 +277,7 @@ makes sense, what is confusing, and so on.
 # References, 1
 
 ```{r refs-1, results="asis", echo=FALSE}
-PrintBibliography(bib, end = 4)
+PrintBibliography(bib, end = 5)
 ```
 
 ---
@@ -285,5 +285,5 @@ PrintBibliography(bib, end = 4)
 # References, 2
 
 ```{r refs-2, results="asis", echo=FALSE}
-PrintBibliography(bib, start = 5)
+PrintBibliography(bib, start = 6)
 ```

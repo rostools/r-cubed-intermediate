@@ -22,6 +22,7 @@ LearnR3
 ├── data/
 │   └── README.md
 ├── data-raw/
+│   ├── README.md
 │   ├── mmash-data.zip
 │   ├── mmash/
 │   │  ├── user_1
@@ -62,8 +63,11 @@ programming is in functional programming. So what is it? It is programming that:
 
 - Uses functions (like `function()`)
 - Applies functions to vectors all at once (called [vectorisation]), rather than
-in a loop
-- Can use functions as input to other functions (called a [functional]), rather than having to create your own loop to do it
+one at a time
+    - Vectors are multiple items, like a sequence of numbers from 1 to 5, that are
+    bundled together, for instance a column for body weight in a dataset is a vector 
+    of numbers
+- Can use functions as input to other functions to then output a vector (called a [functional]) 
 
 [vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
 [functional]: https://adv-r.hadley.nz/functionals.html
@@ -80,6 +84,7 @@ knitr::include_graphics(here::here("images/vectorization.png"))
 For example, in R, there is a vectorized function called `sum()` that takes the entire vector of `values` and outputs the total sum, without needing a for loop.
 
 ```{r}
+values <- 1:10
 # Vectorized
 sum(values)
 ```
@@ -171,7 +176,13 @@ Also highlight that the resources appendix has some links for continued learning
 for this and that the RStudio purrr cheatsheet is an amazing resource to use.
 ")`
 
-The concept of functional programming can be difficult to grasp. As an alternative to the above explanation, one could also explain functional programming in relation to what it enables. For example, imagine that you have a vector and would like to investigate whether any given number inside this vector is above 5. This can be accomplished using a variety of programming styles. First, we could create a function to check whether a given number is above 5, and manually check each element of the vector:
+The concept of functional programming can be difficult to grasp. As an
+alternative to the above explanation, one could also explain functional
+programming in relation to what it enables. For example, imagine that you have a
+vector and would like to investigate whether any given number inside this vector
+is above 5. This can be accomplished using a variety of programming styles.
+First, we could create a function to check whether a given number is above 5,
+and manually check each element of the vector:
 
 ```{r}
 # Create vector of 10 numbers
@@ -342,13 +353,16 @@ user_info_df %>%
 
 Now that we have this working, let's **add and commit** the changes to the Git history.
 
-## Exercise: Brainstorm and discuss ways to incorporate functionals into your work
+## Exercise: Brainstorm and discuss how you'd use functionals in your work
 
-Time: 10 min
+Time: 15 min
 
-As a group, brainstorm and discuss as many ways as you can for how you might
-incorporate functionals like `map()` into your own work. Afterwards, all groups
-will briefly share some of what they thought of before we move on to the next exercise.
+As a group, discuss if you've ever used for loops or functionals like `map()`
+and your experiences with either. Discuss any advantages to using for loops over
+functionals and vice versa. Then, brainstorm and discuss as many ways as you can
+for how you might incorporate functionals like `map()`, or replace for loops
+with them, into your own work. Afterwards, groups will briefly share some of
+what they thought of before we move on to the next exercise.
 
 ## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
 
@@ -743,6 +757,7 @@ summarised_rr_df <- rr_df %>%
 summarised_rr_df %>% 
     trim_filepath_for_book()
 ```
+Un-grouping the data with `ungroup()` does not provide any visual indication of what is happening. However, in the background, it removes certain metadata that the `group_by()` function added.
 
 Before continuing, switch to the Git interface and **add and commit** the changes so
 far.

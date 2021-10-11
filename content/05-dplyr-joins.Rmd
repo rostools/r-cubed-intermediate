@@ -25,6 +25,7 @@ LearnR3
 │   ├── mmash.rda
 │   └── README.md
 ├── data-raw/
+│   ├── README.md
 │   ├── mmash-data.zip
 │   ├── mmash/
 │   │  ├── user_1
@@ -612,8 +613,8 @@ the "Source" button in the top right corner of the script pane).
 We now have a final dataset to start working on! The main way to load data is
 with `load(here::here("data/mmash.rda"))`. Lastly, **add and commit** all the changes,
 including adding the final `mmash.rda` data file, to the Git history. Make sure
-the `doc/lesson.Rmd` file is empty (except for the YAML header) and ready for
-the next session.
+the `doc/lesson.Rmd` file is empty (except for the YAML header and `setup` code
+chunk) and ready for the next session.
 
 ## Exercise: Brainstorm and discuss other ways of joining the datasets
 
