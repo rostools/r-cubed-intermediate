@@ -152,6 +152,7 @@ about the stringr function.
 ")`
 
 ```{r extract-user-id, eval=FALSE}
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 # Note: your file paths and data may look slightly different.
 user_info_df %>% 
     mutate(user_id = str_extract(file_path_id, "user_[1-9][0-9]?"), file_path_id)
@@ -240,7 +241,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 We'll re-source the functions with `source()` (`Ctrl-Shift-S`). Then re-run these
 pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
 update them based on the new code in the `import_multiple_files()` function.
-Something like this should already be somewhere in your `doc/lesson.Rmd` file.
+Add this to your `doc/lesson.Rmd` file for now.
 
 ```{r}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
@@ -249,8 +250,8 @@ rr_df <- import_multiple_files("RR.csv", import_rr)
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 ```
 
-And update the `summarised_rr_df` and `summarised_actigraph_df` to use `user_id`
-instead of `file_path_id`:
+As well as adding the `summarised_rr_df` and `summarised_actigraph_df` to use
+`user_id` instead of `file_path_id`:
 
 ```{r}
 summarised_rr_df <- rr_df %>% 
