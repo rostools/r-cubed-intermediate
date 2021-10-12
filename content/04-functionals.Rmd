@@ -501,15 +501,16 @@ user_info_df %>%
 But many dplyr verbs can also take functions as input. When you combine `select()`
 with the `where()` function, you can select different variables. The `where()` function is a `tidyselect` helper, a set of functions that make it easier to select variables. Some additional helper functions include:
 
-```{r echo=FALSE}
+```{r tab-tidyselect-helpers, echo=FALSE}
 tibble::tribble(
     ~'What it selects', ~Example, ~Function,
     'Select variables where a function returns TRUE', 'Select variables that have data as character (`is.character`)', '`where()`',
     'Select all variables', 'Select all variables in `user_info_df`', '`everything()`',
-    'Select variables that contain the matching string', 'Select variables that contain the string `"user_info"`', '`contains()`',
-    'Select variables that ends with string', 'Select all variables that end with `"date"`', '`ends_with()`'
+    'Select variables that contain the matching string', 'Select variables that contain the string "user_info"', '`contains()`',
+    'Select variables that ends with string', 'Select all variables that end with "date"', '`ends_with()`'
     ) %>% 
     knitr::kable(caption = "Common tidyselect helper functions and some of their use cases.")
+
 ```
 
 Let's select columns that are numeric:
