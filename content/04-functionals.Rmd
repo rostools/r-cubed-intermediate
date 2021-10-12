@@ -390,7 +390,7 @@ the document.
     `import_function`. 
     - Within the code, replace and re-write `"user_info.csv"` with
     `file_pattern` and `import_user_info` with `import_function`.
-    - Create generic intermediate objects (instead of `user_info_file` and
+    - Create generic intermediate objects (instead of `user_info_files` and
     `user_info_df`). So, replace and re-write `user_info_file` with `data_files`
     and `user_info_df` with `combined_data`.
     - Use `return(combined_data)` at the end of the function to output the
