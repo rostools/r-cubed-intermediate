@@ -20,3 +20,4 @@ Here are two possible datasets you could use that require the skills and tools
 we covered in this course:
     - [Data on the 2021 Olympics in Tokyo](https://www.kaggle.com/arjunprasadsarkhel/2021-olympics-in-tokyo)
     - [RR interval time series from healthy subjects](https://physionet.org/content/rr-interval-healthy-subjects/1.0.0/) 
+- Work on the game ["Murder Mystery"](https://andersaskeland.github.io/R-murder-mystery) (which Anders converted into a game using R).
