@@ -2,14 +2,14 @@
 
 ```{r setup-06, include=FALSE, eval=FALSE}
 # Used this only during writing to run code dependent on previous chapters.
-source("R/functions.R")
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-functions.Rmd")
-source_session("04-functionals.Rmd")
-source_session("05-dplyr-joins.Rmd")
+source(here("R/functions.R"))
+source_session("content/03-functions.Rmd")
+source_session("content/04-functionals.Rmd")
+source_session("content/05-dplyr-joins.Rmd")
 load(here("data/mmash.rda"))
 ```
 
@@ -304,7 +304,7 @@ knitr::include_graphics(here::here("images/pivot-wider.png"))
 In our case, we want either `gender` or `day` as columns with the mean and SD values. 
 Let's use `pivot_wider()` on `day` to see differences between days.
 
-```{r pivot-wider-from-summarised}
+```{r pivot-wider-from-summarised, error=TRUE}
 mmash %>% 
     select(-samples) %>% 
     pivot_longer(c(-user_id, -day, -gender)) %>% 
