@@ -384,7 +384,9 @@ There are many ways to clean up this particular problem, but probably the
 easiest, most explicit, and programmatically accurate way of doing it would be
 with the function `case_when()`. 
 This function works by providing it with a series of logical conditions and an
-associated output if the condition is true. The general form looks like:
+associated output if the condition is true. Each condition is processed
+*sequentially*, meaning that if a condition is TRUE, the output won't be overridden
+for later conditions. The general form of `case_when()` looks like:
 
 ```r
 case_when(
@@ -396,8 +398,10 @@ case_when(
 ```
 
 The optional ending is only necessary if you want a certain output if none of your
-conditions are met. By default, the final output would be a missing value.
-A (silly) example using age might be:
+conditions are met. Because conditions are processed *sequentially* and because
+it is the *last* condition, by setting it as `TRUE` the final output will used.
+If this last `TRUE` condition is not used then by default, the final output
+would be a missing value. A (silly) example using age might be:
 
 ```r
 case_when(
@@ -417,6 +421,16 @@ case_when(
     age <= 20 ~ NA_character_,
     # For final condition
     TRUE ~ "unborn!"
+)
+```
+
+Alternatively, if we want missing age values to output `NA` values at the end
+(instead of `"unborn!"`), we would exclude the final condition:
+
+```r
+case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ "young"
 )
 ```
 
