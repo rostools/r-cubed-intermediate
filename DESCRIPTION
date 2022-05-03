@@ -2,48 +2,12 @@ Package: RCubedIntermediate
 Title: "Reproducible Research in R: An Intermediate Workshop on
     Modern Approaches and Workflows to Processing Data"
 Version: 1.0
-Authors@R: 
-    c(person(given = "Luke",
+Authors@R: person(given = "Luke",
              family = "Johnston",
-             role = c("aut", "cre"),
+             role = c("aut", "cre", "cph"),
              email = "lwjohnst@gmail.com",
              comment = c(ORCID = "0000-0003-4169-2616",
-                         affiliation = "Steno Diabetes Center Aarhus")),
-      person(given = "Omar",
-             family = "Silverman-Retana",
-             role = "ctb",
-             email = "omar.silverman@ph.au.dk",
-             comment = c(ORCID = "0000-0002-2744-9698",
-                         affiliation = "Steno Diabetes Center Aarhus")),
-      person(given = "Andreas",
-             family = "Eiset",
-             role = "ctb",
-             email = "eiset@ph.au.dk",
-             comment = c(ORCID = "0000-0002-5487-8359",
-                         affiliation = "Aarhus University")),
-      person(given = "Signe",
-             family = "Storgaard",
-             role = "ctb",
-             email = "sist@ph.au.dk",
-             comment = c(ORCID = "0000-0003-0014-8868",
-                         affiliation = "Aarhus University"))
-      person(given = "Stine",
-             family = "Scheuer",
-             role = "ctb",
-             email = "stine.scheuer@regionh.dk",
-             comment = c(ORCID = "0000-0002-1244-9871",
-                         affiliation = "Steno Diabetes Center Copenhagen")),
-      person(given = "Malene Revsbech",
-             family = "Christiansen",
-             role = "ctb",
-             comment = c(ORCID = "0000-0002-9772-3576", 
-                         affiliation = "Københavns Universitet")),
-      person(given = "Anders Aasted",
-             family = "Isaksen",
-             role = "ctb",
-             comment = c(ORCID = "0000-0001-8457-5466", 
-                         affiliation = "Aarhus University"))
-      )
+                         affiliation = "Steno Diabetes Center Aarhus"))
 Description: Reproducibility and open scientific practices are
     increasingly being requested or required of scientists and
     researchers, but training on these practices has not kept pace. This
@@ -54,10 +18,11 @@ Description: Reproducibility and open scientific practices are
     more details on the course, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
-Remotes: 
+Remotes:  
     gadenbuie/xaringanthemer,
     gitlab::rostools/r3,
-    hadley/emo
+    hadley/emo,
+    github::rostools/zen4R
 Encoding: UTF-8
 Depends: 
     R (>= 4.0.0)
@@ -78,7 +43,8 @@ Imports:
     vroom,
     downlit,
     gt,
-    fontawesome
+    fontawesome,
+    zen4R (>= 0.6)
 Suggests: 
     withr,
     furrr,
