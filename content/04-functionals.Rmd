@@ -797,8 +797,17 @@ summarised_actigraph_df <- actigraph_df %>%
 **We'll do this all together**.
 Now that we have some functions that import some of the datasets, let's add them
 to the `data-raw/mmash.R` script and then *completely* clean up the R Markdown.
-Open up the `data-raw/mmash.R` script, go to the very bottom of the script,
-and let's add the importing functions to the script:
+Open up the `data-raw/mmash.R` script, go to the line right below `library(here)`, 
+at the top of the script. Create two new lines and add these code, so it looks like:
+
+```{r add-source-tidyverse, eval=FALSE}
+library(here)
+library(tidyverse)
+source(here::here("R/functions.R"))
+```
+
+Next, go to the bottom of the script, and let's add the importing functions to
+the script:
 
 ```{r add-import-functions-to-data-raw-script, eval=FALSE}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
