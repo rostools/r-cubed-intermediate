@@ -67,6 +67,8 @@ There are a few other things to install:
 (building off of the Introduction course), so it needs to be installed.
 1. For some Windows users, you may need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/Rtools35.exe)
 in order for some R packages to be installed (which you'll do shortly).
+For some computers, installing Rtools can take some time. You need this
+in order for some packages to work.
 
 All these programs are required for the course, even Git.
 Git, which is a software program to formally manage file versions, 
