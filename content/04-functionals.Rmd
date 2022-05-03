@@ -389,7 +389,8 @@ the document.
     - Within `function()`, set two new arguments called `file_pattern` and
     `import_function`. 
     - Within the code, replace and re-write `"user_info.csv"` with
-    `file_pattern` and `import_user_info` with `import_function`.
+    `file_pattern` (this is *without* quotes around it) and `import_user_info` with
+    `import_function` (also *without* quotes).
     - Create generic intermediate objects (instead of `user_info_files` and
     `user_info_df`). So, replace and re-write `user_info_file` with `data_files`
     and `user_info_df` with `combined_data`.
