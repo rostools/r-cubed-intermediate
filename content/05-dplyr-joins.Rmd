@@ -617,17 +617,6 @@ including adding the final `mmash.rda` data file, to the Git history. Make sure
 the `doc/lesson.Rmd` file is empty (except for the YAML header and `setup` code
 chunk) and ready for the next session.
 
-## Exercise: Brainstorm and discuss other ways of joining the datasets
-
-Time: 15 min
-
-In order to meaningfully join all the datasets together, we had to calculate
-summary measures for the `RR.csv` and `Actigraph.csv` data. However,
-we also lose a lot of information and potentially interesting analyses from it.
-With your group, discuss some potential ways that you might join the datasets
-to retain that information and what questions you might be interested in with
-that data. We'll discuss all the ideas afterwards.
-
 ## Exercise: Import and process the activity data
 
 Time: 25 minutes
