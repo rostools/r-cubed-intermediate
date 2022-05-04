@@ -6,8 +6,8 @@ library(fs)
 library(tidyverse)
 library(vroom)
 source(here("R/functions.R"))
-source_session("content/03-functions.Rmd")
-source_session("content/04-functionals.Rmd")
+source_session(here("content/03-functions.Rmd"))
+source_session(here("content/04-functionals.Rmd"))
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over to the
