@@ -14,12 +14,21 @@ knitr::opts_chunk$set(
     out.width = "100%"
 )
 
-knitr::knit_hooks$set(solution = function(before) {
-    if (before)
-        "<details style='margin-bottom: 1rem'><summary><strong>Click for the (possible) solution.</strong> Click only if you are really struggling or you are out of time for the exercise.</summary><p>"
-    else
-        "</p></details>"
-})
+knitr::knit_hooks$set(
+    solution = function(before) {
+        if (before)
+            "<details style='margin-bottom: 1rem'><summary><strong>Click for the (possible) solution.</strong> Click only if you are really struggling or you are out of time for the exercise.</summary><p>"
+        else
+            "</p></details>"
+    },
+    instructor_details = function(before) {
+        if (before)
+            "<details style='margin-bottom: 1rem'><summary><strong><em>For instructors: Click for details.</em></strong></summary><blockquote><p>"
+
+        else
+            "</p></blockquote></details>"
+    }
+)
 
 BibOptions(
     check.entries = FALSE,
