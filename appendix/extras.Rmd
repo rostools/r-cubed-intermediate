@@ -1,5 +1,73 @@
 # Extra material {#extra-material}
 
+## Functionals and for loops {alternative-loop-explanation}
+
+The concept of functional programming can be difficult to grasp. As an
+alternative to the above explanation, one could also explain functional
+programming in relation to what it enables. For example, imagine that you have a
+vector and would like to investigate whether any given number inside this vector
+is above 5. This can be accomplished using a variety of programming styles.
+First, we could create a function to check whether a given number is above 5,
+and manually check each element of the vector:
+
+```{r}
+# Create vector of 10 numbers
+numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+# Function to check if a number is above 5
+over_five <- function(number) {
+    if (number > 5) {
+        return(TRUE)
+    } else {
+        return(FALSE)
+    }
+}
+
+# Check each element
+over_five(numbers[1])
+over_five(numbers[2])
+over_five(numbers[3])
+over_five(numbers[4])
+over_five(numbers[5])
+over_five(numbers[6])
+over_five(numbers[7])
+over_five(numbers[8])
+over_five(numbers[9])
+over_five(numbers[10])
+```
+
+Such an approach is verbose, not "functional" in style, and very inflexible. Imagine if the vector had contained 100 numbers instead of 10. In such a case, it would have been unreasonable to manually check each element. As an alternative we could accomplish the same by using a for loop:
+
+```{r}
+# Initialize a vector to capture the output in the for loop
+output <- vector("logical", length = length(numbers))
+
+# Use seq_along to get for loop to start from 1 and end at the end of numbers
+for (item in seq_along(numbers)) {
+    output[item] <- over_five(numbers[item])
+}
+output
+```
+
+This for loop is taking each item from numbers, using `over_five()` on it, and then saving the output into the object `output`. So this loop allows us to do the same as we did manually, but more precisely and with less code. If the vector has more items or less, it doesn't matter to the for loop since it will run no matter the length.
+
+For some situations, for loops are the perfect solution. However, they are not R's strength, but rather functional programming is. In this case, we replace the for loop with the functional `map()`, which would make the code shorter and more robust.
+
+```{r}
+# Functional
+map(numbers, over_five)
+```
+
+This works great as is, but sometimes you might not need to create a new function to use inside of `map()`. Instead we could use an anonymous function with either `function()` or `~`.
+
+```{r}
+# Anonymous function
+map(numbers, function(x) if (x > 5) TRUE else FALSE)
+
+# Anonymous function (with shortcut)
+map(numbers, ~if (.x > 5) TRUE else FALSE)
+```
+
 ## Debugging functions
 
 Debugging is one of activities that seems really scary and difficult, but
