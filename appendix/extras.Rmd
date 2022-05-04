@@ -1,6 +1,6 @@
 # Extra material {#extra-material}
 
-## Functionals and for loops {alternative-loop-explanation}
+## Functionals and for loops {#alternative-loop-explanation}
 
 The concept of functional programming can be difficult to grasp. As an
 alternative to the above explanation, one could also explain functional
