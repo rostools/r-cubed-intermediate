@@ -1,13 +1,13 @@
 # Processing and joining datasets for cleaning {#dplyr-joins}
 
 ```{r setup-05, include=FALSE, eval=FALSE}
-source("R/functions.R")
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source_session("03-functions.Rmd")
-source_session("04-functionals.Rmd")
+source(here("R/functions.R"))
+source_session("content/03-functions.Rmd")
+source_session("content/04-functionals.Rmd")
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over to the
