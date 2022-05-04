@@ -796,7 +796,9 @@ summarised_actigraph_df <- actigraph_df %>%
 
 **We'll do this all together**.
 Now that we have some functions that import some of the datasets, let's add them
-to the `data-raw/mmash.R` script and then *completely* clean up the R Markdown.
+to the `data-raw/mmash.R` script and then clean up the R Markdown. In the 
+R Markdown file, make sure to keep the setup code chunk as well as the code to
+create the `user_info_df` (made by the `import_multiple_files()` function).
 Open up the `data-raw/mmash.R` script, go to the line right below `library(here)`, 
 at the top of the script. Create two new lines and add these code, so it looks like:
 

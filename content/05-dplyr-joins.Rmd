@@ -190,8 +190,8 @@ previously.
     - Include Roxygen documentation.
 - After writing it and testing that the function works, 
 move the function into `R/functions.R`.
-- Replace the code in the `doc/lesson.Rmd` file with the function name (e.g.
-`extract_user_id(user_info_df)`), restart the R session, source everything with
+- Replace the code in the `doc/lesson.Rmd` file with the function name so it looks
+like `extract_user_id(user_info_df)`, restart the R session, source everything with
 `source()` (`Ctrl-Shift-S`), and run the new function to test that it works.
 
 *Tip*: If you don't know what package a function comes from when you
@@ -214,6 +214,9 @@ extract_user_id <- function(imported_data) {
         dplyr::select(-file_path_id)
     return(extracted_id)
 }
+
+# This tests that it works:
+extract_user_id(user_info_df)
 ```
 
 ## Modifying existing functions as part of the processing workflow
