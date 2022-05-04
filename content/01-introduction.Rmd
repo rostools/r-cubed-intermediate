@@ -8,7 +8,9 @@
 knitr::include_url("slides/introduction.html", height = "375px")
 ```
 
-`r details_for_instructors("The slides contain speaking notes that you can view by pressing 'p' on the keyboard.")`
+```{asis, instructor_details=TRUE}
+The slides contain speaking notes that you can view by pressing 'p' on the keyboard.
+```
 
 ## Overview of workflow
 
@@ -145,10 +147,10 @@ them into the Git history.
 
 **Stop reading here**.
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Go over the text again, to reinforce the workflow, and the reasons why we do certain
 things.
-")`
+```
 
 ## Exercise: Discuss the types of workflows you use
 

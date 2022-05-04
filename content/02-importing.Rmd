@@ -502,9 +502,9 @@ user_1_actigraph_data <- vroom(
 
 ## Summary
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Quickly cover this before finishing the session and when starting the next session.
-")`
+```
 
 - Use the appropriate package when importing a specific data file (e.g. for `.xlsx` use readxl)
 - Use `vroom()` for fast importing of plain text type files (e.g. csv)

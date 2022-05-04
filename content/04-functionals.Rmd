@@ -41,10 +41,10 @@ LearnR3
 └── README.md
 ```
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Briefly go over the bigger picture (found in the introduction section) and
 remind everyone the 'what' and 'why' of what we are doing.
-")`
+```
 
 ## Learning objectives
 
@@ -245,7 +245,9 @@ What if you want to output a character vector instead? If we check the help:
 ?map
 ```
 
-`r details_for_instructors("Go through this help documentation and talk a bit about it.")`
+```{asis, instructor_details=TRUE}
+Go through this help documentation and talk a bit about it.
+```
 
 We see that there are other functions, including a function
 called `map_chr()` that seems to output a character vector. 
@@ -381,10 +383,10 @@ import_multiple_files("saliva.csv", import_saliva)
 
 Time: 5 min
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Before starting this exercise, ask how many have used the pipe before.
 If everyone has, then move on to the next section.
-")`
+```
 
 We haven't used the `%>%` pipe from the [magrittr] package yet, but it is used
 extensively in many R packages and is the foundation of tidyverse packages.
@@ -402,10 +404,10 @@ from the beginner course.
 
 ## Split-apply-combine technique and functionals
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Verbally cover this section before moving on to the summarizing. Let them know 
 they can read more about this in this section.
-")`
+```
 
 We're taking a quick detour to briefly talk about a concept that perfectly
 illustrates how vectorization and functionals fit into doing data analysis.
@@ -537,9 +539,9 @@ this argument.
 
 **Ok, stop reading and we'll cover this together**.
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Go over the first two arguments again, reinforcing what they read.
-")`
+```
 
 Let's try out some examples. To calculate the mean of `cortisol_norm` like we did
 above, we'd do:
@@ -786,9 +788,9 @@ to the text later.
 
 ## Summary
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Quickly cover this before finishing the session and when starting the next session.
-")`
+```
 
 - R is a functional programming language: 
     - It uses functions that take an input, do an action, and give an output

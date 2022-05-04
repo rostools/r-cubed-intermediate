@@ -89,11 +89,11 @@ inside, that does some action.
 For learning purposes, we'll always use `return()` to help show us what is the
 final function output.
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Emphasize that we will be using this workflow for creating functions all the
 time throughout course and that this workflow is also what you'd use in your
 daily work.
-")`
+```
 
 While there is no minimum or maximum number of arguments you can provide for a
 function (e.g. you could have zero or dozens of arguments), its good practice
@@ -219,11 +219,11 @@ function at the end to indicate what the function will output.
 1. Add the Roxygen documentation tags (with `Ctrl-Alt-Shift-R` or "Code -> Insert
 Roxygen Skeleton" menu item while the cursor is in the function).
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Emphasize that we will be using this workflow for creating functions all the
 time throughout course and that this workflow is also what you'd use in your
 daily work.
-")`
+```
 
 So, step one. Let's take the code we wrote for importing the `user_info` data
 and convert that as a function:
@@ -535,15 +535,13 @@ using `packagename::`, which you've seen and used many times in this course.
 We won't get into the reasons why this is incorrect because it can quickly get
 quite technical.
 
-```{r, echo=FALSE, results='asis'}
-details_for_instructors("
+```{asis, instructor_details=TRUE}
 You can also talk about why `require()` shouldn't be used compared to `library()`.
 The problem with `require()` is that if the package can't be loaded, it won't
 throw an error, it only *checks* if the package is available and will otherwise
 continue running the code. On the other hand, `library()` will throw an error if
 it can't find the package, which is what you expect if your code depends on a
 package.
-")
 ```
 
 Another reason to use `packagename::` for each function from an R package
@@ -695,9 +693,9 @@ import_actigraph <- function(file_path) {
 
 ## Summary
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Quickly cover this before finishing the session and when starting the next session.
-")`
+```
 
 - Functions in R are anything that does an action
 - Functions have five components:

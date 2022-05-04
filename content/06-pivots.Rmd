@@ -48,11 +48,10 @@ LearnR3
 └── README.md
 ```
 
-
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Briefly go over the bigger picture (found in the introduction section) and
 remind everyone the 'what' and 'why' of what we are doing.
-")`
+```
 
 ## Learning objectives
 
@@ -99,12 +98,12 @@ HTML, this won't be a problem.
 
 ## Re-arranging data for easier summarizing
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Let them read through this section and then walk through it again and explain it
 a bit more, making use of the tables and graphs. Doing both reading and listening
 again will help reinforce the concept of pivoting, which is usually quite
 difficult to grasp for those new to it.
-")`
+```
 
 **Take 6 min to read over the sections until it says to stop, and then we'll 
 go over it again.**
@@ -258,12 +257,12 @@ mmash %>%
 
 ## Pivot data to wider form
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Like with the pivoting to long section, 
 let them read through this section first and than go over it again to verbally
 explain it more, making use of the graphs to help illustrate what is happening.
 Doing both reading and listening will help reinforce the concepts.
-")`
+```
 
 **Take 6 min to read over the sections until it says to stop, and then we'll 
 go over it again.**
@@ -449,11 +448,11 @@ to change the summary statistics function to something else. This is a
 surprisingly easy thing so before we do that, let's take a few minutes to
 brainstorm how we can achieve this.
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Get the groups to chat together for about 5 minutes to think about how they'd do
 that. Ask that they don't look ahead in the text. After that, discuss some ways
 to add the functionality.
-")`
+```
 
 Now that we've discussed this and come to a conclusion, let's update the 
 function.
@@ -494,10 +493,10 @@ mmash %>%
 
 ## Making prettier output in R Markdown
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Can go over this quite quickly after they've (optionally) finished the previous
 exercise.
-")`
+```
 
 What we created is nice and all, but since we are working in an R Markdown
 document and knitting to HTML, let's make it easier for others (including
@@ -516,9 +515,9 @@ Then knit the document and check out the HTML file. So pretty! `r emo::ji("grin"
 
 ## General workflow up to this point {#general-workflow}
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 You can go over this point verbally, reiterating what they've learned so far.
-")`
+```
 
 You now have some skills and tools to allow you to reproducibly import,
 process, clean, join, and eventually analyze your datasets.
@@ -602,9 +601,9 @@ script.
 
 ## Summary
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Quickly cover this before finishing the session and when starting the next session.
-")`
+```
 
 - Data is usually structured to varying degrees as wide or long format
     - Use `pivot_longer()` to convert from wide to long
