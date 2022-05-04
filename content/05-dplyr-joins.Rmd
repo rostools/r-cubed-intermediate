@@ -279,9 +279,11 @@ runs fine. Then, **add and commit** all the changed files into the Git history.
 ## Join datasets together
 
 ```{asis, instructor_details=TRUE}
-Walk through and describe these images and the different type of joins.
+Walk through and describe these images and the different type of joins after
+they've read it.
 ```
 
+**Take 10 min to read over this section, until it says to stop**.
 The ability to join datasets together is a fundamental component of data processing
 and transformation. In our case, we want to add the datasets together so we 
 eventually have preferably one main dataset to work with.
@@ -336,8 +338,9 @@ comes in. Again, we have a simple goal: For a set of data frames, join them
 all together. Here we use another functional programming concept called `reduce()`.
 Like `map()`, which "maps" a function onto a set of items, `reduce()`
 applies a function to each item of a vector or list, each time reducing the set
-of items down until only one remains: the output. Let's use our simple function
-`add_numbers()` from before and add up 1 to 5. Since `add_numbers()` only takes
+of items down until only one remains: the output. Let's use an example with our simple function
+`add_numbers()` we had created before (but later deleted) and add up 1 to 5. 
+Since `add_numbers()` only takes
 two numbers, we have to give it two numbers at a time and repeat until we reach
 5.
 
@@ -366,7 +369,8 @@ knitr::include_graphics(here::here("images/reduce.png"))
 If we look at `?reduce`, we see that `reduce()`, like `map()`, takes either a
 vector or a list as an input. Since data frames can only be put together as a list 
 and not as a vector (a data frame has vectors for columns and so can't be a vector itself), 
-we need to combine the datasets together in a `list()` and reduce them with `full_join()`:
+we need to combine the datasets together in a `list()` and reduce them with `full_join()`.
+**Stop reading here and we will go over it again before continuing to code**.
 
 ```{r}
 combined_data <- reduce(list(user_info_df, saliva_df), full_join)
