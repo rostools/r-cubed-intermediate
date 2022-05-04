@@ -116,8 +116,7 @@ regex would be to extract the user ID.
 "user_[1-9][0-9]?"
 ```
 
-```{r, results='asis', echo=FALSE}
-details_for_instructors("
+```{asis, instructor_details=TRUE}
 Make sure to reinforce that while regex is incredibly complicated, there are some
 basic things you can do with it that are quite powerful.
 
@@ -128,7 +127,6 @@ course and this time frame.
 Go over the solution. Explanation is that the pattern will find anything that has
 `user_` followed by a number from 1 to 9 and maybe followed by another number
 from 0 to 9.
-")
 ```
 
 ## Using regular expressions to extract text
@@ -272,9 +270,9 @@ runs fine. Then, **add and commit** all the changed files into the Git history.
 
 ## Join datasets together
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Walk through and describe these images and the different type of joins.
-")`
+```
 
 The ability to join datasets together is a fundamental component of data processing
 and transformation. In our case, we want to add the datasets together so we 
@@ -460,7 +458,9 @@ user_info_df %>%
 
 **Ok, please stop reading and we will code together again**.
 
-`r details_for_instructors("Briefly review the content again, to reinforce what they read.")`
+```{asis, instructor_details=TRUE}
+Briefly review the content again, to reinforce what they read.
+```
 
 By using the `case_when()` function, we can set `"before sleep"` as day 1 and
 `"wake up"` as day 2 by creating a new column called `day`. (We will use
@@ -701,9 +701,9 @@ activity_df %>%
 
 ## Summary
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Quickly cover this before finishing the session and when starting the next session.
-")`
+```
 
 - While very difficult to learn and use, regular expressions (regex or regexp) 
 are incredibly powerfully at processing character data
