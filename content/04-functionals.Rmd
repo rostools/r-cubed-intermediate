@@ -341,6 +341,20 @@ Then restart the R session, run the line with `source(here("R/functions.R"))`,
 and test the code out in the **Console**.
 1. Once done, **add** the changes you've made and **commit** them to the Git history.
 
+Here is some scaffolding to help get you started:
+
+```{r, eval=FALSE}
+___ <- ___(___, ___) {
+    ___ <- ___dir_ls(___here("data-raw/mmash/"),
+                     regexp = ___,
+                     recurse = TRUE)
+    
+    ___ <- ___map_dfr(___, ___, 
+                      .id = "file_path_id")
+    ___(___)
+}
+```
+
 ```{r solution-import-multiple-files, results='hide', solution=TRUE}
 #' Import multiple MMASH data files and merge into one data frame.
 #'
