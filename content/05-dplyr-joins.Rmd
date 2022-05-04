@@ -139,28 +139,34 @@ Once it works, we will convert it into a function and move it into the
 Since we will create a new column for the user ID, we will use the `mutate()`
 function from the dplyr package. We'll use the `str_extract()` function from the
 stringr package to "extract a string" by using the regex `user_[1-9][0-9]?` that
-we discussed from the exercise.
+we discussed from the exercise. We're also using an argument to `mutate()` you might
+not have seen previously, called `.before`. This will insert the new `user_id` column
+before the column we use and we do this entirely for visual reasons, since it is
+easier to see the newly created column when we run the code.
 In your `doc/lesson.Rmd` file, create a new header called 
 `## Using regex for user ID` at the bottom of the document, and create a new
 code chunk below that.
 
-`r details_for_instructors("
+```{asis, instructor_details=TRUE}
 Walk through writing this code, briefly explain/remind how to use mutate, and
 about the stringr function.
-")`
+```
 
 ```{r extract-user-id, eval=FALSE}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 # Note: your file paths and data may look slightly different.
 user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[1-9][0-9]?"), file_path_id)
+    mutate(user_id = str_extract(file_path_id,
+                                 "user_[1-9][0-9]?"),
+           .before = file_path_id)
 ```
 
 ```{r extract-user-id-eval, echo=FALSE}
 user_info_df %>% 
     trim_filepath_for_book() %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[1-9][0-9]?")) %>% 
-    relocate(file_path_id, user_id)
+    mutate(user_id = str_extract(file_path_id, 
+                                 "user_[1-9][0-9]?"),
+           .before = file_path_id)
 ```
 
 Since we don't need the `file_path_id` column anymore, let's drop it using `select()`
@@ -168,7 +174,9 @@ and `-`.
 
 ```{r drop-file-path-id}
 user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id, "user_[1-9][0-9]?")) %>% 
+    mutate(user_id = str_extract(file_path_id, 
+                                 "user_[1-9][0-9]?"),
+           .before = file_path_id) %>% 
     select(-file_path_id)
 ```
 
