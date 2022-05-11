@@ -1,7 +1,7 @@
 # Pre-course tasks {#pre-course}
 
-In order to participate in this course, you must complete everything in this
-pre-course tasks section and finish with *completing the survey* at the end.
+In order to participate in this course, you must complete this section for
+the pre-course tasks and finish with **completing the survey** at the end.
 These tasks are designed to make it easier for everyone to start the course
 with everything set up. For some of the tasks, you might not understand why
 you need to do them, but you will likely understand why once the course begins.
@@ -10,30 +10,30 @@ Depending on your skills and knowledge, these tasks could take between **3-5 hrs
 to finish**, so we suggest planning a full day to complete them. Depending on
 your institution and how they handle installing software on work computers, you
 also might have to contact IT very early to make sure everything is properly
-installed and setup.
+installed and set up.
 
 ## Summary of tasks
 
 Here's a quick overview of the tasks you need to do. Specific details about
-them are found as you work through the tasks.
+them are found as you work through the section.
 
 1. Install R, RStudio, and Git. For some people, depending on their institution,
-this task can take the longest because you have to contact your IT to install this
+this task can take the longest because you have to contact your IT to install these
 packages.
-1. Install necessary packages.
+1. Install the necessary R packages.
 1. Read about Git from the introduction course and configure Git on your computer.
 If you haven't used Git before, this task could take a while because of the reading.
-1. Run a check to see if everything works (you'll later need to paste this output
-into the survey).
+1. Run a check to see if everything works.
+    - You'll later need to paste this output into the survey.
 1. Create an R Project, along with the folder and file setup.
 1. Create an R Markdown file.
-1. Writing R code to download the data and save it to your computer. This task
-will probably take up most of the time, maybe 30-60 minutes.
-1. Run a check to see that everything is as expected (you'll later need to paste
-this output into the survey).
+1. Write R code to download the data and save it to your computer. This task
+will probably take up the most time, maybe 30-60 minutes.
+1. Run a check to see that everything is as expected
+    - You'll later need to paste this output into the survey.
 1. Read the syllabus.
 1. Read the Code of Conduct.
-1. Complete the pre-course survey. This survey is pretty quick, maybe ~10 minutes.
+1. **Complete the pre-course survey**. This survey is pretty quick, maybe ~10 minutes.
 
 Check each section for exact details on completing these tasks.
 
@@ -42,7 +42,7 @@ Check each section for exact details on completing these tasks.
 In general, these pre-course tasks are meant to help prepare you for the course and
 make sure everything is setup properly so the first session runs smoothly. However,
 some of these tasks are meant for learning as well as for general setup, so we 
-have defined the following learning objectives:
+have defined the following learning objectives for this page:
 
 1. Learn about making reproducible documents with R Markdown.
 1. Learn about filesystems, relative and absolute paths, and how to make use 
@@ -59,7 +59,7 @@ installed. However, you may not have the latest versions installed.
 1. Have the latest version of [R](https://cloud.r-project.org/index.html)
 installed (any version above 4.0.0).
 1. Have the latest version of [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
-installed (any version above 1.3).
+installed (any version above 1.4).
 
 There are a few other things to install:
 
@@ -83,9 +83,9 @@ restrictive administrative privileges*:
 You may encounter problems installing software due to administrative reasons
 (e.g. you don't have permission to install things).
 For issues with updating to the latest version of R or RStudio, 
-if you have at least 4.0.0 for R and at least 1.3 for RStudio, 
+if you have at least 4.0.0 for R and at least 1.4 for RStudio, 
 that should be fine. If you have versions of R and RStudio older than that,
-it is necessary for you to request IT update your software if you can't yourself.
+it is necessary for you to request that IT update your software if you can't yourself.
 Unfortunately, given that Git is not a commonly used software for some organizations,
 you may not have it installed and you *will* need to ask IT to install it.
 We *require* it for the course, so please make sure to give IT enough time to
@@ -93,7 +93,7 @@ be able to install it for you.
 
 Once R, RStudio, and Git have been installed, open RStudio. 
 *If at any point during these pre-course tasks you have any troubles*, 
-try as best as you can to complete the task and then let me know about the
+try as best as you can to complete the task and then let us know about the
 issues in the pre-course survey (at the end of this section). 
 If you continue having problems, indicate on the survey that you need help
 and we can try to book a quick video call to fix the problem. 
@@ -105,7 +105,7 @@ We will be using specific R packages for the course,
 so you will need to install them.
 A detailed walkthrough for installing the necessary packages is
 available on the [pre-course tasks for installing packages](https://r-cubed.rostools.org/pre-course.html#installing-r-packages)
-section of the beginner course,
+section of the introduction course,
 however, you only need to install the r3 helper package in order to install
 all the necessary packages by running these commands in the R Console:
 
@@ -115,7 +115,7 @@ all the necessary packages by running these commands in the R Console:
     install.packages("remotes")
     ```
 
-2. Install the helper package for this course, r3:
+2. Install the r3 helper package for this course:
 
     ```r
     remotes::install_gitlab("rostools/r3", upgrade = TRUE)
@@ -130,9 +130,10 @@ for example with `remotes::install_gitlab()`, you would "read" this as:
 The normal way of doing this would be to load the package with `library(remotes)` 
 and then running the command (`install_gitlab()`).
 But by using the `::`, we tell R to directly use a function from a package,
-without needing to load the package and all of its other functions. We use this
+without needing to load the package and all of its other functions too. We use this
 trick because we only want to use the `install_gitlab()` command from the
-remotes package and not have to load all the other functions as well.
+remotes package and not have to load all the other functions as well. In this
+course we will be using `::` often.
 
 ## Setting up Git
 
@@ -144,7 +145,7 @@ If you have used or currently use Git, you can skip this section.
 If you haven't used it, please do these tasks:
 
 1. Follow the [pre-course tasks for Git](https://r-cubed.rostools.org/pre-course.html#setting-up-git-and-github)
-(*not* the GitHub tasks) from the beginner's course.
+(*not* the GitHub tasks) from the introduction course.
 Specifically, type in the RStudio Console:
 
     ```r
@@ -155,7 +156,7 @@ Specifically, type in the RStudio Console:
     
 2. **Please read** through the 
 [Version Control lesson](https://r-cubed.rostools.org/version-control.html)
-of the beginner course.
+of the introduction course.
 *You don't need to do any of the exercises or activities*, 
 but you are welcome to do them if it will help you learn or understand it better.
 For most of the course, we will be using Git as shown in the 
@@ -166,17 +167,31 @@ which is described in the
 section.
 
 Regardless of whether you've done the steps above or not, 
-*everyone* needs to run
+*everyone* needs to run:
 
 ```r
 r3::check_setup()
 ```
 
-and **eventually copy and paste the output into one of the survey questions**. *Note*
-that while GitHub is a natural connection to using Git, given the limited time
-available, we will not be covering using GitHub. If you want to learn about using 
+The output you'll get for success will look something like this:
+
+```text
+Checking R version:
+✔ Your R is at the latest version of 4.2.0!
+Checking RStudio version:
+✔ Your RStudio is at the latest version of 2022.2.2.485!
+Checking Git config settings:
+✔ Your Git configuration is all setup!
+  Git now knows that:
+  - Your name is 'Luke W. Johnston'
+  - Your email is 'lwjohnst@gmail.com'
+```
+
+**Eventually you will need to copy and paste the output into one of the survey questions**. 
+*Note* that while GitHub is a natural connection to using Git, given the limited time
+available, we will not be going over how to use GitHub. If you want to learn about using 
 GitHub, check out the [session](https://r-cubed.rostools.org/version-control.html) 
-on it in the beginner course.
+on it in the introduction course.
 
 ## Create an R Project
 
@@ -185,20 +200,22 @@ is to keep everything contained in a single location.
 In RStudio, this is done with R Projects.
 Please read all of 
 [Section 7.1](https://r-cubed.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
-from the beginner course to learn about R Projects 
-and keeping things self-contained. 
+from the introduction course to learn about R Projects 
+and how they help keeping things self-contained. 
 *You don't need to do any of the exercises or activities*.
 
 There are several ways to organise a project folder.
-We'll be using the structure from the package prodigenr. 
+We'll be using the structure from the package [prodigenr]. 
 The project setup can be done by either:
 
 1. Using RStudio's New Project menu item: "File -> New Project -> New Directory",
 scroll down to "Scientific Analysis Project using prodigenr" and name the project
 "LearnR3" in the Directory Name, saving it to the "Desktop" with Browse.
-2. Or, running the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the Console.
+2. Or, running the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the R Console.
 
-When the RStudio Project opens up again, run these three commands in the Console:
+[prodigenr]: https://rostools.github.io/prodigenr/
+
+When the RStudio Project opens up again, run these three commands in the R Console:
 
 ```r
 prodigenr::setup_with_git()
@@ -219,7 +236,7 @@ reproducible and because it is a very powerful tool to doing data analysis.
 Please do these two tasks:
 
 1. Please read over the [R Markdown section](https://r-cubed.rostools.org/reproducible-documents.html)
-of the beginner course.
+of the introduction course.
 If you use R Markdown already, you can skip this step.
 2. Open up the `LearnR3` project,
 either by clicking the `LearnR3.Rproj` file or
@@ -239,7 +256,9 @@ use an openly licensed dataset on monitoring
 sleep and activity (MMASH) [@Rossi2020;@Rossi2020a]. To begin learning about 
 being reproducible and applying modern approaches to data analysis, 
 we're going to write and save R code to download a dataset, prepare it a bit
-so it's at least a little usable, and than save it to your computer.
+so it's at least a little usable, and than save it to your computer. The goal
+at the end of the course is to create a pipeline to download the data, process
+and clean it, and save it in a form that makes it easier to analyze.
 Why don't we get you to download an already cleaned and prepared dataset? Because
 in the real world, the data you get is rarely all cleaned up and ready for you,
 and this course is about learning more advanced tools to do the data wrangling.
@@ -250,7 +269,7 @@ over to the [MMASH website][mmash-website]:
 is contained inside of it. We'll refer back to the Data Description throughout
 the course as well as in the exercises.
 1. Look over the open license that allows you to re-use it, even for research
-purposes. Note: GDPR makes stricter on how to share and use personal data, but
+purposes. Note: GDPR makes it stricter on how to share and use personal data, but
 it *does not prohibit sharing it or making it public*! GDPR and Open Data are
 not in conflict.
 
@@ -259,7 +278,7 @@ not in conflict.
 > *Note*: Sometimes the PhysioNet website is slow. If that's the case,
 use **[this alternative link](resources/mmash-page.html)** instead.
 
-After looking over the MMASH website, you need to setup where to store dataset
+After looking over the MMASH website, you need to setup where to store the dataset
 to prepare it for later processing. While in your `LearnR3` R Project, go to the
 Console pane in RStudio and type out:
 
@@ -283,14 +302,18 @@ library(here)
 The [here] package was described in the 
 [Management of R Projects](https://r-cubed.rostools.org/r-project-management.html)
 of the introductory course and makes it easier to refer to other files in an R
-project. Read through the [section about here][here-r-cubed] in the introductory R course.
+project. Read through the [section about the here package][here-r-cubed] in the
+introductory R course.
 
 R works based on the current *working directory*, which you can see on the top 
-of the RStudio Console pane. When in an RStudio R Project, the working directory
+of the RStudio Console pane, which you can see in the red box inside the image below.
+When in an RStudio R Project, the working directory
 is the folder where the `.Rproj` file is located. When you run scripts in R with
 `source()`, sometimes the working directory will be set to where the R script is located.
 So you can sometimes encounter problems with finding files. Instead, when you use
-`here()` R knows where to start searching for files from the `.Rproj` location.
+`here()` R knows to start searching for files from the `.Rproj` location.
+
+![The folder location that R does it's "work", called the "working directory", highlighted by the red box.](images/rstudio-console-working-directory.png)
 
 [here]: https://here.r-lib.org/
 [here-r-cubed]: https://r-cubed.rostools.org/r-project-management.html#packages-data-and-file-paths
@@ -302,11 +325,14 @@ assuming everything starts in the `LearnR3/` folder. But! If we run the code in
 the `mmash.R` script by other ways (e.g. not with RStudio, not in an R Project,
 or with `source()`), R runs everything assuming it starts in the `data-raw/` folder.
 This can make things tricky. What `here()` does is tell R to first look for the
-`.Rproj` file and then start looking for the file we actually want.
+`.Rproj` file and then start looking for the file we actually want. This might not
+make sense yet, but as we go through the course, you will see why this is important
+to consider.
 
-If you want to see the structure and content of a directory, you can use the `dir_tree()` 
+*Note*, you don't need to run the below code. But if you want to see the 
+structure and content of a directory, you can use the `dir_tree()` 
 function from the [fs] package, 
-which means "filesystem", and run the following code in the R Console:
+which means "filesystem", by running the following code in the R Console:
 
 ```{r, eval=FALSE}
 # To print the file list.
@@ -351,9 +377,20 @@ Run these lines of code to download the dataset.
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
-Because the original dataset is stored elsewhere, we don't need to keep it or 
-save it to our Git history. Add the zip file to the Git ignore list.
-In the Console pane, type out and run this code. You only need to do this once.
+*After* downloading the zip file (it should be called `mmash-data.zip` 
+in the `data-raw/` folder), comment out this line, so that inside the 
+`data-raw/mmash.R` script it looks like:
+
+```{r download-data-comment-out, eval=FALSE}
+# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+```
+
+We do this because we don't want to accidentally run this code again, since we
+already downloaded the file.
+
+Because the original dataset is stored elsewhere on a website, we don't need to  
+save it to our Git history. Add the zip file to the Git ignore list by 
+typing out and run this code in the Console. You only need to do this once.
 
 ```{r ignore-mmash-zip, eval=FALSE}
 usethis::use_git_ignore("data-raw/mmash-data.zip")
@@ -391,7 +428,8 @@ Unzip the zip files by using the `unzip()` function and writing it in
 `unzip()` is the zip file and the next important one is called `exdir` that
 tells `unzip()` which folder you want to extract the files to. The argument
 `junkpaths` is used here to tell `unzip()` to extract everything to the
-`data-raw/` folder (no idea why it's called "junkpaths").
+`data-raw/` folder (no idea why it's called "junkpaths"). This code should be 
+written and executed in the `data-raw/mmash.R` script.
 
 ```{r unzip-main-file}
 unzip(here("data-raw/mmash-data.zip"), 
@@ -403,8 +441,9 @@ Notice the indentations and spacings of the code. Like writing any language,
 code should follow a [style guide]. An easy way of following a style is by
 selecting your code and using RStudio's builtin style fixer with either
 `Ctrl-Shift-A` or "Code -> Reformat Code" menu item.
-Next, extract the new `data-raw/MMASH.zip` file. Because we want to
-keep the folder structure inside this zip file, we won't use `junkpaths`.
+Next, we'll extract the new `data-raw/MMASH.zip` file using `unzip()` again. 
+Because we want to keep the folder structure inside this zip file, we won't use
+`junkpaths`. Write and execute this code in the `data-raw/mmash.R` script.
 
 [style guide]: https://style.tidyverse.org
 
@@ -415,13 +454,13 @@ unzip(here("data-raw/MMASH.zip"),
 
 Almost done! There are several files left over that we don't need, so you'll
 need to write code in the script code that removes them. We'll use the [fs]
-package to work with files. Before you change any files,
-the `data-raw/` folder should look something like:
+package to work with files. Before you change any files, look into the `data-raw/`
+folder and confirm that the below listed files and folders are there.
 
 [fs]: https://fs.r-lib.org/
 
 ```{r, eval=FALSE}
-# You don't need to run this code, 
+# NOTE: You don't need to run this code, 
 # its here to show how we got the file list.
 fs::dir_tree("data-raw", recurse = 1)
 ```
@@ -438,9 +477,13 @@ data-raw
 │   ├── ...
 │   ├── user_8
 │   └── user_9
-├── DataPaper.zip
+├── mmash-data.zip
 └── mmash.R
 ```
+
+If your files and folders in the `data-raw/` folder do not look like this,
+start over by deleting all the files *except for* the `mmash.R` and `mmash-data.zip`
+files. Then re-run the code from beginning to end.
 
 To tidy up the files, first, use the `file_delete()` function from fs to delete
 all the files we originally extracted (`LICENSE.txt`, `SHA256SUMS.txt`, and
@@ -470,6 +513,10 @@ data-raw
 ├── mmash-data.zip
 └── mmash.R
 ```
+
+Like before, if your files and folders inside `data-raw/` don't look like those
+listed above, start over again (making sure to delete all *but* the `mmash.R`
+and `mmash-data.zip` files).
 
 Since we have an R script that downloads the data and processes it for us,
 we don't need to have Git track it. So, in the Console, type out and run
@@ -510,7 +557,53 @@ At this point, please run this function in the Console:
 r3::check_project_setup()
 ```
 
-and paste the output into the survey at the end.
+```{text}
+~/Desktop/LearnR3
+├── DESCRIPTION
+├── LearnR3.Rproj
+├── R
+│   ├── README.md
+│   └── functions.R
+├── README.md
+├── TODO.md
+├── data
+│   └── README.md
+├── data-raw
+│   ├── README.md
+│   ├── mmash
+│   │   ├── user_1
+│   │   ├── user_10
+│   │   ├── user_11
+│   │   ├── user_12
+│   │   ├── user_13
+│   │   ├── user_14
+│   │   ├── user_15
+│   │   ├── user_16
+│   │   ├── user_17
+│   │   ├── user_18
+│   │   ├── user_19
+│   │   ├── user_2
+│   │   ├── user_20
+│   │   ├── user_21
+│   │   ├── user_22
+│   │   ├── user_3
+│   │   ├── user_4
+│   │   ├── user_5
+│   │   ├── user_6
+│   │   ├── user_7
+│   │   ├── user_8
+│   │   └── user_9
+│   ├── mmash-data.zip
+│   └── mmash.R
+└── doc
+    ├── README.md
+    └── lesson.Rmd
+```
+
+The output should look something a bit like the above text. If it doesn't,
+start over by deleting all *but* the `mmash.R` and `mmash-data.zip` files
+and running the code from the beginning again. If your output looks a bit like this,
+than copy and paste the output into the survey question at the end.
 
 ## Course introduction
 
