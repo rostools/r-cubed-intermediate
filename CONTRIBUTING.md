@@ -66,6 +66,9 @@ and the below command to reduce the video file size:
 ffmpeg -i input.mp4 -crf 28 output.mp4
 ```
 
+Taking screenshots is done using the program [Shutter](https://shutter-project.org/),
+which also has some editing tools to use after taking a screenshot.
+
 ## Teaching in class :information_desk_person: :speech_balloon:
 
 Here are some steps and guidelines when you instruct a class:
