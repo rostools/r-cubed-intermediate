@@ -352,7 +352,8 @@ and commit** it to the Git history with the RStudio Git Interface.
 Time: 15 min
 
 Take the code you created for importing the saliva data set from 
-Exercise \@ref(ex-import-saliva) and make it into a function. A helpful tip:
+Exercise \@ref(ex-import-saliva) (*not* the code related to using `spec()`) 
+and make it into a function. A helpful tip:
 To move around an R Markdown or R script more easily, open up the 
 "Document Outline" on the side by clicking the button in the top right corner of
 the R Markdown pane or by using `Ctrl-Shift-O`.
@@ -362,11 +363,30 @@ the R Markdown pane or by using `Ctrl-Shift-O`.
 1. Paste the code you used from the exercise into the code chunk and begin
 converting it into a function, like we did above.
     - Wrap it with the `function() {...}`
-    - Make a meaningful name (e.g. `import_saliva`)
-    - Make an argument for the file path and replace it with the code in `vroom()`
-    - Rename the output object and include it in the `return()` function
+    - Make a meaningful name (use `import_saliva`)
+    - Make an argument for the file path (`file_path`) and replace
+    `user_1_saliva_file` with `file_path` in the `vroom()` code
+    - Rename the output object to `saliva_data` and put it in the `return()` function
     - Test that it works
     - Create the Roxygen documentation
+
+Use the below code as a guide:
+    
+```{r exercise-template-repeat-saliva, eval=FALSE}
+# Need to also add the Roxygen documentation 
+# ("Code -> Insert Roxygen Skeleton")
+import_saliva <- function(file_path) {
+    # Paste the code to import saliva data you created 
+    # from previous exercise
+    saliva_data <- ___(
+        ___
+    )
+    return(saliva_data)
+}
+
+# Test that the function works
+___(here("data-raw/mmash/user_1/saliva.csv"))
+```
 
 ```{r solution-repeat-saliva, results='hide', solution=TRUE}
 #' Import the MMASH saliva dataset.
@@ -389,6 +409,9 @@ import_saliva <- function(file_path) {
     )
     return(saliva_data)
 }
+
+# Test that this works
+# import_saliva(here("data-raw/mmash/user_1/saliva.csv"))
 ```
 
 ## Continuing the workflow
@@ -610,11 +633,35 @@ where the function comes from.
     - Name the new functions `import_rr` and `import_actigraph`.
 1. Move the function into `R/functions.R`.
 1. Restart R, `source()` the functions file (`Ctrl-Shift-S`), and
-test that the functions work by running them in the **Console**.
+test that the functions work by running them in the **Console**. The below code
+should run without a problem if you did it right:
+
+    ```{r, eval=FALSE}
+    import_rr(here("data-raw/mmash/user_1/RR.csv"))
+    import_actigraph(here("data-raw/mmash/user_1/Actigraph.csv"))
+    ```
 
 Also update the `import_saliva()` function you created by being explicit about
 where the functions come from (e.g. with the `packagename::`). Afterwards,
-**add and commit** the changes to the Git history.
+**add and commit** the changes to the Git history. 
+
+Use this code template as a guide for making the functions.
+
+```{r exercise-template-other-functions, eval=FALSE}
+# Insert Roxygen documentation too
+___ <- function(___) {
+    ___ <- ___::___(
+        ___,
+        col_select = ___,
+        col_types = ___::cols(
+            ___,
+            .delim = ","
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(___)
+}
+```
 
 ```{r solution-update-other-functions, results='hide', solution=TRUE}
 #' Import the MMASH saliva dataset.

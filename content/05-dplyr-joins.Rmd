@@ -216,7 +216,8 @@ corner, surrounded by `{ }`.
 extract_user_id <- function(imported_data) {
     extracted_id <- imported_data %>% 
         dplyr::mutate(user_id = stringr::str_extract(file_path_id, 
-                                                     "user_[0-9][0-9]?")) %>% 
+                                                     "user_[0-9][0-9]?"),
+                      .before = file_path_id) %>% 
         dplyr::select(-file_path_id)
     return(extracted_id)
 }
@@ -482,8 +483,7 @@ By using the `case_when()` function, we can set `"before sleep"` as day 1 and
 saliva_with_day_df <- saliva_df %>% 
     mutate(day = case_when(
         samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2,
-        TRUE ~ NA_real_
+        samples == "wake up" ~ 2
     ))
 saliva_with_day_df
 ```

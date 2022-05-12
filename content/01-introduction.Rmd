@@ -18,9 +18,15 @@ The slides contain speaking notes that you can view by pressing 'p' on the keybo
 
 This section provides an bigger picture view of what we will be doing, 
 why we want to do it, how we will be going about doing it, and what it will look
-like in the end. Firstly, what we ultimately want to do is process the MMASH
+like in the end. 
+
+Big picture overall aim:
+
+Firstly, what we ultimately want to do is process the MMASH
 data so that we have a single dataset to work with for later (hypothetical)
-analyses. We also want to make sure that whatever processing we do to the data
+analyses. 
+
+We also want to make sure that whatever processing we do to the data
 is reproducible. So everything we'll do throughout the course is done in order
 to achieve our aim of making a single data and to make things reproducible.
 
@@ -106,7 +112,8 @@ which you already did in the pre-course tasks.
     - We do this to keep the code for downloading and processing the data
     together with the raw data.
 - Use R Markdown (`doc/lesson.Rmd`) to write and test out code, convert it into
-a function, test it, and then move it into `R/functions.R`.
+a function, test it, and then move it into `R/functions.R`. Later we will also
+move code into the `data-raw/mmash.R`.
     - We use R Markdown to prototype code because 1) it's easier from a teaching
     perspective to interweave text and comments with code as we do the
     code-alongs, 2) to make it easier to translate your work into a format for easy
@@ -115,6 +122,7 @@ a function, test it, and then move it into `R/functions.R`.
     it is a key component to doing reproducible research in R. Another alternative
     way of working is to prototype ("write and test") code in a temporary R
     script in the `R/` folder.
+    - TODO: Add a bit more explanation
     - We keep the functions in a separate file because we will frequently `source()`
     from it as we prototype and test out code in the R Markdown file. It also 
     creates a clear separation between "finalized" code and prototyping code.
@@ -156,9 +164,17 @@ things.
 
 Time: 15 min
 
-As a group, discuss what type of workflow you use for your own work. How does
-it compare with the others in the group? How does it compare with what has been
-described so far? Groups will briefly share what they've discussed.
+- Take 2 min to think about your workflow you use in your work. How do you 
+*exactly* do the things you do (like what apps you use, how you collaborate, how
+you name your files and folders, where you save your work)? 
+
+- Then for about 10 min, in your group/table share and discuss each others
+workflows. How do they compare to each other? What are things you'd like to try
+out in your own work? How do all your workflows compare with what has been
+described so far? 
+
+- For the remaining time, as the whole group, we'll briefly share what you've
+all thought and discussed.
 
 ## Setting up our project
 

@@ -468,6 +468,28 @@ the HTML document.
 1. If everything works, **add and commit** the new changes to the Git history (`Ctrl-Alt-M`
 or with the Git button).
 
+Use this template as a guide for completing this exercise.
+
+```{r exercise-template-import-the-actigraph-data, eval=FALSE}
+user_1_actigraph_file <- here("data-raw/mmash/user_1/___")
+user_1_actigraph_data_prep <- ___(
+    ___,
+    n_max = ___,
+    col_select = ___,
+    .name_repair = ___
+)
+___(user_1_actigraph_data_prep)
+
+user_1_actigraph_data <- ___(
+    user_1_actigraph_file,
+    col_select = ___,
+    col_types = ___(
+        ___
+    ),
+    ___ = ___
+)
+```
+
 ```{r solution-import-the-actigraph-data, results='hide', solution=TRUE}
 # Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")

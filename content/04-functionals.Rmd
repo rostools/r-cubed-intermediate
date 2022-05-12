@@ -343,9 +343,9 @@ Then restart the R session, run the line with `source(here("R/functions.R"))`,
 and test the code out in the **Console**.
 1. Once done, **add** the changes you've made and **commit** them to the Git history.
 
-Here is some scaffolding to help get you started:
+Use this code as a guide to help complete this exercise:
 
-```{r, eval=FALSE}
+```{r , eval=FALSE}
 ___ <- ___(___, ___) {
     ___ <- ___dir_ls(___here("data-raw/mmash/"),
                      regexp = ___,
@@ -757,7 +757,7 @@ at the top of the script. Create two new lines and add these code, so it looks l
 ```{r add-source-tidyverse, eval=FALSE}
 library(here)
 library(tidyverse)
-source(here::here("R/functions.R"))
+source(here("R/functions.R"))
 ```
 
 Next, go to the bottom of the script, and let's add the importing functions to
