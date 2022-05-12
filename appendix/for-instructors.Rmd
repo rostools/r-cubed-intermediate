@@ -3,6 +3,22 @@
 More guidance for instructors is also found in the 
 [introduction R course](https://r-cubed.rostools.org/for-instructors).
 
+## Timings for specific sessions
+
+### Introduction section: Time ~55 min
+
+- Slides take ~20 min
+- Reading activity and quick verbally reiteration take ~15 min
+- Workflow exercise takes 15 min
+- Short code-along ~5 min
+
+### Importing session: Time ~
+
+- *Briefly go over overview and objectives*, ~5 min
+- First importing section should take ~45 min
+- First exercise takes 15 min
+- 
+
 ## Course details
 
 - **Instructor and helper number**: The recommended number of instructors would
