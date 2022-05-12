@@ -153,6 +153,10 @@ class: middle
     - Material for further learning
     - Useful R packages to use
 
+???
+
+Explain more why doing the reading exercises...
+
 ---
 
 ## Getting or asking for help `r emo::ji("raising_hand_woman")`
