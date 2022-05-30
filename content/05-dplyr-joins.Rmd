@@ -182,7 +182,7 @@ user_info_df %>%
 
 ## Exercise: Convert ID extractor code into a function
 
-Time: 15-20 min
+Time: 15 min
 
 We now have code that takes the data that has the `file_path_id` column
 and extracts the user ID from it. **First step**: While in the `doc/lesson.Rmd`
@@ -205,6 +205,24 @@ need to append the package when using `::`, you can find out what the package is
 by using the help documentation `?functionname` (can also be done by pressing F1
 when the cursor is over the function). The package name is at the very top left
 corner, surrounded by `{ }`.
+
+Use this code as a guide to help complete this exercise:
+
+```{r exercise-template-user-id-extract, eval=FALSE}
+extract_user_id <- ___(___) {
+    ___ <- ___ %>%
+        ___mutate(
+            user_id = ___str_extract(file_path_id,
+                                     "user_[0-9][0-9]?"),
+            .before = file_path_id
+        ) %>%
+        ___select(-file_path_id)
+    return(___)
+}
+
+# This tests that it works:
+# extract_user_id(user_info_df)
+```
 
 ```{r solution-user-id-extract, results='hide', solution=TRUE}
 #' Extract user ID from data with file path column.
