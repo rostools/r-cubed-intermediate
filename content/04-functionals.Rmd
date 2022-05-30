@@ -287,7 +287,7 @@ Now that we have this working, let's **add and commit** the changes to the Git h
 
 ## Exercise: Brainstorm and discuss how you'd use functionals in your work
 
-Time: 15 min
+Time: 10 min
 
 As a group, discuss if you've ever used for loops or functionals like `map()`
 and your experiences with either. Discuss any advantages to using for loops over
@@ -303,7 +303,7 @@ Time: 20 min
 We need to do basically the exact same thing for the `saliva.csv`, `RR.csv`, and
 `Actigraph.csv` datasets, following this format:
 
-```{r ex-template, eval=FALSE}
+```{r ex-starting-point, eval=FALSE}
 user_info_files <- dir_ls(here("data-raw/mmash/"), 
                           regexp = "user_info.csv", 
                           recurse = TRUE)
@@ -345,7 +345,7 @@ and test the code out in the **Console**.
 
 Use this code as a guide to help complete this exercise:
 
-```{r , eval=FALSE}
+```{r exercise-template-import-multiple-files, eval=FALSE}
 ___ <- ___(___, ___) {
     ___ <- ___dir_ls(___here("data-raw/mmash/"),
                      regexp = ___,
@@ -712,7 +712,7 @@ far.
 
 ## Exercise: Summarise the Actigraph data
 
-Time: 20 min
+Time: 15 min
 
 Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so 
 that it makes it easier to join with the other datasets later.
