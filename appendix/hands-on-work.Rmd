@@ -75,6 +75,44 @@ activity_df %>%
     mutate(activity_duration = end - start)
 ```
 
+## Exercise: Process and join sleep and questionnaire data
+
+Time: 30 min
+
+**This is an *optional* exercise and could also be done during the group work time.**
+
+There are still a few datasets that you can join in with the current
+datasets like `sleep.csv` and `questionnaire.csv`. 
+Using the workflows in Section \@ref(general-workflow) as a guide,
+start from the beginning and import, process, clean, make functions,
+and join these two datasets in with the others so that they get 
+included in the `data/mmash.rda` final dataset. Afterwards, do some
+descriptive analysis using the function `tidy_summarise_by_day()`.
+
+**Note**: User 11 has no sleep data, so you will eventually have to drop
+user 11 from the dataset before summarizing the data.
+
+## Exercise: Create a second dataset of only the Actigraph and RR data
+
+Time: 30 min
+
+**This is an *optional* exercise and could also be done during the group work time.**
+
+The Actigraph and RR datasets contain a lot of interesting and useful
+data that gets destroyed when we first summarise and then join them
+with the other datasets. While we can't meaningfully join all this
+data with the other datasets, we can join them on their own as separate datasets.
+
+Using the workflows in Section \@ref(general-workflow) as a guide,
+start from the beginning and import, process, clean, make functions,
+and create a final dataset of only the `Actigraph.csv` and `RR.csv`
+datasets.
+
+- Join only these two datasets by `user_id`, `day`, and `time`.
+- Name the new dataset `actigraph_rr` and save it to `data/`
+by using another `usethis::use_data()` line in the `data-raw/mmash.R`
+script.
+
 
 However, if you don't have data to work on, you have several other options:
 
