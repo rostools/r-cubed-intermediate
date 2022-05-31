@@ -352,6 +352,7 @@ mmash %>%
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
+    ungroup() %>% 
     pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -391,6 +392,7 @@ tidy_summarise_by_day <- function(data) {
         dplyr::summarise(dplyr::across(value,
                          list(mean = mean, sd = sd),
                          na.rm = TRUE)) %>%
+        dplyr::ungroup() %>% 
         tidyr::pivot_wider(names_from = day, 
                     values_from = dplyr::starts_with("value"))
     return(daily_summary)
