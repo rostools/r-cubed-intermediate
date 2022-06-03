@@ -10,7 +10,27 @@ For the most part, we thought the best way to reinforce and practice the
 skills learned in this course is to apply them to your own datasets or projects.
 So we set aside time in the schedule for this work under the heading of "project work".
 
-## Exercise: Import and process the activity data
+## MMASH exercises
+
+### Fix up some remaining data issues
+
+There are some issues with the data still. Try to work through these tasks
+to clean the data up more.
+
+1. In the cleaned data, take a look at user 21. Notice some problems?
+Go into the raw data as well as the data documentation on the [MMASH
+website][mmash-website] and try to figure how what happened. How you might
+fix the problem? Try your fix within the `data-raw/mmash.R` cleaning script.
+
+2. If you do `count(mmash, day)` in the Console while the `mmash` dataset is
+loaded, you'll see that the `day` column has a weird value of `-29`. Look into
+the data documentation on the [MMASH website][mmash-website] and see if you can
+find an explanation for this. How would you go about solving this issue?
+Write up code to fix this issue in the `data-raw/mmash.R` script.
+
+[mmash-website]: https://physionet.org/content/mmash/1.0.0/
+
+### Import and process the activity data
 
 Time: 25 minutes
 
@@ -75,7 +95,7 @@ activity_df %>%
     mutate(activity_duration = end - start)
 ```
 
-## Exercise: Process and join sleep and questionnaire data
+### Process and join sleep and questionnaire data
 
 Time: 30 min
 
@@ -92,7 +112,7 @@ descriptive analysis using the function `tidy_summarise_by_day()`.
 **Note**: User 11 has no sleep data, so you will eventually have to drop
 user 11 from the dataset before summarizing the data.
 
-## Exercise: Create a second dataset of only the Actigraph and RR data
+### Create a second dataset of only the Actigraph and RR data
 
 Time: 30 min
 
