@@ -224,7 +224,7 @@ Using the `group_by()` and `summarise()` functions we learned in
 section \@ref(summarise-with-functionals), complete these tasks starting from 
 this code.
 
-```{r, eval=FALSE}
+```{r ex-starting-pivot-summarise, eval=FALSE}
 mmash %>% 
     select(-samples) %>% 
     pivot_longer(c(-user_id, -day, -gender)) %>% 
@@ -333,6 +333,7 @@ mmash %>%
         list(mean = mean, sd = sd), 
         na.rm = TRUE
     )) %>% 
+    ungroup() %>% 
     pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -376,6 +377,14 @@ called `daily_summary` and put it in `return()` so the function outputs it.
 in the R Markdown document with the `source()` and `load()` commands. Then test
 that the new function works in a code chunk at the bottom of the document.
 
+Use this code to refresh your memory and to use as a starting point:
+
+```{r ex-template-summarise-function, eval=FALSE}
+___ <- function(___) {
+    
+}
+```
+
 ```{r solution-summarise-function, results='hide', solution=TRUE}
 #' Calculate tidy summary statistics by day.
 #'
@@ -397,6 +406,10 @@ tidy_summarise_by_day <- function(data) {
                     values_from = dplyr::starts_with("value"))
     return(daily_summary)
 }
+
+# Testing that the function works.
+mmash %>% 
+    tidy_summarise_by_day()
 ```
 
 ## Extending the function to use other statistics and to be tidier
@@ -554,7 +567,7 @@ stuff and can keep track of changes to your files.
 Time: 15 min
 
 We've covered quite a bit in this course and you've (hopefully) learned a lot.
-Before moving on to other exercises and the project work, discuss with your group
+Before moving on to other exercises, discuss with your group
 how you might use this workflow (or parts of it) in your own work. What are some
 ways you might use these workflows and techniques? What challenges do you see
 might come up by using these skills and tools? Groups will briefly share what
