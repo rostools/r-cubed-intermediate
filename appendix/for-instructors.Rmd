@@ -25,8 +25,13 @@ More guidance for instructors is also found in the
 be about ~1 instructors for every 1-2 sessions, with a ratio of 1 helper
 (including instructor) for every 4-6 participants.
 
-- **Group work**:
+- **Group work** (optional):
     - Have 4 learners per group, not more.
+
+- **Before first day**:
+    - Setup the course R Project beforehand so that the instructors can use it.
+    Create as a Git repo and push up to GitHub, so instructors can clone
+    the project before their session.
 
 - **First day**: 
     - During the introduction, don't forget to introduce all the instructors and
@@ -36,7 +41,6 @@ be about ~1 instructors for every 1-2 sessions, with a ratio of 1 helper
 
 - **End of course**: Ask if any participant would like to be involved in next
 year's teaching, or in making the material, or in being a helper.
-Also ask who would like to join some community "mailing list" (e.g. Slack).
 
 ## Instructor tips
 
