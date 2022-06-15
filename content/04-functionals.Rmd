@@ -103,6 +103,15 @@ for (value in values) {
 total_sum
 ```
 
+```{asis, instructor_details=TRUE}
+Emphasize this next paragraph.
+```
+
+Writing effective and proper for loops is actually quite tricky and difficult to
+easily explain. Because of this and because there are better and easier ways
+of writing R code to replace for loops, we will **not** be covering loops in this
+course.
+
 A functional on the other hand is a function that can also use a function as
 one of its arguments. Figure \@ref(fig:image-functionals) shows how the functional
 `map()` from the [purrr] package works by taking a vector (or list), applying a 
