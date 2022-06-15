@@ -18,7 +18,7 @@ rmd_files:
     - "content/07-what-next.Rmd"
     - "appendix/appendix.md"
     - "appendix/conduct.Rmd"
-    - "appendix/project-work.Rmd"
+    - "appendix/extras.Rmd"
     - "appendix/resources.Rmd"
     - "appendix/extras.Rmd"
     - "appendix/for-instructors.Rmd"
