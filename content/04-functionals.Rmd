@@ -405,7 +405,11 @@ Time: 5 min
 
 ```{asis, instructor_details=TRUE}
 Before starting this exercise, ask how many have used the pipe before.
-If everyone has, then move on to the next section.
+If everyone has, then move on to the next section. If some haven't,
+let the others in the group explain, but **do not** use much time or even
+demonstrate it. If they don't know what it is, they can look it up after.
+We covered this in the introduction course, so we should not cover it again
+here.
 ```
 
 We haven't used the `%>%` pipe from the [magrittr] package yet, but it is used
