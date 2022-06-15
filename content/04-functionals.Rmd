@@ -158,13 +158,24 @@ for (num in 1:5) {
 }
 ```
 
-With `map()`, we'd do this a bit differently. purrr allows us to create anonymous functions (functions that are used once and disappear after usage) to extend its capabilities. Anonymous functions are created by writing `function(x)` followed by the function definition inside of `map()`. Using `map()` with an anonymous function allows us to do more things to the input vector (e.g. `1:5`). Here is an example:
+With `map()`, we'd do this a bit differently. purrr allows us to create
+anonymous functions (functions that are used once and disappear after usage) to
+extend its capabilities. Anonymous functions are created by writing
+`function(x)` followed by the function definition inside of `map()`. Using
+`map()` with an anonymous function allows us to do more things to the input
+vector (e.g. `1:5`). Here is an example:
 
 ```{r}
 map(1:5, function(x) paste(x, "seconds have passed"))
 ```
 
-As this is quite verbose, purrr supports the use of a syntax shortcut to write anonymous functions. This shortcut is using `~` (tilde) to start the function and `.x` as the replacement for the vector item. `.x` is used instead of `x` in order to avoid potential name collisions in functions where `x` is an function argument (for example in `ggplot2::aes()`, where `x` can be used to define the x-axis mapping for a graph). Here is the same example as above, now using the `~` shortcut:
+As this is quite verbose, purrr supports the use of a syntax shortcut to write
+anonymous functions. This shortcut is using `~` (tilde) to start the function
+and `.x` as the replacement for the vector item. `.x` is used instead of `x` in
+order to avoid potential name collisions in functions where `x` is an function
+argument (for example in `ggplot2::aes()`, where `x` can be used to define the
+x-axis mapping for a graph). Here is the same example as above, now using the
+`~` shortcut:
 
 ```{r}
 map(1:5, ~paste(.x, "seconds have passed"))
