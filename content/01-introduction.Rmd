@@ -113,16 +113,15 @@ which you already did in the pre-course tasks.
     together with the raw data.
 - Use R Markdown (`doc/lesson.Rmd`) to write and test out code, convert it into
 a function, test it, and then move it into `R/functions.R`. Later we will also
-move code into the `data-raw/mmash.R`.
-    - We use R Markdown to prototype code because 1) it's easier from a teaching
-    perspective to interweave text and comments with code as we do the
-    code-alongs, 2) to make it easier to translate your work into a format for easy
-    dissemination (e.g. webpage, Word Doc, or PDF), and 3) because we want to
-    you to practice and reinforce skills in using and writing R Markdown since
-    it is a key component to doing reproducible research in R. Another alternative
-    way of working is to prototype ("write and test") code in a temporary R
-    script in the `R/` folder.
-    - TODO: Add a bit more explanation
+move code into the `data-raw/mmash.R`. We use this workflow because:
+    - It's easier to quickly test code out and make sure it works before moving
+    the code over into a more formal location and structure. Think of using the
+    R Markdown file as a sandbox to test out and play with code, without fear 
+    of messing things up.
+    - We also test code out in the R Markdown because it's easier from a
+    teaching perspective to interweave text and comments with code as we do the
+    code-alongs and because it forces you to practice working within R Markdown
+    documents, which are key components to a reproducible workflow in R.
     - We keep the functions in a separate file because we will frequently `source()`
     from it as we prototype and test out code in the R Markdown file. It also 
     creates a clear separation between "finalized" code and prototyping code.
