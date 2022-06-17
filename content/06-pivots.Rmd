@@ -74,11 +74,6 @@ source(here("R/functions.R"))
 load(here("data/mmash.rda"))
 ```
 
-When everything has been deleted, **add and commit** these changes into the Git history.
-Then, we'll "Knit" our R Markdown document into HTML by using the "Knit" button
-at the top of the pane or with `Ctrl-Shift-K`. Once it creates the file, it should
-either pop up or open in the Viewer pane on the side. 
-
 As we write more R code and do some simple analyses of the data, we are going
 to be knitting often. The main reason for this is to ensure that whatever you
 are writing and coding will at least be reproducible on your computer, since

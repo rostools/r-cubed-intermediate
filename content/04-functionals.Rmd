@@ -450,8 +450,10 @@ user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
 
-To test that things work, let's knit the R Markdown document (`Ctrl-Shift-K`).
-If it works, then we can move on and open up the `data-raw/mmash.R` script. Inside
+To test that things work, we'll "Knit" our R Markdown document into HTML by
+using the "Knit" button at the top of the pane or with `Ctrl-Shift-K`. Once it
+creates the file, it should either pop up or open in the Viewer pane on the
+side. If it works, then we can move on and open up the `data-raw/mmash.R` script. Inside
 the script, add these two lines of code to the bottom of the script. Afterwards,
 go the top of the script and right below the `library(here)` code, add these two
 lines of code, so it looks like this:
