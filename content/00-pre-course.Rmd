@@ -557,7 +557,7 @@ At this point, please run this function in the Console:
 r3::check_project_setup()
 ```
 
-```{text}
+```text
 ~/Desktop/LearnR3
 ├── DESCRIPTION
 ├── LearnR3.Rproj
