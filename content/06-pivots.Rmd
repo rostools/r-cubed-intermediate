@@ -62,12 +62,10 @@ remind everyone the 'what' and 'why' of what we are doing.
 We now have a working dataset to start doing some simple analyses on in the
 R Markdown document. A recommended workflow with R Markdown is to often
 "Knit" it and make sure your analysis is reproducible (while on your computer).
-So let's first clean it up and start from the beginning again.
+We already cleaned it up from the previous session.
 
-Then, we'll delete everything from below the `setup` code chunk until the end of the file.
-This code chunk should have all the packages listed with `library()` functions.
-We'll also add `load()` one right below them so we have access to the newly 
-merged dataset:
+We will now add the `load()` code right below the `source()` function in the
+`setup` code chunk:
 
 ```r
 source(here("R/functions.R"))
