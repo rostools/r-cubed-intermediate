@@ -1,4 +1,6 @@
-image: rocker/tidyverse
+image:
+  - rocker/tidyverse
+  - rocker/rstudio
 
 stages:
   - build
@@ -10,7 +12,7 @@ build:
         GITHUB_PAT: $GITHUB_PAT
     script:
         - R -e "remotes::install_deps(dependencies = c('Depends', 'Imports'))"
-        - Rscript _build.R
+        - quarto render
     only:
         - main
     artifacts:

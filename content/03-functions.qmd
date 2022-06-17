@@ -1,8 +1,10 @@
 # Save time, don't repeat yourself: Making functions {#dry-functions}
 
-```{r setup-03, include=FALSE, eval=FALSE}
-source("R/functions.R")
-source_session("02-importing.Rmd")
+```{r setup-03, include=FALSE}
+library(fs)
+library(vroom)
+library(here)
+source(here("R/build-functions.R"))
 user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 ```
 
@@ -65,7 +67,7 @@ function name without the `()` into the Console and run it.
 If we do it with the function `sd()` which calculates the standard deviation,
 we see:
 
-```{r}
+```{r show-sd-internals}
 sd
 ```
 
@@ -121,7 +123,7 @@ Let's write a simple example. First, create a new Markdown header called
 `## Making a function` and create a code chunk below that with `Ctrl-Alt-I`.
 Then, inside the function, we'll write this code out:
 
-```{r create-add-function}
+```{r create-add-function, purl=TRUE}
 add_numbers <- function(num1, num2) {
     added <- num1 + num2
     return(added)
@@ -457,7 +459,7 @@ dependencies is easy. We do this by making use of the `DESCRIPTION` file.
 
 Open up the `DESCRIPTION` file. You may or may not see something that looks like:
 
-```text
+```
 Package: LearnR3
 Type: Project
 Version: 0.0.1
@@ -479,7 +481,7 @@ usethis::use_package("vroom")
 You will see a bunch of text about adding it to `Imports`. If you look in your
 `DESCRIPTION` file now, you'll see something like:
 
-```text
+```
 Imports: 
     knitr,
     rmarkdown,
@@ -521,7 +523,7 @@ tidyverse because of one big reason: the `usethis::use_package()` function will
 complain if we try to put tidyverse in the `Imports` and it recommends putting
 it in the `Depends` field.
 
-```text
+```
 Depends: 
     tidyverse
 ```
@@ -578,7 +580,7 @@ We also do this step at the end of making the function because doing it while
 we create it can be quite tedious. Alright, let's go into `R/functions.R` and
 add `vroom::` to each of the vroom functions we've used:
 
-```{r explicit-function-calls}
+```{r explicit-function-calls, purl=TRUE}
 import_user_info <- function(file_path) {
     info_data <- vroom::vroom(
         file_path,
@@ -663,7 +665,7 @@ ___ <- function(___) {
 }
 ```
 
-```{r solution-update-other-functions, results='hide', solution=TRUE}
+```{r solution-update-other-functions, results='hide', solution=TRUE, purl=TRUE}
 #' Import the MMASH saliva dataset.
 #'
 #' @param file_path Path to the user saliva data file.

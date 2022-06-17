@@ -84,16 +84,20 @@ diagram_overview <- function(section_num = 0) {
 
 #' Source session R code for use when developing later sessions.
 #'
-#' @param rmd_file Chapter Rmd file.
+#' @param qmd_files Chapter Quarto Markdown files.
 #'
-#' @return Nothing. Sources the Rmd file.
+#' @return Nothing. Sources the Qmd file(s).
 #'
-source_session <- function(rmd_file) {
-    tmp_r_file <- tempfile(fileext = ".R")
-    knitr::purl(rmd_file, output = tmp_r_file,
-                quiet = TRUE)
-    source(tmp_r_file, verbose = FALSE, echo = FALSE,
-           print. = FALSE)
+source_session <- function(qmd_files) {
+    r_files <- fs::path("R", fs::path_file(qmd_files))
+    r_files <- fs::path_ext_set(r_files, ".R")
+    purrr::walk(
+        r_files,
+        source,
+        verbose = FALSE,
+        echo = FALSE,
+        print.eval = FALSE
+    )
     return(invisible(NULL))
 }
 
@@ -105,4 +109,41 @@ source_session <- function(rmd_file) {
 #'
 trim_filepath_for_book <- function(data) {
     mutate(data, file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id))
+}
+
+#' Convert contents of Qmd files into R scripts, only for purl chunks
+#'
+#' @return Nothing. Converts Qmd files to R scripts.
+#'
+extract_chunks <- function() {
+    knitr::opts_chunk$set(
+        purl = FALSE
+    )
+
+    fs::dir_ls(here::here("R"), regexp = ".*[0-9][0-9]-.*\\.R$") |>
+        fs::file_delete()
+
+    qmd_files <- fs::path(
+        "content",
+        c(
+            # "00-pre-course.qmd",
+            "03-functions.qmd",
+            "04-functionals.qmd",
+            "05-dplyr-joins.qmd"
+        )
+    )
+    r_files <- fs::path("R", fs::path_file(qmd_files))
+    r_files <- fs::path_ext_set(r_files, ".R")
+    purrr::walk2(qmd_files, r_files, knitr::purl, documentation = 0L)
+}
+
+insert_video <- function(video_file) {
+    htmltools::tags$video(
+        htmltools::tags$source(
+            src = video_file,
+            type = "video/mp4"
+        ),
+        controls = NA,
+        width = "100%"
+    )
 }

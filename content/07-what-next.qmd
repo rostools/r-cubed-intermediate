@@ -3,5 +3,5 @@
 **[What Next slides](slides/next-steps.html)**
 
 ```{r slides-page-frame-finale, echo=FALSE}
-knitr::include_url("slides/next-steps.html", height = "375px")
+knitr::include_url("../slides/next-steps.html", height = "375px")
 ```

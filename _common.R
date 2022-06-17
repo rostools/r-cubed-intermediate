@@ -1,8 +1,19 @@
 
 library(RefManageR)
 library(knitr)
-library(tidyverse)
 library(htmltools)
+
+# Remove any leftovers, just in case
+delete_if_present <- function(path, type = c("dir", "file")) {
+    fn_check <- switch(type, dir = fs::dir_exists, file = fs::file_exists)
+    fn_delete <- switch(type, dir = fs::dir_delete, file = fs::file_delete)
+    if (fn_check(path))
+        fn_delete(path)
+    return(invisible(NULL))
+}
+delete_if_present("data-raw/mmash", "dir")
+delete_if_present("R/book-functions.R", "file")
+fs::file_create("R/book-functions.R")
 
 knitr::opts_chunk$set(
     comment = "#>",
@@ -45,14 +56,3 @@ options(knitr.table.format = "html",
                              "fs", "dplyr", "tidyr"))
 
 set.seed(12345)
-
-insert_video <- function(video_file) {
-    htmltools::tags$video(
-        htmltools::tags$source(
-            src = video_file,
-            type = "video/mp4"
-        ),
-        controls = NA,
-        width = "100%"
-    )
-}

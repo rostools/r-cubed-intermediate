@@ -175,7 +175,7 @@ r3::check_setup()
 
 The output you'll get for success will look something like this:
 
-```text
+```
 Checking R version:
 ✔ Your R is at the latest version of 4.2.0!
 Checking RStudio version:
@@ -339,7 +339,7 @@ which means "filesystem", by running the following code in the R Console:
 fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 ```
 
-```text
+```
 LearnR3
 ├── data
 │   └── README.md
@@ -465,7 +465,7 @@ folder and confirm that the below listed files and folders are there.
 fs::dir_tree("data-raw", recurse = 1)
 ```
 
-```text
+```
 data-raw
 ├── README.md
 ├── LICENSE.txt
@@ -501,7 +501,7 @@ file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 
 Afterwards, the files and folders in `data-raw/` will look like:
 
-```text
+```
 data-raw
 ├── README.md
 ├── mmash
@@ -528,7 +528,7 @@ usethis::use_git_ignore("data-raw/mmash/")
 
 The `data-raw/mmash.R` script should look like this at this point:
 
-```{r pre-course-state-of-script, eval=FALSE}
+```{r pre-course-state-of-script, eval=FALSE, purl=TRUE}
 library(here)
 
 # Download
@@ -557,7 +557,7 @@ At this point, please run this function in the Console:
 r3::check_project_setup()
 ```
 
-```{text}
+```
 ~/Desktop/LearnR3
 ├── DESCRIPTION
 ├── LearnR3.Rproj

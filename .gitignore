@@ -4,7 +4,6 @@
 .Ruserdata
 public/*
 *_files/*
-resources/packages.bib
 *.rds
 .Rbuildignore
 resources/refs.bib.sav
@@ -14,3 +13,5 @@ data-raw/mmash.R
 _ignore
 R/ignore.R
 slides/libs
+
+/.quarto/

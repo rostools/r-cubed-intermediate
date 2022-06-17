@@ -1,15 +1,15 @@
 # Quickly re-arranging data with pivots {#pivots}
 
-```{r setup-06, include=FALSE, eval=FALSE}
+```{r setup-06, include=FALSE}
 # Used this only during writing to run code dependent on previous chapters.
 library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source(here("R/functions.R"))
-source_session("content/03-functions.Rmd")
-source_session("content/04-functionals.Rmd")
-source_session("content/05-dplyr-joins.Rmd")
+source(here("R/build-functions.R"))
+source_session(here("content/03-functions.qmd"))
+source_session(here("content/04-functionals.qmd"))
+source_session(here("content/05-dplyr-joins.qmd"))
 load(here("data/mmash.rda"))
 ```
 
@@ -143,14 +143,14 @@ analysis. Figure \@ref(fig:image-pivot-longer) visually shows what happens when
 you pivot from wide to long.
 
 ```{r image-pivot-longer, fig.cap="Pivot longer in tidyr. New columns are called 'name' and 'value'.", out.width="90%", echo=FALSE}
-knitr::include_graphics(here::here("images/pivot-longer.png"))
+knitr::include_graphics("images/pivot-longer.png")
 ```
 
 If you had, for instance, an ID column for each participant, the pivoting would 
 look like what is shown in Figure \@ref(fig:image-pivot-longer-id).
 
 ```{r image-pivot-longer-id, fig.cap="Pivot longer in tidyr, excluding an 'id' column. New columns are called 'name' and 'value', as well as the old 'id' column.", out.width="90%", echo=FALSE}
-knitr::include_graphics(here::here("images/pivot-longer-id.png"))
+knitr::include_graphics("images/pivot-longer-id.png")
 ```
 
 Pivoting is a conceptually challenging thing to grasp, so don't be disheartened
@@ -295,7 +295,7 @@ Figure \@ref(fig:image-pivot-wider) visually shows what's happening when using
 `pivot_wider()`.
 
 ```{r image-pivot-wider, fig.cap="Pivot wider in tidyr.", out.width="90%", echo=FALSE}
-knitr::include_graphics(here::here("images/pivot-wider.png"))
+knitr::include_graphics("images/pivot-wider.png")
 ```
 
 **Stop here and we will go over it again.**

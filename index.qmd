@@ -1,29 +1,5 @@
---- 
-title: "Reproducible Research in R"
-subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
-date: "`r format(Sys.time(), '%B %d %Y')`"
-site: bookdown::bookdown_site
-author: "Luke W. Johnston"
-documentclass: book
-bibliography: [resources/packages.bib, resources/refs.bib]
-link-citations: yes
-csl: resources/vancouver.csl
-description: "A 3-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
-apple-touch-icon: "images/apple-touch-icon.png"
-apple-touch-icon-size: 180
-favicon: "images/favicon.ico"
-url: 'https\://r-cubed-intermediate.rostools.org'
----
 
 # Welcome!
-
-```{r, include=FALSE, eval=TRUE}
-# automatically create a bib database for R packages
-knitr::write_bib(
-    c(.packages(), "bookdown", "knitr", "rmarkdown"),
-    here::here('resources/packages.bib')
-)
-```
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4061900.svg)](https://doi.org/10.5281/zenodo.4061900)

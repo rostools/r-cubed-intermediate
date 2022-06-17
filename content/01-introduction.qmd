@@ -5,7 +5,7 @@
 **[Introduction slides](slides/introduction.html)**
 
 ```{r slides-page-frame, echo=FALSE}
-knitr::include_url("slides/introduction.html", height = "375px")
+knitr::include_url("../slides/introduction.html", height = "375px")
 ```
 
 ```{asis, instructor_details=TRUE}
@@ -176,6 +176,11 @@ described so far?
 all thought and discussed.
 
 ## Setting up our project
+
+```{asis, instructor_details=TRUE}
+Take this time to briefly explain the Git interface, what add and commit mean,
+as well as where the history is located.
+```
 
 Now that we've gone over the overview, let's get our project ready for the next
 steps. But first, we need to do a few things. Since we did all that work in the

@@ -1,12 +1,13 @@
 # Save time, don't repeat yourself: Using functionals {#dry-functionals}
 
-```{r setup-04, include=FALSE, eval=FALSE}
+```{r setup-04, include=FALSE}
 library(here)
+library(dplyr)
+library(purrr)
 library(fs)
-library(tidyverse)
 library(vroom)
-source(here("R/functions.R"))
-source_session(here("content/03-functions.Rmd"))
+source(here("R/build-functions.R"))
+source_session(here("R/03-functions.qmd"))
 ```
 
 We will continue covering the "*Workflow*" block in Figure \@ref(fig:diagram-overview-3).
@@ -78,7 +79,7 @@ since it is one of R's big strengths. For instance, functions like `mean()`,
 do something to all the values in the vector at once. In vectorized functions, you can give the function an entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. Figure \@ref(fig:image-vectorization) shows how a function conceptually uses vectorization.
 
 ```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="45%", echo=FALSE}
-knitr::include_graphics(here::here("images/vectorization.png"))
+knitr::include_graphics("images/vectorization.png")
 ```
 
 For example, in R, there is a vectorized function called `sum()` that takes the entire vector of `values` and outputs the total sum, without needing a for loop.
@@ -120,7 +121,7 @@ The name `map()` doesn't mean a geographic map, it is the mathematical meaning
 of map: To use a function on each item in a set of items.
 
 ```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="90%", echo=FALSE}
-knitr::include_graphics(here::here("images/functionals.png"))
+knitr::include_graphics("images/functionals.png")
 ```
 
 [purrr]: https://purrr.tidyverse.org
@@ -377,7 +378,7 @@ ___ <- ___(___, ___) {
 }
 ```
 
-```{r solution-import-multiple-files, results='hide', solution=TRUE}
+```{r solution-import-multiple-files, results='hide', solution=TRUE, purl=TRUE}
 #' Import multiple MMASH data files and merge into one data frame.
 #'
 #' @param file_pattern Pattern for which data file to import.
@@ -445,7 +446,7 @@ text later. Next, we restart the R session (`Ctrl-Shift-F10`). Then we'll create
 a new code chunk below the `setup` chunk where we will use the
 `import_multiple_files()` function to import the user info and saliva data.
 
-```{r}
+```{r, purl=TRUE}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
@@ -709,7 +710,7 @@ rr_df %>%
 
 You might notice a message (depending on the version of dplyr you have):
 
-```text
+```
 `summarise()` regrouping output by 'file_path_id' (override with `.groups` argument)
 ```
 
