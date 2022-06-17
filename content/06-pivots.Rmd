@@ -331,9 +331,16 @@ mmash %>%
 ```
 
 Now we have a different problem. There are missing values in both the `day` and `gender`
-columns that, at least in this case, we don't want pivoted. We can remove
-missing values with the function called `drop_na()`. Add it in the pipe
-right before `group_by()`.
+columns that, at least in this case, we don't want pivoted. 
+Shouldn't they be removed when we include `na.rm = TRUE` in our code?
+The function of `na.rm = TRUE` is not to remove `NA` values, but to instead
+tell R to not include variables in `mmash` that are `NA` when calculating the mean and
+standard deviation. In this particular case, the columns `value_mean_NA` or
+`value_mean_-29` have `NA` or `NaN` values because there are no other values
+in the data *other than* `NA`. Since we don't actually care about missing
+days (or the random `-29` day), we can remove missing values with the function
+called `drop_na()`. We also don't care about missing `gender` values, so we'll
+drop them as well. Add it in the pipe right before `group_by()`.
 
 ```{r pivot-wider-from-summarised-drop-na}
 mmash %>% 
