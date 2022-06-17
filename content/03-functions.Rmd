@@ -614,11 +614,9 @@ Time: 5 min
 
 Before moving on to the next exercise, discuss with your group about:
 
-- How tracking dependencies might help you in your own work
-- Some personal experiences, if you have any, you have had where the lack of
-explicit dependencies made your work harder and more confusing.
-
-All groups will briefly share their own thoughts.
+- How tracking dependencies might help you in your own work.
+- Some personal experiences, if you have had any, where the lack of explicit
+dependencies made your work harder and more confusing.
 
 ## Exercise: Move and update the rest of the functions
 

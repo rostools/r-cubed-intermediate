@@ -318,7 +318,7 @@ what they thought of before we move on to the next exercise.
 
 ## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
 
-Time: 20 min
+Time: 25 min
 
 We need to do basically the exact same thing for the `saliva.csv`, `RR.csv`, and
 `Actigraph.csv` datasets, following this format:
