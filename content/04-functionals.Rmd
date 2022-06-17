@@ -670,6 +670,8 @@ called "join") them with the smaller datasets like `user_info.csv` or
 `saliva.csv`. Let's work with the `RR.csv` dataset to eventually join it with
 the others.
 
+## Summarizing long data like the RR dataset
+
 With the RR dataset, each participant had almost 100,000 data points recorded
 over two days of collection. So if we want to join with the other datasets,
 we need to calculate summary measures by at least `file_path_id` and also preferably
