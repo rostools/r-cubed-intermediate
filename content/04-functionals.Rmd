@@ -453,10 +453,10 @@ saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 To test that things work, we'll "Knit" our R Markdown document into HTML by
 using the "Knit" button at the top of the pane or with `Ctrl-Shift-K`. Once it
 creates the file, it should either pop up or open in the Viewer pane on the
-side. If it works, then we can move on and open up the `data-raw/mmash.R` script. Inside
-the script, add these two lines of code to the bottom of the script. Afterwards,
-go the top of the script and right below the `library(here)` code, add these two
-lines of code, so it looks like this:
+side. If it works, then we can move on and open up the `data-raw/mmash.R` script. 
+Inside the script, copy and paste these two lines of code to the bottom of the script. 
+Afterwards, go the top of the script and right below the `library(here)` code,
+add these two lines of code, so it looks like this:
 
 ```{r add-source-tidyverse, eval=FALSE}
 library(here)
@@ -778,8 +778,9 @@ Ungrouping the data with `ungroup()` does not provide any visual indication of
 what is happening. However, in the background, it removes certain metadata that
 the `group_by()` function added.
 
-Before continuing, switch to the Git interface and **add and commit** the changes so
-far.
+Before continuing, let's knit the R Markdown document to confirm that everything
+runs as it should. If the knitting works, then switch to the Git interface and
+**add and commit** the changes so far.
 
 ## Exercise: Summarise the Actigraph data
 
@@ -804,7 +805,8 @@ with the summary functions you chose.
 Assign the newly summarised data frame to a new data frame and call it
 `summarised_actigraph_df`.
 7. End the grouping effect with `ungroup()`.
-8. **Add and commit** the changes you've made into the Git history.
+8. Knit the `doc/lesson.Rmd` document to make sure everything works.
+9. **Add and commit** the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
