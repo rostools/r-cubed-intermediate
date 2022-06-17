@@ -5,6 +5,10 @@ library(tidyverse)
 library(lubridate)
 conflicted::conflict_prefer("filter", "dplyr")
 
+stop("To prevent accidental sourcing.")
+
+course_date <- "2022-06"
+
 # Import pre-survey data --------------------------------------------------
 
 # To get the output to rename the columns
@@ -51,12 +55,13 @@ renaming_columns <- tibble::tribble(
 
 presurvey <- drive_get(id = PRE_SURVEY_ID) %>%
     read_sheet() %>%
-    set_names(renaming_columns$new_column_names)
+    select(deframe(renaming_columns[2:1]))
 # nrow(presurvey)
 # View(presurvey)
 
 presurvey_current <- presurvey %>%
-    filter(year(timestamp) == "2021", month(timestamp) %in% 9:10)
+    filter(year(timestamp) == str_sub(course_date, 1, 4),
+           month(timestamp) %in% str_sub(course_date, -1, -1))
 nrow(presurvey_current)
 
 # Check who hasn't finished the survey ------------------------------------
@@ -71,27 +76,43 @@ presurvey_with_participants <- presurvey_current %>%
 participants_list <- presurvey_with_participants %>%
     select(full_name, name_from_survey, name_from_list, email = email_from_list)
 
-# nrow(participants)
-# nrow(participants_list)
-# View(participants_list)
+nrow(participants)
+nrow(participants_list)
+View(participants_list)
 
 # Get list of emails to remind to finish survey.
-# participants_list %>%
-#     filter(is.na(name_from_survey)) %>%
-#     pull(email) %>%
-#     clipr::write_clip()
+participants_list %>%
+    filter(is.na(name_from_survey)) %>%
+    pull(email) %>%
+    clipr::write_clip()
 
 # Check setup responses ---------------------------------------------------
 
-# presurvey_current %>%
-#     select(starts_with("check")) %>%
-#     pull(check_setup_output) %>%
-#     cat()
+presurvey_current %>%
+    pull(check_setup_output) %>%
+    str_c(collapse = "\n\n") %>%
+    write_lines(file = "_ignore/check-installs.txt")
 
-# presurvey_current %>%
-#     select(starts_with("check")) %>%
-#     pull(check_project_setup_output) %>%
-#     write_lines("temp.txt")
+presurvey_current %>%
+    pull(check_project_setup_output) %>%
+    str_c(collapse = "\n\n") %>%
+    write_lines("_ignore/check-project-setup.txt")
+
+# Needs help? -------------------------------------------------------------
+
+participants_with_problems <- presurvey_current %>%
+    select(full_name, email, encounter_problems, describe_problems, when_available_for_help,
+           check_setup_output, check_project_setup_output) %>%
+    filter(encounter_problems == "Yes")
+
+View(participants_with_problems)
+
+participants_with_problems %>%
+    pull(full_name) %>%
+    str_c("- ", ., collapse = "\n") %>%
+    append("People with problems:", after = 0) %>%
+    str_c(collapse = " \n") %>%
+    clipr::write_clip()
 
 # Save some details and the feedback --------------------------------------
 
@@ -110,7 +131,7 @@ basic_overview <- prep_for_saving %>%
     select(-Questions, Questions = original_column_names) %>%
     relocate(Questions)
 
-write_csv(basic_overview, here::here("data/2021-10-participant-overview.csv"))
+write_csv(basic_overview, here::here(glue::glue("data/{course_date}-participant-overview.csv")))
 
 precourse_feedback <- prep_for_saving %>%
     select(contains("feedback"), describe_problems, contains("course_expectations")) %>%
@@ -121,4 +142,4 @@ precourse_feedback <- prep_for_saving %>%
     select(-Questions, Questions = original_column_names) %>%
     relocate(Questions)
 
-write_csv(precourse_feedback, here::here("feedback/2021-10-precourse.csv"))
+write_csv(precourse_feedback, here::here(glue::glue("feedback/{course_date}-precourse.csv")))
