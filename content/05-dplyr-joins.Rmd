@@ -520,69 +520,22 @@ Now that we've got several datasets processed and joined, its now time to
 bring it all together and put it into the `data-raw/mmash.R` script so we
 can create a final working dataset.
 
-Open up the `data-raw/mmash.R` file to get ready to start cutting and pasting
-the code from `doc/lesson.Rmd` that is related to importing and joining the
-`user_info.csv`, `saliva.csv`, `RR.csv`, and `Actigraph.csv`.
-Before you cut and paste, check that the `data-raw/mmash.R` matches the code
-below. 
-
-```{r data-raw-mmash-script, eval=FALSE}
-library(here)
-
-# Download
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
-
-# Unzip
-unzip(here("data-raw/mmash-data.zip"), 
-      exdir = here("data-raw"),
-      junkpaths = TRUE)
-unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw"))
-
-# Remove/tidy up left over files
-library(fs)
-file_delete(here(c("data-raw/MMASH.zip", 
-                   "data-raw/SHA256SUMS.txt",
-                   "data-raw/LICENSE.txt")))
-file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
-```
-
-First thing to do is comment out the `download.file()`, `unzip()`, `file_delete()`, 
-and `file_move()` code, since we don't want
-to download and unzip the data every single time we run this script. Next we'll want to
-rearrange all the `library()` package calls so they are at the top, and then add
-the other packages we'll need: tidyverse and vroom.
+Open up the `data-raw/mmash.R` file and the top of the file, add the vroom
+package to the end of the list of other packages. Move the code `library(fs)`
+to go with the other packages as well. It should look something like this now:
 
 ```{r}
+library(here)
 library(tidyverse)
 library(vroom)
 library(fs)
-library(here)
 ```
 
-Next, we need to let this script know where to get our functions from. So right
-below the `library()` functions, add:
+Then, we will comment out the `download.file()`, `unzip()`, `file_delete()`, 
+and `file_move()` code, since we don't want to download and unzip the data every
+single time we run this script. It should look like this:
 
-```r
-source(here("R/functions.R"))
-```
-
-This is the code that runs when you use `Ctrl-Shift-S` (`source()`).
-
-Now, find the code for `import_multiple_files()`, summarised RR and Actigraph
-data, saliva data with the day column, and the `reduce()` code in your
-`doc/lesson.Rmd` file and cut and paste it at the bottom of the
-`data-raw/mmash.R` script. Find any `file_path_id` variables and replace
-with `user_id`. This is what the script should look like now:
-
-```{r data-raw-mmash-2, eval=FALSE}
-library(tidyverse)
-library(vroom)
-library(fs)
-library(here)
-source(here("R/functions.R"))
-
+```{r data-raw-mmash-comment-out, eval=FALSE}
 # Download
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
@@ -599,23 +552,14 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 #                    "data-raw/SHA256SUMS.txt",
 #                    "data-raw/LICENSE.txt")))
 # file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+```
 
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-rr_df <- import_multiple_files("RR.csv", import_rr)
-actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+Go into the `doc/lesson.Rmd` and cut the code used to create the
+`saliva_with_day_df` as well as the code to `full_join()` all the datasets
+together with `reduce()` and paste it at the bottom of the `data-raw/mmash.R` 
+script. Assign the output into a new variable called `mmash`, like this:
 
-summarised_rr_df <- rr_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
-    ungroup()
-
-# Your Actigraph code will be probably be different
-summarised_actigraph_df <- actigraph_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(hr, list(mean = mean, sd = sd))) %>% 
-    ungroup()
-
+```{r data-raw-mmash-to-final}
 saliva_with_day_df <- saliva_df %>% 
     mutate(day = case_when(
         samples == "before sleep" ~ 1,
@@ -643,8 +587,8 @@ usethis::use_data(mmash, overwrite = TRUE)
 ```
 
 We're adding `overwrite = TRUE` so every time we re-run this script, the dataset
-will be saved. If the final dataset is going to be really large, we could save
-it as a `.csv` file with:
+will be saved. If the final dataset is going to be really large, we could (but won't
+in this course) save it as a `.csv` file with:
 
 ```{r, eval=FALSE}
 vroom_write(mmash, here("data/mmash.csv"))
@@ -659,10 +603,11 @@ by:
 the "Source" button in the top right corner of the script pane).
 
 We now have a final dataset to start working on! The main way to load data is
-with `load(here::here("data/mmash.rda"))`. Lastly, **add and commit** all the changes,
-including adding the final `mmash.rda` data file, to the Git history. Make sure
-the `doc/lesson.Rmd` file is empty (except for the YAML header and `setup` code
-chunk) and ready for the next session.
+with `load(here::here("data/mmash.rda"))`. Go into the `doc/lesson.Rmd` file 
+and delete **everything** again, except for the YAML header and `setup` code
+chunk, so that we are ready for the next session. Lastly, **add and commit** all
+the changes, including adding the final `mmash.rda` data file, to the Git
+history.
 
 ## Summary
 
