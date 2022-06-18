@@ -73,9 +73,10 @@ load(here("data/mmash.rda"))
 ```
 
 As we write more R code and do some simple analyses of the data, we are going
-to be knitting often. The main reason for this is to ensure that whatever you
-are writing and coding will at least be reproducible on your computer, since
-R Markdown is designed to ensure the document is reproducible.
+to be knitting fairly often (depending on how long the analysis takes of
+course). The main reason for this is to ensure that whatever you are writing and
+coding will at least be reproducible on your computer, since R Markdown is
+designed to ensure the document is reproducible.
 
 For this specific workflow and for checking reproducibility, you should output
 to HTML rather than to a Word document. While you can create a Word document by
