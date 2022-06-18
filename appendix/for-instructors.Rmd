@@ -5,9 +5,13 @@ More guidance for instructors is also found in the
 
 ## Timings for specific sessions
 
+### Slides: Time ~50 min
+
+- First presentation: ~20 min
+- Second presentation: ~30 min
+
 ### Introduction section: Time ~55 min
 
-- Slides take ~20 min
 - Section 5.2: ~15 min
 - Exercise 5.3: 15 min
 - Section 5.4: ~5 min
@@ -58,6 +62,18 @@ More guidance for instructors is also found in the
 - Section 9.9: ~15 min
 
 ### Pivoting session: Time ~2.25 hrs
+
+- *Briefly go over overview and objectives*, ~5 min
+- Section 10.2: ~5 min
+- Section 10.3: ~15 min
+- Exercise 10.4: 10 min
+- Exercise 10.5: 15 min
+- Section 10.6: ~20 min
+- Exercise 10.7: 15 min
+- Section 10.8: ~15 min
+- Section 10.9: ~5 min
+- Section 10.10: ~5 min
+- Exercise 10.11: 15 min
 
 ## Course details
 
