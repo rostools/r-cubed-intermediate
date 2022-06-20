@@ -56,7 +56,7 @@ library(randomizr)
 
 set.seed(97)
 teams_assigned <- teams_prep %>%
-    mutate(team = (perceived_skill_score >= 4) %>%
+    mutate(team = (perceived_skill_score >= 3) %>%
                block_ra(conditions = team_names_final) %>%
                as.character()) %>%
     arrange(team, perceived_skill_score)
@@ -64,7 +64,7 @@ count(teams_assigned, team)
 View(teams_assigned)
 
 # Manually change if need be.
-# teams_assigned <- edit(teams_assigned)
+teams_assigned <- edit(teams_assigned)
 
 # Format teams and names so its easier to put name tags when physically
 # putting groups together.
@@ -76,7 +76,7 @@ format_teams <- function(data) {
         str_c(collapse = "\n- ")
 }
 
-gh_teams_assigned %>%
+teams_assigned %>%
     select(team, full_name) %>%
     group_split(team) %>%
     map_chr(format_teams) %>%
