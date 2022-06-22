@@ -439,6 +439,32 @@ source(here("R/functions.R"))
 
 Save the files, then add and commit the changes to the Git history.
 
+
+## Split-apply-combine technique and functionals
+
+```{asis, instructor_details=TRUE}
+Verbally cover this section before moving on to the summarizing. Let them know 
+they can read more about this in this section.
+```
+
+We're taking a quick detour to briefly talk about a concept that perfectly
+illustrates how vectorization and functionals fit into doing data analysis.
+The concept is called the
+[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
+technique, which we covered in the beginner R course.
+The method is:
+
+1. Split the data into groups (e.g. diabetes status).
+2. Apply some analysis or statistics to each group (e.g. finding the mean of age).
+3. Combine the results to present them together (e.g. into a data frame that you can use
+to make a plot or table).
+
+So when you split data into multiple groups, you make a *vector* that you can 
+than apply (i.e. the *map* functional) some statistical technique to each group
+through *vectorization*. This technique works really well for a range of tasks, 
+including for our task of summarizing some of the MMASH data so we can merge
+it all into one dataset.
+
 ## Exercise: What is the pipe?
 
 Time: 5 min
@@ -465,31 +491,6 @@ time to talk about and explain it (if you know).
 - If no one in the group knows, please read 
 [the section on it](https://r-cubed.rostools.org/wrangling.html#chaining-functions-with-the-pipe)
 from the beginner course.
-
-## Split-apply-combine technique and functionals
-
-```{asis, instructor_details=TRUE}
-Verbally cover this section before moving on to the summarizing. Let them know 
-they can read more about this in this section.
-```
-
-We're taking a quick detour to briefly talk about a concept that perfectly
-illustrates how vectorization and functionals fit into doing data analysis.
-The concept is called the
-[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
-technique, which we covered in the beginner R course.
-The method is:
-
-1. Split the data into groups (e.g. diabetes status).
-2. Apply some analysis or statistics to each group (e.g. finding the mean of age).
-3. Combine the results to present them together (e.g. into a data frame that you can use
-to make a plot or table).
-
-So when you split data into multiple groups, you make a *vector* that you can 
-than apply (i.e. the *map* functional) some statistical technique to each group
-through *vectorization*. This technique works really well for a range of tasks, 
-including for our task of summarizing some of the MMASH data so we can merge
-it all into one dataset.
 
 ## Summarising data through functionals {#summarise-with-functionals}
 
