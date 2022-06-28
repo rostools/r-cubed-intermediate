@@ -46,14 +46,14 @@ quantitative_feedback %>%
     count(id) %>%
     count(n)
 
-write_csv(quantitative_feedback, here::here(glue::glue("data/{course_date}-quantitative.csv")))
+write_csv(quantitative_feedback, here::here(glue::glue("feedback/{course_date}-quantitative.csv")))
 
 # Keep and save the general feedback
 overall_feedback <- long_feedback_survey %>%
     filter(str_detect(question, "other feedback")) %>%
     select(response)
 
-write_csv(overall_feedback, here::here(glue::glue("data/{course_date}-overall.csv")))
+write_csv(overall_feedback, here::here(glue::glue("feedback/{course_date}-overall.csv")))
 
 # Keep and save the session specific feedback
 session_feedback <- long_feedback_survey %>%
@@ -70,4 +70,4 @@ session_feedback <- long_feedback_survey %>%
     arrange(day, session) %>%
     select(-time_stamp)
 
-write_csv(session_feedback, here::here(glue::glue("data/{course_date}-session-specific.csv")))
+write_csv(session_feedback, here::here(glue::glue("feedback/{course_date}-session-specific.csv")))
