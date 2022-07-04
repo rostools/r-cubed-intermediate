@@ -1,13 +1,13 @@
-source(here::here("R/ignore.R"))
+source(here::here("R/_ignore.R"))
 library(googledrive)
 library(googlesheets4)
 library(tidyverse)
 library(lubridate)
 conflicted::conflict_prefer("filter", "dplyr")
 
-# Import pre-survey data --------------------------------------------------
-
 stop("To prevent accidental sourcing.")
+
+# Import pre-survey data --------------------------------------------------
 
 course_date <- "2022-06"
 
@@ -21,7 +21,7 @@ any(duplicated(feedback_survey$Timestamp))
 
 # Clean up and convert to long form
 long_feedback_survey <- feedback_survey %>%
-    mutate(across(where(is.list), ~unlist(as.character(.x)))) %>%
+    unnest(cols = where(is.list), keep_empty = TRUE) %>%
     rename(day = `Which of the days is the feedback for?`,
            time_stamp = Timestamp) %>%
     pivot_longer(cols = -c(time_stamp, day), names_to = "question", values_to = "response") %>%
