@@ -319,7 +319,7 @@ what they thought of before we move on to the next exercise.
 
 ## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
 
-Time: 20 min
+Time: 25 min
 
 We need to do basically the exact same thing for the `saliva.csv`, `RR.csv`, and
 `Actigraph.csv` datasets, following this format:
@@ -400,6 +400,72 @@ import_multiple_files <- function(file_pattern, import_function) {
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
+## Adding to the processing script and clean up R Markdown document
+
+**We'll do this together**.
+We've now made a function that imports multiple data files based on the type of
+data file, we can start using this function directly, like we did in the exercise
+above for the saliva data. We've already imported the `user_info_df` previously,
+but now we should do some tidying up of our R Markdown file and to start updating
+the `data-raw/mmash.R` script. Why are we doing that? Because the R Markdown file
+is only a sandbox to test code out and in the end we want a script that takes
+the raw data, processes it, and creates a working dataset we can use for analysis.
+
+First thing we will do is delete **everything** below the `setup` code chunk 
+that contains the `library()` and `source()` code. Why do we delete everything?
+Because it keeps things cleaner and makes it easier to look through the file.
+And because we use Git, nothing is truly gone so you can always go back to the
+text later. Next, we restart the R session (`Ctrl-Shift-F10`). Then we'll create
+a new code chunk below the `setup` chunk where we will use the
+`import_multiple_files()` function to import the user info and saliva data.
+
+```{r}
+user_info_df <- import_multiple_files("user_info.csv", import_user_info)
+saliva_df <- import_multiple_files("saliva.csv", import_saliva)
+```
+
+To test that things work, we'll "Knit" our R Markdown document into HTML by
+using the "Knit" button at the top of the pane or with `Ctrl-Shift-K`. Once it
+creates the file, it should either pop up or open in the Viewer pane on the
+side. If it works, then we can move on and open up the `data-raw/mmash.R` script. 
+Inside the script, copy and paste these two lines of code to the bottom of the script. 
+Afterwards, go the top of the script and right below the `library(here)` code,
+add these two lines of code, so it looks like this:
+
+```{r add-source-tidyverse, eval=FALSE}
+library(here)
+library(tidyverse)
+source(here("R/functions.R"))
+```
+
+Save the files, then add and commit the changes to the Git history.
+
+
+## Split-apply-combine technique and functionals
+
+```{asis, instructor_details=TRUE}
+Verbally cover this section before moving on to the summarizing. Let them know 
+they can read more about this in this section.
+```
+
+We're taking a quick detour to briefly talk about a concept that perfectly
+illustrates how vectorization and functionals fit into doing data analysis.
+The concept is called the
+[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
+technique, which we covered in the beginner R course.
+The method is:
+
+1. Split the data into groups (e.g. diabetes status).
+2. Apply some analysis or statistics to each group (e.g. finding the mean of age).
+3. Combine the results to present them together (e.g. into a data frame that you can use
+to make a plot or table).
+
+So when you split data into multiple groups, you make a *vector* that you can 
+than apply (i.e. the *map* functional) some statistical technique to each group
+through *vectorization*. This technique works really well for a range of tasks, 
+including for our task of summarizing some of the MMASH data so we can merge
+it all into one dataset.
+
 ## Exercise: What is the pipe?
 
 Time: 5 min
@@ -426,69 +492,6 @@ time to talk about and explain it (if you know).
 - If no one in the group knows, please read 
 [the section on it](https://r-cubed.rostools.org/wrangling.html#chaining-functions-with-the-pipe)
 from the beginner course.
-
-## Adding to the processing script and clean up R Markdown document
-
-**We'll do this together**.
-We've now made a function that imports multiple data files based on the type of
-data file, we can start using this function directly, like we did in the exercise
-above for the saliva data. We've already imported the `user_info_df` previously,
-but now we should do some tidying up of our R Markdown file and to start updating
-the `data-raw/mmash.R` script. Why are we doing that? Because the R Markdown file
-is only a sandbox to test code out and in the end we want a script that takes
-the raw data, processes it, and creates a working dataset we can use for analysis.
-
-First thing we will do is delete **everything** below the `setup` code chunk 
-that contains the `library()` and `source()` code. Why do we delete everything?
-Because it keeps things cleaner and makes it easier to look through the file.
-And because we use Git, nothing is truly gone so you can always go back to the
-text later. Next, we restart the R session (`Ctrl-Shift-F10`). Then we'll create
-a new code chunk below the `setup` chunk where we will use the
-`import_multiple_files()` function to import the user info and saliva data.
-
-```{r, purl=TRUE}
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-```
-
-To test that things work, let's knit the R Markdown document (`Ctrl-Shift-K`).
-If it works, then we can move on and open up the `data-raw/mmash.R` script. Inside
-the script, add these two lines of code to the bottom of the script. Afterwards,
-go the top of the script and right below the `library(here)` code, add these two
-lines of code, so it looks like this:
-
-```{r add-source-tidyverse, eval=FALSE}
-library(here)
-library(tidyverse)
-source(here("R/functions.R"))
-```
-
-Save the files, then add and commit the changes to the Git history.
-
-## Split-apply-combine technique and functionals
-
-```{asis, instructor_details=TRUE}
-Verbally cover this section before moving on to the summarizing. Let them know 
-they can read more about this in this section.
-```
-
-We're taking a quick detour to briefly talk about a concept that perfectly
-illustrates how vectorization and functionals fit into doing data analysis.
-The concept is called the
-[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
-technique, which we covered in the beginner R course.
-The method is:
-
-1. Split the data into groups (e.g. diabetes status).
-2. Apply some analysis or statistics to each group (e.g. finding the mean of age).
-3. Combine the results to present them together (e.g. into a data frame that you can use
-to make a plot or table).
-
-So when you split data into multiple groups, you make a *vector* that you can 
-than apply (i.e. the *map* functional) some statistical technique to each group
-through *vectorization*. This technique works really well for a range of tasks, 
-including for our task of summarizing some of the MMASH data so we can merge
-it all into one dataset.
 
 ## Summarising data through functionals {#summarise-with-functionals}
 
@@ -669,6 +672,8 @@ called "join") them with the smaller datasets like `user_info.csv` or
 `saliva.csv`. Let's work with the `RR.csv` dataset to eventually join it with
 the others.
 
+## Summarizing long data like the RR dataset
+
 With the RR dataset, each participant had almost 100,000 data points recorded
 over two days of collection. So if we want to join with the other datasets,
 we need to calculate summary measures by at least `file_path_id` and also preferably
@@ -775,8 +780,9 @@ Ungrouping the data with `ungroup()` does not provide any visual indication of
 what is happening. However, in the background, it removes certain metadata that
 the `group_by()` function added.
 
-Before continuing, switch to the Git interface and **add and commit** the changes so
-far.
+Before continuing, let's knit the R Markdown document to confirm that everything
+runs as it should. If the knitting works, then switch to the Git interface and
+**add and commit** the changes so far.
 
 ## Exercise: Summarise the Actigraph data
 
@@ -801,7 +807,8 @@ with the summary functions you chose.
 Assign the newly summarised data frame to a new data frame and call it
 `summarised_actigraph_df`.
 7. End the grouping effect with `ungroup()`.
-8. **Add and commit** the changes you've made into the Git history.
+8. Knit the `doc/lesson.Rmd` document to make sure everything works.
+9. **Add and commit** the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)

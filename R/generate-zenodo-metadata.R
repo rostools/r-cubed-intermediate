@@ -5,14 +5,15 @@ library(gert)
 
 stop("To prevent accidental sourcing.")
 
-course_date <- "2021-10"
+course_date <- "2022-06"
+full_course_date <- "2022-06-21"
 repo_version <- str_c("v", str_replace(course_date, "-", "."))
 
 # Tag and release on GitLab -----------------------------------------------
 
 version_tag <- git_tag_create(
     name = repo_version,
-    message = "Material used for the October 2021 course."
+    message = "Material used for the June 21-23, 2022 course."
 )
 
 git_push()
@@ -64,21 +65,24 @@ zenodo <- ZenodoManager$new(
     token = askpass::askpass()
 )
 
-update_record <- zenodo$getDepositionById("4061900")
+update_record <- zenodo$getDepositionById("6513784")
 update_record <- zenodo$editRecord(update_record$id)
 
 # Only if new authors have been added.
 # TODO: Write filter to keep only new authors from Zenodo record.
 # pwalk(authors_df, update_record$addCreator)
+previous_tag <- git_tag_list()$name
+previous_tag <- tail(previous_tag, n = 2)[1]
 update_record$removeRelatedIdentifier(
     "isIdenticalTo",
-    "https://gitlab.com/rostools/r-cubed/-/tags/v3.0"
+    str_c("https://gitlab.com/rostools/r-cubed-intermediate/-/tags/", previous_tag)
 )
 update_record$addRelatedIdentifier(
     "isIdenticalTo",
-    str_c("https://gitlab.com/rostools/r-cubed/-/tags/", repo_version)
+    str_c("https://gitlab.com/rostools/r-cubed-intermediate/-/tags/", repo_version)
 )
 
+update_record$setPublicationDate(full_course_date)
 update_record$setVersion(repo_version)
 deposited_record <- zenodo$depositRecordVersion(update_record, files = tag_archive_file)
 fs::file_delete(tag_archive_file)

@@ -62,27 +62,21 @@ remind everyone the 'what' and 'why' of what we are doing.
 We now have a working dataset to start doing some simple analyses on in the
 R Markdown document. A recommended workflow with R Markdown is to often
 "Knit" it and make sure your analysis is reproducible (while on your computer).
-So let's first clean it up and start from the beginning again.
+We already cleaned it up from the previous session.
 
-Then, we'll delete everything from below the `setup` code chunk until the end of the file.
-This code chunk should have all the packages listed with `library()` functions.
-We'll also add `load()` one right below them so we have access to the newly 
-merged dataset:
+We will now add the `load()` code right below the `source()` function in the
+`setup` code chunk:
 
 ```r
 source(here("R/functions.R"))
 load(here("data/mmash.rda"))
 ```
 
-When everything has been deleted, **add and commit** these changes into the Git history.
-Then, we'll "Knit" our R Markdown document into HTML by using the "Knit" button
-at the top of the pane or with `Ctrl-Shift-K`. Once it creates the file, it should
-either pop up or open in the Viewer pane on the side. 
-
 As we write more R code and do some simple analyses of the data, we are going
-to be knitting often. The main reason for this is to ensure that whatever you
-are writing and coding will at least be reproducible on your computer, since
-R Markdown is designed to ensure the document is reproducible.
+to be knitting fairly often (depending on how long the analysis takes of
+course). The main reason for this is to ensure that whatever you are writing and
+coding will at least be reproducible on your computer, since R Markdown is
+designed to ensure the document is reproducible.
 
 For this specific workflow and for checking reproducibility, you should output
 to HTML rather than to a Word document. While you can create a Word document by
@@ -338,9 +332,16 @@ mmash %>%
 ```
 
 Now we have a different problem. There are missing values in both the `day` and `gender`
-columns that, at least in this case, we don't want pivoted. We can remove
-missing values with the function called `drop_na()`. Add it in the pipe
-right before `group_by()`.
+columns that, at least in this case, we don't want pivoted. 
+Shouldn't they be removed when we include `na.rm = TRUE` in our code?
+The function of `na.rm = TRUE` is not to remove `NA` values, but to instead
+tell R to not include variables in `mmash` that are `NA` when calculating the mean and
+standard deviation. In this particular case, the columns `value_mean_NA` or
+`value_mean_-29` have `NA` or `NaN` values because there are no other values
+in the data *other than* `NA`. Since we don't actually care about missing
+days (or the random `-29` day), we can remove missing values with the function
+called `drop_na()`. We also don't care about missing `gender` values, so we'll
+drop them as well. Add it in the pipe right before `group_by()`.
 
 ```{r pivot-wider-from-summarised-drop-na}
 mmash %>% 

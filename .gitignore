@@ -11,7 +11,7 @@ r-cubed-intermediate.Rmd
 data-raw/mmash/
 data-raw/mmash.R
 _ignore
-R/ignore.R
+R/_ignore.R
 slides/libs
 
 /.quarto/

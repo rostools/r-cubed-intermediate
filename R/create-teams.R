@@ -6,16 +6,16 @@ stop("To prevent accidentally sourcing.")
 # Create team names -------------------------------------------------------
 
 # Create random team names
-set.seed(214)
+set.seed(534)
 team_prefix <- tibble(adjective = praise::praise_parts$adjective) %>%
-    filter(nchar(adjective) <= 7) %>%
+    filter(nchar(adjective) <= 9) %>%
     pull(adjective) %>%
     str_to_sentence() %>%
     sample()
 
 team_suffix <- tidytext::parts_of_speech %>%
     filter(str_detect(pos, "^Noun$"),
-           nchar(word) <= 6,
+           nchar(word) <= 9,
            !str_detect(word, "\\d|/|-")) %>%
     sample_n(length(team_prefix)) %>%
     pull(word) %>%
@@ -24,9 +24,10 @@ team_suffix <- tidytext::parts_of_speech %>%
 team_names <- glue::glue("Team{team_prefix}{team_suffix}") %>%
     as.character()
 
-# Choose number of teams based on number of instructors (one instructor per team)
-# ~6 groups
-team_names_final <- team_names[c(7, 2, 6, 39, 11, 8)]
+# Number of groups would be = participants / persons per group
+# 30 / 4
+# So about 8 groups
+team_names_final <- team_names[c(11, 12, 20, 21, 27, 32, 35, 67)]
 
 # Put participants into teams ---------------------------------------------
 
@@ -53,9 +54,9 @@ teams_prep <- presurvey_current %>%
 # perceived skill.
 library(randomizr)
 
-set.seed(31)
+set.seed(97)
 teams_assigned <- teams_prep %>%
-    mutate(team = (perceived_skill_score > 4) %>%
+    mutate(team = (perceived_skill_score >= 3) %>%
                block_ra(conditions = team_names_final) %>%
                as.character()) %>%
     arrange(team, perceived_skill_score)
@@ -63,28 +64,45 @@ count(teams_assigned, team)
 View(teams_assigned)
 
 # Manually change if need be.
-# teams_assigned <- edit(teams_assigned)
+teams_assigned <- edit(teams_assigned)
 
-# To paste and use to write teams and names on paper
+# Format teams and names so its easier to put name tags when physically
+# putting groups together.
+format_teams <- function(data) {
+    append(
+        paste0("# ", unique(data$team), "\n"),
+        data$full_name
+    ) %>%
+        str_c(collapse = "\n- ")
+}
+
 teams_assigned %>%
     select(team, full_name) %>%
-    arrange(team, full_name) %>%
-    glue::glue_data("- {team}: {full_name}") %>%
+    group_split(team) %>%
+    map_chr(format_teams) %>%
+    str_c(collapse = "\n\n") %>%
+    clipr::write_clip()
+
+# Send invites to Slack ---------------------------------------------------
+
+presurvey_current %>%
+    pull(email) %>%
+    str_c(collapse = ", ") %>%
     clipr::write_clip()
 
 # Assigning instructors to groups -----------------------------------------
+# Don't need to do this for this course at this point in time.
+# instructors <- c("")
 
-instructors <- c("Anders", "Luke", "Malene", "Mario")
-
-set.seed(156)
-instructor_assigned_teams <- tibble(
-    teams = team_names_final,
-    primary = sample(rep(instructors, times = 2), 6),
-    secondary = sample(rep(instructors, times = 2), 6)
-)
-instructor_assigned_teams
-
-instructor_assigned_teams %>%
-    rename_with(str_to_sentence) %>%
-    knitr::kable() %>%
-    clipr::write_clip()
+# set.seed(156)
+# instructor_assigned_teams <- tibble(
+#     teams = team_names_final,
+#     primary = sample(rep(instructors, times = 2), 6),
+#     secondary = sample(rep(instructors, times = 2), 6)
+# )
+# instructor_assigned_teams
+#
+# instructor_assigned_teams %>%
+#     rename_with(str_to_sentence) %>%
+#     knitr::kable() %>%
+#     clipr::write_clip()

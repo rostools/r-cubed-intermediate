@@ -5,19 +5,75 @@ More guidance for instructors is also found in the
 
 ## Timings for specific sessions
 
+### Slides: Time ~50 min
+
+- First presentation: ~20 min
+- Second presentation: ~30 min
+
 ### Introduction section: Time ~55 min
 
-- Slides take ~20 min
-- Reading activity and quick verbally reiteration take ~15 min
-- Workflow exercise takes 15 min
-- Short code-along ~5 min
+- Section 5.2: ~15 min
+- Exercise 5.3: 15 min
+- Section 5.4: ~5 min
 
-### Importing session: Time ~
+### Importing session: Time ~2 hrs
 
 - *Briefly go over overview and objectives*, ~5 min
-- First importing section should take ~45 min
-- First exercise takes 15 min
-- 
+- Section 6.2: ~45 min
+- Exercise 6.3: 15 min
+- Section 6.4: ~25 min
+- Exercise 6.5: 15 min
+
+### Functions session: Time ~3 hrs
+
+- *Briefly go over overview and objectives*, ~5 min
+- Section 7.2: ~35 min
+- Exercise 7.3: 15 min
+- Section 7.4: ~40 min
+- Exercise 7.5: 15 min
+- Section 7.6: ~30 min
+- Exercise 7.7: 5 min
+- Exercise 7.8: 20 min
+
+### Functionals session: Time ~3.25 hrs
+
+- *Briefly go over overview and objectives*, ~5 min
+- Section 8.2: ~45 min
+- Exercise 8.3: 10 min
+- Exercise 8.4: 25 min
+- Exercise 8.5: 5 min
+- Section 8.6: ~10 min
+- Section 8.7: ~5 min
+- Section 8.8: ~30 min
+- Section 8.9: ~20 min
+- Exercise 8.10: 10 min
+- Section 8.11: ~10 min
+
+### Joining data session: Time ~2.25 hrs
+
+- *Briefly go over overview and objectives*, ~5 min
+- Section 9.2: ~10 min
+- Exercise 9.3: 10 min
+- Section 9.4: ~10 min
+- Exercise 9.5: 15 min
+- Section 9.6: ~15 min
+- Section 9.7: ~25 min
+- Section 9.8: ~15 min
+- Section 9.9: ~15 min
+
+### Pivoting session: Time ~2.25 hrs
+
+- *Briefly go over overview and objectives*, ~5 min
+- Section 10.2: ~5 min
+- Section 10.3: ~15 min
+- Exercise 10.4: 10 min
+- Exercise 10.5: 15 min
+- Section 10.6: ~20 min
+- Exercise 10.7: 15 min
+- Section 10.8: ~15 min
+- Section 10.9: ~5 min
+- Section 10.10: ~5 min
+- Exercise 10.11: 15 min
 
 ## Course details
 

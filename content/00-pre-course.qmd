@@ -213,11 +213,16 @@ scroll down to "Scientific Analysis Project using prodigenr" and name the projec
 "LearnR3" in the Directory Name, saving it to the "Desktop" with Browse.
 2. Or, running the command `prodigenr::setup_project("~/Desktop/LearnR3")` in the R Console.
 
+```{r, echo=FALSE, eval=FALSE, purl=TRUE}
+# For purling
+prodigenr::setup_project("~/Desktop/LearnR3")
+```
+
 [prodigenr]: https://rostools.github.io/prodigenr/
 
 When the RStudio Project opens up again, run these three commands in the R Console:
 
-```r
+```{r, eval=FALSE, purl=TRUE}
 prodigenr::setup_with_git()
 usethis::use_blank_slate()
 usethis::use_r("functions", open = FALSE)
@@ -244,7 +249,7 @@ by using the "File -> Open Project" menu.
 Run the function below in the Console when RStudio is in the `LearnR3` project,
 which will create a new file called `lesson.Rmd` in the `doc/` folder.
 
-    ```r
+    ```{r, eval=FALSE, purl=TRUE}
     r3::create_rmarkdown_doc()
     ```
 
@@ -282,7 +287,7 @@ After looking over the MMASH website, you need to setup where to store the datas
 to prepare it for later processing. While in your `LearnR3` R Project, go to the
 Console pane in RStudio and type out:
 
-```{r create-data-raw, eval=FALSE}
+```{r create-data-raw, eval=FALSE, purl=TRUE}
 usethis::use_data_raw("mmash")
 ```
 
@@ -392,7 +397,7 @@ Because the original dataset is stored elsewhere on a website, we don't need to
 save it to our Git history. Add the zip file to the Git ignore list by 
 typing out and run this code in the Console. You only need to do this once.
 
-```{r ignore-mmash-zip, eval=FALSE}
+```{r ignore-mmash-zip, eval=FALSE, purl=TRUE}
 usethis::use_git_ignore("data-raw/mmash-data.zip")
 ```
 
@@ -522,7 +527,7 @@ Since we have an R script that downloads the data and processes it for us,
 we don't need to have Git track it. So, in the Console, type out and run
 this command:
 
-```{r git-ignore-mmash, eval=FALSE}
+```{r git-ignore-mmash, eval=FALSE, purl=TRUE}
 usethis::use_git_ignore("data-raw/mmash/")
 ```
 
