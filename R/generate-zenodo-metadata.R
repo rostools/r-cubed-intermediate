@@ -5,14 +5,14 @@ library(gert)
 
 stop("To prevent accidental sourcing.")
 
-course_date <- "2021-10"
+course_date <- "2022-06"
 repo_version <- str_c("v", str_replace(course_date, "-", "."))
 
 # Tag and release on GitLab -----------------------------------------------
 
 version_tag <- git_tag_create(
     name = repo_version,
-    message = "Material used for the October 2021 course."
+    message = "Material used for the June 21-23, 2022 course."
 )
 
 git_push()
