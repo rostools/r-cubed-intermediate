@@ -3,7 +3,7 @@ library(googledrive)
 library(googlesheets4)
 library(tidyverse)
 library(lubridate)
-conflicted::conflict_prefer("filter", "dplyr")
+# conflicted::conflict_prefer("filter", "dplyr")
 
 # Import pre-survey data --------------------------------------------------
 
@@ -11,7 +11,7 @@ stop("To prevent accidental sourcing.")
 
 feedback_survey <- drive_get(id = FEEDBACK_SURVEY_ID) %>%
     read_sheet() %>%
-    filter(year(Timestamp) == 2021, month(Timestamp) == 6)
+    filter(year(Timestamp) == 2022, month(Timestamp) == 6)
 
 # Any duplicate timestamps?
 any(duplicated(feedback_survey$Timestamp))
