@@ -140,8 +140,7 @@ class: middle
 - Course is mix of:
     - "Code-alongs" (we type and explain, you type along)
     - Hands-on coding, discussing, and reading exercises
-    - Project work to either help apply to your own projects or practice on
-    another dataset
+    - Dedicated practice time (potentially on your own data)
 
 - Use r3 package to help with learning
 

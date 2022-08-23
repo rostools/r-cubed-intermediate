@@ -1,23 +1,27 @@
-source(here::here("R/ignore.R"))
+source(here::here("R/_ignore.R"))
 library(googledrive)
 library(googlesheets4)
 library(tidyverse)
 library(lubridate)
 # conflicted::conflict_prefer("filter", "dplyr")
 
+stop("To prevent accidental sourcing.")
+
 # Import pre-survey data --------------------------------------------------
 
-stop("To prevent accidental sourcing.")
+course_date <- "2022-06"
 
 feedback_survey <- drive_get(id = FEEDBACK_SURVEY_ID) %>%
     read_sheet() %>%
-    filter(year(Timestamp) == 2022, month(Timestamp) == 6)
+    filter(year(Timestamp) == str_sub(course_date, 1, 4),
+           month(Timestamp) %in% str_sub(course_date, -1, -1))
 
 # Any duplicate timestamps?
 any(duplicated(feedback_survey$Timestamp))
 
 # Clean up and convert to long form
 long_feedback_survey <- feedback_survey %>%
+    unnest(cols = where(is.list), keep_empty = TRUE) %>%
     rename(day = `Which of the days is the feedback for?`,
            time_stamp = Timestamp) %>%
     pivot_longer(cols = -c(time_stamp, day), names_to = "question", values_to = "response") %>%
@@ -39,16 +43,17 @@ quantitative_feedback <- long_feedback_survey %>%
 
 # Quick check everything was wrangled correctly.
 quantitative_feedback %>%
-    count(id)
+    count(id) %>%
+    count(n)
 
-write_csv(quantitative_feedback, here::here("feedback/2021-06-quantitative.csv"))
+write_csv(quantitative_feedback, here::here(glue::glue("feedback/{course_date}-quantitative.csv")))
 
 # Keep and save the general feedback
 overall_feedback <- long_feedback_survey %>%
     filter(str_detect(question, "other feedback")) %>%
     select(response)
 
-write_csv(overall_feedback, here::here("feedback/2021-06-overall.csv"))
+write_csv(overall_feedback, here::here(glue::glue("feedback/{course_date}-overall.csv")))
 
 # Keep and save the session specific feedback
 session_feedback <- long_feedback_survey %>%
@@ -65,4 +70,4 @@ session_feedback <- long_feedback_survey %>%
     arrange(day, session) %>%
     select(-time_stamp)
 
-write_csv(session_feedback, here::here("feedback/2021-06-session-specific.csv"))
+write_csv(session_feedback, here::here(glue::glue("feedback/{course_date}-session-specific.csv")))

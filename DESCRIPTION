@@ -18,7 +18,7 @@ Description: Reproducibility and open scientific practices are
     more details on the course, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
-Remotes:  
+Remotes: 
     gadenbuie/xaringanthemer,
     gitlab::rostools/r3,
     hadley/emo,
@@ -47,6 +47,7 @@ Imports:
     zen4R (>= 0.6)
 Suggests: 
     withr,
+    conflicted,
     furrr,
     prodigenr,
     showtext,
