@@ -9,18 +9,18 @@ stop("To prevent accidental sourcing.")
 
 # Import pre-survey data --------------------------------------------------
 
-course_date <- "2022-06"
+course_date <- "2021-10"
 
 feedback_survey <- drive_get(id = FEEDBACK_SURVEY_ID) %>%
     read_sheet() %>%
-    filter(year(Timestamp) == str_sub(course_date, 1, 4),
-           month(Timestamp) %in% str_sub(course_date, -1, -1))
+    filter(str_detect(as.character(Timestamp), course_date))
 
 # Any duplicate timestamps?
 any(duplicated(feedback_survey$Timestamp))
 
 # Clean up and convert to long form
 long_feedback_survey <- feedback_survey %>%
+    mutate(across(where(is.list), ~map(., as.character))) %>%
     unnest(cols = where(is.list), keep_empty = TRUE) %>%
     rename(day = `Which of the days is the feedback for?`,
            time_stamp = Timestamp) %>%

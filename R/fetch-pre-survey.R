@@ -1,4 +1,4 @@
-source(here::here("R/ignore.R"))
+source(here::here("R/_ignore.R"))
 library(googledrive)
 library(googlesheets4)
 library(tidyverse)
@@ -7,7 +7,7 @@ conflicted::conflict_prefer("filter", "dplyr")
 
 stop("To prevent accidental sourcing.")
 
-course_date <- "2022-06"
+course_date <- "2021-10"
 
 # Import pre-survey data --------------------------------------------------
 
@@ -60,8 +60,7 @@ presurvey <- drive_get(id = PRE_SURVEY_ID) %>%
 # View(presurvey)
 
 presurvey_current <- presurvey %>%
-    filter(year(timestamp) == str_sub(course_date, 1, 4),
-           month(timestamp) %in% str_sub(course_date, -1, -1))
+    filter(str_detect(as.character(timestamp), course_date))
 nrow(presurvey_current)
 
 # Check who hasn't finished the survey ------------------------------------
