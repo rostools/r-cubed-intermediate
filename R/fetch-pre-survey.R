@@ -7,7 +7,8 @@ conflicted::conflict_prefer("filter", "dplyr")
 
 stop("To prevent accidental sourcing.")
 
-course_date <- "2021-10"
+course_date <- "2020-09"
+course_date_pattern <- "2020-0[89]"
 
 # Import pre-survey data --------------------------------------------------
 
@@ -60,7 +61,7 @@ presurvey <- drive_get(id = PRE_SURVEY_ID) %>%
 # View(presurvey)
 
 presurvey_current <- presurvey %>%
-    filter(str_detect(as.character(timestamp), course_date))
+    filter(str_detect(as.character(timestamp), course_date_pattern))
 nrow(presurvey_current)
 
 # Check who hasn't finished the survey ------------------------------------
