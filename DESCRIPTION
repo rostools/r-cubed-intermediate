@@ -25,6 +25,7 @@ Imports:
     fs,
     glue,
     here,
+    htmltools,
     knitr,
     magrittr,
     purrr,
