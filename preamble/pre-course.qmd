@@ -1,4 +1,4 @@
-# Pre-course tasks {#pre-course}
+# Pre-course tasks {#sec-pre-course}
 
 In order to participate in this course, you must complete this section
 for the pre-course tasks and finish with **completing the
@@ -142,7 +142,7 @@ can, come to the course earlier (about 20-30 min) to get help.
 We will be using specific R packages for the course, so you will need to
 install them. A detailed walkthrough for installing the necessary
 packages is available on the [pre-course tasks for installing
-packages](https://r-cubed.rostools.org/pre-course.html#installing-r-packages)
+packages](https://r-cubed-intro.rostools.org/preamble/pre-course.html#installing-r-packages)
 section of the introduction course, however, you only need to install
 the r3 helper package in order to install all the necessary packages by
 running these commands in the R Console:
@@ -184,7 +184,7 @@ have used or currently use Git, you can skip this section. If you
 haven't used it, please do these tasks:
 
 1.  Follow the [pre-course tasks for
-    Git](https://r-cubed.rostools.org/pre-course.html#setting-up-git-and-github)
+    Git](https://r-cubed-intro.rostools.org/preamble/pre-course.html#setting-up-git-and-github)
     (*not* the GitHub tasks) from the introduction course. Specifically,
     type in the RStudio Console:
 
@@ -195,15 +195,15 @@ haven't used it, please do these tasks:
     ```
 
 2.  **Please read** through the [Version Control
-    lesson](https://r-cubed.rostools.org/version-control.html) of the
-    introduction course. *You don't need to do any of the exercises or
-    activities*, but you are welcome to do them if it will help you
-    learn or understand it better. For most of the course, we will be
-    using Git as shown in the [Using Git in
-    RStudio](https://r-cubed.rostools.org/version-control.html#using-git-in-rstudio)
+    lesson](https://r-cubed-intro.rostools.org/sessions/version-control.html)
+    of the introduction course. *You don't need to do any of the
+    exercises or activities*, but you are welcome to do them if it will
+    help you learn or understand it better. For most of the course, we
+    will be using Git as shown in the [Using Git in
+    RStudio](https://r-cubed-intro.rostools.org/sessions/version-control.html#using-git-in-rstudio)
     section. Later on during the course, we might connect our projects
     to GitHub, which is described in the [Synchronizing with
-    GitHub](https://r-cubed.rostools.org/version-control.html#synchronizing-with-github)
+    GitHub](https://r-cubed-intro.rostools.org/sessions/version-control.html#synchronizing-with-github)
     section.
 
 Regardless of whether you've done the steps above or not, *everyone*
@@ -229,15 +229,16 @@ The output you'll get for success will look something like this:
 survey questions**. *Note* that while GitHub is a natural connection to
 using Git, given the limited time available, we will not be going over
 how to use GitHub. If you want to learn about using GitHub, check out
-the [session](https://r-cubed.rostools.org/version-control.html) on it
-in the introduction course.
+the
+[session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
+on it in the introduction course.
 
 ## Create an R Project
 
 One of the basic steps to reproducibility and modern workflows in data
 analysis is to keep everything contained in a single location. In
 RStudio, this is done with R Projects. Please read all of [Section
-7.1](https://r-cubed.rostools.org/r-project-management.html#what-is-a-project-and-why-use-it)
+7.1](https://r-cubed-intro.rostools.org/sessions/project-management.html#what-is-a-project-and-why-use-it)
 from the introduction course to learn about R Projects and how they help
 keeping things self-contained. *You don't need to do any of the
 exercises or activities*.
@@ -280,7 +281,7 @@ being reproducible and because it is a very powerful tool to doing data
 analysis. Please do these two tasks:
 
 1.  Please read over the [R Markdown
-    section](https://r-cubed.rostools.org/reproducible-documents.html)
+    section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html)
     of the introduction course. If you use R Markdown already, you can
     skip this step.
 
@@ -347,10 +348,10 @@ library(here)
 
 The [here](https://here.r-lib.org/) package was described in the
 [Management of R
-Projects](https://r-cubed.rostools.org/r-project-management.html) of the
-introductory course and makes it easier to refer to other files in an R
-project. Read through the [section about the here
-package](https://r-cubed.rostools.org/r-project-management.html#packages-data-and-file-paths)
+Projects](https://r-cubed-intro.rostools.org/sessions/project-management.html)
+of the introductory course and makes it easier to refer to other files
+in an R project. Read through the [section about the here
+package](https://r-cubed-intro.rostools.org/sessions/project-management.html#packages-data-and-file-paths)
 in the introductory R course.
 
 R works based on the current *working directory*, which you can see on
@@ -677,4 +678,3 @@ survey**](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iU
 to finish this assignment.
 
 See you at the course!
-
