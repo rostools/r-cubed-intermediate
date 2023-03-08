@@ -32,7 +32,7 @@ will probably take up the most time, maybe 30-60 minutes.
 1. Run a check to see that everything is as expected
     - You'll later need to paste this output into the survey.
 1. Read the syllabus.
-1. Read the Code of Conduct.
+1. Read the [Code of Conduct](https://guides.rostools.org/conduct.html).
 1. **Complete the pre-course survey**. This survey is pretty quick, maybe ~10 minutes.
 
 Check each section for exact details on completing these tasks.
@@ -627,7 +627,7 @@ The course material is publicly accessible (all on this website) and
 The material and table of contents on the side is listed in the order 
 that we will cover in the course.
 
-We have a [Code of Conduct](conduct.html).
+We have a [Code of Conduct](https://guides.rostools.org/conduct.html).
 If you haven't read it, **read it now**. 
 The survey at the end will ask about Conduct.
 We want to make sure this course is a supportive 
