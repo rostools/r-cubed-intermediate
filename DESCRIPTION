@@ -1,4 +1,5 @@
 Package: RCubedIntermediate
+Type: Book
 Title: "Reproducible Research in R: An Intermediate Workshop on
     Modern Approaches and Workflows to Processing Data"
 Version: 1.0
@@ -19,39 +20,28 @@ Description: Reproducibility and open scientific practices are
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
 Remotes: 
-    gadenbuie/xaringanthemer,
     gitlab::rostools/r3,
-    hadley/emo,
     github::rostools/zen4R
 Encoding: UTF-8
 Depends: 
     R (>= 4.0.0)
 Imports: 
-    bslib,
-    bookdown,
-    DiagrammeR,
     dplyr,
-    emo,
     fs,
     glue,
     here,
     magrittr,
     purrr,
     r3 (>= 0.0.0.9000),
-    RefManageR,
     stringr,
     vroom,
     downlit,
-    gt,
-    fontawesome,
-    zen4R (>= 0.6)
-Suggests: 
-    withr,
-    conflicted,
-    furrr,
-    prodigenr,
-    showtext,
-    tidyverse,
     usethis,
-    xaringan,
-    xaringanthemer
+    desc,
+    knitr
+Suggests: 
+    zen4R (>= 0.6),
+    withr,
+    prodigenr,
+    tidyverse,
+    DiagrammeR,
