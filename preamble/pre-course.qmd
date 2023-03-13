@@ -80,8 +80,8 @@ this website to be aware of:
 -   Sometimes functions have their package name appended with `::` to
     indicate to run the code from the specific package, since we likely
     haven't loaded the package with `library()`. For instance, to
-    install packages from GitHub using the `{remotes}` package we use
-    `remotes::install_github()`. You'll learn about this more later.
+    install packages from GitHub using the `{pak}` package we use
+    `pak::pkg_install()`. You'll learn about this more later.
 -   Reading tasks always start with a statement "Reading task" and are
     enclosed in a "callout block". Read within this block. We will
     usually go over the section again to reinforce the concepts and
@@ -151,32 +151,36 @@ section of the introduction course, however, you only need to install
 the r3 helper package in order to install all the necessary packages by
 running these commands in the R Console:
 
-1.  Install the remotes package:
+1.  Install the `{pak}` package:
 
     ``` r
-    install.packages("remotes")
+    install.packages("pak")
     ```
 
 2.  Install the r3 helper package for this course:
 
     ``` r
-    remotes::install_gitlab("rostools/r3", upgrade = TRUE)
+    pak::pkg_install("rostools/r3", upgrade = TRUE)
+    ```
+
+3.  Install the necessary packages for the course:
+
+    ``` r
+    r3::install_packages_intermediate()
     ```
 
 *Note*: When you see a command like `something::something()`, for
-example with `remotes::install_gitlab()`, you would "read" this as:
+example with `pak::pkg_install()`, you would "read" this as:
 
-> R, can you please use the `install_gitlab` function from the remotes
-> package.
+> R, can you please use the `pkg_install` function from the pak package.
 
 The normal way of doing this would be to load the package with
-`library(remotes)` and then running the command (`install_gitlab()`).
-But by using the `::`, we tell R to directly use a function from a
-package, without needing to load the package and all of its other
-functions too. We use this trick because we only want to use the
-`install_gitlab()` command from the remotes package and not have to load
-all the other functions as well. In this course we will be using `::`
-often.
+`library(pak)` and then running the command (`pkg_install()`). But by
+using the `::`, we tell R to directly use a function from a package,
+without needing to load the package and all of its other functions too.
+We use this trick because we only want to use the `pkg_install()`
+command from the `{pkg}` package and not have to load all the other
+functions as well. In this course we will be using `::` often.
 
 ## Setting up Git
 
