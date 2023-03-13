@@ -1,5 +1,7 @@
 # Course syllabus {#sec-syllabus}
 
+<!-- TODO: Covert to be similar to the advanced course -->
+
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
 environments. We increasingly produce larger and more complex amounts of
