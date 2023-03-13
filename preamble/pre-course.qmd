@@ -1,5 +1,10 @@
 # Pre-course tasks {#sec-pre-course}
 
+```{r force-downlit}
+#| include: false
+library(downlit)
+```
+
 In order to participate in this course, you must complete this section
 for the pre-course tasks and finish with **completing the
 [survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)**
@@ -52,8 +57,7 @@ objectives for this page:
 
 1.  Learn about making reproducible documents with R Markdown.
 2.  Learn about filesystems, relative and absolute paths, and how to
-    make use of the [fs](https://fs.r-lib.org/) R package to navigate
-    files in your project.
+    make use of the `{fs}` R package to navigate files in your project.
 3.  Learn where to store your raw data so that you can use scripts as a
     record of what was done to process the data before analyzing it, and
     why that's important.
