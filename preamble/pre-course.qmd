@@ -39,7 +39,7 @@ about them are found as you work through the section.
     task will probably take up the most time, maybe 30-60 minutes.
 8.  Run a check to see that everything is as expected
     -   You'll later need to paste this output into the survey.
-9.  Read the syllabus.
+9.  Read the syllabus (@sec-syllabus).
 10. Read the [Code of
     Conduct](https://guides.rostools.org/conduct.html).
 11. **Complete the pre-course survey**. This survey is pretty quick,
