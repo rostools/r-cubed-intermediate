@@ -1,0 +1,2 @@
+keybind:
+  git: '`Ctrl-Shift-M` or with the Palette (`Ctrl-Shift-P`, then "commit")'
