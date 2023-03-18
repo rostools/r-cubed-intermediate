@@ -109,7 +109,7 @@ with each block representing one or two sessions. We've already done a
 bit of the first block, *"Download raw data"*.
 
 ![Overview of the workflow we will be using and
-covering.](../images/diagram-overview-0.svg){#fig-diagram-overview-0}
+covering.](/images/diagram-overview-0.svg){#fig-diagram-overview-0}
 
 Our workflow and process will be something like:
 
