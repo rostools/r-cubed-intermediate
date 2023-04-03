@@ -45,7 +45,7 @@ computing language; know how to write re-usable and well-documented
 code; and know how to make modern and reproducible data analysis
 projects.
 
-## Is this course for you? {#is-it-for-you}
+## Is this course for you? {#sec-is-it-for-you}
 
 This course is designed in a specific way and is ideal for you if:
 
