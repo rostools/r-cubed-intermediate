@@ -157,15 +157,17 @@ r3::check_setup()
 
 The output you'll get for success will look something like this:
 
-    Checking R version:
-    ✔ Your R is at the latest version of 4.2.0!
-    Checking RStudio version:
-    ✔ Your RStudio is at the latest version of 2022.2.2.485!
-    Checking Git config settings:
-    ✔ Your Git configuration is all setup!
-      Git now knows that:
-      - Your name is 'Luke W. Johnston'
-      - Your email is 'lwjohnst@gmail.com'
+```         
+Checking R version:
+✔ Your R is at the latest version of 4.2.0!
+Checking RStudio version:
+✔ Your RStudio is at the latest version of 2022.2.2.485!
+Checking Git config settings:
+✔ Your Git configuration is all setup!
+  Git now knows that:
+  - Your name is 'Luke W. Johnston'
+  - Your email is 'lwjohnst@gmail.com'
+```
 
 **Eventually you will need to copy and paste the output into one of the
 survey questions**. *Note* that while GitHub is a natural connection to
@@ -175,7 +177,7 @@ the
 [session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
 on it in the introduction course.
 
-## Create an R Project
+## Create an R Project {#sec-create-r-project}
 
 One of the basic steps to reproducibility and modern workflows in data
 analysis is to keep everything contained in a single location. In
@@ -184,6 +186,25 @@ RStudio, this is done with R Projects. Please read all of [Section
 from the introduction course to learn about R Projects and how they help
 keeping things self-contained. *You don't need to do any of the
 exercises or activities*.
+
+::: callout-danger
+Before creating and setting up the project folder, there are two things
+we strongly strongly encourage:
+
+1.  Don't create the project on your Dropbox, OneDrive, or other
+    backup/synching service. The reason being that they don't integrate
+    well with Git because of how they synchronize things. Plus, we will
+    be re-generating files often, which causes these services to
+    constantly be working to synchronize these files.
+2.  Don't create the project on any shared drive (like `H:` or `E:`
+    drives on Windows). Because these folders are remote locations on an
+    external server, they can really slow things down when working with
+    Git, R, and RStudio. Create the project on your actual computer,
+    like the `C:` drive in Windows or `/Users/` on Mac.
+
+These two things are the biggest source of errors, troubleshooting, and
+issues with participants when they do the course.
+:::
 
 There are several ways to organise a project folder. We'll be using the
 structure from the package
