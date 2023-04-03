@@ -28,16 +28,17 @@ Imports:
     htmltools,
     knitr,
     magrittr,
+    pak,
     purrr,
     r3 (>= 0.0.0.9000),
     stringr,
     usethis,
-    vroom
+    vroom,
+    withr
 Suggests: 
     DiagrammeR,
     prodigenr,
     tidyverse,
-    withr,
     zen4R (>= 0.6)
 Remotes: 
     github::rostools/zen4R,
