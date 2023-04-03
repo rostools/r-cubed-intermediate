@@ -337,7 +337,7 @@ start searching for files from the `.Rproj` location.
 
 ![The folder location that R does it's "work", called the "working
 directory", highlighted by the red
-box.](images/rstudio-console-working-directory.png)
+box.](/images/rstudio-console-working-directory.png)
 
 Let's use an example. Below is the tree of the folders and files you
 have so far. If we open up RStudio with the `LearnR3.Rproj` file and run
@@ -387,7 +387,7 @@ and save the zip dataset. We're going to save the zip file to
 be written in the `data-raw/mmash.R` file. Run these lines of code to
 download the dataset.
 
-```{r download-data, eval=FALSE}
+``` r
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
@@ -395,7 +395,7 @@ download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 in the `data-raw/` folder), comment out this line, so that inside the
 `data-raw/mmash.R` script it looks like:
 
-```{r download-data-comment-out, eval=FALSE}
+``` r
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
@@ -485,25 +485,28 @@ use the [fs](https://fs.r-lib.org/) package to work with files. Before
 you change any files, look into the `data-raw/` folder and confirm that
 the below listed files and folders are there.
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 # NOTE: You don't need to run this code, 
 # its here to show how we got the file list.
 fs::dir_tree("data-raw", recurse = 1)
 ```
 
-    data-raw
-    ├── README.md
-    ├── LICENSE.txt
-    ├── MMASH.zip
-    ├── SHA256SUMS.txt
-    ├── DataPaper
-    │   ├── user_1
-    │   ├── user_10
-    │   ├── ...
-    │   ├── user_8
-    │   └── user_9
-    ├── mmash-data.zip
-    └── mmash.R
+```         
+data-raw
+├── README.md
+├── LICENSE.txt
+├── MMASH.zip
+├── SHA256SUMS.txt
+├── DataPaper
+│   ├── user_1
+│   ├── user_10
+│   ├── ...
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
 
 If your files and folders in the `data-raw/` folder do not look like
 this, start over by deleting all the files *except for* the `mmash.R`
