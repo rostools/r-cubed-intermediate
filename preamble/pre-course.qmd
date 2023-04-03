@@ -1,8 +1,9 @@
 # Pre-course tasks {#sec-pre-course}
 
-```{r force-downlit}
+```{r setup}
 #| include: false
-library(downlit)
+temp_path <- fs::path_temp()
+project_path <- fs::path(temp_path, "LearnR3")
 ```
 
 In order to participate in this course, you must complete this section
@@ -291,8 +292,16 @@ After looking over the MMASH website, you need to setup where to store
 the dataset to prepare it for later processing. While in your `LearnR3`
 R Project, go to the Console pane in RStudio and type out:
 
-```{r create-data-raw, eval=FALSE, purl=TRUE}
+``` r
 usethis::use_data_raw("mmash")
+```
+
+```{r admin-create-data-raw}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {usethis::use_data_raw("mmash")}
+)
 ```
 
 What this function does is create a new folder called `data-raw/` and
@@ -305,7 +314,7 @@ The first thing we want do is delete all the code in the script that is
 added there by default. Then we'll create a new line at the top and type
 out:
 
-```{r dr-script-add-here}
+```{r data-raw-script-add-here}
 library(here)
 ```
 
@@ -341,35 +350,30 @@ is tell R to first look for the `.Rproj` file and then start looking for
 the file we actually want. This might not make sense yet, but as we go
 through the course, you will see why this is important to consider.
 
-*Note*, you don't need to run the below code. But if you want to see the
+::: callout-note
+You don't need to run the below code. But if you want to see the
 structure and content of a directory, you can use the `dir_tree()`
-function from the [fs](https://fs.r-lib.org/) package, which means
-"filesystem", by running the following code in the R Console:
+function from the `{fs}` package, which means "filesystem", by running
+the following code in the R Console:
 
-```{r, eval=FALSE}
+``` r
 # To print the file list.
 fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 ```
 
-    LearnR3
-    ├── data
-    │   └── README.md
-    ├── data-raw
-    │   └── mmash.R
-    ├── doc
-    │   ├── lesson.Rmd
-    │   └── README.md
-    ├── R
-    │   └── README.md
-    ├── .gitignore
-    ├── DESCRIPTION
-    ├── LearnR3.Rproj
-    └── README.md
+```{r admin-print-dir-tree}
+#| echo: false
+withr::with_dir(
+  new = project_path,
+  {fs::dir_tree(recurse = 1)}
+)
+```
+:::
 
 Alright, the next step is to download the dataset. Paste this code into
 the `data-raw/mmash.R` script:
 
-```{r mmash-link, eval=FALSE}
+``` r
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 ```
 
@@ -403,8 +407,16 @@ need to save it to our Git history. Add the zip file to the Git ignore
 list by typing out and run this code in the Console. You only need to do
 this once.
 
-```{r ignore-mmash-zip, eval=FALSE, purl=TRUE}
+``` r
 usethis::use_git_ignore("data-raw/mmash-data.zip")
+```
+
+```{r admin-ignore-mmash-zip}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {usethis::use_git_ignore("data-raw/mmash-data.zip")}
+)
 ```
 
 Next, open up the zip file with your File Manager and look at what is
@@ -514,16 +526,18 @@ file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 
 Afterwards, the files and folders in `data-raw/` will look like:
 
-    data-raw
-    ├── README.md
-    ├── mmash
-    │   ├── user_1
-    │   ├── user_10
-    │   ├── ...
-    │   ├── user_8
-    │   └── user_9
-    ├── mmash-data.zip
-    └── mmash.R
+```         
+data-raw
+├── README.md
+├── mmash
+│   ├── user_1
+│   ├── user_10
+│   ├── ...
+│   ├── user_8
+│   └── user_9
+├── mmash-data.zip
+└── mmash.R
+```
 
 Like before, if your files and folders inside `data-raw/` don't look
 like those listed above, start over again (making sure to delete all
@@ -533,32 +547,31 @@ Since we have an R script that downloads the data and processes it for
 us, we don't need to have Git track it. So, in the Console, type out and
 run this command:
 
-```{r git-ignore-mmash, eval=FALSE, purl=TRUE}
+``` r
 usethis::use_git_ignore("data-raw/mmash/")
+```
+
+```{r admin-git-ignore-mmash}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {usethis::use_git_ignore("data-raw/mmash/")}
+)
 ```
 
 The `data-raw/mmash.R` script should look like this at this point:
 
-```{r pre-course-state-of-script, eval=FALSE, purl=TRUE}
-library(here)
+```{r pre-course-state-of-script}
+#| file: ../R/pre-course-script.R
+#| eval: false
+```
 
-# Download
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
-
-# Unzip
-unzip(here("data-raw/mmash-data.zip"), 
-      exdir = here("data-raw"),
-      junkpaths = TRUE)
-unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw"))
-
-# Remove/tidy up left over files
-library(fs)
-file_delete(here(c("data-raw/MMASH.zip", 
-                   "data-raw/SHA256SUMS.txt",
-                   "data-raw/LICENSE.txt")))
-file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+```{r admin-pre-course-state-of-script}
+#| echo: false
+fs::file_copy(
+  here::here("R/pre-course-script.R"),
+  fs::path(project_path, "data-raw", "mmash.R")
+)
 ```
 
 You now have the data ready for the course! At this point, please run
@@ -568,46 +581,48 @@ this function in the Console:
 r3::check_project_setup()
 ```
 
-    ~/Desktop/LearnR3
-    ├── DESCRIPTION
-    ├── LearnR3.Rproj
-    ├── R
-    │   ├── README.md
-    │   └── functions.R
+```         
+~/Desktop/LearnR3
+├── DESCRIPTION
+├── LearnR3.Rproj
+├── R
+│   ├── README.md
+│   └── functions.R
+├── README.md
+├── TODO.md
+├── data
+│   └── README.md
+├── data-raw
+│   ├── README.md
+│   ├── mmash
+│   │   ├── user_1
+│   │   ├── user_10
+│   │   ├── user_11
+│   │   ├── user_12
+│   │   ├── user_13
+│   │   ├── user_14
+│   │   ├── user_15
+│   │   ├── user_16
+│   │   ├── user_17
+│   │   ├── user_18
+│   │   ├── user_19
+│   │   ├── user_2
+│   │   ├── user_20
+│   │   ├── user_21
+│   │   ├── user_22
+│   │   ├── user_3
+│   │   ├── user_4
+│   │   ├── user_5
+│   │   ├── user_6
+│   │   ├── user_7
+│   │   ├── user_8
+│   │   └── user_9
+│   ├── mmash-data.zip
+│   └── mmash.R
+└── doc
     ├── README.md
-    ├── TODO.md
-    ├── data
-    │   └── README.md
-    ├── data-raw
-    │   ├── README.md
-    │   ├── mmash
-    │   │   ├── user_1
-    │   │   ├── user_10
-    │   │   ├── user_11
-    │   │   ├── user_12
-    │   │   ├── user_13
-    │   │   ├── user_14
-    │   │   ├── user_15
-    │   │   ├── user_16
-    │   │   ├── user_17
-    │   │   ├── user_18
-    │   │   ├── user_19
-    │   │   ├── user_2
-    │   │   ├── user_20
-    │   │   ├── user_21
-    │   │   ├── user_22
-    │   │   ├── user_3
-    │   │   ├── user_4
-    │   │   ├── user_5
-    │   │   ├── user_6
-    │   │   ├── user_7
-    │   │   ├── user_8
-    │   │   └── user_9
-    │   ├── mmash-data.zip
-    │   └── mmash.R
-    └── doc
-        ├── README.md
-        └── lesson.Rmd
+    └── learning.qmd
+```
 
 The output should look something a bit like the above text. If it
 doesn't, start over by deleting all *but* the `mmash.R` and
@@ -615,14 +630,14 @@ doesn't, start over by deleting all *but* the `mmash.R` and
 your output looks a bit like this, than copy and paste the output into
 the survey question at the end.
 
-## Course introduction
+## Basic course details {#sec-course-details}
 
-Most of the course description is found in the
-[syllabus](syllabus.html). If you haven't read it, **please read it
-now**. Read over what the course will cover, what we expect you to learn
-at the end of it, and what our basic assumptions are about who you are
-and what you know. The final pre-course task is a survey that asks some
-questions on if you've read and understood it.
+Most of the course description is found in the syllabus in
+@sec-syllabus. If you haven't read it, **please read it now**. Read over
+what the course will cover, what we expect you to learn at the end of
+it, and what our basic assumptions are about who you are and what you
+know. The final pre-course task is a survey that asks some questions on
+if you've read and understood it.
 
 One goal of the course is to teach about open science, and true to our
 mission, we practice what we preach. The course material is publicly
