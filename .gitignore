@@ -15,3 +15,4 @@ R/_ignore.R
 slides/libs
 
 /.quarto/
+_temp
