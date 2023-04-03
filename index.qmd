@@ -96,9 +96,11 @@ The [Danish Diabetes and Endocrinology
 Academy](https://www.ddeacademy.dk/) hosted, organized, and sponsored
 this course. A huge thanks to them for their involvement, support, and
 sponsorship! [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/)
-employs Luke, who is the lead instructor and curriculum developer.
+and [Aarhus University](https://international.au.dk/) employs Luke, who
+is the lead instructor and curriculum developer.
 
 <!-- TODO: Update DDA logo -->
 
-![Danish Diabetes Academy](images/dda_logo.png){width="90px"} ![Steno
-Diabetes Center Aarhus](images/SDCA_logo.png){width="55px"}
+![Danish Diabetes
+Academy](https://www.ddeacademy.dk/sites/all/themes/dda/DDEA_logo_outlined.svg){width="90px"}
+![Steno Diabetes Center Aarhus](/images/SDCA_logo.png){width="55px"}
