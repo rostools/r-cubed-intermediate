@@ -14,40 +14,52 @@ might not understand why you need to do them, but you will likely
 understand why once the course begins.
 
 Depending on your skills and knowledge, these tasks could take between
-**3-5 hrs to finish**, so we suggest planning a full day to complete
+**3-7 hrs to finish**, so we suggest planning a full day to complete
 them. Depending on your institution and how they handle installing
 software on work computers, you also might have to contact IT very early
 to make sure everything is properly installed and set up.
 
-## Summary of tasks
+## List of tasks
 
-Here's a quick overview of the tasks you need to do. Specific details
-about them are found as you work through the section.
+Here's the list of tasks you need to do. Specific details about them are
+found as you work through the tasks.
 
-1.  Install R, RStudio, and Git. For some people, depending on their
-    institution, this task can take the longest because you have to
-    contact your IT to install these packages.
-2.  Install the necessary R packages.
-3.  Read about Git from the introduction course and configure Git on
-    your computer. If you haven't used Git before, this task could take
-    a while because of the reading.
-4.  Run a check to see if everything works.
-    -   You'll later need to paste this output into the survey.
-5.  Create an R Project, along with the folder and file setup.
-6.  Create an R Markdown file.
-7.  Write R code to download the data and save it to your computer. This
-    task will probably take up the most time, maybe 30-60 minutes.
-8.  Run a check to see that everything is as expected
-    -   You'll later need to paste this output into the survey.
-9.  Read the syllabus (@sec-syllabus).
-10. Read the [Code of
+1.  Read the Learning objectives in @sec-pre-course-learning-objectives
+    for the pre-course tasks (below).
+2.  Read the ["How to read the
+    website"](https://guides.rostools.org/pre-course.html#reading-website)
+    (on a new website).
+3.  Follow the [installation
+    instructions](https://guides.rostools.org/pre-course.html#installation-instructions)
+    (on a new website). Install a version of R, RStudio, and Git that is
+    as updated as possible. For some people, depending on their
+    institution, this task can take the **longest amount of time**
+    because you have to contact your IT to install these packages.
+4.  Install the necessary R packages in @sec-install-r-packages.
+5.  Read about Git from the introduction course and configure Git on
+    your computer in @sec-setup-git. If you haven't used Git before,
+    this task could take a while because of the reading. Run the checks
+    in this subsection to see if everything works. You'll later need to
+    paste this output into the survey.
+6.  Create an R Project in @sec-create-r-project, including the folder
+    and files.
+7.  Create an R Markdown / Quarto file in @sec-quarto.
+8.  Write R code to download the data in @sec-download-data and save it
+    to your computer. This task will probably take up the most time,
+    maybe 30-90 minutes. Run a check in this subsection to see that
+    everything is as expected. You'll later need to paste this output
+    into the survey.
+9.  Read about the basic course details in @sec-course-details.
+10. Read the syllabus in @sec-syllabus.
+11. Read the [Code of
     Conduct](https://guides.rostools.org/conduct.html).
-11. **Complete the pre-course survey**. This survey is pretty quick,
-    maybe \~10 minutes.
+12. **Complete the pre-course
+    [survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)**.
+    This survey is pretty quick, maybe \~10 minutes.
 
 Check each section for exact details on completing these tasks.
 
-## Learning objectives
+## Learning objectives {#sec-pre-course-learning-objectives}
 
 In general, these pre-course tasks are meant to help prepare you for the
 course and make sure everything is setup properly so the first session
@@ -62,86 +74,7 @@ objectives for this page:
     record of what was done to process the data before analyzing it, and
     why that's important.
 
-## Reading the course website
-
-<!-- TODO: Move this into guides repo -->
-
-We will explain this a bit during the course, but read this to start
-learning how the website is structured and how to read certain things.
-Specifically, there are a few "syntax" type formatting of the text in
-this website to be aware of:
-
--   Folder names always end with a `/`, for example `data/` means the
-    data folder.
--   R variables are always shown as is. For instance, for the code
-    `x <- 10`, `x` is a variable because it was assigned with 10.
--   Functions always end with `()`, for instance `mean()` or
-    `read_csv()`.
--   Sometimes functions have their package name appended with `::` to
-    indicate to run the code from the specific package, since we likely
-    haven't loaded the package with `library()`. For instance, to
-    install packages from GitHub using the `{pak}` package we use
-    `pak::pkg_install()`. You'll learn about this more later.
--   Reading tasks always start with a statement "Reading task" and are
-    enclosed in a "callout block". Read within this block. We will
-    usually go over the section again to reinforce the concepts and
-    address any questions.
-
-## Installing the latest programs
-
-Given this is an intermediate course, you should already have R and
-RStudio installed. However, you may not have the latest versions
-installed.
-
-1.  Have the latest version of
-    [R](https://cloud.r-project.org/index.html) installed (any version
-    above 4.0.0).
-2.  Have the latest version of
-    [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
-    installed (any version above 1.4).
-
-There are a few other things to install:
-
-1.  [Git](https://git-scm.com/downloads). We'll be using Git (building
-    off of the Introduction course), so it needs to be installed.
-2.  For some Windows users, you may need to install
-    [Rtools](https://cran.r-project.org/bin/windows/Rtools/Rtools35.exe)
-    in order for some R packages to be installed (which you'll do
-    shortly). For some computers, installing Rtools can take some time.
-    You need this in order for some packages to work.
-
-All these programs are required for the course, even Git. Git, which is
-a software program to formally manage file versions, is used because of
-it's popularity and the amount of documentation available for it. Check
-out the online book [Happy Git with R](https://happygitwithr.com/),
-especially the "Why Git" section, to understand why we are using Git.
-Windows users tend to have more trouble with installing Git than macOS
-or Linux users. See the section on [Installing Git for
-Windows](https://happygitwithr.com/install-git.html#install-git-windows)
-for help.
-
-> *A note to those who have or use work laptops with restrictive
-> administrative privileges*: You may encounter problems installing
-> software due to administrative reasons (e.g. you don't have permission
-> to install things). For issues with updating to the latest version of
-> R or RStudio, if you have at least 4.0.0 for R and at least 1.4 for
-> RStudio, that should be fine. If you have versions of R and RStudio
-> older than that, it is necessary for you to request that IT update
-> your software if you can't yourself. Unfortunately, given that Git is
-> not a commonly used software for some organizations, you may not have
-> it installed and you *will* need to ask IT to install it. We *require*
-> it for the course, so please make sure to give IT enough time to be
-> able to install it for you.
-
-Once R, RStudio, and Git have been installed, open RStudio. *If at any
-point during these pre-course tasks you have any troubles*, try as best
-as you can to complete the task and then let us know about the issues in
-the pre-course survey (at the end of this section). If you continue
-having problems, indicate on the survey that you need help and we can
-try to book a quick video call to fix the problem. Otherwise, if you
-can, come to the course earlier (about 20-30 min) to get help.
-
-## Installing the R packages
+## Installing the R packages {#sec-install-r-packages}
 
 We will be using specific R packages for the course, so you will need to
 install them. A detailed walkthrough for installing the necessary
@@ -182,7 +115,7 @@ We use this trick because we only want to use the `pkg_install()`
 command from the `{pkg}` package and not have to load all the other
 functions as well. In this course we will be using `::` often.
 
-## Setting up Git
+## Setting up Git {#sec-setup-git}
 
 Since Git has already been covered in the Introduction course, we won't
 cover *learning it* during this course. However, since version control
@@ -263,18 +196,30 @@ can be done by either:
 2.  Or, running the command
     `prodigenr::setup_project("~/Desktop/LearnR3")` in the R Console.
 
-```{r, echo=FALSE, eval=FALSE, purl=TRUE}
-# For purling
-prodigenr::setup_project("~/Desktop/LearnR3")
+```{r create-project}
+#| include: false
+prodigenr::setup_project(project_path)
 ```
 
 When the RStudio Project opens up again, run these three commands in the
 R Console:
 
-```{r, eval=FALSE, purl=TRUE}
+``` r
 prodigenr::setup_with_git()
 usethis::use_blank_slate()
 usethis::use_r("functions", open = FALSE)
+```
+
+```{r admin-add-setup-files-to-project}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {
+    prodigenr::setup_with_git()
+    usethis::use_blank_slate()
+    usethis::use_r("functions", open = FALSE)
+  }
+)
 ```
 
 Here we use the [usethis](https://usethis.r-lib.org/) package to help
@@ -282,28 +227,38 @@ set things up. usethis is an extremely useful package for managing R
 Projects and we highly recommend checking it out more to see how you can
 use it more in your own work.
 
-## R Markdown
+## R Markdown / Quarto {#sec-quarto}
 
-We teach and use R Markdown because it is one of the very first steps to
-being reproducible and because it is a very powerful tool to doing data
-analysis. Please do these two tasks:
+<!-- TODO: switch to Quarto -->
+
+We teach and use R Markdown / [Quarto](https://quarto.org) because it is
+one of the very first steps to being reproducible and because it is a
+very powerful tool to doing data analysis. Please do these two tasks:
 
 1.  Please read over the [R Markdown
-    section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html)
-    of the introduction course. If you use R Markdown already, you can
-    skip this step.
+    section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-r-markdown-and-quarto)
+    of the introduction course. If you use R Markdown / Quarto already,
+    you can skip this step.
 
 2.  Open up the `LearnR3` project, either by clicking the
     `LearnR3.Rproj` file or by using the "File -\> Open Project" menu.
     Run the function below in the Console when RStudio is in the
-    `LearnR3` project, which will create a new file called `lesson.Rmd`
-    in the `doc/` folder.
+    `LearnR3` project, which will create a new file called
+    `learning.qmd` in the `doc/` folder.
 
-    ```{r, eval=FALSE, purl=TRUE}
-    r3::create_rmarkdown_doc()
+    ``` r
+    r3::create_qmd_doc()
     ```
 
-## Download the course data
+```{r admin-create-qmd}
+#| include: false
+usethis::with_project(
+  path = project_path,
+  {r3::create_qmd_doc()}
+)
+```
+
+## Download the course data {#sec-download-data}
 
 To best demonstrate the concepts in the course, we ideally should work
 on a real dataset to apply what we're going to learn. So for this
