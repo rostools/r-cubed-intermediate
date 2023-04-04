@@ -1,67 +1,65 @@
 project:
-  type: book
-  output-dir: public
-  description: "A 3-day workshop for researchers expanding on the modern data processing toolkit for reproducible research in R."
-  execute-dir: project
+  type: r3-theme
   pre-render:
-    - _common.R
-    - Rscript -e "source('R/build-functions.R'); extract_chunks()"
-    - R/build-functions.R
+    - rm -rf _temp/ data-raw/mmash R/book-functions.R
+    - mkdir -p _temp
+    # - bash _build-slides.sh
   post-render:
-    - Rscript -e "fs::dir_delete('data-raw/mmash')"
-  resources:
-    - resources
-    - slides
+    - rm -rf _temp/ data-raw/mmash
+  # resources:
+  #   - slides/*.html
+  # pre-render:
+  #   - _common.R
+  #   - Rscript -e "source('R/build-functions.R'); extract_chunks()"
+  #   - R/build-functions.R
+  # resources:
+  #   - resources
+  #   - slides
 
 book:
-    title: "Reproducible Research in R"
-    subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
-    author: "Luke W. Johnston"
-    license: "CC BY"
-    apple-touch-icon: "images/apple-touch-icon.png"
-    apple-touch-icon-size: 180
-    favicon: "images/favicon.ico"
-    site-url: 'https\://r-cubed-intermediate.rostools.org'
-    repo-url: "https://gitlab.com/rostools/r-cubed-intermediate"
-    repo-branch: main
-    repo-actions: [edit, issue, source]
-    search:
-        location: navbar
-        type: overlay
-    chapters:
-        - "index.qmd"
-        - part: "Sessions"
-          chapters:
-            - "content/00-syllabus.qmd"
-            - "content/00-schedule.qmd"
-            - "content/00-pre-course.qmd"
-            - "content/01-introduction.qmd"
-            - "content/02-importing.qmd"
-            - "content/03-functions.qmd"
-            - "content/04-functionals.qmd"
-            - "content/05-dplyr-joins.qmd"
-            - "content/06-pivots.qmd"
-            - "content/07-what-next.qmd"
-        - part: "Appendix"
-          chapters:
-            - "appendix/conduct.qmd"
-            - "appendix/extras.qmd"
-            - "appendix/resources.qmd"
-            - "appendix/extras.qmd"
-            - "appendix/for-instructors.qmd"
-
-bibliography:
-    - resources/refs.bib
-csl: resources/vancouver.csl
+  title: "Reproducible Research in R"
+  subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
+  author: "Luke W. Johnston"
+  date: last-modified
+  repo-url: "https://github.com/rostools/r-cubed-intermediate"
+  site-url: "https://r-cubed-intermediate.rostools.org"
+  chapters:
+    - index.qmd
+    - part: "Preamble"
+      chapters:
+      - preamble/syllabus.qmd
+      - preamble/schedule.qmd
+      - preamble/pre-course.qmd
+    # - part: "Sessions"
+    #   chapters:
+    #   - sessions/introduction.qmd
+    #   - sessions/lesson.qmd
+    #   - sessions/what-next.qmd
+  appendices:
+    - appendix/social.qmd
+    - appendix/for-instructors.qmd
+    - appendix/references.qmd
+    - LICENSE.md
+  page-footer:
+    center:
+      - text: "License: CC BY 4.0 {{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}}"
+        href: LICENSE.html
+      - text: "Code of Conduct"
+        href: "https://guides.rostools.org/conduct.html"
 
 format:
-  html:
+  r3-theme-html:
     doi: "10.5281/zenodo.4061900"
-    theme: "journal"
-    fontsize: 1.1em
-    # linestretch: 1.7
     include-before-body:
-      - "resources/contribute.html"
-      - "resources/site-counter.html"
+      - "includes/contribute.html"
+      - "includes/site-counter.html"
 
-# editor: visual
+csl: includes/vancouver.csl
+bibliography:
+  - includes/packages.bib
+  - includes/references.bib
+
+editor:
+  markdown:
+    wrap: 72
+    canonical: true
