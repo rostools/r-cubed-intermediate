@@ -28,12 +28,15 @@ This section provides an bigger picture view of what we will be doing,
 why we want to do it, how we will be going about doing it, and what it
 will look like in the end.
 
-Big picture overall aim:
+Big picture aim:
 
-<!-- TODO: Complete this -->
+> To apply a reproducible and programmatic approach to efficiently
+> downloading multiple data files, processing and cleaning them, and
+> saving them as a single data file.
 
-Firstly, what we ultimately want to do is process the MMASH data so that
-we have a single dataset to work with for later (hypothetical) analyses.
+In our case during the course, we ultimately want to process the MMASH
+data so that we have a single dataset to work with for later
+(hypothetical) analyses.
 
 We also want to make sure that whatever processing we do to the data is
 reproducible. So everything we'll do throughout the course is done in
@@ -44,65 +47,68 @@ Both the folder and file structures below as well as the Figure
 @fig-diagram-overview-0 show exactly what we will be doing and how it
 will look like at the file level (not at the R code level). Hopefully
 with this overview, you can better understand where we are and where we
-want to get to. A comment on naming: whenever folder names are given,
-they always end in `/`, for instance `data/` or `doc/`.
+want to get to.
 
 Right now, everyone's initial project structure should look like:
 
-    LearnR3
-    ├── data/
-    │   └── README.md
-    ├── data-raw/
-    │   ├── README.md
-    │   ├── mmash-data.zip
-    │   ├── mmash/
-    │   │  ├── user_1
-    │   │  ├── ...
-    │   │  └── user_22
-    │   └── mmash.R
-    ├── doc/
-    │   ├── README.md
-    │   └── lesson.Rmd
-    ├── R/
-    │   ├── functions.R
-    │   └── README.md
-    ├── .gitignore
-    ├── DESCRIPTION
-    ├── LearnR3.Rproj
-    ├── README.md
-    └── TODO.md
+```         
+LearnR3
+├── data/
+│   └── README.md
+├── data-raw/
+│   ├── README.md
+│   ├── mmash-data.zip
+│   ├── mmash/
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
+├── doc/
+│   ├── README.md
+│   └── learning.qmd
+├── R/
+│   ├── functions.R
+│   └── README.md
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+├── README.md
+└── TODO.md
+```
 
 At the end of this workshop, it should look something like:
 
-    LearnR3
-    ├── data/
-    │   ├── README.md
-    │   └── mmash.rda
-    ├── data-raw/
-    │   ├── README.md
-    │   ├── mmash-data.zip
-    │   ├── mmash/
-    │   │  ├── user_1
-    │   │  ├── ...
-    │   │  └── user_22
-    │   └── mmash.R
-    ├── doc/
-    │   ├── README.md
-    │   ├── lesson.html
-    │   └── lesson.Rmd
-    ├── R/
-    │   ├── README.md
-    │   └── functions.R
-    ├── .gitignore
-    ├── DESCRIPTION
-    ├── LearnR3.Rproj
-    └── README.md
+```         
+LearnR3
+├── data/
+│   ├── README.md
+│   └── mmash.rda
+├── data-raw/
+│   ├── README.md
+│   ├── mmash-data.zip
+│   ├── mmash/
+│   │  ├── user_1
+│   │  ├── ...
+│   │  └── user_22
+│   └── mmash.R
+├── doc/
+│   ├── README.md
+│   ├── learning.html
+│   └── learning.qmd
+├── R/
+│   ├── README.md
+│   └── functions.R
+├── .gitignore
+├── DESCRIPTION
+├── LearnR3.Rproj
+└── README.md
+```
 
 Why do we structure it this way? Because we want to follow some standard
-conventions in R, like having a `DESCRIPTION` file, keeping raw data in
-the `data-raw/` folder, and keeping R scripts in the `R/`. We also want
-to keep things structured to make it easier for others and ourselves to
-reproducible the work.
+conventions in R, like having a `DESCRIPTION` metadata file, keeping raw
+data in the `data-raw/` folder, and keeping (most) R scripts in the
+`R/`. We also want to keep things structured to make it easier for
+others and ourselves to reproduce the work.
 
 Our workflow will generally look like Figure @fig-diagram-overview-0,
 with each block representing one or two sessions. We've already done a
@@ -117,7 +123,7 @@ Our workflow and process will be something like:
     (`data-raw/mmash/`), which you already did in the pre-course tasks.
     -   We do this to keep the code for downloading and processing the
         data together with the raw data.
--   Use R Markdown (`doc/lesson.Rmd`) to write and test out code,
+-   Use R Markdown (`doc/learning.qmd`) to write and test out code,
     convert it into a function, test it, and then move it into
     `R/functions.R`. Later we will also move code into the
     `data-raw/mmash.R`. We use this workflow because:
@@ -141,7 +147,7 @@ Our workflow and process will be something like:
         clearing up the R workspace and starting for a "clean plate".
         And for reproducibility, we should always aim to working from a
         clean plate.
--   Replace the old code in the R Markdown document (`doc/lesson.Rmd`)
+-   Replace the old code in the R Markdown document (`doc/learning.qmd`)
     with the new function.
 -   Finish building functions that prepare the dataset, use them in the
     cleaning script (`data-raw/mmash.R`), run the script and save the
@@ -215,8 +221,7 @@ Next, delete one of the files we don't need by using the `{fs}` package.
 
 In the **Console**, type out:
 
-```{r remove-extra-files}
-#| eval: false
+``` r
 fs::file_delete("TODO.md")
 ```
 
