@@ -681,3 +681,11 @@ survey**](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iU
 to finish this assignment.
 
 See you at the course!
+
+```{r admin-save-project}
+#| include: false
+tar(
+  here::here("_temp", "pre-course.tar.gz"),
+  fs::dir_ls(project_path, all = TRUE, recurse = TRUE)
+)
+```
