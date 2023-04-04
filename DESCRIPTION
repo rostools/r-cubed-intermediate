@@ -1,13 +1,11 @@
+Type: Book
 Package: RCubedIntermediate
-Title: "Reproducible Research in R: An Intermediate Workshop on
-    Modern Approaches and Workflows to Processing Data"
+Title: "Reproducible Research in R: An Intermediate Workshop on Modern
+    Approaches and Workflows to Processing Data"
 Version: 1.0
-Authors@R: person(given = "Luke",
-             family = "Johnston",
-             role = c("aut", "cre", "cph"),
-             email = "lwjohnst@gmail.com",
-             comment = c(ORCID = "0000-0003-4169-2616",
-                         affiliation = "Steno Diabetes Center Aarhus"))
+Authors@R: 
+    person("Luke", "Johnston", , "lwjohnst@gmail.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0003-4169-2616", affiliation = "Steno Diabetes Center Aarhus"))
 Description: Reproducibility and open scientific practices are
     increasingly being requested or required of scientists and
     researchers, but training on these practices has not kept pace. This
@@ -18,40 +16,31 @@ Description: Reproducibility and open scientific practices are
     more details on the course, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
-Remotes: 
-    gadenbuie/xaringanthemer,
-    gitlab::rostools/r3,
-    hadley/emo,
-    github::rostools/zen4R
-Encoding: UTF-8
 Depends: 
     R (>= 4.0.0)
 Imports: 
-    bslib,
-    bookdown,
-    DiagrammeR,
+    desc,
+    downlit,
     dplyr,
-    emo,
     fs,
     glue,
     here,
+    htmltools,
+    knitr,
     magrittr,
+    pak,
     purrr,
     r3 (>= 0.0.0.9000),
-    RefManageR,
     stringr,
-    vroom,
-    downlit,
-    gt,
-    fontawesome,
-    zen4R (>= 0.6)
-Suggests: 
-    withr,
-    conflicted,
-    furrr,
-    prodigenr,
-    showtext,
-    tidyverse,
     usethis,
-    xaringan,
-    xaringanthemer
+    vroom,
+    withr
+Suggests: 
+    DiagrammeR,
+    prodigenr,
+    tidyverse,
+    zen4R (>= 0.6)
+Remotes: 
+    github::rostools/zen4R,
+    gitlab::rostools/r3
+Encoding: UTF-8

@@ -1,0 +1,65 @@
+project:
+  type: r3-theme
+  pre-render:
+    - rm -rf _temp/ data-raw/mmash R/book-functions.R
+    - mkdir -p _temp
+    # - bash _build-slides.sh
+  post-render:
+    - rm -rf _temp/ data-raw/mmash
+  # resources:
+  #   - slides/*.html
+  # pre-render:
+  #   - _common.R
+  #   - Rscript -e "source('R/build-functions.R'); extract_chunks()"
+  #   - R/build-functions.R
+  # resources:
+  #   - resources
+  #   - slides
+
+book:
+  title: "Reproducible Research in R"
+  subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
+  author: "Luke W. Johnston"
+  date: last-modified
+  repo-url: "https://github.com/rostools/r-cubed-intermediate"
+  site-url: "https://r-cubed-intermediate.rostools.org"
+  chapters:
+    - index.qmd
+    - part: "Preamble"
+      chapters:
+      - preamble/syllabus.qmd
+      - preamble/schedule.qmd
+      - preamble/pre-course.qmd
+    # - part: "Sessions"
+    #   chapters:
+    #   - sessions/introduction.qmd
+    #   - sessions/lesson.qmd
+    #   - sessions/what-next.qmd
+  appendices:
+    - appendix/social.qmd
+    - appendix/for-instructors.qmd
+    - LICENSE.md
+    - appendix/references.qmd
+  page-footer:
+    center:
+      - text: "License: CC BY 4.0 {{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}}"
+        href: LICENSE.html
+      - text: "Code of Conduct"
+        href: "https://guides.rostools.org/conduct.html"
+
+format:
+  r3-theme-html:
+    doi: "10.5281/zenodo.4061900"
+    include-before-body:
+      - "includes/contribute.html"
+      - "includes/site-counter.html"
+
+csl: includes/vancouver.csl
+bibliography:
+  - includes/packages.bib
+  - includes/references.bib
+
+editor:
+  markdown:
+    wrap: 72
+    canonical: true

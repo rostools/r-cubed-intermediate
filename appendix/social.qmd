@@ -1,0 +1,7 @@
+# Networking and social activities
+
+{{< include ../includes/_wip.qmd >}}
+
+## Day 1 {#social-day-1 .unnumbered}
+
+## Day 2 {#social-day-2 .unnumbered}

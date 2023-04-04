@@ -1,0 +1,3 @@
+keybind:
+  git: '`Ctrl-Shift-M` or with the Palette (`Ctrl-Shift-P`, then type "commit")'
+  chunk: '`Ctrl-Alt-I` or with the Palette (`Ctrl-Shift-P`, then type "new chunk")'

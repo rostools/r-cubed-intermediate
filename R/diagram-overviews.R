@@ -1,7 +1,7 @@
 library(DiagrammeRsvg)
 library(rsvg)
 library(here)
-source(here("R/functions.R"))
+source(here("R/build-functions.R"))
 
 save_diagram_to_svg <- function(number, output_file) {
     diagram_overview(number) |>
