@@ -586,7 +586,7 @@ usethis::with_project(
 The `data-raw/mmash.R` script should look like this at this point:
 
 ```{r pre-course-state-of-script}
-#| file: ../R/pre-course-script.R
+#| file: R/pre-course-script.R
 #| eval: false
 ```
 
@@ -594,7 +594,8 @@ The `data-raw/mmash.R` script should look like this at this point:
 #| echo: false
 fs::file_copy(
   here::here("R/pre-course-script.R"),
-  fs::path(project_path, "data-raw", "mmash.R")
+  fs::path(project_path, "data-raw", "mmash.R"),
+  overwrite = TRUE
 )
 ```
 
