@@ -38,8 +38,8 @@ book:
   appendices:
     - appendix/social.qmd
     - appendix/for-instructors.qmd
-    - appendix/references.qmd
     - LICENSE.md
+    - appendix/references.qmd
   page-footer:
     center:
       - text: "License: CC BY 4.0 {{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}}"
