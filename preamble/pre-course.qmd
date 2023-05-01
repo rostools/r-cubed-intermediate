@@ -437,6 +437,15 @@ download the dataset.
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
+```{r admin-copy-zip-data}
+#| echo: false
+fs::file_copy(
+  here::here("data-raw/mmash-data.zip"),
+  fs::path(project_path, "data-raw", "mmash-data.zip"),
+  overwrite = TRUE
+)
+```
+
 *After* downloading the zip file (it should be called `mmash-data.zip`
 in the `data-raw/` folder), comment out this line, so that inside the
 `data-raw/mmash.R` script it looks like:
