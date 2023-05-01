@@ -216,20 +216,19 @@ we strongly strongly encourage:
     well with Git because of how they synchronize things. Plus, we will
     be re-generating files often, which causes these services to
     constantly be working to synchronize these files.
-2.  Don't create the project on any shared drive (like `H:` or `E:`
-    drives on Windows). Because these folders are remote locations on an
-    external server, they can really slow things down when working with
-    Git, R, and RStudio. Create the project on your actual computer,
-    like the `C:` drive in Windows or `/Users/` on Mac.
+2.  Don't create the project on any shared drive (like `H:` or `E:` or
+    `U:` drives on Windows). Because these folders are remote locations
+    on an external server, they can really slow things down when working
+    with Git, R, and RStudio. Create the project on your actual
+    computer, like the `C:` drive in Windows or `/Users/` on Mac.
 
 These two things are the biggest source of errors, troubleshooting, and
 issues with participants when they do the course.
 :::
 
 There are several ways to organise a project folder. We'll be using the
-structure from the package
-[prodigenr](https://rostools.github.io/prodigenr/). The project setup
-can be done by either:
+structure from the package `{prodigenr}`. The project setup can be done
+by either:
 
 1.  Using RStudio's New Project menu item: "File -\> New Project -\> New
     Directory", scroll down to "Scientific Analysis Project using
