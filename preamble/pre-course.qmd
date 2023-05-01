@@ -534,44 +534,47 @@ script.
 
 ```{r unzip-data-file}
 unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw"))
+  exdir = here("data-raw")
+)
+```
+
+```{r admin-unzip-data-file}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {
+unzip(here("data-raw/mmash-data.zip"),
+  exdir = here("data-raw"),
+  junkpaths = TRUE
+)
+unzip(here("data-raw/MMASH.zip"),
+  exdir = here("data-raw")
+)
+  }
+)
 ```
 
 Almost done! There are several files left over that we don't need, so
 you'll need to write code in the script code that removes them. We'll
-use the [fs](https://fs.r-lib.org/) package to work with files. Before
-you change any files, look into the `data-raw/` folder and confirm that
-the below listed files and folders are there.
+use the `{fs}` package to work with files. Before you change any files,
+look into the `data-raw/` folder and confirm that the below listed files
+and folders are there.
 
 ```{r}
 #| eval: false
-# NOTE: You don't need to run this code, 
+# NOTE: You don't need to run this code,
 # its here to show how we got the file list.
 fs::dir_tree("data-raw", recurse = 1)
 ```
 
-```{r admin-print-data-raw}
+```{r admin-print-data-raw-after-unzip}
 #| echo: false
 usethis::with_project(
   path = project_path,
-  {fs::dir_tree("data-raw", recurse = 1)}
+  {
+    fs::dir_tree("data-raw", recurse = 1)
+  }
 )
-```
-
-```         
-data-raw
-├── README.md
-├── LICENSE.txt
-├── MMASH.zip
-├── SHA256SUMS.txt
-├── DataPaper
-│   ├── user_1
-│   ├── user_10
-│   ├── ...
-│   ├── user_8
-│   └── user_9
-├── mmash-data.zip
-└── mmash.R
 ```
 
 If your files and folders in the `data-raw/` folder do not look like
@@ -587,13 +590,31 @@ script and run them:
 
 ```{r delete-rename-files}
 library(fs)
-file_delete(here(c("data-raw/MMASH.zip", 
-                   "data-raw/SHA256SUMS.txt",
-                   "data-raw/LICENSE.txt")))
+file_delete(here(c(
+  "data-raw/MMASH.zip",
+  "data-raw/SHA256SUMS.txt",
+  "data-raw/LICENSE.txt"
+)))
 file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 ```
 
 Afterwards, the files and folders in `data-raw/` will look like:
+
+```{r admin-print-data-raw-after-deleting}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {
+    fs::file_delete(here::here(c(
+      "data-raw/MMASH.zip",
+      "data-raw/SHA256SUMS.txt",
+      "data-raw/LICENSE.txt"
+    )))
+    fs::file_move(here::here("data-raw/DataPaper"), here::here("data-raw/mmash"))
+    fs::dir_tree("data-raw", recurse = 1)
+  }
+)
+```
 
 ```         
 data-raw
