@@ -140,9 +140,9 @@ Our workflow and process will be something like:
         frequently `source()` from it as we prototype and test out code
         in the R Markdown file. It also creates a clear separation
         between "finalized" code and prototyping code.
--   Use a combination of restarting R (`Ctrl-Shift-F10` or "Session -\>
-    Restart R") and using `source()` (`Ctrl-Shift-S` while in
-    `R/functions.R`) to run the functions inside of `R/functions.R`.
+-   Use a combination of restarting R ({{< var keybind.restart-r >}})
+    and using `source()` with {{< var keybind.source >}} while in
+    `R/functions.R` to run the functions inside of `R/functions.R`.
     -   We restart R because it is the only sure way there is to
         clearing up the R workspace and starting for a "clean plate".
         And for reproducibility, we should always aim to working from a

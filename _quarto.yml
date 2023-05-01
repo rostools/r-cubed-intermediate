@@ -30,9 +30,9 @@ book:
       - preamble/syllabus.qmd
       - preamble/schedule.qmd
       - preamble/pre-course.qmd
-    # - part: "Sessions"
-    #   chapters:
-    #   - sessions/introduction.qmd
+    - part: "Sessions"
+      chapters:
+      - sessions/introduction.qmd
     #   - sessions/lesson.qmd
     #   - sessions/what-next.qmd
   appendices:
