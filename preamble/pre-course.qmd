@@ -115,6 +115,14 @@ running these commands in the R Console:
     r3::install_packages_intermediate()
     ```
 
+::: callout-warning
+You might encounter an error when running this code. That's ok, you can
+fix it if you restart R by going to `Sessions -> Restart R` and
+re-running this code, it should work. If it still doesn't, try to
+complete the other tasks, complete the survey, and let us know you have
+a problem in the survey.
+:::
+
 *Note*: When you see a command like `something::something()`, for
 example with `pak::pkg_install()`, you would "read" this as:
 
