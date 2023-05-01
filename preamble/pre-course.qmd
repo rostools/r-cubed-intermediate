@@ -532,6 +532,14 @@ the below listed files and folders are there.
 fs::dir_tree("data-raw", recurse = 1)
 ```
 
+```{r admin-print-data-raw}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {fs::dir_tree("data-raw", recurse = 1)}
+)
+```
+
 ```         
 data-raw
 ├── README.md
