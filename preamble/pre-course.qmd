@@ -295,7 +295,9 @@ very powerful tool to doing data analysis. Please do these two tasks:
 #| include: false
 usethis::with_project(
   path = project_path,
-  {r3::create_qmd_doc()}
+  {
+    r3::create_qmd_doc()
+  }
 )
 ```
 
@@ -340,7 +342,9 @@ usethis::use_data_raw("mmash")
 #| echo: false
 usethis::with_project(
   path = project_path,
-  {usethis::use_data_raw("mmash")}
+  {
+    usethis::use_data_raw("mmash")
+  }
 )
 ```
 
@@ -405,7 +409,9 @@ fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 #| echo: false
 withr::with_dir(
   new = project_path,
-  {fs::dir_tree(recurse = 1)}
+  {
+    fs::dir_tree(recurse = 1)
+  }
 )
 ```
 :::
@@ -455,7 +461,9 @@ usethis::use_git_ignore("data-raw/mmash-data.zip")
 #| echo: false
 usethis::with_project(
   path = project_path,
-  {usethis::use_git_ignore("data-raw/mmash-data.zip")}
+  {
+    usethis::use_git_ignore("data-raw/mmash-data.zip")
+  }
 )
 ```
 
@@ -499,9 +507,10 @@ extract everything to the `data-raw/` folder (no idea why it's called
 `data-raw/mmash.R` script.
 
 ```{r unzip-main-file}
-unzip(here("data-raw/mmash-data.zip"), 
-      exdir = here("data-raw"),
-      junkpaths = TRUE)
+unzip(here("data-raw/mmash-data.zip"),
+  exdir = here("data-raw"),
+  junkpaths = TRUE
+)
 ```
 
 Notice the indentations and spacings of the code. Like writing any
@@ -606,7 +615,9 @@ usethis::use_git_ignore("data-raw/mmash/")
 #| echo: false
 usethis::with_project(
   path = project_path,
-  {usethis::use_git_ignore("data-raw/mmash/")}
+  {
+    usethis::use_git_ignore("data-raw/mmash/")
+  }
 )
 ```
 
