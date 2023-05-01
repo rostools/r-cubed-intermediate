@@ -7,4 +7,3 @@ Copyright (c) 2020-2023 Luke W. Johnston
 The course material and code is licensed under the [Creative Commons
 Attribution 4.0 International
 License](https://creativecommons.org/licenses/by/4.0/).
-
