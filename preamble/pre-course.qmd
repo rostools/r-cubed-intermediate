@@ -75,6 +75,18 @@ objectives for this page:
     record of what was done to process the data before analyzing it, and
     why that's important.
 
+## Programs to install
+
+Make sure to install as updated versions of R, RStudio, and Git as
+possible by following these [installation
+instructions](https://guides.rostools.org/pre-course.html#installation-instructions)
+on the Guides website. For some people, depending on their institution
+and their specific computer, this task can take the **longest amount of
+time** because you have to contact your IT to install these packages or
+do troubleshooting because of issues specific to your computer setup. It
+is extremely difficult to predict who will and who won't have issues
+with these installation tasks.
+
 ## Installing the R packages {#sec-install-r-packages}
 
 We will be using specific R packages for the course, so you will need to
