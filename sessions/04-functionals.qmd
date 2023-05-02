@@ -32,7 +32,7 @@ LearnR3
 │   └── mmash.R
 ├── doc/
 │   ├── README.md
-│   └── lesson.Rmd
+│   └── learning.qmd
 ├── R/
 │   ├── functions.R
 │   └── README.md
@@ -204,7 +204,7 @@ But what does functionals have to do with what we are doing now? Well, our
 22 files that we could load all at once if we used functionals.
 
 The first thing we have to do is add `library(purrr)` to the `setup` code chunk
-in the `doc/lesson.Rmd` document. Then we need to add the package dependency
+in the `doc/learning.qmd` document. Then we need to add the package dependency
 by going to the **Console** and running:
 
 ```r
@@ -215,7 +215,7 @@ Then, the next step for using the `map()` functional is to get a vector
 or list of all the dataset files available to us. We will return to using the fs
 package, which has a function called `dir_ls()` that finds files of a certain
 pattern. In our case, the pattern is `user_info.csv`. So, let's add `library(fs)`
-to the `setup` code chunk. Then, go to the bottom of the `doc/lesson.Rmd`
+to the `setup` code chunk. Then, go to the bottom of the `doc/learning.qmd`
 document, create a new header called `## Using map`, and create a code chunk
 below that.
 
@@ -336,7 +336,7 @@ For importing the other datasets, we have to modify the code in two locations
 to get this code to import the other datasets: at the `regexp =` argument and
 at `import_user_info`. This is the perfect chance to make a
 function that you can use for other purposes and that is itself a functional
-(since it takes a function as an input). So inside `doc/lesson.Rmd`, convert
+(since it takes a function as an input). So inside `doc/learning.qmd`, convert
 this bit of code into a function that works to import the other three datasets.
 
 1. Create a new header `## Exercise: Map on the other datasets` at the bottom of
@@ -807,7 +807,7 @@ with the summary functions you chose.
 Assign the newly summarised data frame to a new data frame and call it
 `summarised_actigraph_df`.
 7. End the grouping effect with `ungroup()`.
-8. Knit the `doc/lesson.Rmd` document to make sure everything works.
+8. Knit the `doc/learning.qmd` document to make sure everything works.
 9. **Add and commit** the changes you've made into the Git history.
 
 ```{r solution-summarise-actigraph, results='hide', solution=TRUE}

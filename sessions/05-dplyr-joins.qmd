@@ -34,7 +34,7 @@ LearnR3
 │   └── mmash.R
 ├── doc/
 │   ├── README.md
-│   └── lesson.Rmd
+│   └── learning.qmd
 ├── R/
 │   ├── functions.R
 │   └── README.md
@@ -143,7 +143,7 @@ we discussed from the exercise. We're also using an argument to `mutate()` you m
 not have seen previously, called `.before`. This will insert the new `user_id` column
 before the column we use and we do this entirely for visual reasons, since it is
 easier to see the newly created column when we run the code.
-In your `doc/lesson.Rmd` file, create a new header called 
+In your `doc/learning.qmd` file, create a new header called 
 `## Using regex for user ID` at the bottom of the document, and create a new
 code chunk below that.
 
@@ -185,7 +185,7 @@ user_info_df %>%
 Time: 15 min
 
 We now have code that takes the data that has the `file_path_id` column
-and extracts the user ID from it. **First step**: While in the `doc/lesson.Rmd`
+and extracts the user ID from it. **First step**: While in the `doc/learning.qmd`
 file, convert this code into a function, using the same process you've done
 previously.
 
@@ -196,10 +196,10 @@ previously.
     - Include Roxygen documentation.
 - After writing it and testing that the function works, 
 move the function into `R/functions.R`.
-- Replace the code in the `doc/lesson.Rmd` file with the function name so it looks
+- Replace the code in the `doc/learning.qmd` file with the function name so it looks
 like `extract_user_id(user_info_df)`, restart the R session, source everything with
 `source()` (`Ctrl-Shift-S`), and run the new function to test that it works.
-- Knit the `doc/lesson.Rmd` file to make sure things remain reproducible.
+- Knit the `doc/learning.qmd` file to make sure things remain reproducible.
 
 *Tip*: If you don't know what package a function comes from when you
 need to append the package when using `::`, you can find out what the package is
@@ -270,7 +270,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 We'll re-source the functions with `source()` (`Ctrl-Shift-S`). Then re-run these
 pieces of code you wrote during Exercise \@ref(ex-function-import-all-data) to
 update them based on the new code in the `import_multiple_files()` function.
-Add this to your `doc/lesson.Rmd` file for now.
+Add this to your `doc/learning.qmd` file for now.
 
 ```{r}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
@@ -293,7 +293,7 @@ summarised_actigraph_df <- actigraph_df %>%
     summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
 ```
 
-Let's knit the `doc/lesson.Rmd` document to make sure everything still
+Let's knit the `doc/learning.qmd` document to make sure everything still
 runs fine. Then, **add and commit** all the changed files into the Git history.
 
 ## Join datasets together
@@ -555,7 +555,7 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 # file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 ```
 
-Go into the `doc/lesson.Rmd` and cut the code used to create the
+Go into the `doc/learning.qmd` and cut the code used to create the
 `saliva_with_day_df` as well as the code to `full_join()` all the datasets
 together with `reduce()` and paste it at the bottom of the `data-raw/mmash.R` 
 script. Assign the output into a new variable called `mmash`, like this:
@@ -604,7 +604,7 @@ by:
 the "Source" button in the top right corner of the script pane).
 
 We now have a final dataset to start working on! The main way to load data is
-with `load(here::here("data/mmash.rda"))`. Go into the `doc/lesson.Rmd` file 
+with `load(here::here("data/mmash.rda"))`. Go into the `doc/learning.qmd` file 
 and delete **everything** again, except for the YAML header and `setup` code
 chunk, so that we are ready for the next session. Lastly, **add and commit** all
 the changes, including adding the final `mmash.rda` data file, to the Git

@@ -37,7 +37,7 @@ Write up code to fix this issue in the `data-raw/mmash.R` script.
 
 We have a few other datasets that we could join together, but would likely
 require more processing in order to appropriately join with the other datasets.
-Complete these tasks in the `doc/lesson.Rmd` file:
+Complete these tasks in the `doc/learning.qmd` file:
 
 1. Create a new header called `## Exercise: Importing activity data`
 1. Create a new code chunk below this new header.
@@ -51,7 +51,7 @@ this course:
     - Add Roxygen documentation and explicit package links (`::`) with the
     functions.
     - Move the newly created function into the `R/functions.R`.
-    - Use the new function in `doc/lesson.Rmd` and use `source()`
+    - Use the new function in `doc/learning.qmd` and use `source()`
     (`Ctrl-Shift-S`) to run it.
 1. Import all the `user_` datasets with `import_multiple_files()` and the
 `import_activity()` function.

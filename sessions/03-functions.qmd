@@ -30,7 +30,7 @@ LearnR3
 │   └── mmash.R
 ├── doc/
 │   ├── README.md
-│   └── lesson.Rmd
+│   └── learning.qmd
 ├── R/
 │   ├── functions.R
 │   └── README.md
@@ -419,7 +419,7 @@ import_saliva <- function(file_path) {
 ## Continuing the workflow
 
 We've created two functions. Now we need to move those functions from the 
-`doc/lesson.Rmd` file and into the `R/` folder. We do this for a few reasons:
+`doc/learning.qmd` file and into the `R/` folder. We do this for a few reasons:
 
 1. To prevent the R Markdown document from becoming too long and having a large
 portion of R code over other text.
@@ -428,12 +428,12 @@ portion of R code over other text.
 
 We want to store our functions in the file `R/functions.R` script so its easier
 to source them. Cut and paste *only* the
-`import_user_info()` function we created in `doc/lesson.Rmd`, including the
+`import_user_info()` function we created in `doc/learning.qmd`, including the
 Roxygen documentation, and paste it into the newly created `R/functions.R`.
 
 Once we have it in there, let's test out the workflow.
 Restart our R session with either `Ctrl-Shift-F10` or from the 
-"Session -> Restart R" menu item. Move back into the `doc/lesson.Rmd`
+"Session -> Restart R" menu item. Move back into the `doc/learning.qmd`
 and add `source(here("R/functions.R"))` to the code chunk called `setup` at the top.
 Run that line of code. Then go to where you wrote:
 

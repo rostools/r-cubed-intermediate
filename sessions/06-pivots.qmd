@@ -37,7 +37,7 @@ LearnR3
 │   └── mmash.R
 ├── doc/
 │   ├── README.md
-│   └── lesson.Rmd
+│   └── learning.qmd
 ├── R/
 │   ├── functions.R
 │   └── README.md
@@ -168,7 +168,7 @@ everything it can do in this course, but if you want to learn more, read up on
 the [documentation][tidyr-pivoting] for it.
 **Ok, stop reading at this point and we will go over pivoting to long again.**
 
-Let's try this out with `mmash`. In your `doc/lesson.Rmd` file, create a new
+Let's try this out with `mmash`. In your `doc/learning.qmd` file, create a new
 header called `## Pivot longer` and create a new code chunk below that. Now we can
 start typing in our code:
 
@@ -234,7 +234,7 @@ list like we did previously). Don't forget to use `na.rm = TRUE` to exclude miss
 values.
 1. Stop the grouping effect with `ungroup()`.
 1. Knit the R Markdown document into HTML (`Ctrl-Shift-K` or the "Knit" button).
-1. Open up the Git interface and **add and commit** the changes to `doc/lesson.Rmd`.
+1. Open up the Git interface and **add and commit** the changes to `doc/learning.qmd`.
 
 ```{r solution-pivot-summary, results='hide', solution=TRUE}
 mmash %>% 
@@ -374,7 +374,7 @@ called `daily_summary` and put it in `return()` so the function outputs it.
     - Don't forget, you can use `?functionname` to find out which package the
     function comes from.
 1. Move the newly created function over into the `R/functions.R` file.
-1. Restart R, go into the `doc/lesson.Rmd` file and run the `setup` code chunk
+1. Restart R, go into the `doc/learning.qmd` file and run the `setup` code chunk
 in the R Markdown document with the `source()` and `load()` commands. Then test
 that the new function works in a code chunk at the bottom of the document.
 
@@ -496,7 +496,7 @@ tidy_summarise_by_day(mmash, max)
 ```
 
 Now that it works, let's add some summary statistics to the 
-`doc/lesson.Rmd` file.
+`doc/learning.qmd` file.
 
 ```{r test-tidier-summary}
 mmash %>% 
