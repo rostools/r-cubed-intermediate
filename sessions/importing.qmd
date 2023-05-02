@@ -1,13 +1,36 @@
 # Importing data, fast! {#sec-import-data}
 
-During this session we'll be covering the first block, "*Download raw
-data*" in Figure \@ref(fig:diagram-overview-1). You already downloaded
-and unzipped the raw data during the [pre-course](pre-course.html) tasks
-and here we'll continue the process by now importing it into R.
+```{r setup}
+#| include: false
+#| eval: false
+library(vroom)
+library(here)
+temp_path <- fs::path_temp()
+project_path <- fs::path(temp_path, "LearnR3")
 
-```{r diagram-overview-1, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-knitr::include_graphics("images/diagram-overview-1.svg")
+untar(
+  tarfile = here::here("_temp", "pre-course.tar.gz"),
+  exdir = fs::dir_ls(project_path, all = TRUE, recurse = TRUE)
+)
+
+usethis::with_project(
+  temp_path,
+  {
+    fs::file_delete("TODO.md")
+    gert::git_add(".")
+    gert::git_commit("Added initial files")
+  }
+)
+
 ```
+
+During this session we'll be covering the first block, "*Download raw
+data*" in Figure @fig-diagram-overview-1. You already downloaded and
+unzipped the raw data during the [pre-course](/preamble/pre-course.qmd)
+tasks and here we'll continue the process by now importing it into R.
+
+![Section of the overall workflow we will be
+covering.](/images/diagram-overview-1.svg){#fig-diagram-overview-1}
 
 Right now, your folder and file structure should look like (use
 `fs::dir_tree(recurse = 2)` if you want to check using R):
@@ -26,7 +49,7 @@ LearnR3
 │   └── mmash.R
 ├── doc/
 │   ├── README.md
-│   └── lesson.Rmd
+│   └── lesson.qmd
 ├── R/
 │   ├── functions.R
 │   └── README.md
@@ -38,8 +61,8 @@ LearnR3
 
 ## Learning objectives
 
-1.  Learn how to import data and do minor cleaning with the
-    [vroom](https://vroom.r-lib.org/index.html) package.
+1.  Learn how to import data and do minor cleaning with the `{vroom}`
+    package.
 2.  Learn about strategies and resources to use when encountering
     problems when importing data (arguably one of the most important
     skills in any coding-type work).
@@ -51,12 +74,11 @@ LearnR3
 The ultimate goal for the beginning phases of a data analysis project is
 to eventually save a version of the raw data that you can work on. The
 first step to processing data is to import it into R so we can work on
-it. So for now, we'll open up the `doc/lesson.Rmd` file so we can start
-building and testing out the code. At the bottom of the file, create a
-new header by typing out `## Importing raw data`. Right below the
-header, make a new code chunk with `Ctrl-Alt-I` and call it `setup`.
-Inside the code chunk, load the
-[vroom](https://vroom.r-lib.org/index.html) package with
+it. So for now, we'll open up the `doc/learning.qmd` file so we can
+start building and testing out the code. At the bottom of the file,
+create a new header by typing out `## Importing raw data`. Right below
+the header, make a new code chunk with {{< var keybind.chunk >}} and
+call it `setup`. Inside the code chunk, load the `{vroom}` package with
 `library(vroom)` as well as `library(here)`. Since we'll also be using
 the tidyverse package, let's also add `library(tidyverse)`. It should
 look like this:
@@ -73,63 +95,55 @@ This is a special, named code chunk that tells R to run this code chunk
 first whenever you open this R Markdown file and run code inside of the
 file. It's in this `setup` code chunk that we will add `library()`
 functions when we want to load other packages. After adding this code
-chunk, create a new code chunk (`Ctrl-Alt-I`) right below it.
+chunk, create a new code chunk right below it using
+{{< var keybind.chunk >}}.
 
-**Take 5 minutes to read the next paragraphs until it says to stop**.
+::: callout-note
+## Reading task: \~5 minutes
 
-What is [vroom](https://vroom.r-lib.org/index.html)? It is a package
-designed to load in data, specifically text-based data files such as
-CSV. In R there are several packages that you can use to load in data
-and of different types of file formats. We won't cover these other
-packages, but you can use this as a reference for when or if you ever
-have to load other file types:
+What is `{vroom}`? It is a package designed to load in data,
+specifically text-based data files such as CSV. In R there are several
+packages that you can use to load in data and of different types of file
+formats. We won't cover these other packages, but you can use this as a
+reference for when or if you ever have to load other file types:
 
--   [haven](https://haven.tidyverse.org/): For reading (also known as
-    importing or loading) in SAS, SPSS, and Stata files.
--   [readxl](https://readxl.tidyverse.org/): For reading in Excel
-    spreadsheets with `.xls` or `.xlsx` file endings.
--   [googlesheets4](https://googlesheets4.tidyverse.org/): For reading
-    in Google Sheets from their cloud service.
--   [readr](https://readr.tidyverse.org/): Standard package used to load
-    in text-based data files like CSV. This package is included by
-    default within the tidyverse.
--   [`utils::read.delim()`](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table):
-    This function comes from the core R package utils and includes other
-    functions like `utils::read.csv()`.
--   [`data.table::fread()`](https://rdatatable.gitlab.io/data.table/reference/fread.html):
-    From the [data.table](https://rdatatable.gitlab.io/data.table/)
-    package, this function is used to load in CSV files.
+-   `{haven}`: For reading (also known as importing or loading) in SAS,
+    SPSS, and Stata files.
+-   `{readxl}`: For reading in Excel spreadsheets with `.xls` or `.xlsx`
+    file endings.
+-   `{googlesheets4}`: For reading in Google Sheets from their cloud
+    service.
+-   `{readr}`: Standard package used to load in text-based data files
+    like CSV. This package is included by default within the tidyverse.
+-   `utils::read.delim()`: This function comes from the core R package
+    utils and includes other functions like `utils::read.csv()`.
+-   `data.table::fread()`: From the `{data.table}` package, this
+    function is used to load in CSV files.
 
-We're using the vroom package for largely one reason: It makes use of
-recent improvements in R that allow data to be imported into R very very
-quickly. Just how fast? The vroom website has a [benchmark
+We're using the `{vroom}` package for largely one reason: It makes use
+of recent improvements in R that allow data to be imported into R very
+very quickly. Just how fast? The `{vroom}` website has a [benchmark
 page](https://vroom.r-lib.org/articles/benchmarks.html) showing how fast
 it is. For many people, loading in the data can be one of the most
 time-consuming parts of starting an analysis. Hopefully by using this
 package, that time can be reduced.
 
-The packages readr, vroom, haven, readxl, and googlesheets4 all are very
-similar in how you use them and their documentation are almost
-identical. So the skills you learn in this session with vroom can mostly
-be applied to these other packages. And because readr (which the other
-packages are based on) has been around for awhile, there is a large
-amount of support and help for using it. If you're curious to learn more
-about vroom, check out the
-[website](https://vroom.r-lib.org/index.html).
+The packages `{readr}`, `{vroom}`, `{haven}`, `{readxl}`, and
+`{googlesheets4}` all are very similar in how you use them and their
+documentation are almost identical. So the skills you learn in this
+session with `{vroom}` can mostly be applied to these other packages.
+And because `{readr}` (which the other packages are based on) has been
+around for awhile, there is a large amount of support and help for using
+it.
 
-If your data is in CSV format, vroom is perfect. The CSV file format is
-a commonly used format for data because it is open and transparent,
+If your data is in CSV format, `{vroom}` is perfect. The CSV file format
+is a commonly used format for data because it is open and transparent,
 readable by any computer, and doesn't depend on any special software to
-open (unlike for e.g. Excel spreadsheets). **Please stop reading now and
-we'll go over this together**.
+open (unlike for e.g. Excel spreadsheets).
+:::
 
 Let's first start by creating an object that has the file path to the
 dataset, then we'll use `vroom()` to import that dataset.
-
-```{r setup-02, include=FALSE}
-library(vroom)
-library(here)
-```
 
 ```{r first-load-in-user-info}
 user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
@@ -179,7 +193,9 @@ It says to use a "cols() specification", which is the output of
 `spec()`. Copy the output from `spec()` and paste it into the
 `col_types` argument of `vroom()`.
 
-```{r vroom-with-error, error=TRUE, warning=TRUE}
+```{r vroom-with-error}
+#| error: true
+#| warning: true
 user_1_info_data <- vroom(
     user_1_info_file,
     col_types = cols(
@@ -198,10 +214,10 @@ first. We copied and pasted, so what's going on? If you recall, the
 `user_info.csv` file has an empty column name. Looking at the [data
 dictionary](https://physionet.org/content/mmash/1.0.0/) it doesn't seem
 there is any reference to this column, so it likely isn't important.
-More than likely, vroom is complaining about this empty column name and
-the use of `...1` to represent it. We don't need it, so we'll get rid of
-it when we load in the dataset. But how? Look at the help documentation
-again. Go to the **Console** and type out:
+More than likely, `{vroom}` is complaining about this empty column name
+and the use of `...1` to represent it. We don't need it, so we'll get
+rid of it when we load in the dataset. But how? Look at the help
+documentation again. Go to the **Console** and type out:
 
 ``` r
 ?vroom::vroom
@@ -234,7 +250,7 @@ user_1_info_data <- vroom(
 )
 ```
 
-Amazing! We did it `r emo::ji("grin")`
+Amazing! We did it! :grin:
 
 But... we still have the warning message. You may or may not see this
 message depending on the version of your packages (the most updated
@@ -247,17 +263,17 @@ only excludes it after reading the column names, before importing the
 data.
 
 To remove this new message, we need to tell `vroom()` exactly how to
-handle renaming cases. Let's look at the help docs of vroom: `?vroom`.
-Scroll down and we see an argument called `.name_repair` that handles
-naming of columns. Going into the provided link takes us to the
+handle renaming cases. Let's look at the help docs of `{vroom}`:
+`?vroom`. Scroll down and we see an argument called `.name_repair` that
+handles naming of columns. Going into the provided link takes us to the
 `tibble::tibble()` help documentation. Scroll down to the `.name_repair`
 argument documentation and it says that it treats problematic column
 names, of which a missing column name is definitely a problem. There are
 several options here, but the one I want to focus on is the comment
 about "function: apply custom name repair". This is an important one
-because we eventually want to rename the columns to match the \[style
-guide\] by using `snake_case`, since there is a package to do that
-called [snakecase](https://tazinho.github.io/snakecase/).
+because we eventually want to rename the columns to match the [style
+guide](https://style.tidyverse.org/) by using `snake_case`, since there
+is a package to do that called `{snakecase}`.
 
 In the **Console**, type out `snakecase::` and hit Tab. You'll see a
 list of possible functions to use. We want to use the snakecase one, so
@@ -323,26 +339,27 @@ types, so using `col_types = cols()` can fix those problems.
 If you have a lot of columns in your dataset, then you can make use of
 `col_select` or `cols_only()` to keep only the columns you want. Before
 moving on to the exercise, **add and commit** the changes to the Git
-history through the RStudio Git interface with `Ctrl-Alt-M`, through the
-Git tab, or the Git button.
+history through the RStudio Git interface with {{< var keybind.git >}}.
 
-## Exercise: Import the saliva data {#ex-import-saliva}
+## Exercise: Import the saliva data
 
-Time: 15 min
+> Time: 15 minutes.
 
 Practice importing data files by doing the same process with the saliva
 data.
 
-1.  Create a new header at the bottom of the `doc/lesson.Rmd` file and
+1.  Create a new header at the bottom of the `doc/learning.qmd` file and
     call it `## Exercise: Import the saliva data`.
-2.  Below the header, create a new code chunk with `Ctrl-Alt-I`.
+2.  Below the header, create a new code chunk with
+    {{< var keybind.chunk >}}.
 3.  Copy and paste the code template below into the new code chunk.
     Begin replacing the `___` with the correct R functions or other
     information.
 4.  Once you have the code working, use the RStudio Git interface to
-    **add and commit** the changes into the version history.
+    **add and commit** the changes to the Git history using
+    {{< var keybind.git >}}.
 
-```{r exercise-template-saliva-import, eval=FALSE}
+``` r
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")
 user_1_saliva_data_prep <- vroom(
     user_1_saliva_file,
@@ -359,7 +376,10 @@ user_1_saliva_data <- vroom(
 )
 ```
 
-```{r solution-import-the-saliva-data, results='hide', solution=TRUE}
+```{r solution-import-the-saliva-data}
+#| eval: false
+#| code-fold: true
+#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
 user_1_saliva_data_prep <- vroom(
     user_1_saliva_file,
@@ -383,7 +403,7 @@ user_1_saliva_data <- vroom(
 ## Importing larger datasets
 
 Sometimes you may have a dataset that's just a bit too large. Sometimes
-vroom may not have enough information to guess the data type of the
+`{vroom}` may not have enough information to guess the data type of the
 column. Or maybe there are hundreds or thousands of columns in your data
 and you only want to import specific columns. In these cases, we can do
 a trick: read in the first few lines of the dataset, use `spec()` and
@@ -393,14 +413,14 @@ columns you want to keep.
 Let's do this on the `RR.csv` file. We can see from the file size that
 it is bigger than most of the other files (\~2Mb). So, we'll use this
 technique to decide what we want to keep. First, create a new header
-`## Import larger datasets` and a new code chunk below it (with
-`Ctrl-Alt-I`).
+`## Import larger datasets` and a new code chunk below it using
+{{< var keybind.chunk >}}.
 
 Do the same thing that we've been doing, but this time we are going to
-use the argument `n_max`, which tells vroom how many rows to read into
-R. In this case, let's read in 100, since that is the amount vroom will
-guess until. This dataset, like the others, has an empty column that we
-will drop.
+use the argument `n_max`, which tells `{vroom}` how many rows to read
+into R. In this case, let's read in 100, since that is the amount
+`{vroom}` will guess until. This dataset, like the others, has an empty
+column that we will drop.
 
 ```{r import-some-of-data-trick}
 user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
@@ -442,22 +462,24 @@ so on. Right, back to the data, what does it look like?
 user_1_rr_data
 ```
 
-To make sure everything is so far reproducible within the `lesson.Rmd`
-file, we will "Knit" the R Markdown document to output an HTML file.
-Click the "Knit" button at the top of the Source pane or by typing
-`Ctrl-Shift-K`. If it generates an HTML document without problems, we
-know our code is at least starting to be reproducible.
+To make sure everything is so far reproducible within the
+`doc/learning.qmd` file, we will render the Quarto document to output an
+HTML file. Click the "Render" button at the top of the Source pane or by
+typing {{< var keybind.render >}}. If it generates an HTML document
+without problems, we know our code is at least starting to be
+reproducible.
 
 ## Exercise: Import the Actigraph data
 
-Time: 15 min
+> Time: 15 minutes.
 
 Practice some more. Do the same thing with the `Actigraph.csv` dataset
 as we did for the `RR.csv`. But first:
 
-1.  Create a new header at the bottom of the `doc/lesson.Rmd` file and
+1.  Create a new header at the bottom of the `doc/learning.qmd` file and
     call it `## Exercise: Import the Actigraph data`.
-2.  Below the header, create a new code chunk with `Ctrl-Alt-I`.
+2.  Below the header, create a new code chunk with
+    {{< var keybind.chunk >}}.
 
 Use the *same technique* as we used for the `RR.csv` data and read in
 the `Actigraph.csv` file from `user_1/`.
@@ -469,14 +491,14 @@ the `Actigraph.csv` file from `user_1/`.
     results into `col_types()`. Don't forget to remove the
     `...1 = col_skip()` (or `NA = col_skip()`) line from the `cols()`
     function.
-4.  Knit the R Markdown document (`Ctrl-Shift-K` or the "Knit" button)
-    to regenerate the HTML document.
+4.  Render the Quarto document with {{< var keybind.render >}} to
+    regenerate the HTML document.
 5.  If everything works, **add and commit** the new changes to the Git
-    history (`Ctrl-Alt-M` or with the Git button).
+    history with {{< var keybind.git >}}
 
 Use this template as a guide for completing this exercise.
 
-```{r exercise-template-import-the-actigraph-data, eval=FALSE}
+``` r
 user_1_actigraph_file <- here("data-raw/mmash/user_1/___")
 user_1_actigraph_data_prep <- ___(
     ___,
@@ -496,7 +518,10 @@ user_1_actigraph_data <- ___(
 )
 ```
 
-```{r solution-import-the-actigraph-data, results='hide', solution=TRUE}
+```{r solution-import-the-actigraph-data}
+#| eval: false
+#| code-fold: true
+#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 # Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
 user_1_actigraph_data_prep <- vroom(
@@ -530,19 +555,27 @@ user_1_actigraph_data <- vroom(
 
 ## Summary
 
-```{asis, instructor_details=TRUE}
-Quickly cover this before finishing the session and when starting the next session.
-```
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Quickly cover this before finishing the session and when starting the
+next session.
+:::
 
 -   Use the appropriate package when importing a specific data file
-    (e.g. for `.xlsx` use readxl)
--   Use `vroom()` for fast importing of plain text type files (e.g. csv)
--   Use `spec()` to diagnose importing issues
+    (e.g. for `.xlsx` use `{readxl}`).
+-   Use `vroom()` for fast importing of plain text type files (e.g.
+    csv).
+-   Use `spec()` to diagnose importing issues.
 -   Use `col_types =` and `col_select =` arguments in `vroom()` to
-    import only the data you need
+    import only the data you need.
 -   Fix column names to match a style using `.name_repair =` argument in
-    `vroom()`
+    `vroom()`.
 -   For very large datasets, importing in the first 100-1000 rows using
     `n_max =` to test that importing works fine before importing the
-    full dataset
+    full dataset.
 
+```{r store-session-code}
+#| include: false
+save.image(here::here("_temp/importing.RData"))
+```
