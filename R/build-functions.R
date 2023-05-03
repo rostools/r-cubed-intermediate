@@ -136,14 +136,3 @@ extract_chunks <- function() {
     r_files <- fs::path_ext_set(r_files, ".R")
     purrr::walk2(qmd_files, r_files, knitr::purl, documentation = 0L)
 }
-
-insert_video <- function(video_file) {
-    htmltools::tags$video(
-        htmltools::tags$source(
-            src = video_file,
-            type = "video/mp4"
-        ),
-        controls = NA,
-        width = "100%"
-    )
-}
