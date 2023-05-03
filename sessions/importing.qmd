@@ -342,7 +342,7 @@ If you have a lot of columns in your dataset, then you can make use of
 moving on to the exercise, **add and commit** the changes to the Git
 history through the RStudio Git interface with {{< var keybind.git >}}.
 
-## Exercise: Import the saliva data
+## Exercise: Import the saliva data {#sec-ex-import-saliva}
 
 > Time: 15 minutes.
 
