@@ -111,28 +111,3 @@ trim_filepath_for_book <- function(data) {
     mutate(data, file_path_id = gsub(".*\\/data-raw", "data-raw", file_path_id))
 }
 
-#' Convert contents of Qmd files into R scripts, only for purl chunks
-#'
-#' @return Nothing. Converts Qmd files to R scripts.
-#'
-extract_chunks <- function() {
-    knitr::opts_chunk$set(
-        purl = FALSE
-    )
-
-    fs::dir_ls(here::here("R"), regexp = ".*[0-9][0-9]-.*\\.R$") |>
-        fs::file_delete()
-
-    qmd_files <- fs::path(
-        "content",
-        c(
-            # "00-pre-course.qmd",
-            "03-functions.qmd",
-            "04-functionals.qmd",
-            "05-dplyr-joins.qmd"
-        )
-    )
-    r_files <- fs::path("R", fs::path_file(qmd_files))
-    r_files <- fs::path_ext_set(r_files, ".R")
-    purrr::walk2(qmd_files, r_files, knitr::purl, documentation = 0L)
-}
