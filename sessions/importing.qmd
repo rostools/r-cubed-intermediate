@@ -10,13 +10,14 @@ project_path <- fs::path(temp_path, "LearnR3")
 
 untar(
   tarfile = here::here("_temp", "pre-course.tar.gz"),
-  exdir = fs::dir_ls(project_path, all = TRUE, recurse = TRUE)
+  exdir = project_path
 )
 
 usethis::with_project(
-  temp_path,
+  project_path,
   {
     fs::file_delete("TODO.md")
+    fs::file_delete("doc/report.Rmd")
     gert::git_add(".")
     gert::git_commit("Added initial files")
   }
