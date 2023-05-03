@@ -750,8 +750,13 @@ See you at the course!
 
 ```{r admin-save-project}
 #| include: false
-tar(
-  here::here("_temp", "pre-course.tar.gz"),
-  fs::dir_ls(project_path, all = TRUE, recurse = TRUE)
+withr::with_dir(
+  project_path,
+  {
+    tar(
+      tarfile = here::here("_temp", "pre-course.tar.gz"),
+      files = fs::dir_ls(".", all = TRUE, recurse = TRUE)
+    )
+  }
 )
 ```
