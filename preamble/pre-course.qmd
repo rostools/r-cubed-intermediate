@@ -362,8 +362,7 @@ out:
 library(here)
 ```
 
-The [here](https://here.r-lib.org/) package was described in the
-[Management of R
+The `{here}` package was described in the [Management of R
 Projects](https://r-cubed-intro.rostools.org/sessions/project-management.html)
 of the introductory course and makes it easier to refer to other files
 in an R project. Read through the [section about the here
