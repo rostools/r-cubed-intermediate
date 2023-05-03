@@ -1,3 +1,4 @@
+# TODO: Convert this over to r3-theme or as shortcodes? To share across courses?
 keybind:
   palette: '{{< kbd linux=Ctrl-Shift-P mac=Cmd-Shift-P win=Ctrl-Shift-P >}}'
   git: '{{< kbd linux=Ctrl-Shift-M mac=Cmd-Shift-M win=Ctrl-Shift-M >}} or with the Palette ({{< var keybind.palette >}}, then type "commit")'
@@ -6,3 +7,4 @@ keybind:
   source: '{{< kbd linux=Ctrl-Shift-S mac=Cmd-Shift-S win=Ctrl-Shift-S >}} or with the Palette ({{< var keybind.palette >}}, then type "source")'
   render: '{{< kbd linux=Ctrl-Shift-K mac=Cmd-Shift-K win=Ctrl-Shift-K >}} or with the Palette ({{< var keybind.palette >}}, then type "render")'
   roxygen: '{{< kbd linux=Ctrl-Shift-Alt-R mac=Cmd-Shift-Alt-R win=Ctrl-Shift-Alt-R >}} or with the Palette ({{< var keybind.palette >}}, then type "roxygen comment")'
+  outline: '{{< kbd linux=Ctrl-Shift-O mac=Cmd-Shift-O win=Ctrl-Shift-O >}} or with the Palette ({{< var keybind.palette >}}, then type "outline")'
