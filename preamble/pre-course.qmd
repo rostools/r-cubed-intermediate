@@ -542,12 +542,12 @@ unzip(here("data-raw/MMASH.zip"),
 usethis::with_project(
   path = project_path,
   {
-    unzip(here("data-raw/mmash-data.zip"),
-      exdir = here("data-raw"),
+    unzip("data-raw/mmash-data.zip",
+      exdir = "data-raw",
       junkpaths = TRUE
     )
-    unzip(here("data-raw/MMASH.zip"),
-      exdir = here("data-raw")
+    unzip("data-raw/MMASH.zip",
+      exdir = "data-raw"
     )
   }
 )
@@ -603,12 +603,12 @@ Afterwards, the files and folders in `data-raw/` will look like:
 usethis::with_project(
   path = project_path,
   {
-    fs::file_delete(here::here(c(
+    fs::file_delete(c(
       "data-raw/MMASH.zip",
       "data-raw/SHA256SUMS.txt",
       "data-raw/LICENSE.txt"
-    )))
-    fs::file_move(here::here("data-raw/DataPaper"), here::here("data-raw/mmash"))
+    ))
+    fs::file_move("data-raw/DataPaper", "data-raw/mmash")
     fs::dir_tree("data-raw", recurse = 1)
   }
 )
