@@ -217,12 +217,13 @@ write a commit message in the text box on the right, something like
 `Code to download data zip file`. Click the "Commit" button and close
 the Git interface.
 
-Next, delete one of the files we don't need by using the `{fs}` package.
+Next, delete these two files we don't need by using the `{fs}` package.
 
 In the **Console**, type out:
 
 ``` r
 fs::file_delete("TODO.md")
+fs::file_delete("doc/report.Rmd")
 ```
 
 Then, open up the `README.md` and fix some of the TODO items. After
