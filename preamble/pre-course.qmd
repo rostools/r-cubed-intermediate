@@ -343,7 +343,7 @@ usethis::use_data_raw("mmash")
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_data_raw("mmash")
+    usethis::use_data_raw("mmash", open = FALSE)
   }
 )
 ```
