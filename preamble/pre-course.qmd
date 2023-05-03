@@ -542,13 +542,13 @@ unzip(here("data-raw/MMASH.zip"),
 usethis::with_project(
   path = project_path,
   {
-unzip(here("data-raw/mmash-data.zip"),
-  exdir = here("data-raw"),
-  junkpaths = TRUE
-)
-unzip(here("data-raw/MMASH.zip"),
-  exdir = here("data-raw")
-)
+    unzip(here("data-raw/mmash-data.zip"),
+      exdir = here("data-raw"),
+      junkpaths = TRUE
+    )
+    unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw")
+    )
   }
 )
 ```
@@ -559,8 +559,7 @@ use the `{fs}` package to work with files. Before you change any files,
 look into the `data-raw/` folder and confirm that the below listed files
 and folders are there.
 
-```{r}
-#| eval: false
+``` r
 # NOTE: You don't need to run this code,
 # its here to show how we got the file list.
 fs::dir_tree("data-raw", recurse = 1)
