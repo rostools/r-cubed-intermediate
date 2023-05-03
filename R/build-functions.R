@@ -81,26 +81,6 @@ diagram_overview <- function(section_num = 0) {
     DiagrammeR::grViz(graph_viz_text)
 }
 
-
-#' Source session R code for use when developing later sessions.
-#'
-#' @param qmd_files Chapter Quarto Markdown files.
-#'
-#' @return Nothing. Sources the Qmd file(s).
-#'
-source_session <- function(qmd_files) {
-    r_files <- fs::path("R", fs::path_file(qmd_files))
-    r_files <- fs::path_ext_set(r_files, ".R")
-    purrr::walk(
-        r_files,
-        source,
-        verbose = FALSE,
-        echo = FALSE,
-        print.eval = FALSE
-    )
-    return(invisible(NULL))
-}
-
 #' Trim file path for showing in book.
 #'
 #' @param data Data frame with `file_path_id` column.
