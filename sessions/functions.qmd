@@ -134,8 +134,8 @@ code out:
 
 ```{r create-add-function}
 add_numbers <- function(num1, num2) {
-    added <- num1 + num2
-    return(added)
+  added <- num1 + num2
+  return(added)
 }
 ```
 
@@ -156,16 +156,16 @@ template documentation right above the function. It looks like:
 ```{r roxygen-docs-1}
 #' Title
 #'
-#' @param num1 
-#' @param num2 
+#' @param num1
+#' @param num2
 #'
 #' @return
 #' @export
 #'
 #' @examples
 add_numbers <- function(num1, num2) {
-    added <- num1 + num2
-    return(added)
+  added <- num1 + num2
+  return(added)
 }
 ```
 
@@ -194,8 +194,8 @@ are:
 #' @return Returns the sum of the two numbers.
 #'
 add_numbers <- function(num1, num2) {
-    added <- num1 + num2
-    return(added)
+  added <- num1 + num2
+  return(added)
 }
 ```
 
@@ -249,16 +249,16 @@ data and convert that as a function:
 ```{r function-creation-step-1}
 #| eval: false
 user_1_info_data <- vroom(
-    user_1_info_file,
-    col_select = -1,
-    col_types = cols(
-        gender = col_character(),
-        weight = col_double(),
-        height = col_double(),
-        age = col_double(),
-        .delim = ","
-    ),
-    .name_repair = snakecase::to_snake_case
+  user_1_info_file,
+  col_select = -1,
+  col_types = cols(
+    gender = col_character(),
+    weight = col_double(),
+    height = col_double(),
+    age = col_double(),
+    .delim = ","
+  ),
+  .name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -270,18 +270,18 @@ this case, `import_user_info` is descriptive and meaningful.
 ```{r function-creation-step-2}
 #| eval: false
 import_user_info <- function() {
-    user_1_info_data <- vroom(
-        user_1_info_file,
-        col_select = -1,
-        col_types = cols(
-            gender = col_character(),
-            weight = col_double(),
-            height = col_double(),
-            age = col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
+  user_1_info_data <- vroom(
+    user_1_info_file,
+    col_select = -1,
+    col_types = cols(
+      gender = col_character(),
+      weight = col_double(),
+      height = col_double(),
+      age = col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
 }
 ```
 
@@ -292,18 +292,18 @@ dataset. So, a good name might be `file_path`.
 ```{r function-creation-step-3}
 #| eval: false
 import_user_info <- function(file_path) {
-    user_1_info_data <- vroom(
-        file_path,
-        col_select = -1,
-        col_types = cols(
-            gender = col_character(),
-            weight = col_double(),
-            height = col_double(),
-            age = col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
+  user_1_info_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      gender = col_character(),
+      weight = col_double(),
+      height = col_double(),
+      age = col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
 }
 ```
 
@@ -314,19 +314,19 @@ want your function to output.
 
 ```{r function-creation-step-4}
 import_user_info <- function(file_path) {
-    info_data <- vroom(
-        file_path,
-        col_select = -1,
-        col_types = cols(
-            gender = col_character(),
-            weight = col_double(),
-            height = col_double(),
-            age = col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(info_data)
+  info_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      gender = col_character(),
+      weight = col_double(),
+      height = col_double(),
+      age = col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(info_data)
 }
 ```
 
@@ -348,19 +348,19 @@ Awesome! It works. The final stage is adding the Roxygen documentation.
 #' @return Outputs a data frame/tibble.
 #'
 import_user_info <- function(file_path) {
-    info_data <- vroom(
-        file_path,
-        col_select = -1,
-        col_types = cols(
-            gender = col_character(),
-            weight = col_double(),
-            height = col_double(),
-            age = col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(info_data)
+  info_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      gender = col_character(),
+      weight = col_double(),
+      height = col_double(),
+      age = col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(info_data)
 }
 ```
 
@@ -443,18 +443,18 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 #' @return Outputs a data frame/tibble.
 #'
 import_saliva <- function(file_path) {
-    saliva_data <- vroom(
-        file_path,
-        col_select = -1,
-        col_types = cols(
-            samples = col_character(),
-            cortisol_norm = col_double(),
-            melatonin_norm = col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(saliva_data)
+  saliva_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      samples = col_character(),
+      cortisol_norm = col_double(),
+      melatonin_norm = col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(saliva_data)
 }
 
 # Test that this works
@@ -513,7 +513,7 @@ looks like:
 usethis::with_project(
   path = project_path,
   {
-desc::desc_print()
+    desc::desc_print()
   }
 )
 ```
@@ -543,7 +543,7 @@ usethis::use_package("vroom")
 usethis::with_project(
   path = project_path,
   {
-usethis::use_package("vroom")
+    usethis::use_package("vroom")
   }
 )
 ```
@@ -556,7 +556,7 @@ in your `DESCRIPTION` file now, you'll see something like:
 usethis::with_project(
   path = project_path,
   {
-  desc::desc_print()
+    desc::desc_print()
   }
 )
 ```
@@ -601,11 +601,10 @@ usethis::use_package("tidyverse", type = "Depends")
 usethis::with_project(
   path = project_path,
   {
-    
-usethis::use_package("here")
-usethis::use_package("fs")
-usethis::use_package("snakecase")
-usethis::use_package("tidyverse", type = "Depends")
+    usethis::use_package("here")
+    usethis::use_package("fs")
+    usethis::use_package("snakecase")
+    usethis::use_package("tidyverse", type = "Depends")
   }
 )
 ```
@@ -625,7 +624,7 @@ the `Depends` field.
 usethis::with_project(
   path = project_path,
   {
-  desc::desc_print()
+    desc::desc_print()
   }
 )
 ```
@@ -698,19 +697,19 @@ Alright, let's go into `R/functions.R` and add `vroom::` to each of the
 
 ```{r explicit-function-calls}
 import_user_info <- function(file_path) {
-    info_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            gender = vroom::col_character(),
-            weight = vroom::col_double(),
-            height = vroom::col_double(),
-            age = vroom::col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(info_data)
+  info_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      gender = vroom::col_character(),
+      weight = vroom::col_double(),
+      height = vroom::col_double(),
+      age = vroom::col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(info_data)
 }
 ```
 
@@ -796,18 +795,18 @@ ___ <- function(___) {
 #' @return Outputs a data frame/tibble.
 #'
 import_saliva <- function(file_path) {
-    saliva_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            samples = vroom::col_character(),
-            cortisol_norm = vroom::col_double(),
-            melatonin_norm = vroom::col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(saliva_data)
+  saliva_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      samples = vroom::col_character(),
+      cortisol_norm = vroom::col_double(),
+      melatonin_norm = vroom::col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(saliva_data)
 }
 
 #' Import the MMASH RR dataset (heart beat-to-beat interval).
@@ -817,19 +816,19 @@ import_saliva <- function(file_path) {
 #' @return Outputs a data frame/tibble.
 #'
 import_rr <- function(file_path) {
-    rr_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            ibi_s = vroom::col_double(),
-            day = vroom::col_double(),
-            # Converts to seconds
-            time = vroom::col_time(format = ""),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    ) 
-    return(rr_data)
+  rr_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      ibi_s = vroom::col_double(),
+      day = vroom::col_double(),
+      # Converts to seconds
+      time = vroom::col_time(format = ""),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(rr_data)
 }
 
 #' Import the MMASH Actigraph dataset (accelerometer).
@@ -839,27 +838,27 @@ import_rr <- function(file_path) {
 #' @return Outputs a data frame/tibble.
 #'
 import_actigraph <- function(file_path) {
-    actigraph_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            axis_1 = vroom::col_double(),
-            axis_2 = vroom::col_double(),
-            axis_3 = vroom::col_double(),
-            steps = vroom::col_double(),
-            hr = vroom::col_double(),
-            inclinometer_off = vroom::col_double(),
-            inclinometer_standing = vroom::col_double(),
-            inclinometer_sitting = vroom::col_double(),
-            inclinometer_lying = vroom::col_double(),
-            vector_magnitude = vroom::col_double(),
-            day = vroom::col_double(),
-            time = vroom::col_time(format = ""),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    )
-    return(actigraph_data)
+  actigraph_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      axis_1 = vroom::col_double(),
+      axis_2 = vroom::col_double(),
+      axis_3 = vroom::col_double(),
+      steps = vroom::col_double(),
+      hr = vroom::col_double(),
+      inclinometer_off = vroom::col_double(),
+      inclinometer_standing = vroom::col_double(),
+      inclinometer_sitting = vroom::col_double(),
+      inclinometer_lying = vroom::col_double(),
+      vector_magnitude = vroom::col_double(),
+      day = vroom::col_double(),
+      time = vroom::col_time(format = ""),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(actigraph_data)
 }
 ```
 
@@ -890,4 +889,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
-
