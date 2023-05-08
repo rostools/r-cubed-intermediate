@@ -1,8 +1,9 @@
 # Importing data, fast! {#sec-import-data}
 
+{{< include ../includes/_wip.qmd >}}
+
 ```{r setup}
 #| include: false
-#| eval: false
 library(vroom)
 library(here)
 temp_path <- fs::path_temp()
@@ -22,7 +23,6 @@ usethis::with_project(
     gert::git_commit("Added initial files")
   }
 )
-
 ```
 
 During this session we'll be covering the first block, "*Download raw
