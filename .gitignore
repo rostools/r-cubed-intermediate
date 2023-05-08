@@ -16,3 +16,4 @@ slides/libs
 
 /.quarto/
 _temp
+.local
