@@ -6,11 +6,9 @@ library(fs)
 library(vroom)
 library(here)
 load(here("_temp/importing.RData"))
-# source(here("R/build-functions.R"))
-# user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 ```
 
-Here we will cover the second block, "*Workflow*" in Figure
+Here we will cover the second block, "*Workflow*" in
 @fig-diagram-overview-2.
 
 ![Section of the overall workflow we will be
