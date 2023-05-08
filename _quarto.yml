@@ -32,6 +32,8 @@ book:
     - part: "Sessions"
       chapters:
       - sessions/introduction.qmd
+      - sessions/importing.qmd
+      - sessions/functions.qmd
     #   - sessions/lesson.qmd
     #   - sessions/what-next.qmd
   appendices:
