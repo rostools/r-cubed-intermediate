@@ -1,11 +1,20 @@
 # Save time, don't repeat yourself: Making functions {#sec-dry-functions}
 
+{{< include ../includes/_wip.qmd >}}
+
 ```{r setup}
 #| include: false
 library(fs)
 library(vroom)
 library(here)
 load(here("_temp/importing.RData"))
+temp_path <- fs::path_temp()
+project_path <- fs::path(temp_path, "LearnR3")
+
+untar(
+  tarfile = here::here("_temp", "pre-course.tar.gz"),
+  exdir = project_path
+)
 ```
 
 Here we will cover the second block, "*Workflow*" in
