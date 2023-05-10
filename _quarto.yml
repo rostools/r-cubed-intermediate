@@ -5,7 +5,6 @@ project:
     # - bash _build-slides.sh
   post-render:
     - rm -rf data-raw/mmash
-    - if [ -v GITHUB_ACTIONS ]; then rm -rf _temp; fi
   # resources:
   #   - slides/*.html
   # pre-render:
