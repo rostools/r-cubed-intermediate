@@ -5,7 +5,7 @@ project:
     # - bash _build-slides.sh
   post-render:
     - rm -rf data-raw/mmash
-    - if [ ! -f ".local" ]; then rm -rf _temp; fi
+    - if [ -v GITHUB_ACTIONS ]; then rm -rf _temp; fi
   # resources:
   #   - slides/*.html
   # pre-render:
