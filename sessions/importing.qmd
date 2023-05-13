@@ -84,13 +84,13 @@ call it `setup`. Inside the code chunk, load the `{vroom}` package with
 the tidyverse package, let's also add `library(tidyverse)`. It should
 look like this:
 
-``` markdown
-`r ''````{r setup}
+````         
+```{{r setup}}
 library(tidyverse)
 library(vroom)
 library(here)
-`r ''````
 ```
+````
 
 This is a special, named code chunk that tells R to run this code chunk
 first whenever you open this R Markdown file and run code inside of the
