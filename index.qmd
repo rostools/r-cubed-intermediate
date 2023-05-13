@@ -101,6 +101,6 @@ is the lead instructor and curriculum developer.
 
 <!-- TODO: Update DDA logo -->
 
-![Danish Diabetes
+![Danish Diabetes and Endocrinology
 Academy](https://www.ddeacademy.dk/sites/all/themes/dda/DDEA_logo_outlined.svg){width="90px"}
 ![Steno Diabetes Center Aarhus](/images/SDCA_logo.png){width="55px"}
