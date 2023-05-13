@@ -33,6 +33,7 @@ book:
       - sessions/introduction.qmd
       - sessions/importing.qmd
       - sessions/functions.qmd
+      - sessions/functionals.qmd
     #   - sessions/lesson.qmd
     #   - sessions/what-next.qmd
   appendices:
