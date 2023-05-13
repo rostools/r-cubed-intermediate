@@ -442,7 +442,8 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 ```
 
 ```{r solution-repeat-saliva}
-#| eval: false
+#| eval: true
+#| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 #' Import the MMASH saliva dataset.
@@ -794,7 +795,8 @@ ___ <- function(___) {
 ```
 
 ```{r solution-update-other-functions}
-#| eval: false
+#| eval: true
+#| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 #' Import the MMASH saliva dataset.
