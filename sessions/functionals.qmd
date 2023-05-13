@@ -1,88 +1,87 @@
-# Save time, don't repeat yourself: Using functionals {#dry-functionals}
+# Save time, don't repeat yourself: Using functionals {#sec-functionals}
 
-```{r setup-04, include=FALSE}
+```{r setup}
+#| include: false
 library(here)
 library(dplyr)
 library(purrr)
 library(fs)
 library(vroom)
-source(here("R/build-functions.R"))
-source_session(here("R/03-functions.qmd"))
+load(here("_temp/functions.RData"))
+# source(here("R/build-functions.R"))
 ```
 
-We will continue covering the "*Workflow*" block in Figure \@ref(fig:diagram-overview-3).
+We will continue covering the "*Workflow*" block in
+@fig-diagram-overview-3.
 
-```{r diagram-overview-3, fig.cap="Section of the overall workflow we will be covering.", echo=FALSE}
-knitr::include_graphics("images/diagram-overview-3.svg")
-```
+![Section of the overall workflow we will be
+covering.](/images/diagram-overview-3.svg){#fig-diagram-overview-3}
 
-And your folder and file structure should look like (use `fs::dir_tree(recurse = 2)` if you want to check using R):
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
 
-```
-LearnR3
-├── data/
-│   └── README.md
-├── data-raw/
-│   ├── README.md
-│   ├── mmash-data.zip
-│   ├── mmash/
-│   │  ├── user_1
-│   │  ├── ...
-│   │  └── user_22
-│   └── mmash.R
-├── doc/
-│   ├── README.md
-│   └── learning.qmd
-├── R/
-│   ├── functions.R
-│   └── README.md
-├── .gitignore
-├── DESCRIPTION
-├── LearnR3.Rproj
-└── README.md
-```
-
-```{asis, instructor_details=TRUE}
-Briefly go over the bigger picture (found in the introduction section) and
-remind everyone the 'what' and 'why' of what we are doing.
-```
+Briefly go over the bigger picture (found in the introduction section)
+and remind everyone the 'what' and 'why' of what we are doing.
+:::
 
 ## Learning objectives
 
-1. Learn about and apply functional programming, vectorization, and functionals
-within R.
-1. Review the split-apply-combine technique and understand the link with functional
-programming.
-1. Apply functional programming to summarizing data and for using the 
-split-apply-combine technique.
+1.  Learn about and apply functional programming, vectorization, and
+    functionals within R.
+2.  Review the split-apply-combine technique and understand the link
+    with functional programming.
+3.  Apply functional programming to summarizing data and for using the
+    split-apply-combine technique.
 
 ## Functional programming
 
-**Please take 15 min to read over this section before we continue.**
-Unlike many other programming languages, R's primary strength and approach to
-programming is in functional programming. So what is it? It is programming that:
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
 
-- Uses functions (like `function()`)
-- Applies functions to vectors all at once (called [vectorisation]), rather than
-one at a time
-    - Vectors are multiple items, like a sequence of numbers from 1 to 5, that are
-    bundled together, for instance a column for body weight in a dataset is a vector 
-    of numbers
-- Can use functions as input to other functions to then output a vector (called a [functional]) 
+Go over this section briefly by reinforcing what they read, especially
+reinforcing the concepts shown in the image. Make sure they understand
+the concept of applying something to many things at once and that
+functionals are better coding patterns to use compared to loops. Doing
+the code-along should also help reinforce this concept.
 
-[vectorisation]: https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html
-[functional]: https://adv-r.hadley.nz/functionals.html
+Also highlight that the resources appendix has some links for continued
+learning for this and that the RStudio `{purrr}` cheatsheet is an
+amazing resource to use.
+:::
 
-We've already covered functions. You've definitely already used vectorization
-since it is one of R's big strengths. For instance, functions like `mean()`,
-`sd()`, `sum()` are vectorized in that you give them a vector of numbers and they
-do something to all the values in the vector at once. In vectorized functions, you can give the function an entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it. Figure \@ref(fig:image-vectorization) shows how a function conceptually uses vectorization.
+::: callout-note
+## Reading task: \~15 minutes
 
-```{r image-vectorization, fig.cap="A function using vectorization. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="45%", echo=FALSE}
-knitr::include_graphics("images/vectorization.png")
-```
+Unlike many other programming languages, R's primary strength and
+approach to programming is in functional programming. So what is it? It
+is programming that:
 
-For example, in R, there is a vectorized function called `sum()` that takes the entire vector of `values` and outputs the total sum, without needing a for loop.
+-   Uses functions (like `function()`).
+-   Applies functions to vectors all at once (called
+    [vectorisation](https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html)),
+    rather than one at a time.
+    -   Vectors are multiple items, like a sequence of numbers from 1 to
+        5, that are bundled together, for instance a column for body
+        weight in a dataset is a vector of numbers.
+-   Can use functions as input to other functions to then output a
+    vector (called a
+    [functional](https://adv-r.hadley.nz/functionals.html)).
+
+We've already covered functions. You've definitely already used
+vectorization since it is one of R's big strengths. For instance,
+functions like `mean()`, `sd()`, `sum()` are vectorized in that you give
+them a vector of numbers and they do something to all the values in the
+vector at once. In vectorized functions, you can give the function an
+entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it.
+@fig-vectorization shows how a function conceptually uses vectorization.
+
+![A function using vectorization. Modified from the [RStudio purrr
+cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
+width="45%"}
+
+For example, in R, there is a vectorized function called `sum()` that
+takes the entire vector of `values` and outputs the total sum, without
+needing a for loop.
 
 ```{r}
 values <- 1:10
@@ -90,9 +89,8 @@ values <- 1:10
 sum(values)
 ```
 
-[purrr-cheatsheet]: https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf
-
-As a comparison, in other programming languages, if you wanted to calculate the sum you would need a loop:
+As a comparison, in other programming languages, if you wanted to
+calculate the sum you would need a loop:
 
 ```{r using-for-loop}
 total_sum <- 0
@@ -104,43 +102,46 @@ for (value in values) {
 total_sum
 ```
 
-```{asis, instructor_details=TRUE}
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
 Emphasize this next paragraph.
-```
+:::
 
-Writing effective and proper for loops is actually quite tricky and difficult to
-easily explain. Because of this and because there are better and easier ways
-of writing R code to replace for loops, we will **not** be covering loops in this
-course.
+Writing effective and proper for loops is actually quite tricky and
+difficult to easily explain. Because of this and because there are
+better and easier ways of writing R code to replace for loops, we will
+**not** be covering loops in this course.
 
-A functional on the other hand is a function that can also use a function as
-one of its arguments. Figure \@ref(fig:image-functionals) shows how the functional
-`map()` from the [purrr] package works by taking a vector (or list), applying a 
-function to each of those items, and outputting the results from each function.
-The name `map()` doesn't mean a geographic map, it is the mathematical meaning
-of map: To use a function on each item in a set of items.
+A functional on the other hand is a function that can also use a
+function as one of its arguments. @fig-functionals shows how the
+functional `map()` from the `{purrr}` package works by taking a vector
+(or list), applying a function to each of those items, and outputting
+the results from each function. The name `map()` doesn't mean a
+geographic map, it is the mathematical meaning of map: To use a function
+on each item in a set of items.
 
-```{r image-functionals, fig.cap="A functional that uses a function to apply it to each item in a vector. Modified from the [RStudio purrr cheatsheet][purrr-cheatsheet].", out.width="90%", echo=FALSE}
-knitr::include_graphics("images/functionals.png")
-```
+![A functional that uses a function to apply it to each item in a
+vector. Modified from the [RStudio purrr
+cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
+width="90%"}
 
-[purrr]: https://purrr.tidyverse.org
-
-Here's a simple toy example to show how it works. We'll use `paste()` on each
-item of `1:5`.
+Here's a simple toy example to show how it works. We'll use `paste()` on
+each item of `1:5`.
 
 ```{r}
 library(purrr)
 map(1:5, paste)
 ```
 
-You'll notice that `map()` outputs a list, with all the `[[1]]` printed. `map()`
-will always output a list. Also notice that the `paste()` function is given 
-*without* the `()` brackets. Without the brackets, the function can be used
-by the `map()` functional and treated like any other object in R. 
+You'll notice that `map()` outputs a list, with all the `[[1]]` printed.
+`map()` will always output a list. Also notice that the `paste()`
+function is given *without* the `()` brackets. Without the brackets, the
+function can be used by the `map()` functional and treated like any
+other object in R.
 
-Let's say we wanted to paste together the number with the sentence "seconds have
-passed". Normally it would look like:
+Let's say we wanted to paste together the number with the sentence
+"seconds have passed". Normally it would look like:
 
 ```{r paste-multiple}
 paste(1, "seconds have passed")
@@ -159,24 +160,27 @@ for (num in 1:5) {
 }
 ```
 
-With `map()`, we'd do this a bit differently. purrr allows us to create
-anonymous functions (functions that are used once and disappear after usage) to
-extend its capabilities. Anonymous functions are created by writing
-`function(x)` followed by the function definition inside of `map()`. Using
-`map()` with an anonymous function allows us to do more things to the input
-vector (e.g. `1:5`). Here is an example:
+With `map()`, we'd do this a bit differently. `{purrr}` allows us to
+create anonymous functions (functions that are used once and disappear
+after usage) to extend its capabilities. Anonymous functions are created
+by writing `function(x)` (the short version is `\(x)`), followed by the
+function definition inside of `map()`. Using `map()` with an anonymous
+function allows us to do more things to the input vector (e.g. `1:5`).
+Here is an example:
 
 ```{r}
 map(1:5, function(x) paste(x, "seconds have passed"))
+# Or with the short version
+map(1:5, \(x) paste(x, "seconds have passed"))
 ```
 
-As this is quite verbose, purrr supports the use of a syntax shortcut to write
-anonymous functions. This shortcut is using `~` (tilde) to start the function
-and `.x` as the replacement for the vector item. `.x` is used instead of `x` in
-order to avoid potential name collisions in functions where `x` is an function
-argument (for example in `ggplot2::aes()`, where `x` can be used to define the
-x-axis mapping for a graph). Here is the same example as above, now using the
-`~` shortcut:
+`{purrr}` supports the use of a syntax shortcut to write anonymous
+functions. This shortcut is using `~` (tilde) to start the function and
+`.x` as the replacement for the vector item. `.x` is used instead of `x`
+in order to avoid potential name collisions in functions where `x` is an
+function argument (for example in `ggplot2::aes()`, where `x` can be
+used to define the x-axis mapping for a graph). Here is the same example
+as above, now using the `~` shortcut:
 
 ```{r}
 map(1:5, ~paste(.x, "seconds have passed"))
@@ -184,47 +188,39 @@ map(1:5, ~paste(.x, "seconds have passed"))
 
 This is the basics of using functionals. Functions, vectorization, and
 functionals provide expressive and powerful approaches to a simple task:
-*Doing an action on each item in a set of items*. And while technically using a
-for loop lets you "not repeat yourself", they tend to be more error prone
-and harder to write and read compared to these other tools. 
-For some alternative explanations of this, see Section \@ref(alternative-loop-explanation).
-**Ok, stop reading and we'll go over this again before continuing with the coding.**
+*Doing an action on each item in a set of items*. And while technically
+using a for loop lets you "not repeat yourself", they tend to be more
+error prone and harder to write and read compared to these other tools.
+For some alternative explanations of this, see
+@sec-alternative-loop-explanation.
+:::
 
-```{asis, instructor_details=TRUE}
-Go over this section briefly by reinforcing what they read. Make sure they
-understand the concept of applying something to many things at once. Doing the
-code-along should also help reinforce this concept. 
+But what does functionals have to do with what we are doing now? Well,
+our `import_user_info()` function only takes in one data file. But we
+have 22 files that we could load all at once if we used functionals.
 
-Also highlight that the resources appendix has some links for continued learning
-for this and that the RStudio purrr cheatsheet is an amazing resource to use.
-```
+The first thing we have to do is add `library(purrr)` to the `setup`
+code chunk in the `doc/learning.qmd` document. Then we need to add the
+package dependency by going to the **Console** and running:
 
-But what does functionals have to do with what we are doing now? Well, our 
-`import_user_info()` function only takes in one data file. But we have 
-22 files that we could load all at once if we used functionals.
-
-The first thing we have to do is add `library(purrr)` to the `setup` code chunk
-in the `doc/learning.qmd` document. Then we need to add the package dependency
-by going to the **Console** and running:
-
-```r
+``` r
 usethis::use_package("purrr")
 ```
 
 Then, the next step for using the `map()` functional is to get a vector
-or list of all the dataset files available to us. We will return to using the fs
-package, which has a function called `dir_ls()` that finds files of a certain
-pattern. In our case, the pattern is `user_info.csv`. So, let's add `library(fs)`
-to the `setup` code chunk. Then, go to the bottom of the `doc/learning.qmd`
-document, create a new header called `## Using map`, and create a code chunk
-below that.
+or list of all the dataset files available to us. We will return to
+using the `{fs}` package, which has a function called `dir_ls()` that
+finds files of a certain pattern. In our case, the pattern is
+`user_info.csv`. So, let's add `library(fs)` to the `setup` code chunk.
+Then, go to the bottom of the `doc/learning.qmd` document, create a new
+header called `## Using map`, and create a code chunk below that with
+{{< var keybind.chunk >}}
 
-The `dir_ls()` function takes the path that we want to search (`data-raw/mmash/`),
-uses the argument `regexp` (short for [regular expression][regex] or also `regex`) to find the pattern,
-and `recurse` to look in all subfolders. We'll cover regular expressions
-more in the next session.
-
-[regex]: https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions
+The `dir_ls()` function takes the path that we want to search
+(`data-raw/mmash/`), uses the argument `regexp` (short for [regular
+expression](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)
+or also `regex`) to find the pattern, and `recurse` to look in all
+subfolders. We'll cover regular expressions more in the next session.
 
 ```{r list-user-info-files}
 user_info_files <- dir_ls(here("data-raw/mmash/"), 
@@ -232,59 +228,68 @@ user_info_files <- dir_ls(here("data-raw/mmash/"),
                           recurse = TRUE)
 ```
 
-Then let's see what the output looks like. For the website, we are only showing
-the first 3 files. Your output will look slightly different from this.
+Then let's see what the output looks like. For the website, we are only
+showing the first 3 files. Your output will look slightly different from
+this.
 
-```{r list-files-head, eval=FALSE}
+``` r
 user_info_files
 ```
 
-```{r list-files-for-book, echo=FALSE}
+```{r admin-list-files-for-book}
+#| echo: false
 head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
 ```
 
-Alright, we now have all the files ready to give to `map()`. So let's try it!
+Alright, we now have all the files ready to give to `map()`. So let's
+try it!
 
 ```{r}
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
-Remember, that `map()` always outputs a list, so when we look into this object,
-it will give us 22 tibbles (data.frames). Here we'll only show the first one:
+Remember, that `map()` always outputs a list, so when we look into this
+object, it will give us 22 tibbles (data.frames). Here we'll only show
+the first one:
 
 ```{r}
 user_info_list[[1]]
 ```
 
-This is great because with one line of code we imported all these datasets!
-But we're missing an important bit of information: The user ID. 
-A powerful feature of the purrr package is that it has other functions to
-make working with functionals easier. We know `map()` always outputs a list.
-What if you want to output a character vector instead? If we check the help:
+This is great because with one line of code we imported all these
+datasets! But we're missing an important bit of information: The user
+ID. A powerful feature of the `{purrr}` package is that it has other
+functions to make working with functionals easier. We know `map()`
+always outputs a list. What if you want to output a character vector
+instead? If we check the help:
 
-```r
+``` r
 ?map
 ```
 
-```{asis, instructor_details=TRUE}
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
 Go through this help documentation and talk a bit about it.
-```
+:::
 
-We see that there are other functions, including a function
-called `map_chr()` that seems to output a character vector. 
-There are several others that give an output based 
-on the ending of `map_`, such as:
+We see that there are other functions, including a function called
+`map_chr()` that seems to output a character vector. There are several
+others that give an output based on the ending of `map_`, such as:
 
-- `map_int()` outputs an integer.
-- `map_dbl()` outputs a numeric value, called a "double" in programming.
-- `map_dfr()` outputs a data frame, combining the list items by row (`r`).
-- `map_dfc()` outputs a data frame, combining the list items by column (`c`).
+-   `map_int()` outputs an integer.
+-   `map_dbl()` outputs a numeric value, called a "double" in
+    programming.
+-   `map_dfr()` outputs a data frame, combining the list items by row
+    (`r`).
+-   `map_dfc()` outputs a data frame, combining the list items by column
+    (`c`).
 
-The `map_dfr()` looks like the one we want, since we want all these datasets
-together as one. If we look at the help for it,
-we see that it has an argument `.id`, which we can use to create a new column
-that sets the user ID, or in this case, the file path to the dataset, which
-has the user ID information in it. So, let's use it and create a new column
+The `map_dfr()` looks like the one we want, since we want all these
+datasets together as one. If we look at the help for it, we see that it
+has an argument `.id`, which we can use to create a new column that sets
+the user ID, or in this case, the file path to the dataset, which has
+the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
 ```{r}
@@ -292,39 +297,42 @@ user_info_df <- map_dfr(user_info_files, import_user_info,
                         .id = "file_path_id")
 ```
 
-Your `file_path_id` variable will look different. Don't worry, we're going to
-tidy up the `file_path_id` variable later.
+Your `file_path_id` variable will look different. Don't worry, we're
+going to tidy up the `file_path_id` variable later.
 
-```{r, eval=FALSE}
+``` r
 user_info_df
 ```
 
-```{r show-data-for-book, echo=FALSE}
+```{r admin-show-data-for-book}
+#| echo:false
 user_info_df %>% 
     trim_filepath_for_book()
 ```
 
-Now that we have this working, let's **add and commit** the changes to the Git history.
+Now that we have this working, let's **add and commit** the changes to
+the Git history, by using {{< var keybind.git >}}
 
 ## Exercise: Brainstorm and discuss how you'd use functionals in your work
 
-Time: 10 min
+> Time: 10 minutes.
 
-As a group, discuss if you've ever used for loops or functionals like `map()`
-and your experiences with either. Discuss any advantages to using for loops over
-functionals and vice versa. Then, brainstorm and discuss as many ways as you can
-for how you might incorporate functionals like `map()`, or replace for loops
-with them, into your own work. Afterwards, groups will briefly share some of
-what they thought of before we move on to the next exercise.
+As a group, discuss if you've ever used for loops or functionals like
+`map()` and your experiences with either. Discuss any advantages to
+using for loops over functionals and vice versa. Then, brainstorm and
+discuss as many ways as you can for how you might incorporate
+functionals like `map()`, or replace for loops with them, into your own
+work. Afterwards, groups will briefly share some of what they thought of
+before we move on to the next exercise.
 
-## Exercise: Make a function for importing other datasets with functionals {#ex-function-import-all-data}
+## Exercise: Make a function for importing other datasets with functionals {#sec-ex-function-import-all-data}
 
-Time: 25 min
+> Time: 25 minutes.
 
-We need to do basically the exact same thing for the `saliva.csv`, `RR.csv`, and
-`Actigraph.csv` datasets, following this format:
+We need to do basically the exact same thing for the `saliva.csv`,
+`RR.csv`, and `Actigraph.csv` datasets, following this format:
 
-```{r ex-starting-point, eval=FALSE}
+``` r
 user_info_files <- dir_ls(here("data-raw/mmash/"), 
                           regexp = "user_info.csv", 
                           recurse = TRUE)
@@ -332,41 +340,48 @@ user_info_df <- map_dfr(user_info_files, import_user_info,
                         .id = "file_path_id")
 ```
 
-For importing the other datasets, we have to modify the code in two locations
-to get this code to import the other datasets: at the `regexp =` argument and
-at `import_user_info`. This is the perfect chance to make a
-function that you can use for other purposes and that is itself a functional
-(since it takes a function as an input). So inside `doc/learning.qmd`, convert
-this bit of code into a function that works to import the other three datasets.
+For importing the other datasets, we have to modify the code in two
+locations to get this code to import the other datasets: at the
+`regexp =` argument and at `import_user_info`. This is the perfect
+chance to make a function that you can use for other purposes and that
+is itself a functional (since it takes a function as an input). So
+inside `doc/learning.qmd`, convert this bit of code into a function that
+works to import the other three datasets.
 
-1. Create a new header `## Exercise: Map on the other datasets` at the bottom of
-the document.
-1. Create a new code chunk below it.
-1. Repeat the steps you've taken previously to create a new function:
-    - Wrap the code with `function() { ... }`
-    - Name the function `import_multiple_files`
-    - Within `function()`, set two new arguments called `file_pattern` and
-    `import_function`. 
-    - Within the code, replace and re-write `"user_info.csv"` with
-    `file_pattern` (this is *without* quotes around it) and `import_user_info` with
-    `import_function` (also *without* quotes).
-    - Create generic intermediate objects (instead of `user_info_files` and
-    `user_info_df`). So, replace and re-write `user_info_file` with `data_files`
-    and `user_info_df` with `combined_data`.
-    - Use `return(combined_data)` at the end of the function to output the
-    imported data frame.
-    - Create and write Roxygen documentation to describe the new function
-    - Append `packagename::` to the individual functions (there are three packages
-    used: fs, here, and purrr)
-    - Run it and check that it works on `saliva.csv`
-1. After it works, cut and paste the function into the `R/functions.R` file.
-Then restart the R session, run the line with `source(here("R/functions.R"))`, 
-and test the code out in the **Console**.
-1. Once done, **add** the changes you've made and **commit** them to the Git history.
+1.  Create a new header `## Exercise: Map on the other datasets` at the
+    bottom of the document.
+2.  Create a new code chunk below it, using {{< var keybind.chunk >}}.
+3.  Repeat the steps you've taken previously to create a new function:
+    -   Wrap the code with `function() { ... }`
+    -   Name the function `import_multiple_files`
+    -   Within `function()`, set two new arguments called `file_pattern`
+        and `import_function`.
+    -   Within the code, replace and re-write `"user_info.csv"` with
+        `file_pattern` (this is *without* quotes around it) and
+        `import_user_info` with `import_function` (also *without*
+        quotes).
+    -   Create generic intermediate objects (instead of
+        `user_info_files` and `user_info_df`). So, replace and re-write
+        `user_info_file` with `data_files` and `user_info_df` with
+        `combined_data`.
+    -   Use `return(combined_data)` at the end of the function to output
+        the imported data frame.
+    -   Create and write Roxygen documentation to describe the new
+        function by using {{< var keybind.roxygen >}}.
+    -   Append `packagename::` to the individual functions (there are
+        three packages used: `{fs}`, `{here}`, and `{purrr}`)
+    -   Run it and check that it works on `saliva.csv`.
+4.  After it works, cut and paste the function into the `R/functions.R`
+    file. Then restart the R session with {{< var keybind.restart-r >}},
+    run the line with `source(here("R/functions.R"))` or with
+    {{< var keybind.source >}}, and test the code out in the
+    **Console**.
+5.  Once done, **add** the changes you've made and **commit** them to
+    the Git history, using {{< var keybind.git >}}.
 
 Use this code as a guide to help complete this exercise:
 
-```{r exercise-template-import-multiple-files, eval=FALSE}
+``` r
 ___ <- ___(___, ___) {
     ___ <- ___dir_ls(___here("data-raw/mmash/"),
                      regexp = ___,
@@ -378,7 +393,11 @@ ___ <- ___(___, ___) {
 }
 ```
 
-```{r solution-import-multiple-files, results='hide', solution=TRUE, purl=TRUE}
+```{r solution-import-multiple-files}
+#| eval: true
+#| output: false
+#| code-fold: true
+#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 #' Import multiple MMASH data files and merge into one data frame.
 #'
 #' @param file_pattern Pattern for which data file to import.
@@ -400,129 +419,139 @@ import_multiple_files <- function(file_pattern, import_function) {
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
-## Adding to the processing script and clean up R Markdown document
+## Adding to the processing script and clean up Quart / R Markdown document
 
-**We'll do this together**.
-We've now made a function that imports multiple data files based on the type of
-data file, we can start using this function directly, like we did in the exercise
-above for the saliva data. We've already imported the `user_info_df` previously,
-but now we should do some tidying up of our R Markdown file and to start updating
-the `data-raw/mmash.R` script. Why are we doing that? Because the R Markdown file
-is only a sandbox to test code out and in the end we want a script that takes
-the raw data, processes it, and creates a working dataset we can use for analysis.
+We've now made a function that imports multiple data files based on the
+type of data file, we can start using this function directly, like we
+did in the exercise above for the saliva data. We've already imported
+the `user_info_df` previously, but now we should do some tidying up of
+our Quarto / R Markdown file and to start updating the
+`data-raw/mmash.R` script. Why are we doing that? Because the Quarto / R
+Markdown file is only a sandbox to test code out and in the end we want
+a script that takes the raw data, processes it, and creates a working
+dataset we can use for analysis.
 
-First thing we will do is delete **everything** below the `setup` code chunk 
-that contains the `library()` and `source()` code. Why do we delete everything?
-Because it keeps things cleaner and makes it easier to look through the file.
-And because we use Git, nothing is truly gone so you can always go back to the
-text later. Next, we restart the R session (`Ctrl-Shift-F10`). Then we'll create
-a new code chunk below the `setup` chunk where we will use the
-`import_multiple_files()` function to import the user info and saliva data.
+First thing we will do is delete **everything** below the `setup` code
+chunk that contains the `library()` and `source()` code. Why do we
+delete everything? Because it keeps things cleaner and makes it easier
+to look through the file. And because we use Git, nothing is truly gone
+so you can always go back to the text later. Next, we restart the R
+session with {{< var keybind.restart-r >}}. Then we'll create a new code
+chunk below the `setup` chunk where we will use the
+`import_multiple_files()` function to import the user info and saliva
+data.
 
 ```{r}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
 
-To test that things work, we'll "Knit" our R Markdown document into HTML by
-using the "Knit" button at the top of the pane or with `Ctrl-Shift-K`. Once it
-creates the file, it should either pop up or open in the Viewer pane on the
-side. If it works, then we can move on and open up the `data-raw/mmash.R` script. 
-Inside the script, copy and paste these two lines of code to the bottom of the script. 
-Afterwards, go the top of the script and right below the `library(here)` code,
-add these two lines of code, so it looks like this:
+To test that things work, we'll create an HTML document from our Quarto
+/ R Markdown document by using the "Render" / "Knit" button at the top
+of the pane or with {{< var keybind.render >}}. Once it creates the
+file, it should either pop up or open in the Viewer pane on the side. If
+it works, then we can move on and open up the `data-raw/mmash.R` script.
+Inside the script, copy and paste these two lines of code to the bottom
+of the script. Afterwards, go the top of the script and right below the
+`library(here)` code, add these two lines of code, so it looks like
+this:
 
-```{r add-source-tidyverse, eval=FALSE}
+``` r
 library(here)
 library(tidyverse)
 source(here("R/functions.R"))
 ```
 
-Save the files, then add and commit the changes to the Git history.
-
+Save the files, then add and commit the changes to the Git history with
+{{< var keybind.git >}}.
 
 ## Split-apply-combine technique and functionals
 
-```{asis, instructor_details=TRUE}
-Verbally cover this section before moving on to the summarizing. Let them know 
-they can read more about this in this section.
-```
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
 
-We're taking a quick detour to briefly talk about a concept that perfectly
-illustrates how vectorization and functionals fit into doing data analysis.
-The concept is called the
-[split-apply-combine](https://r-cubed.rostools.org/wrangling.html#split-apply-combine-summarizing-data)
-technique, which we covered in the beginner R course.
-The method is:
+Verbally cover this section before moving on to the summarizing. Let
+them know they can read more about this in this section.
+:::
 
-1. Split the data into groups (e.g. diabetes status).
-2. Apply some analysis or statistics to each group (e.g. finding the mean of age).
-3. Combine the results to present them together (e.g. into a data frame that you can use
-to make a plot or table).
+We're taking a quick detour to briefly talk about a concept that
+perfectly illustrates how vectorization and functionals fit into doing
+data analysis. The concept is called the
+[split-apply-combine](https://r-cubed-intro.rostools.org/session/wrangling.html#split-apply-combine-summarizing-data)
+technique, which we covered in the beginner R course. The method is:
 
-So when you split data into multiple groups, you make a *vector* that you can 
-than apply (i.e. the *map* functional) some statistical technique to each group
-through *vectorization*. This technique works really well for a range of tasks, 
-including for our task of summarizing some of the MMASH data so we can merge
-it all into one dataset.
+1.  Split the data into groups (e.g. diabetes status).
+2.  Apply some analysis or statistics to each group (e.g. finding the
+    mean of age).
+3.  Combine the results to present them together (e.g. into a data frame
+    that you can use to make a plot or table).
+
+So when you split data into multiple groups, you make a *vector* that
+you can than apply (i.e. the *map* functional) some statistical
+technique to each group through *vectorization*. This technique works
+really well for a range of tasks, including for our task of summarizing
+some of the MMASH data so we can merge it all into one dataset.
 
 ## Exercise: What is the pipe?
 
-Time: 5 min
+> Time: 5 minutes.
 
-```{asis, instructor_details=TRUE}
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
 Before starting this exercise, ask how many have used the pipe before.
-If everyone has, then move on to the next section. If some haven't,
-let the others in the group explain, but **do not** use much time or even
-demonstrate it. If they don't know what it is, they can look it up after.
-We covered this in the introduction course, so we should not cover it again
-here.
-```
+If everyone has, then move on to the next section. If some haven't, let
+the others in the group explain, but **do not** use much time or even
+demonstrate it. If they don't know what it is, they can look it up
+after. We covered this in the introduction course, so we should not
+cover it again here.
+:::
 
-We haven't used the `%>%` pipe from the [magrittr] package yet, but it is used
-extensively in many R packages and is the foundation of tidyverse packages.
-The function fundamentally changed how people write R code so much that
-in version 4.1 a similar function, `|>`, was added to base R. To make sure
-everyone is aware of what the pipe is, in your groups please do either task:
+We haven't used the `%>%` pipe from the `{magrittr}` package yet, but it
+is used extensively in many R packages and is the foundation of
+tidyverse packages. The function fundamentally changed how people write
+R code so much that in version 4.1 a similar function, `|>`, was added
+to base R. To make sure everyone is aware of what the pipe is, in your
+groups please do either task:
 
-[magrittr]: https://magrittr.tidyverse.org/
+-   If one or more person in the group doesn't know what the pipe is,
+    take some time to talk about and explain it (if you know).
+-   If no one in the group knows, please read [the section on
+    it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
+    from the beginner course.
 
-- If one or more person in the group doesn't know what the pipe is, take some
-time to talk about and explain it (if you know).
-- If no one in the group knows, please read 
-[the section on it](https://r-cubed.rostools.org/wrangling.html#chaining-functions-with-the-pipe)
-from the beginner course.
+## Summarising data through functionals {#sec-summarise-with-functionals}
 
-## Summarising data through functionals {#summarise-with-functionals}
+Functionals and vectorization are an integral component of how R works
+and they appear throughout many of R's functions and packages. They are
+particularly used throughout the `{tidyverse}` packages like `{dplyr}`.
+Let's get into some more advanced features of `{dplyr}` functions that
+work as functionals. Before we continue, re-run the code for getting
+`user_info_df` since you had restarted the R session previously.
 
-Functionals and vectorization are an integral component of how R works and
-they appear throughout many of R's functions and packages. They are particularly
-used throughout the tidyverse packages like [dplyr]. Let's get into some more
-advanced features of dplyr functions that work as functionals. Before we continue, 
-re-run the code for getting `user_info_df` since you had restarted the R session
-previously.
-
-[dplyr]: https://dplyr.tidyverse.org/
-
-There are many "verbs" in dplyr, like `select()`, `rename()`, `mutate()`, 
-`summarise()`, and `group_by()` (covered in more detail in the 
-[Data Management and Wrangling](https://r-cubed.rostools.org/wrangling.html#managing-and-working-with-data-in-r)
-session of the beginner course). The common usage of these verbs is through
-acting on and directly using the column names (e.g. without `"` quotes around
-the column name). For instance, to select only the `age` column, you would type
-out:
+There are many "verbs" in `{dplyr}`, like `select()`, `rename()`,
+`mutate()`, `summarise()`, and `group_by()` (covered in more detail in
+the [Data Management and
+Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
+session of the beginner course). The common usage of these verbs is
+through acting on and directly using the column names (e.g. without `"`
+quotes around the column name). For instance, to select only the `age`
+column, you would type out:
 
 ```{r}
 user_info_df %>% 
     select(age)
 ```
 
-But many dplyr verbs can also take functions as input. When you combine `select()`
-with the `where()` function, you can select different variables. The `where()`
-function is a `tidyselect` helper, a set of functions that make it easier to
-select variables. Some additional helper functions include:
+But many `{dplyr}` verbs can also take functions as input. When you
+combine `select()` with the `where()` function, you can select different
+variables. The `where()` function is a `tidyselect` helper, a set of
+functions that make it easier to select variables. Some additional
+helper functions are listed in @tab-tidyselect-helpers.
 
-```{r tab-tidyselect-helpers, echo=FALSE}
+```{r tab-tidyselect-helpers}
+#| echo: false
+#| tbl-cap: "Common tidyselect helper functions and some of their use cases."
 tibble::tribble(
     ~'What it selects', ~Example, ~Function,
     'Select variables where a function returns TRUE', 'Select variables that have data as character (`is.character`)', '`where()`',
@@ -530,8 +559,7 @@ tibble::tribble(
     'Select variables that contain the matching string', 'Select variables that contain the string "user_info"', '`contains()`',
     'Select variables that ends with string', 'Select all variables that end with "date"', '`ends_with()`'
     ) %>% 
-    knitr::kable(caption = "Common tidyselect helper functions and some of their use cases.")
-
+    knitr::kable()
 ```
 
 Let's select columns that are numeric:
@@ -543,28 +571,29 @@ user_info_df %>%
 
 Or, only character columns:
 
-```{r select-where, eval=FALSE}
+``` r
 user_info_df %>% 
     select(where(is.character))
 ```
 
-```{r select-where-for-book, echo=FALSE}
+```{r admin-select-where-for-book}
+#| echo: false
 user_info_df %>% 
     select(where(is.character)) %>% 
     trim_filepath_for_book()
 ```
 
-Likewise, with functions like `summarise()`,
-if you want to for example calculate the mean of cortisol in the saliva dataset,
-you would usually type out:
+Likewise, with functions like `summarise()`, if you want to for example
+calculate the mean of cortisol in the saliva dataset, you would usually
+type out:
 
 ```{r}
 saliva_df %>% 
     summarise(cortisol_mean = mean(cortisol_norm))
 ```
 
-If you want to calculate the mean of multiple columns, you might think you'd have
-to do something like:
+If you want to calculate the mean of multiple columns, you might think
+you'd have to do something like:
 
 ```{r}
 saliva_df %>% 
@@ -572,47 +601,55 @@ saliva_df %>%
               melatonin_mean = mean(melatonin_norm))
 ```
 
-But instead, there is the `across()` function that works like `map()` and allows
-you to calculate the mean across which ever columns you want. In many ways,
-`across()` is a duplicate of `map()`, particularly in the arguments you give 
-it. 
+But instead, there is the `across()` function that works like `map()`
+and allows you to calculate the mean across which ever columns you want.
+In many ways, `across()` is a duplicate of `map()`, particularly in the
+arguments you give it.
 
-**Take 2 min and read through this list**. When you look in `?across`, there are
-two main arguments and two optional ones:
+::: callout-note
+## Reading task: \~2 minutes
 
-1. `.cols` argument: Columns you want to use. 
-    - Write column names directly and wrapped in `c()`: `c(age, weight)`.
-    - Write `tidyselect` helpers: `everything()`, `starts_with()`,
-    `contains()`, `ends_with()`
-    - Use a function wrapped in `where()`: `where(is.numeric)`,
-    `where(is.character)`
-2. `.fns`: The function to use on the `.cols`.
-    - A bare function (`mean`) applies it to each column and returns the output,
-    with the column name unchanged.
-    - A list with bare functions (`list(mean, sd)`) applies each function to
-    each column and returns the output with the column name appended with a 
-    number (e.g. `cortisol_norm_1`).
-    - A named list with bare functions (`list(average = mean, stddev = sd)`)
-    does the same as above but instead returns an output with the column names
-    appended with the name given to the function in the list (e.g. `cortisol_norm_average`).
-    - A function passed with `~` and `.x`, like in `map()`. For instance,
-    `across(c(age, weight), ~ mean(.x, na.rm = TRUE))` is used to say "put age
-    and weight, one after the other, in place of where `.x` is located" to 
-    calculate the mean for age and the mean for weight.
-3. `...` argument: Arguments to give to the functions in `.fns`. For instance,
-`across(age, mean, na.rm = TRUE)` passes the argument to remove missingness
-`na.rm` into the `mean()` function.
-4. `.names` argument: Customize the output of the column names. We won't cover 
-this argument.
+When you look in `?across`, there are two main arguments and two
+optional ones:
 
-**Ok, stop reading and we'll cover this together**.
+1.  `.cols` argument: Columns you want to use.
+    -   Write column names directly and wrapped in `c()`:
+        `c(age, weight)`.
+    -   Write `tidyselect` helpers: `everything()`, `starts_with()`,
+        `contains()`, `ends_with()`
+    -   Use a function wrapped in `where()`: `where(is.numeric)`,
+        `where(is.character)`
+2.  `.fns`: The function to use on the `.cols`.
+    -   A bare function (`mean`) applies it to each column and returns
+        the output, with the column name unchanged.
+    -   A list with bare functions (`list(mean, sd)`) applies each
+        function to each column and returns the output with the column
+        name appended with a number (e.g. `cortisol_norm_1`).
+    -   A named list with bare functions
+        (`list(average = mean, stddev = sd)`) does the same as above but
+        instead returns an output with the column names appended with
+        the name given to the function in the list (e.g.
+        `cortisol_norm_average`).
+    -   A function passed with `~` and `.x`, like in `map()`. For
+        instance, `across(c(age, weight), ~ mean(.x, na.rm = TRUE))` is
+        used to say "put age and weight, one after the other, in place
+        of where `.x` is located" to calculate the mean for age and the
+        mean for weight.
+3.  `...` argument: Arguments to give to the functions in `.fns`. For
+    instance, `across(age, mean, na.rm = TRUE)` passes the argument to
+    remove missingness `na.rm` into the `mean()` function.
+4.  `.names` argument: Customize the output of the column names. We
+    won't cover this argument.
+:::
 
-```{asis, instructor_details=TRUE}
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
 Go over the first two arguments again, reinforcing what they read.
-```
+:::
 
-Let's try out some examples. To calculate the mean of `cortisol_norm` like we did
-above, we'd do:
+Let's try out some examples. To calculate the mean of `cortisol_norm`
+like we did above, we'd do:
 
 ```{r}
 saliva_df %>% 
@@ -626,17 +663,18 @@ saliva_df %>%
     summarise(across(c(cortisol_norm, melatonin_norm), mean))
 ```
 
-This is nice, but changing the column names so that the function name is added 
-would make reading what the column contents are clearer. That's when we would
-use "named lists", which are lists that look like:
+This is nice, but changing the column names so that the function name is
+added would make reading what the column contents are clearer. That's
+when we would use "named lists", which are lists that look like:
 
-```r
+``` r
 list(item_one_name = ..., item_two_name = ...)
 ```
 
-So, for having a named list with mean inside `across()`, it would look like:
+So, for having a named list with mean inside `across()`, it would look
+like:
 
-```r
+``` r
 list(mean = mean)
 # or
 list(average = mean)
@@ -653,43 +691,45 @@ names(list(ave = mean))
 ```
 
 Let's stick with `list(mean = mean)`:
-    
+
 ```{r}
 saliva_df %>% 
     summarise(across(cortisol_norm, list(mean = mean)))
 ```
-    
-If we wanted to do that for all numeric columns and also calculate `sd()`:
+
+If we wanted to do that for all numeric columns and also calculate
+`sd()`:
 
 ```{r}
 saliva_df %>% 
     summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
 ```
 
-We can use these concepts and code to process the other longer datasets, like
-`RR.csv`, in a way that makes it more meaningful to eventually merge (also
-called "join") them with the smaller datasets like `user_info.csv` or
-`saliva.csv`. Let's work with the `RR.csv` dataset to eventually join it with
-the others.
+We can use these concepts and code to process the other longer datasets,
+like `RR.csv`, in a way that makes it more meaningful to eventually
+merge (also called "join") them with the smaller datasets like
+`user_info.csv` or `saliva.csv`. Let's work with the `RR.csv` dataset to
+eventually join it with the others.
 
 ## Summarizing long data like the RR dataset
 
-With the RR dataset, each participant had almost 100,000 data points recorded
-over two days of collection. So if we want to join with the other datasets,
-we need to calculate summary measures by at least `file_path_id` and also preferably
-by `day` as well. In this case, we need to `group_by()` these two variables
-before summarising that lets us use the split-apply-combine technique. Let's
-first summarise by taking the mean of `ibi_s` (which is the inter-beat interval
-in seconds):
+With the RR dataset, each participant had almost 100,000 data points
+recorded over two days of collection. So if we want to join with the
+other datasets, we need to calculate summary measures by at least
+`file_path_id` and also preferably by `day` as well. In this case, we
+need to `group_by()` these two variables before summarising that lets us
+use the split-apply-combine technique. Let's first summarise by taking
+the mean of `ibi_s` (which is the inter-beat interval in seconds):
 
-```{r rr-summarised, eval=FALSE}
+``` r
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean)))
 ```
 
-```{r rr-summarised-for-book, echo=FALSE}
+```{r admin-rr-summarised-for-book}
+#| echo: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df %>% 
     group_by(file_path_id, day) %>% 
@@ -697,58 +737,66 @@ rr_df %>%
     trim_filepath_for_book()
 ```
 
-While there are no missing values here, let's add the argument `na.rm = TRUE`
-just in case.
+While there are no missing values here, let's add the argument
+`na.rm = TRUE` just in case.
 
-```{r rr-summarise-na-rm, eval=FALSE}
+``` r
 rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean), na.rm = TRUE))
 ```
 
-```{r rr-summarise-na-rm-for-book, echo=FALSE}
+```{r admin-rr-summarise-na-rm-for-book}
+#| echo: false
 rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean), na.rm = TRUE)) %>% 
     trim_filepath_for_book()
 ```
 
-You might notice a message (depending on the version of dplyr you have):
+You might notice a message (depending on the version of `{dplyr}` you
+have):
 
-```
+```         
 `summarise()` regrouping output by 'file_path_id' (override with `.groups` argument)
 ```
 
-**Take 5 min to read this section over before we continue**.
-This message talks about regrouping, and overriding based on the `.groups`
-argument. If we look in the help `?summarise`, at the `.groups` argument, we see that
-this argument is currently "experimental". At the bottom there is a message about:
+::: callout-note
+## Reading task: \~5 minutes
+
+This message talks about regrouping, and overriding based on the
+`.groups` argument. If we look in the help `?summarise`, at the
+`.groups` argument, we see that this argument is currently
+"experimental". At the bottom there is a message about:
 
 > In addition, a message informs you of that choice, unless the option
-"dplyr.summarise.inform" is set to FALSE, or when summarise() is called from a
-function in a package.
+> "dplyr.summarise.inform" is set to FALSE, or when summarise() is
+> called from a function in a package.
 
 So how would be go about removing this message? By putting the
-"dplyr.summarise.inform" in the `options()` function. So, go to the `setup` code
-chunk at the top of the document and add this code to the top:
+"dplyr.summarise.inform" in the `options()` function. So, go to the
+`setup` code chunk at the top of the document and add this code to the
+top:
 
 ```{r}
 options(dplyr.summarise.inform = FALSE)
 ```
 
-You will now no longer get the message. 
-**Please stop reading and we will continue together**.
+You will now no longer get the message.
+:::
 
-Let's also add standard deviation as another measure from the RR datasets:
+Let's also add standard deviation as another measure from the RR
+datasets:
 
-```{r rr-summarise-as-object, eval=FALSE}
+``` r
 summarised_rr_df <- rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
 summarised_rr_df
 ```
 
-```{r rr-summarise-as-object-for-book, echo=FALSE}
+```{r admin-rr-summarise-as-object-for-book}
+#| echo: false
 summarised_rr_df <- rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
@@ -756,10 +804,10 @@ summarised_rr_df %>%
     trim_filepath_for_book()
 ```
 
-Whenever you are finished with a grouping effect, it's good practice to end 
-the `group_by()` with `ungroup()`. Let's add it to the end:
+Whenever you are finished with a grouping effect, it's good practice to
+end the `group_by()` with `ungroup()`. Let's add it to the end:
 
-```{r rr-summarise-ungroup, eval=FALSE}
+``` r
 summarised_rr_df <- rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
@@ -767,7 +815,8 @@ summarised_rr_df <- rr_df %>%
 summarised_rr_df
 ```
 
-```{r rr-summarise-ungroup-for-book, echo=FALSE}
+```{r rr-summarise-ungroup-for-book}
+#| echo: false
 summarised_rr_df <- rr_df %>% 
     group_by(file_path_id, day) %>% 
     summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
@@ -776,41 +825,53 @@ summarised_rr_df %>%
     trim_filepath_for_book()
 ```
 
-Ungrouping the data with `ungroup()` does not provide any visual indication of
-what is happening. However, in the background, it removes certain metadata that
-the `group_by()` function added.
+Ungrouping the data with `ungroup()` does not provide any visual
+indication of what is happening. However, in the background, it removes
+certain metadata that the `group_by()` function added.
 
-Before continuing, let's knit the R Markdown document to confirm that everything
-runs as it should. If the knitting works, then switch to the Git interface and
-**add and commit** the changes so far.
+Before continuing, let's knit the Quarto / R Markdown document with
+{{< var keybind.render >}} to confirm that everything runs as it should.
+If the knitting works, then switch to the Git interface and **add and
+commit** the changes so far with {{< var keybind.git >}}.
 
 ## Exercise: Summarise the Actigraph data
 
-Time: 15 min
+> Time: 15 minutes.
 
-Like with the `RR.csv` dataset, let's process the `Actigraph.csv` dataset so 
-that it makes it easier to join with the other datasets later.
+Like with the `RR.csv` dataset, let's process the `Actigraph.csv`
+dataset so that it makes it easier to join with the other datasets
+later.
 
-1. Like usual, create a new Markdown header called e.g. `## Exercise: Summarise 
-Actigraph` and insert a new code chunk below that.
-2. Import all the Actigraph data files using the `import_multiple_files()` function
-you created previously. Name the new data frame `actigraph_df`.
-3. Look into the [Data Description][mmash-site] to find out what each column 
-is for.
-4. Based on the documentation, which variables would you be most interested in
-analyzing more?
-5. Decide which summary measure(s) you think may be most interesting for you
-(e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`, `var()`).
-6. Use `group_by()` of `file_path_id` and `day`, then use `summarise()` with
-`across()` to summarise the variables you are interested in (from item 4 above)
-with the summary functions you chose.
-Assign the newly summarised data frame to a new data frame and call it
-`summarised_actigraph_df`.
-7. End the grouping effect with `ungroup()`.
-8. Knit the `doc/learning.qmd` document to make sure everything works.
-9. **Add and commit** the changes you've made into the Git history.
+1.  Like usual, create a new Markdown header called e.g.
+    `## Exercise: Summarise  Actigraph` and insert a new code chunk
+    below that with {{< var keybind.chunk >}}.
+2.  Import all the Actigraph data files using the
+    `import_multiple_files()` function you created previously. Name the
+    new data frame `actigraph_df`.
+3.  Look into the [Data
+    Description](https://physionet.org/content/mmash/1.0.0/) to find out
+    what each column is for.
+4.  Based on the documentation, which variables would you be most
+    interested in analyzing more?
+5.  Decide which summary measure(s) you think may be most interesting
+    for you (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`,
+    `var()`).
+6.  Use `group_by()` of `file_path_id` and `day`, then use `summarise()`
+    with `across()` to summarise the variables you are interested in
+    (from item 4 above) with the summary functions you chose. Assign the
+    newly summarised data frame to a new data frame and call it
+    `summarised_actigraph_df`.
+7.  End the grouping effect with `ungroup()`.
+8.  Knit the `doc/learning.qmd` document with {{< var keybind.render >}}
+    to make sure everything works.
+9.  **Add and commit** the changes you've made into the Git history with
+    {{< var keybind.git >}}.
 
-```{r solution-summarise-actigraph, results='hide', solution=TRUE}
+```{r solution-summarise-actigraph}
+#| eval: true
+#| output: false
+#| code-fold: true
+#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_actigraph_df <- actigraph_df %>% 
     group_by(file_path_id, day) %>% 
@@ -821,12 +882,12 @@ summarised_actigraph_df <- actigraph_df %>%
 
 ## Cleaning up and adding to the processing script
 
-**We'll do this all together**.
-We've tested out, imported, and processed two new datasets, the RR and the
-Actigraph datasets. First, in the R Markdown document, cut the code that we used
-to import and process the `rr_df` and `actigraph_df` data. Then open up the
-`data-raw/mmash.R` file and paste the cut code into the bottom of the script.
-It should look something like this:
+**We'll do this all together**. We've tested out, imported, and
+processed two new datasets, the RR and the Actigraph datasets. First, in
+the R Markdown / Quarto document, cut the code that we used to import
+and process the `rr_df` and `actigraph_df` data. Then open up the
+`data-raw/mmash.R` file and paste the cut code into the bottom of the
+script. It should look something like this:
 
 ```{r add-import-functions-to-data-raw-script, eval=FALSE}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
@@ -842,23 +903,23 @@ summarised_rr_df <- rr_df %>%
 # Code pasted here that was made from the above exercise
 ```
 
-Next, go to the R Markdown document and again delete **everything** below the
-`setup` code chunk. After it has been deleted, add and commit the changes to the
-Git history.
+Next, go to the R Markdown / Quarto document and again delete
+**everything** below the `setup` code chunk. After it has been deleted,
+add and commit the changes to the Git history with
+{{< var keybind.git >}}.
 
 ## Summary
 
-```{asis, instructor_details=TRUE}
-Quickly cover this before finishing the session and when starting the next session.
-```
-
-- R is a functional programming language: 
-    - It uses functions that take an input, do an action, and give an output
-    - It uses vectorisation that apply a function to multiple items (in a vector)
-    all at once rather than using loops
-    - It uses functionals that allow functions to use other functions as input
-- Use the purrr package and its function `map()` when you want to repeat a function
-on multiple items at once
-- Use `group_by()`, `summarise()`, and `across()` followed by `ungroup()` to use
-the split-apply-combine technique when needing to do an action on groups within
-the data (e.g. calculate the mean age between education groups)
+-   R is a functional programming language:
+    -   It uses functions that take an input, do an action, and give an
+        output.
+    -   It uses vectorisation that apply a function to multiple items
+        (in a vector) all at once rather than using loops.
+    -   It uses functionals that allow functions to use other functions
+        as input.
+-   Use the `{purrr}` package and its function `map()` when you want to
+    repeat a function on multiple items at once.
+-   Use `group_by()`, `summarise()`, and `across()` followed by
+    `ungroup()` to use the split-apply-combine technique when needing to
+    do an action on groups within the data (e.g. calculate the mean age
+    between education groups).
