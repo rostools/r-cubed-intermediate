@@ -39,6 +39,7 @@ book:
   appendices:
     - appendix/social.qmd
     - appendix/for-instructors.qmd
+    - appendix/extras.qmd
     - LICENSE.md
     - appendix/references.qmd
   page-footer:
