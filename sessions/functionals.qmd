@@ -923,3 +923,8 @@ add and commit the changes to the Git history with
     `ungroup()` to use the split-apply-combine technique when needing to
     do an action on groups within the data (e.g. calculate the mean age
     between education groups).
+
+```{r store-session-code}
+#| include: false
+save.image(here::here("_temp/functionals.RData"))
+```
