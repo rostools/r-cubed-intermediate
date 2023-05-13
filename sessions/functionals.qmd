@@ -889,7 +889,8 @@ and process the `rr_df` and `actigraph_df` data. Then open up the
 `data-raw/mmash.R` file and paste the cut code into the bottom of the
 script. It should look something like this:
 
-```{r add-import-functions-to-data-raw-script, eval=FALSE}
+```{r add-import-functions-to-data-raw-script}
+#| eval: false
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 rr_df <- import_multiple_files("RR.csv", import_rr)
