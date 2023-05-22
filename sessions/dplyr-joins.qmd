@@ -144,30 +144,42 @@ mutate, and about the stringr function.
 #| eval: false
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 # Note: your file paths and data may look slightly different.
-user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id,
-                                 "user_[1-9][0-9]?"),
-           .before = file_path_id)
+user_info_df %>%
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "user_[1-9][0-9]?"
+    ),
+    .before = file_path_id
+  )
 ```
 
 ```{r extract-user-id-eval}
 #| echo: false
-user_info_df %>% 
-    trim_filepath_for_book() %>% 
-    mutate(user_id = str_extract(file_path_id, 
-                                 "user_[1-9][0-9]?"),
-           .before = file_path_id)
+user_info_df %>%
+  trim_filepath_for_book() %>%
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "user_[1-9][0-9]?"
+    ),
+    .before = file_path_id
+  )
 ```
 
 Since we don't need the `file_path_id` column anymore, let's drop it
 using `select()` and `-`.
 
 ```{r drop-file-path-id}
-user_info_df %>% 
-    mutate(user_id = str_extract(file_path_id, 
-                                 "user_[1-9][0-9]?"),
-           .before = file_path_id) %>% 
-    select(-file_path_id)
+user_info_df %>%
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "user_[1-9][0-9]?"
+    ),
+    .before = file_path_id
+  ) %>%
+  select(-file_path_id)
 ```
 
 ## Exercise: Convert ID extractor code into a function
@@ -232,12 +244,16 @@ extract_user_id <- ___(___) {
 #' @return A data.frame/tibble.
 #'
 extract_user_id <- function(imported_data) {
-    extracted_id <- imported_data %>% 
-        dplyr::mutate(user_id = stringr::str_extract(file_path_id, 
-                                                     "user_[0-9][0-9]?"),
-                      .before = file_path_id) %>% 
-        dplyr::select(-file_path_id)
-    return(extracted_id)
+  extracted_id <- imported_data %>%
+    dplyr::mutate(
+      user_id = stringr::str_extract(
+        file_path_id,
+        "user_[0-9][0-9]?"
+      ),
+      .before = file_path_id
+    ) %>%
+    dplyr::select(-file_path_id)
+  return(extracted_id)
 }
 
 # This tests that it works:
@@ -256,14 +272,16 @@ function. The code should look something like:
 
 ```{r add-extract-user-to-import}
 import_multiple_files <- function(file_pattern, import_function) {
-    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-                             regexp = file_pattern,
-                             recurse = TRUE)
-    
-    combined_data <- purrr::map_dfr(data_files, import_function,
-                                    .id = "file_path_id") %>% 
-        extract_user_id() # Add the function here.
-    return(combined_data)
+  data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+    regexp = file_pattern,
+    recurse = TRUE
+  )
+
+  combined_data <- purrr::map_dfr(data_files, import_function,
+    .id = "file_path_id"
+  ) %>%
+    extract_user_id() # Add the function here.
+  return(combined_data)
 }
 ```
 
@@ -284,14 +302,14 @@ As well as adding the `summarised_rr_df` and `summarised_actigraph_df`
 to use `user_id` instead of `file_path_id`:
 
 ```{r}
-summarised_rr_df <- rr_df %>% 
-    group_by(user_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+summarised_rr_df <- rr_df %>%
+  group_by(user_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
 
-summarised_actigraph_df <- actigraph_df %>% 
-    group_by(user_id, day) %>% 
-    # These statistics will probably be different for you
-    summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
+summarised_actigraph_df <- actigraph_df %>%
+  group_by(user_id, day) %>%
+  # These statistics will probably be different for you
+  summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
 ```
 
 Let's render the `doc/learning.qmd` document using
@@ -435,10 +453,10 @@ like:
 ```{r}
 #| eval: false
 case_when(
-    variable1 == condition1 ~ output,
-    variable2 == condition2 ~ output,
-    # (Optional) Otherwise
-    TRUE ~ final_output
+  variable1 == condition1 ~ output,
+  variable2 == condition2 ~ output,
+  # (Optional) Otherwise
+  TRUE ~ final_output
 )
 ```
 
@@ -452,10 +470,10 @@ used then by default, the final output would be a missing value. A
 ```{r}
 #| eval: false
 case_when(
-    age > 20 ~ "old",
-    age <= 20 ~ "young",
-    # For final condition
-    TRUE ~ "unborn!"
+  age > 20 ~ "old",
+  age <= 20 ~ "young",
+  # For final condition
+  TRUE ~ "unborn!"
 )
 ```
 
@@ -465,10 +483,10 @@ the appropriate `NA` value:
 ```{r}
 #| eval: false
 case_when(
-    age > 20 ~ "old",
-    age <= 20 ~ NA_character_,
-    # For final condition
-    TRUE ~ "unborn!"
+  age > 20 ~ "old",
+  age <= 20 ~ NA_character_,
+  # For final condition
+  TRUE ~ "unborn!"
 )
 ```
 
@@ -497,11 +515,11 @@ Assuming the final output is `NA`, in a pipeline this would look like
 how you normally would use `mutate()`:
 
 ```{r}
-user_info_df %>% 
-    mutate(age_category = case_when(
-        age > 20 ~ "old",
-        age <= 20 ~ "young"
-    ))
+user_info_df %>%
+  mutate(age_category = case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ "young"
+  ))
 ```
 :::
 
@@ -517,11 +535,11 @@ will use `NA_real_` because the other `day` columns are numeric, not
 integer.)
 
 ```{r}
-saliva_with_day_df <- saliva_df %>% 
-    mutate(day = case_when(
-        samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2
-    ))
+saliva_with_day_df <- saliva_df %>%
+  mutate(day = case_when(
+    samples == "before sleep" ~ 1,
+    samples == "wake up" ~ 2
+  ))
 saliva_with_day_df
 ```
 
@@ -563,14 +581,14 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 
 # Unzip
-# unzip(here("data-raw/mmash-data.zip"), 
+# unzip(here("data-raw/mmash-data.zip"),
 #       exdir = here("data-raw"),
 #       junkpaths = TRUE)
 # unzip(here("data-raw/MMASH.zip"),
 #       exdir = here("data-raw"))
 
 # Remove/tidy up left over files
-# file_delete(here(c("data-raw/MMASH.zip", 
+# file_delete(here(c("data-raw/MMASH.zip",
 #                    "data-raw/SHA256SUMS.txt",
 #                    "data-raw/LICENSE.txt")))
 # file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
@@ -583,21 +601,21 @@ datasets together with `reduce()` and paste it at the bottom of the
 `mmash`, like this:
 
 ```{r data-raw-mmash-to-final}
-saliva_with_day_df <- saliva_df %>% 
-    mutate(day = case_when(
-        samples == "before sleep" ~ 1,
-        samples == "wake up" ~ 2,
-        TRUE ~ NA_real_
-    ))
+saliva_with_day_df <- saliva_df %>%
+  mutate(day = case_when(
+    samples == "before sleep" ~ 1,
+    samples == "wake up" ~ 2,
+    TRUE ~ NA_real_
+  ))
 
 mmash <- reduce(
-    list(
-        user_info_df,
-        saliva_with_day_df,
-        summarised_rr_df,
-        summarised_actigraph_df
-    ),
-    full_join
+  list(
+    user_info_df,
+    saliva_with_day_df,
+    summarised_rr_df,
+    summarised_actigraph_df
+  ),
+  full_join
 )
 ```
 
@@ -657,4 +675,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/dplyr-join.RData"))
 ```
-

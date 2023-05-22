@@ -97,7 +97,7 @@ total_sum <- 0
 # a vector
 values <- 1:10
 for (value in values) {
-    total_sum <- value + total_sum
+  total_sum <- value + total_sum
 }
 total_sum
 ```
@@ -155,8 +155,8 @@ Or as a loop:
 
 ```{r paste-loop}
 for (num in 1:5) {
-    sec_passed <- paste(num, "seconds have passed")
-    print(sec_passed)
+  sec_passed <- paste(num, "seconds have passed")
+  print(sec_passed)
 }
 ```
 
@@ -183,7 +183,7 @@ used to define the x-axis mapping for a graph). Here is the same example
 as above, now using the `~` shortcut:
 
 ```{r}
-map(1:5, ~paste(.x, "seconds have passed"))
+map(1:5, ~ paste(.x, "seconds have passed"))
 ```
 
 This is the basics of using functionals. Functions, vectorization, and
@@ -223,9 +223,10 @@ or also `regex`) to find the pattern, and `recurse` to look in all
 subfolders. We'll cover regular expressions more in the next session.
 
 ```{r list-user-info-files}
-user_info_files <- dir_ls(here("data-raw/mmash/"), 
-                          regexp = "user_info.csv", 
-                          recurse = TRUE)
+user_info_files <- dir_ls(here("data-raw/mmash/"),
+  regexp = "user_info.csv",
+  recurse = TRUE
+)
 ```
 
 Then let's see what the output looks like. For the website, we are only
@@ -294,7 +295,8 @@ called `file_path_id`.
 
 ```{r}
 user_info_df <- map_dfr(user_info_files, import_user_info,
-                        .id = "file_path_id")
+  .id = "file_path_id"
+)
 ```
 
 Your `file_path_id` variable will look different. Don't worry, we're
@@ -306,8 +308,8 @@ user_info_df
 
 ```{r admin-show-data-for-book}
 #| echo:false
-user_info_df %>% 
-    trim_filepath_for_book()
+user_info_df %>%
+  trim_filepath_for_book()
 ```
 
 Now that we have this working, let's **add and commit** the changes to
@@ -406,13 +408,15 @@ ___ <- ___(___, ___) {
 #' @return A single data frame/tibble.
 #'
 import_multiple_files <- function(file_pattern, import_function) {
-    data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-                             regexp = file_pattern,
-                             recurse = TRUE)
-    
-    combined_data <- purrr::map_dfr(data_files, import_function,
-                                    .id = "file_path_id")
-    return(combined_data)
+  data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
+    regexp = file_pattern,
+    recurse = TRUE
+  )
+
+  combined_data <- purrr::map_dfr(data_files, import_function,
+    .id = "file_path_id"
+  )
+  return(combined_data)
 }
 
 # Test on saliva in the Console
@@ -539,8 +543,8 @@ quotes around the column name). For instance, to select only the `age`
 column, you would type out:
 
 ```{r}
-user_info_df %>% 
-    select(age)
+user_info_df %>%
+  select(age)
 ```
 
 But many `{dplyr}` verbs can also take functions as input. When you
@@ -553,20 +557,20 @@ helper functions are listed in @tbl-tidyselect-helpers.
 #| echo: false
 #| tbl-cap: "Common tidyselect helper functions and some of their use cases."
 tibble::tribble(
-    ~'What it selects', ~Example, ~Function,
-    'Select variables where a function returns TRUE', 'Select variables that have data as character (`is.character`)', '`where()`',
-    'Select all variables', 'Select all variables in `user_info_df`', '`everything()`',
-    'Select variables that contain the matching string', 'Select variables that contain the string "user_info"', '`contains()`',
-    'Select variables that ends with string', 'Select all variables that end with "date"', '`ends_with()`'
-    ) %>% 
-    knitr::kable()
+  ~"What it selects", ~Example, ~Function,
+  "Select variables where a function returns TRUE", "Select variables that have data as character (`is.character`)", "`where()`",
+  "Select all variables", "Select all variables in `user_info_df`", "`everything()`",
+  "Select variables that contain the matching string", 'Select variables that contain the string "user_info"', "`contains()`",
+  "Select variables that ends with string", 'Select all variables that end with "date"', "`ends_with()`"
+) %>%
+  knitr::kable()
 ```
 
 Let's select columns that are numeric:
 
 ```{r}
-user_info_df %>% 
-    select(where(is.numeric))
+user_info_df %>%
+  select(where(is.numeric))
 ```
 
 Or, only character columns:
@@ -578,9 +582,9 @@ user_info_df %>%
 
 ```{r admin-select-where-for-book}
 #| echo: false
-user_info_df %>% 
-    select(where(is.character)) %>% 
-    trim_filepath_for_book()
+user_info_df %>%
+  select(where(is.character)) %>%
+  trim_filepath_for_book()
 ```
 
 Likewise, with functions like `summarise()`, if you want to for example
@@ -588,17 +592,19 @@ calculate the mean of cortisol in the saliva dataset, you would usually
 type out:
 
 ```{r}
-saliva_df %>% 
-    summarise(cortisol_mean = mean(cortisol_norm))
+saliva_df %>%
+  summarise(cortisol_mean = mean(cortisol_norm))
 ```
 
 If you want to calculate the mean of multiple columns, you might think
 you'd have to do something like:
 
 ```{r}
-saliva_df %>% 
-    summarise(cortisol_mean = mean(cortisol_norm),
-              melatonin_mean = mean(melatonin_norm))
+saliva_df %>%
+  summarise(
+    cortisol_mean = mean(cortisol_norm),
+    melatonin_mean = mean(melatonin_norm)
+  )
 ```
 
 But instead, there is the `across()` function that works like `map()`
@@ -652,15 +658,15 @@ Let's try out some examples. To calculate the mean of `cortisol_norm`
 like we did above, we'd do:
 
 ```{r}
-saliva_df %>% 
-    summarise(across(cortisol_norm, mean))
+saliva_df %>%
+  summarise(across(cortisol_norm, mean))
 ```
 
 To calculate the mean of another column:
 
 ```{r}
-saliva_df %>% 
-    summarise(across(c(cortisol_norm, melatonin_norm), mean))
+saliva_df %>%
+  summarise(across(c(cortisol_norm, melatonin_norm), mean))
 ```
 
 This is nice, but changing the column names so that the function name is
@@ -693,16 +699,16 @@ names(list(ave = mean))
 Let's stick with `list(mean = mean)`:
 
 ```{r}
-saliva_df %>% 
-    summarise(across(cortisol_norm, list(mean = mean)))
+saliva_df %>%
+  summarise(across(cortisol_norm, list(mean = mean)))
 ```
 
 If we wanted to do that for all numeric columns and also calculate
 `sd()`:
 
 ```{r}
-saliva_df %>% 
-    summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
+saliva_df %>%
+  summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
 ```
 
 We can use these concepts and code to process the other longer datasets,
@@ -731,10 +737,10 @@ rr_df %>%
 ```{r admin-rr-summarised-for-book}
 #| echo: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
-rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean))) %>% 
-    trim_filepath_for_book()
+rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean))) %>%
+  trim_filepath_for_book()
 ```
 
 While there are no missing values here, let's add the argument
@@ -748,10 +754,10 @@ rr_df %>%
 
 ```{r admin-rr-summarise-na-rm-for-book}
 #| echo: false
-rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean), na.rm = TRUE)) %>% 
-    trim_filepath_for_book()
+rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean), na.rm = TRUE)) %>%
+  trim_filepath_for_book()
 ```
 
 You might notice a message (depending on the version of `{dplyr}` you
@@ -797,11 +803,11 @@ summarised_rr_df
 
 ```{r admin-rr-summarise-as-object-for-book}
 #| echo: false
-summarised_rr_df <- rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
-summarised_rr_df %>% 
-    trim_filepath_for_book()
+summarised_rr_df <- rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+summarised_rr_df %>%
+  trim_filepath_for_book()
 ```
 
 Whenever you are finished with a grouping effect, it's good practice to
@@ -817,12 +823,12 @@ summarised_rr_df
 
 ```{r rr-summarise-ungroup-for-book}
 #| echo: false
-summarised_rr_df <- rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
-    ungroup()
-summarised_rr_df %>% 
-    trim_filepath_for_book()
+summarised_rr_df <- rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>%
+  ungroup()
+summarised_rr_df %>%
+  trim_filepath_for_book()
 ```
 
 Ungrouping the data with `ungroup()` does not provide any visual
@@ -873,11 +879,11 @@ later.
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
-summarised_actigraph_df <- actigraph_df %>% 
-    group_by(file_path_id, day) %>% 
-    # These statistics will probably be different for you
-    summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
-    ungroup()
+summarised_actigraph_df <- actigraph_df %>%
+  group_by(file_path_id, day) %>%
+  # These statistics will probably be different for you
+  summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE)) %>%
+  ungroup()
 ```
 
 ## Cleaning up and adding to the processing script
@@ -896,10 +902,10 @@ saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 rr_df <- import_multiple_files("RR.csv", import_rr)
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 
-summarised_rr_df <- rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
-    ungroup()
+summarised_rr_df <- rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>%
+  ungroup()
 
 # Code pasted here that was made from the above exercise
 ```
