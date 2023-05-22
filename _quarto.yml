@@ -34,6 +34,7 @@ book:
       - sessions/importing.qmd
       - sessions/functions.qmd
       - sessions/functionals.qmd
+      - sessions/dplyr-joins.qmd
     #   - sessions/lesson.qmd
     #   - sessions/what-next.qmd
   appendices:
