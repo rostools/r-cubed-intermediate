@@ -533,6 +533,14 @@ Let's get into some more advanced features of `{dplyr}` functions that
 work as functionals. Before we continue, re-run the code for getting
 `user_info_df` since you had restarted the R session previously.
 
+Since we're going to use `{dplyr}`, we need to add it as a dependency by
+typing this in the Console:
+
+```{r}
+#| eval: false
+usethis::use_package("dplyr")
+```
+
 There are many "verbs" in `{dplyr}`, like `select()`, `rename()`,
 `mutate()`, `summarise()`, and `group_by()` (covered in more detail in
 the [Data Management and
