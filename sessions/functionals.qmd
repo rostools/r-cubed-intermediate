@@ -583,9 +583,10 @@ user_info_df %>%
 
 Or, only character columns:
 
-``` r
+```{r}
+#| eval: false
 user_info_df %>% 
-    select(where(is.character))
+  select(where(is.character))
 ```
 
 ```{r admin-select-where-for-book}
@@ -943,3 +944,4 @@ add and commit the changes to the Git history with
 #| include: false
 save.image(here::here("_temp/functionals.RData"))
 ```
+
