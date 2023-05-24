@@ -523,64 +523,9 @@ Then render the document with {{< var keybind.render >}} and check out
 the HTML file. So pretty! :grin: Well, there's lots of things to fix up,
 but its a good starting place.
 
-## General workflow up to this point {#general-workflow}
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-You can go over this point verbally, reiterating what they've learned so
-far.
-:::
-
-You now have some skills and tools to allow you to reproducibly import,
-process, clean, join, and eventually analyze your datasets. Listed below
-are the general workflows we've covered and that you can use as a
-guideline to complete the following (optional) exercises and group work.
-
--   Import with the `vroom()`, and optionally use `spec()` to `vroom()`
-    again to select specific variables.
--   Convert importing into a function in a Quarto / R Markdown document,
-    move to the `R/function.R` script, restarting R, and `source()`.
--   Test that joining datasets into a final form works properly while in
-    a Quarto / R Markdown document, then cut and paste the code into a
-    data processing R script in the `data-raw/` folder (alternatively,
-    you can directly write and test code while in the `data-raw/` R
-    script).
--   Restart R and generate the `.rda` dataset in the `data/` folder by
-    sourcing the `data-raw/` R script.
--   Restart R, load the new dataset with `load()` and put the loading
-    code into a Quarto / R Markdown document.
--   Add any additional cleaning code to the data processing R script in
-    `data-raw/` and update the `.rda` dataset in `data/` whenever you
-    encounter problems in the dataset.
--   Write R in code chunks in a Quarto / R Markdown document to further
-    analyze your data and check reproducibility by often rendering to
-    HTML.
-    -   Part of this workflow is to also write R code to output in a way
-        that looks nice in the HTML (or Word) formats by mostly creating
-        tables or figures of the R output.
--   Use Git often by adding and committing into the history so you never
-    lose stuff and can keep track of changes to your files.
-
-## Exercise: Discuss how you might use this workflow in your own work
-
-> Time: 15 minutes.
-
-We've covered quite a bit in this course and you've (hopefully) learned
-a lot. Before moving on to other exercises, discuss with your group how
-you might use this workflow (or parts of it) in your own work. What are
-some ways you might use these workflows and techniques? What challenges
-do you see might come up by using these skills and tools? Groups will
-briefly share what they've discussed before moving on to the other
-exercises. (side note: this exercise is partly to help reinforce what
-you've learned and also partly selfish since we'd love to hear how you
-might use these tools and some challenges that might come up by using
-them.)
-
 ## Summary
 
 -   Data is usually structured to varying degrees as wide or long
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-
