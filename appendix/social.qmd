@@ -2,6 +2,42 @@
 
 {{< include ../includes/_wip.qmd >}}
 
+As you get more experienced in coding, the role of your network becomes
+increasingly important both for continued learning, but also for
+collaboration with others skilled in R. So, part of the course is also
+about getting to know others!
+
+So while we have formal social activities, try to seek out someone you
+haven't met yet or who you haven't chatted with as much during the lunch
+breaks.
+
 ## Day 1 {#social-day-1 .unnumbered}
 
+After lunch we will do a rapid "meet-and-greet" activity. Depending on
+the space available, we'll form two parallel lines, each person facing
+across with another person, with some space on the sides of each person
+so you can hear what each other is saying. A timer will be set for 4
+minutes, and after it goes off, move *two (2)* to the the right. People
+on the ends of each line will move to the other side, to face the person
+who they used to be standing beside. Each person has 2 minutes to
+introduce themselves (name only) and to share your thoughts on one of
+these questions.
+
+-   Why are you here and what do you want to learn besides R?
+-   Have you done any courses that teach how to do coding for data
+    processing and cleaning?
+-   How did you hear about this course?
+
 ## Day 2 {#social-day-2 .unnumbered}
+
+After lunch, get in your group and walk outside while discussing these
+topics:
+
+-   Share a positive or exciting experience you had with cleaning,
+    processing, and preparing data for later analysis. It can be recent
+    or in the past, but as long as it was a memorable and positive. What
+    made it positive? Do you try to repeat that experience, or at least
+    the feeling of it?
+-   Share a challenging experience or barriers that you encounter while
+    cleaning, processing, and preparing data. Why was it challenging or
+    had barriers and how could you limit those for for next time?
