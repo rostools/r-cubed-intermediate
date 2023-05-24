@@ -3,8 +3,8 @@ project:
   pre-render:
     - mkdir -p _temp
     # - bash _build-slides.sh
-  post-render:
-    - rm -rf data-raw/mmash
+  # post-render:
+  #   - rm -rf data-raw/mmash
   # resources:
   #   - slides/*.html
   # pre-render:
@@ -35,6 +35,7 @@ book:
       - sessions/functions.qmd
       - sessions/functionals.qmd
       - sessions/dplyr-joins.qmd
+      - sessions/pivot.qmd
     #   - sessions/lesson.qmd
     #   - sessions/what-next.qmd
   appendices:
