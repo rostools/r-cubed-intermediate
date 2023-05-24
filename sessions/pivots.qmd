@@ -98,15 +98,17 @@ data in like this:
 ```{r table-example-wide}
 #| echo: false
 example_wide <- tribble(
-    ~person_id, ~glucose_0, ~glucose_30, ~glucose_60,
-    1, 5.6, 7.8, 4.5,
-    2, 4.7, 9.5, 5.3,
-    3, 5.1, 10.2, 4.2
-) 
+  ~person_id, ~glucose_0, ~glucose_30, ~glucose_60,
+  1, 5.6, 7.8, 4.5,
+  2, 4.7, 9.5, 5.3,
+  3, 5.1, 10.2, 4.2
+)
 
-example_wide %>% 
-    knitr::kable(caption = "Example of a **wide** dataset that is useful for data entry.",
-                 align = "c")
+example_wide %>%
+  knitr::kable(
+    caption = "Example of a **wide** dataset that is useful for data entry.",
+    align = "c"
+  )
 ```
 
 However, when it comes time to analyze the data, this wide form is very
@@ -154,9 +156,9 @@ code:
 
 ```{r pivot-everything-error}
 #| error: true
-mmash %>% 
-    # pivot every column
-    pivot_longer(everything())
+mmash %>%
+  # pivot every column
+  pivot_longer(everything())
 ```
 
 Why the error? We get an error because we are trying to mix data types.
@@ -164,8 +166,8 @@ We can't have character data and number data in the same column. Let's
 pivot only numbers.
 
 ```{r pivot-numeric}
-mmash %>% 
-    pivot_longer(where(is.numeric))
+mmash %>%
+  pivot_longer(where(is.numeric))
 ```
 
 Nice! But not super useful. We can exclude specific columns from
@@ -174,9 +176,9 @@ and `day`. Let's drop the `samples` column before pivoting since `day`
 gives us the same information:
 
 ```{r pivot-longer-example}
-mmash %>% 
-    select(-samples) %>% 
-    pivot_longer(c(-user_id, -day, -gender))
+mmash %>%
+  select(-samples) %>%
+  pivot_longer(c(-user_id, -day, -gender))
 ```
 
 ## Exercise: Summarise your data after pivoting
@@ -211,16 +213,16 @@ mmash %>%
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-mmash %>% 
-    select(-samples) %>% 
-    pivot_longer(c(-user_id, -day, -gender)) %>% 
-    group_by(gender, day, name) %>% 
-    summarise(across(
-        value,
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    ungroup()
+mmash %>%
+  select(-samples) %>%
+  pivot_longer(c(-user_id, -day, -gender)) %>%
+  group_by(gender, day, name) %>%
+  summarise(across(
+    value,
+    list(mean = mean, sd = sd),
+    na.rm = TRUE
+  )) %>%
+  ungroup()
 ```
 
 ## Pivot data to wider form
@@ -277,17 +279,17 @@ between days.
 
 ```{r pivot-wider-from-summarised}
 #| error: true
-mmash %>% 
-    select(-samples) %>% 
-    pivot_longer(c(-user_id, -day, -gender)) %>% 
-    group_by(gender, day, name) %>% 
-    summarise(across(
-        value,
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>%
-    ungroup() %>% 
-    pivot_wider(names_from = day)
+mmash %>%
+  select(-samples) %>%
+  pivot_longer(c(-user_id, -day, -gender)) %>%
+  group_by(gender, day, name) %>%
+  summarise(across(
+    value,
+    list(mean = mean, sd = sd),
+    na.rm = TRUE
+  )) %>%
+  ungroup() %>%
+  pivot_wider(names_from = day)
 ```
 
 Hmm, didn't work. Nothing has been pivoted to wider. That's because we
@@ -298,17 +300,17 @@ works similar to `select()`, we can use `starts_with()` to select the
 columns starting with `"values"`.
 
 ```{r pivot-wider-from-summarised-starts-with}
-mmash %>% 
-    select(-samples) %>% 
-    pivot_longer(c(-user_id, -day, -gender)) %>% 
-    group_by(gender, day, name) %>% 
-    summarise(across(
-        value,
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    ungroup() %>% 
-    pivot_wider(names_from = day, values_from = starts_with("value"))
+mmash %>%
+  select(-samples) %>%
+  pivot_longer(c(-user_id, -day, -gender)) %>%
+  group_by(gender, day, name) %>%
+  summarise(across(
+    value,
+    list(mean = mean, sd = sd),
+    na.rm = TRUE
+  )) %>%
+  ungroup() %>%
+  pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
 Now we have a different problem. There are missing values in both the
@@ -325,18 +327,18 @@ We also don't care about missing `gender` values, so we'll drop them as
 well. Add it in the pipe right before `group_by()`.
 
 ```{r pivot-wider-from-summarised-drop-na}
-mmash %>% 
-    select(-samples) %>% 
-    pivot_longer(c(-user_id, -day, -gender)) %>% 
-    drop_na(day, gender) %>% 
-    group_by(gender, day, name) %>% 
-    summarise(across(
-        value,
-        list(mean = mean, sd = sd), 
-        na.rm = TRUE
-    )) %>% 
-    ungroup() %>% 
-    pivot_wider(names_from = day, values_from = starts_with("value"))
+mmash %>%
+  select(-samples) %>%
+  pivot_longer(c(-user_id, -day, -gender)) %>%
+  drop_na(day, gender) %>%
+  group_by(gender, day, name) %>%
+  summarise(across(
+    value,
+    list(mean = mean, sd = sd),
+    na.rm = TRUE
+  )) %>%
+  ungroup() %>%
+  pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
 ## Exercise: Convert this code into a function
@@ -383,23 +385,26 @@ ___ <- function(___) {
 #' @return A data.frame/tibble.
 #'
 tidy_summarise_by_day <- function(data) {
-    daily_summary <- data %>%
-        dplyr::select(-samples) %>%
-        tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
-        tidyr::drop_na(day, gender) %>%
-        dplyr::group_by(gender, day, name) %>%
-        dplyr::summarise(dplyr::across(value,
-                         list(mean = mean, sd = sd),
-                         na.rm = TRUE)) %>%
-        dplyr::ungroup() %>% 
-        tidyr::pivot_wider(names_from = day, 
-                    values_from = dplyr::starts_with("value"))
-    return(daily_summary)
+  daily_summary <- data %>%
+    dplyr::select(-samples) %>%
+    tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+    tidyr::drop_na(day, gender) %>%
+    dplyr::group_by(gender, day, name) %>%
+    dplyr::summarise(dplyr::across(value,
+      list(mean = mean, sd = sd),
+      na.rm = TRUE
+    )) %>%
+    dplyr::ungroup() %>%
+    tidyr::pivot_wider(
+      names_from = day,
+      values_from = dplyr::starts_with("value")
+    )
+  return(daily_summary)
 }
 
 # Testing that the function works.
-mmash %>% 
-    tidy_summarise_by_day()
+mmash %>%
+  tidy_summarise_by_day()
 ```
 
 ## Extending the function to use other statistics and to be tidier
@@ -430,18 +435,23 @@ that `start_with()` the word `"value"` to 2 digits.
 
 ```{r rounding-summary-function-output}
 tidy_summarise_by_day <- function(data) {
-    data %>%
-        dplyr::select(-samples) %>%
-        tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
-        tidyr::drop_na(day, gender) %>%
-        dplyr::group_by(gender, day, name) %>%
-        dplyr::summarise(dplyr::across(value,
-                         list(mean = mean, sd = sd),
-                         na.rm = TRUE)) %>%
-        dplyr::mutate(dplyr::across(dplyr::starts_with("value"), 
-                                    round, digits = 2)) %>% 
-        tidyr::pivot_wider(names_from = day, 
-                    values_from = dplyr::starts_with("value"))
+  data %>%
+    dplyr::select(-samples) %>%
+    tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+    tidyr::drop_na(day, gender) %>%
+    dplyr::group_by(gender, day, name) %>%
+    dplyr::summarise(dplyr::across(value,
+      list(mean = mean, sd = sd),
+      na.rm = TRUE
+    )) %>%
+    dplyr::mutate(dplyr::across(dplyr::starts_with("value"),
+      round,
+      digits = 2
+    )) %>%
+    tidyr::pivot_wider(
+      names_from = day,
+      values_from = dplyr::starts_with("value")
+    )
 }
 
 # Source, then test out the function in the Console:
@@ -466,20 +476,24 @@ function.
 
 ```{r generalize-summary-function}
 tidy_summarise_by_day <- function(data, summary_fn) {
-    data %>%
-        dplyr::select(-samples) %>%
-        tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
-        tidyr::drop_na(day, gender) %>%
-        dplyr::group_by(gender, day, name) %>%
-        dplyr::summarise(dplyr::across(
-            value,
-            summary_fn,
-            na.rm = TRUE)
-        ) %>%
-        dplyr::mutate(dplyr::across(dplyr::starts_with("value"), 
-                                    round, digits = 2)) %>% 
-        tidyr::pivot_wider(names_from = day, 
-                    values_from = dplyr::starts_with("value"))
+  data %>%
+    dplyr::select(-samples) %>%
+    tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+    tidyr::drop_na(day, gender) %>%
+    dplyr::group_by(gender, day, name) %>%
+    dplyr::summarise(dplyr::across(
+      value,
+      summary_fn,
+      na.rm = TRUE
+    )) %>%
+    dplyr::mutate(dplyr::across(dplyr::starts_with("value"),
+      round,
+      digits = 2
+    )) %>%
+    tidyr::pivot_wider(
+      names_from = day,
+      values_from = dplyr::starts_with("value")
+    )
 }
 
 # Source, then test out the function in the Console:
@@ -490,12 +504,12 @@ Now that it works, let's add some summary statistics to the
 `doc/learning.qmd` file.
 
 ```{r test-tidier-summary}
-mmash %>% 
-    tidy_summarise_by_day(max)
 mmash %>%
-    tidy_summarise_by_day(median)
+  tidy_summarise_by_day(max)
 mmash %>%
-    tidy_summarise_by_day(list(median = median, max = max))
+  tidy_summarise_by_day(median)
+mmash %>%
+  tidy_summarise_by_day(list(median = median, max = max))
 ```
 
 ## Making prettier output in Quarto / R Markdown
@@ -514,9 +528,9 @@ as an actual table. We can do that with `knitr::kable()` (meaning "knitr
 table"). We can also add a table caption with the `caption` argument.
 
 ```{r knitr-table}
-mmash %>% 
-    tidy_summarise_by_day(list(mean = mean, min = min, max = max)) %>% 
-    knitr::kable(caption = "Descriptive statistics of some variables.")
+mmash %>%
+  tidy_summarise_by_day(list(mean = mean, min = min, max = max)) %>%
+  knitr::kable(caption = "Descriptive statistics of some variables.")
 ```
 
 Then render the document with {{< var keybind.render >}} and check out
