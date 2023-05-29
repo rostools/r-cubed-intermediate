@@ -1,5 +1,7 @@
 ---
 search: false
+# Relative to main project
+bibliography: includes/references.bib
 ---
 
 # Welcome to the Intermediate R^3^ course!
