@@ -230,5 +230,22 @@ Then, open up the `README.md` and fix some of the TODO items. After
 cleaning everything up, now we need to use Git to add and commit all the
 current files into the history. Open up the Git interface in RStudio
 with {{< var keybind.git >}} or through the Git button. Write a message
-in the commit textbox saying `Added initial files`. Now we're ready for
-the next session!
+in the commit textbox saying `Added initial files`.
+
+## Styling your files
+
+Before moving to the next session, there's one more "setup" thing to do.
+Since we write code for other humans (including ourselves in the
+future), code should also *look* pretty, clean, and organized. To do
+that, we'll follow a the tidyverse [style
+guide](https://style.tidyverse.org/) and use the package called
+`{styler}`, which automatically fixes code to fit the style guide. With
+`{styler}` you can style multiple files at once, one file at a time, or
+based on code you select and highlight. Throughout the course, we will
+re-style the file were are working on a lot. We'll do that by using the
+Command Palette by typing {{< var keybind.palette >}}, followed by
+typing "style file". The first one that pops up, which should say "Style
+active file", will be the one to select and use. We'll get lots of
+chances to use it as we go through the course. The thing to note is that
+`{styler}` isn't always perfect, so you might need to sometimes manually
+fix code
