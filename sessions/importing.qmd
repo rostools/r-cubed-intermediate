@@ -67,22 +67,23 @@ LearnR3
 2.  Learn about strategies and resources to use when encountering
     problems when importing data (arguably one of the most important
     skills in any coding-type work).
-3.  Practice using Git version control as part of the data analysis
+3.  Understand and apply best practices for importing data quickly.
+4.  Practice using Git version control as part of the data analysis
     workflow.
 
 ## Importing in the raw data
 
 The ultimate goal for the beginning phases of a data analysis project is
-to eventually save a version of the raw data that you can work on. The
-first step to processing data is to import it into R so we can work on
-it. So for now, we'll open up the `doc/learning.qmd` file so we can
-start building and testing out the code. At the bottom of the file,
-create a new header by typing out `## Importing raw data`. Right below
-the header, make a new code chunk with {{< var keybind.chunk >}} and
-call it `setup`. Inside the code chunk, load the `{vroom}` package with
-`library(vroom)` as well as `library(here)`. Since we'll also be using
-the tidyverse package, let's also add `library(tidyverse)`. It should
-look like this:
+to eventually save a version of the raw data that is specific to your
+research questions. The first step to processing data is to import it
+into R so we can work on it. So for now, we'll open up the
+`doc/learning.qmd` file so we can start building and testing out the
+code. At the bottom of the file, create a new header by typing out
+`## Importing raw data`. Right below the header, make a new code chunk
+with {{< var keybind.chunk >}} and call it `setup`. Inside the code
+chunk, load the `{vroom}` package with `library(vroom)` as well as
+`library(here)`. Since we'll also be using the `{tidyverse}` package,
+let's also add `library(tidyverse)`. It should look like this:
 
 ````         
 ```{{r setup}}
@@ -105,7 +106,7 @@ chunk, create a new code chunk right below it using
 What is `{vroom}`? It is a package designed to load in data,
 specifically text-based data files such as CSV. In R there are several
 packages that you can use to load in data and of different types of file
-formats. We won't cover these other packages, but you can use this as a
+formats. We won't cover these other packages, so you can use this as a
 reference for when or if you ever have to load other file types:
 
 -   `{haven}`: For reading (also known as importing or loading) in SAS,
@@ -115,9 +116,14 @@ reference for when or if you ever have to load other file types:
 -   `{googlesheets4}`: For reading in Google Sheets from their cloud
     service.
 -   `{readr}`: Standard package used to load in text-based data files
-    like CSV. This package is included by default within the tidyverse.
+    like CSV. This package is included by default within the
+    `{tidyverse}`. Newer versions of `{readr}` actually use `{vroom}`
+    internally, but we'll still cover `{vroom}` separately in this
+    course.
 -   `utils::read.delim()`: This function comes from the core R package
-    utils and includes other functions like `utils::read.csv()`.
+    utils and includes other functions like `utils::read.csv()` (note
+    the `.` in the name, rather than `_` in the `readr::read_csv()`
+    version).
 -   `data.table::fread()`: From the `{data.table}` package, this
     function is used to load in CSV files.
 
@@ -195,8 +201,6 @@ It says to use a "cols() specification", which is the output of
 `col_types` argument of `vroom()`.
 
 ```{r vroom-with-error}
-#| error: true
-#| warning: true
 user_1_info_data <- vroom(
   user_1_info_file,
   col_types = cols(
@@ -204,15 +208,14 @@ user_1_info_data <- vroom(
     Gender = col_character(),
     Weight = col_double(),
     Height = col_double(),
-    Age = col_double(),
-    .delim = ","
+    Age = col_double()
   )
 )
 ```
 
-Hmm. A warning and an error message. Let's deal with the error message
-first. We copied and pasted, so what's going on? If you recall, the
-`user_info.csv` file has an empty column name. Looking at the [data
+We get a funny message though. We copied and pasted, so what's going on?
+If you recall, the `user_info.csv` file has an empty column name.
+Looking at the [data
 dictionary](https://physionet.org/content/mmash/1.0.0/) it doesn't seem
 there is any reference to this column, so it likely isn't important.
 More than likely, `{vroom}` is complaining about this empty column name
@@ -242,20 +245,18 @@ user_1_info_data <- vroom(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
+    ...1 = col_double(),
     Gender = col_character(),
     Weight = col_double(),
     Height = col_double(),
-    Age = col_double(),
-    .delim = ","
+    Age = col_double()
   )
 )
 ```
 
-Amazing! We did it! :grin:
-
-But... we still have the warning message. You may or may not see this
-message depending on the version of your packages (the most updated
-packages will show this), but you can see it in the code chunk above.
+Hmm, we still have the message. You may or may not see this message
+depending on the version of your packages (the most updated packages
+will show this), but you can see it in the code chunk above.
 
 This is `vroom()` letting you know that a column was renamed because it
 found an empty column with no column name and is letting you know it had
@@ -289,6 +290,7 @@ user_1_info_data <- vroom(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
+    ...1 = col_double(),
     Gender = col_character(),
     Weight = col_double(),
     Height = col_double(),
@@ -314,6 +316,7 @@ user_1_info_data <- vroom(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
+    col_skip(),
     gender = col_character(),
     weight = col_double(),
     height = col_double(),
@@ -331,16 +334,29 @@ data:
 user_1_info_data
 ```
 
-Why might we use `spec()` and `col_types`? Depending on the size of the
-dataset, it could take a long time to load everything, which may not be
-very efficient if you only intend to use some parts of the dataset and
-not all of it. And sometimes, `spec()` incorrectly guesses the column
-types, so using `col_types = cols()` can fix those problems.
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Verbally emphasize that when you read from a larger dataset (that isn't
+your project dataset), its better to *explicitly* select the columns you
+want. It's faster to import and you make it clear from the beginning
+which variables you want.
+:::
+
+Why might we use `spec()` and `col_types`? It's good practice, at least
+when reading from a larger dataset and not your project specific
+dataset, to read *only* the columns you need. Depending on the size of
+the dataset, it could take a long time to load everything, which may not
+be very efficient if you only intend to use some parts of the dataset
+and not all of it. And sometimes, `spec()` incorrectly guesses the
+column types, so using `col_types = cols()` can fix those problems.
 
 If you have a lot of columns in your dataset, then you can make use of
 `col_select` or `cols_only()` to keep only the columns you want. Before
-moving on to the exercise, **add and commit** the changes to the Git
-history through the RStudio Git interface with {{< var keybind.git >}}.
+moving on to the exercise, run `{styler}` with
+{{< var keybind.styler >}}, then **add and commit** the changes to the
+Git history through the RStudio Git interface with
+{{< var keybind.git >}}.
 
 ## Exercise: Import the saliva data {#sec-ex-import-saliva}
 
@@ -356,7 +372,8 @@ data.
 3.  Copy and paste the code template below into the new code chunk.
     Begin replacing the `___` with the correct R functions or other
     information.
-4.  Once you have the code working, use the RStudio Git interface to
+4.  Once you have the code working, run `{styler}` with
+    {{< var keybind.styler >}} and then use the RStudio Git interface to
     **add and commit** the changes to the Git history using
     {{< var keybind.git >}}.
 
@@ -378,7 +395,8 @@ user_1_saliva_data <- vroom(
 ```
 
 ```{r solution-import-the-saliva-data}
-#| eval: false
+#| eval: true
+#| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
@@ -393,6 +411,7 @@ user_1_saliva_data <- vroom(
   user_1_saliva_file,
   col_select = -1,
   col_types = cols(
+    col_skip(),
     samples = col_character(),
     cortisol_norm = col_double(),
     melatonin_norm = col_double()
@@ -435,7 +454,7 @@ spec(user_1_rr_data_prep)
 ```
 
 Like with last time, copy and paste the output into a new use of
-`vroom()`. Remove the `...1` line. Add the `.name_repair` argument with
+`vroom()`. Add the `.name_repair` argument with
 `snakecase::to_snake_case`. Don't forget to also remove the last `,` at
 the end! Make sure to remove the `n_max` argument, since we want to
 import in the whole dataset.
@@ -445,6 +464,7 @@ user_1_rr_data <- vroom(
   user_1_rr_file,
   col_select = -1,
   col_types = cols(
+    col_skip(),
     ibi_s = col_double(),
     day = col_double(),
     # Converts to seconds
@@ -489,13 +509,12 @@ the `Actigraph.csv` file from `user_1/`.
 2.  Read in a max of 100 rows for `n_max` and exclude the first column
     with `col_select = -1`.
 3.  Use `spec()` to output the column specification and paste the
-    results into `col_types()`. Don't forget to remove the
-    `...1 = col_skip()` (or `NA = col_skip()`) line from the `cols()`
-    function.
+    results into `col_types()`.
 4.  Render the Quarto document with {{< var keybind.render >}} to
     regenerate the HTML document.
-5.  If everything works, **add and commit** the new changes to the Git
-    history with {{< var keybind.git >}}
+5.  If everything works, run `{styler}` with {{< var keybind.styler >}}
+    and then **add and commit** the new changes to the Git history with
+    {{< var keybind.git >}}
 
 Use this template as a guide for completing this exercise.
 
@@ -537,6 +556,7 @@ user_1_actigraph_data <- vroom(
   user_1_actigraph_file,
   col_select = -1,
   col_types = cols(
+    col_skip(),
     axis_1 = col_double(),
     axis_2 = col_double(),
     axis_3 = col_double(),
