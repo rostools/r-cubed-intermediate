@@ -18,10 +18,10 @@ untar(
 ```
 
 Here we will cover the second block, "*Workflow*" in
-@fig-diagram-overview-2.
+@fig-overview-workflow.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-2.svg){#fig-diagram-overview-2}
+covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 And your folder and file structure should look like (use
 `fs::dir_tree(recurse = 2)` if you want to check using R):

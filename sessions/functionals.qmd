@@ -12,10 +12,10 @@ source(here("R/build-functions.R"))
 ```
 
 We will continue covering the "*Workflow*" block in
-@fig-diagram-overview-3.
+@fig-overview-workflow.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-3.svg){#fig-diagram-overview-3}
+covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -944,4 +944,3 @@ add and commit the changes to the Git history with
 #| include: false
 save.image(here::here("_temp/functionals.RData"))
 ```
-

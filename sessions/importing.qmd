@@ -25,13 +25,14 @@ usethis::with_project(
 )
 ```
 
-During this session we'll be covering the first block, "*Download raw
-data*" in @fig-diagram-overview-1. You already downloaded and unzipped
-the raw data during the [pre-course](/preamble/pre-course.qmd) tasks and
-here we'll continue the process by now importing it into R.
+During this session we'll be introducing concepts for both the
+"*Download raw data*" block as well as the "*Workflow*" block in
+@fig-overview-download-data. You already downloaded and unzipped the raw
+data during the [pre-course](/preamble/pre-course.qmd) tasks and here
+we'll continue the process by now importing it into R.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-1.svg){#fig-diagram-overview-1}
+covering.](/images/overview-download-data.svg){#fig-overview-download-data}
 
 Right now, your folder and file structure should look like (use
 `fs::dir_tree(recurse = 2)` if you want to check using R):

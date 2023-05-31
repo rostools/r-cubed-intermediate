@@ -11,10 +11,11 @@ source(here("R/build-functions.R"))
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over
-to the third block, "*Create final data*", in @fig-diagram-overview-4.
+to the third block, "*Create project data*", in
+@fig-overview-create-project-data.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-3.svg){#fig-diagram-overview-4}
+covering.](/images/overview-create-project-data.svg){#fig-overview-create-project-data}
 
 ## Learning objectives
 
@@ -675,3 +676,4 @@ next session.
 #| include: false
 save.image(here::here("_temp/dplyr-join.RData"))
 ```
+
