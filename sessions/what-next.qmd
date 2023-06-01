@@ -1,6 +1,23 @@
-# Conclusion {#sec-conclusion}
+# What next? {#sec-final-remarks}
 
-## Summary of workflow {#sec-general-workflow}
+[**What Next slides**](slides/next-steps.html)
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="../slides/what-next.html"></iframe>
+```
+
+</div>
+
+::: {.callout-note collapse="true"}
+## Instructor note
+
+The slides contain speaking notes that you can view by pressing 'S' on
+the keyboard.
+:::
+
+## Quick recap of workflow {#sec-general-workflow}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -38,25 +55,6 @@ guideline to complete the following (optional) exercises and group work.
         tables or figures of the R output.
 -   Use Git often by adding and committing into the history so you never
     lose stuff and can keep track of changes to your files.
-
-## What next?
-
-[**What Next slides**](slides/next-steps.html)
-
-<div>
-
-```{=html}
-<iframe class="slide-deck" src="../slides/what-next.html"></iframe>
-```
-
-</div>
-
-::: {.callout-note collapse="true"}
-## Instructor note
-
-The slides contain speaking notes that you can view by pressing 'S' on
-the keyboard.
-:::
 
 ## What else can you do?
 
