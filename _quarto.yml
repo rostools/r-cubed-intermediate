@@ -36,12 +36,12 @@ book:
       - sessions/functionals.qmd
       - sessions/dplyr-joins.qmd
       - sessions/pivot.qmd
-    #   - sessions/lesson.qmd
-    #   - sessions/what-next.qmd
+      - sessions/what-next.qmd
   appendices:
     - appendix/social.qmd
     - appendix/for-instructors.qmd
     - appendix/extras.qmd
+    - appendix/hands-on-work.qmd
     - LICENSE.md
     - appendix/references.qmd
   page-footer:
