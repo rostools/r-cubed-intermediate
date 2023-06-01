@@ -30,7 +30,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 1.  Using the concept of "pivoting" to arrange data from long to wide
     and vice versa.
 
-## Setup for the analysis in R Markdown
+## Setup for the analysis in Quarto / R Markdown
 
 We now have a working dataset to start doing some simple analyses on in
 the Quarto / R Markdown document. A recommended workflow with Quarto / R

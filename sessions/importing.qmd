@@ -95,10 +95,10 @@ library(here)
 ````
 
 This is a special, named code chunk that tells R to run this code chunk
-first whenever you open this R Markdown file and run code inside of the
-file. It's in this `setup` code chunk that we will add `library()`
-functions when we want to load other packages. After adding this code
-chunk, create a new code chunk right below it using
+first whenever you open this Quarto / R Markdown file and run code
+inside of the file. It's in this `setup` code chunk that we will add
+`library()` functions when we want to load other packages. After adding
+this code chunk, create a new code chunk right below it using
 {{< var keybind.chunk >}}.
 
 ::: callout-note
