@@ -154,8 +154,6 @@ material and in how we teach you. What makes sense, what is confusing,
 and so on.
 :::
 
-## Getting or asking for help `r emo::ji("raising_hand_woman")`
-
 ## Getting or asking for help :raising_hand_woman::raising_hand_man: {.smaller}
 
 -   Put the sticky on your laptop to get help
