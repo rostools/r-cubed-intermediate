@@ -7,10 +7,6 @@ project:
   #   - rm -rf data-raw/mmash
   # resources:
   #   - slides/*.html
-  # pre-render:
-  #   - _common.R
-  #   - R/build-functions.R
-  # resources:
   #   - resources
   #   - slides
 
