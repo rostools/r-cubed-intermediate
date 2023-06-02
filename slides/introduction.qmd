@@ -8,16 +8,11 @@ bibliography: includes/references.bib
 
 ::: columns
 ::: {.column width="70%"}
--   :heavy_check_mark: Select a table name from the basket and go to the
-    table name
--   :heavy_check_mark: Introduce yourself to your group members
+-   :heavy_check_mark: Pick a group from the basket and go to that table
+-   :heavy_check_mark: Introduce yourself
 -   :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project
--   :heavy_check_mark: Make sure your `data-raw/` looks like the thing
-    on the side
-    -   **NO** other files should be there besides these (some of you
-        have other files and folders)
-    -   If not, re-do the pre-course download data tasks and ask us for
-        help
+-   :heavy_check_mark: Check that your `data-raw/` looks like that one
+    the side
 :::
 
 ::: {.column width="30%"}
@@ -81,7 +76,9 @@ and wondered how exactly they did it.
 
 ## Code sharing: From scientific principle of "reproducibility" {.center}
 
-...often confused with "replicability" [@Plesser2018a]
+...often confused with "replicability" [@Plesser2018a] (see also
+American Statistical Association
+[statement](https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf))
 
 . . .
 
@@ -91,7 +88,8 @@ and wondered how exactly they did it.
 
 -   Repeating a study by *independently* performing another identical
     study
--   Linked to the "irreproducibility crisis"<sup>2</sup>
+-   Linked to the "irreproducibility crisis" (aka "irreplicability
+    crisis")
 :::
 
 ::: {.column width="50%"}
@@ -101,12 +99,6 @@ and wondered how exactly they did it.
 -   *Question*: If we can't even *reproduce* a study's results, how can
     we expect to replicate it?
 :::
-:::
-
-::: aside
-1.  Also from an American Statistical Association
-    [statement](https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf).
-2.  Or rather "irreplicability crisis".
 :::
 
 ## These issues can be fixed by creating and nurturing a culture of openness {.center}
@@ -219,3 +211,4 @@ Question, mostly for my own information...
 ## Return to your seats! :chair: {.center}
 
 # References
+
