@@ -126,7 +126,9 @@ If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
 ![Pivot longer in tidyr, excluding an 'id' column. New columns are
-called 'name' and 'value', as well as the old 'id'
+called 'name' and 'value', as well as the old 'id' column. Notice how
+the values in `A` and `B` columns are stacked on top of each other in
+the newly created `V`
 column.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
@@ -281,7 +283,11 @@ first argument is the data and the other arguments are:
 @fig-pivot-wider visually shows what's happening when using
 `pivot_wider()`.
 
-![Pivot wider in tidyr.](/images/pivot-wider.png){#fig-pivot-wider
+![Pivot wider in tidyr, where a set of stacked "groups" in the data on
+the left are placed side-by-side as new columns in the output data on
+the right. Notice how the values in the column `N`, which is used in the
+`names_from` argument, are used as the names for the new columns `A` and
+`B` in the new data.](/images/pivot-wider.png){#fig-pivot-wider
 width="90%"}
 :::
 
@@ -584,4 +590,3 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-

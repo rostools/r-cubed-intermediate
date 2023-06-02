@@ -75,7 +75,9 @@ vector at once. In vectorized functions, you can give the function an
 entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it.
 @fig-vectorization shows how a function conceptually uses vectorization.
 
-![A function using vectorization. Modified from the [RStudio purrr
+![A function using vectorization. Notice how a set of items is included
+*all at once* in the `func()` function and outputs a single item on the
+right. Modified from the [RStudio purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
 width="45%"}
 
@@ -122,7 +124,9 @@ geographic map, it is the mathematical meaning of map: To use a function
 on each item in a set of items.
 
 ![A functional that uses a function to apply it to each item in a
-vector. Modified from the [RStudio purrr
+vector. Notice how each of the green coloured boxes are placed into the
+`func()` function and outputs the same number of blue boxes as there are
+green boxes. Modified from the [RStudio purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
 width="90%"}
 

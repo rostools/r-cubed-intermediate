@@ -352,7 +352,9 @@ There are many ways to join datasets in `{dplyr}` that are described in
     and columns in `x`. *Columns* that exist in `y` but not `x` are
     joined to `x`.
 
-![Left joining in dplyr. Modified from the RStudio dplyr
+![Left joining in `{dplyr}`. Notice how the row with `D` in column `A`
+in the blue data is not included in the outputted data on the right.
+Modified from the RStudio `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
 width="90%"}
 
@@ -360,7 +362,9 @@ width="90%"}
     columns in `x` that match rows and columns in `y`. *Columns* that
     exist in `x` but not `y` are joined to `y`.
 
-![Right joining in dplyr. Modified from the RStudio dplyr
+![Right joining in `{dplyr}`. Notice how the row with `C` in column `A`
+in the green data is not included in the outputted data on the right.
+Modified from the RStudio `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
 width="90%"}
 
@@ -368,7 +372,10 @@ width="90%"}
     and columns in `x`. Columns *and* **rows** that exist in `y` but not
     `x` are joined to `x`.
 
-![Full joining in dplyr. Modified from the RStudio dplyr
+![Full joining in `{dplyr}`. Notice how all rows and columns are
+included in the outputted data on the right, and that some missingness
+is introduced because those values don't exist when the data are
+combined in this way. Modified from the RStudio `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
 width="90%"}
 
@@ -417,7 +424,9 @@ reduce(1:5, add_numbers)
 @fig-reduce visually shows what is happening within `reduce()`.
 
 ![A functional that iteratively uses a function on a set of items until
-only one output remains. Modified from the RStudio purrr
+only one output remains. Notice how the output of the first iteration of
+the `func()` function is placed in the first position of `func()` in the
+next iteration, and so on. Modified from the RStudio purrr
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
@@ -687,3 +696,4 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
+
