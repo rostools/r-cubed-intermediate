@@ -1,7 +1,5 @@
 # Importing data, fast! {#sec-import-data}
 
-{{< include ../includes/_wip.qmd >}}
-
 ```{r setup}
 #| include: false
 library(vroom)

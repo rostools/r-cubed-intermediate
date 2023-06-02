@@ -1,7 +1,5 @@
 # Introduction to course {#sec-introduction}
 
-{{< include ../includes/_wip.qmd >}}
-
 > [**Introduction slides**](../slides/introduction.html)
 
 <div>

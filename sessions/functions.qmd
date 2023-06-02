@@ -1,7 +1,5 @@
 # Save time, don't repeat yourself: Making functions {#sec-dry-functions}
 
-{{< include ../includes/_wip.qmd >}}
-
 ```{r setup}
 #| include: false
 library(fs)
