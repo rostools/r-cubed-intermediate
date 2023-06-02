@@ -227,8 +227,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup()
 ```
@@ -293,8 +295,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup() %>%
   pivot_wider(names_from = day)
@@ -314,8 +318,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup() %>%
   pivot_wider(names_from = day, values_from = starts_with("value"))
@@ -342,8 +348,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup() %>%
   pivot_wider(names_from = day, values_from = starts_with("value"))
@@ -398,9 +406,12 @@ tidy_summarise_by_day <- function(data) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
     tidyr::drop_na(day, gender) %>%
     dplyr::group_by(gender, day, name) %>%
-    dplyr::summarise(dplyr::across(value,
-      list(mean = mean, sd = sd),
-      na.rm = TRUE
+    dplyr::summarise(dplyr::across(
+      value,
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        sd = ~ sd(.x, na.rm = TRUE)
+      )
     )) %>%
     dplyr::ungroup() %>%
     tidyr::pivot_wider(
@@ -448,13 +459,16 @@ tidy_summarise_by_day <- function(data) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
     tidyr::drop_na(day, gender) %>%
     dplyr::group_by(gender, day, name) %>%
-    dplyr::summarise(dplyr::across(value,
-      list(mean = mean, sd = sd),
-      na.rm = TRUE
+    dplyr::summarise(dplyr::across(
+      value,
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        sd = ~ sd(.x, na.rm = TRUE)
+      )
     )) %>%
-    dplyr::mutate(dplyr::across(dplyr::starts_with("value"),
-      round,
-      digits = 2
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      ~ round(.x, digits = 2)
     )) %>%
     tidyr::pivot_wider(
       names_from = day,
@@ -491,12 +505,11 @@ tidy_summarise_by_day <- function(data, summary_fn) {
     dplyr::group_by(gender, day, name) %>%
     dplyr::summarise(dplyr::across(
       value,
-      summary_fn,
-      na.rm = TRUE
+      summary_fn
     )) %>%
-    dplyr::mutate(dplyr::across(dplyr::starts_with("value"),
-      round,
-      digits = 2
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      ~ round(.x, digits = 2)
     )) %>%
     tidyr::pivot_wider(
       names_from = day,
@@ -505,7 +518,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
 }
 
 # Source, then test out the function in the Console:
-tidy_summarise_by_day(mmash, max)
+tidy_summarise_by_day(mmash, ~ max(.x, na.rm = TRUE))
 ```
 
 Now that it works, let's add some summary statistics to the
@@ -517,7 +530,10 @@ mmash %>%
 mmash %>%
   tidy_summarise_by_day(median)
 mmash %>%
-  tidy_summarise_by_day(list(median = median, max = max))
+  tidy_summarise_by_day(list(
+    median = ~ median(.x, na.rm = TRUE), 
+    max = ~ max(.x, na.rm = TRUE)
+  ))
 ```
 
 ## Making prettier output in Quarto / R Markdown
@@ -537,7 +553,11 @@ table"). We can also add a table caption with the `caption` argument.
 
 ```{r knitr-table}
 mmash %>%
-  tidy_summarise_by_day(list(mean = mean, min = min, max = max)) %>%
+  tidy_summarise_by_day(list(
+    mean = ~ mean(.x, na.rm = TRUE), 
+    min = ~ min(.x, na.rm = TRUE), 
+    max = ~ max(.x, na.rm = TRUE)
+  )) %>%
   knitr::kable(caption = "Descriptive statistics of some variables.")
 ```
 
