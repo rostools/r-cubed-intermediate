@@ -682,6 +682,6 @@ next session.
 
 ```{r store-session-code}
 #| include: false
-save.image(here::here("_temp/dplyr-join.RData"))
+rm(actigraph_df, rr_df)
+save.image(here::here("_temp/dplyr-joins.RData"))
 ```
-
