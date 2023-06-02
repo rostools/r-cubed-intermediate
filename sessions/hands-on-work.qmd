@@ -12,9 +12,7 @@ the MMASH, we strongly encourage you to work together with your group to
 ask questions and to help each other out in understanding what to do and
 what to code (we are also here for help).
 
-## MMASH exercises
-
-### Fix up some remaining data issues
+## Fix up some remaining data issues
 
 There are some issues with the data still. Try to work through these
 tasks to clean the data up more.
@@ -54,7 +52,7 @@ tasks to clean the data up more.
         `-29` value start in that data file? Can you guess what the
         issue was and what `-29` is or should be?
 
-### Import and process the activity data
+## Import and process the activity data
 
 We have a few other datasets that we could join together, but would
 likely require more processing in order to appropriately join with the
@@ -123,7 +121,7 @@ activity_df %>%
   mutate(activity_duration = end - start)
 ```
 
-### Process and join sleep and questionnaire data
+## Process and join sleep and questionnaire data
 
 There are still a few datasets that you can join in with the current
 datasets like `sleep.csv` and `questionnaire.csv`. Using the workflows
@@ -138,7 +136,7 @@ User 11 has no sleep data, so you will eventually have to drop user 11
 from the dataset before summarizing the data.
 :::
 
-### Create a second dataset of only the Actigraph and RR data
+## Create a second dataset of only the Actigraph and RR data
 
 The Actigraph and RR datasets contain a lot of interesting and useful
 data that gets destroyed when we first summarise and then join them with
@@ -167,7 +165,7 @@ guide:
     better sleep quality (like `number_of_awakenings`)?
 4.  Does the self-reported activity match the accelerometry data?
 
-## Other datasets to use
+## Other datasets to try out
 
 If you have completed the exercises above and still wanted to practice
 the skills, here are some other datasets you can use (aside from your
