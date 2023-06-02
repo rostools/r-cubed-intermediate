@@ -12,46 +12,6 @@ the MMASH, we strongly encourage you to work together with your group to
 ask questions and to help each other out in understanding what to do and
 what to code (we are also here for help).
 
-## Fix up some remaining data issues
-
-There are some issues with the data still. Try to work through these
-tasks to clean the data up more.
-
-1.  Use the code below to examine the cleaned data for user 21. Notice
-    some problems? Go into the raw data as well as the data
-    documentation on the [MMASH
-    website](https://physionet.org/content/mmash/1.0.0/) and try to
-    figure how what happened. How you might fix the problem? Try your
-    fix within the `data-raw/mmash.R` cleaning script.
-
-    ```{r}
-    #| eval: false
-    mmash %>% 
-      filter(user_id == "user_21")
-    ```
-
-    -   **Hint**: Look into user 21's folder at their `.csv` files they
-        have. Compare to the other users. Are the same number of files
-        there?
-    -   **Hint**: In the `reduce()` and `full_join()` code, try
-        re-arranging the order that the datasets are listed. Does order
-        matter?
-
-2.  If you do `count(mmash, day)` in the Console while the `mmash`
-    dataset is loaded, you'll see that the `day` column has a weird
-    value of `-29`. Use `filter()` to see which rows and users are
-    affected. Look into the data documentation on the [MMASH
-    website](https://physionet.org/content/mmash/1.0.0/) and see if you
-    can find an explanation for this. How would you go about solving
-    this issue? Write up code to fix this issue in the
-    `data-raw/mmash.R` script.
-
-    -   **Hint**: Find the users that have this value and look into
-        their data `.csv` files that have `day` (or `Day`) variables.
-        Which files have this `-29` in the `day` column? Where does the
-        `-29` value start in that data file? Can you guess what the
-        issue was and what `-29` is or should be?
-
 ## Import and process the activity data
 
 We have a few other datasets that we could join together, but would
@@ -120,6 +80,46 @@ activity_df <- import_multiple_files("Activity.csv", import_activity)
 activity_df %>%
   mutate(activity_duration = end - start)
 ```
+
+## Fix up some remaining data issues
+
+There are some issues with the data still. Try to work through these
+tasks to clean the data up more.
+
+1.  Use the code below to examine the cleaned data for user 21. Notice
+    some problems? Go into the raw data as well as the data
+    documentation on the [MMASH
+    website](https://physionet.org/content/mmash/1.0.0/) and try to
+    figure how what happened. How you might fix the problem? Try your
+    fix within the `data-raw/mmash.R` cleaning script.
+
+    ```{r}
+    #| eval: false
+    mmash %>% 
+      filter(user_id == "user_21")
+    ```
+
+    -   **Hint**: Look into user 21's folder at their `.csv` files they
+        have. Compare to the other users. Are the same number of files
+        there?
+    -   **Hint**: In the `reduce()` and `full_join()` code, try
+        re-arranging the order that the datasets are listed. Does order
+        matter?
+
+2.  If you do `count(mmash, day)` in the Console while the `mmash`
+    dataset is loaded, you'll see that the `day` column has a weird
+    value of `-29`. Use `filter()` to see which rows and users are
+    affected. Look into the data documentation on the [MMASH
+    website](https://physionet.org/content/mmash/1.0.0/) and see if you
+    can find an explanation for this. How would you go about solving
+    this issue? Write up code to fix this issue in the
+    `data-raw/mmash.R` script.
+
+    -   **Hint**: Find the users that have this value and look into
+        their data `.csv` files that have `day` (or `Day`) variables.
+        Which files have this `-29` in the `day` column? Where does the
+        `-29` value start in that data file? Can you guess what the
+        issue was and what `-29` is or should be?
 
 ## Process and join sleep and questionnaire data
 
