@@ -892,7 +892,7 @@ commit** the changes so far with {{< var keybind.git >}}.
 
 Like with the `RR.csv` dataset, let's process the `Actigraph.csv`
 dataset so that it makes it easier to join with the other datasets
-later.
+later. Make sure to read the warning block below.
 
 1.  Like usual, create a new Markdown header called e.g.
     `## Exercise: Summarise  Actigraph` and insert a new code chunk
@@ -918,6 +918,14 @@ later.
     to make sure everything works.
 9.  **Add and commit** the changes you've made into the Git history with
     {{< var keybind.git >}}.
+
+::: callout-warning
+Since the `actigraph_df` dataset is quite large, we **strongly**
+recommend not using `View()` or selecting the dataframe in the
+Environments pane to view it. For many computers, your R session will
+**crash**! Instead type out `glimpse(actigraph_df)` or simply
+`actigraph_df` in the Console.
+:::
 
 ```{r solution-summarise-actigraph}
 #| eval: true
