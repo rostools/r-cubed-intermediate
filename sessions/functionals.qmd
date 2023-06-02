@@ -585,7 +585,7 @@ Or, only character columns:
 
 ```{r}
 #| eval: false
-user_info_df %>% 
+user_info_df %>%
   select(where(is.character))
 ```
 

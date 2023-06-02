@@ -9,15 +9,15 @@ library(here)
 #' @return a DiagrammeR GraphVis object.
 #'
 diagram_overview <- function(section_num = 0) {
-    stopifnot(section_num %in% 0:4)
-    colour <- rep("black", times = 5)
-    thickness <- rep(1, times = 5)
-    if (!any(section_num %in% 0)) {
-        colour[section_num] <- "red"
-        thickness[section_num] <- 3
-    }
+  stopifnot(section_num %in% 0:4)
+  colour <- rep("black", times = 5)
+  thickness <- rep(1, times = 5)
+  if (!any(section_num %in% 0)) {
+    colour[section_num] <- "red"
+    thickness[section_num] <- 3
+  }
 
-    graphviz_template_text <- "
+  graphviz_template_text <- "
     digraph {
         # Styling
         graph [compound = true, nodesep = .1, ranksep = .1, rankdir = TB]
@@ -80,15 +80,15 @@ diagram_overview <- function(section_num = 0) {
         }
 
     }"
-    graph_viz_text <- glue::glue(graphviz_template_text, .open = "((", .close = "))")
-    DiagrammeR::grViz(graph_viz_text)
+  graph_viz_text <- glue::glue(graphviz_template_text, .open = "((", .close = "))")
+  DiagrammeR::grViz(graph_viz_text)
 }
 
 save_diagram_to_svg <- function(number, output_file) {
-    diagram_overview(number) |>
-        export_svg() |>
-        charToRaw() |>
-        rsvg_svg(output_file)
+  diagram_overview(number) |>
+    export_svg() |>
+    charToRaw() |>
+    rsvg_svg(output_file)
 }
 
 save_diagram_to_svg(0, here("images/overview.svg"))

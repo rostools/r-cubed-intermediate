@@ -22,7 +22,9 @@ bibliography: includes/references.bib
 
 ::: {.column width="50%"}
 ```{r, echo=FALSE, eval=FALSE}
-withr::with_dir("../", {fs::dir_tree("data-raw/", recurse = 1)})
+withr::with_dir("../", {
+  fs::dir_tree("data-raw/", recurse = 1)
+})
 ```
 
 ``` text

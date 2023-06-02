@@ -77,25 +77,25 @@ other datasets. Complete these tasks in the `doc/learning.qmd` file:
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 import_activity <- function(file_path) {
-    activity_data <- vroom::vroom(
-        file_path,
-        col_select = -1,
-        col_types = vroom::cols(
-            activity = vroom::col_double(),
-            start = vroom::col_time(format = ""),
-            end = vroom::col_time(format = ""),
-            day = vroom::col_double(),
-            .delim = ","
-        ),
-        .name_repair = snakecase::to_snake_case
-    ) 
-    return(activity_data)
+  activity_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      activity = vroom::col_double(),
+      start = vroom::col_time(format = ""),
+      end = vroom::col_time(format = ""),
+      day = vroom::col_double(),
+      .delim = ","
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(activity_data)
 }
 
 activity_df <- import_multiple_files("Activity.csv", import_activity)
 
-activity_df %>% 
-    mutate(activity_duration = end - start)
+activity_df %>%
+  mutate(activity_duration = end - start)
 ```
 
 ### Process and join sleep and questionnaire data
