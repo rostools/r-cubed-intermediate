@@ -193,20 +193,21 @@ and extracts the user ID from it. **First step**: While in the
 `doc/learning.qmd` file, convert this code into a function, using the
 same process you've done previously.
 
--   Call the new function `extract_user_id` and add one argument called
-    `imported_data`.
-    -   Remember to output the code into an object and `return()` it at
-        the end of the function.
-    -   Include Roxygen documentation.
--   After writing it and testing that the function works, move the
+1.  Call the new function `extract_user_id` and add one argument called
+    `imported_data`. - Remember to output the code into an object and
+    `return()` it at the end of the function. - Include Roxygen
+    documentation.
+2.  After writing it and testing that the function works, move the
     function into `R/functions.R`.
--   Replace the code in the `doc/learning.qmd` file with the function
+3.  Replace the code in the `doc/learning.qmd` file with the function
     name so it looks like `extract_user_id(user_info_df)`, restart the R
     session, source everything with `source()` with
     {{< var keybind.source >}}, and run the new function to test that it
     works.
--   Knit / render the `doc/learning.qmd` file to make sure things remain
-    reproducible with {{< var keybind.render >}}
+4.  Knit / render the `doc/learning.qmd` file to make sure things remain
+    reproducible with {{< var keybind.render >}}.
+5.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
 
 ::: callout-tip
 If you don't know what package a function comes from when you need to
@@ -559,7 +560,8 @@ saliva_with_day_df
 reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
 ```
 
-We now have two rows per participant!
+We now have two rows per participant! Let's add and commit the changes
+to the Git history with {{< var keybind.git >}}.
 
 ## Wrangling data into final form
 

@@ -359,6 +359,9 @@ mmash %>%
   pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
+Now that that works, let's render the document to HTML with
+{{< var keybind.render >}}.
+
 ## Exercise: Convert this code into a function
 
 > Time: 15 minutes.
@@ -381,6 +384,9 @@ the code we just wrote above into a function.
     document with the `source()` and `load()` commands. Then test that
     the new function works in a code chunk at the bottom of the
     document.
+7.  Render the Quarto document to HTML with {{< var keybind.render >}}.
+8.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
 
 Use this code to refresh your memory on how functions are structured and
 to use as a starting point:
@@ -538,6 +544,9 @@ mmash %>%
   ))
 ```
 
+Before continuing, let's render the Quarto document with
+{{< var keybind.render >}} to check reproducibility.
+
 ## Making prettier output in Quarto / R Markdown
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -565,7 +574,9 @@ mmash %>%
 
 Then render the document with {{< var keybind.render >}} and check out
 the HTML file. So pretty! :grin: Well, there's lots of things to fix up,
-but its a good starting place.
+but its a good starting place. Let's finish by running `{styler}` with
+{{< var keybind.styler >}} and then committing the changes to the Git
+history with {{< var keybind.git >}}.
 
 ## Summary
 
@@ -573,3 +584,4 @@ but its a good starting place.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+
