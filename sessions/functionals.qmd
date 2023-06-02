@@ -919,7 +919,7 @@ later. Make sure to read the warning block below.
 9.  **Add and commit** the changes you've made into the Git history with
     {{< var keybind.git >}}.
 
-::: callout-warning
+::: {.callout-warning appearance="default"}
 Since the `actigraph_df` dataset is quite large, we **strongly**
 recommend not using `View()` or selecting the dataframe in the
 Environments pane to view it. For many computers, your R session will

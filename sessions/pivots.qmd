@@ -119,17 +119,19 @@ with. So, we do data entry in wide and use functions like
 `pivot_longer()` to get the data ready for analysis. @fig-pivot-longer
 visually shows what happens when you pivot from wide to long.
 
-![Pivot longer in tidyr. New columns are called 'name' and
-'value'.](/immages/pivot-longer.png){#fig-pivot-longer width="90%"}
+![Pivot longer in tidyr. New columns are called 'name' and 'value'.
+Notice how the values in `A` and `B` columns are stacked on top of each
+other in the newly created `V`
+column.](/images/pivot-longer.png){#fig-pivot-longer width="90%"}
 
 If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
 ![Pivot longer in tidyr, excluding an 'id' column. New columns are
-called 'name' and 'value', as well as the old 'id' column. Notice how
-the values in `A` and `B` columns are stacked on top of each other in
-the newly created `V`
-column.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
+called 'name' and 'value', as well as the old 'id' column. Notice how,
+unlike the previous image, the `id` column is excluded when pivotting
+into the data on the
+right.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 disheartened if you can't understand how it works yet. As you practice
@@ -590,3 +592,4 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+

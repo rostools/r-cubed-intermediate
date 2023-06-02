@@ -30,11 +30,9 @@ reproduce the results.
 
 ## How can we check reproducibility if no code is given? {.center}
 
-::: aside
 Possible role models as research groups: [Jeff
 Leek](http://jtleek.com/codedata.html) and [Ben
 Marwick](https://faculty.washington.edu/bmarwick/#publications).
-:::
 
 ::: notes
 But that doesn't even matter, because we can't have reproducibility if
@@ -117,7 +115,8 @@ modern analytic and computational era.
 -   Finding better opportunities outside of academia
 
 ::: aside
-[Tennant (2017)](https://doi.org/10.6084/m9.figshare.5383711.v1)
+More detail on barriers here: [Tennant
+(2017)](https://doi.org/10.6084/m9.figshare.5383711.v1)
 :::
 
 ::: notes

@@ -1,6 +1,6 @@
 # What next? {#sec-final-remarks}
 
-[**What Next slides**](slides/next-steps.html)
+[**What Next slides**](slides/what-next.html)
 
 <div>
 
@@ -16,45 +16,6 @@
 The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
 :::
-
-## Quick recap of workflow {#sec-general-workflow}
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-You can go over this point verbally, reiterating what they've learned so
-far.
-:::
-
-You now have some skills and tools to allow you to reproducibly import,
-process, clean, join, and eventually analyze your datasets. Listed below
-are the general workflows we've covered and that you can use as a
-guideline to complete the following (optional) exercises and group work.
-
--   Import with the `vroom()`, and optionally use `spec()` to `vroom()`
-    again to select specific variables.
--   Convert importing into a function in a Quarto / R Markdown document,
-    move to the `R/function.R` script, restarting R, and `source()`.
--   Test that joining datasets into a final form works properly while in
-    a Quarto / R Markdown document, then cut and paste the code into a
-    data processing R script in the `data-raw/` folder (alternatively,
-    you can directly write and test code while in the `data-raw/` R
-    script).
--   Restart R and generate the `.rda` dataset in the `data/` folder by
-    sourcing the `data-raw/` R script.
--   Restart R, load the new dataset with `load()` and put the loading
-    code into a Quarto / R Markdown document.
--   Add any additional cleaning code to the data processing R script in
-    `data-raw/` and update the `.rda` dataset in `data/` whenever you
-    encounter problems in the dataset.
--   Write R in code chunks in a Quarto / R Markdown document to further
-    analyze your data and check reproducibility by often rendering to
-    HTML.
-    -   Part of this workflow is to also write R code to output in a way
-        that looks nice in the HTML (or Word) formats by mostly creating
-        tables or figures of the R output.
--   Use Git often by adding and committing into the history so you never
-    lose stuff and can keep track of changes to your files.
 
 ## What else can you do?
 

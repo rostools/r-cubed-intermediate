@@ -7,7 +7,7 @@ bibliography: includes/references.bib
 # Welcome to the Intermediate R^3^ course!
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="70%"}
 -   :heavy_check_mark: Select a table name from the basket and go to the
     table name
 -   :heavy_check_mark: Introduce yourself to your group members
@@ -20,7 +20,7 @@ bibliography: includes/references.bib
         help
 :::
 
-::: {.column width="50%"}
+::: {.column width="30%"}
 ```{r, echo=FALSE, eval=FALSE}
 withr::with_dir("../", {
   fs::dir_tree("data-raw/", recurse = 1)
@@ -71,9 +71,7 @@ data analysis?
 
 # :shrug:...Because code sharing is almost non-existent in science {.center}
 
-::: aside
 Very few papers provide code [@Leek2017a, @Considine2017a]
-:::
 
 ::: notes
 It's because code sharing basically doesn't exist in the vast majority
@@ -95,8 +93,6 @@ and wondered how exactly they did it.
     study
 -   Linked to the "irreproducibility crisis"<sup>2</sup>
 :::
-
-. . .
 
 ::: {.column width="50%"}
 ### Reproducibility
@@ -206,7 +202,7 @@ One side of the room if yes, other side if no, middle if you've sorta
 struggled.
 :::
 
-## :raising_hand: Who has seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)?
+## :raising_hand: Who has seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)? {.center}
 
 ::: notes
 More for my personal interest. The word pipeline gets thrown around a
@@ -214,7 +210,7 @@ lot, but how many have encountered, made, or used true pipelines?
 Automated from beginning to end.
 :::
 
-## :talking: For those that have done or are doing data processing, does it take up a lot of time? How much? {.center}
+## 💬 For those that have done or are doing data processing, does it take up a lot of time? How much? {.center}
 
 ::: notes
 Question, mostly for my own information...
