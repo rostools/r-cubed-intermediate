@@ -8,6 +8,7 @@ library(tidyverse)
 library(vroom)
 load(here("_temp/functionals.RData"))
 source(here("R/functions.R"))
+options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over

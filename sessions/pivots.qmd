@@ -10,6 +10,7 @@ library(vroom)
 source(here("R/functions.R"))
 load(here("_temp/dplyr-joins.RData"))
 load(here("data/mmash.rda"))
+options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the *Workflow* block as we cover the fourth
