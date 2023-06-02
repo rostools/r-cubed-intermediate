@@ -30,12 +30,12 @@ book:
       - sessions/functionals.qmd
       - sessions/dplyr-joins.qmd
       - sessions/pivots.qmd
+      - sessions/hands-on-work.qmd
       - sessions/what-next.qmd
   appendices:
     - appendix/social.qmd
     - appendix/for-instructors.qmd
     - appendix/extras.qmd
-    - appendix/hands-on-work.qmd
     - LICENSE.md
     - appendix/references.qmd
   page-footer:

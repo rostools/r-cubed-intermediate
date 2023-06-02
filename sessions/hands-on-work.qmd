@@ -1,4 +1,4 @@
-# Continued hands-on exercises {#hands-on-work}
+# Hands-on exercises {#hands-on-work}
 
 ::: callout-warning
 We're still testing to see what best works for this section.
