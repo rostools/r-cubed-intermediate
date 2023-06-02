@@ -635,7 +635,6 @@ save the data as an `.rda` file. We'll add this code to the very bottom
 of the script:
 
 ```{r save-data}
-#| eval: false
 usethis::use_data(mmash, overwrite = TRUE)
 ```
 

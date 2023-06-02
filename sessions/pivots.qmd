@@ -42,7 +42,8 @@ previous session.
 We will now add the `load()` code right below the `source()` function in
 the `setup` code chunk:
 
-``` r
+```{r}
+#| eval: false
 source(here("R/functions.R"))
 load(here("data/mmash.rda"))
 ```
