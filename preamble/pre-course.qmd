@@ -121,6 +121,14 @@ fix it if you restart R by going to `Sessions -> Restart R` and re-run
 the code in items 2 and 3, it should work. If it still doesn't, try to
 complete the other tasks, complete the survey, and let us know you have
 a problem in the survey.
+
+If this still doesn't work, instead of `pak::pak("rostools/r3")`, try
+running:
+
+```{r}
+#| eval: false
+remotes::install_github("rostools/r3")
+```
 :::
 
 *Note*: When you see a command like `something::something()`, for
