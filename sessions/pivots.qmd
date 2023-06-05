@@ -1,3 +1,9 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
 # Quickly re-arranging data with pivots {#sec-pivots}
 
 ```{r setup}
@@ -239,7 +245,7 @@ mmash %>%
 ## Instructor note
 
 Like with the pivoting to long section, let them read through this
-section first and than go over it again to verbally explain it more,
+section first and then go over it again to verbally explain it more,
 making use of the graphs to help illustrate what is happening. Doing
 both reading and listening will help reinforce the concepts.
 :::
