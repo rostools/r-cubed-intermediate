@@ -589,6 +589,8 @@ user_info_df %>%
   select(where(is.character))
 ```
 
+What is this trim_filepath_for_book?
+
 ```{r admin-select-where-for-book}
 #| echo: false
 user_info_df %>%
@@ -944,4 +946,3 @@ add and commit the changes to the Git history with
 #| include: false
 save.image(here::here("_temp/functionals.RData"))
 ```
-
