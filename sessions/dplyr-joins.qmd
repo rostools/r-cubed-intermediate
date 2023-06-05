@@ -662,6 +662,7 @@ vroom_write(mmash, here("data/mmash.csv"))
 And later load it in with `vroom()` (since it is so fast). Alright,
 we're finished creating this dataset! Let's generate it by:
 
+-   First running `{styler}` with {{< var keybind.styler >}}.
 -   Restarting the R session with {{< var keybind.restart-r >}}.
 -   Sourcing the `data-raw/mmash.R` script with
     {{< var keybind.source >}}.
@@ -698,4 +699,3 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
-

@@ -311,7 +311,7 @@ user_info_df
 ```
 
 ```{r admin-show-data-for-book}
-#| echo:false
+#| echo: false
 user_info_df %>%
   trim_filepath_for_book()
 ```
@@ -883,7 +883,8 @@ Ungrouping the data with `ungroup()` does not provide any visual
 indication of what is happening. However, in the background, it removes
 certain metadata that the `group_by()` function added.
 
-Before continuing, let's knit the Quarto / R Markdown document with
+Before continuing, let's run `{styler}` with {{< var keybind.styler >}}
+and knit the Quarto / R Markdown document with
 {{< var keybind.render >}} to confirm that everything runs as it should.
 If the knitting works, then switch to the Git interface and **add and
 commit** the changes so far with {{< var keybind.git >}}.

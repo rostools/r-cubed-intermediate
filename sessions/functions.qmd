@@ -345,8 +345,9 @@ import_user_info <- function(file_path) {
 A massive advantage of using functions is that if you want to make a
 change to all your code, you can very easily do it by modifying the
 function and it will change all your other code too. Now that we have a
-working function, let's **add and commit** it to the Git history with
-the RStudio Git Interface by using {{< var keybind.git >}}.
+working function, run `{styler}` with {{< var keybind.styler >}} and
+then let's **add and commit** it to the Git history with the RStudio Git
+Interface by using {{< var keybind.git >}}.
 
 ## Exercise: Repeat with the saliva data
 
