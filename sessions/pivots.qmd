@@ -13,16 +13,17 @@ library(here)
 library(fs)
 library(tidyverse)
 library(vroom)
-source(here("R/build-functions.R"))
+source(here("R/functions.R"))
 load(here("_temp/dplyr-joins.RData"))
 load(here("data/mmash.rda"))
+options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the *Workflow* block as we cover the fourth
-block, "*Work with final data*" in @fig-diagram-overview-5.
+block, "*Work with project data*" in @fig-overview-analyze-project-data.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-4.svg){#fig-diagram-overview-5}
+covering.](/images/overview-analyze-project-data.svg){#fig-overview-analyze-project-data}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -36,7 +37,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 1.  Using the concept of "pivoting" to arrange data from long to wide
     and vice versa.
 
-## Setup for the analysis in R Markdown
+## Setup for the analysis in Quarto / R Markdown
 
 We now have a working dataset to start doing some simple analyses on in
 the Quarto / R Markdown document. A recommended workflow with Quarto / R
@@ -47,7 +48,8 @@ previous session.
 We will now add the `load()` code right below the `source()` function in
 the `setup` code chunk:
 
-``` r
+```{r}
+#| eval: false
 source(here("R/functions.R"))
 load(here("data/mmash.rda"))
 ```
@@ -123,15 +125,19 @@ with. So, we do data entry in wide and use functions like
 `pivot_longer()` to get the data ready for analysis. @fig-pivot-longer
 visually shows what happens when you pivot from wide to long.
 
-![Pivot longer in tidyr. New columns are called 'name' and
-'value'.](/immages/pivot-longer.png){#fig-pivot-longer width="90%"}
+![Pivot longer in tidyr. New columns are called 'name' and 'value'.
+Notice how the values in `A` and `B` columns are stacked on top of each
+other in the newly created `V`
+column.](/images/pivot-longer.png){#fig-pivot-longer width="90%"}
 
 If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
 ![Pivot longer in tidyr, excluding an 'id' column. New columns are
-called 'name' and 'value', as well as the old 'id'
-column.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
+called 'name' and 'value', as well as the old 'id' column. Notice how,
+unlike the previous image, the `id` column is excluded when pivotting
+into the data on the
+right.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 disheartened if you can't understand how it works yet. As you practice
@@ -233,8 +239,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup()
 ```
@@ -283,7 +291,11 @@ first argument is the data and the other arguments are:
 @fig-pivot-wider visually shows what's happening when using
 `pivot_wider()`.
 
-![Pivot wider in tidyr.](/images/pivot-wider.png){#fig-pivot-wider
+![Pivot wider in tidyr, where a set of stacked "groups" in the data on
+the left are placed side-by-side as new columns in the output data on
+the right. Notice how the values in the column `N`, which is used in the
+`names_from` argument, are used as the names for the new columns `A` and
+`B` in the new data.](/images/pivot-wider.png){#fig-pivot-wider
 width="90%"}
 :::
 
@@ -299,8 +311,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup() %>%
   pivot_wider(names_from = day)
@@ -320,8 +334,10 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup() %>%
   pivot_wider(names_from = day, values_from = starts_with("value"))
@@ -348,12 +364,17 @@ mmash %>%
   group_by(gender, day, name) %>%
   summarise(across(
     value,
-    list(mean = mean, sd = sd),
-    na.rm = TRUE
+    list(
+      mean = ~ mean(.x, na.rm = TRUE),
+      sd = ~ sd(.x, na.rm = TRUE)
+    )
   )) %>%
   ungroup() %>%
   pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
+
+Now that that works, let's render the document to HTML with
+{{< var keybind.render >}}.
 
 ## Exercise: Convert this code into a function
 
@@ -377,6 +398,9 @@ the code we just wrote above into a function.
     document with the `source()` and `load()` commands. Then test that
     the new function works in a code chunk at the bottom of the
     document.
+7.  Render the Quarto document to HTML with {{< var keybind.render >}}.
+8.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
 
 Use this code to refresh your memory on how functions are structured and
 to use as a starting point:
@@ -404,9 +428,12 @@ tidy_summarise_by_day <- function(data) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
     tidyr::drop_na(day, gender) %>%
     dplyr::group_by(gender, day, name) %>%
-    dplyr::summarise(dplyr::across(value,
-      list(mean = mean, sd = sd),
-      na.rm = TRUE
+    dplyr::summarise(dplyr::across(
+      value,
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        sd = ~ sd(.x, na.rm = TRUE)
+      )
     )) %>%
     dplyr::ungroup() %>%
     tidyr::pivot_wider(
@@ -454,13 +481,16 @@ tidy_summarise_by_day <- function(data) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
     tidyr::drop_na(day, gender) %>%
     dplyr::group_by(gender, day, name) %>%
-    dplyr::summarise(dplyr::across(value,
-      list(mean = mean, sd = sd),
-      na.rm = TRUE
+    dplyr::summarise(dplyr::across(
+      value,
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        sd = ~ sd(.x, na.rm = TRUE)
+      )
     )) %>%
-    dplyr::mutate(dplyr::across(dplyr::starts_with("value"),
-      round,
-      digits = 2
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      ~ round(.x, digits = 2)
     )) %>%
     tidyr::pivot_wider(
       names_from = day,
@@ -497,12 +527,11 @@ tidy_summarise_by_day <- function(data, summary_fn) {
     dplyr::group_by(gender, day, name) %>%
     dplyr::summarise(dplyr::across(
       value,
-      summary_fn,
-      na.rm = TRUE
+      summary_fn
     )) %>%
-    dplyr::mutate(dplyr::across(dplyr::starts_with("value"),
-      round,
-      digits = 2
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      ~ round(.x, digits = 2)
     )) %>%
     tidyr::pivot_wider(
       names_from = day,
@@ -511,7 +540,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
 }
 
 # Source, then test out the function in the Console:
-tidy_summarise_by_day(mmash, max)
+tidy_summarise_by_day(mmash, ~ max(.x, na.rm = TRUE))
 ```
 
 Now that it works, let's add some summary statistics to the
@@ -523,8 +552,14 @@ mmash %>%
 mmash %>%
   tidy_summarise_by_day(median)
 mmash %>%
-  tidy_summarise_by_day(list(median = median, max = max))
+  tidy_summarise_by_day(list(
+    median = ~ median(.x, na.rm = TRUE), 
+    max = ~ max(.x, na.rm = TRUE)
+  ))
 ```
+
+Before continuing, let's render the Quarto document with
+{{< var keybind.render >}} to check reproducibility.
 
 ## Making prettier output in Quarto / R Markdown
 
@@ -543,13 +578,19 @@ table"). We can also add a table caption with the `caption` argument.
 
 ```{r knitr-table}
 mmash %>%
-  tidy_summarise_by_day(list(mean = mean, min = min, max = max)) %>%
+  tidy_summarise_by_day(list(
+    mean = ~ mean(.x, na.rm = TRUE), 
+    min = ~ min(.x, na.rm = TRUE), 
+    max = ~ max(.x, na.rm = TRUE)
+  )) %>%
   knitr::kable(caption = "Descriptive statistics of some variables.")
 ```
 
 Then render the document with {{< var keybind.render >}} and check out
 the HTML file. So pretty! :grin: Well, there's lots of things to fix up,
-but its a good starting place.
+but its a good starting place. Let's finish by running `{styler}` with
+{{< var keybind.styler >}} and then committing the changes to the Git
+history with {{< var keybind.git >}}.
 
 ## Summary
 
@@ -557,3 +598,4 @@ but its a good starting place.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+

@@ -1,46 +1,44 @@
-# What next? {#sec-what-next}
+# What next? {#sec-final-remarks}
 
-## General workflow up to this point {#sec-general-workflow}
+[**What Next slides**](slides/what-next.html)
 
-::: {.callout-note appearance="minimal" collapse="true"}
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="../slides/what-next.html"></iframe>
+```
+
+</div>
+
+::: {.callout-note collapse="true"}
 ## Instructor note
 
-You can go over this point verbally, reiterating what they've learned so
-far.
+The slides contain speaking notes that you can view by pressing 'S' on
+the keyboard.
 :::
 
-You now have some skills and tools to allow you to reproducibly import,
-process, clean, join, and eventually analyze your datasets. Listed below
-are the general workflows we've covered and that you can use as a
-guideline to complete the following (optional) exercises and group work.
+## What else can you do?
 
--   Import with the `vroom()`, and optionally use `spec()` to `vroom()`
-    again to select specific variables.
--   Convert importing into a function in a Quarto / R Markdown document,
-    move to the `R/function.R` script, restarting R, and `source()`.
--   Test that joining datasets into a final form works properly while in
-    a Quarto / R Markdown document, then cut and paste the code into a
-    data processing R script in the `data-raw/` folder (alternatively,
-    you can directly write and test code while in the `data-raw/` R
-    script).
--   Restart R and generate the `.rda` dataset in the `data/` folder by
-    sourcing the `data-raw/` R script.
--   Restart R, load the new dataset with `load()` and put the loading
-    code into a Quarto / R Markdown document.
--   Add any additional cleaning code to the data processing R script in
-    `data-raw/` and update the `.rda` dataset in `data/` whenever you
-    encounter problems in the dataset.
--   Write R in code chunks in a Quarto / R Markdown document to further
-    analyze your data and check reproducibility by often rendering to
-    HTML.
-    -   Part of this workflow is to also write R code to output in a way
-        that looks nice in the HTML (or Word) formats by mostly creating
-        tables or figures of the R output.
--   Use Git often by adding and committing into the history so you never
-    lose stuff and can keep track of changes to your files.
+The other things you can start doing is find or start building a
+community of people who also use R or are doing reproducibility or any
+other computational work. Use them as support and help and also give
+back too.
 
-[**What Next slides**](slides/next-steps.html)
+Start doing code reviews in your research group. Code review would be
+where you look over each others code, check that it works, check that it
+makes sense, that it's readable and understandable. The nice thing with
+doing code reviews is that it dispels the mystery around code and about
+criticizing it and trying to improve it. We review manuscripts, why not
+code? Do note though, that this is way easier said than done!
 
-```{r slides-page-frame-finale, echo=FALSE}
-knitr::include_url("../slides/next-steps.html", height = "375px")
-```
+You can teach! Teach others. Use these teaching materials. Or get
+involved with this course next year. Or now! Several participants from
+these courses are or will soon be helping to improve the material for
+next year. There are also so many other things you can get involved in,
+aside from this course. Let us know if you're interested!
+
+We also have an informal, once-monthly, Coding Club you can join or
+follow. Information about it is on the
+[website](https://coding-club.rostools.org/). We do the sessions
+virtually on the [r-cubed Discord
+server](https://discord.gg/xHPyj7dxJx).

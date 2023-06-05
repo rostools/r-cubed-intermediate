@@ -42,3 +42,4 @@ Suggests:
 Remotes: 
     github::rostools/r3
 Encoding: UTF-8
+LazyData: true

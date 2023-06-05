@@ -1,7 +1,5 @@
 # Save time, don't repeat yourself: Making functions {#sec-dry-functions}
 
-{{< include ../includes/_wip.qmd >}}
-
 ```{r setup}
 #| include: false
 library(fs)
@@ -18,37 +16,10 @@ untar(
 ```
 
 Here we will cover the second block, "*Workflow*" in
-@fig-diagram-overview-2.
+@fig-overview-workflow.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-2.svg){#fig-diagram-overview-2}
-
-And your folder and file structure should look like (use
-`fs::dir_tree(recurse = 2)` if you want to check using R):
-
-```         
-LearnR3
-├── data/
-│   └── README.md
-├── data-raw/
-│   ├── README.md
-│   ├── mmash-data.zip
-│   ├── mmash/
-│   │  ├── user_1
-│   │  ├── ...
-│   │  └── user_22
-│   └── mmash.R
-├── doc/
-│   ├── README.md
-│   └── learning.qmd
-├── R/
-│   ├── functions.R
-│   └── README.md
-├── .gitignore
-├── DESCRIPTION
-├── LearnR3.Rproj
-└── README.md
-```
+covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 ## Learning objectives
 
@@ -520,23 +491,14 @@ looks like:
 
 ```{r admin-print-desc}
 #| echo: false
+#| comment: ""
 usethis::with_project(
   path = project_path,
   {
     desc::desc_print()
-  }
+  },
+  quiet = TRUE
 )
-```
-
-```         
-Package: LearnR3
-Type: Project
-Version: 0.0.1
-Imports:
-    knitr,
-    rmarkdown,
-    distill
-Encoding: UTF-8
 ```
 
 If it doesn't look like this, replace all of your current text with the
@@ -554,7 +516,8 @@ usethis::with_project(
   path = project_path,
   {
     usethis::use_package("vroom")
-  }
+  },
+  quiet = TRUE
 )
 ```
 
@@ -563,20 +526,14 @@ in your `DESCRIPTION` file now, you'll see something like:
 
 ```{r admin-print-desc-add-vroom}
 #| echo: false
+#| comment: ""
 usethis::with_project(
   path = project_path,
   {
     desc::desc_print()
-  }
+  },
+  quiet = TRUE
 )
-```
-
-```         
-Imports: 
-    knitr,
-    rmarkdown,
-    distill,
-    vroom
 ```
 
 Now, if you or someone else wants to install all the packages your
@@ -597,6 +554,19 @@ usethis::use_package("fs")
 usethis::use_package("snakecase")
 ```
 
+```{r admin-use-packages-several}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {
+    usethis::use_package("here")
+    usethis::use_package("fs")
+    usethis::use_package("snakecase")
+  },
+  quiet = TRUE
+)
+```
+
 Since we will also make use of the tidyverse set of packages later in
 the course, we'll also add tidyverse as a dependency. Since the
 tidyverse is a large collection of packages, the recommended way to add
@@ -611,11 +581,9 @@ usethis::use_package("tidyverse", type = "Depends")
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_package("here")
-    usethis::use_package("fs")
-    usethis::use_package("snakecase")
     usethis::use_package("tidyverse", type = "Depends")
-  }
+  },
+  quiet = TRUE
 )
 ```
 
@@ -631,17 +599,14 @@ the `Depends` field.
 
 ```{r admin-print-desc-add-tidyverse}
 #| echo: false
+#| comment: ""
 usethis::with_project(
   path = project_path,
   {
     desc::desc_print()
-  }
+  },
+  quiet = TRUE
 )
-```
-
-```         
-Depends: 
-    tidyverse
 ```
 
 Great! Now that we've formally established package dependencies in our

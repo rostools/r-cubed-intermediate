@@ -1,7 +1,5 @@
 # Introduction to course {#sec-introduction}
 
-{{< include ../includes/_wip.qmd >}}
-
 > [**Introduction slides**](../slides/introduction.html)
 
 <div>
@@ -40,14 +38,14 @@ data so that we have a single dataset to work with for later
 
 We also want to make sure that whatever processing we do to the data is
 reproducible. So everything we'll do throughout the course is done in
-order to achieve our aim of making a single data and to make things
+order to achieve our aim of making a single dataset and to make things
 reproducible.
 
 Both the folder and file structures below as well as the Figure
-@fig-diagram-overview-0 show exactly what we will be doing and how it
-will look like at the file level (not at the R code level). Hopefully
-with this overview, you can better understand where we are and where we
-want to get to.
+@fig-overview show exactly what we will be doing and how it will look
+like at the file level (not at the R code level). Hopefully with this
+overview, you can better understand where we are and where we want to
+get to.
 
 Right now, everyone's initial project structure should look like:
 
@@ -110,12 +108,12 @@ data in the `data-raw/` folder, and keeping (most) R scripts in the
 `R/`. We also want to keep things structured to make it easier for
 others and ourselves to reproduce the work.
 
-Our workflow will generally look like Figure @fig-diagram-overview-0,
-with each block representing one or two sessions. We've already done a
-bit of the first block, *"Download raw data"*.
+Our workflow will generally look like Figure @fig-overview, with each
+block representing one or two sessions. We've already done a bit of the
+first block, *"Download raw data"*.
 
 ![Overview of the workflow we will be using and
-covering.](/images/diagram-overview-0.svg){#fig-diagram-overview-0}
+covering.](/images/overview.svg){#fig-overview}
 
 Our workflow and process will be something like:
 
@@ -123,23 +121,25 @@ Our workflow and process will be something like:
     (`data-raw/mmash/`), which you already did in the pre-course tasks.
     -   We do this to keep the code for downloading and processing the
         data together with the raw data.
--   Use R Markdown (`doc/learning.qmd`) to write and test out code,
-    convert it into a function, test it, and then move it into
+-   Use Quarto / R Markdown (`doc/learning.qmd`) to write and test out
+    code, convert it into a function, test it, and then move it into
     `R/functions.R`. Later we will also move code into the
     `data-raw/mmash.R`. We use this workflow because:
     -   It's easier to quickly test code out and make sure it works
         before moving the code over into a more formal location and
-        structure. Think of using the R Markdown file as a sandbox to
-        test out and play with code, without fear of messing things up.
-    -   We also test code out in the R Markdown because it's easier from
-        a teaching perspective to interweave text and comments with code
-        as we do the code-alongs and because it forces you to practice
-        working within R Markdown documents, which are key components to
-        a reproducible workflow in R.
+        structure. Think of using the Quarto / R Markdown file as a
+        sandbox to test out and play with code, without fear of messing
+        things up.
+    -   We also test code out in the Quarto / R Markdown because it's
+        easier from a teaching perspective to interweave text and
+        comments with code as we do the code-alongs and because it
+        forces you to practice working within Quarto / R Markdown
+        documents, which are key components to a reproducible workflow
+        in R.
     -   We keep the functions in a separate file because we will
         frequently `source()` from it as we prototype and test out code
-        in the R Markdown file. It also creates a clear separation
-        between "finalized" code and prototyping code.
+        in the Quarto / R Markdown file. It also creates a clear
+        separation between "finalized" code and prototyping code.
 -   Use a combination of restarting R ({{< var keybind.restart-r >}})
     and using `source()` with {{< var keybind.source >}} while in
     `R/functions.R` to run the functions inside of `R/functions.R`.
@@ -147,16 +147,16 @@ Our workflow and process will be something like:
         clearing up the R workspace and starting for a "clean plate".
         And for reproducibility, we should always aim to working from a
         clean plate.
--   Replace the old code in the R Markdown document (`doc/learning.qmd`)
-    with the new function.
+-   Replace the old code in the Quarto / R Markdown document
+    (`doc/learning.qmd`) with the new function.
 -   Finish building functions that prepare the dataset, use them in the
     cleaning script (`data-raw/mmash.R`), run the script and save the
     data as an `.rda` file (`data/mmash.rda`).
     -   Like with the `R/functions.R` script, we move the finalized data
-        processing code over from the R Markdown into the
+        processing code over from the Quarto / R Markdown into the
         `data-raw/mmash.R` script to have a clear separation of
         completed code and prototyping code.
--   Remove the old code from the R Markdown document
+-   Remove the old code from the Quarto / R Markdown document
     (`doc/lessons.Rmd`).
     -   Once we've finished prototyping code and moved it over into a
         more "final" location, we remove left over code because it isn't

@@ -7,14 +7,16 @@ library(fs)
 library(tidyverse)
 library(vroom)
 load(here("_temp/functionals.RData"))
-source(here("R/build-functions.R"))
+source(here("R/functions.R"))
+options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over
-to the third block, "*Create final data*", in @fig-diagram-overview-4.
+to the third block, "*Create project data*", in
+@fig-overview-create-project-data.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-3.svg){#fig-diagram-overview-4}
+covering.](/images/overview-create-project-data.svg){#fig-overview-create-project-data}
 
 ## Learning objectives
 
@@ -191,20 +193,21 @@ and extracts the user ID from it. **First step**: While in the
 `doc/learning.qmd` file, convert this code into a function, using the
 same process you've done previously.
 
--   Call the new function `extract_user_id` and add one argument called
-    `imported_data`.
-    -   Remember to output the code into an object and `return()` it at
-        the end of the function.
-    -   Include Roxygen documentation.
--   After writing it and testing that the function works, move the
+1.  Call the new function `extract_user_id` and add one argument called
+    `imported_data`. - Remember to output the code into an object and
+    `return()` it at the end of the function. - Include Roxygen
+    documentation.
+2.  After writing it and testing that the function works, move the
     function into `R/functions.R`.
--   Replace the code in the `doc/learning.qmd` file with the function
+3.  Replace the code in the `doc/learning.qmd` file with the function
     name so it looks like `extract_user_id(user_info_df)`, restart the R
     session, source everything with `source()` with
     {{< var keybind.source >}}, and run the new function to test that it
     works.
--   Knit / render the `doc/learning.qmd` file to make sure things remain
-    reproducible with {{< var keybind.render >}}
+4.  Knit / render the `doc/learning.qmd` file to make sure things remain
+    reproducible with {{< var keybind.render >}}.
+5.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
 
 ::: callout-tip
 If you don't know what package a function comes from when you need to
@@ -304,12 +307,20 @@ to use `user_id` instead of `file_path_id`:
 ```{r}
 summarised_rr_df <- rr_df %>%
   group_by(user_id, day) %>%
-  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+  summarise(across(ibi_s, list(
+    mean = ~ mean(.x, na.rm = TRUE), 
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>% 
+  ungroup()
 
 summarised_actigraph_df <- actigraph_df %>%
   group_by(user_id, day) %>%
   # These statistics will probably be different for you
-  summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE))
+  summarise(across(hr, list(
+    mean = ~ mean(.x, na.rm = TRUE), 
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>% 
+  ungroup()
 ```
 
 Let's render the `doc/learning.qmd` document using
@@ -341,7 +352,9 @@ There are many ways to join datasets in `{dplyr}` that are described in
     and columns in `x`. *Columns* that exist in `y` but not `x` are
     joined to `x`.
 
-![Left joining in dplyr. Modified from the RStudio dplyr
+![Left joining in `{dplyr}`. Notice how the row with `D` in column `A`
+in the blue data is not included in the outputted data on the right.
+Modified from the RStudio `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
 width="90%"}
 
@@ -349,7 +362,9 @@ width="90%"}
     columns in `x` that match rows and columns in `y`. *Columns* that
     exist in `x` but not `y` are joined to `y`.
 
-![Right joining in dplyr. Modified from the RStudio dplyr
+![Right joining in `{dplyr}`. Notice how the row with `C` in column `A`
+in the green data is not included in the outputted data on the right.
+Modified from the RStudio `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
 width="90%"}
 
@@ -357,7 +372,10 @@ width="90%"}
     and columns in `x`. Columns *and* **rows** that exist in `y` but not
     `x` are joined to `x`.
 
-![Full joining in dplyr. Modified from the RStudio dplyr
+![Full joining in `{dplyr}`. Notice how all rows and columns are
+included in the outputted data on the right, and that some missingness
+is introduced because those values don't exist when the data are
+combined in this way. Modified from the RStudio `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
 width="90%"}
 
@@ -406,7 +424,9 @@ reduce(1:5, add_numbers)
 @fig-reduce visually shows what is happening within `reduce()`.
 
 ![A functional that iteratively uses a function on a set of items until
-only one output remains. Modified from the RStudio purrr
+only one output remains. Notice how the output of the first iteration of
+the `func()` function is placed in the first position of `func()` in the
+next iteration, and so on. Modified from the RStudio purrr
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
@@ -549,7 +569,8 @@ saliva_with_day_df
 reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
 ```
 
-We now have two rows per participant!
+We now have two rows per participant! Let's add and commit the changes
+to the Git history with {{< var keybind.git >}}.
 
 ## Wrangling data into final form
 
@@ -625,7 +646,6 @@ save the data as an `.rda` file. We'll add this code to the very bottom
 of the script:
 
 ```{r save-data}
-#| eval: false
 usethis::use_data(mmash, overwrite = TRUE)
 ```
 
@@ -673,5 +693,7 @@ next session.
 
 ```{r store-session-code}
 #| include: false
-save.image(here::here("_temp/dplyr-join.RData"))
+rm(actigraph_df, rr_df)
+save.image(here::here("_temp/dplyr-joins.RData"))
 ```
+

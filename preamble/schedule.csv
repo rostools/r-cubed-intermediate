@@ -14,9 +14,9 @@ Day 2,10:15,Coffee break and snacks,mug-hot,
 Day 2,10:30,"Save time, don't repeat yourself: Using functionals",laptop-code,../sessions/functionals.html
 Day 2,12:15,Lunch,utensils,
 Day 2,13:00,Networking and social activity,user-group,../appendix/social.qmd#social-day-two
-Day 2,13:30,Processing and joining datasets for cleaning,laptop-code,../sessions/joins.html
+Day 2,13:30,Processing and joining datasets for cleaning,laptop-code,../sessions/dplyr-joins.html
 Day 2,15:00,Coffee break and snacks,mug-hot,
-Day 2,15:15,Processing and joining datasets for cleaning,laptop-code,../sessions/joins.html
+Day 2,15:15,Processing and joining datasets for cleaning,laptop-code,../sessions/dplyr-joins.html
 Day 2,16:45,End of day survey,comment-dots,https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link
 Day 3,9:00,Quickly re-arranging data with pivots,laptop-code,../sessions/pivots.html
 Day 3,10:15,Coffee break and snacks,mug-hot,

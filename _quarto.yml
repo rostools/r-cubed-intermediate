@@ -2,17 +2,11 @@ project:
   type: r3-theme
   pre-render:
     - mkdir -p _temp
-    # - bash _build-slides.sh
+    - bash _build-slides.sh
   # post-render:
   #   - rm -rf data-raw/mmash
-  # resources:
-  #   - slides/*.html
-  # pre-render:
-  #   - _common.R
-  #   - R/build-functions.R
-  # resources:
-  #   - resources
-  #   - slides
+  resources:
+    - slides/*.html
 
 book:
   title: "Reproducible Research in R"
@@ -35,9 +29,9 @@ book:
       - sessions/functions.qmd
       - sessions/functionals.qmd
       - sessions/dplyr-joins.qmd
-      - sessions/pivot.qmd
-    #   - sessions/lesson.qmd
-    #   - sessions/what-next.qmd
+      - sessions/pivots.qmd
+      - sessions/hands-on-work.qmd
+      - sessions/what-next.qmd
   appendices:
     - appendix/social.qmd
     - appendix/for-instructors.qmd
@@ -67,3 +61,6 @@ editor:
   markdown:
     wrap: 72
     canonical: true
+
+execute:
+  warning: true

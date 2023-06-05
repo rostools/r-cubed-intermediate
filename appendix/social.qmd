@@ -1,7 +1,5 @@
 # Networking and social activities
 
-{{< include ../includes/_wip.qmd >}}
-
 As you get more experienced in coding, the role of your network becomes
 increasingly important both for continued learning, but also for
 collaboration with others skilled in R. So, part of the course is also

@@ -8,14 +8,14 @@ library(purrr)
 library(fs)
 library(vroom)
 load(here("_temp/functions.RData"))
-source(here("R/build-functions.R"))
+source(here("R/functions.R"))
 ```
 
 We will continue covering the "*Workflow*" block in
-@fig-diagram-overview-3.
+@fig-overview-workflow.
 
 ![Section of the overall workflow we will be
-covering.](/images/diagram-overview-3.svg){#fig-diagram-overview-3}
+covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -75,7 +75,9 @@ vector at once. In vectorized functions, you can give the function an
 entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it.
 @fig-vectorization shows how a function conceptually uses vectorization.
 
-![A function using vectorization. Modified from the [RStudio purrr
+![A function using vectorization. Notice how a set of items is included
+*all at once* in the `func()` function and outputs a single item on the
+right. Modified from the [RStudio purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
 width="45%"}
 
@@ -122,7 +124,9 @@ geographic map, it is the mathematical meaning of map: To use a function
 on each item in a set of items.
 
 ![A functional that uses a function to apply it to each item in a
-vector. Modified from the [RStudio purrr
+vector. Notice how each of the green coloured boxes are placed into the
+`func()` function and outputs the same number of blue boxes as there are
+green boxes. Modified from the [RStudio purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
 width="90%"}
 
@@ -585,7 +589,7 @@ Or, only character columns:
 
 ```{r}
 #| eval: false
-user_info_df %>% 
+user_info_df %>%
   select(where(is.character))
 ```
 
@@ -626,8 +630,8 @@ arguments you give it.
 ::: callout-note
 ## Reading task: \~2 minutes
 
-When you look in `?across`, there are two main arguments and two
-optional ones:
+When you look in `?across`, there are two main arguments and one
+optional one (plus one deprecated one):
 
 1.  `.cols` argument: Columns you want to use.
     -   Write column names directly and wrapped in `c()`:
@@ -639,22 +643,39 @@ optional ones:
 2.  `.fns`: The function to use on the `.cols`.
     -   A bare function (`mean`) applies it to each column and returns
         the output, with the column name unchanged.
+
     -   A list with bare functions (`list(mean, sd)`) applies each
         function to each column and returns the output with the column
         name appended with a number (e.g. `cortisol_norm_1`).
-    -   A named list with bare functions
+
+    -   An anonymous function passed with either `~` (using `.x` to
+        refer to the variable) or `\()` or `function()` like in `map()`.
+        For instance, these three lines of code below mean all the same
+        and are used to say "put age and weight, one after the other, in
+        place of where `.x` is located" to calculate the mean for age
+        and the mean for weight.
+
+        ``` r
+        across(c(age, weight), ~ mean(.x, na.rm = TRUE))
+        across(c(age, weight), function(x) mean(x, na.rm = TRUE))
+        across(c(age, weight), \(x) mean(x, na.rm = TRUE))
+        ```
+
+    -   A named list with bare or anonymous functions
         (`list(average = mean, stddev = sd)`) does the same as above but
         instead returns an output with the column names appended with
         the name given to the function in the list (e.g.
-        `cortisol_norm_average`).
-    -   A function passed with `~` and `.x`, like in `map()`. For
-        instance, `across(c(age, weight), ~ mean(.x, na.rm = TRUE))` is
-        used to say "put age and weight, one after the other, in place
-        of where `.x` is located" to calculate the mean for age and the
-        mean for weight.
-3.  `...` argument: Arguments to give to the functions in `.fns`. For
-    instance, `across(age, mean, na.rm = TRUE)` passes the argument to
-    remove missingness `na.rm` into the `mean()` function.
+        `cortisol_norm_average`). You can also use anonymous functions
+        within the list:
+
+        ``` r
+        list(
+          average = ~ mean(.x, na.rm = TRUE),
+          stddev = ~ sd(.x, na.rm = TRUE),
+        )
+        ```
+3.  `...` argument (**deprecated**): Arguments to give to the functions
+    in `.fns`. No longer used.
 4.  `.names` argument: Customize the output of the column names. We
     won't cover this argument.
 :::
@@ -738,11 +759,12 @@ need to `group_by()` these two variables before summarising that lets us
 use the split-apply-combine technique. Let's first summarise by taking
 the mean of `ibi_s` (which is the inter-beat interval in seconds):
 
-``` r
+```{r}
+#| eval: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
-rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean)))
+rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = mean)))
 ```
 
 ```{r admin-rr-summarised-for-book}
@@ -755,19 +777,20 @@ rr_df %>%
 ```
 
 While there are no missing values here, let's add the argument
-`na.rm = TRUE` just in case.
+`na.rm = TRUE` just in case. In order add this argument to the mean, we
 
-``` r
-rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean), na.rm = TRUE))
+```{r}
+#| eval: false
+rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE))))
 ```
 
 ```{r admin-rr-summarise-na-rm-for-book}
 #| echo: false
 rr_df %>%
   group_by(file_path_id, day) %>%
-  summarise(across(ibi_s, list(mean = mean), na.rm = TRUE)) %>%
+  summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE)))) %>%
   trim_filepath_for_book()
 ```
 
@@ -805,10 +828,14 @@ You will now no longer get the message.
 Let's also add standard deviation as another measure from the RR
 datasets:
 
-``` r
-summarised_rr_df <- rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+```{r}
+#| eval: false
+summarised_rr_df <- rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  )))
 summarised_rr_df
 ```
 
@@ -816,7 +843,10 @@ summarised_rr_df
 #| echo: false
 summarised_rr_df <- rr_df %>%
   group_by(file_path_id, day) %>%
-  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE))
+  summarise(across(ibi_s, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  )))
 summarised_rr_df %>%
   trim_filepath_for_book()
 ```
@@ -824,11 +854,15 @@ summarised_rr_df %>%
 Whenever you are finished with a grouping effect, it's good practice to
 end the `group_by()` with `ungroup()`. Let's add it to the end:
 
-``` r
-summarised_rr_df <- rr_df %>% 
-    group_by(file_path_id, day) %>% 
-    summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>% 
-    ungroup()
+```{r}
+#| eval: false
+summarised_rr_df <- rr_df %>%
+  group_by(file_path_id, day) %>%
+  summarise(across(ibi_s, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>%
+  ungroup()
 summarised_rr_df
 ```
 
@@ -836,7 +870,10 @@ summarised_rr_df
 #| echo: false
 summarised_rr_df <- rr_df %>%
   group_by(file_path_id, day) %>%
-  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>%
+  summarise(across(ibi_s, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>%
   ungroup()
 summarised_rr_df %>%
   trim_filepath_for_book()
@@ -857,7 +894,7 @@ commit** the changes so far with {{< var keybind.git >}}.
 
 Like with the `RR.csv` dataset, let's process the `Actigraph.csv`
 dataset so that it makes it easier to join with the other datasets
-later.
+later. Make sure to read the warning block below.
 
 1.  Like usual, create a new Markdown header called e.g.
     `## Exercise: Summarise  Actigraph` and insert a new code chunk
@@ -884,6 +921,14 @@ later.
 9.  **Add and commit** the changes you've made into the Git history with
     {{< var keybind.git >}}.
 
+::: {.callout-warning appearance="default"}
+Since the `actigraph_df` dataset is quite large, we **strongly**
+recommend not using `View()` or selecting the dataframe in the
+Environments pane to view it. For many computers, your R session will
+**crash**! Instead type out `glimpse(actigraph_df)` or simply
+`actigraph_df` in the Console.
+:::
+
 ```{r solution-summarise-actigraph}
 #| eval: true
 #| output: false
@@ -893,7 +938,10 @@ actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_actigraph_df <- actigraph_df %>%
   group_by(file_path_id, day) %>%
   # These statistics will probably be different for you
-  summarise(across(hr, list(mean = mean, sd = sd), na.rm = TRUE)) %>%
+  summarise(across(hr, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>%
   ungroup()
 ```
 
@@ -915,7 +963,10 @@ actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 
 summarised_rr_df <- rr_df %>%
   group_by(file_path_id, day) %>%
-  summarise(across(ibi_s, list(mean = mean, sd = sd), na.rm = TRUE)) %>%
+  summarise(across(ibi_s, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>%
   ungroup()
 
 # Code pasted here that was made from the above exercise
@@ -944,5 +995,6 @@ add and commit the changes to the Git history with
 
 ```{r store-session-code}
 #| include: false
+rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
