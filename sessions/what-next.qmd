@@ -1,6 +1,6 @@
 # What next? {#sec-final-remarks}
 
-[**What Next slides**](slides/what-next.html)
+[**What Next slides**](../slides/what-next.html)
 
 <div>
 
