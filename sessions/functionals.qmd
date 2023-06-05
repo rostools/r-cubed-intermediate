@@ -382,7 +382,9 @@ works to import the other three datasets.
     run the line with `source(here("R/functions.R"))` or with
     {{< var keybind.source >}}, and test the code out in the
     **Console**.
-5.  Once done, **add** the changes you've made and **commit** them to
+5.  Run `{styler}` while in the `R/functions.R` file with
+    {{< var keybind.styler >}}.
+6.  Once done, **add** the changes you've made and **commit** them to
     the Git history, using {{< var keybind.git >}}.
 
 Use this code as a guide to help complete this exercise:
@@ -914,9 +916,11 @@ later. Make sure to read the warning block below.
     newly summarised data frame to a new data frame and call it
     `summarised_actigraph_df`.
 7.  End the grouping effect with `ungroup()`.
-8.  Knit the `doc/learning.qmd` document with {{< var keybind.render >}}
+8.  Run `{styler}` while in the `doc/learning.qmd` file with
+    {{< var keybind.styler >}}.
+9.  Knit the `doc/learning.qmd` document with {{< var keybind.render >}}
     to make sure everything works.
-9.  **Add and commit** the changes you've made into the Git history with
+10. **Add and commit** the changes you've made into the Git history with
     {{< var keybind.git >}}.
 
 ::: {.callout-warning appearance="default"}

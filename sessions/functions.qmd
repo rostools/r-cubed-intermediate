@@ -394,6 +394,8 @@ using {{< var keybind.outline >}}.
     -   Run the function and then test that it works
     -   Create the Roxygen documentation by adding it with
         {{< var keybind.roxygen >}}
+4.  Run `{styler}` while in the `doc/learning.qmd` file with
+    {{< var keybind.styler >}}.
 
 Use the below code as a guide:
 
@@ -735,6 +737,9 @@ code you worked on previously that imported the `RR.csv` and
     import_rr(here("data-raw/mmash/user_1/RR.csv"))
     import_actigraph(here("data-raw/mmash/user_1/Actigraph.csv"))
     ```
+
+4.  Run `{styler}` while in the `R/functions.R` file with
+    {{< var keybind.styler >}}.
 
 Also update the `import_saliva()` function you created by being explicit
 about where the functions come from (e.g. with the `packagename::`).

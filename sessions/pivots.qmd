@@ -218,8 +218,10 @@ mmash %>%
     them into a named list like we did previously). Don't forget to use
     `na.rm = TRUE` to exclude missing values.
 3.  Stop the grouping effect with `ungroup()`.
-4.  Render the Quarto file into HTML with {{< var keybind.render >}}.
-5.  Open up the Git interface and **add and commit** the changes to
+4.  Run `{styler}` while in the `doc/learning.qmd` file with
+    {{< var keybind.styler >}}.
+5.  Render the Quarto file into HTML with {{< var keybind.render >}}.
+6.  Open up the Git interface and **add and commit** the changes to
     `doc/learning.qmd` with {{< var keybind.git >}}
 
 ```{r solution-pivot-summarize}
@@ -387,13 +389,15 @@ the code we just wrote above into a function.
     -   Don't forget, you can use `?functionname` to find out which
         package the function comes from.
 5.  Move the newly created function over into the `R/functions.R` file.
-6.  Restart R with {{< var keybind.restart-r >}}, go into the
+6.  Run `{styler}` while in the `R/functions.R` file with
+    {{< var keybind.styler >}}.
+7.  Restart R with {{< var keybind.restart-r >}}, go into the
     `doc/learning.qmd` file and run the `setup` code chunk in the Quarto
     document with the `source()` and `load()` commands. Then test that
     the new function works in a code chunk at the bottom of the
     document.
-7.  Render the Quarto document to HTML with {{< var keybind.render >}}.
-8.  Add and commit the changes to the Git history with
+8.  Render the Quarto document to HTML with {{< var keybind.render >}}.
+9.  Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
 
 Use this code to refresh your memory on how functions are structured and
@@ -592,4 +596,3 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-
