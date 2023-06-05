@@ -273,8 +273,6 @@ use it more in your own work.
 
 ## R Markdown / Quarto {#sec-quarto}
 
-<!-- TODO: switch to Quarto -->
-
 We teach and use R Markdown / [Quarto](https://quarto.org) because it is
 one of the very first steps to being reproducible and because it is a
 very powerful tool to doing data analysis. Please do these two tasks:

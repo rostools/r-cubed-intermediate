@@ -1,4 +1,3 @@
-# TODO: Convert this over to r3-theme or as shortcodes? To share across courses?
 keybind:
   palette: '{{< kbd linux=Ctrl-Shift-P mac=Cmd-Shift-P win=Ctrl-Shift-P >}}'
   git: '{{< kbd linux=Ctrl-Shift-M mac=Cmd-Shift-M win=Ctrl-Shift-M >}} or with the Palette ({{< var keybind.palette >}}, then type "commit")'

@@ -245,8 +245,6 @@ user_1_info_data <- vroom(
 Next we wrap it in the function call and give it an appropriate name. In
 this case, `import_user_info` is descriptive and meaningful.
 
-<!-- TODO: Use styler throughout course? -->
-
 ```{r function-creation-step-2}
 #| eval: false
 import_user_info <- function() {
