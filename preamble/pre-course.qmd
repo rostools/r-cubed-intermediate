@@ -1,3 +1,9 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
 # Pre-course tasks {#sec-pre-course}
 
 ```{r setup}
@@ -312,14 +318,14 @@ course, we're going to use an openly licensed dataset on monitoring
 sleep and activity (MMASH) [@Rossi2020; @Rossi2020a]. To begin learning
 about being reproducible and applying modern approaches to data
 analysis, we're going to write and save R code to download a dataset,
-prepare it a bit so it's at least a little usable, and than save it to
+prepare it a bit so it's at least a little usable, and then save it to
 your computer. The goal at the end of the course is to create a pipeline
 to download the data, process and clean it, and save it in a form that
 makes it easier to analyze. Why don't we get you to download an already
 cleaned and prepared dataset? Because in the real world, the data you
 get is rarely all cleaned up and ready for you, and this course is about
 learning more advanced tools to do the data wrangling. Look over these
-tasks and than switch over to the [MMASH
+tasks and then switch over to the [MMASH
 website](https://physionet.org/content/mmash/1.0.0/):
 
 1.  Look through the Data Description to get familiar with the dataset
@@ -365,11 +371,11 @@ out:
 library(here)
 ```
 
-The `{here}` package was described in the [Management of R
-Projects](https://r-cubed-intro.rostools.org/sessions/project-management.html)
+The `{here}` package was described in the [Data management and
+wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html)
 of the introductory course and makes it easier to refer to other files
 in an R project. Read through the [section about the here
-package](https://r-cubed-intro.rostools.org/sessions/project-management.html#packages-data-and-file-paths)
+package](https://r-cubed-intro.rostools.org/sessions/data-management.html)
 in the introductory R course.
 
 R works based on the current *working directory*, which you can see on
@@ -721,7 +727,7 @@ r3::check_project_setup()
 The output should look something a bit like the above text. If it
 doesn't, start over by deleting all *but* the `mmash.R` and
 `mmash-data.zip` files and running the code from the beginning again. If
-your output looks a bit like this, than copy and paste the output into
+your output looks a bit like this, then copy and paste the output into
 the survey question at the end.
 
 ## Basic course details {#sec-course-details}
