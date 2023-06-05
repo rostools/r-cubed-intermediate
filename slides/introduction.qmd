@@ -11,8 +11,8 @@ bibliography: includes/references.bib
 -   :heavy_check_mark: Pick a group from the basket and go to that table
 -   :heavy_check_mark: Introduce yourself
 -   :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project
--   :heavy_check_mark: Check that your `data-raw/` looks like that one
-    the side
+-   :heavy_check_mark: Check that your `data-raw/` looks like that on
+    the right
 :::
 
 ::: {.column width="30%"}
@@ -64,7 +64,7 @@ So, why is it that there isn't much information on how researchers do
 data analysis?
 :::
 
-# :shrug:...Because code sharing is almost non-existent in science {.center}
+# :shrug::confused:...Because code sharing is almost non-existent in science {.center}
 
 Very few papers provide code [@Leek2017a, @Considine2017a]
 
@@ -211,4 +211,3 @@ Question, mostly for my own information...
 ## Return to your seats! :chair: {.center}
 
 # References
-
