@@ -2,6 +2,7 @@
 search: false
 # Relative to main project
 bibliography: includes/references.bib
+csl: includes/vancouver.csl
 ---
 
 # What next? Reproducibility in research
