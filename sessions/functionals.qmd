@@ -593,8 +593,6 @@ user_info_df %>%
   select(where(is.character))
 ```
 
-What is this trim_filepath_for_book?
-
 ```{r admin-select-where-for-book}
 #| echo: false
 user_info_df %>%

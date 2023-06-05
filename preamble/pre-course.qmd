@@ -1,9 +1,3 @@
----
-editor: 
-  markdown: 
-    wrap: 72
----
-
 # Pre-course tasks {#sec-pre-course}
 
 ```{r setup}
@@ -375,7 +369,7 @@ The `{here}` package was described in the [Data management and
 wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html)
 of the introductory course and makes it easier to refer to other files
 in an R project. Read through the [section about the here
-package](https://r-cubed-intro.rostools.org/sessions/data-management.html)
+package](https://r-cubed-intro.rostools.org/sessions/data-management.html#saving-datasets-as-files)
 in the introductory R course.
 
 R works based on the current *working directory*, which you can see on

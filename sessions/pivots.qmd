@@ -1,9 +1,3 @@
----
-editor: 
-  markdown: 
-    wrap: 72
----
-
 # Quickly re-arranging data with pivots {#sec-pivots}
 
 ```{r setup}
@@ -598,4 +592,3 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-
