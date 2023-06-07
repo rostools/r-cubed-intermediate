@@ -495,35 +495,17 @@ technique to each group through *vectorization*. This technique works
 really well for a range of tasks, including for our task of summarizing
 some of the MMASH data so we can merge it all into one dataset.
 
-## Exercise: What is the pipe?
-
-> Time: 5 minutes.
+## Summarising data through functionals {#sec-summarise-with-functionals}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
-Before starting this exercise, ask how many have used the pipe before.
-If everyone has, then move on to the next section. If some haven't, let
-the others in the group explain, but **do not** use much time or even
-demonstrate it. If they don't know what it is, they can look it up
-after. We covered this in the introduction course, so we should not
-cover it again here.
+Before starting this section, ask how many have used the pipe before. If
+everyone has, then move on. If some haven't, very briefly explain it,
+but **do not** use much time on it since we will be using it shortly and
+they will see how it works then. We covered this in the introduction
+course, so we should not cover it again here.
 :::
-
-We haven't used the `%>%` pipe from the `{magrittr}` package yet, but it
-is used extensively in many R packages and is the foundation of
-tidyverse packages. The function fundamentally changed how people write
-R code so much that in version 4.1 a similar function, `|>`, was added
-to base R. To make sure everyone is aware of what the pipe is, in your
-groups please do either task:
-
--   If one or more person in the group doesn't know what the pipe is,
-    take some time to talk about and explain it (if you know).
--   If no one in the group knows, please read [the section on
-    it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
-    from the beginner course.
-
-## Summarising data through functionals {#sec-summarise-with-functionals}
 
 Functionals and vectorization are an integral component of how R works
 and they appear throughout many of R's functions and packages. They are
@@ -553,6 +535,12 @@ column, you would type out:
 user_info_df %>%
   select(age)
 ```
+
+::: aside
+Don't know what the `%>%` pipe is? Check out [the section on
+it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
+from the beginner course.
+:::
 
 But many `{dplyr}` verbs can also take functions as input. When you
 combine `select()` with the `where()` function, you can select different
