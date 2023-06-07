@@ -437,7 +437,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
-## Adding to the processing script and clean up Quart / R Markdown document
+## Adding to the processing script and clean up Quarto / R Markdown document
 
 We've now made a function that imports multiple data files based on the
 type of data file, we can start using this function directly, like we
