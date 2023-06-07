@@ -441,6 +441,9 @@ columns and so can't be a vector itself), we need to combine the
 datasets together in a `list()` and reduce them with `full_join()`.
 :::
 
+Let's code this together, using `reduce()`, `full_join()`, and `list()`
+while in the `doc/learning.qmd` file.
+
 ```{r}
 combined_data <- reduce(list(user_info_df, saliva_df), full_join)
 combined_data
