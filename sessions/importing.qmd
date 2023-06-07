@@ -77,12 +77,11 @@ to eventually save a version of the raw data that is specific to your
 research questions. The first step to processing data is to import it
 into R so we can work on it. So for now, we'll open up the
 `doc/learning.qmd` file so we can start building and testing out the
-code. At the bottom of the file, create a new header by typing out
-`## Importing raw data`. Right below the header, make a new code chunk
-with {{< var keybind.chunk >}} and call it `setup`. Inside the code
-chunk, load the `{vroom}` package with `library(vroom)` as well as
-`library(here)`. Since we'll also be using the `{tidyverse}` package,
-let's also add `library(tidyverse)`. It should look like this:
+code. There should be a `setup` code chunk already be in the file, where
+we will put the `library()` code for loading the `{vroom}` package with
+`library(vroom)` as well as `library(here)`. Since we'll also be using
+the `{tidyverse}` package, let's also add `library(tidyverse)`. It
+should look like this:
 
 ````         
 ```{{r setup}}
@@ -92,12 +91,13 @@ library(here)
 ```
 ````
 
-This is a special, named code chunk that tells R to run this code chunk
-first whenever you open this Quarto / R Markdown file and run code
-inside of the file. It's in this `setup` code chunk that we will add
-`library()` functions when we want to load other packages. After adding
-this code chunk, create a new code chunk right below it using
-{{< var keybind.chunk >}}.
+This `setup` code chunk is a special, named code chunk that tells R to
+run this code chunk first whenever you open this Quarto / R Markdown
+file and run code inside of the file. It's in this `setup` code chunk
+that we will add `library()` functions when we want to load other
+packages. After adding this code chunk, create a new header by typing
+out `## Importing raw data`, followed by creating a new code chunk right
+below it using {{< var keybind.chunk >}}.
 
 ::: callout-note
 ## Reading task: \~5 minutes
@@ -599,3 +599,4 @@ next session.
 #| include: false
 save.image(here::here("_temp/importing.RData"))
 ```
+
