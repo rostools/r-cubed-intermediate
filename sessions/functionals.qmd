@@ -203,22 +203,30 @@ But what does functionals have to do with what we are doing now? Well,
 our `import_user_info()` function only takes in one data file. But we
 have 22 files that we could load all at once if we used functionals.
 
-The first thing we have to do is add `library(purrr)` to the `setup`
-code chunk in the `doc/learning.qmd` document. Then we need to add the
-package dependency by going to the **Console** and running:
+Before we continue, let's clean up the `doc/learning.qmd` file by
+deleting **everything** below the `setup` code chunk that contains the
+`library()` and `source()` code. Why do we delete everything? Because it
+keeps things cleaner and makes it easier to look through the file (both
+for you and for us as instructors). And because we use Git, nothing is
+truly gone so you can always go back to the text later. Next, we restart
+the R session with {{< var keybind.restart-r >}}.
+
+Next, we'll need to add `{purrr}` as a package dependency by going to
+the **Console** and running:
 
 ``` r
 usethis::use_package("purrr")
 ```
 
-Then, the next step for using the `map()` functional is to get a vector
-or list of all the dataset files available to us. We will return to
-using the `{fs}` package, which has a function called `dir_ls()` that
-finds files of a certain pattern. In our case, the pattern is
-`user_info.csv`. So, let's add `library(fs)` to the `setup` code chunk.
-Then, go to the bottom of the `doc/learning.qmd` document, create a new
-header called `## Using map`, and create a code chunk below that with
-{{< var keybind.chunk >}}
+Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
+with `library()`. The next step for using the `map()` functional is to
+get a vector or list of all the dataset files available to us. We will
+return to using the `{fs}` package, which has a function called
+`dir_ls()` that finds files of a certain pattern. In our case, the
+pattern is `user_info.csv`. So, let's add `library(fs)` to the `setup`
+code chunk. Then, go to the bottom of the `doc/learning.qmd` document,
+create a new header called `## Using map`, and create a code chunk below
+that with {{< var keybind.chunk >}}
 
 The `dir_ls()` function takes the path that we want to search
 (`data-raw/mmash/`), uses the argument `regexp` (short for [regular
@@ -441,13 +449,10 @@ Markdown file is only a sandbox to test code out and in the end we want
 a script that takes the raw data, processes it, and creates a working
 dataset we can use for analysis.
 
-First thing we will do is delete **everything** below the `setup` code
-chunk that contains the `library()` and `source()` code. Why do we
-delete everything? Because it keeps things cleaner and makes it easier
-to look through the file. And because we use Git, nothing is truly gone
-so you can always go back to the text later. Next, we restart the R
-session with {{< var keybind.restart-r >}}. Then we'll create a new code
-chunk below the `setup` chunk where we will use the
+Like we did before, delete **everything** below the `setup` code chunk
+that contains the `library()` and `source()` code. Then, we will restart
+the R session with {{< var keybind.restart-r >}} and we'll create a new
+code chunk below the `setup` chunk where we will use the
 `import_multiple_files()` function to import the user info and saliva
 data.
 
