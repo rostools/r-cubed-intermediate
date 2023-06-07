@@ -190,6 +190,15 @@ as above, now using the `~` shortcut:
 map(1:5, ~ paste(.x, "seconds have passed"))
 ```
 
+`map()` will always output a list, but sometimes we might want to output
+a different data type. If we look into the help documentation with
+`?map`, it shows several other types of map that all start with `map_`:
+
+-   `map_chr()` outputs a character vector.
+-   `map_int()` outputs an integer.
+-   `map_dbl()` outputs a numeric value, called a "double" in
+    programming.
+
 This is the basics of using functionals. Functions, vectorization, and
 functionals provide expressive and powerful approaches to a simple task:
 *Doing an action on each item in a set of items*. And while technically
@@ -273,42 +282,21 @@ This is great because with one line of code we imported all these
 datasets! But we're missing an important bit of information: The user
 ID. A powerful feature of the `{purrr}` package is that it has other
 functions to make working with functionals easier. We know `map()`
-always outputs a list. What if you want to output a character vector
-instead? If we check the help:
+always outputs a list. But what we want is a single data frame at the
+end that also contains the user ID information.
 
-``` r
-?map
-```
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Go through this help documentation and talk a bit about it.
-:::
-
-We see that there are other functions, including a function called
-`map_chr()` that seems to output a character vector. There are several
-others that give an output based on the ending of `map_`, such as:
-
--   `map_int()` outputs an integer.
--   `map_dbl()` outputs a numeric value, called a "double" in
-    programming.
--   `map_dfr()` outputs a data frame, combining the list items by row
-    (`r`).
--   `map_dfc()` outputs a data frame, combining the list items by column
-    (`c`).
-
-The `map_dfr()` looks like the one we want, since we want all these
-datasets together as one. If we look at the help for it, we see that it
-has an argument `.id`, which we can use to create a new column that sets
+The function that will take a list and convert it into a data frame is
+called `list_rbind()` to bind ("stack") by rows or `list_cbind()` to
+bind ("stack") by columns. We want to bind by rows, so will use
+`list_rbind()` and if we look at the help for it, we see that it has an
+argument `names_to`. This argument lets us create a new column that sets
 the user ID, or in this case, the file path to the dataset, which has
 the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
 ```{r}
-user_info_df <- map_dfr(user_info_files, import_user_info,
-  .id = "file_path_id"
-)
+user_info_df <- map(user_info_files, import_user_info) %>%
+  list_rbind(names_to = "file_path_id")
 ```
 
 Your `file_path_id` variable will look different. Don't worry, we're
@@ -334,12 +322,14 @@ the Git history, by using {{< var keybind.git >}}
 We need to do basically the exact same thing for the `saliva.csv`,
 `RR.csv`, and `Actigraph.csv` datasets, following this format:
 
-``` r
-user_info_files <- dir_ls(here("data-raw/mmash/"), 
-                          regexp = "user_info.csv", 
-                          recurse = TRUE)
-user_info_df <- map_dfr(user_info_files, import_user_info,
-                        .id = "file_path_id")
+```{r}
+#| eval: false
+user_info_files <- dir_ls(here("data-raw/mmash/"),
+  regexp = "user_info.csv",
+  recurse = TRUE
+)
+user_info_df <- map(user_info_files, import_user_info) %>%
+  list_rbind(names_to = "file_path_id")
 ```
 
 For importing the other datasets, we have to modify the code in two
@@ -387,13 +377,14 @@ Use this code as a guide to help complete this exercise:
 
 ``` r
 ___ <- ___(___, ___) {
-    ___ <- ___dir_ls(___here("data-raw/mmash/"),
-                     regexp = ___,
-                     recurse = TRUE)
-    
-    ___ <- ___map_dfr(___, ___, 
-                      .id = "file_path_id")
-    ___(___)
+  ___ <- ___dir_ls(___here("data-raw/mmash/"),
+    regexp = ___,
+    recurse = TRUE
+  )
+
+  ___ <- ___map(___, ____) %>% 
+    ___list_rbind(names_to = "file_path_id")
+  ___(___)
 }
 ```
 
@@ -415,9 +406,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map_dfr(data_files, import_function,
-    .id = "file_path_id"
-  )
+  combined_data <- purrr::map(data_files, import_function) %>% 
+    purrr::list_rbind(names_to = "file_path_id")
   return(combined_data)
 }
 

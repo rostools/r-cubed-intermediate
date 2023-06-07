@@ -274,8 +274,8 @@ file path variable, we need to actually use it within our processing
 pipeline. Since we want this function to work on all the datasets that
 we will import, we need to add it to the `import_multiple_files()`
 function. We'll go to the `import_multiple_files()` function in
-`R/functions.R` and use the `%>%` to add it after using the `map_dfr()`
-function. The code should look something like:
+`R/functions.R` and use the `%>%` to add it after using the
+`list_rbind()` function. The code should look something like:
 
 ```{r add-extract-user-to-import}
 import_multiple_files <- function(file_pattern, import_function) {
@@ -284,9 +284,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map_dfr(data_files, import_function,
-    .id = "file_path_id"
-  ) %>%
+  combined_data <- purrr::map(data_files, import_function) %>% 
+    purrr::list_rbind(names_to = "file_path_id") %>% 
     extract_user_id() # Add the function here.
   return(combined_data)
 }
