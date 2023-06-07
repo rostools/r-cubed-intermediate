@@ -329,7 +329,7 @@ the Git history, by using {{< var keybind.git >}}
 
 ## Exercise: Make a function for importing other datasets with functionals {#sec-ex-function-import-all-data}
 
-> Time: 25 minutes.
+> Time: \~30 minutes.
 
 We need to do basically the exact same thing for the `saliva.csv`,
 `RR.csv`, and `Actigraph.csv` datasets, following this format:

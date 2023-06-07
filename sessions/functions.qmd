@@ -710,7 +710,7 @@ Before moving on to the next exercise, discuss with your group about:
 
 ## Exercise: Move and update the rest of the functions
 
-> Time: 20 minutes.
+> Time: \~30 minutes.
 
 Repeat this process of making functions by doing this to the rest of the
 code you worked on previously that imported the `RR.csv` and
