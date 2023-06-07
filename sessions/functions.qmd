@@ -434,9 +434,17 @@ import_saliva <- function(file_path) {
 
 ## Continuing the workflow
 
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Really emphasize to **cut** and paste, so that the function in the
+`doc/learning.qmd` file is **deleted** and no longer kept in the Quarto
+document.
+:::
+
 We've created two functions. Now we need to move those functions from
-the `doc/learning.qmd` file and into the `R/` folder. We do this for a
-few reasons:
+the `doc/learning.qmd` file and into the `R/` folder by **cutting and
+pasting** (not just copying). We do this for a few reasons:
 
 1.  To prevent the Quarto / R Markdown document from becoming too long
     and having a large portion of R code over other text.
@@ -869,3 +877,4 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
+
