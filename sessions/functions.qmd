@@ -722,7 +722,7 @@ code you worked on previously that imported the `RR.csv` and
 
     -   Name the new functions `import_rr` and `import_actigraph`.
 
-2.  Move the function into `R/functions.R`.
+2.  Move (by **cutting** and pasting) the function into `R/functions.R`.
 
 3.  Restart R, `source()` the functions file, using
     {{< var keybind.source >}}, and test that the functions work by

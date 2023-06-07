@@ -121,7 +121,8 @@ another number from 0 to 9.
 
 Now that we've identified a possible regex to use to extract the user
 ID, let's test it out on the `user_info_df` data. Once it works, we will
-convert it into a function and move it into the `R/functions.R` file.
+convert it into a function and move (**cut and paste**) it into the
+`R/functions.R` file.
 
 Since we will create a new column for the user ID, we will use the
 `mutate()` function from the `{dplyr}` package. We'll use the
@@ -194,11 +195,12 @@ and extracts the user ID from it. **First step**: While in the
 same process you've done previously.
 
 1.  Call the new function `extract_user_id` and add one argument called
-    `imported_data`. - Remember to output the code into an object and
-    `return()` it at the end of the function. - Include Roxygen
-    documentation.
-2.  After writing it and testing that the function works, move the
-    function into `R/functions.R`.
+    `imported_data`.
+    -   Remember to output the code into an object and `return()` it at
+        the end of the function.
+    -   Include Roxygen documentation.
+2.  After writing it and testing that the function works, move (**cut**
+    and paste) the function into `R/functions.R`.
 3.  Run `{styler}` while in the `R/functions.R` file with
     {{< var keybind.styler >}}.
 4.  Replace the code in the `doc/learning.qmd` file with the function
