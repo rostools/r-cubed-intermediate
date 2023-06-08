@@ -452,15 +452,23 @@ Let's code this together, using `reduce()`, `full_join()`, and `list()`
 while in the `doc/learning.qmd` file.
 
 ```{r}
-combined_data <- reduce(list(user_info_df, saliva_df), full_join)
-combined_data
+list(
+  user_info_df,
+  saliva_df
+) %>%
+  reduce(full_join)
 ```
 
 We now have the data in a form that would make sense to join it with the
 other datasets. So lets try it:
 
 ```{r}
-reduce(list(user_info_df, saliva_df, summarised_rr_df), full_join)
+list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df
+) %>%
+  reduce(full_join)
 ```
 
 Hmm, but wait, we now have four rows of each user, when we should have
@@ -580,7 +588,13 @@ saliva_with_day_df
 ...Now, let's use the `reduce()` with `full_join()` again:
 
 ```{r}
-reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
+list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df,
+  summarised_actigraph_df
+) %>%
+  reduce(full_join)
 ```
 
 We now have two rows per participant! Let's add and commit the changes
@@ -643,15 +657,13 @@ saliva_with_day_df <- saliva_df %>%
     TRUE ~ NA_real_
   ))
 
-mmash <- reduce(
-  list(
-    user_info_df,
-    saliva_with_day_df,
-    summarised_rr_df,
-    summarised_actigraph_df
-  ),
-  full_join
-)
+mmash <- list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df,
+  summarised_actigraph_df
+) %>%
+  reduce(full_join)
 ```
 
 Lastly, we have to save this final dataset into the `data/` folder.
