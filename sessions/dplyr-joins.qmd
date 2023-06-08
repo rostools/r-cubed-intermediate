@@ -42,7 +42,7 @@ wonderful package to use for working with character data is called
 `{stringr}`, which we'll use to extract the user ID from the
 `file_path_id` column.
 
-The main driver behind the functions in stringr are [regular
+The main driver behind the functions in `{stringr}` are [regular
 expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex
 for short). These expressions are powerful, very concise ways of finding
 patterns in text. Because they are so concise, though, they are also
@@ -128,11 +128,19 @@ Since we will create a new column for the user ID, we will use the
 `mutate()` function from the `{dplyr}` package. We'll use the
 `str_extract()` function from the `{stringr}` package to "extract a
 string" by using the regex `user_[1-9][0-9]?` that we discussed from the
-exercise. We're also using an argument to `mutate()` you might not have
-seen previously, called `.before`. This will insert the new `user_id`
-column before the column we use and we do this entirely for visual
-reasons, since it is easier to see the newly created column when we run
-the code. In your `doc/learning.qmd` file, create a new header called
+exercise. Since we're going to use `{stringr}`, so let's add it as a
+package dependency:
+
+```{r}
+#| eval: false
+usethis::use_package("stringr")
+```
+
+We're also using an argument to `mutate()` you might not have seen
+previously, called `.before`. This will insert the new `user_id` column
+before the column we use and we do this entirely for visual reasons,
+since it is easier to see the newly created column when we run the code.
+In your `doc/learning.qmd` file, create a new header called
 `## Using regex for user ID` at the bottom of the document, and create a
 new code chunk below that.
 
@@ -140,7 +148,7 @@ new code chunk below that.
 ## Instructor note
 
 Walk through writing this code, briefly explain/remind how to use
-mutate, and about the stringr function.
+mutate, and about the `{stringr}` function.
 :::
 
 ```{r extract-user-id}
