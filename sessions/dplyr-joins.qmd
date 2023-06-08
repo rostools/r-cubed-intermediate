@@ -607,14 +607,13 @@ to bring it all together and put it into the `data-raw/mmash.R` script
 so we can create a final working dataset.
 
 Open up the `data-raw/mmash.R` file and the top of the file, add the
-`{vroom}` package to the end of the list of other packages. Move the
-code `library(fs)` to go with the other packages as well. It should look
-something like this now:
+`{tidyverse}` package to the end of the list of other packages if it
+isn't there already. Move the code `library(fs)` to go with the other
+packages as well. It should look something like this now:
 
 ```{r}
 library(here)
 library(tidyverse)
-library(vroom)
 library(fs)
 ```
 
