@@ -292,8 +292,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map(data_files, import_function) %>% 
-    purrr::list_rbind(names_to = "file_path_id") %>% 
+  combined_data <- purrr::map(data_files, import_function) %>%
+    purrr::list_rbind(names_to = "file_path_id") %>%
     extract_user_id() # Add the function here.
   return(combined_data)
 }
@@ -319,18 +319,18 @@ to use `user_id` instead of `file_path_id`:
 summarised_rr_df <- rr_df %>%
   group_by(user_id, day) %>%
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE), 
+    mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>% 
+  ))) %>%
   ungroup()
 
 summarised_actigraph_df <- actigraph_df %>%
   group_by(user_id, day) %>%
   # These statistics will probably be different for you
   summarise(across(hr, list(
-    mean = ~ mean(.x, na.rm = TRUE), 
+    mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>% 
+  ))) %>%
   ungroup()
 ```
 
