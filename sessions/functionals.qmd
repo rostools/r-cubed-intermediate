@@ -773,7 +773,7 @@ have):
 ```
 
 ::: callout-note
-## Reading task: \~5 minutes
+## Reading task: \~2 minutes
 
 This message talks about regrouping, and overriding based on the
 `.groups` argument. If we look in the help `?summarise`, at the
