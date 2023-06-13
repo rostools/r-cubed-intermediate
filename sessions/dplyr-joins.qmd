@@ -42,7 +42,7 @@ wonderful package to use for working with character data is called
 `{stringr}`, which we'll use to extract the user ID from the
 `file_path_id` column.
 
-The main driver behind the functions in stringr are [regular
+The main driver behind the functions in `{stringr}` are [regular
 expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex
 for short). These expressions are powerful, very concise ways of finding
 patterns in text. Because they are so concise, though, they are also
@@ -121,17 +121,26 @@ another number from 0 to 9.
 
 Now that we've identified a possible regex to use to extract the user
 ID, let's test it out on the `user_info_df` data. Once it works, we will
-convert it into a function and move it into the `R/functions.R` file.
+convert it into a function and move (**cut and paste**) it into the
+`R/functions.R` file.
 
 Since we will create a new column for the user ID, we will use the
 `mutate()` function from the `{dplyr}` package. We'll use the
 `str_extract()` function from the `{stringr}` package to "extract a
 string" by using the regex `user_[1-9][0-9]?` that we discussed from the
-exercise. We're also using an argument to `mutate()` you might not have
-seen previously, called `.before`. This will insert the new `user_id`
-column before the column we use and we do this entirely for visual
-reasons, since it is easier to see the newly created column when we run
-the code. In your `doc/learning.qmd` file, create a new header called
+exercise. Since we're going to use `{stringr}`, so let's add it as a
+package dependency:
+
+```{r}
+#| eval: false
+usethis::use_package("stringr")
+```
+
+We're also using an argument to `mutate()` you might not have seen
+previously, called `.before`. This will insert the new `user_id` column
+before the column we use and we do this entirely for visual reasons,
+since it is easier to see the newly created column when we run the code.
+In your `doc/learning.qmd` file, create a new header called
 `## Using regex for user ID` at the bottom of the document, and create a
 new code chunk below that.
 
@@ -139,7 +148,7 @@ new code chunk below that.
 ## Instructor note
 
 Walk through writing this code, briefly explain/remind how to use
-mutate, and about the stringr function.
+mutate, and about the `{stringr}` function.
 :::
 
 ```{r extract-user-id}
@@ -194,11 +203,12 @@ and extracts the user ID from it. **First step**: While in the
 same process you've done previously.
 
 1.  Call the new function `extract_user_id` and add one argument called
-    `imported_data`. - Remember to output the code into an object and
-    `return()` it at the end of the function. - Include Roxygen
-    documentation.
-2.  After writing it and testing that the function works, move the
-    function into `R/functions.R`.
+    `imported_data`.
+    -   Remember to output the code into an object and `return()` it at
+        the end of the function.
+    -   Include Roxygen documentation.
+2.  After writing it and testing that the function works, move (**cut**
+    and paste) the function into `R/functions.R`.
 3.  Run `{styler}` while in the `R/functions.R` file with
     {{< var keybind.styler >}}.
 4.  Replace the code in the `doc/learning.qmd` file with the function
@@ -272,8 +282,8 @@ file path variable, we need to actually use it within our processing
 pipeline. Since we want this function to work on all the datasets that
 we will import, we need to add it to the `import_multiple_files()`
 function. We'll go to the `import_multiple_files()` function in
-`R/functions.R` and use the `%>%` to add it after using the `map_dfr()`
-function. The code should look something like:
+`R/functions.R` and use the `%>%` to add it after using the
+`list_rbind()` function. The code should look something like:
 
 ```{r add-extract-user-to-import}
 import_multiple_files <- function(file_pattern, import_function) {
@@ -282,9 +292,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map_dfr(data_files, import_function,
-    .id = "file_path_id"
-  ) %>%
+  combined_data <- purrr::map(data_files, import_function) %>%
+    purrr::list_rbind(names_to = "file_path_id") %>%
     extract_user_id() # Add the function here.
   return(combined_data)
 }
@@ -310,18 +319,18 @@ to use `user_id` instead of `file_path_id`:
 summarised_rr_df <- rr_df %>%
   group_by(user_id, day) %>%
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE), 
+    mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>% 
+  ))) %>%
   ungroup()
 
 summarised_actigraph_df <- actigraph_df %>%
   group_by(user_id, day) %>%
   # These statistics will probably be different for you
   summarise(across(hr, list(
-    mean = ~ mean(.x, na.rm = TRUE), 
+    mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>% 
+  ))) %>%
   ungroup()
 ```
 
@@ -439,16 +448,27 @@ columns and so can't be a vector itself), we need to combine the
 datasets together in a `list()` and reduce them with `full_join()`.
 :::
 
+Let's code this together, using `reduce()`, `full_join()`, and `list()`
+while in the `doc/learning.qmd` file.
+
 ```{r}
-combined_data <- reduce(list(user_info_df, saliva_df), full_join)
-combined_data
+list(
+  user_info_df,
+  saliva_df
+) %>%
+  reduce(full_join)
 ```
 
 We now have the data in a form that would make sense to join it with the
 other datasets. So lets try it:
 
 ```{r}
-reduce(list(user_info_df, saliva_df, summarised_rr_df), full_join)
+list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df
+) %>%
+  reduce(full_join)
 ```
 
 Hmm, but wait, we now have four rows of each user, when we should have
@@ -568,7 +588,13 @@ saliva_with_day_df
 ...Now, let's use the `reduce()` with `full_join()` again:
 
 ```{r}
-reduce(list(user_info_df, saliva_with_day_df, summarised_rr_df), full_join)
+list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df,
+  summarised_actigraph_df
+) %>%
+  reduce(full_join)
 ```
 
 We now have two rows per participant! Let's add and commit the changes
@@ -581,14 +607,13 @@ to bring it all together and put it into the `data-raw/mmash.R` script
 so we can create a final working dataset.
 
 Open up the `data-raw/mmash.R` file and the top of the file, add the
-`{vroom}` package to the end of the list of other packages. Move the
-code `library(fs)` to go with the other packages as well. It should look
-something like this now:
+`{tidyverse}` package to the end of the list of other packages if it
+isn't there already. Move the code `library(fs)` to go with the other
+packages as well. It should look something like this now:
 
 ```{r}
 library(here)
 library(tidyverse)
-library(vroom)
 library(fs)
 ```
 
@@ -631,15 +656,13 @@ saliva_with_day_df <- saliva_df %>%
     TRUE ~ NA_real_
   ))
 
-mmash <- reduce(
-  list(
-    user_info_df,
-    saliva_with_day_df,
-    summarised_rr_df,
-    summarised_actigraph_df
-  ),
-  full_join
-)
+mmash <- list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df,
+  summarised_actigraph_df
+) %>%
+  reduce(full_join)
 ```
 
 Lastly, we have to save this final dataset into the `data/` folder.

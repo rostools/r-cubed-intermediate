@@ -183,17 +183,6 @@ Once we've created that, let's open up the Git Interface with
 {{< var keybind.git >}} and **add and commit** these changes to our
 history.
 
-## Exercise: Brainstorm and discuss why and what you could make as a function
-
-> Time: 15 minutes.
-
-You've learned the basics of making your own, custom function. Now, as a
-group, brainstorm and discuss some ways that you might make functions in
-your own work to help reduce repetition. What type of code might you
-make as a function for your own project? Do you think others, maybe in
-your research group, might use this function too? Afterwards, all the
-groups will briefly share what they thought of.
-
 ## Making a function for vroom
 
 Now that we have a basic understanding of what a function looks like,
@@ -445,9 +434,17 @@ import_saliva <- function(file_path) {
 
 ## Continuing the workflow
 
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Really emphasize to **cut** and paste, so that the function in the
+`doc/learning.qmd` file is **deleted** and no longer kept in the Quarto
+document.
+:::
+
 We've created two functions. Now we need to move those functions from
-the `doc/learning.qmd` file and into the `R/` folder. We do this for a
-few reasons:
+the `doc/learning.qmd` file and into the `R/` folder by **cutting and
+pasting** (not just copying). We do this for a few reasons:
 
 1.  To prevent the Quarto / R Markdown document from becoming too long
     and having a large portion of R code over other text.
@@ -713,7 +710,7 @@ Before moving on to the next exercise, discuss with your group about:
 
 ## Exercise: Move and update the rest of the functions
 
-> Time: 20 minutes.
+> Time: \~30 minutes.
 
 Repeat this process of making functions by doing this to the rest of the
 code you worked on previously that imported the `RR.csv` and
@@ -725,7 +722,7 @@ code you worked on previously that imported the `RR.csv` and
 
     -   Name the new functions `import_rr` and `import_actigraph`.
 
-2.  Move the function into `R/functions.R`.
+2.  Move (by **cutting** and pasting) the function into `R/functions.R`.
 
 3.  Restart R, `source()` the functions file, using
     {{< var keybind.source >}}, and test that the functions work by
@@ -842,6 +839,17 @@ import_actigraph <- function(file_path) {
 }
 ```
 
+## Exercise: Brainstorm and discuss why and what you could make as a function
+
+> Time: 15 minutes.
+
+You've learned the basics of making your own, custom function. Now, as a
+group, brainstorm and discuss some ways that you might make functions in
+your own work to help reduce repetition. What type of code might you
+make as a function for your own project? Do you think others, maybe in
+your research group, might use this function too? Afterwards, all the
+groups will briefly share what they thought of.
+
 ## Summary
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -869,3 +877,4 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
+

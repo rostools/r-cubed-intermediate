@@ -190,6 +190,15 @@ as above, now using the `~` shortcut:
 map(1:5, ~ paste(.x, "seconds have passed"))
 ```
 
+`map()` will always output a list, but sometimes we might want to output
+a different data type. If we look into the help documentation with
+`?map`, it shows several other types of map that all start with `map_`:
+
+-   `map_chr()` outputs a character vector.
+-   `map_int()` outputs an integer.
+-   `map_dbl()` outputs a numeric value, called a "double" in
+    programming.
+
 This is the basics of using functionals. Functions, vectorization, and
 functionals provide expressive and powerful approaches to a simple task:
 *Doing an action on each item in a set of items*. And while technically
@@ -203,22 +212,30 @@ But what does functionals have to do with what we are doing now? Well,
 our `import_user_info()` function only takes in one data file. But we
 have 22 files that we could load all at once if we used functionals.
 
-The first thing we have to do is add `library(purrr)` to the `setup`
-code chunk in the `doc/learning.qmd` document. Then we need to add the
-package dependency by going to the **Console** and running:
+Before we continue, let's clean up the `doc/learning.qmd` file by
+deleting **everything** below the `setup` code chunk that contains the
+`library()` and `source()` code. Why do we delete everything? Because it
+keeps things cleaner and makes it easier to look through the file (both
+for you and for us as instructors). And because we use Git, nothing is
+truly gone so you can always go back to the text later. Next, we restart
+the R session with {{< var keybind.restart-r >}}.
+
+Next, we'll need to add `{purrr}` as a package dependency by going to
+the **Console** and running:
 
 ``` r
 usethis::use_package("purrr")
 ```
 
-Then, the next step for using the `map()` functional is to get a vector
-or list of all the dataset files available to us. We will return to
-using the `{fs}` package, which has a function called `dir_ls()` that
-finds files of a certain pattern. In our case, the pattern is
-`user_info.csv`. So, let's add `library(fs)` to the `setup` code chunk.
-Then, go to the bottom of the `doc/learning.qmd` document, create a new
-header called `## Using map`, and create a code chunk below that with
-{{< var keybind.chunk >}}
+Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
+with `library()`. The next step for using the `map()` functional is to
+get a vector or list of all the dataset files available to us. We will
+return to using the `{fs}` package, which has a function called
+`dir_ls()` that finds files of a certain pattern. In our case, the
+pattern is `user_info.csv`. So, let's add `library(fs)` to the `setup`
+code chunk. Then, go to the bottom of the `doc/learning.qmd` document,
+create a new header called `## Using map`, and create a code chunk below
+that with {{< var keybind.chunk >}}
 
 The `dir_ls()` function takes the path that we want to search
 (`data-raw/mmash/`), uses the argument `regexp` (short for [regular
@@ -265,42 +282,21 @@ This is great because with one line of code we imported all these
 datasets! But we're missing an important bit of information: The user
 ID. A powerful feature of the `{purrr}` package is that it has other
 functions to make working with functionals easier. We know `map()`
-always outputs a list. What if you want to output a character vector
-instead? If we check the help:
+always outputs a list. But what we want is a single data frame at the
+end that also contains the user ID information.
 
-``` r
-?map
-```
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Go through this help documentation and talk a bit about it.
-:::
-
-We see that there are other functions, including a function called
-`map_chr()` that seems to output a character vector. There are several
-others that give an output based on the ending of `map_`, such as:
-
--   `map_int()` outputs an integer.
--   `map_dbl()` outputs a numeric value, called a "double" in
-    programming.
--   `map_dfr()` outputs a data frame, combining the list items by row
-    (`r`).
--   `map_dfc()` outputs a data frame, combining the list items by column
-    (`c`).
-
-The `map_dfr()` looks like the one we want, since we want all these
-datasets together as one. If we look at the help for it, we see that it
-has an argument `.id`, which we can use to create a new column that sets
+The function that will take a list and convert it into a data frame is
+called `list_rbind()` to bind ("stack") by rows or `list_cbind()` to
+bind ("stack") by columns. We want to bind by rows, so will use
+`list_rbind()` and if we look at the help for it, we see that it has an
+argument `names_to`. This argument lets us create a new column that sets
 the user ID, or in this case, the file path to the dataset, which has
 the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
 ```{r}
-user_info_df <- map_dfr(user_info_files, import_user_info,
-  .id = "file_path_id"
-)
+user_info_df <- map(user_info_files, import_user_info) %>%
+  list_rbind(names_to = "file_path_id")
 ```
 
 Your `file_path_id` variable will look different. Don't worry, we're
@@ -319,31 +315,21 @@ user_info_df %>%
 Now that we have this working, let's **add and commit** the changes to
 the Git history, by using {{< var keybind.git >}}
 
-## Exercise: Brainstorm and discuss how you'd use functionals in your work
-
-> Time: 10 minutes.
-
-As a group, discuss if you've ever used for loops or functionals like
-`map()` and your experiences with either. Discuss any advantages to
-using for loops over functionals and vice versa. Then, brainstorm and
-discuss as many ways as you can for how you might incorporate
-functionals like `map()`, or replace for loops with them, into your own
-work. Afterwards, groups will briefly share some of what they thought of
-before we move on to the next exercise.
-
 ## Exercise: Make a function for importing other datasets with functionals {#sec-ex-function-import-all-data}
 
-> Time: 25 minutes.
+> Time: \~30 minutes.
 
 We need to do basically the exact same thing for the `saliva.csv`,
 `RR.csv`, and `Actigraph.csv` datasets, following this format:
 
-``` r
-user_info_files <- dir_ls(here("data-raw/mmash/"), 
-                          regexp = "user_info.csv", 
-                          recurse = TRUE)
-user_info_df <- map_dfr(user_info_files, import_user_info,
-                        .id = "file_path_id")
+```{r}
+#| eval: false
+user_info_files <- dir_ls(here("data-raw/mmash/"),
+  regexp = "user_info.csv",
+  recurse = TRUE
+)
+user_info_df <- map(user_info_files, import_user_info) %>%
+  list_rbind(names_to = "file_path_id")
 ```
 
 For importing the other datasets, we have to modify the code in two
@@ -391,13 +377,14 @@ Use this code as a guide to help complete this exercise:
 
 ``` r
 ___ <- ___(___, ___) {
-    ___ <- ___dir_ls(___here("data-raw/mmash/"),
-                     regexp = ___,
-                     recurse = TRUE)
-    
-    ___ <- ___map_dfr(___, ___, 
-                      .id = "file_path_id")
-    ___(___)
+  ___ <- ___dir_ls(___here("data-raw/mmash/"),
+    regexp = ___,
+    recurse = TRUE
+  )
+
+  ___ <- ___map(___, ____) %>% 
+    ___list_rbind(names_to = "file_path_id")
+  ___(___)
 }
 ```
 
@@ -419,9 +406,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map_dfr(data_files, import_function,
-    .id = "file_path_id"
-  )
+  combined_data <- purrr::map(data_files, import_function) %>% 
+    purrr::list_rbind(names_to = "file_path_id")
   return(combined_data)
 }
 
@@ -429,7 +415,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
-## Adding to the processing script and clean up Quart / R Markdown document
+## Adding to the processing script and clean up Quarto / R Markdown document
 
 We've now made a function that imports multiple data files based on the
 type of data file, we can start using this function directly, like we
@@ -441,13 +427,10 @@ Markdown file is only a sandbox to test code out and in the end we want
 a script that takes the raw data, processes it, and creates a working
 dataset we can use for analysis.
 
-First thing we will do is delete **everything** below the `setup` code
-chunk that contains the `library()` and `source()` code. Why do we
-delete everything? Because it keeps things cleaner and makes it easier
-to look through the file. And because we use Git, nothing is truly gone
-so you can always go back to the text later. Next, we restart the R
-session with {{< var keybind.restart-r >}}. Then we'll create a new code
-chunk below the `setup` chunk where we will use the
+Like we did before, delete **everything** below the `setup` code chunk
+that contains the `library()` and `source()` code. Then, we will restart
+the R session with {{< var keybind.restart-r >}} and we'll create a new
+code chunk below the `setup` chunk where we will use the
 `import_multiple_files()` function to import the user info and saliva
 data.
 
@@ -502,35 +485,17 @@ technique to each group through *vectorization*. This technique works
 really well for a range of tasks, including for our task of summarizing
 some of the MMASH data so we can merge it all into one dataset.
 
-## Exercise: What is the pipe?
-
-> Time: 5 minutes.
+## Summarising data through functionals {#sec-summarise-with-functionals}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
-Before starting this exercise, ask how many have used the pipe before.
-If everyone has, then move on to the next section. If some haven't, let
-the others in the group explain, but **do not** use much time or even
-demonstrate it. If they don't know what it is, they can look it up
-after. We covered this in the introduction course, so we should not
-cover it again here.
+Before starting this section, ask how many have used the pipe before. If
+everyone has, then move on. If some haven't, very briefly explain it,
+but **do not** use much time on it since we will be using it shortly and
+they will see how it works then. We covered this in the introduction
+course, so we should not cover it again here.
 :::
-
-We haven't used the `%>%` pipe from the `{magrittr}` package yet, but it
-is used extensively in many R packages and is the foundation of
-tidyverse packages. The function fundamentally changed how people write
-R code so much that in version 4.1 a similar function, `|>`, was added
-to base R. To make sure everyone is aware of what the pipe is, in your
-groups please do either task:
-
--   If one or more person in the group doesn't know what the pipe is,
-    take some time to talk about and explain it (if you know).
--   If no one in the group knows, please read [the section on
-    it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
-    from the beginner course.
-
-## Summarising data through functionals {#sec-summarise-with-functionals}
 
 Functionals and vectorization are an integral component of how R works
 and they appear throughout many of R's functions and packages. They are
@@ -560,6 +525,12 @@ column, you would type out:
 user_info_df %>%
   select(age)
 ```
+
+::: aside
+Don't know what the `%>%` pipe is? Check out [the section on
+it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
+from the beginner course.
+:::
 
 But many `{dplyr}` verbs can also take functions as input. When you
 combine `select()` with the `where()` function, you can select different
@@ -802,7 +773,7 @@ have):
 ```
 
 ::: callout-note
-## Reading task: \~5 minutes
+## Reading task: \~2 minutes
 
 This message talks about regrouping, and overriding based on the
 `.groups` argument. If we look in the help `?summarise`, at the
@@ -979,6 +950,18 @@ Next, go to the R Markdown / Quarto document and again delete
 **everything** below the `setup` code chunk. After it has been deleted,
 add and commit the changes to the Git history with
 {{< var keybind.git >}}.
+
+## Exercise: Brainstorm and discuss how you'd use functionals in your work
+
+> Time: 10 minutes.
+
+As a group, discuss if you've ever used for loops or functionals like
+`map()` and your experiences with either. Discuss any advantages to
+using for loops over functionals and vice versa. Then, brainstorm and
+discuss as many ways as you can for how you might incorporate
+functionals like `map()`, or replace for loops with them, into your own
+work. Afterwards, groups will briefly share some of what they thought of
+before we move on to the next exercise.
 
 ## Summary
 

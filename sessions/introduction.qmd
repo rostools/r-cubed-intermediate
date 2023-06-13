@@ -1,5 +1,10 @@
 # Introduction to course {#sec-introduction}
 
+```{r, include=FALSE}
+# To trigger downlit usage.
+library(styler)
+```
+
 > [**Introduction slides**](../slides/introduction.html)
 
 <div>

@@ -388,7 +388,8 @@ the code we just wrote above into a function.
     explicit function calls with `packagename::`.
     -   Don't forget, you can use `?functionname` to find out which
         package the function comes from.
-5.  Move the newly created function over into the `R/functions.R` file.
+5.  Move (**cut** and paste) the newly created function over into the
+    `R/functions.R` file.
 6.  Run `{styler}` while in the `R/functions.R` file with
     {{< var keybind.styler >}}.
 7.  Restart R with {{< var keybind.restart-r >}}, go into the
