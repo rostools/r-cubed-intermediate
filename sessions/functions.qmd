@@ -731,8 +731,10 @@ code you worked on previously that imported the `RR.csv` and
 
 Also update the `import_saliva()` function you created by being explicit
 about where the functions come from (e.g. with the `packagename::`).
-Afterwards, **add and commit** the changes to the Git history, using
-{{< var keybind.git >}}.
+Then **cut and paste** this function along with its Roxygen
+documentation over into the `R/functions.R` file. Run `{styler}` with
+{{< var keybind.style >}} and afterwards, **add and commit** the changes
+to the Git history, using {{< var keybind.git >}}.
 
 Use this code template as a guide for making the functions.
 
@@ -869,3 +871,4 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
+
