@@ -487,6 +487,7 @@ tidy_summarise_by_day <- function(data) {
         sd = ~ sd(.x, na.rm = TRUE)
       )
     )) %>%
+    dplyr::ungroup() %>% 
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       ~ round(.x, digits = 2)
@@ -528,6 +529,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       value,
       summary_fn
     )) %>%
+    dplyr::ungroup() %>% 
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       ~ round(.x, digits = 2)
