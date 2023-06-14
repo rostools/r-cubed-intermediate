@@ -698,16 +698,6 @@ It should work as expected! Now that we've done that, let's **add and
 commit** the changes made through the Git interface, using
 {{< var keybind.git >}}.
 
-## Exercise: Discuss why tracking dependencies might help you
-
-> Time: 5 minutes.
-
-Before moving on to the next exercise, discuss with your group about:
-
--   How tracking dependencies might help you in your own work.
--   Some personal experiences, if you have had any, where the lack of
-    explicit dependencies made your work harder and more confusing.
-
 ## Exercise: Move and update the rest of the functions
 
 > Time: \~30 minutes.
