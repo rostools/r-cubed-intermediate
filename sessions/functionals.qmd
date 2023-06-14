@@ -946,6 +946,10 @@ summarised_rr_df <- rr_df %>%
 # Code pasted here that was made from the above exercise
 ```
 
+::: {.callout-important appearance="default"}
+Do not yet `source()` or run code in this file!!
+:::
+
 Next, go to the R Markdown / Quarto document and again delete
 **everything** below the `setup` code chunk. After it has been deleted,
 add and commit the changes to the Git history with
