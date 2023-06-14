@@ -717,7 +717,7 @@ code you worked on previously that imported the `RR.csv` and
 `Actigraph.csv` data.
 
 1.  Convert the importing code into functions while in the
-    `doc/lessons.Rmd` file. Include the Roxygen documentation and use
+    `doc/learning.qmd` file. Include the Roxygen documentation and use
     `packagename::` to be explicit about where the function comes from.
 
     -   Name the new functions `import_rr` and `import_actigraph`.
@@ -877,4 +877,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
-

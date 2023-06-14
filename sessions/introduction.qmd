@@ -162,7 +162,7 @@ Our workflow and process will be something like:
         `data-raw/mmash.R` script to have a clear separation of
         completed code and prototyping code.
 -   Remove the old code from the Quarto / R Markdown document
-    (`doc/lessons.Rmd`).
+    (`doc/learning.qmd`).
     -   Once we've finished prototyping code and moved it over into a
         more "final" location, we remove left over code because it isn't
         necessary and we don't want our files to be littered with left
