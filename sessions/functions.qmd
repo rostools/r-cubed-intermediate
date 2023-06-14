@@ -460,8 +460,8 @@ Once we have it in there, let's test out the workflow. Restart our R
 session with by either going to the "Session -\> Restart R" menu item or
 by using the keybindings {{< var keybind.restart-r >}}. Move back into
 the `doc/learning.qmd` and add `source(here("R/functions.R"))` to the
-code chunk called `setup` at the top. Run that line of code. Then go to
-where you wrote:
+code chunk called `setup` at the top. Run all the code inside the
+`setup` code chunk. Then go to where you wrote:
 
 ``` r
 import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
