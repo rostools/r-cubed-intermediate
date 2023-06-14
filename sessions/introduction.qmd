@@ -176,6 +176,9 @@ Our workflow and process will be something like:
         to GitHub. Using version control should be a standard practice
         to doing better science since it fits with the philosophy of
         doing science.
+    -   **Note**: While we covered GitHub in the introductory course, we
+        can't assume everyone will have taken that course. Because of
+        that, we won't be using GitHub in this course.
 :::
 
 ::: {.callout-note appearance="minimal" collapse="true"}
