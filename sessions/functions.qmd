@@ -466,7 +466,7 @@ code chunk called `setup` at the top. Run all the code inside the
 `setup` code chunk. Then go to where you wrote:
 
 ``` r
-import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
+import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
 Now run this line. What happens now? You *may* get an error about not
