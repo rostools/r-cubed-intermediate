@@ -384,6 +384,8 @@ using {{< var keybind.outline >}}.
         {{< var keybind.roxygen >}}
 4.  Run `{styler}` while in the `doc/learning.qmd` file with
     {{< var keybind.styler >}}.
+5.  Then, **add and commit** the changes to the Git history, using
+    {{< var keybind.git >}}.
 
 Use the below code as a guide:
 
