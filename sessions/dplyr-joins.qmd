@@ -215,7 +215,9 @@ same process you've done previously.
     name so it looks like `extract_user_id(user_info_df)`, restart the R
     session, source everything with `source()` with
     {{< var keybind.source >}}, and run the new function in the code
-    chunk inside the `doc/learning.qmd` to test that it works.
+    chunk inside the `doc/learning.qmd` to test that it works. This
+    should automatically run the `setup` code chunk, otherwise, run that
+    chunk if it doesn't.
 5.  Knit / render the `doc/learning.qmd` file to make sure things remain
     reproducible with {{< var keybind.render >}}.
 6.  Add and commit the changes to the Git history with
@@ -722,3 +724,4 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
+
