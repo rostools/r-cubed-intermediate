@@ -452,6 +452,15 @@ user_1_rr_data_prep <- vroom(
 spec(user_1_rr_data_prep)
 ```
 
+::: {.callout-warning appearance="default"}
+Some people may see `time` set as something like `col_double()` or
+`col_character()`. This is great example of why we would use `spec()`
+and `col_types` to explicitly tell R what the data type the variable
+should be. If yours is not `col_time()`, after you paste the spec output
+into the `col_type` argument of `vroom::vroom()`, fix it so it is
+`col_time(format = "")`.
+:::
+
 Like with last time, copy and paste the output into a new use of
 `vroom()`. Add the `.name_repair` argument with
 `snakecase::to_snake_case`. Don't forget to also remove the last `,` at
