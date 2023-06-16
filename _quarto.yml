@@ -63,4 +63,9 @@ editor:
     canonical: true
 
 execute:
+  # Need to show warnings for many bits of code as part of learning.
   warning: true
+  # Normally using freeze is good, but here, later sessions depend on
+  # temporary outputs from earlier sessions. And using freeze makes this
+  # tricky.
+  freeze: false

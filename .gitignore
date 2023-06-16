@@ -17,3 +17,4 @@ slides/libs
 slides/*.html
 /.quarto/
 _temp
+_freeze
