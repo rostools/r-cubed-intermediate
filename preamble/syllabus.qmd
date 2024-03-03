@@ -29,15 +29,6 @@ participants of the course will be able to:
 3.  Learn where to go to get help and to continue learning modern data
     science and analysis skills.
 
-The course will enable participants to answer questions such as:
-
--   What does a modern data analysis setup and workflow look like?
--   How can I create pipelines that get, process, and clean my data
-    quickly and that works regardless of whether there is one data file
-    or hundreds (i.e. it scales well)?
--   How can I write code that is more reproducible, readable, and easily
-    re-used for my future self and for my collaborators and colleagues?
-
 By the end of the course, participants will: have improved their
 competency in processing and wrangling datasets; have improved their
 proficiency in using the [R](https://www.r-project.org/) statistical
