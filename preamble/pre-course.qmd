@@ -75,77 +75,32 @@ objectives for this page:
     record of what was done to process the data before analyzing it, and
     why that's important.
 
-## Programs to install
+## Reading the course website {#sec-reading-website}
 
-Make sure to install as updated versions of R, RStudio, and Git as
-possible by following these [installation
-instructions](https://guides.rostools.org/pre-course.html#installation-instructions)
-on the Guides website. For some people, depending on their institution
-and their specific computer, this task can take the **longest amount of
-time** because you have to contact your IT to install these packages or
-do troubleshooting because of issues specific to your computer setup. It
-is extremely difficult to predict who will and who won't have issues
-with these installation tasks.
+```{r}
+#| echo: false
+#| eval: true
+#| output: asis
+r3admin::read_common("reading-website.md")
+```
+
+## Installing the latest programs {#sec-install-programs}
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: asis
+r3admin::read_common("installing-programs.md")
+```
 
 ## Installing the R packages {#sec-install-r-packages}
 
-We will be using specific R packages for the course, so you will need to
-install them. A detailed walkthrough for installing the necessary
-packages is available on the [pre-course tasks for installing
-packages](https://r-cubed-intro.rostools.org/preamble/pre-course.html#installing-r-packages)
-section of the introduction course, however, you only need to install
-the r3 helper package in order to install all the necessary packages by
-running these commands in the R Console:
-
-1.  Install the `{pak}` package:
-
-    ``` r
-    install.packages("pak")
-    ```
-
-2.  Install the r3 helper package for this course:
-
-    ``` r
-    pak::pak("rostools/r3")
-    ```
-
-3.  Install the necessary packages for the course:
-
-    ``` r
-    r3::install_packages_intermediate()
-    ```
-
-::: callout-warning
-You might encounter an error when running this code. That's ok, you can
-fix it if you restart R by going to `Sessions -> Restart R` and re-run
-the code in items 2 and 3, it should work. If it still doesn't, try to
-complete the other tasks, complete the survey, and let us know you have
-a problem in the survey.
-
-If this still doesn't work, instead of `pak::pak("rostools/r3")`, try
-running:
-
 ```{r}
-#| eval: false
-remotes::install_github("rostools/r3")
+#| echo: false
+#| eval: true
+#| output: asis
+r3admin::read_pkg_install("advanced")
 ```
-:::
-
-*Note*: When you see a command like `something::something()`, for
-example with `r3::install_packages_intermediate()`, you would "read"
-this as:
-
-> R, can you please use the `install_packages_intermediate` function
-> from the r3 package.
-
-The normal way of doing this would be to load the package with
-`library(r3)` and then running the command
-(`install_packages_intermediate()`). But by using the `::`, we tell R to
-directly use a function from a package, without needing to load the
-package and all of its other functions too. We use this trick because we
-only want to use the `install_packages_intermediate()` command from the
-r3 package and not have to load all the other functions as well. In this
-course we will be using `::` often.
 
 ## Setting up Git {#sec-setup-git}
 
