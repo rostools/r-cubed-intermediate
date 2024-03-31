@@ -1,16 +1,16 @@
+name: Build Website
+
 on:
   push:
     branches:
       - main
-
-name: build-deploy
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
