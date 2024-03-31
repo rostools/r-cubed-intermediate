@@ -99,7 +99,7 @@ r3admin::read_common("installing-programs.md")
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_pkg_install("advanced")
+r3admin::read_template_pkg_install("advanced")
 ```
 
 ## Setting up Git {#sec-setup-git}
