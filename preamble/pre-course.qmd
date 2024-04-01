@@ -81,7 +81,7 @@ objectives for this page:
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_common("reading-website.md")
+cat(r3admin::read_common("reading-website.md"), sep = "\n")
 ```
 
 ## Installing the latest programs {#sec-install-programs}
@@ -90,7 +90,7 @@ r3admin::read_common("reading-website.md")
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_common("installing-programs.md")
+cat(r3admin::read_common("installing-programs.md"), sep = "\n")
 ```
 
 ## Installing the R packages {#sec-install-r-packages}
@@ -99,7 +99,7 @@ r3admin::read_common("installing-programs.md")
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_template_pkg_install("advanced")
+cat(r3admin::read_template_pkg_install("advanced"), sep = "\n")
 ```
 
 ## Setting up Git {#sec-setup-git}
