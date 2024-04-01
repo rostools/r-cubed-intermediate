@@ -493,9 +493,11 @@ either `Ctrl-Shift-A` or `Code -> Reformat Code` menu item. Next, we'll
 extract the new `data-raw/MMASH.zip` file using `unzip()` again. Because
 we want to keep the folder structure inside this zip file, we won't use
 `junkpaths`. Write and execute this code in the `data-raw/mmash.R`
-script.
+script. We'll also add a `Sys.sleep(1)` to pause the script for a second
+because sometimes the unzipping can be too fast and cause problems.
 
 ```{r unzip-data-file}
+Sys.sleep(1)
 unzip(here("data-raw/MMASH.zip"),
   exdir = here("data-raw")
 )
