@@ -36,11 +36,13 @@ Imports:
     stringr,
     usethis,
     vroom,
-    withr
+    withr,
+    r3admin (>= 0.0.1)
 Suggests: 
     prodigenr,
     tidyverse
-Remotes: 
-    github::rostools/r3
+Remotes:  
+    github::rostools/r3,
+    rostools/r3admin
 Encoding: UTF-8
 LazyData: true
