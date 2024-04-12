@@ -155,7 +155,7 @@ mutate, and about the `{stringr}` function.
 #| eval: false
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 # Note: your file paths and data may look slightly different.
-user_info_df %>%
+user_info_df |>
   mutate(
     user_id = str_extract(
       file_path_id,
@@ -167,8 +167,8 @@ user_info_df %>%
 
 ```{r extract-user-id-eval}
 #| echo: false
-user_info_df %>%
-  trim_filepath_for_book() %>%
+user_info_df |>
+  trim_filepath_for_book() |>
   mutate(
     user_id = str_extract(
       file_path_id,
@@ -182,14 +182,14 @@ Since we don't need the `file_path_id` column anymore, let's drop it
 using `select()` and `-`.
 
 ```{r drop-file-path-id}
-user_info_df %>%
+user_info_df |>
   mutate(
     user_id = str_extract(
       file_path_id,
       "user_[1-9][0-9]?"
     ),
     .before = file_path_id
-  ) %>%
+  ) |>
   select(-file_path_id)
 ```
 
@@ -235,12 +235,12 @@ Use this code as a guide to help complete this exercise:
 
 ``` r
 extract_user_id <- ___(___) {
-    ___ <- ___ %>%
+    ___ <- ___ |>
         ___mutate(
             user_id = ___str_extract(file_path_id,
                                      "user_[0-9][0-9]?"),
             .before = file_path_id
-        ) %>%
+        ) |>
         ___select(-file_path_id)
     return(___)
 }
@@ -261,14 +261,14 @@ extract_user_id <- ___(___) {
 #' @return A data.frame/tibble.
 #'
 extract_user_id <- function(imported_data) {
-  extracted_id <- imported_data %>%
+  extracted_id <- imported_data |>
     dplyr::mutate(
       user_id = stringr::str_extract(
         file_path_id,
         "user_[0-9][0-9]?"
       ),
       .before = file_path_id
-    ) %>%
+    ) |>
     dplyr::select(-file_path_id)
   return(extracted_id)
 }
@@ -284,7 +284,7 @@ file path variable, we need to actually use it within our processing
 pipeline. Since we want this function to work on all the datasets that
 we will import, we need to add it to the `import_multiple_files()`
 function. We'll go to the `import_multiple_files()` function in
-`R/functions.R` and use the `%>%` to add it after using the
+`R/functions.R` and use the `|>` to add it after using the
 `list_rbind()` function. The code should look something like:
 
 ```{r add-extract-user-to-import}
@@ -294,8 +294,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map(data_files, import_function) %>%
-    purrr::list_rbind(names_to = "file_path_id") %>%
+  combined_data <- purrr::map(data_files, import_function) |>
+    purrr::list_rbind(names_to = "file_path_id") |>
     extract_user_id() # Add the function here.
   return(combined_data)
 }
@@ -318,21 +318,21 @@ As well as adding the `summarised_rr_df` and `summarised_actigraph_df`
 to use `user_id` instead of `file_path_id`:
 
 ```{r}
-summarised_rr_df <- rr_df %>%
-  group_by(user_id, day) %>%
+summarised_rr_df <- rr_df |>
+  group_by(user_id, day) |>
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
+  ))) |>
   ungroup()
 
-summarised_actigraph_df <- actigraph_df %>%
-  group_by(user_id, day) %>%
+summarised_actigraph_df <- actigraph_df |>
+  group_by(user_id, day) |>
   # These statistics will probably be different for you
   summarise(across(hr, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
+  ))) |>
   ungroup()
 ```
 
@@ -457,7 +457,7 @@ while in the `doc/learning.qmd` file.
 list(
   user_info_df,
   saliva_df
-) %>%
+) |>
   reduce(full_join)
 ```
 
@@ -469,7 +469,7 @@ list(
   user_info_df,
   saliva_df,
   summarised_rr_df
-) %>%
+) |>
   reduce(full_join)
 ```
 
@@ -559,7 +559,7 @@ Assuming the final output is `NA`, in a pipeline this would look like
 how you normally would use `mutate()`:
 
 ```{r}
-user_info_df %>%
+user_info_df |>
   mutate(age_category = case_when(
     age > 20 ~ "old",
     age <= 20 ~ "young"
@@ -579,7 +579,7 @@ creating a new column called `day`. (We will use `NA_real_` because the
 other `day` columns are numeric, not integer.)
 
 ```{r}
-saliva_with_day_df <- saliva_df %>%
+saliva_with_day_df <- saliva_df |>
   mutate(day = case_when(
     samples == "before sleep" ~ 1,
     samples == "wake up" ~ 2
@@ -595,7 +595,7 @@ list(
   saliva_df,
   summarised_rr_df,
   summarised_actigraph_df
-) %>%
+) |>
   reduce(full_join)
 ```
 
@@ -651,7 +651,7 @@ datasets together with `reduce()` and paste it at the bottom of the
 `mmash`, like this:
 
 ```{r data-raw-mmash-to-final}
-saliva_with_day_df <- saliva_df %>%
+saliva_with_day_df <- saliva_df |>
   mutate(day = case_when(
     samples == "before sleep" ~ 1,
     samples == "wake up" ~ 2,
@@ -663,7 +663,7 @@ mmash <- list(
   saliva_df,
   summarised_rr_df,
   summarised_actigraph_df
-) %>%
+) |>
   reduce(full_join)
 ```
 

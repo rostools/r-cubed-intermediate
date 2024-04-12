@@ -23,14 +23,14 @@ add_link <- function(text, icon, link) {
   return(htmltools::HTML(added_link))
 }
 
-schedule <- here::here("preamble/schedule.csv") %>%
-  readr::read_csv(col_types = "ccccc") %>%
-  mutate(across(everything(), ~ if_else(is.na(.x), "", .x))) %>%
+schedule <- here::here("preamble/schedule.csv") |>
+  readr::read_csv(col_types = "ccccc") |>
+  mutate(across(everything(), ~ if_else(is.na(.x), "", .x))) |>
   mutate(
-    `Session topic` = list(`Session topic`, icon, link) %>%
-      purrr::pmap(~ add_link(..1, ..2, ..3)) %>%
+    `Session topic` = list(`Session topic`, icon, link) |>
+      purrr::pmap(~ add_link(..1, ..2, ..3)) |>
       unlist()
-  ) %>%
+  ) |>
   select(-icon, -link)
 ```
 
@@ -38,9 +38,9 @@ schedule <- here::here("preamble/schedule.csv") %>%
 
 ```{r}
 #| echo: false
-schedule %>%
-  filter(Day == "Day 1") %>%
-  select(-Day) %>%
+schedule |>
+  filter(Day == "Day 1") |>
+  select(-Day) |>
   knitr::kable()
 ```
 
@@ -48,9 +48,9 @@ schedule %>%
 
 ```{r}
 #| echo: false
-schedule %>%
-  filter(Day == "Day 2") %>%
-  select(-Day) %>%
+schedule |>
+  filter(Day == "Day 2") |>
+  select(-Day) |>
   knitr::kable()
 ```
 
@@ -58,9 +58,9 @@ schedule %>%
 
 ```{r}
 #| echo: false
-schedule %>%
-  filter(Day == "Day 3") %>%
-  select(-Day) %>%
+schedule |>
+  filter(Day == "Day 3") |>
+  select(-Day) |>
   knitr::kable()
 ```
 :::
