@@ -178,6 +178,7 @@ map(1:5, function(x) paste(x, "seconds have passed"))
 map(1:5, \(x) paste(x, "seconds have passed"))
 ```
 
+::: {.callout-note appearance="default"}
 `{purrr}` supports the use of a syntax shortcut to write anonymous
 functions. This shortcut is using `~` (tilde) to start the function and
 `.x` as the replacement for the vector item. `.x` is used instead of `x`
@@ -189,6 +190,13 @@ as above, now using the `~` shortcut:
 ```{r}
 map(1:5, ~ paste(.x, "seconds have passed"))
 ```
+
+However, the package authors now strongly recommend using the more
+recent `\(x)` R syntax instead of `~` for anonymous functions. This is
+mostly to be consistent with base R and to make use of the clearer
+argument naming within the anonymous function, rather than rely on `.x`
+or `.y` as the argument names.
+:::
 
 `map()` will always output a list, but sometimes we might want to output
 a different data type. If we look into the help documentation with
