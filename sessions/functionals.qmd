@@ -641,6 +641,9 @@ optional one (plus one deprecated one):
         across(c(age, weight), \(x) mean(x, na.rm = TRUE))
         ```
 
+        We will use the `\()` syntax to be consistent with how we use
+        `{purrr}` functions.
+
     -   A named list with bare or anonymous functions
         (`list(average = mean, stddev = sd)`) does the same as above but
         instead returns an output with the column names appended with
@@ -650,8 +653,8 @@ optional one (plus one deprecated one):
 
         ``` r
         list(
-          average = ~ mean(.x, na.rm = TRUE),
-          stddev = ~ sd(.x, na.rm = TRUE),
+          average = \(x) mean(x, na.rm = TRUE),
+          stddev = \(x) sd(x, na.rm = TRUE),
         )
         ```
 3.  `...` argument (**deprecated**): Arguments to give to the functions
@@ -763,14 +766,14 @@ While there are no missing values here, let's add the argument
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE))))
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))))
 ```
 
 ```{r admin-rr-summarise-na-rm-for-book}
 #| echo: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE)))) |>
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))) |> 
   trim_filepath_for_book()
 ```
 
@@ -813,8 +816,8 @@ datasets:
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   )))
 summarised_rr_df
 ```
@@ -824,8 +827,8 @@ summarised_rr_df
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   )))
 summarised_rr_df |>
   trim_filepath_for_book()
@@ -839,8 +842,8 @@ end the `group_by()` with `ungroup()`. Let's add it to the end:
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   ))) |>
   ungroup()
 summarised_rr_df
@@ -851,8 +854,8 @@ summarised_rr_df
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   ))) |>
   ungroup()
 summarised_rr_df |>
@@ -922,8 +925,8 @@ summarised_actigraph_df <- actigraph_df |>
   group_by(file_path_id, day) |>
   # These statistics will probably be different for you
   summarise(across(hr, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   ))) |>
   ungroup()
 ```
@@ -947,8 +950,8 @@ actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   ))) |>
   ungroup()
 

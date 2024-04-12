@@ -25,7 +25,7 @@ add_link <- function(text, icon, link) {
 
 schedule <- here::here("preamble/schedule.csv") |>
   readr::read_csv(col_types = "ccccc") |>
-  mutate(across(everything(), ~ if_else(is.na(.x), "", .x))) |>
+  mutate(across(everything(), \(x) if_else(is.na(x), "", x))) |>
   mutate(
     `Session topic` = list(`Session topic`, icon, link) |>
       purrr::pmap(~ add_link(..1, ..2, ..3)) |>
