@@ -321,8 +321,8 @@ to use `user_id` instead of `file_path_id`:
 summarised_rr_df <- rr_df |>
   group_by(user_id, day) |>
   summarise(across(ibi_s, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   ))) |>
   ungroup()
 
@@ -330,8 +330,8 @@ summarised_actigraph_df <- actigraph_df |>
   group_by(user_id, day) |>
   # These statistics will probably be different for you
   summarise(across(hr, list(
-    mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
   ))) |>
   ungroup()
 ```
@@ -724,4 +724,3 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
-

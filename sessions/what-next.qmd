@@ -10,7 +10,7 @@
 
 </div>
 
-::: {.callout-note collapse="true"}
+::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
 The slides contain speaking notes that you can view by pressing 'S' on

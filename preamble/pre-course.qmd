@@ -357,7 +357,7 @@ is tell R to first look for the `.Rproj` file and then start looking for
 the file we actually want. This might not make sense yet, but as we go
 through the course, you will see why this is important to consider.
 
-::: callout-note
+::: {.callout-note appearance="default"}
 You don't need to run the below code. But if you want to see the
 structure and content of a directory, you can use the `dir_tree()`
 function from the `{fs}` package, which means "filesystem", by running

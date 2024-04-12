@@ -210,8 +210,8 @@ mmash |>
   ___
 ```
 
-1.  Continuing the `|>` from `pivot_longer()`, use `group_by()` to
-    group the data by `gender`, `day`, and `name` (the long form column
+1.  Continuing the `|>` from `pivot_longer()`, use `group_by()` to group
+    the data by `gender`, `day`, and `name` (the long form column
     produced from `pivot_longer()`).
 2.  After grouping with `group_by()`, use `summarise()` and `across()`
     on the `value` column and find the mean and standard deviation (put
@@ -236,8 +236,8 @@ mmash |>
   summarise(across(
     value,
     list(
-      mean = ~ mean(.x, na.rm = TRUE),
-      sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup()
@@ -308,8 +308,8 @@ mmash |>
   summarise(across(
     value,
     list(
-      mean = ~ mean(.x, na.rm = TRUE),
-      sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup() |>
@@ -331,8 +331,8 @@ mmash |>
   summarise(across(
     value,
     list(
-      mean = ~ mean(.x, na.rm = TRUE),
-      sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup() |>
@@ -361,8 +361,8 @@ mmash |>
   summarise(across(
     value,
     list(
-      mean = ~ mean(.x, na.rm = TRUE),
-      sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup() |>
@@ -430,8 +430,8 @@ tidy_summarise_by_day <- function(data) {
     dplyr::summarise(dplyr::across(
       value,
       list(
-        mean = ~ mean(.x, na.rm = TRUE),
-        sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
       )
     )) |>
     dplyr::ungroup() |>
@@ -467,9 +467,9 @@ Before we get to adding this functionality, let's first make it so the
 function has a tidier output. Specifically, we want to round the values
 so they are easier to read. Go into the `R/functions.R` script to the
 `tidy_summarize_by_day()` function. We'll create a new line right after
-the `dplyr::summarise()` function, after the `|>` pipe. Since we want
-to round values of existing columns, we need to use `mutate()`. And like
-we used `across()` in `summarise()`, we can also use `across()` within
+the `dplyr::summarise()` function, after the `|>` pipe. Since we want to
+round values of existing columns, we need to use `mutate()`. And like we
+used `across()` in `summarise()`, we can also use `across()` within
 `mutate()` on specific columns. In our case, we want to round columns
 that `start_with()` the word `"value"` to 2 digits.
 
@@ -483,14 +483,14 @@ tidy_summarise_by_day <- function(data) {
     dplyr::summarise(dplyr::across(
       value,
       list(
-        mean = ~ mean(.x, na.rm = TRUE),
-        sd = ~ sd(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
       )
     )) |>
     dplyr::ungroup() |> 
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
-      ~ round(.x, digits = 2)
+      \(x) round(x, digits = 2)
     )) |>
     tidyr::pivot_wider(
       names_from = day,
@@ -532,7 +532,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
     dplyr::ungroup() |> 
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
-      ~ round(.x, digits = 2)
+      \(x) round(x, digits = 2)
     )) |>
     tidyr::pivot_wider(
       names_from = day,
@@ -541,7 +541,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
 }
 
 # Source, then test out the function in the Console:
-tidy_summarise_by_day(mmash, ~ max(.x, na.rm = TRUE))
+tidy_summarise_by_day(mmash, \(x) max(x, na.rm = TRUE))
 ```
 
 Now that it works, let's add some summary statistics to the
@@ -554,8 +554,8 @@ mmash |>
   tidy_summarise_by_day(median)
 mmash |>
   tidy_summarise_by_day(list(
-    median = ~ median(.x, na.rm = TRUE), 
-    max = ~ max(.x, na.rm = TRUE)
+    median = \(x) median(x, na.rm = TRUE), 
+    max = \(x) max(x, na.rm = TRUE)
   ))
 ```
 
@@ -580,9 +580,9 @@ table"). We can also add a table caption with the `caption` argument.
 ```{r knitr-table}
 mmash |>
   tidy_summarise_by_day(list(
-    mean = ~ mean(.x, na.rm = TRUE), 
-    min = ~ min(.x, na.rm = TRUE), 
-    max = ~ max(.x, na.rm = TRUE)
+    mean = \(x) mean(x, na.rm = TRUE),
+    min = \(x) min(x, na.rm = TRUE),
+    max = \(x) max(x, na.rm = TRUE)
   )) |>
   knitr::kable(caption = "Descriptive statistics of some variables.")
 ```
