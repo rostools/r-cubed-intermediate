@@ -116,7 +116,7 @@ import_activity <- function(file_path) {
 
 activity_df <- import_multiple_files("Activity.csv", import_activity)
 
-activity_df %>%
+activity_df |>
   mutate(activity_duration = end - start)
 ```
 
@@ -134,7 +134,7 @@ tasks to clean the data up more.
 
     ```{r}
     #| eval: false
-    mmash %>% 
+    mmash |> 
       filter(user_id == "user_21")
     ```
 

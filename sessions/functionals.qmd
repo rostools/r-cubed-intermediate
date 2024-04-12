@@ -295,7 +295,7 @@ the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
 ```{r}
-user_info_df <- map(user_info_files, import_user_info) %>%
+user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
 
@@ -308,9 +308,18 @@ user_info_df
 
 ```{r admin-show-data-for-book}
 #| echo: false
-user_info_df %>%
+user_info_df |>
   trim_filepath_for_book()
 ```
+
+::: callout-note
+We're using the base R `|>` pipe rather than the `{magrittr}` pipe `%>%`
+as more documentation and packages are using or relying on it. In terms
+of functionality, they are nearly the same, with some small differences.
+It ultimately doesn't matter which one you use, but we're using to be
+consistent with other documentation and with the general trend to
+recommend it over the `{magrittr}` pipe.
+:::
 
 Now that we have this working, let's **add and commit** the changes to
 the Git history, by using {{< var keybind.git >}}
@@ -328,7 +337,7 @@ user_info_files <- dir_ls(here("data-raw/mmash/"),
   regexp = "user_info.csv",
   recurse = TRUE
 )
-user_info_df <- map(user_info_files, import_user_info) %>%
+user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
 
@@ -382,7 +391,7 @@ ___ <- ___(___, ___) {
     recurse = TRUE
   )
 
-  ___ <- ___map(___, ____) %>% 
+  ___ <- ___map(___, ____) |> 
     ___list_rbind(names_to = "file_path_id")
   ___(___)
 }
@@ -406,7 +415,7 @@ import_multiple_files <- function(file_pattern, import_function) {
     recurse = TRUE
   )
 
-  combined_data <- purrr::map(data_files, import_function) %>% 
+  combined_data <- purrr::map(data_files, import_function) |> 
     purrr::list_rbind(names_to = "file_path_id")
   return(combined_data)
 }
@@ -522,12 +531,12 @@ quotes around the column name). For instance, to select only the `age`
 column, you would type out:
 
 ```{r}
-user_info_df %>%
+user_info_df |>
   select(age)
 ```
 
 ::: aside
-Don't know what the `%>%` pipe is? Check out [the section on
+Don't know what the `|>` pipe is? Check out [the section on
 it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
 from the beginner course.
 :::
@@ -547,14 +556,14 @@ tibble::tribble(
   "Select all variables", "Select all variables in `user_info_df`", "`everything()`",
   "Select variables that contain the matching string", 'Select variables that contain the string "user_info"', "`contains()`",
   "Select variables that ends with string", 'Select all variables that end with "date"', "`ends_with()`"
-) %>%
+) |>
   knitr::kable()
 ```
 
 Let's select columns that are numeric:
 
 ```{r}
-user_info_df %>%
+user_info_df |>
   select(where(is.numeric))
 ```
 
@@ -562,14 +571,14 @@ Or, only character columns:
 
 ```{r}
 #| eval: false
-user_info_df %>%
+user_info_df |>
   select(where(is.character))
 ```
 
 ```{r admin-select-where-for-book}
 #| echo: false
-user_info_df %>%
-  select(where(is.character)) %>%
+user_info_df |>
+  select(where(is.character)) |>
   trim_filepath_for_book()
 ```
 
@@ -578,7 +587,7 @@ calculate the mean of cortisol in the saliva dataset, you would usually
 type out:
 
 ```{r}
-saliva_df %>%
+saliva_df |>
   summarise(cortisol_mean = mean(cortisol_norm))
 ```
 
@@ -586,7 +595,7 @@ If you want to calculate the mean of multiple columns, you might think
 you'd have to do something like:
 
 ```{r}
-saliva_df %>%
+saliva_df |>
   summarise(
     cortisol_mean = mean(cortisol_norm),
     melatonin_mean = mean(melatonin_norm)
@@ -661,14 +670,14 @@ Let's try out some examples. To calculate the mean of `cortisol_norm`
 like we did above, we'd do:
 
 ```{r}
-saliva_df %>%
+saliva_df |>
   summarise(across(cortisol_norm, mean))
 ```
 
 To calculate the mean of another column:
 
 ```{r}
-saliva_df %>%
+saliva_df |>
   summarise(across(c(cortisol_norm, melatonin_norm), mean))
 ```
 
@@ -702,7 +711,7 @@ names(list(ave = mean))
 Let's stick with `list(mean = mean)`:
 
 ```{r}
-saliva_df %>%
+saliva_df |>
   summarise(across(cortisol_norm, list(mean = mean)))
 ```
 
@@ -710,7 +719,7 @@ If we wanted to do that for all numeric columns and also calculate
 `sd()`:
 
 ```{r}
-saliva_df %>%
+saliva_df |>
   summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
 ```
 
@@ -733,17 +742,17 @@ the mean of `ibi_s` (which is the inter-beat interval in seconds):
 ```{r}
 #| eval: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
-rr_df %>%
-  group_by(file_path_id, day) %>%
+rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(mean = mean)))
 ```
 
 ```{r admin-rr-summarised-for-book}
 #| echo: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
-rr_df %>%
-  group_by(file_path_id, day) %>%
-  summarise(across(ibi_s, list(mean = mean))) %>%
+rr_df |>
+  group_by(file_path_id, day) |>
+  summarise(across(ibi_s, list(mean = mean))) |>
   trim_filepath_for_book()
 ```
 
@@ -752,16 +761,16 @@ While there are no missing values here, let's add the argument
 
 ```{r}
 #| eval: false
-rr_df %>%
-  group_by(file_path_id, day) %>%
+rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE))))
 ```
 
 ```{r admin-rr-summarise-na-rm-for-book}
 #| echo: false
-rr_df %>%
-  group_by(file_path_id, day) %>%
-  summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE)))) %>%
+rr_df |>
+  group_by(file_path_id, day) |>
+  summarise(across(ibi_s, list(mean = ~ mean(.x, na.rm = TRUE)))) |>
   trim_filepath_for_book()
 ```
 
@@ -801,8 +810,8 @@ datasets:
 
 ```{r}
 #| eval: false
-summarised_rr_df <- rr_df %>%
-  group_by(file_path_id, day) %>%
+summarised_rr_df <- rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
@@ -812,13 +821,13 @@ summarised_rr_df
 
 ```{r admin-rr-summarise-as-object-for-book}
 #| echo: false
-summarised_rr_df <- rr_df %>%
-  group_by(file_path_id, day) %>%
+summarised_rr_df <- rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
   )))
-summarised_rr_df %>%
+summarised_rr_df |>
   trim_filepath_for_book()
 ```
 
@@ -827,26 +836,26 @@ end the `group_by()` with `ungroup()`. Let's add it to the end:
 
 ```{r}
 #| eval: false
-summarised_rr_df <- rr_df %>%
-  group_by(file_path_id, day) %>%
+summarised_rr_df <- rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
+  ))) |>
   ungroup()
 summarised_rr_df
 ```
 
 ```{r rr-summarise-ungroup-for-book}
 #| echo: false
-summarised_rr_df <- rr_df %>%
-  group_by(file_path_id, day) %>%
+summarised_rr_df <- rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
+  ))) |>
   ungroup()
-summarised_rr_df %>%
+summarised_rr_df |>
   trim_filepath_for_book()
 ```
 
@@ -909,13 +918,13 @@ Environments pane to view it. For many computers, your R session will
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
-summarised_actigraph_df <- actigraph_df %>%
-  group_by(file_path_id, day) %>%
+summarised_actigraph_df <- actigraph_df |>
+  group_by(file_path_id, day) |>
   # These statistics will probably be different for you
   summarise(across(hr, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
+  ))) |>
   ungroup()
 ```
 
@@ -935,12 +944,12 @@ saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 rr_df <- import_multiple_files("RR.csv", import_rr)
 actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 
-summarised_rr_df <- rr_df %>%
-  group_by(file_path_id, day) %>%
+summarised_rr_df <- rr_df |>
+  group_by(file_path_id, day) |>
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
+  ))) |>
   ungroup()
 
 # Code pasted here that was made from the above exercise
