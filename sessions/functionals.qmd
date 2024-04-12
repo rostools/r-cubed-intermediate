@@ -320,7 +320,7 @@ user_info_df |>
   trim_filepath_for_book()
 ```
 
-::: callout-note
+::: {.callout-note appearance="default"}
 We're using the base R `|>` pipe rather than the `{magrittr}` pipe `%>%`
 as more documentation and packages are using or relying on it. In terms
 of functionality, they are nearly the same, with some small differences.
