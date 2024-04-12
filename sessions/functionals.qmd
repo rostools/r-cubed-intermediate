@@ -312,6 +312,15 @@ user_info_df |>
   trim_filepath_for_book()
 ```
 
+::: callout-note
+We're using the base R `|>` pipe rather than the `{magrittr}` pipe `%>%`
+as more documentation and packages are using or relying on it. In terms
+of functionality, they are nearly the same, with some small differences.
+It ultimately doesn't matter which one you use, but we're using to be
+consistent with other documentation and with the general trend to
+recommend it over the `{magrittr}` pipe.
+:::
+
 Now that we have this working, let's **add and commit** the changes to
 the Git history, by using {{< var keybind.git >}}
 
