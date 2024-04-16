@@ -77,14 +77,11 @@ map(numbers, over_five)
 
 This works great as is, but sometimes you might not need to create a new
 function to use inside of `map()`. Instead we could use an anonymous
-function with either `function()` or `~`.
+function with `\()` (or either `function()` or `~`).
 
 ```{r}
 # Anonymous function
-map(numbers, function(x) if (x > 5) TRUE else FALSE)
-
-# Anonymous function (with shortcut)
-map(numbers, ~ if (.x > 5) TRUE else FALSE)
+map(numbers, \(x) if (x > 5) TRUE else FALSE)
 ```
 
 ## Debugging functions
@@ -148,12 +145,12 @@ Here's an example where you want to use your own arguments in
 
 ```{r test-nse, error=TRUE}
 test_nse <- function(data, filter_condition) {
-  data %>%
+  data |>
     dplyr::filter(filter_condition)
 }
 
-CO2 %>%
-  tibble() %>%
+CO2 |>
+  tibble() |>
   test_nse(conc > 100)
 ```
 
@@ -179,15 +176,15 @@ with `{{}}`.
 ```{r test-nse-fixed}
 #| error: true
 test_nse <- function(data, filter_condition) {
-  data %>%
+  data |>
     dplyr::filter({{ filter_condition }})
 }
 
-CO2 %>%
-  tibble() %>%
+CO2 |>
+  tibble() |>
   test_nse(conc > 100)
 
-CO2 %>%
-  tibble() %>%
+CO2 |>
+  tibble() |>
   test_nse(uptake < 30)
 ```

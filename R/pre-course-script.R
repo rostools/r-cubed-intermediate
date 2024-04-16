@@ -9,6 +9,7 @@ unzip(here("data-raw/mmash-data.zip"),
   exdir = here("data-raw"),
   junkpaths = TRUE
 )
+Sys.sleep(1)
 unzip(here("data-raw/MMASH.zip"),
   exdir = here("data-raw")
 )

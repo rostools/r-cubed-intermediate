@@ -81,7 +81,7 @@ objectives for this page:
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_common("reading-website.md")
+cat(r3admin::read_common("reading-website.md"), sep = "\n")
 ```
 
 ## Installing the latest programs {#sec-install-programs}
@@ -90,7 +90,7 @@ r3admin::read_common("reading-website.md")
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_common("installing-programs.md")
+cat(r3admin::read_common("installing-programs.md"), sep = "\n")
 ```
 
 ## Installing the R packages {#sec-install-r-packages}
@@ -99,7 +99,7 @@ r3admin::read_common("installing-programs.md")
 #| echo: false
 #| eval: true
 #| output: asis
-r3admin::read_pkg_install("advanced")
+cat(r3admin::read_template_pkg_install("advanced"), sep = "\n")
 ```
 
 ## Setting up Git {#sec-setup-git}
@@ -357,7 +357,7 @@ is tell R to first look for the `.Rproj` file and then start looking for
 the file we actually want. This might not make sense yet, but as we go
 through the course, you will see why this is important to consider.
 
-::: callout-note
+::: {.callout-note appearance="default"}
 You don't need to run the below code. But if you want to see the
 structure and content of a directory, you can use the `dir_tree()`
 function from the `{fs}` package, which means "filesystem", by running
@@ -493,9 +493,11 @@ either `Ctrl-Shift-A` or `Code -> Reformat Code` menu item. Next, we'll
 extract the new `data-raw/MMASH.zip` file using `unzip()` again. Because
 we want to keep the folder structure inside this zip file, we won't use
 `junkpaths`. Write and execute this code in the `data-raw/mmash.R`
-script.
+script. We'll also add a `Sys.sleep(1)` to pause the script for a second
+because sometimes the unzipping can be too fast and cause problems.
 
 ```{r unzip-data-file}
+Sys.sleep(1)
 unzip(here("data-raw/MMASH.zip"),
   exdir = here("data-raw")
 )
