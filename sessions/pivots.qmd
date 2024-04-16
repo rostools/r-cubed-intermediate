@@ -450,15 +450,20 @@ mmash |>
 Now that we've made the tidy summary code into a function, let's make it
 more generic so we can use other summary statistics and to have the
 output be a bit tidier. For instance, it would be nice to be able to do
-something like this:
+something like this (we'd still have to use `na.rm` though):
 
 ``` r
 mmash |> 
-    tidy_summarise_by_day(median)
+    tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
 mmash |> 
-    tidy_summarise_by_day(max)
+    tidy_summarise_by_day(\(x) max(x, na.rm = TRUE))
 mmash |> 
-    tidy_summarise_by_day(list(median = median, max = max))
+    tidy_summarise_by_day(
+      list(
+        median = \(x) median(x, na.rm = TRUE),
+        max = \(x) max(x, na.rm = TRUE)
+      )
+    )
 ```
 
 Before we get to adding this functionality, let's first make it so the
@@ -547,9 +552,7 @@ Now that it works, let's add some summary statistics to the
 
 ```{r test-tidier-summary}
 mmash |>
-  tidy_summarise_by_day(max)
-mmash |>
-  tidy_summarise_by_day(median)
+  tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
 mmash |>
   tidy_summarise_by_day(list(
     median = \(x) median(x, na.rm = TRUE),
