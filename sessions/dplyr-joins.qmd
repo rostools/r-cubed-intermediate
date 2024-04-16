@@ -5,7 +5,6 @@
 library(here)
 library(fs)
 library(tidyverse)
-library(vroom)
 load(here("_temp/functionals.RData"))
 source(here("R/functions.R"))
 options(dplyr.summarise.inform = FALSE)
@@ -681,10 +680,10 @@ dataset will be saved. If the final dataset is going to be really large,
 we could (but won't in this course) save it as a `.csv` file with:
 
 ```{r, eval=FALSE}
-vroom_write(mmash, here("data/mmash.csv"))
+write_csv(mmash, here("data/mmash.csv"))
 ```
 
-And later load it in with `vroom()` (since it is so fast). Alright,
+And later load it in with `read_csv()` (since it is so fast). Alright,
 we're finished creating this dataset! Let's generate it by:
 
 -   First running `{styler}` with {{< var keybind.styler >}}.
@@ -724,4 +723,3 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
-

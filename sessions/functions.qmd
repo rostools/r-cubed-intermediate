@@ -3,7 +3,7 @@
 ```{r setup}
 #| include: false
 library(fs)
-library(vroom)
+library(tidyverse)
 library(here)
 load(here("_temp/importing.RData"))
 temp_path <- fs::path_temp()
@@ -183,7 +183,7 @@ Once we've created that, let's open up the Git Interface with
 {{< var keybind.git >}} and **add and commit** these changes to our
 history.
 
-## Making a function for vroom
+## Making a function for readr
 
 Now that we have a basic understanding of what a function looks like,
 let's apply it to something we're doing right now: Importing our data.
@@ -217,7 +217,7 @@ data and convert that as a function:
 
 ```{r function-creation-step-1}
 #| eval: false
-user_1_info_data <- vroom(
+user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
@@ -227,7 +227,7 @@ user_1_info_data <- vroom(
     age = col_double(),
     .delim = ","
   ),
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -237,7 +237,7 @@ this case, `import_user_info` is descriptive and meaningful.
 ```{r function-creation-step-2}
 #| eval: false
 import_user_info <- function() {
-  user_1_info_data <- vroom(
+  user_1_info_data <- read_csv(
     user_1_info_file,
     col_select = -1,
     col_types = cols(
@@ -247,7 +247,7 @@ import_user_info <- function() {
       age = col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
 }
 ```
@@ -259,7 +259,7 @@ dataset. So, a good name might be `file_path`.
 ```{r function-creation-step-3}
 #| eval: false
 import_user_info <- function(file_path) {
-  user_1_info_data <- vroom(
+  user_1_info_data <- read_csv(
     file_path,
     col_select = -1,
     col_types = cols(
@@ -269,7 +269,7 @@ import_user_info <- function(file_path) {
       age = col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
 }
 ```
@@ -281,7 +281,7 @@ want your function to output.
 
 ```{r function-creation-step-4}
 import_user_info <- function(file_path) {
-  info_data <- vroom(
+  info_data <- read_csv(
     file_path,
     col_select = -1,
     col_types = cols(
@@ -291,7 +291,7 @@ import_user_info <- function(file_path) {
       age = col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(info_data)
 }
@@ -315,7 +315,7 @@ Awesome! It works. The final stage is adding the Roxygen documentation.
 #' @return Outputs a data frame/tibble.
 #'
 import_user_info <- function(file_path) {
-  info_data <- vroom(
+  info_data <- read_csv(
     file_path,
     col_select = -1,
     col_types = cols(
@@ -325,7 +325,7 @@ import_user_info <- function(file_path) {
       age = col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(info_data)
 }
@@ -347,7 +347,7 @@ Take the code you created for importing the saliva data set from
 make it into a function. It looks like the code below.
 
 ``` r
-user_1_saliva_data <- vroom(
+user_1_saliva_data <- read_csv(
     user_1_saliva_file,
     col_select = -1,
     col_types = cols(
@@ -355,7 +355,7 @@ user_1_saliva_data <- vroom(
         cortisol_norm = col_double(),
         melatonin_norm = col_double()  
     ), 
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -376,7 +376,7 @@ using {{< var keybind.outline >}}.
     -   Wrap it with the `function() {...}`
     -   Make a meaningful name (use `import_saliva`)
     -   Make an argument for the file path (`file_path`) and replace
-        `user_1_saliva_file` with `file_path` in the `vroom()` code
+        `user_1_saliva_file` with `file_path` in the `read_csv()` code
     -   Rename the output object to `saliva_data` and put it in the
         `return()` function
     -   Run the function and then test that it works
@@ -416,7 +416,7 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 #' @return Outputs a data frame/tibble.
 #'
 import_saliva <- function(file_path) {
-  saliva_data <- vroom(
+  saliva_data <- read_csv(
     file_path,
     col_select = -1,
     col_types = cols(
@@ -425,7 +425,7 @@ import_saliva <- function(file_path) {
       melatonin_norm = col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(saliva_data)
 }
@@ -470,10 +470,10 @@ import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
 Now run this line. What happens now? You *may* get an error about not
-finding the `vroom()` function. If you put `library(vroom)` in the
-`setup` code chunk, you might not get an error. If you did get an error,
-that's because R doesn't know what the `vroom()` function is. This is
-where we start getting into package dependency management.
+finding the `read_csv()` function. If you put `library(tidyverse)` in
+the `setup` code chunk, you might not get an error. If you did get an
+error, that's because R doesn't know what the `read_csv()` function is.
+This is where we start getting into package dependency management.
 
 What is package dependency management? Whenever you use an R package,
 you depend on it for your code to work. The informal way to show what
@@ -507,15 +507,15 @@ packages are added. To quickly add a package, go to the **Console** and
 type out:
 
 ``` r
-usethis::use_package("vroom")
+usethis::use_package("readr")
 ```
 
-```{r admin-use-package-vroom}
+```{r admin-use-package-readr}
 #| echo: false
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_package("vroom")
+    usethis::use_package("readr")
   },
   quiet = TRUE
 )
@@ -524,7 +524,7 @@ usethis::with_project(
 You will see a bunch of text about adding it to `Imports`. If you look
 in your `DESCRIPTION` file now, you'll see something like:
 
-```{r admin-print-desc-add-vroom}
+```{r admin-print-desc-add-readr}
 #| echo: false
 #| comment: ""
 usethis::with_project(
@@ -667,22 +667,22 @@ do this step at the end of making the function because doing it while we
 create it can be quite tedious.
 :::
 
-Alright, let's go into `R/functions.R` and add `vroom::` to each of the
-`{vroom}` functions we've used:
+Alright, let's go into `R/functions.R` and add `readr::` to each of the
+`{readr}` functions we've used:
 
 ```{r explicit-function-calls}
 import_user_info <- function(file_path) {
-  info_data <- vroom::vroom(
+  info_data <- readr::read_csv(
     file_path,
     col_select = -1,
-    col_types = vroom::cols(
-      gender = vroom::col_character(),
-      weight = vroom::col_double(),
-      height = vroom::col_double(),
-      age = vroom::col_double(),
+    col_types = readr::cols(
+      gender = readr::col_character(),
+      weight = readr::col_double(),
+      height = readr::col_double(),
+      age = readr::col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(info_data)
 }
@@ -749,7 +749,7 @@ ___ <- function(___) {
             ___,
             .delim = ","
         ),
-        .name_repair = snakecase::to_snake_case
+        name_repair = snakecase::to_snake_case
     )
     return(___)
 }
@@ -767,16 +767,16 @@ ___ <- function(___) {
 #' @return Outputs a data frame/tibble.
 #'
 import_saliva <- function(file_path) {
-  saliva_data <- vroom::vroom(
+  saliva_data <- readr::read_csv(
     file_path,
     col_select = -1,
-    col_types = vroom::cols(
-      samples = vroom::col_character(),
-      cortisol_norm = vroom::col_double(),
-      melatonin_norm = vroom::col_double(),
+    col_types = readr::cols(
+      samples = readr::col_character(),
+      cortisol_norm = readr::col_double(),
+      melatonin_norm = readr::col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(saliva_data)
 }
@@ -788,17 +788,17 @@ import_saliva <- function(file_path) {
 #' @return Outputs a data frame/tibble.
 #'
 import_rr <- function(file_path) {
-  rr_data <- vroom::vroom(
+  rr_data <- readr::read_csv(
     file_path,
     col_select = -1,
-    col_types = vroom::cols(
-      ibi_s = vroom::col_double(),
-      day = vroom::col_double(),
+    col_types = readr::cols(
+      ibi_s = readr::col_double(),
+      day = readr::col_double(),
       # Converts to seconds
-      time = vroom::col_time(format = ""),
+      time = readr::col_time(format = ""),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(rr_data)
 }
@@ -810,25 +810,25 @@ import_rr <- function(file_path) {
 #' @return Outputs a data frame/tibble.
 #'
 import_actigraph <- function(file_path) {
-  actigraph_data <- vroom::vroom(
+  actigraph_data <- readr::read_csv(
     file_path,
     col_select = -1,
-    col_types = vroom::cols(
-      axis_1 = vroom::col_double(),
-      axis_2 = vroom::col_double(),
-      axis_3 = vroom::col_double(),
-      steps = vroom::col_double(),
-      hr = vroom::col_double(),
-      inclinometer_off = vroom::col_double(),
-      inclinometer_standing = vroom::col_double(),
-      inclinometer_sitting = vroom::col_double(),
-      inclinometer_lying = vroom::col_double(),
-      vector_magnitude = vroom::col_double(),
-      day = vroom::col_double(),
-      time = vroom::col_time(format = ""),
+    col_types = readr::cols(
+      axis_1 = readr::col_double(),
+      axis_2 = readr::col_double(),
+      axis_3 = readr::col_double(),
+      steps = readr::col_double(),
+      hr = readr::col_double(),
+      inclinometer_off = readr::col_double(),
+      inclinometer_standing = readr::col_double(),
+      inclinometer_sitting = readr::col_double(),
+      inclinometer_lying = readr::col_double(),
+      vector_magnitude = readr::col_double(),
+      day = readr::col_double(),
+      time = readr::col_time(format = ""),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(actigraph_data)
 }
@@ -872,4 +872,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
-

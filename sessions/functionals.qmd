@@ -6,7 +6,6 @@ library(here)
 library(dplyr)
 library(purrr)
 library(fs)
-library(vroom)
 load(here("_temp/functions.RData"))
 source(here("R/functions.R"))
 ```

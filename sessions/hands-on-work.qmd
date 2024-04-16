@@ -26,7 +26,7 @@ process, clean, join, and eventually analyze your datasets. Listed below
 are the general workflows we've covered and that you can use as a
 guideline to complete the following (optional) exercises and group work.
 
--   Import with the `vroom()`, and optionally use `spec()` to `vroom()`
+-   Import with the `read_csv()`, and optionally use `spec()` to `read_csv()`
     again to select specific variables.
 -   Convert importing into a function in a Quarto / R Markdown document,
     move to the `R/function.R` script, restarting R, and `source()`.
@@ -99,17 +99,17 @@ other datasets. Complete these tasks in the `doc/learning.qmd` file:
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 import_activity <- function(file_path) {
-  activity_data <- vroom::vroom(
+  activity_data <- readr::read_csv(
     file_path,
     col_select = -1,
-    col_types = vroom::cols(
-      activity = vroom::col_double(),
-      start = vroom::col_time(format = ""),
-      end = vroom::col_time(format = ""),
-      day = vroom::col_double(),
+    col_types = readr::cols(
+      activity = readr::col_double(),
+      start = readr::col_time(format = ""),
+      end = readr::col_time(format = ""),
+      day = readr::col_double(),
       .delim = ","
     ),
-    .name_repair = snakecase::to_snake_case
+    name_repair = snakecase::to_snake_case
   )
   return(activity_data)
 }

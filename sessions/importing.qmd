@@ -2,7 +2,7 @@
 
 ```{r setup}
 #| include: false
-library(vroom)
+library(readr)
 library(here)
 temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
@@ -61,7 +61,7 @@ LearnR3
 
 ## Learning objectives
 
-1.  Learn how to import data and do minor cleaning with the `{vroom}`
+1.  Learn how to import data and do minor cleaning with the `{readr}`
     package.
 2.  Learn about strategies and resources to use when encountering
     problems when importing data (arguably one of the most important
@@ -78,18 +78,14 @@ research questions. The first step to processing data is to import it
 into R so we can work on it. So for now, we'll open up the
 `doc/learning.qmd` file so we can start building and testing out the
 code. There should be a `setup` code chunk already be in the file, where
-we will put the `library()` code for loading the `{vroom}` package with
-`library(vroom)` as well as `library(here)`. Since we'll also be using
-the `{tidyverse}` package, let's also add `library(tidyverse)`. It
+we will put the `library()` code for loading the `{tidyverse}` package,
+which has `{readr}` bundled with it, as well as `library(here)`. It
 should look like this:
 
-````         
 ```{{r setup}}
 library(tidyverse)
-library(vroom)
 library(here)
 ```
-````
 
 This `setup` code chunk is a special, named code chunk that tells R to
 run this code chunk first whenever you open this Quarto / R Markdown
@@ -102,7 +98,7 @@ below it using {{< var keybind.chunk >}}.
 ::: callout-note
 ## Reading task: \~5 minutes
 
-What is `{vroom}`? It is a package designed to load in data,
+What is `{readr}`? It is a package designed to load in data,
 specifically text-based data files such as CSV. In R there are several
 packages that you can use to load in data and of different types of file
 formats. We won't cover these other packages, so you can use this as a
@@ -114,11 +110,10 @@ reference for when or if you ever have to load other file types:
     file endings.
 -   `{googlesheets4}`: For reading in Google Sheets from their cloud
     service.
--   `{readr}`: Standard package used to load in text-based data files
-    like CSV. This package is included by default within the
-    `{tidyverse}`. Newer versions of `{readr}` actually use `{vroom}`
-    internally, but we'll still cover `{vroom}` separately in this
-    course.
+-   `{vroom}`: We originally taught this package, but since then it has
+    been merged in with the `{readr}` package, which is why we now teach
+    that instead. This package was designed to read in text-based data
+    files really fast.
 -   `utils::read.delim()`: This function comes from the core R package
     utils and includes other functions like `utils::read.csv()` (note
     the `.` in the name, rather than `_` in the `readr::read_csv()`
@@ -126,9 +121,9 @@ reference for when or if you ever have to load other file types:
 -   `data.table::fread()`: From the `{data.table}` package, this
     function is used to load in CSV files.
 
-We're using the `{vroom}` package for largely one reason: It makes use
-of recent improvements in R that allow data to be imported into R very
-very quickly. Just how fast? The `{vroom}` website has a [benchmark
+We're using the `{readr}` package because it is well integrated within
+the `{tidyverse}` universe of packages. It also runs `{vroom}`
+internally. How fast is `{vroom}`? The website has a [benchmark
 page](https://vroom.r-lib.org/articles/benchmarks.html) showing how fast
 it is. For many people, loading in the data can be one of the most
 time-consuming parts of starting an analysis. Hopefully by using this
@@ -137,23 +132,23 @@ package, that time can be reduced.
 The packages `{readr}`, `{vroom}`, `{haven}`, `{readxl}`, and
 `{googlesheets4}` all are very similar in how you use them and their
 documentation are almost identical. So the skills you learn in this
-session with `{vroom}` can mostly be applied to these other packages.
+session with `{readr}` can mostly be applied to these other packages.
 And because `{readr}` (which the other packages are based on) has been
 around for awhile, there is a large amount of support and help for using
 it.
 
-If your data is in CSV format, `{vroom}` is perfect. The CSV file format
+If your data is in CSV format, `{readr}` is perfect. The CSV file format
 is a commonly used format for data because it is open and transparent,
 readable by any computer, and doesn't depend on any special software to
 open (unlike for e.g. Excel spreadsheets).
 :::
 
 Let's first start by creating an object that has the file path to the
-dataset, then we'll use `vroom()` to import that dataset.
+dataset, then we'll use `read_csv()` to import that dataset.
 
 ```{r first-load-in-user-info}
 user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
-user_1_info_data <- vroom(user_1_info_file)
+user_1_info_data <- read_csv(user_1_info_file)
 ```
 
 You'll see the output mention using `spec()` to use in the argument
@@ -164,7 +159,7 @@ column header. So, let's figure out what this message means. Let's go to
 the **Console** and type out:
 
 ``` r
-?vroom::spec
+?readr::spec
 ```
 
 In the documentation, we see that it says:
@@ -183,11 +178,11 @@ columns are imported into R and what data types they are given. For
 instance, `col_double()` means numeric (double is how computers
 represent non-integer numbers) and `col_character()` means a character
 data type. Next, let's see what the message meant about `col_types`.
-Let's check out the help documentation for `vroom()` by typing in the
+Let's check out the help documentation for `read_csv()` by typing in the
 **Console**:
 
 ``` r
-?vroom::vroom
+?readr::read_csv
 ```
 
 And if we scroll down to the explanation of `col_types`:
@@ -197,10 +192,10 @@ And if we scroll down to the explanation of `col_types`:
 
 It says to use a "cols() specification", which is the output of
 `spec()`. Copy the output from `spec()` and paste it into the
-`col_types` argument of `vroom()`.
+`col_types` argument of `read_csv()`.
 
-```{r vroom-with-error}
-user_1_info_data <- vroom(
+```{r read-csv-with-error}
+user_1_info_data <- read_csv(
   user_1_info_file,
   col_types = cols(
     ...1 = col_double(),
@@ -217,13 +212,13 @@ If you recall, the `user_info.csv` file has an empty column name.
 Looking at the [data
 dictionary](https://physionet.org/content/mmash/1.0.0/) it doesn't seem
 there is any reference to this column, so it likely isn't important.
-More than likely, `{vroom}` is complaining about this empty column name
+More than likely, `{readr}` is complaining about this empty column name
 and the use of `...1` to represent it. We don't need it, so we'll get
 rid of it when we load in the dataset. But how? Look at the help
 documentation again. Go to the **Console** and type out:
 
 ``` r
-?vroom::vroom
+?readr::read_csv
 ```
 
 Looking at the list of arguments, there is an argument called
@@ -233,14 +228,14 @@ used with actual column names. Our column doesn't have a name, that's
 the problem. Next check the Example section of the help. Scrolling down,
 you'll eventually see:
 
-> `vroom(input_file, col_select = c(1, 3, 11))`
+> `read_csv(input_file, col_select = c(1, 3, 11))`
 
 So, it takes numbers! With `dplyr::select()`, using the `-` before the
 column name (or number) means to drop the column, so in this case, we
 could drop the first column with `col_select = -1`!
 
 ```{r second-load-in-info-no-error}
-user_1_info_data <- vroom(
+user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
@@ -257,35 +252,35 @@ Hmm, we still have the message. You may or may not see this message
 depending on the version of your packages (the most updated packages
 will show this), but you can see it in the code chunk above.
 
-This is `vroom()` letting you know that a column was renamed because it
-found an empty column with no column name and is letting you know it had
-to rename it. Even though we excluded it with `col_select = -1`, that
-only excludes it after reading the column names, before importing the
-data.
+This is `read_csv()` letting you know that a column was renamed because
+it found an empty column with no column name and is letting you know it
+had to rename it. Even though we excluded it with `col_select = -1`,
+that only excludes it after reading the column names, before importing
+the data.
 
-To remove this new message, we need to tell `vroom()` exactly how to
-handle renaming cases. Let's look at the help docs of `{vroom}`:
-`?vroom`. Scroll down and we see an argument called `.name_repair` that
-handles naming of columns. Going into the provided link takes us to the
-`tibble::tibble()` help documentation. Scroll down to the `.name_repair`
-argument documentation and it says that it treats problematic column
-names, of which a missing column name is definitely a problem. There are
-several options here, but the one I want to focus on is the comment
-about "function: apply custom name repair". This is an important one
-because we eventually want to rename the columns to match the [style
-guide](https://style.tidyverse.org/) by using `snake_case`, since there
-is a package to do that called `{snakecase}`.
+To remove this new message, we need to tell `read_csv()` exactly how to
+handle renaming cases. Let's look at the help docs of `{readr}`:
+`?read_csv`. Scroll down and we see an argument called `name_repair`
+that handles naming of columns. Going into the provided link takes us to
+the `tibble::tibble()` help documentation. Scroll down to the
+`name_repair` argument documentation and it says that it treats
+problematic column names, of which a missing column name is definitely a
+problem. There are several options here, but the one I want to focus on
+is the comment about "function: apply custom name repair". This is an
+important one because we eventually want to rename the columns to match
+the [style guide](https://style.tidyverse.org/) by using `snake_case`,
+since there is a package to do that called `{snakecase}`.
 
 In the **Console**, type out `snakecase::` and hit Tab. You'll see a
 list of possible functions to use. We want to use the snakecase one, so
 scroll down and find the `to_snake_case()`. That's the one we want to
 use. So to remove the messages and convert the variable names to snake
-case, we would add `.name_repair = snakecase::to_snake_case` to the
-code. Notice the lack of `()` when using the function. We'll explain
-more about this in later sessions.
+case, we would add `name_repair = snakecase::to_snake_case` to the code.
+Notice the lack of `()` when using the function. We'll explain more
+about this in later sessions.
 
 ```{r use-name-repair}
-user_1_info_data <- vroom(
+user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
@@ -295,23 +290,23 @@ user_1_info_data <- vroom(
     Height = col_double(),
     Age = col_double()
   ),
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 ```
 
 Now we have another warning though. It's probably because the names are
 repaired to snake case before the `col_types` are used. Let's try
-repeating the `vroom()` to `spec()` to `vroom()` workflow we just used
-to see if that fixes the problem.
+repeating the `read_csv()` to `spec()` to `read_csv()` workflow we just
+used to see if that fixes the problem.
 
 ```{r use-spec-after-name-repair}
-user_1_info_data <- vroom(
+user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 spec(user_1_info_data)
-user_1_info_data <- vroom(
+user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
   col_types = cols(
@@ -322,7 +317,7 @@ user_1_info_data <- vroom(
     age = col_double(),
     .delim = ","
   ),
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -378,18 +373,18 @@ data.
 
 ``` r
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")
-user_1_saliva_data_prep <- vroom(
+user_1_saliva_data_prep <- read_csv(
     user_1_saliva_file,
     col_select = ___,
-    .name_repair = ___
+    name_repair = ___
 )
 ___(user_1_saliva_data_prep)
 
-user_1_saliva_data <- vroom(
+user_1_saliva_data <- read_csv(
     user_1_saliva_file,
     col_select = ___,
     col_types = ___,
-    .name_repair = ___
+    name_repair = ___
 )
 ```
 
@@ -399,14 +394,14 @@ user_1_saliva_data <- vroom(
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
-user_1_saliva_data_prep <- vroom(
+user_1_saliva_data_prep <- read_csv(
   user_1_saliva_file,
   col_select = -1,
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 spec(user_1_saliva_data_prep)
 
-user_1_saliva_data <- vroom(
+user_1_saliva_data <- read_csv(
   user_1_saliva_file,
   col_select = -1,
   col_types = cols(
@@ -415,14 +410,14 @@ user_1_saliva_data <- vroom(
     cortisol_norm = col_double(),
     melatonin_norm = col_double()
   ),
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 ```
 
 ## Importing larger datasets
 
 Sometimes you may have a dataset that's just a bit too large. Sometimes
-`{vroom}` may not have enough information to guess the data type of the
+`{readr}` may not have enough information to guess the data type of the
 column. Or maybe there are hundreds or thousands of columns in your data
 and you only want to import specific columns. In these cases, we can do
 a trick: read in the first few lines of the dataset, use `spec()` and
@@ -436,18 +431,18 @@ technique to decide what we want to keep. First, create a new header
 {{< var keybind.chunk >}}.
 
 Do the same thing that we've been doing, but this time we are going to
-use the argument `n_max`, which tells `{vroom}` how many rows to read
+use the argument `n_max`, which tells `{readr}` how many rows to read
 into R. In this case, let's read in 100, since that is the amount
-`{vroom}` will guess until. This dataset, like the others, has an empty
+`{readr}` will guess until. This dataset, like the others, has an empty
 column that we will drop.
 
 ```{r import-some-of-data-trick}
 user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
-user_1_rr_data_prep <- vroom(
+user_1_rr_data_prep <- read_csv(
   user_1_rr_file,
   n_max = 100,
   col_select = -1,
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 spec(user_1_rr_data_prep)
 ```
@@ -457,18 +452,18 @@ Some people may see `time` set as something like `col_double()` or
 `col_character()`. This is great example of why we would use `spec()`
 and `col_types` to explicitly tell R what the data type the variable
 should be. If yours is not `col_time()`, after you paste the spec output
-into the `col_type` argument of `vroom::vroom()`, fix it so it is
+into the `col_type` argument of `readr::read_csv()`, fix it so it is
 `col_time(format = "")`.
 :::
 
 Like with last time, copy and paste the output into a new use of
-`vroom()`. Add the `.name_repair` argument with
+`read_csv()`. Add the `name_repair` argument with
 `snakecase::to_snake_case`. Don't forget to also remove the last `,` at
 the end! Make sure to remove the `n_max` argument, since we want to
 import in the whole dataset.
 
 ```{r}
-user_1_rr_data <- vroom(
+user_1_rr_data <- read_csv(
   user_1_rr_file,
   col_select = -1,
   col_types = cols(
@@ -478,7 +473,7 @@ user_1_rr_data <- vroom(
     # Converts to seconds
     time = col_time(format = "")
   ),
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -532,7 +527,7 @@ user_1_actigraph_data_prep <- ___(
     ___,
     n_max = ___,
     col_select = ___,
-    .name_repair = ___
+    name_repair = ___
 )
 ___(user_1_actigraph_data_prep)
 
@@ -552,15 +547,15 @@ user_1_actigraph_data <- ___(
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 # Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
-user_1_actigraph_data_prep <- vroom(
+user_1_actigraph_data_prep <- read_csv(
   user_1_actigraph_file,
   n_max = 100,
   col_select = -1,
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 spec(user_1_actigraph_data_prep)
 
-user_1_actigraph_data <- vroom(
+user_1_actigraph_data <- read_csv(
   user_1_actigraph_file,
   col_select = -1,
   col_types = cols(
@@ -578,7 +573,7 @@ user_1_actigraph_data <- vroom(
     day = col_double(),
     time = col_time(format = "")
   ),
-  .name_repair = snakecase::to_snake_case
+  name_repair = snakecase::to_snake_case
 )
 ```
 
@@ -593,13 +588,13 @@ next session.
 
 -   Use the appropriate package when importing a specific data file
     (e.g. for `.xlsx` use `{readxl}`).
--   Use `vroom()` for fast importing of plain text type files (e.g.
+-   Use `read_csv()` for fast importing of plain text type files (e.g.
     csv).
 -   Use `spec()` to diagnose importing issues.
--   Use `col_types =` and `col_select =` arguments in `vroom()` to
+-   Use `col_types =` and `col_select =` arguments in `read_csv()` to
     import only the data you need.
--   Fix column names to match a style using `.name_repair =` argument in
-    `vroom()`.
+-   Fix column names to match a style using `name_repair =` argument in
+    `read_csv()`.
 -   For very large datasets, importing in the first 100-1000 rows using
     `n_max =` to test that importing works fine before importing the
     full dataset.
@@ -608,4 +603,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/importing.RData"))
 ```
-
