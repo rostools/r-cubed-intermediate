@@ -192,8 +192,8 @@ Than think of how some of these questions might be answered, using the
 [Data Description](https://physionet.org/content/mmash/1.0.0/) as a
 guide:
 
-1.  What times of the day are people lying down (`inclinometer_lying`)
-    most often? How long are they lying down for?
+1.  When are people most likely to be lying down (`inclinometer_lying`)?
+    How long do they lie down for?
 2.  When are people most likely to be sitting down
     (`inclinometer_sitting`)? Does this also correspond to a lower heart
     rate or a lower interbeat interval (from the `RR` data) compared to
