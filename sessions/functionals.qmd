@@ -900,11 +900,11 @@ later. Make sure to read the warning block below.
 5.  Decide which summary measure(s) you think may be most interesting
     for you (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`,
     `var()`).
-6.  Use `group_by()` of `file_path_id` and `day`, then use `summarise()`
-    with `across()` to summarise the variables you are interested in
-    (from item 4 above) with the summary functions you chose. Assign the
-    newly summarised data frame to a new data frame and call it
-    `summarised_actigraph_df`.
+6.  Use `group_by()` with the `file_path_id` and `day` variables
+    **only**, then use `summarise()` with `across()` to summarise the
+    variables you are interested in (from item 4 above) with the summary
+    functions you chose. Assign the newly summarised data frame to a new
+    data frame and call it `summarised_actigraph_df`.
 7.  End the grouping effect with `ungroup()`.
 8.  Run `{styler}` while in the `doc/learning.qmd` file with
     {{< var keybind.styler >}}.
