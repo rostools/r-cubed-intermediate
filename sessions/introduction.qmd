@@ -126,30 +126,28 @@ Our workflow and process will be something like:
     (`data-raw/mmash/`), which you already did in the pre-course tasks.
     -   We do this to keep the code for downloading and processing the
         data together with the raw data.
--   Use Quarto / R Markdown (`doc/learning.qmd`) to write and test out
-    code, convert it into a function, test it, and then move it into
-    `R/functions.R`. Later we will also move code into the
-    `data-raw/mmash.R`. We use this workflow because:
+-   Use Quarto (`doc/learning.qmd`) to write and test out code, convert
+    it into a function, test it, and then move it into `R/functions.R`.
+    Later we will also move code into the `data-raw/mmash.R`. We use
+    this workflow because:
     -   It's easier to quickly test code out and make sure it works
         before moving the code over into a more formal location and
-        structure. Think of using the Quarto / R Markdown file as a
-        sandbox to test out and play with code, without fear of messing
-        things up.
-    -   We also test code out in the Quarto / R Markdown because it's
-        easier from a teaching perspective to interweave text and
-        comments with code as we do the code-alongs and because it
-        forces you to practice working within Quarto / R Markdown
-        documents, which are key components to a reproducible workflow
-        in R.
-    -   Rendering a Quarto / R Markdown file runs all the code from
-        beginning to end in a new environment (so completely clean),
-        meaning we can test the reproducibility of our code. Because of
-        this feature, it allows us to detect errors and issues with the
-        code, making Quarto / R Markdown an excellent prototyping tool.
+        structure. Think of using the Quarto file as a sandbox to test
+        out and play with code, without fear of messing things up.
+    -   We also test code out in the Quarto because it's easier from a
+        teaching perspective to interweave text and comments with code
+        as we do the code-alongs and because it forces you to practice
+        working within Quarto documents, which are key components to a
+        reproducible workflow in R.
+    -   Rendering a Quarto file runs all the code from beginning to end
+        in a new environment (so completely clean), meaning we can test
+        the reproducibility of our code. Because of this feature, it
+        allows us to detect errors and issues with the code, making
+        Quarto an excellent prototyping tool.
     -   We keep the functions in a separate file because we will
         frequently `source()` from it as we prototype and test out code
-        in the Quarto / R Markdown file. It also creates a clear
-        separation between "finalized" code and prototyping code.
+        in the Quarto file. It also creates a clear separation between
+        "finalized" code and prototyping code.
 -   Use a combination of restarting R ({{< var keybind.restart-r >}})
     and using `source()` with {{< var keybind.source >}} while in
     `R/functions.R` to run the functions inside of `R/functions.R`.
@@ -157,23 +155,22 @@ Our workflow and process will be something like:
         clearing up the R workspace and starting for a "clean plate".
         And for reproducibility, we should always aim to working from a
         clean plate.
--   Replace the old code in the Quarto / R Markdown document
-    (`doc/learning.qmd`) with the new function.
+-   Replace the old code in the Quarto document (`doc/learning.qmd`)
+    with the new function.
 -   Finish building functions that prepare the dataset, use them in the
     cleaning script (`data-raw/mmash.R`), run the script and save the
     data as an `.rda` file (`data/mmash.rda`).
     -   Like with the `R/functions.R` script, we move the finalized data
-        processing code over from the Quarto / R Markdown into the
-        `data-raw/mmash.R` script to have a clear separation of
-        completed code and prototyping code.
-    -   Why is the `data-raw/mmash.R` script not a Quarto / R Markdown
-        file instead? Because our *aim* for the R script is to produce a
-        specific dataset output, while the *aim* of a Quarto / R
-        Markdown file is to create an output *document* (like HTML) and
-        to test reproducibility. We use specific tools or file formats
-        for specific purposes base on their design.
--   Remove the old code from the Quarto / R Markdown document
-    (`doc/learning.qmd`).
+        processing code over from the Quarto into the `data-raw/mmash.R`
+        script to have a clear separation of completed code and
+        prototyping code.
+    -   Why is the `data-raw/mmash.R` script not a Quarto file instead?
+        Because our *aim* for the R script is to produce a specific
+        dataset output, while the *aim* of a Quarto file is to create an
+        output *document* (like HTML) and to test reproducibility. We
+        use specific tools or file formats for specific purposes base on
+        their design.
+-   Remove the old code from the Quarto document (`doc/learning.qmd`).
     -   Once we've finished prototyping code and moved it over into a
         more "final" location, we remove left over code because it isn't
         necessary and we don't want our files to be littered with left

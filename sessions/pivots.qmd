@@ -30,13 +30,12 @@ and remind everyone the 'what' and 'why' of what we are doing.
 1.  Using the concept of "pivoting" to arrange data from long to wide
     and vice versa.
 
-## Setup for the analysis in Quarto / R Markdown
+## Setup for the analysis in Quarto
 
 We now have a working dataset to start doing some simple analyses on in
-the Quarto / R Markdown document. A recommended workflow with Quarto / R
-Markdown is to often render / "knit" it and make sure your analysis is
-reproducible (while on your computer). We already cleaned it up from the
-previous session.
+the Quarto document. A recommended workflow with Quarto is to often
+render / "knit" it and make sure your analysis is reproducible (while on
+your computer). We already cleaned it up from the previous session.
 
 We will now add the `load()` code right below the `source()` function in
 the `setup` code chunk:
@@ -51,18 +50,18 @@ As we write more R code and do some simple analyses of the data, we are
 going to be knitting fairly often (depending on how long the analysis
 takes of course). The main reason for this is to ensure that whatever
 you are writing and coding will at least be reproducible on your
-computer, since Quarto / R Markdown is designed to ensure the document
-is reproducible.
+computer, since Quarto is designed to ensure the document is
+reproducible.
 
 For this specific workflow and for checking reproducibility, you should
 output to HTML rather than to a Word document. While you can create a
 Word document by changing the `format: html` to `format: docx` (for
 Quarto only) at the top in the YAML header, you'd only do this when you
 need to submit to a journal or need to email to co-authors for review.
-The reason is simple: After you generate the Word document from Quarto /
-R Markdown, the Word file opens up and consequently Word locks the file
-from further edits. What that means is that every time you generate the
-Word document, you have to close it before you can generate it again,
+The reason is simple: After you generate the Word document from Quarto,
+the Word file opens up and consequently Word locks the file from further
+edits. What that means is that every time you generate the Word
+document, you have to close it before you can generate it again,
 otherwise knitting / rendering will fail. This can get annoying very
 quickly (trust me), since you don't always remember to close the Word
 document. If you output to HTML, this won't be a problem.
@@ -561,7 +560,7 @@ mmash |>
 Before continuing, let's render the Quarto document with
 {{< var keybind.render >}} to check reproducibility.
 
-## Making prettier output in Quarto / R Markdown
+## Making prettier output in Quarto
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -570,10 +569,10 @@ Can go over this quite quickly after they've (optionally) finished the
 previous exercise.
 :::
 
-What we created is nice and all, but since we are working in a Quarto /
-R Markdown document and generating to HTML, let's make it easier for
-others (including yourself) to read the document. Let's make the output
-as an actual table. We can do that with `knitr::kable()` (meaning "knitr
+What we created is nice and all, but since we are working in a Quarto
+document and generating to HTML, let's make it easier for others
+(including yourself) to read the document. Let's make the output as an
+actual table. We can do that with `knitr::kable()` (meaning "knitr
 table"). We can also add a table caption with the `caption` argument.
 
 ```{r knitr-table}

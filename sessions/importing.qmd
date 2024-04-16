@@ -88,11 +88,11 @@ library(here)
 ```
 
 This `setup` code chunk is a special, named code chunk that tells R to
-run this code chunk first whenever you open this Quarto / R Markdown
-file and run code inside of the file. It's in this `setup` code chunk
-that we will add `library()` functions when we want to load other
-packages. After adding this code chunk, create a new header by typing
-out `## Importing raw data`, followed by creating a new code chunk right
+run this code chunk first whenever you open this Quarto file and run
+code inside of the file. It's in this `setup` code chunk that we will
+add `library()` functions when we want to load other packages. After
+adding this code chunk, create a new header by typing out
+`## Importing raw data`, followed by creating a new code chunk right
 below it using {{< var keybind.chunk >}}.
 
 ::: callout-note

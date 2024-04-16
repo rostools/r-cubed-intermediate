@@ -431,17 +431,16 @@ import_multiple_files <- function(file_pattern, import_function) {
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
-## Adding to the processing script and clean up Quarto / R Markdown document
+## Adding to the processing script and clean up Quarto document
 
 We've now made a function that imports multiple data files based on the
 type of data file, we can start using this function directly, like we
 did in the exercise above for the saliva data. We've already imported
 the `user_info_df` previously, but now we should do some tidying up of
-our Quarto / R Markdown file and to start updating the
-`data-raw/mmash.R` script. Why are we doing that? Because the Quarto / R
-Markdown file is only a sandbox to test code out and in the end we want
-a script that takes the raw data, processes it, and creates a working
-dataset we can use for analysis.
+our Quarto file and to start updating the `data-raw/mmash.R` script. Why
+are we doing that? Because the Quarto file is only a sandbox to test
+code out and in the end we want a script that takes the raw data,
+processes it, and creates a working dataset we can use for analysis.
 
 Like we did before, delete **everything** below the `setup` code chunk
 that contains the `library()` and `source()` code. Then, we will restart
@@ -456,12 +455,12 @@ saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
 
 To test that things work, we'll create an HTML document from our Quarto
-/ R Markdown document by using the "Render" / "Knit" button at the top
-of the pane or with {{< var keybind.render >}}. Once it creates the
-file, it should either pop up or open in the Viewer pane on the side. If
-it works, then we can move on and open up the `data-raw/mmash.R` script.
-Inside the script, copy and paste these two lines of code to the bottom
-of the script. Afterwards, go the top of the script and right below the
+document by using the "Render" / "Knit" button at the top of the pane or
+with {{< var keybind.render >}}. Once it creates the file, it should
+either pop up or open in the Viewer pane on the side. If it works, then
+we can move on and open up the `data-raw/mmash.R` script. Inside the
+script, copy and paste these two lines of code to the bottom of the
+script. Afterwards, go the top of the script and right below the
 `library(here)` code, add these two lines of code, so it looks like
 this:
 
@@ -874,10 +873,10 @@ indication of what is happening. However, in the background, it removes
 certain metadata that the `group_by()` function added.
 
 Before continuing, let's run `{styler}` with {{< var keybind.styler >}}
-and knit the Quarto / R Markdown document with
-{{< var keybind.render >}} to confirm that everything runs as it should.
-If the knitting works, then switch to the Git interface and **add and
-commit** the changes so far with {{< var keybind.git >}}.
+and knit the Quarto document with {{< var keybind.render >}} to confirm
+that everything runs as it should. If the knitting works, then switch to
+the Git interface and **add and commit** the changes so far with
+{{< var keybind.git >}}.
 
 ## Exercise: Summarise the Actigraph data
 
@@ -942,10 +941,10 @@ summarised_actigraph_df <- actigraph_df |>
 
 **We'll do this all together**. We've tested out, imported, and
 processed two new datasets, the RR and the Actigraph datasets. First, in
-the R Markdown / Quarto document, cut the code that we used to import
-and process the `rr_df` and `actigraph_df` data. Then open up the
-`data-raw/mmash.R` file and paste the cut code into the bottom of the
-script. It should look something like this:
+the Quarto document, cut the code that we used to import and process the
+`rr_df` and `actigraph_df` data. Then open up the `data-raw/mmash.R`
+file and paste the cut code into the bottom of the script. It should
+look something like this:
 
 ```{r add-import-functions-to-data-raw-script}
 #| eval: false
@@ -969,10 +968,9 @@ summarised_rr_df <- rr_df |>
 Do not yet `source()` or run code in this file!!
 :::
 
-Next, go to the R Markdown / Quarto document and again delete
-**everything** below the `setup` code chunk. After it has been deleted,
-add and commit the changes to the Git history with
-{{< var keybind.git >}}.
+Next, go to the Quarto document and again delete **everything** below
+the `setup` code chunk. After it has been deleted, add and commit the
+changes to the Git history with {{< var keybind.git >}}.
 
 ## Exercise: Brainstorm and discuss how you'd use functionals in your work
 

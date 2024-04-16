@@ -44,7 +44,7 @@ found as you work through the tasks.
     paste this output into the survey.
 6.  Create an R Project in @sec-create-r-project, including the folder
     and files.
-7.  Create an R Markdown / Quarto file in @sec-quarto.
+7.  Create a Quarto file in @sec-quarto.
 8.  Write R code to download the data in @sec-download-data and save it
     to your computer. This task will probably take up the most time,
     maybe 30-90 minutes. Run a check in this subsection to see that
@@ -68,7 +68,7 @@ runs smoothly. However, some of these tasks are meant for learning as
 well as for general setup, so we have defined the following learning
 objectives for this page:
 
-1.  Learn about making reproducible documents with R Markdown.
+1.  Learn about making reproducible documents with Quarto.
 2.  Learn about filesystems, relative and absolute paths, and how to
     make use of the `{fs}` R package to navigate files in your project.
 3.  Learn where to store your raw data so that you can use scripts as a
@@ -234,16 +234,17 @@ set things up. usethis is an extremely useful package for managing R
 Projects and we highly recommend checking it out more to see how you can
 use it more in your own work.
 
-## R Markdown / Quarto {#sec-quarto}
+## Quarto {#sec-quarto}
 
-We teach and use R Markdown / [Quarto](https://quarto.org) because it is
-one of the very first steps to being reproducible and because it is a
-very powerful tool to doing data analysis. Please do these two tasks:
+We teach and use [Quarto](https://quarto.org) (which is a more powerful
+version of R Markdown) because it is one of the very first steps to
+being reproducible and because it is a very powerful tool to doing data
+analysis. Please do these two tasks:
 
-1.  Please read over the [R Markdown
-    section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-r-markdown-and-quarto)
-    of the introduction course. If you use R Markdown / Quarto already,
-    you can skip this step.
+1.  Please read over the [Quarto
+    section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-quarto)
+    of the introduction course. If you use Quarto already, you can skip
+    this step.
 
 2.  Open up the `LearnR3` project, either by clicking the
     `LearnR3.Rproj` file or by using the "File -\> Open Project" menu.

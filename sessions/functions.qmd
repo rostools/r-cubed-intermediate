@@ -24,7 +24,7 @@ covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 ## Learning objectives
 
 1.  Learn what functions are in R and how to create and use them.
-2.  Learn a workflow of using Quarto / R Markdown, `source()` with
+2.  Learn a workflow of using Quarto, `source()` with
     {{< var keybind.source >}} and restarting R with
     {{< var keybind.restart-r >}} as a tool and process for developing
     functions that can be later easily (re-)used.
@@ -360,10 +360,9 @@ user_1_saliva_data <- read_csv(
 ```
 
 ::: {.callout-tip appearance="default"}
-A helpful tip: To move around a Quarto / R Markdown or R script more
-easily, open up the "Document Outline" on the side by clicking the
-button in the top right corner of the Quarto / R Markdown pane or by
-using {{< var keybind.outline >}}.
+A helpful tip: To move around a Quarto or R script more easily, open up
+the "Document Outline" on the side by clicking the button in the top
+right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 :::
 
 1.  Create a new markdown header
@@ -448,8 +447,8 @@ We've created two functions. Now we need to move those functions from
 the `doc/learning.qmd` file and into the `R/` folder by **cutting and
 pasting** (not just copying). We do this for a few reasons:
 
-1.  To prevent the Quarto / R Markdown document from becoming too long
-    and having a large portion of R code over other text.
+1.  To prevent the Quarto document from becoming too long and having a
+    large portion of R code over other text.
 2.  To make it easier to maintain and find things in your project.
 3.  To make use of the `source()` function.
 
