@@ -235,8 +235,8 @@ mmash |>
   summarise(across(
     value,
     list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup()
@@ -307,8 +307,8 @@ mmash |>
   summarise(across(
     value,
     list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup() |>
@@ -330,8 +330,8 @@ mmash |>
   summarise(across(
     value,
     list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup() |>
@@ -360,8 +360,8 @@ mmash |>
   summarise(across(
     value,
     list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
     )
   )) |>
   ungroup() |>
@@ -429,8 +429,8 @@ tidy_summarise_by_day <- function(data) {
     dplyr::summarise(dplyr::across(
       value,
       list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
       )
     )) |>
     dplyr::ungroup() |>
@@ -482,11 +482,11 @@ tidy_summarise_by_day <- function(data) {
     dplyr::summarise(dplyr::across(
       value,
       list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
       )
     )) |>
-    dplyr::ungroup() |> 
+    dplyr::ungroup() |>
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       \(x) round(x, digits = 2)
@@ -528,7 +528,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       value,
       summary_fn
     )) |>
-    dplyr::ungroup() |> 
+    dplyr::ungroup() |>
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       \(x) round(x, digits = 2)
@@ -553,7 +553,7 @@ mmash |>
   tidy_summarise_by_day(median)
 mmash |>
   tidy_summarise_by_day(list(
-    median = \(x) median(x, na.rm = TRUE), 
+    median = \(x) median(x, na.rm = TRUE),
     max = \(x) max(x, na.rm = TRUE)
   ))
 ```
