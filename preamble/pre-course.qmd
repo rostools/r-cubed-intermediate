@@ -117,6 +117,7 @@ haven't used it, please do these tasks:
     type in the RStudio Console:
 
     ``` r
+    #| filename: Console
     # A pop-up to type in your name (first and last), 
     # as well as your email
     r3::setup_git_config()
@@ -138,6 +139,7 @@ Regardless of whether you've done the steps above or not, *everyone*
 needs to run:
 
 ``` r
+#| filename: Console
 r3::check_setup()
 ```
 
@@ -204,6 +206,7 @@ by either:
     `prodigenr::setup_project("~/Desktop/LearnR3")` in the R Console.
 
 ```{r admin-create-project}
+#| filename: Console
 #| include: false
 prodigenr::setup_project(project_path)
 ```
@@ -212,6 +215,7 @@ When the RStudio Project opens up again, run these three commands in the
 R Console:
 
 ``` r
+#| filename: Console
 prodigenr::setup_with_git()
 usethis::use_blank_slate()
 usethis::use_r("functions", open = FALSE)
@@ -253,6 +257,7 @@ analysis. Please do these two tasks:
     `learning.qmd` in the `doc/` folder.
 
     ``` r
+    #| filename: Console
     r3::create_qmd_doc()
     ```
 
@@ -300,6 +305,7 @@ the dataset to prepare it for later processing. While in your `LearnR3`
 R Project, go to the Console pane in RStudio and type out:
 
 ``` r
+#| filename: Console
 usethis::use_data_raw("mmash")
 ```
 
@@ -324,6 +330,7 @@ added there by default. Then we'll create a new line at the top and type
 out:
 
 ```{r data-raw-script-add-here}
+#| filename: "data-raw/mmash.R"
 library(here)
 ```
 
@@ -365,6 +372,7 @@ function from the `{fs}` package, which means "filesystem", by running
 the following code in the R Console:
 
 ``` r
+#| filename: "Console"
 # To print the file list.
 fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 ```
@@ -384,6 +392,7 @@ Alright, the next step is to download the dataset. Paste this code into
 the `data-raw/mmash.R` script:
 
 ``` r
+#| filename: "data-raw/mmash.R"
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 ```
 
@@ -398,6 +407,7 @@ be written in the `data-raw/mmash.R` file. Run these lines of code to
 download the dataset.
 
 ``` r
+#| filename: "data-raw/mmash.R"
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
@@ -415,6 +425,7 @@ in the `data-raw/` folder), comment out this line, so that inside the
 `data-raw/mmash.R` script it looks like:
 
 ``` r
+#| filename: "data-raw/mmash.R"
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
 
@@ -427,6 +438,7 @@ list by typing out and run this code in the Console. You only need to do
 this once.
 
 ``` r
+#| filename: "Console"
 usethis::use_git_ignore("data-raw/mmash-data.zip")
 ```
 
@@ -480,6 +492,7 @@ extract everything to the `data-raw/` folder (no idea why it's called
 `data-raw/mmash.R` script.
 
 ```{r unzip-main-file}
+#| filename: "data-raw/mmash.R"
 unzip(here("data-raw/mmash-data.zip"),
   exdir = here("data-raw"),
   junkpaths = TRUE
@@ -498,6 +511,7 @@ script. We'll also add a `Sys.sleep(1)` to pause the script for a second
 because sometimes the unzipping can be too fast and cause problems.
 
 ```{r unzip-data-file}
+#| filename: "data-raw/mmash.R"
 Sys.sleep(1)
 unzip(here("data-raw/MMASH.zip"),
   exdir = here("data-raw")
@@ -513,6 +527,7 @@ usethis::with_project(
       exdir = "data-raw",
       junkpaths = TRUE
     )
+    Sys.sleep(1)
     unzip("data-raw/MMASH.zip",
       exdir = "data-raw"
     )
@@ -527,6 +542,7 @@ look into the `data-raw/` folder and confirm that the below listed files
 and folders are there.
 
 ``` r
+#| filename: "Console"
 # NOTE: You don't need to run this code,
 # its here to show how we got the file list.
 fs::dir_tree("data-raw", recurse = 1)
@@ -554,6 +570,7 @@ new folder `data-raw/DataPaper/` to something more explicit like
 script and run them:
 
 ```{r delete-rename-files}
+#| filename: "data-raw/mmash.R"
 library(fs)
 file_delete(here(c(
   "data-raw/MMASH.zip",
@@ -603,6 +620,7 @@ us, we don't need to have Git track it. So, in the Console, type out and
 run this command:
 
 ``` r
+#| filename: "Console"
 usethis::use_git_ignore("data-raw/mmash/")
 ```
 
@@ -619,6 +637,7 @@ usethis::with_project(
 The `data-raw/mmash.R` script should look like this at this point:
 
 ```{r pre-course-state-of-script}
+#| filename: "data-raw/mmash.R"
 #| file: R/pre-course-script.R
 #| eval: false
 ```
@@ -636,6 +655,7 @@ You now have the data ready for the course! At this point, please run
 this function in the Console:
 
 ``` r
+#| filename: "Console"
 r3::check_project_setup()
 ```
 

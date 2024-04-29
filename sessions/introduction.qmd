@@ -228,7 +228,7 @@ the next steps. But first, we need to do a few things. Since we did all
 that work in the pre-course tasks downloading the data and unzipping it,
 we need to save these changes to the Git history. Open the Git interface
 with either the Git icon at the top near the menu bar, or with
-{{< var keybind.git >}}. When the Git inferface opens up we'll click the
+{{< var keybind.git >}}. When the Git interface opens up we'll click the
 checkbox beside the `.gitignore` and `data-raw/mmash.R` files. Then we
 write a commit message in the text box on the right, something like
 `Code to download data zip file`. Click the "Commit" button and close
@@ -238,7 +238,7 @@ Next, delete these two files we don't need by using the `{fs}` package.
 
 In the **Console**, type out:
 
-``` r
+``` {.r filename="Console"}
 fs::file_delete("TODO.md")
 fs::file_delete("doc/report.Rmd")
 ```
@@ -247,7 +247,7 @@ Then, open up the `README.md` and fix some of the TODO items. After
 cleaning everything up, now we need to use Git to add and commit all the
 current files into the history. Open up the Git interface in RStudio
 with {{< var keybind.git >}} or through the Git button. Write a message
-in the commit textbox saying `Added initial files`.
+in the commit text box saying `Added initial files`.
 
 ## Styling your files
 
