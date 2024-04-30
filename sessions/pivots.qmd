@@ -562,7 +562,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
 Source the `R/functions.R` file with {{< var keybind.source >}}, then
 test out the function in the Console:
 
-```{r generalize-summary-function}
+```{r}
 #| filename: "Console"
 tidy_summarise_by_day(mmash, \(x) max(x, na.rm = TRUE))
 ```
