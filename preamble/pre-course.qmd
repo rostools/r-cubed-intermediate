@@ -99,7 +99,7 @@ cat(r3admin::read_common("installing-programs.md"), sep = "\n")
 #| echo: false
 #| eval: true
 #| output: asis
-cat(r3admin::read_template_pkg_install("advanced"), sep = "\n")
+cat(r3admin::read_template_pkg_install("inter"), sep = "\n")
 ```
 
 ## Setting up Git {#sec-setup-git}
