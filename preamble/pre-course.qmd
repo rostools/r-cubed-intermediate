@@ -305,7 +305,7 @@ usethis::use_data_raw("mmash")
 ```
 
 ```{r admin-create-data-raw}
-#| echo: false
+#| include: false
 usethis::with_project(
   path = project_path,
   {
@@ -326,6 +326,7 @@ out:
 
 ```{r data-raw-script-add-here}
 #| filename: "data-raw/mmash.R"
+#| output: false
 library(here)
 ```
 
@@ -433,7 +434,7 @@ usethis::use_git_ignore("data-raw/mmash-data.zip")
 ```
 
 ```{r admin-ignore-mmash-zip}
-#| echo: false
+#| include: false
 usethis::with_project(
   path = project_path,
   {
@@ -502,6 +503,7 @@ because sometimes the unzipping can be too fast and cause problems.
 
 ```{r unzip-data-file}
 #| filename: "data-raw/mmash.R"
+#| eval: !expr skip
 Sys.sleep(1)
 unzip(here("data-raw/MMASH.zip"),
   exdir = here("data-raw")
@@ -509,7 +511,7 @@ unzip(here("data-raw/MMASH.zip"),
 ```
 
 ```{r admin-unzip-data-file}
-#| echo: false
+#| include: false
 usethis::with_project(
   path = project_path,
   {
@@ -539,6 +541,8 @@ fs::dir_tree("data-raw", recurse = 1)
 
 ```{r admin-print-data-raw-after-unzip}
 #| echo: false
+#| message: false
+#| warning: false
 usethis::with_project(
   path = project_path,
   {
@@ -572,7 +576,7 @@ file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
 Afterwards, the files and folders in `data-raw/` will look like:
 
 ```{r admin-print-data-raw-after-deleting}
-#| echo: false
+#| include: false
 usethis::with_project(
   path = project_path,
   {
@@ -613,7 +617,7 @@ usethis::use_git_ignore("data-raw/mmash/")
 ```
 
 ```{r admin-git-ignore-mmash}
-#| echo: false
+#| include: false
 usethis::with_project(
   path = project_path,
   {
@@ -631,7 +635,7 @@ The `data-raw/mmash.R` script should look like this at this point:
 ```
 
 ```{r admin-pre-course-state-of-script}
-#| echo: false
+#| include: false
 fs::file_copy(
   here::here("R/pre-course-script.R"),
   fs::path(project_path, "data-raw", "mmash.R"),
