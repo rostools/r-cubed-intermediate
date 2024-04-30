@@ -138,7 +138,7 @@ haven't used it, please do these tasks:
 Regardless of whether you've done the steps above or not, *everyone*
 needs to run:
 
-``` r
+```{r}
 #| filename: Console
 r3::check_setup()
 ```
@@ -214,7 +214,7 @@ prodigenr::setup_project(project_path)
 When the RStudio Project opens up again, run these three commands in the
 R Console:
 
-``` r
+```{r}
 #| filename: Console
 prodigenr::setup_with_git()
 usethis::use_blank_slate()
@@ -304,7 +304,7 @@ After looking over the MMASH website, you need to setup where to store
 the dataset to prepare it for later processing. While in your `LearnR3`
 R Project, go to the Console pane in RStudio and type out:
 
-``` r
+```{r}
 #| filename: Console
 usethis::use_data_raw("mmash")
 ```
@@ -371,7 +371,7 @@ structure and content of a directory, you can use the `dir_tree()`
 function from the `{fs}` package, which means "filesystem", by running
 the following code in the R Console:
 
-``` r
+```{r}
 #| filename: "Console"
 # To print the file list.
 fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
@@ -391,7 +391,7 @@ withr::with_dir(
 Alright, the next step is to download the dataset. Paste this code into
 the `data-raw/mmash.R` script:
 
-``` r
+```{r}
 #| filename: "data-raw/mmash.R"
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
 ```
@@ -406,7 +406,7 @@ and save the zip dataset. We're going to save the zip file to
 be written in the `data-raw/mmash.R` file. Run these lines of code to
 download the dataset.
 
-``` r
+```{r}
 #| filename: "data-raw/mmash.R"
 download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
@@ -424,7 +424,7 @@ fs::file_copy(
 in the `data-raw/` folder), comment out this line, so that inside the
 `data-raw/mmash.R` script it looks like:
 
-``` r
+```{r}
 #| filename: "data-raw/mmash.R"
 # download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 ```
@@ -437,7 +437,7 @@ need to save it to our Git history. Add the zip file to the Git ignore
 list by typing out and run this code in the Console. You only need to do
 this once.
 
-``` r
+```{r}
 #| filename: "Console"
 usethis::use_git_ignore("data-raw/mmash-data.zip")
 ```
@@ -541,7 +541,7 @@ use the `{fs}` package to work with files. Before you change any files,
 look into the `data-raw/` folder and confirm that the below listed files
 and folders are there.
 
-``` r
+```{r}
 #| filename: "Console"
 # NOTE: You don't need to run this code,
 # its here to show how we got the file list.
@@ -619,7 +619,7 @@ Since we have an R script that downloads the data and processes it for
 us, we don't need to have Git track it. So, in the Console, type out and
 run this command:
 
-``` r
+```{r}
 #| filename: "Console"
 usethis::use_git_ignore("data-raw/mmash/")
 ```
@@ -654,7 +654,7 @@ fs::file_copy(
 You now have the data ready for the course! At this point, please run
 this function in the Console:
 
-``` r
+```{r}
 #| filename: "Console"
 r3::check_project_setup()
 ```
