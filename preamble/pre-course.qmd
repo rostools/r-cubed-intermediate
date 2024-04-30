@@ -482,8 +482,14 @@ extract everything to the `data-raw/` folder (no idea why it's called
 "junkpaths"). This code should be written and executed in the
 `data-raw/mmash.R` script.
 
+```{r admin-mmash-dir-exists}
+#| include: false
+skip <- !fs::dir_exists(here::here("data-raw/mmash"))
+```
+
 ```{r unzip-main-file}
 #| filename: "data-raw/mmash.R"
+#| eval: !expr skip
 unzip(here("data-raw/mmash-data.zip"),
   exdir = here("data-raw"),
   junkpaths = TRUE
@@ -564,6 +570,7 @@ script and run them:
 
 ```{r delete-rename-files}
 #| filename: "data-raw/mmash.R"
+#| eval: !expr skip
 library(fs)
 file_delete(here(c(
   "data-raw/MMASH.zip",
