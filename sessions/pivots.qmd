@@ -41,6 +41,7 @@ We will now add the `load()` code right below the `source()` function in
 the `setup` code chunk:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 #| eval: false
 source(here("R/functions.R"))
 load(here("data/mmash.rda"))
@@ -157,6 +158,7 @@ Since we'll be using `{tidyr}`, we will need to add it as a dependency
 by running this in the Console:
 
 ```{r}
+#| filename: "Console"
 #| eval: false
 usethis::use_package("tidyr")
 ```
@@ -167,6 +169,7 @@ that with {{< var keybind.chunk >}}. Now we can start typing in our
 code:
 
 ```{r pivot-everything-error}
+#| filename: "doc/learning.qmd"
 #| error: true
 mmash |>
   # pivot every column
@@ -178,6 +181,7 @@ We can't have character data and number data in the same column. Let's
 pivot only numbers.
 
 ```{r pivot-numeric}
+#| filename: "doc/learning.qmd"
 mmash |>
   pivot_longer(where(is.numeric))
 ```
@@ -188,6 +192,7 @@ and `day`. Let's drop the `samples` column before pivoting since `day`
 gives us the same information:
 
 ```{r pivot-longer-example}
+#| filename: "doc/learning.qmd"
 mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender))
@@ -201,7 +206,7 @@ Using the `group_by()` and `summarise()` functions we learned in
 @sec-summarise-with-functionals, complete these tasks starting from this
 code.
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 mmash |> 
   select(-samples) |> 
   pivot_longer(c(-user_id, -day, -gender)) |> 
@@ -298,6 +303,7 @@ and SD values. Let's use `pivot_wider()` on `day` to see differences
 between days.
 
 ```{r pivot-wider-from-summarised}
+#| filename: "doc/learning.qmd"
 #| error: true
 mmash |>
   select(-samples) |>
@@ -322,6 +328,7 @@ works similar to `select()`, we can use `starts_with()` to select the
 columns starting with `"values"`.
 
 ```{r pivot-wider-from-summarised-starts-with}
+#| filename: "doc/learning.qmd"
 mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
@@ -351,6 +358,7 @@ We also don't care about missing `gender` values, so we'll drop them as
 well. Add it in the pipe right before `group_by()`.
 
 ```{r pivot-wider-from-summarised-drop-na}
+#| filename: "doc/learning.qmd"
 mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
@@ -477,6 +485,7 @@ used `across()` in `summarise()`, we can also use `across()` within
 that `start_with()` the word `"value"` to 2 digits.
 
 ```{r rounding-summary-function-output}
+#| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data) {
   data |>
     dplyr::select(-samples) |>
@@ -500,8 +509,13 @@ tidy_summarise_by_day <- function(data) {
       values_from = dplyr::starts_with("value")
     )
 }
+```
 
-# Source, then test out the function in the Console:
+Source the `R/functions.R` file with {{< var keybind.source >}}, then
+test out the function in the Console:
+
+```{r}
+#| filename: "Console"
 tidy_summarise_by_day(mmash)
 ```
 
@@ -522,6 +536,7 @@ Now that we've discussed this and come to a conclusion, let's update the
 function.
 
 ```{r generalize-summary-function}
+#| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data, summary_fn) {
   data |>
     dplyr::select(-samples) |>
@@ -542,8 +557,13 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       values_from = dplyr::starts_with("value")
     )
 }
+```
 
-# Source, then test out the function in the Console:
+Source the `R/functions.R` file with {{< var keybind.source >}}, then
+test out the function in the Console:
+
+```{r generalize-summary-function}
+#| filename: "Console"
 tidy_summarise_by_day(mmash, \(x) max(x, na.rm = TRUE))
 ```
 
@@ -551,6 +571,7 @@ Now that it works, let's add some summary statistics to the
 `doc/learning.qmd` file.
 
 ```{r test-tidier-summary}
+#| filename: "doc/learning.qmd"
 mmash |>
   tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
 mmash |>
@@ -579,6 +600,7 @@ actual table. We can do that with `knitr::kable()` (meaning "knitr
 table"). We can also add a table caption with the `caption` argument.
 
 ```{r knitr-table}
+#| filename: "doc/learning.qmd"
 mmash |>
   tidy_summarise_by_day(list(
     mean = \(x) mean(x, na.rm = TRUE),

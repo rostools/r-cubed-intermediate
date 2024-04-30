@@ -147,6 +147,7 @@ Let's first start by creating an object that has the file path to the
 dataset, then we'll use `read_csv()` to import that dataset.
 
 ```{r first-load-in-user-info}
+#| filename: "doc/learning.qmd"
 user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 user_1_info_data <- read_csv(user_1_info_file)
 ```
@@ -158,7 +159,7 @@ names... but that technically there is a first empty column without a
 column header. So, let's figure out what this message means. Let's go to
 the **Console** and type out:
 
-``` r
+``` {.r filename="Console"}
 ?readr::spec
 ```
 
@@ -170,6 +171,7 @@ Without seeing the output, it's not clear what "specification" means.
 Use `spec()` on the dataset object. In the **Console** again:
 
 ```{r}
+#| filename: "Console"
 spec(user_1_info_data)
 ```
 
@@ -181,7 +183,7 @@ data type. Next, let's see what the message meant about `col_types`.
 Let's check out the help documentation for `read_csv()` by typing in the
 **Console**:
 
-``` r
+``` {.r filename="Console"}
 ?readr::read_csv
 ```
 
@@ -195,6 +197,7 @@ It says to use a "cols() specification", which is the output of
 `col_types` argument of `read_csv()`.
 
 ```{r read-csv-with-error}
+#| filename: "doc/learning.qmd"
 user_1_info_data <- read_csv(
   user_1_info_file,
   col_types = cols(
@@ -217,7 +220,7 @@ and the use of `...1` to represent it. We don't need it, so we'll get
 rid of it when we load in the dataset. But how? Look at the help
 documentation again. Go to the **Console** and type out:
 
-``` r
+``` {.r filename="Console"}
 ?readr::read_csv
 ```
 
@@ -235,6 +238,7 @@ column name (or number) means to drop the column, so in this case, we
 could drop the first column with `col_select = -1`!
 
 ```{r second-load-in-info-no-error}
+#| filename: "doc/learning.qmd"
 user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
@@ -280,6 +284,7 @@ Notice the lack of `()` when using the function. We'll explain more
 about this in later sessions.
 
 ```{r use-name-repair}
+#| filename: "doc/learning.qmd"
 user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
@@ -300,6 +305,7 @@ repeating the `read_csv()` to `spec()` to `read_csv()` workflow we just
 used to see if that fixes the problem.
 
 ```{r use-spec-after-name-repair}
+#| filename: "doc/learning.qmd"
 user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
@@ -325,6 +331,7 @@ That fixed it! No more messages or warnings! We can now look at the
 data:
 
 ```{r print-user-info-data}
+#| filename: "Console"
 user_1_info_data
 ```
 
@@ -371,7 +378,7 @@ data.
     **add and commit** the changes to the Git history using
     {{< var keybind.git >}}.
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")
 user_1_saliva_data_prep <- read_csv(
     user_1_saliva_file,
@@ -437,6 +444,7 @@ into R. In this case, let's read in 100, since that is the amount
 column that we will drop.
 
 ```{r import-some-of-data-trick}
+#| filename: "doc/learning.qmd"
 user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
 user_1_rr_data_prep <- read_csv(
   user_1_rr_file,
@@ -463,6 +471,7 @@ the end! Make sure to remove the `n_max` argument, since we want to
 import in the whole dataset.
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_1_rr_data <- read_csv(
   user_1_rr_file,
   col_select = -1,
@@ -483,6 +492,7 @@ the Tab key. You'll see other types, like `col_date`, `col_factor`, and
 so on. Right, back to the data, what does it look like?
 
 ```{r}
+#| filename: "Console"
 user_1_rr_data
 ```
 
@@ -521,7 +531,7 @@ the `Actigraph.csv` file from `user_1/`.
 
 Use this template as a guide for completing this exercise.
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 user_1_actigraph_file <- here("data-raw/mmash/user_1/___")
 user_1_actigraph_data_prep <- ___(
     ___,

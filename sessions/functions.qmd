@@ -48,11 +48,12 @@ made of a function call, its arguments, and the function body:
 
 Because R is open source, anyone can see how things work underneath. So,
 if we want to see what a function does underneath, we type out the
-function name without the `()` into the Console and run it. If we do it
-with the function `sd()` which calculates the standard deviation, we
+function name without the `()` into the **Console** and run it. If we do
+it with the function `sd()` which calculates the standard deviation, we
 see:
 
 ```{r show-sd-internals}
+#| filename: "Console"
 sd
 ```
 
@@ -89,7 +90,7 @@ for a function (e.g. you could have zero or dozens of arguments), its
 good practice for yourself and for others to have as few arguments as
 necessary to get the job done. So, the structure is:
 
-``` r
+``` {.r filename="Console"}
 name <- function(argument1, argument2) {
     # body of function
     output <- ... code ....
@@ -113,6 +114,7 @@ Let's write a simple example. First, create a new Markdown header called
 code out:
 
 ```{r create-add-function}
+#| filename: "doc/learning.qmd"
 add_numbers <- function(num1, num2) {
   added <- num1 + num2
   return(added)
@@ -123,6 +125,7 @@ You can use the new function by running the above code and writing out
 your new function, with arguments to give it.
 
 ```{r call-function}
+#| filename: "doc/learning.qmd"
 add_numbers(1, 2)
 ```
 
@@ -134,6 +137,7 @@ documentation to the function. Use the "Insert Roxygen Skeleton" in the
 template documentation right above the function. It looks like:
 
 ```{r roxygen-docs-1}
+#| filename: "doc/learning.qmd"
 #' Title
 #'
 #' @param num1
@@ -166,6 +170,7 @@ are:
     documentation for this function:
 
 ```{r roxygen-docs-2}
+#| filename: "doc/learning.qmd"
 #' Add two numbers together.
 #'
 #' @param num1 A number here.
@@ -216,6 +221,7 @@ So, step one. Let's take the code we wrote for importing the `user_info`
 data and convert that as a function:
 
 ```{r function-creation-step-1}
+#| filename: "doc/learning.qmd"
 #| eval: false
 user_1_info_data <- read_csv(
   user_1_info_file,
@@ -235,6 +241,7 @@ Next we wrap it in the function call and give it an appropriate name. In
 this case, `import_user_info` is descriptive and meaningful.
 
 ```{r function-creation-step-2}
+#| filename: "doc/learning.qmd"
 #| eval: false
 import_user_info <- function() {
   user_1_info_data <- read_csv(
@@ -257,6 +264,7 @@ Here, we have only one thing that we would change: The file path to the
 dataset. So, a good name might be `file_path`.
 
 ```{r function-creation-step-3}
+#| filename: "doc/learning.qmd"
 #| eval: false
 import_user_info <- function(file_path) {
   user_1_info_data <- read_csv(
@@ -280,6 +288,7 @@ like to also import more than just `user_1`. A nice object name would be
 want your function to output.
 
 ```{r function-creation-step-4}
+#| filename: "doc/learning.qmd"
 import_user_info <- function(file_path) {
   info_data <- read_csv(
     file_path,
@@ -301,6 +310,7 @@ Great! Now we need to test it out. Let's try on two datasets, two
 `user_info.csv` files in the `user_1` and `user_2` folders.
 
 ```{r function-creation-step-5}
+#| filename: "doc/learning.qmd"
 import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
 import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
 ```
@@ -308,6 +318,7 @@ import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
 Awesome! It works. The final stage is adding the Roxygen documentation.
 
 ```{r function-creation-step-6}
+#| filename: "doc/learning.qmd"
 #' Import MMASH user info data file.
 #'
 #' @param file_path Path to user info data file.
@@ -346,7 +357,7 @@ Take the code you created for importing the saliva data set from
 @sec-ex-import-saliva (*not* the code related to using `spec()`) and
 make it into a function. It looks like the code below.
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 user_1_saliva_data <- read_csv(
     user_1_saliva_file,
     col_select = -1,
@@ -388,7 +399,7 @@ right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 
 Use the below code as a guide:
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 # Need to also add the Roxygen documentation 
 import_saliva <- function(file_path) {
     # Paste the code to import saliva data you created 
@@ -464,7 +475,7 @@ the `doc/learning.qmd` and add `source(here("R/functions.R"))` to the
 code chunk called `setup` at the top. Run all the code inside the
 `setup` code chunk. Then go to where you wrote:
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
@@ -505,7 +516,7 @@ text above. Notice the `Imports:` key. This is where information about
 packages are added. To quickly add a package, go to the **Console** and
 type out:
 
-``` r
+``` {.r filename="Console"}
 usethis::use_package("readr")
 ```
 
@@ -539,7 +550,7 @@ Now, if you or someone else wants to install all the packages your
 project depends on, they can do that by going to the **Console** and
 running:
 
-``` r
+``` {.r filename="Console"}
 pak::pak()
 ```
 
@@ -547,7 +558,7 @@ This function finds the `DESCRIPTION` file and installs all the packages
 in `Imports`. Let's add the other dependencies by typing in the
 **Console**:
 
-``` r
+``` {.r filename="Console"}
 usethis::use_package("here")
 usethis::use_package("fs")
 usethis::use_package("snakecase")
@@ -571,7 +582,7 @@ the course, we'll also add tidyverse as a dependency. Since the
 tidyverse is a large collection of packages, the recommended way to add
 this particular dependency is with:
 
-``` r
+``` {.r filename="Console"}
 usethis::use_package("tidyverse", type = "Depends")
 ```
 
@@ -670,6 +681,7 @@ Alright, let's go into `R/functions.R` and add `readr::` to each of the
 `{readr}` functions we've used:
 
 ```{r explicit-function-calls}
+#| filename: "R/functions.R"
 import_user_info <- function(file_path) {
   info_data <- readr::read_csv(
     file_path,
@@ -691,7 +703,7 @@ Test that it works by restart the R session with
 {{< var keybind.restart-r >}} and source the file with
 {{< var keybind.source >}}, then go to the **Console** and type out:
 
-``` r
+``` {.r filename="Console"}
 import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
@@ -721,7 +733,7 @@ code you worked on previously that imported the `RR.csv` and
     running them in the **Console**. The below code should run without a
     problem if you did it right:
 
-    ``` r
+    ``` {.r filename="Console"}
     import_rr(here::here("data-raw/mmash/user_1/RR.csv"))
     import_actigraph(here::here("data-raw/mmash/user_1/Actigraph.csv"))
     ```

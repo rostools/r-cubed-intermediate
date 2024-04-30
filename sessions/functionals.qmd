@@ -230,7 +230,7 @@ the R session with {{< var keybind.restart-r >}}.
 Next, we'll need to add `{purrr}` as a package dependency by going to
 the **Console** and running:
 
-``` r
+``` {.r filename="Console"}
 usethis::use_package("purrr")
 ```
 
@@ -251,6 +251,7 @@ or also `regex`) to find the pattern, and `recurse` to look in all
 subfolders. We'll cover regular expressions more in the next session.
 
 ```{r list-user-info-files}
+#| filename: "doc/learning.qmd"
 user_info_files <- dir_ls(here("data-raw/mmash/"),
   regexp = "user_info.csv",
   recurse = TRUE
@@ -261,7 +262,7 @@ Then let's see what the output looks like. For the website, we are only
 showing the first 3 files. Your output will look slightly different from
 this.
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 user_info_files
 ```
 
@@ -274,6 +275,7 @@ Alright, we now have all the files ready to give to `map()`. So let's
 try it!
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
@@ -282,6 +284,7 @@ object, it will give us 22 tibbles (data.frames). Here we'll only show
 the first one:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_info_list[[1]]
 ```
 
@@ -302,6 +305,7 @@ the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
@@ -309,7 +313,7 @@ user_info_df <- map(user_info_files, import_user_info) |>
 Your `file_path_id` variable will look different. Don't worry, we're
 going to tidy up the `file_path_id` variable later.
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 user_info_df
 ```
 
@@ -391,7 +395,7 @@ works to import the other three datasets.
 
 Use this code as a guide to help complete this exercise:
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 ___ <- ___(___, ___) {
   ___ <- ___dir_ls(___here("data-raw/mmash/"),
     regexp = ___,
@@ -450,6 +454,7 @@ code chunk below the `setup` chunk where we will use the
 data.
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
@@ -464,7 +469,7 @@ script. Afterwards, go the top of the script and right below the
 `library(here)` code, add these two lines of code, so it looks like
 this:
 
-``` r
+``` {.r filename="data-raw/mmash.R"}
 library(here)
 library(tidyverse)
 source(here("R/functions.R"))
@@ -520,10 +525,9 @@ work as functionals. Before we continue, re-run the code for getting
 `user_info_df` since you had restarted the R session previously.
 
 Since we're going to use `{dplyr}`, we need to add it as a dependency by
-typing this in the Console:
+typing this in the **Console**:
 
-```{r}
-#| eval: false
+``` {.r filename="Console"}
 usethis::use_package("dplyr")
 ```
 
@@ -569,6 +573,7 @@ tibble::tribble(
 Let's select columns that are numeric:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_info_df |>
   select(where(is.numeric))
 ```
@@ -576,6 +581,7 @@ user_info_df |>
 Or, only character columns:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 #| eval: false
 user_info_df |>
   select(where(is.character))
@@ -593,6 +599,7 @@ calculate the mean of cortisol in the saliva dataset, you would usually
 type out:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_df |>
   summarise(cortisol_mean = mean(cortisol_norm))
 ```
@@ -601,6 +608,7 @@ If you want to calculate the mean of multiple columns, you might think
 you'd have to do something like:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_df |>
   summarise(
     cortisol_mean = mean(cortisol_norm),
@@ -679,6 +687,7 @@ Let's try out some examples. To calculate the mean of `cortisol_norm`
 like we did above, we'd do:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_df |>
   summarise(across(cortisol_norm, mean))
 ```
@@ -686,6 +695,7 @@ saliva_df |>
 To calculate the mean of another column:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_df |>
   summarise(across(c(cortisol_norm, melatonin_norm), mean))
 ```
@@ -699,9 +709,10 @@ list(item_one_name = ..., item_two_name = ...)
 ```
 
 So, for having a named list with mean inside `across()`, it would look
-like:
+like (in the **Console**):
 
-``` r
+```{r}
+#| filename: "Console"
 list(mean = mean)
 # or
 list(average = mean)
@@ -712,6 +723,7 @@ list(ave = mean)
 You can confirm that it is a list by using the function `names()`:
 
 ```{r}
+#| filename: "Console"
 names(list(mean = mean))
 names(list(average = mean))
 names(list(ave = mean))
@@ -720,6 +732,7 @@ names(list(ave = mean))
 Let's stick with `list(mean = mean)`:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_df |>
   summarise(across(cortisol_norm, list(mean = mean)))
 ```
@@ -728,6 +741,7 @@ If we wanted to do that for all numeric columns and also calculate
 `sd()`:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_df |>
   summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
 ```
@@ -749,6 +763,7 @@ use the split-apply-combine technique. Let's first summarise by taking
 the mean of `ibi_s` (which is the inter-beat interval in seconds):
 
 ```{r}
+#| filename: "doc/learning.qmd"
 #| eval: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
@@ -769,6 +784,7 @@ While there are no missing values here, let's add the argument
 `na.rm = TRUE` just in case. In order add this argument to the mean, we
 
 ```{r}
+#| filename: "doc/learning.qmd"
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
@@ -808,6 +824,7 @@ So how would be go about removing this message? By putting the
 top:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 options(dplyr.summarise.inform = FALSE)
 ```
 
@@ -818,6 +835,7 @@ Let's also add standard deviation as another measure from the RR
 datasets:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 #| eval: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
@@ -844,6 +862,7 @@ Whenever you are finished with a grouping effect, it's good practice to
 end the `group_by()` with `ungroup()`. Let's add it to the end:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 #| eval: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
@@ -947,6 +966,7 @@ file and paste the cut code into the bottom of the script. It should
 look something like this:
 
 ```{r add-import-functions-to-data-raw-script}
+#| filename: "data-raw/mmash.R"
 #| eval: false
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)

@@ -128,10 +128,9 @@ Since we will create a new column for the user ID, we will use the
 `str_extract()` function from the `{stringr}` package to "extract a
 string" by using the regex `user_[1-9][0-9]?` that we discussed from the
 exercise. Since we're going to use `{stringr}`, so let's add it as a
-package dependency:
+package dependency by typing this in the **Console**:
 
-```{r}
-#| eval: false
+``` {.r filename="Console"}
 usethis::use_package("stringr")
 ```
 
@@ -151,6 +150,7 @@ mutate, and about the `{stringr}` function.
 :::
 
 ```{r extract-user-id}
+#| filename: "doc/learning.qmd"
 #| eval: false
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 # Note: your file paths and data may look slightly different.
@@ -181,6 +181,7 @@ Since we don't need the `file_path_id` column anymore, let's drop it
 using `select()` and `-`.
 
 ```{r drop-file-path-id}
+#| filename: "doc/learning.qmd"
 user_info_df |>
   mutate(
     user_id = str_extract(
@@ -232,7 +233,7 @@ at the very top left corner, surrounded by `{ }`.
 
 Use this code as a guide to help complete this exercise:
 
-``` r
+``` {.r filename="doc/learning.qmd"}
 extract_user_id <- ___(___) {
     ___ <- ___ |>
         ___mutate(
@@ -287,6 +288,7 @@ function. We'll go to the `import_multiple_files()` function in
 `list_rbind()` function. The code should look something like:
 
 ```{r add-extract-user-to-import}
+#| filename: "R/functions.R"
 import_multiple_files <- function(file_pattern, import_function) {
   data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
     regexp = file_pattern,
@@ -307,6 +309,7 @@ based on the new code in the `import_multiple_files()` function. Add
 this to your `doc/learning.qmd` file for now.
 
 ```{r}
+#| filename: "doc/learning.qmd"
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 rr_df <- import_multiple_files("RR.csv", import_rr)
@@ -317,6 +320,7 @@ As well as adding the `summarised_rr_df` and `summarised_actigraph_df`
 to use `user_id` instead of `file_path_id`:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 summarised_rr_df <- rr_df |>
   group_by(user_id, day) |>
   summarise(across(ibi_s, list(
@@ -453,6 +457,7 @@ Let's code this together, using `reduce()`, `full_join()`, and `list()`
 while in the `doc/learning.qmd` file.
 
 ```{r}
+#| filename: "doc/learning.qmd"
 list(
   user_info_df,
   saliva_df
@@ -464,6 +469,7 @@ We now have the data in a form that would make sense to join it with the
 other datasets. So lets try it:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 list(
   user_info_df,
   saliva_df,
@@ -578,6 +584,7 @@ creating a new column called `day`. (We will use `NA_real_` because the
 other `day` columns are numeric, not integer.)
 
 ```{r}
+#| filename: "doc/learning.qmd"
 saliva_with_day_df <- saliva_df |>
   mutate(day = case_when(
     samples == "before sleep" ~ 1,
@@ -589,6 +596,7 @@ saliva_with_day_df
 ...Now, let's use the `reduce()` with `full_join()` again:
 
 ```{r}
+#| filename: "doc/learning.qmd"
 list(
   user_info_df,
   saliva_df,
@@ -613,6 +621,7 @@ isn't there already. Move the code `library(fs)` to go with the other
 packages as well. It should look something like this now:
 
 ```{r}
+#| filename: "data-raw/mmash.R"
 library(here)
 library(tidyverse)
 library(fs)
@@ -624,6 +633,7 @@ and unzip the data every single time we run this script. It should look
 like this:
 
 ```{r data-raw-mmash-comment-out}
+#| filename: "data-raw/mmash.R"
 #| eval: false
 # Download
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
@@ -650,6 +660,7 @@ datasets together with `reduce()` and paste it at the bottom of the
 `mmash`, like this:
 
 ```{r data-raw-mmash-to-final}
+#| filename: "data-raw/mmash.R"
 saliva_with_day_df <- saliva_df |>
   mutate(day = case_when(
     samples == "before sleep" ~ 1,
@@ -672,14 +683,16 @@ save the data as an `.rda` file. We'll add this code to the very bottom
 of the script:
 
 ```{r save-data}
+#| filename: "data-raw/mmash.R"
 usethis::use_data(mmash, overwrite = TRUE)
 ```
 
 We're adding `overwrite = TRUE` so every time we re-run this script, the
-dataset will be saved. If the final dataset is going to be really large,
-we could (but won't in this course) save it as a `.csv` file with:
+dataset will be saved. Alternatively, we could (but won't in this
+course) save it as a `.csv` file with:
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 write_csv(mmash, here("data/mmash.csv"))
 ```
 
