@@ -29,12 +29,13 @@ participants of the course will learn:
 3.  Where to go to get help and to continue learning modern data science
     and analysis skills.
 
-By the end of the course, participants will: have improved their
-competency in processing and wrangling datasets; have improved their
-proficiency in using the [R](https://www.r-project.org/) statistical
-computing language; know how to write re-usable and well-documented
-code; and know how to make modern and reproducible data analysis
-projects.
+By the end of the course, participants will:
+
+1.  Have improved their competency in processing and wrangling datasets;
+2.  Have improved their proficiency in using the
+    [R](https://www.r-project.org/) statistical computing language;
+3.  Know how to write re-usable and well-documented code;
+4.  Know how to make modern and reproducible data analysis projects.
 
 ## Is this course for you? {#sec-is-it-for-you}
 
