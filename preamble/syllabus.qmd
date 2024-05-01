@@ -44,7 +44,7 @@ This course is designed in a specific way and is ideal for you if:
 -   You are a researcher, preferably working in the biomedical field
     (ranging from experimental to epidemiological). Specifically, this
     course targets those working on topics in diabetes and metabolism.
--   You currently or will soon do quantitative data analysis.
+-   You currently are or will soon do quantitative data analysis.
 -   You either:
     -   have taken the [introduction to Reproducible Research in R
         course](https://r-cubed-intro.rostools.org/), since this course
@@ -58,10 +58,10 @@ This course is designed in a specific way and is ideal for you if:
 Considering that this is a natural extension of the [introductory
 r-cubed course](https://r-cubed-intro.rostools.org/), this course
 incorporates tools learned during that course, including basic Git usage
-as well as use of RStudio R Projects. If you *do not* have familiarity
-with these tools, you will need to go over the material from the
-introduction course beforehand (more details about pre-course tasks will
-be sent out a couple of weeks before the course).
+as well as the use of RStudio R Projects. If you *do not* have
+familiarity with these tools, you will need to go over the material from
+the introduction course beforehand (more details about pre-course tasks
+will be sent out a couple of weeks before the course).
 
 While having these assumptions help to focus the content of the course,
 if you have an interest in learning R but don't fit any of the above
