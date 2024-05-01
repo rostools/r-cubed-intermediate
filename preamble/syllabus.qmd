@@ -19,15 +19,15 @@ irreproducible results.
 With this course, we aim to begin addressing this gap. Using a highly
 practical approach that revolves around code-along sessions (instructor
 and learner coding together), hands-on exercises, and group work,
-participants of the course will be able to:
+participants of the course will learn:
 
-1.  Learn and demonstrate what an open and reproducible data processing
-    and analysis workflow looks like.
-2.  Learn and apply some fundamental concepts, techniques, and skills
+1.  How to demonstrate what an open and reproducible data processing and
+    analysis workflow looks like.
+2.  How to apply some fundamental concepts, techniques, and skills
     needed for processing and managing data in a reproducible and
     well-documented way.
-3.  Learn where to go to get help and to continue learning modern data
-    science and analysis skills.
+3.  Where to go to get help and to continue learning modern data science
+    and analysis skills.
 
 By the end of the course, participants will: have improved their
 competency in processing and wrangling datasets; have improved their
