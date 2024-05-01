@@ -27,15 +27,12 @@ found as you work through the tasks.
 
 1.  Read the learning objectives in @sec-pre-course-learning-objectives
     for the pre-course tasks (below).
-2.  Read the ["How to read the
-    website"](https://guides.rostools.org/pre-course.html#reading-website)
-    (on a new website).
-3.  Follow the [installation
-    instructions](https://guides.rostools.org/pre-course.html#installation-instructions)
-    (on a new website). Install a version of R, RStudio, and Git that is
-    as updated as possible. For some people, depending on their
-    institution, this task can take the **longest amount of time**
-    because you have to contact your IT to install these packages.
+2.  Read on how to read this website in @sec-reading-website.
+3.  Follow the installation instructions in @sec-install-programs.
+    Install a version of R, RStudio, and Git that is as updated as
+    possible. For some people, depending on their institution, this task
+    can take the **longest amount of time** because you have to contact
+    your IT to install these packages.
 4.  Install the necessary R packages in @sec-install-r-packages.
 5.  Read about Git from the introduction course and configure Git on
     your computer in @sec-setup-git. If you haven't used Git before,
