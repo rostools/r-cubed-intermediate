@@ -49,9 +49,9 @@ Want to contribute to this course? Check out the
 [README](https://github.com/rostools/r-cubed-intermediate/blob/main/README.md)
 file as well as the
 [CONTRIBUTING](https://github.com/rostools/r-cubed-intermediate/blob/main/CONTRIBUTING.md)
-file on the GitLab repository for more details. The main way to
+file on the GitHub repository for more details. The main way to
 contribute is by using [GitHub](https://github.com/) and creating a [new
-Issue](https://github.com/rostools/r-cubed-intermediate/issues/new) to
+issue](https://github.com/rostools/r-cubed-intermediate/issues/new) to
 make comments and give feedback for the material.
 
 ## Target audiences
