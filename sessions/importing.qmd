@@ -279,15 +279,13 @@ the data.
 To remove this new message, we need to tell `read_csv()` exactly how to
 handle renaming cases. Let's look at the help docs of `{readr}`:
 `?read_csv`. Scroll down and we see an argument called `name_repair`
-that handles naming of columns. Going into the provided link takes us to
-the `tibble::tibble()` help documentation. Scroll down to the
-`name_repair` argument documentation and it says that it treats
-problematic column names, of which a missing column name is definitely a
-problem. There are several options here, but the one I want to focus on
-is the comment about "function: apply custom name repair". This is an
-important one because we eventually want to rename the columns to match
-the [style guide](https://style.tidyverse.org/) by using `snake_case`,
-since there is a package to do that called `{snakecase}`.
+that handles naming of columns. It says that it treats problematic
+column names, of which a missing column name is definitely a problem.
+There are several options here, but the one I want to focus on is the
+comment about "function: apply custom name repair". This is an important
+one because we eventually want to rename the columns to match the [style
+guide](https://style.tidyverse.org/) by using `snake_case`, since there
+is a package to do that called `{snakecase}`.
 
 In the **Console**, type out `snakecase::` and hit Tab. You'll see a
 list of possible functions to use. We want to use the snakecase one, so
@@ -627,4 +625,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/importing.RData"))
 ```
-
