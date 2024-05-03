@@ -127,6 +127,12 @@ first block, *"Download raw data"*.
 ![Overview of the workflow we will be using and
 covering.](/images/overview.svg){#fig-overview}
 
+```{mermaid}
+%%| file: "overview.mmd"
+%%| fig-cap: "tst"
+%%| label: fig-overview
+```
+
 Our workflow and process will be something like:
 
 -   Make an R script (`data-raw/mmash.R`) to download the dataset
