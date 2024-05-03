@@ -1,0 +1,8 @@
+flowchart
+    code(Write code) --> as_function
+    as_function --> test
+    test --> fix_function
+    fix_function --> test
+    fix_function --> restart
+    restart --> test
+    restart --> code

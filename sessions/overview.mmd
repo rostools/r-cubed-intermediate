@@ -1,0 +1,67 @@
+    digraph {
+        # Styling
+        graph [compound = true, nodesep = .1, ranksep = .1, rankdir = TB]
+        node [shape = rectangle, style = filled, fixedsize = true,
+              color = lightblue, fontsize = 14, width = 2.1]
+        edge [fontsize = 14]
+
+        # Nodes
+        mmash_dir [label = 'data-raw/mmash/']
+        mmash_dir_2 [label = 'data-raw/mmash/']
+        mmash_dir_3 [label = 'data-raw/mmash/']
+        mmash_r [label = 'data-raw/mmash.R']
+        mmash_r_2 [label = 'data-raw/mmash.R']
+        mmash_zip [label = 'data-raw/mmash-data.zip']
+        rmd [label = 'doc/learning.qmd']
+        rmd_2 [label = 'doc/learning.qmd']
+        html [label = 'doc/learning.html']
+        fn_r [label = 'R/functions.R']
+        fn_r_2 [label = 'R/functions.R']
+        make_fn [label = 'Create function']
+        mmash_rda [label = 'data/mmash.rda']
+        mmash_rda_2 [label = 'data/mmash.rda']
+
+        subgraph cluster1 {
+            graph [label = 'Download
+raw data', fontsize = 14]
+            color = black
+            penwidth = 1
+            mmash_r -> mmash_dir
+            mmash_r -> mmash_zip [arrowhead = none]
+            mmash_zip -> mmash_dir
+        }
+
+        subgraph cluster2 {
+            graph [label = 'Workflow
+ ', fontsize = 14]
+            color = black
+            penwidth = 1
+            make_fn -> fn_r [label = '  cut & paste
+commit']
+            rmd -> make_fn [len = 2, label = '   ']
+            make_fn -> rmd [len = 2, label = '   ']
+            fn_r -> rmd [label = '   source']
+            mmash_dir_2 -> rmd [label = '   import']
+        }
+
+        subgraph cluster3 {
+            graph [label = 'Create
+project data', fontsize = 14]
+            color = black
+            penwidth = 1
+            mmash_dir_3 -> mmash_rda
+            fn_r_2 -> mmash_r_2 [label = '   source']
+            mmash_r_2 -> mmash_dir_3 [arrowhead = none]
+            mmash_r_2 -> mmash_rda
+        }
+
+        subgraph cluster4 {
+            graph [label = 'Work with
+project data', fontsize = 14]
+            color = black
+            penwidth = 1
+            mmash_rda_2 -> rmd_2 [label = '   import']
+            rmd_2 -> html [label = '   render']
+        }
+
+    }
