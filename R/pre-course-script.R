@@ -2,7 +2,7 @@ library(here)
 
 # Download
 mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
 
 # Unzip
 unzip(here("data-raw/mmash-data.zip"),
