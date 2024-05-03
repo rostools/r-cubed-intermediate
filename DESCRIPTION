@@ -37,11 +37,12 @@ Imports:
     usethis,
     vroom,
     withr,
-    r3admin (>= 0.0.1)
+    r3admin (>= 0.0.1),
+    readr
 Suggests: 
     prodigenr,
     tidyverse
-Remotes:  
+Remotes: 
     github::rostools/r3,
     rostools/r3admin
 Encoding: UTF-8
