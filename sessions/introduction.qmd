@@ -52,7 +52,13 @@ like at the file level (not at the R code level). Hopefully with this
 overview, you can better understand where we are and where we want to
 get to.
 
-Right now, everyone's initial project structure should look like:
+Everyone's project structure starts off looking like the one on the
+left, and ends with the one on the right. You'll notice very little
+changes between the two, except for some files removed (e.g. `TODO.md`),
+and others added (e.g. `data/mmash.rda` and `doc/learning.html`).
+
+::: {layout-ncol="2"}
+### Currently looks like: {.unnumbered}
 
 ```         
 LearnR3
@@ -79,7 +85,7 @@ LearnR3
 └── TODO.md
 ```
 
-At the end of this workshop, it should look something like:
+### End of course: {.unnumbered}
 
 ```         
 LearnR3
@@ -106,6 +112,7 @@ LearnR3
 ├── LearnR3.Rproj
 └── README.md
 ```
+:::
 
 Why do we structure it this way? Because we want to follow some standard
 conventions in R, like having a `DESCRIPTION` metadata file, keeping raw
