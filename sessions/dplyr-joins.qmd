@@ -632,6 +632,8 @@ some code to delete the created `data-raw/mmash/` folder so this script
 can run cleanly each time. Place the code right below where the
 `download.file()` code is.
 
+<!-- TODO: Remove this after course ends, since the same info is in pre-course now -->
+
 ```{r data-raw-mmash-comment-out}
 #| filename: "data-raw/mmash.R"
 #| eval: false
@@ -726,4 +728,3 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
-
