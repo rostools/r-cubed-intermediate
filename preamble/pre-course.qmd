@@ -470,14 +470,40 @@ A quick comment about whether you should save your *raw* data in
     projects to it and use their individual `data-raw/` R scripts as the
     record for how you processed the raw data.
 
-Unzip the zip files by using the `unzip()` function and writing it in
-`data-raw/mmash.R` below the `download.file()` function. The main
-argument for `unzip()` is the zip file and the next important one is
-called `exdir` that tells `unzip()` which folder you want to extract the
-files to. The argument `junkpaths` is used here to tell `unzip()` to
-extract everything to the `data-raw/` folder (no idea why it's called
-"junkpaths"). This code should be written and executed in the
-`data-raw/mmash.R` script.
+We will eventually want to unzip the file, but before we begin, we want
+to include some code to always delete the unzipped output folder. We
+want to do this because sometimes unzipping can cause issues and because
+we want the script to always run everything cleanly from beginning to
+end whenever we `source()` it. In order to delete the folder, we'll use
+the `{fs}` package to handle filesystem actions. Load the `{fs}` package
+with `library()` right below the other `library()` function at the top
+of the script:
+
+```{r}
+#| filename: "data-raw/mmash.R"
+library(here)
+library(fs)
+```
+
+Next, we'll use the `dir_delete()` to tell `{fs}` to always delete the
+`data-raw/mmash/` output folder that we will create shortly. Put this
+below the `dowload.file()` code:
+
+```{r}
+#| filename: "data-raw/mmash.R"
+#| eval: false
+# Remove leftover folder so unzipping is always clean
+dir_delete(here("data-raw/mmash"))
+```
+
+Now we can unzip the zip files by using the `unzip()` function and
+writing it in `data-raw/mmash.R` below the `download.file()` function.
+The main argument for `unzip()` is the zip file and the next important
+one is called `exdir` that tells `unzip()` which folder you want to
+extract the files to. The argument `junkpaths` is used here to tell
+`unzip()` to extract everything to the `data-raw/` folder (no idea why
+it's called "junkpaths"). This code should be written and executed in
+the `data-raw/mmash.R` script.
 
 ```{r admin-mmash-dir-exists}
 #| include: false
@@ -558,8 +584,8 @@ If your files and folders in the `data-raw/` folder do not look like
 this, start over by deleting all the files *except for* the `mmash.R`
 and `mmash-data.zip` files. Then re-run the code from beginning to end.
 
-To tidy up the files, first, use the `file_delete()` function from fs to
-delete all the files we originally extracted (`LICENSE.txt`,
+To tidy up the files, first, use the `file_delete()` function from
+`{fs}` to delete all the files we originally extracted (`LICENSE.txt`,
 `SHA256SUMS.txt`, and `MMASH.zip`). Then use `file_move()` to rename the
 new folder `data-raw/DataPaper/` to something more explicit like
 `data-raw/mmash/`. Add these lines of code to the `data-raw/mmash.R`
@@ -568,7 +594,6 @@ script and run them:
 ```{r delete-rename-files}
 #| filename: "data-raw/mmash.R"
 #| eval: !expr skip
-library(fs)
 file_delete(here(c(
   "data-raw/MMASH.zip",
   "data-raw/SHA256SUMS.txt",
