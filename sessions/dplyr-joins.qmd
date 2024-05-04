@@ -611,20 +611,20 @@ to the Git history with {{< var keybind.git >}}.
 
 ## Wrangling data into final form
 
-Now that we've got several datasets processed and joined, its now time
-to bring it all together and put it into the `data-raw/mmash.R` script
-so we can create a final working dataset.
+Now that we've got several datasets processed and joined, it's time to
+bring it all together and put it into the `data-raw/mmash.R` script so
+we can create a final working dataset.
 
-Open up the `data-raw/mmash.R` file and the top of the file, add the
-`{tidyverse}` package to the end of the list of other packages if it
-isn't there already. Move the code `library(fs)` to go with the other
-packages as well. It should look something like this now:
+Open up the `data-raw/mmash.R` file and the top of the file move the
+code `library(fs)` to go with the other packages as well. It should look
+something like this now:
 
 ```{r}
 #| filename: "data-raw/mmash.R"
 library(here)
 library(tidyverse)
 library(fs)
+source(here("R/functions.R"))
 ```
 
 Then, we will comment out the `download.file()`, `unzip()`,
@@ -643,6 +643,7 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 # unzip(here("data-raw/mmash-data.zip"),
 #       exdir = here("data-raw"),
 #       junkpaths = TRUE)
+# Sys.sleep(1)
 # unzip(here("data-raw/MMASH.zip"),
 #       exdir = here("data-raw"))
 
