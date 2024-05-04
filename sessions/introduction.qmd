@@ -250,11 +250,7 @@ fs::file_delete("TODO.md")
 fs::file_delete("doc/report.Rmd")
 ```
 
-Then, open up the `README.md` and fix some of the TODO items. After
-cleaning everything up, now we need to use Git to add and commit all the
-current files into the history. Open up the Git interface in RStudio
-with {{< var keybind.git >}} or through the Git button. Write a message
-in the commit text box saying `Added initial files`.
+Then, open up the `README.md` and fix some of the TODO items.
 
 ## Styling your files
 
@@ -273,3 +269,9 @@ active file", will be the one to select and use. We'll get lots of
 chances to use it as we go through the course. The thing to note is that
 `{styler}` isn't always perfect, so you might need to sometimes manually
 fix code
+
+After cleaning everything up and running `{styler}`, now we need to use
+Git to add and commit all the current files into the history. Open up
+the Git interface in RStudio with {{< var keybind.git >}} or through the
+Git button. Write a message in the commit text box saying
+`Added initial files`.
