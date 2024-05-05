@@ -78,7 +78,7 @@ entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it.
 
 ![A function using vectorization. Notice how a set of items is included
 *all at once* in the `func()` function and outputs a single item on the
-right. Modified from the [RStudio purrr
+right. Modified from the [Posit purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
 width="45%"}
 
@@ -116,7 +116,7 @@ difficult to easily explain. Because of this and because there are
 better and easier ways of writing R code to replace for loops, we will
 **not** be covering loops in this course.
 
-A functional on the other hand is a function that can also use a
+A **functional** on the other hand is a function that can also use a
 function as one of its arguments. @fig-functionals shows how the
 functional `map()` from the `{purrr}` package works by taking a vector
 (or list), applying a function to each of those items, and outputting
@@ -124,10 +124,10 @@ the results from each function. The name `map()` doesn't mean a
 geographic map, it is the mathematical meaning of map: To use a function
 on each item in a set of items.
 
-![A functional that uses a function to apply it to each item in a
-vector. Notice how each of the green coloured boxes are placed into the
-`func()` function and outputs the same number of blue boxes as there are
-green boxes. Modified from the [RStudio purrr
+![A functional, map, that applies a function to each item in a vector.
+Notice how each of the green coloured boxes are placed into the `func()`
+function and outputs the same number of blue boxes as there are green
+boxes. Modified from the [Posit purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
 width="90%"}
 
@@ -240,20 +240,20 @@ Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
 with `library()`. The next step for using the `map()` functional is to
 get a vector or list of all the dataset files available to us. We will
 return to using the `{fs}` package, which has a function called
-`dir_ls()` that finds files of a certain pattern. In our case, the
-pattern is `user_info.csv`. So, let's add `library(fs)` to the `setup`
-code chunk. Then, go to the bottom of the `doc/learning.qmd` document,
-create a new header called `## Using map`, and create a code chunk below
-that with {{< var keybind.chunk >}}
+`dir_ls()` that finds files of a certain pattern. So, let's add
+`library(fs)` to the `setup` code chunk. Then, go to the bottom of the
+`doc/learning.qmd` document, create a new header called `## Using map`,
+and create a code chunk below that with {{< var keybind.chunk >}}
 
 The `dir_ls()` function takes the path that we want to search
 (`data-raw/mmash/`), uses the argument `regexp` (short for [regular
 expression](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)
 or also `regex`) to find the pattern, and `recurse` to look in all
-subfolders. We'll cover regular expressions more in the next session.
+subfolders. We'll cover regular expressions more in the next session. In
+our case, the pattern is `user_info.csv`, so the code should look like
+this:
 
-```{r list-user-info-files}
-#| filename: "doc/learning.qmd"
+``` {.r filename="doc/learning.qmd"}
 user_info_files <- dir_ls(here("data-raw/mmash/"),
   regexp = "user_info.csv",
   recurse = TRUE
@@ -269,15 +269,14 @@ user_info_files
 ```
 
 ```{r admin-list-files-for-book}
-#| echo: false
 head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
+print("...")
 ```
 
 Alright, we now have all the files ready to give to `map()`. So let's
 try it!
 
-```{r}
-#| filename: "doc/learning.qmd"
+``` {.r filename="doc/learning.qmd"}
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
@@ -285,15 +284,14 @@ Remember, that `map()` always outputs a list, so when we look into this
 object, it will give us 22 tibbles (data.frames). Here we'll only show
 the first one:
 
-```{r}
-#| filename: "doc/learning.qmd"
+``` {.r filename="doc/learning.qmd"}
 user_info_list[[1]]
 ```
 
 This is great because with one line of code we imported all these
 datasets! But we're missing an important bit of information: The user
-ID. A powerful feature of the `{purrr}` package is that it has other
-functions to make working with functionals easier. We know `map()`
+ID. A powerful feature of the `{purrr}` package is that it gas other
+functions to make it easier to work with functionals. We know `map()`
 always outputs a list. But what we want is a single data frame at the
 end that also contains the user ID information.
 
@@ -306,8 +304,7 @@ the user ID, or in this case, the file path to the dataset, which has
 the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
-```{r}
-#| filename: "doc/learning.qmd"
+``` {.r filename="doc/learning.qmd"}
 user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
@@ -329,9 +326,9 @@ user_info_df |>
 We're using the base R `|>` pipe rather than the `{magrittr}` pipe `%>%`
 as more documentation and packages are using or relying on it. In terms
 of functionality, they are nearly the same, with some small differences.
-It ultimately doesn't matter which one you use, but we're using to be
-consistent with other documentation and with the general trend to
-recommend it over the `{magrittr}` pipe.
+It ultimately doesn't matter which one you use, but we're using the base
+R `|>` pipe to be consistent with other documentation and with the
+general trend to recommend it over the `{magrittr}` pipe.
 :::
 
 Now that we have this working, let's **add and commit** the changes to
@@ -371,12 +368,14 @@ works to import the other three datasets.
     -   Within `function()`, set two new arguments called `file_pattern`
         and `import_function`.
     -   Within the code, replace and re-write `"user_info.csv"` with
-        `file_pattern` (this is *without* quotes around it) and
-        `import_user_info` with `import_function` (also *without*
+        `file_pattern` (this is *without* quotes around it, otherwise R
+        will read it as the pattern it should look for is a string with
+        the value "file_pattern" and not the argument `file_pattern`)
+        and `import_user_info` with `import_function` (also *without*
         quotes).
     -   Create generic intermediate objects (instead of
         `user_info_files` and `user_info_df`). So, replace and re-write
-        `user_info_file` with `data_files` and `user_info_df` with
+        `user_info_files` with `data_files` and `user_info_df` with
         `combined_data`.
     -   Use `return(combined_data)` at the end of the function to output
         the imported data frame.
@@ -439,9 +438,9 @@ import_multiple_files("saliva.csv", import_saliva)
 
 ## Adding to the processing script and clean up Quarto document
 
-We've now made a function that imports multiple data files based on the
-type of data file, we can start using this function directly, like we
-did in the exercise above for the saliva data. We've already imported
+Now that we've made a function that imports multiple data files based on
+the type of data file, we can start using this function directly, like
+we did in the exercise above for the saliva data. We've already imported
 the `user_info_df` previously, but now we should do some tidying up of
 our Quarto file and to start updating the `data-raw/mmash.R` script. Why
 are we doing that? Because the Quarto file is only a sandbox to test
@@ -455,8 +454,7 @@ code chunk below the `setup` chunk where we will use the
 `import_multiple_files()` function to import the user info and saliva
 data.
 
-```{r}
-#| filename: "doc/learning.qmd"
+``` {.r filename="doc/learning.qmd"}
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
@@ -465,11 +463,14 @@ To test that things work, we'll create an HTML document from our Quarto
 document by using the "Render" / "Knit" button at the top of the pane or
 with {{< var keybind.render >}}. Once it creates the file, it should
 either pop up or open in the Viewer pane on the side. If it works, then
-we can move on and open up the `data-raw/mmash.R` script. Inside the
-script, copy and paste these two lines of code to the bottom of the
-script. Afterwards, go the top of the script and right below the
-`library(here)` code, add these two lines of code, so it looks like
-this:
+we can move on and open up the `data-raw/mmash.R` script. Otherwise,
+this is a sign that there is an error in your code and that might not be
+reproducible.
+
+Inside the `data-raw/mmash.R` script, copy and paste these two lines of
+code to the bottom of the script. Afterwards, go the top of the script
+and right below the `library(here)` line at the top of the script, add
+these two lines of code, so it looks like this:
 
 ``` {.r filename="data-raw/mmash.R"}
 library(here)
@@ -492,7 +493,7 @@ them know they can read more about this in this section.
 We're taking a quick detour to briefly talk about a concept that
 perfectly illustrates how vectorization and functionals fit into doing
 data analysis. The concept is called the
-[split-apply-combine](https://r-cubed-intro.rostools.org/session/wrangling.html#split-apply-combine-summarizing-data)
+[split-apply-combine](https://r-cubed-intro.rostools.org/sessions/data-management.html#split-apply-combine-summarizing-data)
 technique, which we covered in the beginner R course. The method is:
 
 1.  Split the data into groups (e.g. diabetes status).
@@ -502,7 +503,7 @@ technique, which we covered in the beginner R course. The method is:
     that you can use to make a plot or table).
 
 So when you split data into multiple groups, you make a *vector* that
-you can than apply (i.e. the *map* functional) some statistical
+you can then apply (i.e. the *map* functional) some statistical
 technique to each group through *vectorization*. This technique works
 really well for a range of tasks, including for our task of summarizing
 some of the MMASH data so we can merge it all into one dataset.
@@ -760,9 +761,10 @@ With the RR dataset, each participant had almost 100,000 data points
 recorded over two days of collection. So if we want to join with the
 other datasets, we need to calculate summary measures by at least
 `file_path_id` and also preferably by `day` as well. In this case, we
-need to `group_by()` these two variables before summarising that lets us
-use the split-apply-combine technique. Let's first summarise by taking
-the mean of `ibi_s` (which is the inter-beat interval in seconds):
+need to `group_by()` these two variables before summarising. In this
+way, we use the split-apply-combine technique. Let's first summarise by
+taking the mean of `ibi_s` (which is the inter-beat interval in
+seconds):
 
 ```{r}
 #| filename: "doc/learning.qmd"
@@ -907,6 +909,14 @@ Like with the `RR.csv` dataset, let's process the `Actigraph.csv`
 dataset so that it makes it easier to join with the other datasets
 later. Make sure to read the warning block below.
 
+::: {.callout-warning appearance="default"}
+Since the `actigraph_df` dataset is quite large, we **strongly**
+recommend not using `View()` or selecting the dataframe in the
+Environments pane to view it. For many computers, your R session will
+**crash**! Instead type out `glimpse(actigraph_df)` or simply
+`actigraph_df` in the Console.
+:::
+
 1.  Like usual, create a new Markdown header called e.g.
     `## Exercise: Summarise  Actigraph` and insert a new code chunk
     below that with {{< var keybind.chunk >}}.
@@ -933,14 +943,6 @@ later. Make sure to read the warning block below.
     to make sure everything works.
 10. **Add and commit** the changes you've made into the Git history with
     {{< var keybind.git >}}.
-
-::: {.callout-warning appearance="default"}
-Since the `actigraph_df` dataset is quite large, we **strongly**
-recommend not using `View()` or selecting the dataframe in the
-Environments pane to view it. For many computers, your R session will
-**crash**! Instead type out `glimpse(actigraph_df)` or simply
-`actigraph_df` in the Console.
-:::
 
 ```{r solution-summarise-actigraph}
 #| eval: true
