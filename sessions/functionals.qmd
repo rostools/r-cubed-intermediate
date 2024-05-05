@@ -237,7 +237,7 @@ usethis::use_package("purrr")
 ```
 
 Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
-with `library()`. The next step for using the `map()` functional is to
+with `library()`. Before we'll use the `map()` functional, we need to
 get a vector or list of all the dataset files available to us. We will
 return to using the `{fs}` package, which has a function called
 `dir_ls()` that finds files of a certain pattern. So, let's add
