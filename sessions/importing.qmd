@@ -155,10 +155,10 @@ user_1_info_data <- read_csv(user_1_info_file)
 
 You'll see the output mention using `spec()` to use in the argument
 `col_types`. And that it has 5 columns, one called `...1`. If we look at
-the CSV file though, we see that there are only four columns with
-names... but that technically there is a first empty column without a
-column header. So, let's figure out what this message means. Let's go to
-the **Console** and type out:
+the CSV file though, we see that there are only four columns with names,
+but that technically there is a first empty column without a column
+header. So, let's figure out what this message means. Let's go to the
+**Console** and type out:
 
 ``` {.r filename="Console"}
 ?readr::spec
