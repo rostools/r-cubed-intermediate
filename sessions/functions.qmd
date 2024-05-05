@@ -117,8 +117,8 @@ might encounter with R.
 
 Let's write a simple example. First, create a new Markdown header called
 `## Making a function` and create a code chunk below that with
-{{< var keybind.chunk >}} . Then, inside the function, we'll write this
-code out:
+{{< var keybind.chunk >}} . Then, inside the code chunk, we'll write
+this code out:
 
 ```{r create-add-function}
 #| filename: "doc/learning.qmd"
