@@ -106,13 +106,13 @@ name <- function(argument1, argument2) {
 ```
 
 Writing your own functions can be absolutely amazing and fun and
-powerful... but you also often want to pull your hair out with
-frustration at errors that are difficult to understand and fix. The best
-way to deal with this is by debugging. Due to time and to the challenge
-of making meaningful debugging exercises (solutions to problems are very
-dependent on the project), read @sec-extra-material in your own time for
-some instructions on debugging and dealing with another common problem
-you might encounter with R.
+powerful, but you also often want to pull your hair out with frustration
+at errors that are difficult to understand and fix. The best way to deal
+with this is by debugging. Due to time and to the challenge of making
+meaningful debugging exercises (solutions to problems are very dependent
+on the project), read @sec-extra-material in your own time for some
+instructions on debugging and dealing with another common problem you
+might encounter with R.
 :::
 
 Let's write a simple example. First, create a new Markdown header called
@@ -136,7 +136,7 @@ your new function, with arguments to give it.
 add_numbers(1, 2)
 ```
 
-The function name is fairly good... `add_numbers` is read as "add
+The function name is fairly good; `add_numbers` is read as "add
 numbers". While we generally want to write code that describes what it
 does by reading it, it's also good practice to add some formal
 documentation to the function. Use the "Insert Roxygen Skeleton" in the
