@@ -558,11 +558,11 @@ it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-fu
 from the beginner course.
 :::
 
-But many `{dplyr}` verbs can also take functions as input. When you
-combine `select()` with the `where()` function, you can select different
-variables. The `where()` function is a `tidyselect` helper, a set of
-functions that make it easier to select variables. Some additional
-helper functions are listed in @tbl-tidyselect-helpers.
+But many `{dplyr}` verbs can also take functions as input. Many of such
+helper functions that make it easier to select variables can be found in
+`tidyselect`. When you combine `select()` with the `where()` function,
+you can select different variables. Some additional helper functions are
+listed in @tbl-tidyselect-helpers.
 
 ```{r tbl-tidyselect-helpers}
 #| echo: false
