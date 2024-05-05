@@ -69,20 +69,19 @@ The learning objectives for this session are:
     problems when importing data (arguably one of the most important
     skills in any coding-type work).
 3.  Understand and apply best practices for importing data quickly.
-4.  Practice using Git version control as part of the data analysis
-    workflow.
+4.  Practice using Git version control as part of the workflow.
 
 ## Importing in the raw data
 
 The ultimate goal for the beginning phases of a data analysis project is
 to eventually save a version of the raw data that is specific to your
-research questions. The first step to processing data is to import it
-into R so we can work on it. So for now, we'll open up the
-`doc/learning.qmd` file so we can start building and testing out the
-code. There should be a `setup` code chunk already be in the file, where
-we will put the `library()` code for loading the `{tidyverse}` package,
-which has `{readr}` bundled with it, as well as `library(here)`. It
-should look like this:
+research questions and enables you to conduct your analyses. The first
+step to processing data is to import it into R so we can work on it. So
+for now, we'll open up the `doc/learning.qmd` file so we can start
+building and testing out the code. There should be a `setup` code chunk
+already be in the file, where we will put the `library()` code for
+loading the `{tidyverse}` package, which has `{readr}` bundled with it,
+as well as `library(here)`. It should look like this:
 
 ```{{r setup}}
 library(tidyverse)
@@ -93,9 +92,9 @@ This `setup` code chunk is a special, named code chunk that tells R to
 run this code chunk first whenever you open this Quarto file and run
 code inside of the file. It's in this `setup` code chunk that we will
 add `library()` functions when we want to load other packages. After
-adding this code chunk, create a new header by typing out
-`## Importing raw data`, followed by creating a new code chunk right
-below it using {{< var keybind.chunk >}}.
+adding this code chunk, create a new header below the `setup` code chunk
+by typing out `## Importing raw data`, followed by creating a new code
+chunk right below it using {{< var keybind.chunk >}}.
 
 ::: callout-note
 ## Reading task: \~5 minutes
@@ -341,9 +340,9 @@ user_1_info_data
 ## Instructor note
 
 Verbally emphasize that when you read from a larger dataset (that isn't
-your project dataset), its better to *explicitly* select the columns you
-want. It's faster to import and you make it clear from the beginning
-which variables you want.
+your project specific dataset), its better to *explicitly* select the
+columns you want. It's faster to import and you make it clear from the
+beginning which variables you want.
 :::
 
 Why might we use `spec()` and `col_types`? It's good practice, at least
