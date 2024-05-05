@@ -19,6 +19,8 @@ covering.](/images/overview-create-project-data.svg){#fig-overview-create-projec
 
 ## Learning objectives
 
+The learning objectives of this session are:
+
 1.  Learn what regular expressions are and how to use them on character
     data.
 2.  Learn about and apply the various ways data can be joined.

@@ -27,6 +27,8 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
+The learning objective for this session is:
+
 1.  Using the concept of "pivoting" to arrange data from long to wide
     and vice versa.
 
