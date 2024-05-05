@@ -32,33 +32,6 @@ we'll continue the process by now importing it into R.
 ![Section of the overall workflow we will be
 covering.](/images/overview-download-data.svg){#fig-overview-download-data}
 
-Right now, your folder and file structure should look like (use
-`fs::dir_tree(recurse = 2)` if you want to check using R):
-
-```         
-LearnR3
-├── data/
-│   └── README.md
-├── data-raw/
-│   ├── README.md
-│   ├── mmash-data.zip
-│   ├── mmash/
-│   │  ├── user_1
-│   │  ├── ...
-│   │  └── user_22
-│   └── mmash.R
-├── doc/
-│   ├── README.md
-│   └── lesson.qmd
-├── R/
-│   ├── functions.R
-│   └── README.md
-├── .gitignore
-├── DESCRIPTION
-├── LearnR3.Rproj
-└── README.md
-```
-
 ## Learning objectives
 
 The overall learning outcome for this session is to:
