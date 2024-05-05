@@ -507,7 +507,7 @@ technique, which we covered in the beginner R course. The method is:
     that you can use to make a plot or table).
 
 So when you split data into multiple groups, you make a *vector* that
-you can then apply (i.e. the *map* functional) some statistical
+you can then apply (i.e. using the *map* functional) some statistical
 technique to each group through *vectorization*. This technique works
 really well for a range of tasks, including for our task of summarizing
 some of the MMASH data so we can merge it all into one dataset.
