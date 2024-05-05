@@ -332,7 +332,7 @@ to use `user_id` instead of `file_path_id`:
 ```{r}
 #| filename: "doc/learning.qmd"
 summarised_rr_df <- rr_df |>
-  group_by(user_id, day) |>
+  group_by(user_id, day) |> # change file_path_id to user_id here
   summarise(across(ibi_s, list(
     mean = \(x) mean(x, na.rm = TRUE),
     sd = \(x) sd(x, na.rm = TRUE)
@@ -340,7 +340,7 @@ summarised_rr_df <- rr_df |>
   ungroup()
 
 summarised_actigraph_df <- actigraph_df |>
-  group_by(user_id, day) |>
+  group_by(user_id, day) |> # change file_path_id to user_id here
   # These statistics will probably be different for you
   summarise(across(hr, list(
     mean = \(x) mean(x, na.rm = TRUE),
