@@ -27,10 +27,21 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-The learning objective for this session is:
+The overall learning outcome for this session is to:
 
-1.  Using the concept of "pivoting" to arrange data from long to wide
-    and vice versa.
+1.  Describe what long and wide data are, what pivoting means in this
+    context, and demonstrate how to switch between the two.
+
+Specific objectives are to:
+
+1.  Describe the concept of "pivoting" data to convert data in a "long"
+    format to a "wide" format and vice versa.
+2.  Identify situations when data in the long or wide format are more
+    appropriate to use.
+3.  Apply the `pivot_longer()` and `pivot_wider()` functions from the
+    `{purrr}` package to pivot data.
+4.  Continue extending functions to make use of pivots for processing
+    and cleaning data.
 
 ## Setup for the analysis in Quarto
 
