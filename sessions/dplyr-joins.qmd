@@ -428,7 +428,7 @@ using `full_join()` until all the other datasets are combined? What if
 we get more data later on? Well, that's where more functional
 programming comes in. Again, we have a simple goal: For a set of data
 frames, join them all together. Here we use another functional
-programming concept from the `purrr` package called `reduce()`. Like
+programming concept from the `{purrr}` package called `reduce()`. Like
 `map()`, which "maps" a function onto a set of items, `reduce()` applies
 a function to each item of a vector or list, each time reducing the set
 of items down until only one remains: the output. Let's use an example
@@ -460,12 +460,12 @@ iteration, and so on. Modified from the Posit purrr
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
-If we look at the documentation for `reduce` by writing `?reduce` in the
+If we look at the documentation for `reduce()` by writing `?reduce` in the
 Console, we see that`reduce()`, like`map()`, takes either a vector or a
 list as an input. Since data frames can only be put together as a list
 and not as a vector (a data frame has vectors for columns and so it
 can't be a vector itself), we need to combine the datasets together in a
-`list()` to be able to reduce them with `full_join()\`.
+`list()` to be able to reduce them with `full_join()`.
 :::
 
 Let's code this together, using `reduce()`, `full_join()`, and `list()`
