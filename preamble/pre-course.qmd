@@ -296,8 +296,9 @@ website](https://physionet.org/content/mmash/1.0.0/):
     use personal data, but it *does not prohibit sharing it or making it
     public*! GDPR and Open Data are not in conflict.
 
-> *Note*: Sometimes the PhysioNet website is slow. If that's the case,
-> use [**this alternative link**](resources/mmash-page.html) instead.
+> *Note*: Sometimes the PhysioNet website, where the MMASH data is
+> described, is slow. If that's the case, use [**this alternative
+> link**](resources/mmash-page.html) instead.
 
 After looking over the MMASH website, you need to setup where to store
 the dataset to prepare it for later processing. While in your `LearnR3`
