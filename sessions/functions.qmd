@@ -46,7 +46,12 @@ bundled sequence of steps that achieve a specific action. For instance,
 the `+` (to add) is a function, `mean()` is a function, `[]` (to subset
 or extract) is a function, and so on. In simple terms, functions are
 made of a function call, its arguments, and the function body:
-`function(argument1, argument2) { ...body with R code... }`.
+
+``` {.r filename="Console"}
+function(argument1, argument2){ 
+  # body of function with R code
+}
+```
 
 Because R is open source, anyone can see how things work underneath. So,
 if we want to see what a function does underneath, we type out the
