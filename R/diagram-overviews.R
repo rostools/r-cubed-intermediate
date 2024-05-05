@@ -1,5 +1,3 @@
-library(DiagrammeRsvg)
-library(rsvg)
 library(here)
 
 #' Create a diagram of the overview of the course and workflow.
@@ -81,7 +79,6 @@ diagram_overview <- function(section_num = 0) {
 
     }"
   graph_viz_text <- glue::glue(graphviz_template_text, .open = "((", .close = "))")
-  DiagrammeR::grViz(graph_viz_text)
 }
 
 save_diagram_to_svg <- function(number, output_file) {
@@ -91,8 +88,14 @@ save_diagram_to_svg <- function(number, output_file) {
     rsvg_svg(output_file)
 }
 
-save_diagram_to_svg(0, here("images/overview.svg"))
-save_diagram_to_svg(1:2, here("images/overview-download-data.svg"))
-save_diagram_to_svg(2, here("images/overview-workflow.svg"))
-save_diagram_to_svg(2:3, here("images/overview-create-project-data.svg"))
-save_diagram_to_svg(4, here("images/overview-analyze-project-data.svg"))
+# save_diagram_to_svg(0, here("images/overview.svg"))
+# save_diagram_to_svg(1:2, here("images/overview-download-data.svg"))
+# save_diagram_to_svg(2, here("images/overview-workflow.svg"))
+# save_diagram_to_svg(2:3, here("images/overview-create-project-data.svg"))
+# save_diagram_to_svg(4, here("images/overview-analyze-project-data.svg"))
+
+diagram_overview(0) |> readr::write_lines(here("images/overview.mmd"))
+# diagram_overview(1:2, here("images/overview-download-data.mmd"))
+# diagram_overview(2, here("images/overview-workflow.mmd"))
+# diagram_overview(2:3, here("images/overview-create-project-data.mmd"))
+# diagram_overview(4, here("images/overview-analyze-project-data.mmd"))

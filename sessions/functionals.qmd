@@ -25,12 +25,19 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-The learning objectives of this session are:
+The overall learning outcome for this session is to:
 
-1.  Learn about and apply functional programming, vectorization, and
-    functionals within R.
-2.  Review the split-apply-combine technique and understand the link
-    with functional programming.
+1.  Describe a basic workflow for creating functions and then apply this
+    workflow to import data.
+
+Specific objectives are to:
+
+1.  Explain what functional programming, vectorization, and functionals
+    are within R and identify when code is a functional or uses
+    functional programming. Then to apply this knowledge by using the
+    `{purrr}` package.
+2.  Review the split-apply-combine technique and identify how these
+    concepts connect to functional programming.
 3.  Apply functional programming to summarizing data and for using the
     split-apply-combine technique.
 
@@ -731,15 +738,6 @@ list(mean = mean)
 list(average = mean)
 # or
 list(ave = mean)
-```
-
-You can confirm that it is a list by using the function `names()`:
-
-```{r}
-#| filename: "Console"
-names(list(mean = mean))
-names(list(average = mean))
-names(list(ave = mean))
 ```
 
 Let's stick with `list(mean = mean)`:
