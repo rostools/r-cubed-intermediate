@@ -23,6 +23,8 @@ covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 ## Learning objectives
 
+The learning objectives of this session are:
+
 1.  Learn what functions are in R and how to create and use them.
 2.  Learn a workflow of using Quarto, `source()` with
     {{< var keybind.source >}} and restarting R with

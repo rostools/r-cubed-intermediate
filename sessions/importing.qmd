@@ -61,6 +61,8 @@ LearnR3
 
 ## Learning objectives
 
+The learning objectives for this session are:
+
 1.  Learn how to import data and do minor cleaning with the `{readr}`
     package.
 2.  Learn about strategies and resources to use when encountering
