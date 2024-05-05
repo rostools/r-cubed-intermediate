@@ -267,6 +267,9 @@ usethis::with_project(
 )
 ```
 
+Throughout the course, we will use this document as a sandbox to test
+code out and then move the finished code to other files.
+
 ## Download the course data {#sec-download-data}
 
 To best demonstrate the concepts in the course, we ideally should work
