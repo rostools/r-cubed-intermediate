@@ -224,6 +224,10 @@ the time throughout course and that this workflow is also what you'd use
 in your daily work.
 :::
 
+In `learning.qmd`, create a new Markdown header called
+`## Import the user data with a function` and create a code chunk below
+that with {{< var keybind.chunk >}} .
+
 So, step one. Let's take the code we wrote for importing the `user_info`
 data and convert that as a function:
 
