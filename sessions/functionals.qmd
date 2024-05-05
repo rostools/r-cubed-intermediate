@@ -46,8 +46,8 @@ functionals are better coding patterns to use compared to loops. Doing
 the code-along should also help reinforce this concept.
 
 Also highlight that the resources appendix has some links for continued
-learning for this and that the RStudio `{purrr}` cheatsheet is an
-amazing resource to use.
+learning for this and that the Posit `{purrr}` cheatsheet is an amazing
+resource to use.
 :::
 
 ::: callout-note
