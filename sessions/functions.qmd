@@ -430,7 +430,7 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import the MMASH saliva dataset.
+#' Import the MMASH saliva file.
 #'
 #' @param file_path Path to the user saliva data file.
 #'
@@ -782,7 +782,7 @@ ___ <- function(___) {
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import the MMASH saliva dataset.
+#' Import the MMASH saliva file
 #'
 #' @param file_path Path to the user saliva data file.
 #'
@@ -803,7 +803,7 @@ import_saliva <- function(file_path) {
   return(saliva_data)
 }
 
-#' Import the MMASH RR dataset (heart beat-to-beat interval).
+#' Import the MMASH RR file (heart beat-to-beat interval).
 #'
 #' @param file_path Path to the user RR data file.
 #'
@@ -825,7 +825,7 @@ import_rr <- function(file_path) {
   return(rr_data)
 }
 
-#' Import the MMASH Actigraph dataset (accelerometer).
+#' Import the MMASH Actigraph file (accelerometer).
 #'
 #' @param file_path Path to the user Actigraph data file.
 #'
