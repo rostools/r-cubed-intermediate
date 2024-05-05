@@ -637,24 +637,6 @@ library(fs)
 source(here("R/functions.R"))
 ```
 
-Making sure to have the `download.file()` commented out, we'll include
-some code to delete the created `data-raw/mmash/` folder so this script
-can run cleanly each time. Place the code right below where the
-`download.file()` code is.
-
-<!-- TODO: Remove this after course ends, since the same info is in pre-course now -->
-
-```{r data-raw-mmash-comment-out}
-#| filename: "data-raw/mmash.R"
-#| eval: false
-# Download
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
-
-# Remove previous `mmash/` folder to have clean update
-dir_delete(here("data-raw/mmash/"))
-```
-
 Next, as we have altered `import_multiple_files()` to use `file_path`
 instead of `file_path_id`, we'll need to update how we `group_by()` when
 creating `summarised_rr_df` and `summarised_actigraph_df`.
@@ -662,21 +644,20 @@ creating `summarised_rr_df` and `summarised_actigraph_df`.
 ```{r data-raw-mmash-update}
 #| filename: "data-raw/mmash.R"
 summarised_rr_df <- rr_df |>
-    group_by(user_id, day) |>
-    summarise(across(ibi_s, list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-    ))) |>
-    ungroup()
+  group_by(user_id, day) |>
+  summarise(across(ibi_s, list(
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
+  ))) |>
+  ungroup()
 
 summarised_actigraph_df <- actigraph_df |>
-    group_by(user_id, day) |>
-    summarise(across(hr, list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-    ))) |>
-    ungroup()
-  reduce(full_join)
+  group_by(user_id, day) |>
+  summarise(across(hr, list(
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
+  ))) |>
+  ungroup() 
 ```
 
 Go into the `doc/learning.qmd` and cut the code used to create the
@@ -762,4 +743,3 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
-
