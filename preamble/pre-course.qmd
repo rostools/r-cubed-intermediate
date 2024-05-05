@@ -654,6 +654,14 @@ fs::file_copy(
 )
 ```
 
+Notice that in the file above, we have added headers in the form of
+comments to explicitly segment what is happening in the script. In
+general, adding headers and comments to your code will not only help
+others looking at the script for the first time, but also you in the
+future, if/when you forget what was done or why it was done. It also
+create sections in your code, which makes it easier to get an overview
+of the code and find the relevant code.
+
 You now have the data ready for the course! At this point, please run
 this function in the Console:
 
