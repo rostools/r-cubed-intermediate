@@ -744,8 +744,8 @@ saliva_df |>
   summarise(across(cortisol_norm, list(mean = mean)))
 ```
 
-If we wanted to do that for all numeric columns and also calculate
-`sd()`:
+Now, let's collect some of the concepts from above to calculate the mean
+and sd for all numeric columns in the `saliva_df`:
 
 ```{r}
 #| filename: "doc/learning.qmd"
