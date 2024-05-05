@@ -175,8 +175,8 @@ Our workflow and process will be something like:
         Because our *aim* for the R script is to produce a specific
         dataset output, while the *aim* of a Quarto file is to create an
         output *document* (like HTML) and to test reproducibility. We
-        use specific tools or file formats for specific purposes base on
-        their design.
+        use specific tools or file formats for specific purposes based
+        on their design.
 -   Remove the old code from the Quarto document (`doc/learning.qmd`).
     -   Once we've finished prototyping code and moved it over into a
         more "final" location, we remove left over code because it isn't
@@ -190,7 +190,8 @@ Our workflow and process will be something like:
         transparent and makes it easier to share your code by uploading
         to GitHub. Using version control should be a standard practice
         to doing better science since it fits with the philosophy of
-        doing science.
+        doing science (e.g., transparency, reproducibility, and
+        documentation).
     -   **Note**: While we covered GitHub in the introductory course, we
         can't assume everyone will have taken that course. Because of
         that, we won't be using GitHub in this course.

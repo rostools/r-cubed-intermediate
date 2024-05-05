@@ -19,22 +19,23 @@ irreproducible results.
 With this course, we aim to begin addressing this gap. Using a highly
 practical approach that revolves around code-along sessions (instructor
 and learner coding together), hands-on exercises, and group work,
-participants of the course will be able to:
+participants of the course will know:
 
-1.  Learn and demonstrate what an open and reproducible data processing
-    and analysis workflow looks like.
-2.  Learn and apply some fundamental concepts, techniques, and skills
+1.  How to demonstrate what an open and reproducible data processing and
+    analysis workflow looks like.
+2.  How to apply some fundamental concepts, techniques, and skills
     needed for processing and managing data in a reproducible and
     well-documented way.
-3.  Learn where to go to get help and to continue learning modern data
-    science and analysis skills.
+3.  Where to go to get help and to continue learning modern data science
+    and analysis skills.
 
-By the end of the course, participants will: have improved their
-competency in processing and wrangling datasets; have improved their
-proficiency in using the [R](https://www.r-project.org/) statistical
-computing language; know how to write re-usable and well-documented
-code; and know how to make modern and reproducible data analysis
-projects.
+By the end of the course, participants will:
+
+1.  Have improved their competency in processing and wrangling datasets;
+2.  Have improved their proficiency in using the
+    [R](https://www.r-project.org/) statistical computing language;
+3.  Know how to write re-usable and well-documented code;
+4.  Know how to make modern and reproducible data analysis projects.
 
 ## Is this course for you? {#sec-is-it-for-you}
 
@@ -43,7 +44,7 @@ This course is designed in a specific way and is ideal for you if:
 -   You are a researcher, preferably working in the biomedical field
     (ranging from experimental to epidemiological). Specifically, this
     course targets those working on topics in diabetes and metabolism.
--   You currently or will soon do quantitative data analysis.
+-   You currently are or will soon do quantitative data analysis.
 -   You either:
     -   have taken the [introduction to Reproducible Research in R
         course](https://r-cubed-intro.rostools.org/), since this course
@@ -57,10 +58,10 @@ This course is designed in a specific way and is ideal for you if:
 Considering that this is a natural extension of the [introductory
 r-cubed course](https://r-cubed-intro.rostools.org/), this course
 incorporates tools learned during that course, including basic Git usage
-as well as use of RStudio R Projects. If you *do not* have familiarity
-with these tools, you will need to go over the material from the
-introduction course beforehand (more details about pre-course tasks will
-be sent out a couple of weeks before the course).
+as well as the use of RStudio R Projects. If you *do not* have
+familiarity with these tools, you will need to go over the material from
+the introduction course beforehand (more details about pre-course tasks
+will be sent out a couple of weeks before the course).
 
 While having these assumptions help to focus the content of the course,
 if you have an interest in learning R but don't fit any of the above
