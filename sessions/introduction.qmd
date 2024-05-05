@@ -52,7 +52,13 @@ like at the file level (not at the R code level). Hopefully with this
 overview, you can better understand where we are and where we want to
 get to.
 
-Right now, everyone's initial project structure should look like:
+Everyone's project structure starts off looking like the one on the
+left, and ends with the one on the right. You'll notice very little
+changes between the two, except for some files removed (e.g. `TODO.md`),
+and others added (e.g. `data/mmash.rda` and `doc/learning.html`).
+
+::: {layout-ncol="2"}
+### Currently looks like: {.unnumbered}
 
 ```         
 LearnR3
@@ -79,7 +85,7 @@ LearnR3
 └── TODO.md
 ```
 
-At the end of this workshop, it should look something like:
+### End of course: {.unnumbered}
 
 ```         
 LearnR3
@@ -106,6 +112,7 @@ LearnR3
 ├── LearnR3.Rproj
 └── README.md
 ```
+:::
 
 Why do we structure it this way? Because we want to follow some standard
 conventions in R, like having a `DESCRIPTION` metadata file, keeping raw
@@ -244,11 +251,7 @@ fs::file_delete("TODO.md")
 fs::file_delete("doc/report.Rmd")
 ```
 
-Then, open up the `README.md` and fix some of the TODO items. After
-cleaning everything up, now we need to use Git to add and commit all the
-current files into the history. Open up the Git interface in RStudio
-with {{< var keybind.git >}} or through the Git button. Write a message
-in the commit text box saying `Added initial files`.
+Then, open up the `README.md` and fix some of the TODO items.
 
 ## Styling your files
 
@@ -267,3 +270,9 @@ active file", will be the one to select and use. We'll get lots of
 chances to use it as we go through the course. The thing to note is that
 `{styler}` isn't always perfect, so you might need to sometimes manually
 fix code
+
+After cleaning everything up and running `{styler}`, now we need to use
+Git to add and commit all the current files into the history. Open up
+the Git interface in RStudio with {{< var keybind.git >}} or through the
+Git button. Write a message in the commit text box saying
+`Added initial files`.

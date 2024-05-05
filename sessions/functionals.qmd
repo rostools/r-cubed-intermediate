@@ -459,6 +459,8 @@ user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
 
+<!-- TODO: Delete the text about the library(fs), since that will be fixed after the course -->
+
 To test that things work, we'll create an HTML document from our Quarto
 document by using the "Render" / "Knit" button at the top of the pane or
 with {{< var keybind.render >}}. Once it creates the file, it should
@@ -467,13 +469,16 @@ we can move on and open up the `data-raw/mmash.R` script. Otherwise,
 this is a sign that there is an error in your code and that might not be
 reproducible.
 
-Inside the `data-raw/mmash.R` script, copy and paste these two lines of
-code to the bottom of the script. Afterwards, go the top of the script
-and right below the `library(here)` line at the top of the script, add
-these two lines of code, so it looks like this:
+Before
+continuing, we'll move the `library(fs)` line to right below the
+`library(here)`. Then, inside `data-raw/mmash.R`, copy and paste the two
+lines of code in the code chunk above to the bottom of the script.
+Afterwards, go the top of the script and right below the `library(fs)`
+code, add these two lines of code, so it looks like this:
 
 ``` {.r filename="data-raw/mmash.R"}
 library(here)
+library(fs)
 library(tidyverse)
 source(here("R/functions.R"))
 ```

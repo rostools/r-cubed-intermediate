@@ -99,6 +99,11 @@ sponsorship! [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/)
 and [Aarhus University](https://international.au.dk/) employs Luke, who
 is the lead instructor and curriculum developer.
 
-![Danish Diabetes and Endocrinology
-Academy](https://www.ddeacademy.dk/sites/all/themes/dda/DDEA_logo_outlined.svg){width="90px"}
-![Steno Diabetes Center Aarhus](/images/SDCA_logo.png){width="55px"}
+::: {layout-ncol="2"}
+![](/images/ddea-logo.png){width="220px" fig-align="center"
+fig-alt="Danish Diabetes and Endocrinology Academy logo"}
+
+![](/images/SDCA_logo.png){width="110px" fig-align="center"
+fig-alt="Steno Diabetes Center Aarhus logo"}
+:::
+
