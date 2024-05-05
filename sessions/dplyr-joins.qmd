@@ -378,9 +378,9 @@ There are many ways to join datasets in `{dplyr}` that are described in
     and columns in `x`. *Columns* that exist in `y` but not `x` are
     joined to `x`.
 
-![Left joining in `{dplyr}`. Notice how the row with `D` in column `A`
-in the blue data is not included in the outputted data on the right.
-Modified from the RStudio `{dplyr}`
+![Left joining in `{dplyr}`. Notice how the last row in the blue data
+(the row with `d` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
 width="90%"}
 
@@ -388,9 +388,9 @@ width="90%"}
     columns in `x` that match rows and columns in `y`. *Columns* that
     exist in `x` but not `y` are joined to `y`.
 
-![Right joining in `{dplyr}`. Notice how the row with `C` in column `A`
-in the green data is not included in the outputted data on the right.
-Modified from the RStudio `{dplyr}`
+![Right joining in `{dplyr}`. Notice how the last row in the green data
+(the row with `c` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
 width="90%"}
 
