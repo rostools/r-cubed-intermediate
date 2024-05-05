@@ -724,15 +724,6 @@ list(average = mean)
 list(ave = mean)
 ```
 
-You can confirm that it is a list by using the function `names()`:
-
-```{r}
-#| filename: "Console"
-names(list(mean = mean))
-names(list(average = mean))
-names(list(ave = mean))
-```
-
 Let's stick with `list(mean = mean)`:
 
 ```{r}
