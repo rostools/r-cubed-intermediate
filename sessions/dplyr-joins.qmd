@@ -601,7 +601,7 @@ saliva_with_day_df
 #| filename: "doc/learning.qmd"
 list(
   user_info_df,
-  saliva_df,
+  saliva_with_day_df,
   summarised_rr_df,
   summarised_actigraph_df
 ) |>
@@ -646,7 +646,7 @@ saliva_with_day_df <- saliva_df |>
 
 mmash <- list(
   user_info_df,
-  saliva_df,
+  saliva_with_day_df,
   summarised_rr_df,
   summarised_actigraph_df
 ) |>
