@@ -159,7 +159,7 @@ Checking Git config settings:
 survey questions**. *Note* that while GitHub is a natural connection to
 using Git, given the limited time available, we will not be going over
 how to use GitHub. If you want to learn about using GitHub, check out
-the
+this
 [session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
 on it in the introduction course.
 
