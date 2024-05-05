@@ -19,14 +19,22 @@ covering.](/images/overview-create-project-data.svg){#fig-overview-create-projec
 
 ## Learning objectives
 
-The learning objectives of this session are:
+The overall learning outcome for this session is to:
 
-1.  Learn what regular expressions are and how to use them on character
-    data.
-2.  Learn about and apply the various ways data can be joined.
-3.  Apply functionals when repeatedly joining multiple datasets.
-4.  Apply the function `case_when()` when you need nested conditionals
-    for cleaning.
+1.  Describe a few ways of joining data and processing character data,
+    and applying them to an existing sequence of data processing.
+
+Specific objectives are to:
+
+1.  Describe what regular expressions are in very simple terms, and then
+    use a regular expression on character data.
+2.  Describe a few ways that data can be joined and identify which join
+    is appropriate for a given situation. Then apply one join type to
+    two datasets to create a single dataset.
+3.  Demonstrate how to use functionals to repeatedly join more than two
+    datasets together.
+4.  Apply the function `case_when()` in situations that require nested
+    conditionals (if-else).
 5.  Use the `usethis::use_data()` function to save the final, fully
     joined dataset as an `.Rda` file in `data/`.
 
@@ -647,10 +655,9 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 dir_delete(here("data-raw/mmash/"))
 ```
 
-Next, as we have altered `import_multiple_files()` to use
-`file_path` instead of `file_path_id`, we'll need to update how we
-`group_by()` when creating `summarised_rr_df` and 
-`summarised_actigraph_df`.
+Next, as we have altered `import_multiple_files()` to use `file_path`
+instead of `file_path_id`, we'll need to update how we `group_by()` when
+creating `summarised_rr_df` and `summarised_actigraph_df`.
 
 ```{r data-raw-mmash-update}
 #| filename: "data-raw/mmash.R"
@@ -755,3 +762,4 @@ next session.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
+
