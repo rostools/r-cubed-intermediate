@@ -676,13 +676,15 @@ fs::file_copy(
 )
 ```
 
-Notice that in the file above, we have added headers in the form of
-comments to explicitly segment what is happening in the script. In
-general, adding headers and comments to your code will not only help
-others looking at the script for the first time, but also you in the
-future, if/when you forget what was done or why it was done. It also
-create sections in your code, which makes it easier to get an overview
-of the code and find the relevant code.
+Notice that in the file above, we have added comments to help segment
+sections in the code and explain what is happening in the script. In
+general, adding comments to your code helps not only when others read
+the script, but also you in the future, if/when you forget what was done
+or why it was done. It also creates sections in your code that makes it
+easier to get an overview of the code. However, there is a balance here.
+Too many comments can negatively impact readability, so as much as
+possible, write code in a way that explains what the code is doing,
+rather than rely on comments.
 
 You now have the data ready for the course! At this point, please run
 this function in the Console:
@@ -779,3 +781,4 @@ withr::with_dir(
   }
 )
 ```
+

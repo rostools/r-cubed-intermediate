@@ -224,7 +224,7 @@ the time throughout course and that this workflow is also what you'd use
 in your daily work.
 :::
 
-In `learning.qmd`, create a new Markdown header called
+In `doc/learning.qmd`, create a new Markdown header called
 `## Import the user data with a function` and create a code chunk below
 that with {{< var keybind.chunk >}} .
 

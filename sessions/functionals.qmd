@@ -124,10 +124,10 @@ the results from each function. The name `map()` doesn't mean a
 geographic map, it is the mathematical meaning of map: To use a function
 on each item in a set of items.
 
-![A functional, map, that applies a function to each item in a vector.
-Notice how each of the green coloured boxes are placed into the `func()`
-function and outputs the same number of blue boxes as there are green
-boxes. Modified from the [Posit purrr
+![A functional, in this case `map()`, applies a function to each item in
+a vector. Notice how each of the green coloured boxes are placed into
+the `func()` function and outputs the same number of blue boxes as there
+are green boxes. Modified from the [Posit purrr
 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
 width="90%"}
 
@@ -253,7 +253,8 @@ subfolders. We'll cover regular expressions more in the next session. In
 our case, the pattern is `user_info.csv`, so the code should look like
 this:
 
-``` {.r filename="doc/learning.qmd"}
+```{r list-user-info-files}
+#| filename: "doc/learning.qmd"
 user_info_files <- dir_ls(here("data-raw/mmash/"),
   regexp = "user_info.csv",
   recurse = TRUE
@@ -269,14 +270,15 @@ user_info_files
 ```
 
 ```{r admin-list-files-for-book}
+#| echo: false
 head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
-print("...")
 ```
 
 Alright, we now have all the files ready to give to `map()`. So let's
 try it!
 
-``` {.r filename="doc/learning.qmd"}
+```{r}
+#| filename: "doc/learning.qmd"
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
@@ -284,13 +286,14 @@ Remember, that `map()` always outputs a list, so when we look into this
 object, it will give us 22 tibbles (data.frames). Here we'll only show
 the first one:
 
-``` {.r filename="doc/learning.qmd"}
+```{r}
+#| filename: "doc/learning.qmd"
 user_info_list[[1]]
 ```
 
 This is great because with one line of code we imported all these
 datasets! But we're missing an important bit of information: The user
-ID. A powerful feature of the `{purrr}` package is that it gas other
+ID. A powerful feature of the `{purrr}` package is that it has other
 functions to make it easier to work with functionals. We know `map()`
 always outputs a list. But what we want is a single data frame at the
 end that also contains the user ID information.
@@ -304,7 +307,8 @@ the user ID, or in this case, the file path to the dataset, which has
 the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
-``` {.r filename="doc/learning.qmd"}
+```{r}
+#| filename: "doc/learning.qmd"
 user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
@@ -369,9 +373,10 @@ works to import the other three datasets.
         and `import_function`.
     -   Within the code, replace and re-write `"user_info.csv"` with
         `file_pattern` (this is *without* quotes around it, otherwise R
-        will read it as the pattern it should look for is a string with
-        the value "file_pattern" and not the argument `file_pattern`)
-        and `import_user_info` with `import_function` (also *without*
+        will interpret it as the pattern to look for in the `regexp`
+        argument, with the value `"file_pattern"` and not as the value
+        from `file_pattern` argument we created for our function) and
+        `import_user_info` with `import_function` (also *without*
         quotes).
     -   Create generic intermediate objects (instead of
         `user_info_files` and `user_info_df`). So, replace and re-write
@@ -454,7 +459,8 @@ code chunk below the `setup` chunk where we will use the
 `import_multiple_files()` function to import the user info and saliva
 data.
 
-``` {.r filename="doc/learning.qmd"}
+```{r}
+#| filename: "doc/learning.qmd"
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
@@ -465,8 +471,8 @@ To test that things work, we'll create an HTML document from our Quarto
 document by using the "Render" / "Knit" button at the top of the pane or
 with {{< var keybind.render >}}. Once it creates the file, it should
 either pop up or open in the Viewer pane on the side. If it works, then
-we can move on and open up the `data-raw/mmash.R` script. Otherwise,
-this is a sign that there is an error in your code and that might not be
+we can move on and open up the `data-raw/mmash.R` script. If not, it
+means that there is an issue in your code and that it won't be
 reproducible.
 
 Before continuing, we'll move the `library(fs)` line to right below the
@@ -559,8 +565,8 @@ from the beginner course.
 :::
 
 But many `{dplyr}` verbs can also take functions as input. The
-`tidyselect` package provides many of such helper functions that make it
-easier to select variables. For instance, when you combine `select()`
+`{tidyselect}` package provides many of such helper functions that make
+it easier to select variables. For instance, when you combine `select()`
 with the `where()` function, you can easily select different variables.
 Some additional helper functions are listed in @tbl-tidyselect-helpers.
 
@@ -745,7 +751,7 @@ saliva_df |>
 ```
 
 Now, let's collect some of the concepts from above to calculate the mean
-and sd for all numeric columns in the `saliva_df`:
+and standard deviation for all numeric columns in the `saliva_df`:
 
 ```{r}
 #| filename: "doc/learning.qmd"

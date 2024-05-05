@@ -19,7 +19,7 @@ irreproducible results.
 With this course, we aim to begin addressing this gap. Using a highly
 practical approach that revolves around code-along sessions (instructor
 and learner coding together), hands-on exercises, and group work,
-participants of the course will learn:
+participants of the course will know:
 
 1.  How to demonstrate what an open and reproducible data processing and
     analysis workflow looks like.
