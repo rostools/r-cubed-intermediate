@@ -156,7 +156,7 @@ Checking Git config settings:
 survey questions**. *Note* that while GitHub is a natural connection to
 using Git, given the limited time available, we will not be going over
 how to use GitHub. If you want to learn about using GitHub, check out
-the
+this
 [session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
 on it in the introduction course.
 
@@ -264,6 +264,9 @@ usethis::with_project(
 )
 ```
 
+Throughout the course, we will use this document as a sandbox to test
+code out and then move the finished code to other files.
+
 ## Download the course data {#sec-download-data}
 
 To best demonstrate the concepts in the course, we ideally should work
@@ -290,8 +293,9 @@ website](https://physionet.org/content/mmash/1.0.0/):
     use personal data, but it *does not prohibit sharing it or making it
     public*! GDPR and Open Data are not in conflict.
 
-> *Note*: Sometimes the PhysioNet website is slow. If that's the case,
-> use [**this alternative link**](resources/mmash-page.html) instead.
+> *Note*: Sometimes the PhysioNet website, where the MMASH data is
+> described, is slow. If that's the case, use [**this alternative
+> link**](resources/mmash-page.html) instead.
 
 After looking over the MMASH website, you need to setup where to store
 the dataset to prepare it for later processing. While in your `LearnR3`
@@ -672,6 +676,16 @@ fs::file_copy(
 )
 ```
 
+Notice that in the file above, we have added comments to help segment
+sections in the code and explain what is happening in the script. In
+general, adding comments to your code helps not only when others read
+the script, but also you in the future, if/when you forget what was done
+or why it was done. It also creates sections in your code that makes it
+easier to get an overview of the code. However, there is a balance here.
+Too many comments can negatively impact readability, so as much as
+possible, write code in a way that explains what the code is doing,
+rather than rely on comments.
+
 You now have the data ready for the course! At this point, please run
 this function in the Console:
 
@@ -767,3 +781,4 @@ withr::with_dir(
   }
 )
 ```
+

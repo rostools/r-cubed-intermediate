@@ -12,6 +12,7 @@ csl: includes/vancouver.csl
 -   :heavy_check_mark: Pick a group from the basket and go to that table
 -   :heavy_check_mark: Introduce yourself
 -   :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project
+-   :heavy_check_mark: Re-install r3 with `pak::pak("rostools/r3")`
 -   :heavy_check_mark: Re-run `r3::install_packages_intermediate()`
 -   :heavy_check_mark: Check that your `data-raw/` looks like that on
     the right

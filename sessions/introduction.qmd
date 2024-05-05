@@ -175,8 +175,8 @@ Our workflow and process will be something like:
         Because our *aim* for the R script is to produce a specific
         dataset output, while the *aim* of a Quarto file is to create an
         output *document* (like HTML) and to test reproducibility. We
-        use specific tools or file formats for specific purposes base on
-        their design.
+        use specific tools or file formats for specific purposes based
+        on their design.
 -   Remove the old code from the Quarto document (`doc/learning.qmd`).
     -   Once we've finished prototyping code and moved it over into a
         more "final" location, we remove left over code because it isn't
@@ -190,7 +190,8 @@ Our workflow and process will be something like:
         transparent and makes it easier to share your code by uploading
         to GitHub. Using version control should be a standard practice
         to doing better science since it fits with the philosophy of
-        doing science.
+        doing science (e.g., transparency, reproducibility, and
+        documentation).
     -   **Note**: While we covered GitHub in the introductory course, we
         can't assume everyone will have taken that course. Because of
         that, we won't be using GitHub in this course.
@@ -250,7 +251,24 @@ fs::file_delete("TODO.md")
 fs::file_delete("doc/report.Rmd")
 ```
 
-Then, open up the `README.md` and fix some of the TODO items.
+Then, open up the `data-raw/mmash.R` file and we'll add something that
+will make the rest of the course a bit easier. We'll include some code
+to delete the created `data-raw/mmash/` folder so this script can run
+cleanly each time. Place the code right below where the
+`download.file()` code is.
+
+<!-- TODO: Remove this after course ends, since the same info is in pre-course now -->
+
+```{r data-raw-mmash-comment-out}
+#| filename: "data-raw/mmash.R"
+#| eval: false
+# Download
+mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+
+# Remove previous `mmash/` folder to have clean update
+dir_delete(here("data-raw/mmash/"))
+```
 
 ## Styling your files
 

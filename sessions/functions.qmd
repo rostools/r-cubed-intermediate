@@ -60,7 +60,12 @@ bundled sequence of steps that achieve a specific action. For instance,
 the `+` (to add) is a function, `mean()` is a function, `[]` (to subset
 or extract) is a function, and so on. In simple terms, functions are
 made of a function call, its arguments, and the function body:
-`function(argument1, argument2) { ...body with R code... }`.
+
+``` {.r filename="Console"}
+function(argument1, argument2){ 
+  # body of function with R code
+}
+```
 
 Because R is open source, anyone can see how things work underneath. So,
 if we want to see what a function does underneath, we type out the
@@ -115,19 +120,19 @@ name <- function(argument1, argument2) {
 ```
 
 Writing your own functions can be absolutely amazing and fun and
-powerful... but you also often want to pull your hair out with
-frustration at errors that are difficult to understand and fix. The best
-way to deal with this is by debugging. Due to time and to the challenge
-of making meaningful debugging exercises (solutions to problems are very
-dependent on the project), read @sec-extra-material in your own time for
-some instructions on debugging and dealing with another common problem
-you might encounter with R.
+powerful, but you also often want to pull your hair out with frustration
+at errors that are difficult to understand and fix. The best way to deal
+with this is by debugging. Due to time and to the challenge of making
+meaningful debugging exercises (solutions to problems are very dependent
+on the project), read @sec-extra-material in your own time for some
+instructions on debugging and dealing with another common problem you
+might encounter with R.
 :::
 
 Let's write a simple example. First, create a new Markdown header called
 `## Making a function` and create a code chunk below that with
-{{< var keybind.chunk >}} . Then, inside the function, we'll write this
-code out:
+{{< var keybind.chunk >}} . Then, inside the code chunk, we'll write
+this code out:
 
 ```{r create-add-function}
 #| filename: "doc/learning.qmd"
@@ -145,7 +150,7 @@ your new function, with arguments to give it.
 add_numbers(1, 2)
 ```
 
-The function name is fairly good... `add_numbers` is read as "add
+The function name is fairly good; `add_numbers` is read as "add
 numbers". While we generally want to write code that describes what it
 does by reading it, it's also good practice to add some formal
 documentation to the function. Use the "Insert Roxygen Skeleton" in the
@@ -232,6 +237,10 @@ Emphasize that we will be using this workflow for creating functions all
 the time throughout course and that this workflow is also what you'd use
 in your daily work.
 :::
+
+In `doc/learning.qmd`, create a new Markdown header called
+`## Import the user data with a function` and create a code chunk below
+that with {{< var keybind.chunk >}} .
 
 So, step one. Let's take the code we wrote for importing the `user_info`
 data and convert that as a function:
@@ -435,7 +444,7 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import the MMASH saliva dataset.
+#' Import the MMASH saliva file.
 #'
 #' @param file_path Path to the user saliva data file.
 #'
@@ -668,9 +677,9 @@ add_numbers <- function(num1, num2) {
 This is *very* **bad practice** and can have some unintended and serious
 consequences that you might not notice or that won't give any warning or
 error. The correct way of indicating which package a function comes from
-is instead by using `packagename::`, which you've seen and used many
-times in this course. We won't get into the reasons why this is
-incorrect because it can quickly get quite technical.
+is instead by using `packagename::functionname`, which you've seen and
+used many times in this course. We won't get into the reasons why this
+is incorrect because it can quickly get quite technical.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -683,14 +692,14 @@ hand, `library()` will throw an error if it can't find the package,
 which is what you expect if your code depends on a package.
 :::
 
-Another reason to use `packagename::` for each function from an R
-package you use in your own function is that it explicitly tells R (and
-us the readers) where the function comes from. Because the same function
-name can be used by multiple packages, if you don't explicitly state
-which package the function is from, R will use the function that it
-finds first... which isn't always the function you meant to use. We also
-do this step at the end of making the function because doing it while we
-create it can be quite tedious.
+Another reason to use `packagename::functionname` for each function from
+an R package you use in your own function is that it explicitly tells R
+(and us the readers) where the function comes from. Because the same
+function name can be used by multiple packages, if you don't explicitly
+state which package the function is from, R will use the function that
+it finds first - which isn't always the function you meant to use. We
+also do this step at the end of making the function because doing it
+while we create it can be quite tedious.
 :::
 
 Alright, let's go into `R/functions.R` and add `readr::` to each of the
@@ -787,7 +796,7 @@ ___ <- function(___) {
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import the MMASH saliva dataset.
+#' Import the MMASH saliva file
 #'
 #' @param file_path Path to the user saliva data file.
 #'
@@ -808,7 +817,7 @@ import_saliva <- function(file_path) {
   return(saliva_data)
 }
 
-#' Import the MMASH RR dataset (heart beat-to-beat interval).
+#' Import the MMASH RR file (heart beat-to-beat interval).
 #'
 #' @param file_path Path to the user RR data file.
 #'
@@ -830,7 +839,7 @@ import_rr <- function(file_path) {
   return(rr_data)
 }
 
-#' Import the MMASH Actigraph dataset (accelerometer).
+#' Import the MMASH Actigraph file (accelerometer).
 #'
 #' @param file_path Path to the user Actigraph data file.
 #'
@@ -899,4 +908,3 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
-
