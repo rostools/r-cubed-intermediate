@@ -469,8 +469,7 @@ we can move on and open up the `data-raw/mmash.R` script. Otherwise,
 this is a sign that there is an error in your code and that might not be
 reproducible.
 
-Before
-continuing, we'll move the `library(fs)` line to right below the
+Before continuing, we'll move the `library(fs)` line to right below the
 `library(here)`. Then, inside `data-raw/mmash.R`, copy and paste the two
 lines of code in the code chunk above to the bottom of the script.
 Afterwards, go the top of the script and right below the `library(fs)`
@@ -525,8 +524,8 @@ they will see how it works then. We covered this in the introduction
 course, so we should not cover it again here.
 :::
 
-Functionals and vectorization are an integral component of how R works
-and they appear throughout many of R's functions and packages. They are
+Functionals and vectorization are integral components of how R works and
+they appear throughout many of R's functions and packages. They are
 particularly used throughout the `{tidyverse}` packages like `{dplyr}`.
 Let's get into some more advanced features of `{dplyr}` functions that
 work as functionals. Before we continue, re-run the code for getting
