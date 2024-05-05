@@ -488,7 +488,7 @@ that `start_with()` the word `"value"` to 2 digits.
 ```{r rounding-summary-function-output}
 #| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data) {
-  data |>
+   daily_summary <- data |>
     dplyr::select(-samples) |>
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
@@ -509,6 +509,7 @@ tidy_summarise_by_day <- function(data) {
       names_from = day,
       values_from = dplyr::starts_with("value")
     )
+return(daily_summary)
 }
 ```
 
