@@ -4,6 +4,7 @@
 #| include: false
 library(fs)
 library(tidyverse)
+library(readr)
 library(here)
 load(here("_temp/importing.RData"))
 temp_path <- fs::path_temp()
@@ -23,14 +24,29 @@ covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 ## Learning objectives
 
-1.  Learn what functions are in R and how to create and use them.
-2.  Learn a workflow of using Quarto, `source()` with
-    {{< var keybind.source >}} and restarting R with
-    {{< var keybind.restart-r >}} as a tool and process for developing
-    functions that can be later easily (re-)used.
-3.  Learn what R package dependency management is and how it can
-    simplify your data analysis work.
-4.  Continue practising Git version control to manage changes to your
+The overall learning outcome for this session is to:
+
+1.  Describe a basic workflow for creating functions and then apply this
+    workflow to import data.
+
+Specific objectives are to:
+
+1.  Describe and identify the individual components of a function as
+    well as the workflow to creating them, and then use this workflow to
+    make one to import some data.
+2.  Describe a workflow for developing code that combines using Quarto,
+    `source()`'ing with {{< var keybind.source >}}, and restarting R
+    with {{< var keybind.restart-r >}}, explain its usefulness in
+    assessing correctness and re-usability of code, and then apply this
+    workflow when developing functions.
+3.  Explain what R package dependency management is, why it is necessary
+    when writing code and ensuring reproducibility, and apply tools like
+    `usethis::use_package()` to manage dependencies in an R project.
+4.  Describe and apply a workflow of prototyping code in a Quarto
+    document and then moving it into a script (called, e.g.,
+    `functions.R`) once finished and tested, then using `source()` to
+    load the functions into the R session.
+5.  Continue practicing Git version control to manage changes to your
     files.
 
 ## The basics of a function
@@ -883,3 +899,4 @@ next session.
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
+
