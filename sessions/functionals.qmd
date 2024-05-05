@@ -1000,18 +1000,6 @@ Next, go to the Quarto document and again delete **everything** below
 the `setup` code chunk. After it has been deleted, add and commit the
 changes to the Git history with {{< var keybind.git >}}.
 
-## Exercise: Brainstorm and discuss how you'd use functionals in your work
-
-> Time: 10 minutes.
-
-As a group, discuss if you've ever used for loops or functionals like
-`map()` and your experiences with either. Discuss any advantages to
-using for loops over functionals and vice versa. Then, brainstorm and
-discuss as many ways as you can for how you might incorporate
-functionals like `map()`, or replace for loops with them, into your own
-work. Afterwards, groups will briefly share some of what they thought of
-before we move on to the next exercise.
-
 ## Summary
 
 -   R is a functional programming language:
