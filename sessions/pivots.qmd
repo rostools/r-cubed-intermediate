@@ -56,19 +56,6 @@ you are writing and coding will at least be reproducible on your
 computer, since Quarto is designed to ensure the document is
 reproducible.
 
-For this specific workflow and for checking reproducibility, you should
-output to HTML rather than to a Word document. While you can create a
-Word document by changing the `format: html` to `format: docx` (for
-Quarto only) at the top in the YAML header, you'd only do this when you
-need to submit to a journal or need to email to co-authors for review.
-The reason is simple: After you generate the Word document from Quarto,
-the Word file opens up and consequently Word locks the file from further
-edits. What that means is that every time you generate the Word
-document, you have to close it before you can generate it again,
-otherwise knitting / rendering will fail. This can get annoying very
-quickly (trust me), since you don't always remember to close the Word
-document. If you output to HTML, this won't be a problem.
-
 ## Re-arranging data for easier summarizing
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -132,7 +119,8 @@ pivoting would look like what is shown in @fig-pivot-longer-id.
 called 'name' and 'value', as well as the old 'id' column. Notice how,
 unlike the previous image, the `id` column is excluded when pivotting
 into the data on the
-right.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
+right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
+width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 disheartened if you can't understand how it works yet. As you practice
@@ -624,3 +612,4 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+
