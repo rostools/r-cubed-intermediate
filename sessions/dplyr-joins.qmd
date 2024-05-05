@@ -645,6 +645,31 @@ mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-
 dir_delete(here("data-raw/mmash/"))
 ```
 
+Next, as we have altered `import_multiple_files()` to use
+`file_path` instead of `file_path_id`, we'll need to update how we
+`group_by()` when creating `summarised_rr_df` and 
+`summarised_actigraph_df`.
+
+```{r data-raw-mmash-update}
+#| filename: "data-raw/mmash.R"
+summarised_rr_df <- rr_df |>
+    group_by(user_id, day) |>
+    summarise(across(ibi_s, list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+    ))) |>
+    ungroup()
+
+summarised_actigraph_df <- actigraph_df |>
+    group_by(user_id, day) |>
+    summarise(across(hr, list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+    ))) |>
+    ungroup()
+  reduce(full_join)
+```
+
 Go into the `doc/learning.qmd` and cut the code used to create the
 `saliva_with_day_df` as well as the code to `full_join()` all the
 datasets together with `reduce()` and paste it at the bottom of the
