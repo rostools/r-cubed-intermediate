@@ -540,7 +540,7 @@ function.
 ```{r generalize-summary-function}
 #| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data, summary_fn) {
-  data |>
+  daily_summary <- data |>
     dplyr::select(-samples) |>
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
@@ -558,6 +558,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       names_from = day,
       values_from = dplyr::starts_with("value")
     )
+return(daily_summary)
 }
 ```
 
