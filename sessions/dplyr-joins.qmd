@@ -455,8 +455,8 @@ reduce(1:5, add_numbers)
 
 ![A functional that iteratively uses a function on a set of items until
 only one output remains. Notice how the output of the first iteration of
-the `func()` function is placed in the first position of `func()` in the
-next iteration, and so on. Modified from the RStudio purrr
+`func()` is placed in the first position of `func()` in the next
+iteration, and so on. Modified from the Posit purrr
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
