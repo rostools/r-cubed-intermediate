@@ -519,30 +519,23 @@ technique, which we covered in the beginner R course. The method is:
 3.  Combine the results to present them together (e.g. into a data frame
     that you can use to make a plot or table).
 
-So when you split data into multiple groups, you make a *vector* that
-you can then apply (i.e. using the *map* functional) some statistical
-technique to each group through *vectorization*. This technique works
-really well for a range of tasks, including for our task of summarizing
-some of the MMASH data so we can merge it all into one dataset.
+So when you split data into multiple groups, you create a list (or a
+*vector*) that you can then use (with the *map* functional) to apply a
+statistical technique to each group through *vectorization*.This
+technique works really well for a range of tasks, including for our task
+of summarizing some of the MMASH data so we can merge it all into one
+dataset.
 
 ## Summarising data through functionals {#sec-summarise-with-functionals}
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Before starting this section, ask how many have used the pipe before. If
-everyone has, then move on. If some haven't, very briefly explain it,
-but **do not** use much time on it since we will be using it shortly and
-they will see how it works then. We covered this in the introduction
-course, so we should not cover it again here.
-:::
 
 Functionals and vectorization are integral components of how R works and
 they appear throughout many of R's functions and packages. They are
 particularly used throughout the `{tidyverse}` packages like `{dplyr}`.
 Let's get into some more advanced features of `{dplyr}` functions that
-work as functionals. Before we continue, re-run the code for getting
-`user_info_df` since you had restarted the R session previously.
+work as functionals.
+
+Before we continue, re-run the code for getting `user_info_df` since you
+had restarted the R session previously.
 
 Since we're going to use `{dplyr}`, we need to add it as a dependency by
 typing this in the **Console**:
