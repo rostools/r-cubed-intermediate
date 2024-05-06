@@ -236,21 +236,13 @@ for you and for us as instructors). And because we use Git, nothing is
 truly gone so you can always go back to the text later. Next, we restart
 the R session with {{< var keybind.restart-r >}}.
 
-Next, we'll need to add `{purrr}` as a package dependency by going to
-the **Console** and running:
-
-``` {.r filename="Console"}
-usethis::use_package("purrr")
-```
-
-Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
-with `library()`. Before we'll use the `map()` functional, we need to
-get a vector or list of all the dataset files available to us. We will
-return to using the `{fs}` package, which has a function called
-`dir_ls()` that finds files of a certain pattern. So, let's add
-`library(fs)` to the `setup` code chunk. Then, go to the bottom of the
-`doc/learning.qmd` document, create a new header called `## Using map`,
-and create a code chunk below that with {{< var keybind.chunk >}}
+Before we'll use the `map()` functional, we need to get a vector or list
+of all the dataset files available to us. We will return to using the
+`{fs}` package, which has a function called `dir_ls()` that finds files
+of a certain pattern. So, let's add `library(fs)` to the `setup` code
+chunk. Then, go to the bottom of the `doc/learning.qmd` document, create
+a new header called `## Using map`, and create a code chunk below that
+with {{< var keybind.chunk >}}
 
 The `dir_ls()` function takes the path that we want to search
 (`data-raw/mmash/`), uses the argument `regexp` (short for [regular
@@ -281,8 +273,16 @@ user_info_files
 head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
 ```
 
-Alright, we now have all the files ready to give to `map()`. So let's
-try it!
+Alright, we now have all the files ready to give to `map()`. But before
+using it, we'll need to add `{purrr}`, where `map()` comes from as a
+package dependency by going to the **Console** and running:
+
+``` {.r filename="Console"}
+usethis::use_package("purrr")
+```
+
+Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
+with `library()`. So let's try it!
 
 ```{r}
 #| filename: "doc/learning.qmd"
