@@ -587,8 +587,11 @@ saliva_df |>
 
 But instead, there is the `across()` function that works like `map()`
 and allows you to calculate the mean across which ever columns you want.
-In many ways, `across()` is a duplicate of `map()`, particularly in the
-arguments you give it.
+In many ways, `across()` is similar to `map()`, particularly in the
+arguments you give it and in the sense that it a functional. But they
+are used in different settings: `across()` works well with columns
+within a dataframe and within a `mutate()` or `summarise()`, while
+`map()` is more generic.
 
 ::: callout-note
 ## Reading task: \~2 minutes
@@ -968,3 +971,4 @@ changes to the Git history with {{< var keybind.git >}}.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
+
