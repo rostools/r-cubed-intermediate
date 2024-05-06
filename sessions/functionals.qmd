@@ -552,9 +552,10 @@ the [Data Management and
 Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
 session of the beginner course). The common usage of these verbs is
 through acting on and directly using the column names (e.g. without `"`
-quotes around the column name). But many `{dplyr}` verbs can also take
-functions as input, especially when using the column selection helpers
-from the `{tidyselect}` package.
+quotes around the column name), e.g.,
+`saliva_df |> select(cortisol_norm)`. But many `{dplyr}` verbs can also
+take functions as input, especially when using the column selection
+helpers from the `{tidyselect}` package.
 
 Likewise, with functions like `summarise()`, if you want to for example
 calculate the mean of cortisol in the saliva dataset, you would usually
