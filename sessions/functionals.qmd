@@ -557,62 +557,9 @@ the [Data Management and
 Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
 session of the beginner course). The common usage of these verbs is
 through acting on and directly using the column names (e.g. without `"`
-quotes around the column name). For instance, to select only the `age`
-column, you would type out:
-
-```{r}
-user_info_df |>
-  select(age)
-```
-
-::: aside
-Don't know what the `|>` pipe is? Check out [the section on
-it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
-from the beginner course.
-:::
-
-But many `{dplyr}` verbs can also take functions as input. The
-`{tidyselect}` package provides many of such helper functions that make
-it easier to select variables. For instance, when you combine `select()`
-with the `where()` function, you can easily select different variables.
-Some additional helper functions are listed in @tbl-tidyselect-helpers.
-
-```{r tbl-tidyselect-helpers}
-#| echo: false
-#| tbl-cap: "Common tidyselect helper functions and some of their use cases."
-tibble::tribble(
-  ~"What it selects", ~Example, ~Function,
-  "Select variables where a function returns TRUE", "Select variables that have data as character (`is.character`)", "`where()`",
-  "Select all variables", "Select all variables in `user_info_df`", "`everything()`",
-  "Select variables that contain the matching string", 'Select variables that contain the string "user_info"', "`contains()`",
-  "Select variables that ends with string", 'Select all variables that end with "date"', "`ends_with()`"
-) |>
-  knitr::kable()
-```
-
-Let's select columns that are numeric:
-
-```{r}
-#| filename: "doc/learning.qmd"
-user_info_df |>
-  select(where(is.numeric))
-```
-
-Or, only character columns:
-
-```{r}
-#| filename: "doc/learning.qmd"
-#| eval: false
-user_info_df |>
-  select(where(is.character))
-```
-
-```{r admin-select-where-for-book}
-#| echo: false
-user_info_df |>
-  select(where(is.character)) |>
-  trim_filepath_for_book()
-```
+quotes around the column name). But many `{dplyr}` verbs can also take
+functions as input, especially when using the column selection helpers
+from the `{tidyselect}` package.
 
 Likewise, with functions like `summarise()`, if you want to for example
 calculate the mean of cortisol in the saliva dataset, you would usually
@@ -623,6 +570,12 @@ type out:
 saliva_df |>
   summarise(cortisol_mean = mean(cortisol_norm))
 ```
+
+::: aside
+Don't know what the `|>` pipe is? Check out [the section on
+it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
+from the beginner course.
+:::
 
 If you want to calculate the mean of multiple columns, you might think
 you'd have to do something like:
@@ -650,10 +603,10 @@ optional one (plus one deprecated one):
 1.  `.cols` argument: Columns you want to use.
     -   Write column names directly and wrapped in `c()`:
         `c(age, weight)`.
-    -   Write `tidyselect` helpers: `everything()`, `starts_with()`,
-        `contains()`, `ends_with()`
-    -   Use a function wrapped in `where()`: `where(is.numeric)`,
-        `where(is.character)`
+    -   Write `{tidyselect}` column selection helpers: `everything()`,
+        `starts_with()`, `contains()`, `ends_with()`
+    -   Use a function wrapped in `where()` to select columns by a
+        condition: `where(is.numeric)` or `where(is.character)`
 2.  `.fns`: The function to use on the `.cols`.
     -   A bare function (`mean`) applies it to each column and returns
         the output, with the column name unchanged.
@@ -1021,3 +974,4 @@ changes to the Git history with {{< var keybind.git >}}.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
+
