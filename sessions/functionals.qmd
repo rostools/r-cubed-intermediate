@@ -723,24 +723,13 @@ way, we use the split-apply-combine technique. Let's first summarise by
 taking the mean of `ibi_s` (which is the inter-beat interval in
 seconds).
 
-::: {.callout-note appearance="default"}
-By default, using `group_by()` continues the grouping effect of later
-code, like `mutate()` and `summarise()`. Normally we would end a
-`group_by()` by using `ungroup()`, especially if we want to do multiple
-wrangling functions on the same grouping. Because sometimes, especially
-after using `summarise()`, we don't need to keep the grouping. So we can
-use the `.groups = "drop"` argument in `summarise()` to end the
-grouping.
-:::
-
 ```{r}
 #| filename: "doc/learning.qmd"
 #| eval: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean)),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = mean))
   )
 ```
 
@@ -749,8 +738,7 @@ rr_df |>
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean)),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = mean))
   ) |>
   trim_filepath_for_book()
 ```
@@ -763,8 +751,7 @@ While there are no missing values here, let's add the argument
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))
   )
 ```
 
@@ -772,8 +759,7 @@ rr_df |>
 #| echo: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))
   ) |>
   trim_filepath_for_book()
 ```
@@ -790,9 +776,9 @@ summarised_rr_df <- rr_df |>
     across(ibi_s, list(
       mean = \(x) mean(x, na.rm = TRUE),
       sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
+    ))
   )
+  
 summarised_rr_df
 ```
 
@@ -804,9 +790,9 @@ summarised_rr_df <- rr_df |>
     across(ibi_s, list(
       mean = \(x) mean(x, na.rm = TRUE),
       sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
+    ))
   )
+
 summarised_rr_df |>
   trim_filepath_for_book()
 ```
@@ -848,6 +834,16 @@ Ungrouping the data with the `.groups = "drop"` in the `summarise()`
 function does not provide any visual indication of what is happening.
 However, in the background, it removes certain metadata that the
 `group_by()` function added.
+
+::: {.callout-note appearance="default"}
+By default, using `group_by()` continues the grouping effect of later
+code, like `mutate()` and `summarise()`. Normally we would end a
+`group_by()` by using `ungroup()`, especially if we want to do multiple
+wrangling functions on the same grouping. Because sometimes, especially
+after using `summarise()`, we don't need to keep the grouping. So we can
+use the `.groups = "drop"` argument in `summarise()` to end the
+grouping.
+:::
 
 Before continuing, let's run `{styler}` with {{< var keybind.styler >}}
 and knit the Quarto document with {{< var keybind.render >}} to confirm
