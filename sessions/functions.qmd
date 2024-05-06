@@ -255,8 +255,7 @@ user_1_info_data <- read_csv(
     gender = col_character(),
     weight = col_double(),
     height = col_double(),
-    age = col_double(),
-    .delim = ","
+    age = col_double()
   ),
   name_repair = snakecase::to_snake_case
 )
