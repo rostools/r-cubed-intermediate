@@ -482,11 +482,13 @@ we can move on and open up the `data-raw/mmash.R` script. If not, it
 means that there is an issue in your code and that it won't be
 reproducible.
 
-Before continuing, we'll move the `library(fs)` line to right below the
-`library(here)`. Then, inside `data-raw/mmash.R`, copy and paste the two
-lines of code in the code chunk above to the bottom of the script.
-Afterwards, go the top of the script and right below the `library(fs)`
-code, add these two lines of code, so it looks like this:
+Before continuing, we'll collect our imported packages in the top of the
+script by adding the `library(fs)` line to right below `library(here)`.
+Then, inside `data-raw/mmash.R`, copy and paste the two lines of code
+that creates the `user_info_df` and `saliva_df` to the bottom of the
+script (i.e., the two lines in the code chunk above). Afterwards, go the
+top of the script and right below the `library(fs)` code, add these two
+lines of code, so it looks like this:
 
 ``` {.r filename="data-raw/mmash.R"}
 library(here)
