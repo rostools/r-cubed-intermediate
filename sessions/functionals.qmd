@@ -34,11 +34,11 @@ Specific objectives are to:
 
 1.  Explain what functional programming, vectorization, and functionals
     are within R and identify when code is a functional or uses
-    functional programming. Then to apply this knowledge by using the
+    functional programming. Then apply this knowledge using the
     `{purrr}` package.
 2.  Review the split-apply-combine technique and identify how these
     concepts connect to functional programming.
-3.  Apply functional programming to summarizing data and for using the
+3.  Apply functional programming to summarize data using the
     split-apply-combine technique.
 
 ## Functional programming
@@ -303,7 +303,7 @@ datasets! But we're missing an important bit of information: The user
 ID. A powerful feature of the `{purrr}` package is that it has other
 functions to make it easier to work with functionals. We know `map()`
 always outputs a list. But what we want is a single data frame at the
-end that also contains the user ID information.
+end that also contains the user ID.
 
 The function that will take a list and convert it into a data frame is
 called `list_rbind()` to bind ("stack") by rows or `list_cbind()` to
