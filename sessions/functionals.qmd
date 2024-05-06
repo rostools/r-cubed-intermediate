@@ -523,7 +523,7 @@ technique, which we covered in the beginner R course. The method is:
 
 So when you split data into multiple groups, you create a list (or a
 *vector*) that you can then use (with the *map* functional) to apply a
-statistical technique to each group through *vectorization*.This
+statistical technique to each group through *vectorization*. This
 technique works really well for a range of tasks, including for our task
 of summarizing some of the MMASH data so we can merge it all into one
 dataset.
@@ -552,8 +552,8 @@ the [Data Management and
 Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
 session of the beginner course). The common usage of these verbs is
 through acting on and directly using the column names (e.g. without `"`
-quotes around the column name), e.g.,
-`saliva_df |> select(cortisol_norm)`. But many `{dplyr}` verbs can also
+quotes around the column name like with
+`saliva_df |> select(cortisol_norm)`). But many `{dplyr}` verbs can also
 take functions as input, especially when using the column selection
 helpers from the `{tidyselect}` package.
 
@@ -588,7 +588,7 @@ saliva_df |>
 But instead, there is the `across()` function that works like `map()`
 and allows you to calculate the mean across which ever columns you want.
 In many ways, `across()` is similar to `map()`, particularly in the
-arguments you give it and in the sense that it a functional. But they
+arguments you give it and in the sense that it is a functional. But they
 are used in different settings: `across()` works well with columns
 within a dataframe and within a `mutate()` or `summarise()`, while
 `map()` is more generic.
