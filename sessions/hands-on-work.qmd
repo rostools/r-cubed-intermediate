@@ -131,10 +131,10 @@ tasks to clean the data up more.
     fix within the `data-raw/mmash.R` cleaning script.
 
     ```{r}
-    #| filename: "data-raw/mmash.R"
-    #| eval: false
-    mmash |> 
-      filter(user_id == "user_21")
+#| filename: "data-raw/mmash.R"
+#| eval: false
+mmash |>
+  filter(user_id == "user_21")
     ```
 
     -   **Hint**: Look into user 21's folder at their `.csv` files they

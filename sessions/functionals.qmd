@@ -725,7 +725,17 @@ other datasets, we need to calculate summary measures by at least
 need to `group_by()` these two variables before summarising. In this
 way, we use the split-apply-combine technique. Let's first summarise by
 taking the mean of `ibi_s` (which is the inter-beat interval in
-seconds):
+seconds).
+
+::: {.callout-note appearance="default"}
+By default, using `group_by()` continues the grouping effect of later
+code, like `mutate()` and `summarise()`. Normally we would end a
+`group_by()` by using `ungroup()`, especially if we want to do multiple
+wrangling functions on the same grouping. Because sometimes, especially
+after using `summarise()`, we don't need to keep the grouping. So we can
+use the `.groups = "drop"` argument in `summarise()` to end the
+grouping.
+:::
 
 ```{r}
 #| filename: "doc/learning.qmd"
@@ -733,7 +743,9 @@ seconds):
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean)))
+  summarise(across(ibi_s, list(mean = mean)),
+    .groups = "drop"
+  )
 ```
 
 ```{r admin-rr-summarised-for-book}
@@ -741,7 +753,9 @@ rr_df |>
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean))) |>
+  summarise(across(ibi_s, list(mean = mean)),
+    .groups = "drop"
+  ) |>
   trim_filepath_for_book()
 ```
 
@@ -753,48 +767,20 @@ While there are no missing values here, let's add the argument
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))))
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))),
+    .groups = "drop"
+  )
 ```
 
 ```{r admin-rr-summarise-na-rm-for-book}
 #| echo: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))) |>
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))),
+    .groups = "drop"
+  ) |>
   trim_filepath_for_book()
 ```
-
-You might notice a message (depending on the version of `{dplyr}` you
-have):
-
-```         
-`summarise()` regrouping output by 'file_path_id' (override with `.groups` argument)
-```
-
-::: callout-note
-## Reading task: \~2 minutes
-
-This message talks about regrouping, and overriding based on the
-`.groups` argument. If we look in the help `?summarise`, at the
-`.groups` argument, we see that this argument is currently
-"experimental". At the bottom there is a message about:
-
-> In addition, a message informs you of that choice, unless the option
-> "dplyr.summarise.inform" is set to FALSE, or when summarise() is
-> called from a function in a package.
-
-So how would be go about removing this message? By putting the
-"dplyr.summarise.inform" in the `options()` function. So, go to the
-`setup` code chunk at the top of the document and add this code to the
-top:
-
-```{r}
-#| filename: "doc/learning.qmd"
-options(dplyr.summarise.inform = FALSE)
-```
-
-You will now no longer get the message.
-:::
 
 Let's also add standard deviation as another measure from the RR
 datasets:
@@ -804,10 +790,13 @@ datasets:
 #| eval: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  )))
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 summarised_rr_df
 ```
 
@@ -815,27 +804,32 @@ summarised_rr_df
 #| echo: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  )))
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 summarised_rr_df |>
   trim_filepath_for_book()
 ```
 
 Whenever you are finished with a grouping effect, it's good practice to
-end the `group_by()` with `ungroup()`. Let's add it to the end:
+end the `group_by()` with `.groups = "drop"`. Let's add it to the end:
 
 ```{r}
 #| filename: "doc/learning.qmd"
 #| eval: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 summarised_rr_df
 ```
 
@@ -843,18 +837,21 @@ summarised_rr_df
 #| echo: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 summarised_rr_df |>
   trim_filepath_for_book()
 ```
 
-Ungrouping the data with `ungroup()` does not provide any visual
-indication of what is happening. However, in the background, it removes
-certain metadata that the `group_by()` function added.
+Ungrouping the data with the `.groups = "drop"` in the `summarise()`
+function does not provide any visual indication of what is happening.
+However, in the background, it removes certain metadata that the
+`group_by()` function added.
 
 Before continuing, let's run `{styler}` with {{< var keybind.styler >}}
 and knit the Quarto document with {{< var keybind.render >}} to confirm
@@ -897,7 +894,7 @@ Environments pane to view it. For many computers, your R session will
     variables you are interested in (from item 4 above) with the summary
     functions you chose. Assign the newly summarised data frame to a new
     data frame and call it `summarised_actigraph_df`.
-7.  End the grouping effect with `ungroup()`.
+7.  End the grouping effect with `.groups = "drop"` in `summarise()`.
 8.  Run `{styler}` while in the `doc/learning.qmd` file with
     {{< var keybind.styler >}}.
 9.  Knit the `doc/learning.qmd` document with {{< var keybind.render >}}
@@ -914,11 +911,13 @@ actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 summarised_actigraph_df <- actigraph_df |>
   group_by(file_path_id, day) |>
   # These statistics will probably be different for you
-  summarise(across(hr, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(hr, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 ```
 
 ## Cleaning up and adding to the processing script
@@ -940,11 +939,13 @@ actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
 
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 
 # Code pasted here that was made from the above exercise
 ```
@@ -964,14 +965,14 @@ changes to the Git history with {{< var keybind.git >}}.
         as input.
 -   Use the `{purrr}` package and its function `map()` when you want to
     repeat a function on multiple items at once.
--   Use `group_by()`, `summarise()`, and `across()` followed by
-    `ungroup()` to use the split-apply-combine technique when needing to
-    do an action on groups within the data (e.g. calculate the mean age
-    between education groups).
+-   Use `group_by()`, `summarise()`, and `across()` with
+    `.groups = "drop"` in the `summarise()` function to use the
+    split-apply-combine technique when needing to do an action on groups
+    within the data (e.g. calculate the mean age between education
+    groups).
 
 ```{r store-session-code}
 #| include: false
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
-

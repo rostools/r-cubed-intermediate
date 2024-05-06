@@ -7,7 +7,6 @@ library(fs)
 library(tidyverse)
 load(here("_temp/functionals.RData"))
 source(here("R/functions.R"))
-options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over
@@ -333,20 +332,24 @@ to use `user_id` instead of `file_path_id`:
 #| filename: "doc/learning.qmd"
 summarised_rr_df <- rr_df |>
   group_by(user_id, day) |> # change file_path_id to user_id here
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 
 summarised_actigraph_df <- actigraph_df |>
   group_by(user_id, day) |> # change file_path_id to user_id here
   # These statistics will probably be different for you
-  summarise(across(hr, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(hr, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 ```
 
 Let's render the `doc/learning.qmd` document using
@@ -460,10 +463,10 @@ iteration, and so on. Modified from the Posit purrr
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
-If we look at the documentation for `reduce()` by writing `?reduce` in the
-Console, we see that`reduce()`, like`map()`, takes either a vector or a
-list as an input. Since data frames can only be put together as a list
-and not as a vector (a data frame has vectors for columns and so it
+If we look at the documentation for `reduce()` by writing `?reduce` in
+the Console, we see that`reduce()`, like`map()`, takes either a vector
+or a list as an input. Since data frames can only be put together as a
+list and not as a vector (a data frame has vectors for columns and so it
 can't be a vector itself), we need to combine the datasets together in a
 `list()` to be able to reduce them with `full_join()`.
 :::
@@ -650,19 +653,23 @@ creating `summarised_rr_df` and `summarised_actigraph_df`.
 #| filename: "data-raw/mmash.R"
 summarised_rr_df <- rr_df |>
   group_by(user_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 
 summarised_actigraph_df <- actigraph_df |>
   group_by(user_id, day) |>
-  summarise(across(hr, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup() 
+  summarise(
+    across(hr, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 ```
 
 Go into the `doc/learning.qmd` and cut the code used to create the

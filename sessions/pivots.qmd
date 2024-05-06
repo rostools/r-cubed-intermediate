@@ -9,7 +9,6 @@ library(tidyverse)
 source(here("R/functions.R"))
 load(here("_temp/dplyr-joins.RData"))
 load(here("data/mmash.rda"))
-options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the *Workflow* block as we cover the fourth
@@ -221,7 +220,7 @@ mmash |>
     on the `value` column and find the mean and standard deviation (put
     them into a named list like we did previously). Don't forget to use
     `na.rm = TRUE` to exclude missing values.
-3.  Stop the grouping effect with `ungroup()`.
+3.  Stop the grouping effect with `.groups = "drop"` in `summarise()`.
 4.  Run `{styler}` while in the `doc/learning.qmd` file with
     {{< var keybind.styler >}}.
 5.  Render the Quarto file into HTML with {{< var keybind.render >}}.
@@ -237,14 +236,16 @@ mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup()
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  )
 ```
 
 ## Pivot data to wider form
@@ -310,14 +311,16 @@ mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup() |>
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  ) |>
   pivot_wider(names_from = day)
 ```
 
@@ -334,14 +337,16 @@ mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup() |>
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  ) |>
   pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -365,14 +370,16 @@ mmash |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   drop_na(day, gender) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup() |>
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  ) |>
   pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -434,14 +441,16 @@ tidy_summarise_by_day <- function(data) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
     dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(dplyr::across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    )) |>
-    dplyr::ungroup() |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        list(
+          mean = \(x) mean(x, na.rm = TRUE),
+          sd = \(x) sd(x, na.rm = TRUE)
+        )
+      ),
+      .groups = "drop"
+    ) |>
     tidyr::pivot_wider(
       names_from = day,
       values_from = dplyr::starts_with("value")
@@ -488,19 +497,21 @@ that `start_with()` the word `"value"` to 2 digits.
 ```{r rounding-summary-function-output}
 #| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data) {
-   daily_summary <- data |>
+  daily_summary <- data |>
     dplyr::select(-samples) |>
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
     dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(dplyr::across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    )) |>
-    dplyr::ungroup() |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        list(
+          mean = \(x) mean(x, na.rm = TRUE),
+          sd = \(x) sd(x, na.rm = TRUE)
+        )
+      ),
+      .groups = "drop"
+    ) |>
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       \(x) round(x, digits = 2)
@@ -509,7 +520,7 @@ tidy_summarise_by_day <- function(data) {
       names_from = day,
       values_from = dplyr::starts_with("value")
     )
-return(daily_summary)
+  return(daily_summary)
 }
 ```
 
@@ -545,11 +556,13 @@ tidy_summarise_by_day <- function(data, summary_fn) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
     dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(dplyr::across(
-      value,
-      summary_fn
-    )) |>
-    dplyr::ungroup() |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        summary_fn
+      ),
+      .groups = "drop"
+    ) |>
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       \(x) round(x, digits = 2)
@@ -558,7 +571,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       names_from = day,
       values_from = dplyr::starts_with("value")
     )
-return(daily_summary)
+  return(daily_summary)
 }
 ```
 
@@ -625,4 +638,3 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-
