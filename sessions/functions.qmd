@@ -209,7 +209,7 @@ Once we've created that, let's open up the Git Interface with
 {{< var keybind.git >}} and **add and commit** these changes to our
 history.
 
-## Making a function for readr
+## Making a function for importing our data
 
 Now that we have a basic understanding of what a function looks like,
 let's apply it to something we're doing right now: Importing our data.
@@ -255,8 +255,7 @@ user_1_info_data <- read_csv(
     gender = col_character(),
     weight = col_double(),
     height = col_double(),
-    age = col_double(),
-    .delim = ","
+    age = col_double()
   ),
   name_repair = snakecase::to_snake_case
 )
