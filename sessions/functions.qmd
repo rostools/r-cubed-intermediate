@@ -275,8 +275,7 @@ import_user_info <- function() {
       gender = col_character(),
       weight = col_double(),
       height = col_double(),
-      age = col_double(),
-      .delim = ","
+      age = col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -298,8 +297,7 @@ import_user_info <- function(file_path) {
       gender = col_character(),
       weight = col_double(),
       height = col_double(),
-      age = col_double(),
-      .delim = ","
+      age = col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -321,8 +319,7 @@ import_user_info <- function(file_path) {
       gender = col_character(),
       weight = col_double(),
       height = col_double(),
-      age = col_double(),
-      .delim = ","
+      age = col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -357,8 +354,7 @@ import_user_info <- function(file_path) {
       gender = col_character(),
       weight = col_double(),
       height = col_double(),
-      age = col_double(),
-      .delim = ","
+      age = col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -456,8 +452,7 @@ import_saliva <- function(file_path) {
     col_types = cols(
       samples = col_character(),
       cortisol_norm = col_double(),
-      melatonin_norm = col_double(),
-      .delim = ","
+      melatonin_norm = col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -714,8 +709,7 @@ import_user_info <- function(file_path) {
       gender = readr::col_character(),
       weight = readr::col_double(),
       height = readr::col_double(),
-      age = readr::col_double(),
-      .delim = ","
+      age = readr::col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -781,8 +775,7 @@ ___ <- function(___) {
         ___,
         col_select = ___,
         col_types = ___::cols(
-            ___,
-            .delim = ","
+            ___
         ),
         name_repair = snakecase::to_snake_case
     )
@@ -808,8 +801,7 @@ import_saliva <- function(file_path) {
     col_types = readr::cols(
       samples = readr::col_character(),
       cortisol_norm = readr::col_double(),
-      melatonin_norm = readr::col_double(),
-      .delim = ","
+      melatonin_norm = readr::col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -830,8 +822,7 @@ import_rr <- function(file_path) {
       ibi_s = readr::col_double(),
       day = readr::col_double(),
       # Converts to seconds
-      time = readr::col_time(format = ""),
-      .delim = ","
+      time = readr::col_time(format = "")
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -860,8 +851,7 @@ import_actigraph <- function(file_path) {
       inclinometer_lying = readr::col_double(),
       vector_magnitude = readr::col_double(),
       day = readr::col_double(),
-      time = readr::col_time(format = ""),
-      .delim = ","
+      time = readr::col_time(format = "")
     ),
     name_repair = snakecase::to_snake_case
   )
