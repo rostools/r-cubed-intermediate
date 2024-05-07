@@ -129,8 +129,7 @@ pivoting would look like what is shown in @fig-pivot-longer-id.
 called 'name' and 'value', as well as the old 'id' column. Notice how,
 unlike the previous image, the `id` column is excluded when pivotting
 into the data on the
-right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
-width="90%"}
+right.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 disheartened if you can't understand how it works yet. As you practice
@@ -588,6 +587,53 @@ mmash |>
   ))
 ```
 
+While everyting now works, the output names are a bit confusing. For
+example, what does `value_median_1` mean? We can make it more
+understandable by modifying our `pivot_wider()` to define a group name
+and adding a `rename_with()` with an anonymous function to remove
+`value_` from the text.
+
+```{r finalize-summary-function}
+#| filename: "R/functions.R"
+tidy_summarise_by_day <- function(data, summary_fn) {
+  daily_summary <- data |>
+    dplyr::select(-samples) |>
+    tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
+    tidyr::drop_na(day, gender) |>
+    dplyr::group_by(gender, day, name) |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        summary_fn
+      ),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      \(x) round(x, digits = 2)
+    )) |>
+    tidyr::pivot_wider(
+      names_from = day,
+      values_from = dplyr::starts_with("value"),
+      names_glue = "{.value}_day_{day}"
+    ) |>
+    dplyr::rename_with(\(x) stringr::str_remove(x, "value_"))
+}
+```
+
+Lets check our output again.
+
+```{r test-even-tidier-summary}
+#| filename: "doc/learning.qmd"
+mmash |>
+  tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
+mmash |>
+  tidy_summarise_by_day(list(
+    median = \(x) median(x, na.rm = TRUE),
+    max = \(x) max(x, na.rm = TRUE)
+  ))
+```
+
 Before continuing, let's render the Quarto document with
 {{< var keybind.render >}} to check reproducibility.
 
@@ -629,3 +675,4 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+
