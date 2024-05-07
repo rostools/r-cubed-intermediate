@@ -34,11 +34,11 @@ Specific objectives are to:
 
 1.  Explain what functional programming, vectorization, and functionals
     are within R and identify when code is a functional or uses
-    functional programming. Then to apply this knowledge by using the
+    functional programming. Then apply this knowledge using the
     `{purrr}` package.
 2.  Review the split-apply-combine technique and identify how these
     concepts connect to functional programming.
-3.  Apply functional programming to summarizing data and for using the
+3.  Apply functional programming to summarize data using the
     split-apply-combine technique.
 
 ## Functional programming
@@ -236,21 +236,13 @@ for you and for us as instructors). And because we use Git, nothing is
 truly gone so you can always go back to the text later. Next, we restart
 the R session with {{< var keybind.restart-r >}}.
 
-Next, we'll need to add `{purrr}` as a package dependency by going to
-the **Console** and running:
-
-``` {.r filename="Console"}
-usethis::use_package("purrr")
-```
-
-Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
-with `library()`. Before we'll use the `map()` functional, we need to
-get a vector or list of all the dataset files available to us. We will
-return to using the `{fs}` package, which has a function called
-`dir_ls()` that finds files of a certain pattern. So, let's add
-`library(fs)` to the `setup` code chunk. Then, go to the bottom of the
-`doc/learning.qmd` document, create a new header called `## Using map`,
-and create a code chunk below that with {{< var keybind.chunk >}}
+Before we'll use the `map()` functional, we need to get a vector or list
+of all the dataset files available to us. We will return to using the
+`{fs}` package, which has a function called `dir_ls()` that finds files
+of a certain pattern. So, let's add `library(fs)` to the `setup` code
+chunk. Then, go to the bottom of the `doc/learning.qmd` document, create
+a new header called `## Using map`, and create a code chunk below that
+with {{< var keybind.chunk >}}
 
 The `dir_ls()` function takes the path that we want to search
 (`data-raw/mmash/`), uses the argument `regexp` (short for [regular
@@ -281,8 +273,16 @@ user_info_files
 head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
 ```
 
-Alright, we now have all the files ready to give to `map()`. So let's
-try it!
+Alright, we now have all the files ready to give to `map()`. But before
+using it, we'll need to add `{purrr}`, where `map()` comes from as a
+package dependency by going to the **Console** and running:
+
+``` {.r filename="Console"}
+usethis::use_package("purrr")
+```
+
+Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
+with `library()`. So let's try it!
 
 ```{r}
 #| filename: "doc/learning.qmd"
@@ -303,7 +303,7 @@ datasets! But we're missing an important bit of information: The user
 ID. A powerful feature of the `{purrr}` package is that it has other
 functions to make it easier to work with functionals. We know `map()`
 always outputs a list. But what we want is a single data frame at the
-end that also contains the user ID information.
+end that also contains the user ID.
 
 The function that will take a list and convert it into a data frame is
 called `list_rbind()` to bind ("stack") by rows or `list_cbind()` to
@@ -482,11 +482,13 @@ we can move on and open up the `data-raw/mmash.R` script. If not, it
 means that there is an issue in your code and that it won't be
 reproducible.
 
-Before continuing, we'll move the `library(fs)` line to right below the
-`library(here)`. Then, inside `data-raw/mmash.R`, copy and paste the two
-lines of code in the code chunk above to the bottom of the script.
-Afterwards, go the top of the script and right below the `library(fs)`
-code, add these two lines of code, so it looks like this:
+Before continuing, we'll collect our imported packages in the top of the
+script by adding the `library(fs)` line to right below `library(here)`.
+Then, inside `data-raw/mmash.R`, copy and paste the two lines of code
+that creates the `user_info_df` and `saliva_df` to the bottom of the
+script (i.e., the two lines in the code chunk above). Afterwards, go the
+top of the script and right below the `library(fs)` code, add these two
+lines of code, so it looks like this:
 
 ``` {.r filename="data-raw/mmash.R"}
 library(here)
@@ -519,30 +521,23 @@ technique, which we covered in the beginner R course. The method is:
 3.  Combine the results to present them together (e.g. into a data frame
     that you can use to make a plot or table).
 
-So when you split data into multiple groups, you make a *vector* that
-you can then apply (i.e. using the *map* functional) some statistical
-technique to each group through *vectorization*. This technique works
-really well for a range of tasks, including for our task of summarizing
-some of the MMASH data so we can merge it all into one dataset.
+So when you split data into multiple groups, you create a list (or a
+*vector*) that you can then use (with the *map* functional) to apply a
+statistical technique to each group through *vectorization*. This
+technique works really well for a range of tasks, including for our task
+of summarizing some of the MMASH data so we can merge it all into one
+dataset.
 
 ## Summarising data through functionals {#sec-summarise-with-functionals}
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Before starting this section, ask how many have used the pipe before. If
-everyone has, then move on. If some haven't, very briefly explain it,
-but **do not** use much time on it since we will be using it shortly and
-they will see how it works then. We covered this in the introduction
-course, so we should not cover it again here.
-:::
 
 Functionals and vectorization are integral components of how R works and
 they appear throughout many of R's functions and packages. They are
 particularly used throughout the `{tidyverse}` packages like `{dplyr}`.
 Let's get into some more advanced features of `{dplyr}` functions that
-work as functionals. Before we continue, re-run the code for getting
-`user_info_df` since you had restarted the R session previously.
+work as functionals.
+
+Before we continue, re-run the code for getting `user_info_df` since you
+had restarted the R session previously.
 
 Since we're going to use `{dplyr}`, we need to add it as a dependency by
 typing this in the **Console**:
@@ -557,9 +552,10 @@ the [Data Management and
 Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
 session of the beginner course). The common usage of these verbs is
 through acting on and directly using the column names (e.g. without `"`
-quotes around the column name). But many `{dplyr}` verbs can also take
-functions as input, especially when using the column selection helpers
-from the `{tidyselect}` package.
+quotes around the column name like with
+`saliva_df |> select(cortisol_norm)`). But many `{dplyr}` verbs can also
+take functions as input, especially when using the column selection
+helpers from the `{tidyselect}` package.
 
 Likewise, with functions like `summarise()`, if you want to for example
 calculate the mean of cortisol in the saliva dataset, you would usually
@@ -591,8 +587,11 @@ saliva_df |>
 
 But instead, there is the `across()` function that works like `map()`
 and allows you to calculate the mean across which ever columns you want.
-In many ways, `across()` is a duplicate of `map()`, particularly in the
-arguments you give it.
+In many ways, `across()` is similar to `map()`, particularly in the
+arguments you give it and in the sense that it is a functional. But they
+are used in different settings: `across()` works well with columns
+within a dataframe and within a `mutate()` or `summarise()`, while
+`map()` is more generic.
 
 ::: callout-note
 ## Reading task: \~2 minutes
@@ -727,24 +726,13 @@ way, we use the split-apply-combine technique. Let's first summarise by
 taking the mean of `ibi_s` (which is the inter-beat interval in
 seconds).
 
-::: {.callout-note appearance="default"}
-By default, using `group_by()` continues the grouping effect of later
-code, like `mutate()` and `summarise()`. Normally we would end a
-`group_by()` by using `ungroup()`, especially if we want to do multiple
-wrangling functions on the same grouping. Because sometimes, especially
-after using `summarise()`, we don't need to keep the grouping. So we can
-use the `.groups = "drop"` argument in `summarise()` to end the
-grouping.
-:::
-
 ```{r}
 #| filename: "doc/learning.qmd"
 #| eval: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean)),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = mean))
   )
 ```
 
@@ -753,8 +741,7 @@ rr_df |>
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean)),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = mean))
   ) |>
   trim_filepath_for_book()
 ```
@@ -767,8 +754,7 @@ While there are no missing values here, let's add the argument
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))
   )
 ```
 
@@ -776,8 +762,7 @@ rr_df |>
 #| echo: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))),
-    .groups = "drop"
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))
   ) |>
   trim_filepath_for_book()
 ```
@@ -794,9 +779,9 @@ summarised_rr_df <- rr_df |>
     across(ibi_s, list(
       mean = \(x) mean(x, na.rm = TRUE),
       sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
+    ))
   )
+  
 summarised_rr_df
 ```
 
@@ -808,9 +793,9 @@ summarised_rr_df <- rr_df |>
     across(ibi_s, list(
       mean = \(x) mean(x, na.rm = TRUE),
       sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
+    ))
   )
+
 summarised_rr_df |>
   trim_filepath_for_book()
 ```
@@ -852,6 +837,16 @@ Ungrouping the data with the `.groups = "drop"` in the `summarise()`
 function does not provide any visual indication of what is happening.
 However, in the background, it removes certain metadata that the
 `group_by()` function added.
+
+::: {.callout-note appearance="default"}
+By default, using `group_by()` continues the grouping effect of later
+code, like `mutate()` and `summarise()`. Normally we would end a
+`group_by()` by using `ungroup()`, especially if we want to do multiple
+wrangling functions on the same grouping. Because sometimes, especially
+after using `summarise()`, we don't need to keep the grouping. So we can
+use the `.groups = "drop"` argument in `summarise()` to end the
+grouping.
+:::
 
 Before continuing, let's run `{styler}` with {{< var keybind.styler >}}
 and knit the Quarto document with {{< var keybind.render >}} to confirm
@@ -976,3 +971,4 @@ changes to the Git history with {{< var keybind.git >}}.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
+
