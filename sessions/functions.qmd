@@ -695,7 +695,7 @@ it finds first - which isn't always the function you meant to use. We
 also do this step at the end of making the function because doing it
 while we create it can be quite tedious.
 
-::: callout-tip
+::: {.callout-tip appearance="default"}
 If you don't know what package a function comes from when you need to
 append the package when using `::`, you can find out what the package is
 by using the help documentation `?functionname` (can also be done by
