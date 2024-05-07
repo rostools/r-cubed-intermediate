@@ -82,18 +82,19 @@ which is usually quite difficult to grasp for those new to it.
 
 Now that we have the final dataset to work with, we want to explore it a
 bit with some simple descriptive statistics. One extremely useful and
-powerful tool to summarizing data is by "pivoting" your data. Pivoting
-is when you convert data between longer forms (more rows) and wider
-forms (more columns). The `{tidyr}` package within `{tidyverse}`
-contains two wonderful functions for pivoting: `pivot_longer()` and
-`pivot_wider()`. There is a well written documentation on pivoting in
-the [tidyr website](https://tidyr.tidyverse.org/articles/pivot.html)
-that can explain more about it. The first thing we'll use, and probably
-the more commonly used in general, is `pivot_longer()`. This function is
-commonly used because entering data in the wide form is easier and more
-time efficient than entering data in long form. For instance, if you
-were measuring glucose values over time in participants, you might enter
-data in like this:
+powerful tool to summarizing as well as processing/wrangling data is by
+"pivoting" your data. Pivoting is when you convert data between longer
+forms (more rows) and wider forms (more columns). The `{tidyr}` package
+within `{tidyverse}` contains two wonderful functions for pivoting:
+`pivot_longer()` and `pivot_wider()`. There is a well written
+documentation on pivoting in the [tidyr
+website](https://tidyr.tidyverse.org/articles/pivot.html) that can
+explain more about it. The first thing we'll use, and probably the more
+commonly used in general, is `pivot_longer()`. This function is commonly
+used because entering data in the wide form is easier and more time
+efficient than entering data in long form. For instance, if you were
+measuring glucose values over time in participants, you might enter data
+in like this:
 
 ```{r table-example-wide}
 #| echo: false
@@ -129,7 +130,8 @@ pivoting would look like what is shown in @fig-pivot-longer-id.
 called 'name' and 'value', as well as the old 'id' column. Notice how,
 unlike the previous image, the `id` column is excluded when pivotting
 into the data on the
-right.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
+right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
+width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 disheartened if you can't understand how it works yet. As you practice
@@ -596,11 +598,21 @@ mmash |>
   ))
 ```
 
-While everyting now works, the column names are a bit confusing. For
-example, what does `value_median_1` mean? We can make it more explicit
-by modifying our `pivot_wider()` to define a group name and performing a
-`rename_with()` (with an anonymous function) to remove the `value_` from
-the text.
+While everything now works, the column names are not very clear. For
+example, what does `value_median_1` or `1` mean? It would be nice if it
+said something like `median_day_1` or `day_1`. And with `pivot_wider()`,
+we can do that with the `name_glue` argument! With this argument, we can
+write a custom variable naming scheme that involves combining the use of
+`{}` and a special `{.value}` keyword within a string in the argument to
+create these custom column names in the wider dataset. So this would
+look like `{.value}_day_{day}`, where `{.value}` refers to the values of
+the column(s) used in `values_from` and the `{day}` refers to the column
+used in `names_from`.
+
+We can then pipe the output to `rename_with()` from the `{dplyr}`
+package, which acts like `map()` (but for renaming columns) and can take
+an anonymous function. We can use this to then remove the `value_` from
+the start of the column name.
 
 ```{r finalize-summary-function}
 #| filename: "R/functions.R"
@@ -627,15 +639,16 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       names_glue = "{.value}_day_{day}"
     ) |>
     dplyr::rename_with(\(x) stringr::str_remove(x, "value_"))
+  return(daily_summary)
 }
 ```
 
-Lets check our output again.
+Let's see how it looks by rendering the `doc/learning.qmd` file again
+with {{< var keybind.render >}}. One of the output tables show now look
+something like:
 
 ```{r test-even-tidier-summary}
-#| filename: "doc/learning.qmd"
-mmash |>
-  tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
+#| echo: false
 mmash |>
   tidy_summarise_by_day(list(
     median = \(x) median(x, na.rm = TRUE),
@@ -643,8 +656,7 @@ mmash |>
   ))
 ```
 
-Before continuing, let's render the Quarto document with
-{{< var keybind.render >}} to check reproducibility.
+Nice!! :grin: :tada:
 
 ## Making prettier output in Quarto
 
@@ -684,3 +696,4 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+
