@@ -349,8 +349,9 @@ the Git history, by using {{< var keybind.git >}}
 
 > Time: \~30 minutes.
 
-We need to do basically the exact same thing for the `saliva.csv`,
-`RR.csv`, and `Actigraph.csv` datasets, following this format:
+We *eventually* (but not yet) want to do the exact same thing for
+importing the `saliva.csv`, `RR.csv`, and `Actigraph.csv` datasets,
+mimicking the code:
 
 ```{r}
 #| eval: false
@@ -362,51 +363,20 @@ user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
 
-For importing the other datasets, we have to modify the code in two
-locations to get this code to import the other datasets: at the
-`regexp =` argument and at `import_user_info`. This is the perfect
-chance to make a function that you can use for other purposes and that
-is itself a functional (since it takes a function as an input). So
-inside `doc/learning.qmd`, convert this bit of code into a function that
-works to import the other three datasets.
+Notice that if we wanted to import one of the other datasets, we could
+copy the code above and make changes at two locations to import the data
+files: at the `regexp =` argument in `dir_ls()` and at the
+`import_user_info` location within `map()`.
 
-1.  Create a new header `## Exercise: Map on the other datasets` at the
-    bottom of the document.
-2.  Create a new code chunk below it, using {{< var keybind.chunk >}}.
-3.  Repeat the steps you've taken previously to create a new function:
-    -   Wrap the code with `function() { ... }`
-    -   Name the function `import_multiple_files`
-    -   Within `function()`, set two new arguments called `file_pattern`
-        and `import_function`.
-    -   Within the code, replace and re-write `"user_info.csv"` with
-        `file_pattern` (this is *without* quotes around it, otherwise R
-        will interpret it as the pattern to look for in the `regexp`
-        argument, with the value `"file_pattern"` and not as the value
-        from `file_pattern` argument we created for our function) and
-        `import_user_info` with `import_function` (also *without*
-        quotes).
-    -   Create generic intermediate objects (instead of
-        `user_info_files` and `user_info_df`). So, replace and re-write
-        `user_info_files` with `data_files` and `user_info_df` with
-        `combined_data`.
-    -   Use `return(combined_data)` at the end of the function to output
-        the imported data frame.
-    -   Create and write Roxygen documentation to describe the new
-        function by using {{< var keybind.roxygen >}}.
-    -   Append `packagename::` to the individual functions (there are
-        three packages used: `{fs}`, `{here}`, and `{purrr}`)
-    -   Run it and check that it works on `saliva.csv`.
-4.  After it works, cut and paste the function into the `R/functions.R`
-    file. Then restart the R session with {{< var keybind.restart-r >}},
-    run the line with `source(here("R/functions.R"))` or with
-    {{< var keybind.source >}}, and test the code out in the
-    **Console**.
-5.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.styler >}}.
-6.  Once done, **add** the changes you've made and **commit** them to
-    the Git history, using {{< var keybind.git >}}.
+Since we **do not** want to repeat ourselves, this is a perfect chance
+to convert this code above into a function, so we can use this new
+function to import the other datasets without repeating ourselves.
 
-Use this code as a guide to help complete this exercise:
+So inside `doc/learning.qmd`, convert this bit of code into a function
+that works to import the other three datasets.
+
+Complete the tasks below and use this below code as a guide to help
+complete this exercise:
 
 ``` {.r filename="doc/learning.qmd"}
 ___ <- ___(___, ___) {
@@ -420,6 +390,45 @@ ___ <- ___(___, ___) {
   ___(___)
 }
 ```
+
+1.  Create a new header `## Exercise: Map on the other datasets` at the
+    bottom of the document.
+2.  Create a new code chunk below it, using {{< var keybind.chunk >}}.
+3.  Use the template code above and the `user_info` code at the start of
+    this exercise section, re-write the code to be able to repeat the
+    steps you've taken previously to be able to import the other three
+    datasets *using a newly created function*.
+    -   Name the function `import_multiple_files`
+    -   Use the `function() { ... }` code to create a new function
+    -   Within `function()`, set two new arguments called `file_pattern`
+        and `import_function`.
+    -   Within the code, use the `user_info` code above as a guide,
+        re-write `"user_info.csv"` with `file_pattern` (this is
+        *without* quotes around it, otherwise R will interpret it as the
+        pattern to look for in the `regexp` argument, with the value
+        `"file_pattern"` and not as the value from `file_pattern`
+        argument we created for our function) and `import_user_info`
+        with `import_function` (also *without* quotes).
+    -   Create generic intermediate objects. So, change the code
+        `user_info_files` with `data_files` and the code `user_info_df`
+        with `combined_data`.
+    -   Use `return(combined_data)` at the end of the function to output
+        the imported data frame.
+    -   Create and write Roxygen documentation to describe the new
+        function by using {{< var keybind.roxygen >}}.
+    -   Append `packagename::` to the individual functions (there are
+        three packages used: `{fs}`, `{here}`, and `{purrr}`)
+    -   Run it and check that it works on `saliva.csv` by using
+        `import_multiple_files("saliva.csv", import_saliva)`.
+4.  After it works, cut and paste the function into the `R/functions.R`
+    file. Then restart the R session with {{< var keybind.restart-r >}},
+    run the line with `source(here("R/functions.R"))` or with
+    {{< var keybind.source >}}, and test the code out in the
+    **Console**.
+5.  Run `{styler}` while in the `R/functions.R` file with
+    {{< var keybind.styler >}}.
+6.  Once done, **add** the changes you've made and **commit** them to
+    the Git history, using {{< var keybind.git >}}.
 
 ```{r solution-import-multiple-files}
 #| eval: true
