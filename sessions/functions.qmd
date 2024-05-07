@@ -859,17 +859,6 @@ import_actigraph <- function(file_path) {
 }
 ```
 
-## Exercise: Brainstorm and discuss why and what you could make as a function
-
-> Time: 15 minutes.
-
-You've learned the basics of making your own, custom function. Now, as a
-group, brainstorm and discuss some ways that you might make functions in
-your own work to help reduce repetition. What type of code might you
-make as a function for your own project? Do you think others, maybe in
-your research group, might use this function too? Afterwards, all the
-groups will briefly share what they thought of.
-
 ## Summary
 
 ::: {.callout-note appearance="minimal" collapse="true"}
