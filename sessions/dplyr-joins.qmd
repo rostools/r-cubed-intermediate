@@ -211,6 +211,24 @@ and extracts the user ID from it. **First step**: While in the
 `doc/learning.qmd` file, convert this code into a function, using the
 same process you've done previously.
 
+Use this code as a guide to help complete the exercise tasks below:
+
+``` {.r filename="doc/learning.qmd"}
+extract_user_id <- ___(___) {
+    ___ <- ___ |>
+        ___mutate(
+            user_id = ___str_extract(file_path_id,
+                                     "user_[0-9][0-9]?"),
+            .before = file_path_id
+        ) |>
+        ___select(-file_path_id)
+    return(___)
+}
+
+# This tests that it works:
+# extract_user_id(user_info_df)
+```
+
 1.  Call the new function `extract_user_id` and add one argument called
     `imported_data`.
     -   Remember to output the code into an object and `return()` it at
@@ -231,32 +249,6 @@ same process you've done previously.
     reproducible with {{< var keybind.render >}}.
 6.  Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
-
-::: callout-tip
-If you don't know what package a function comes from when you need to
-append the package when using `::`, you can find out what the package is
-by using the help documentation `?functionname` (can also be done by
-pressing F1 when the cursor is over the function). The package name is
-at the very top left corner, surrounded by `{ }`.
-:::
-
-Use this code as a guide to help complete this exercise:
-
-``` {.r filename="doc/learning.qmd"}
-extract_user_id <- ___(___) {
-    ___ <- ___ |>
-        ___mutate(
-            user_id = ___str_extract(file_path_id,
-                                     "user_[0-9][0-9]?"),
-            .before = file_path_id
-        ) |>
-        ___select(-file_path_id)
-    return(___)
-}
-
-# This tests that it works:
-# extract_user_id(user_info_df)
-```
 
 ```{r solution-user-id-extract}
 #| eval: true

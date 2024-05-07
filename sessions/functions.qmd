@@ -694,6 +694,14 @@ state which package the function is from, R will use the function that
 it finds first - which isn't always the function you meant to use. We
 also do this step at the end of making the function because doing it
 while we create it can be quite tedious.
+
+::: callout-tip
+If you don't know what package a function comes from when you need to
+append the package when using `::`, you can find out what the package is
+by using the help documentation `?functionname` (can also be done by
+pressing F1 when the cursor is over the function). The package name is
+at the very top left corner, surrounded by `{ }`.
+:::
 :::
 
 Alright, let's go into `R/functions.R` and add `readr::` to each of the
