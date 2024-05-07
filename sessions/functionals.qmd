@@ -741,8 +741,7 @@ seconds).
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean))
-  )
+  summarise(across(ibi_s, list(mean = mean)))
 ```
 
 ```{r admin-rr-summarised-for-book}
@@ -750,8 +749,7 @@ rr_df |>
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean))
-  ) |>
+  summarise(across(ibi_s, list(mean = mean))) |>
   trim_filepath_for_book()
 ```
 
@@ -763,16 +761,14 @@ While there are no missing values here, let's add the argument
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))
-  )
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))))
 ```
 
 ```{r admin-rr-summarise-na-rm-for-book}
 #| echo: false
 rr_df |>
   group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))
-  ) |>
+  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))) |>
   trim_filepath_for_book()
 ```
 
@@ -980,4 +976,3 @@ changes to the Git history with {{< var keybind.git >}}.
 rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
-
