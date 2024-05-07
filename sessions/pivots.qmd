@@ -415,15 +415,6 @@ the code we just wrote above into a function.
 9.  Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
 
-Use this code to refresh your memory on how functions are structured and
-to use as a starting point:
-
-``` r
-___ <- function(___) {
-    
-}
-```
-
 ```{r solution-summarise-function}
 #| eval: true
 #| output: false
