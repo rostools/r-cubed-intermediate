@@ -596,11 +596,11 @@ mmash |>
   ))
 ```
 
-While everyting now works, the output names are a bit confusing. For
-example, what does `value_median_1` mean? We can make it more
-understandable by modifying our `pivot_wider()` to define a group name
-and adding a `rename_with()` with an anonymous function to remove
-`value_` from the text.
+While everyting now works, the column names are a bit confusing. For
+example, what does `value_median_1` mean? We can make it more explicit
+by modifying our `pivot_wider()` to define a group name and performing a
+`rename_with()` (with an anonymous function) to remove the `value_` from
+the text.
 
 ```{r finalize-summary-function}
 #| filename: "R/functions.R"
@@ -684,4 +684,3 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-
