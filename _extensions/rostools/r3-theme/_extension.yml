@@ -4,6 +4,10 @@ version: 1.0.6
 quarto-required: ">=1.5.0"
 contributes:
   format:
+    common:
+      shortcodes:
+        - debruine/glossary
+        - quarto-ext/fontawesome
     html:
       highlight-style: a11y
       fig-dpi: 72
@@ -34,10 +38,14 @@ contributes:
       execute: project
 
     book:
+      navbar:
+        logo: "favicon.ico"
+        logo-alt: "Graphic of a capital R with a 3 as a superscript."
+        search: true
+        pinned: true
       favicon: "favicon.ico"
       repo-branch: main
       repo-actions: [edit, issue, source]
-      search: true
 
     csl: vancouver.csl
 
@@ -49,3 +57,8 @@ contributes:
 
     execute:
       freeze: auto
+
+    knitr:
+      opts_chunk:
+        R.options:
+          width: 72
