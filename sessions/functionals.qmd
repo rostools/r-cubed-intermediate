@@ -786,7 +786,7 @@ summarised_rr_df <- rr_df |>
       sd = \(x) sd(x, na.rm = TRUE)
     ))
   )
-  
+
 summarised_rr_df
 ```
 

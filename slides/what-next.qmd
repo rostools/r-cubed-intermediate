@@ -48,47 +48,48 @@ could be reproduced. Figure shows results of some "meta" studies: 1)
 #| fig-height: 4
 library(tidyverse)
 tribble(
-    ~study, ~text, ~value, ~total,
-    1,"Data available", 41, 62,
-    1,"Code available", 37, 62,
-    1,"Could reproduce", 21, 62,
-    2,"Data available", 2, 27,
-    2,"Code available", 1, 27,
-    2,"Could reproduce", 0, 27,
-    3,"Data available", 14, 57,
-    3,"Code available", 1, 57,
-    3,"Could reproduce", 7, 57,
-) %>% 
-    mutate(
-        study = fct_recode(
-            as_factor(study),
-            "Registered Reports\nin Psychology (n=62) [1]" = "1",
-            "Systematic review of\nmetabolomics studies\n(n=27) [2]" = "2",
-            "Reproducing longitudinal\nanalyses in PLOS ONE\n(n=57) [3]" = "3"
-        ),
-        text = fct_rev(fct_inorder(text)),
-        value = round((value / total) * 100, 0)
-    ) %>% 
-    ggplot(aes(x = text, y = value, label = paste0(value, "%"))) +
-    geom_col(fill = "gray20", width = 0.7) +
-    geom_text(nudge_y = 10) +
-    theme_minimal() +
-    coord_flip(ylim = c(0, 100)) +
-    facet_grid(cols = vars(study), scales = "free") +
-    labs(y = "Percent of articles",
-         title = "") +
-    theme(
-      
-        text = element_text(size = 16),
-        axis.title.y = element_blank(),
-        panel.grid = element_blank(),
-        axis.text.x = element_blank(),
-        axis.title.x = element_text(colour = "grey20", size = 10),
-        axis.line = element_blank(),
-        panel.border = element_blank(),
-        panel.background = element_rect(fill = 'transparent', colour = NA),
-        plot.background = element_rect(fill = 'transparent', colour = NA)
-    )
+  ~study, ~text, ~value, ~total,
+  1, "Data available", 41, 62,
+  1, "Code available", 37, 62,
+  1, "Could reproduce", 21, 62,
+  2, "Data available", 2, 27,
+  2, "Code available", 1, 27,
+  2, "Could reproduce", 0, 27,
+  3, "Data available", 14, 57,
+  3, "Code available", 1, 57,
+  3, "Could reproduce", 7, 57,
+) %>%
+  mutate(
+    study = fct_recode(
+      as_factor(study),
+      "Registered Reports\nin Psychology (n=62) [1]" = "1",
+      "Systematic review of\nmetabolomics studies\n(n=27) [2]" = "2",
+      "Reproducing longitudinal\nanalyses in PLOS ONE\n(n=57) [3]" = "3"
+    ),
+    text = fct_rev(fct_inorder(text)),
+    value = round((value / total) * 100, 0)
+  ) %>%
+  ggplot(aes(x = text, y = value, label = paste0(value, "%"))) +
+  geom_col(fill = "gray20", width = 0.7) +
+  geom_text(nudge_y = 10) +
+  theme_minimal() +
+  coord_flip(ylim = c(0, 100)) +
+  facet_grid(cols = vars(study), scales = "free") +
+  labs(
+    y = "Percent of articles",
+    title = ""
+  ) +
+  theme(
+    text = element_text(size = 16),
+    axis.title.y = element_blank(),
+    panel.grid = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_text(colour = "grey20", size = 10),
+    axis.line = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_rect(fill = "transparent", colour = NA),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  )
 ```
 
 ::: notes
