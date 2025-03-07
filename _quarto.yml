@@ -50,7 +50,6 @@ format:
   r3-theme-html:
     doi: "10.5281/zenodo.4061900"
     include-before-body:
-      - "includes/contribute.html"
       - "includes/site-counter.html"
 
 csl: includes/vancouver.csl
@@ -66,7 +65,4 @@ editor:
 execute:
   # Need to show warnings for many bits of code as part of learning.
   warning: true
-  # Normally using freeze is good, but here, later sessions depend on
-  # temporary outputs from earlier sessions. And using freeze makes this
-  # tricky.
-  freeze: false
+
