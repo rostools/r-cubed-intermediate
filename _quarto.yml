@@ -2,9 +2,9 @@ project:
   type: r3-theme
   pre-render:
     - mkdir -p _temp
-    - bash _build-slides.sh
-  # post-render:
-  #   - rm -rf data-raw/mmash
+    - cp common.R .Rprofile
+  post-render:
+    - rm .Rprofile
   resources:
     - slides/*.html
 
