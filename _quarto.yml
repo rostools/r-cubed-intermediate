@@ -3,6 +3,7 @@ project:
   pre-render:
     - mkdir -p _temp
     - cp common.R .Rprofile
+    - quarto render slides/*.qmd
   post-render:
     - rm .Rprofile
   resources:

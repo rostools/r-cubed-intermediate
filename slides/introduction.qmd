@@ -1,8 +1,8 @@
 ---
 search: false
-# Relative to main project
-bibliography: includes/references.bib
-csl: includes/vancouver.csl
+format: r3-theme-revealjs
+bibliography: "..includes/references.bib"
+csl: "../includes/vancouver.csl"
 ---
 
 # Welcome to the Intermediate R^3^ course!
