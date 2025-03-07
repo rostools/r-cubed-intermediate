@@ -1,20 +1,31 @@
+# RStudio and R files
+.Rbuildignore
 .Rproj.user
 .Rhistory
-.RData
-.Ruserdata
-.DS_Store
-public/*
-*_files/*
-*.rds
-.Rbuildignore
-*.bib.sav
-r-cubed-intermediate.Rmd
-data-raw/mmash/
-data-raw/mmash.R
+.Rdata
+
+# Development files and folders
 _ignore
-R/_ignore.R
-slides/libs
-slides/*.html
+bin/
+dev/
+
+# Temporary files
+*.tmp
+
+# Authentication files
+.httr-oauth
+
+# MacOS
+.DS_Store
+
+# Quarto
 /.quarto/
-_temp
+
+# Website generation
+_site
+_book
+public
+site
+slides/*.html
 _freeze
+

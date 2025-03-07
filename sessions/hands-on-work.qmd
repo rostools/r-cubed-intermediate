@@ -104,8 +104,7 @@ import_activity <- function(file_path) {
       activity = readr::col_double(),
       start = readr::col_time(format = ""),
       end = readr::col_time(format = ""),
-      day = readr::col_double(),
-      .delim = ","
+      day = readr::col_double()
     ),
     name_repair = snakecase::to_snake_case
   )
@@ -133,7 +132,7 @@ tasks to clean the data up more.
     ```{r}
     #| filename: "data-raw/mmash.R"
     #| eval: false
-    mmash |> 
+    mmash |>
       filter(user_id == "user_21")
     ```
 
@@ -219,5 +218,5 @@ own):
     [PhysioNet](https://physionet.org/about/database/#open) or
     [Zenodo](https://zenodo.org/search?page=1&size=20&q=diabetes&access_right=open&file_type=xlsx&file_type=csv&file_type=zip&type=dataset#).
 -   Work on the game ["Murder
-    Mystery"](https://andersaskeland.github.io/R-murder-mystery) (which
+    Mystery"](https://r-murder-mystery.askeland.me/) (which
     Anders Askeland converted into a game using R).

@@ -3,6 +3,11 @@ search: false
 # Relative to main project
 bibliography: includes/references.bib
 csl: includes/vancouver.csl
+knitr:
+  opts_chunk:
+    dev: svg
+    dev.args:
+      bg: "transparent"
 ---
 
 # What next? Reproducibility in research
@@ -27,13 +32,78 @@ understand the logic of what you are doing, even if they can't directly
 reproduce the results.
 :::
 
-# Code sharing is abysmal across health sciences [@Considine2017a, @Rauh2019, @Evans2019, @Rauh2019a, @Hughes2019, @Peng2006a, @Seibold2021]
+## Few share code within health sciences [@Considine2017a, @Rauh2019, @Evans2019, @Rauh2019a, @Hughes2019, @Peng2006a, @Seibold2021]
+
+::: aside
+Few studies on extent of code and data availability, and whether study
+could be reproduced. Figure shows results of some "meta" studies: 1)
+[10.1177/2515245920918872](https://doi.org/10.1177/2515245920918872), 2)
+[10.1007/s11306-017-1299-3](https://link.springer.com/article/10.1007/s11306-017-1299-3),
+3)
+[10.1371/journal.pone.0251194](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0251194).
+:::
+
+```{r sharing}
+#| fig-width: 10
+#| fig-height: 4
+library(tidyverse)
+tribble(
+    ~study, ~text, ~value, ~total,
+    1,"Data available", 41, 62,
+    1,"Code available", 37, 62,
+    1,"Could reproduce", 21, 62,
+    2,"Data available", 2, 27,
+    2,"Code available", 1, 27,
+    2,"Could reproduce", 0, 27,
+    3,"Data available", 14, 57,
+    3,"Code available", 1, 57,
+    3,"Could reproduce", 7, 57,
+) %>% 
+    mutate(
+        study = fct_recode(
+            as_factor(study),
+            "Registered Reports\nin Psychology (n=62) [1]" = "1",
+            "Systematic review of\nmetabolomics studies\n(n=27) [2]" = "2",
+            "Reproducing longitudinal\nanalyses in PLOS ONE\n(n=57) [3]" = "3"
+        ),
+        text = fct_rev(fct_inorder(text)),
+        value = round((value / total) * 100, 0)
+    ) %>% 
+    ggplot(aes(x = text, y = value, label = paste0(value, "%"))) +
+    geom_col(fill = "gray20", width = 0.7) +
+    geom_text(nudge_y = 10) +
+    theme_minimal() +
+    coord_flip(ylim = c(0, 100)) +
+    facet_grid(cols = vars(study), scales = "free") +
+    labs(y = "Percent of articles",
+         title = "") +
+    theme(
+      
+        text = element_text(size = 16),
+        axis.title.y = element_blank(),
+        panel.grid = element_blank(),
+        axis.text.x = element_blank(),
+        axis.title.x = element_text(colour = "grey20", size = 10),
+        axis.line = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_rect(fill = 'transparent', colour = NA),
+        plot.background = element_rect(fill = 'transparent', colour = NA)
+    )
+```
+
+::: notes
+-   Estimating the reproducibility of scientific studies is currently
+    very difficult because of:
+    -   Nearly non-existent publishing of code/data
+    -   General lack of awareness of and training in it
+:::
 
 ## How can we check reproducibility if no code is given? {.center}
 
 Possible role models as research groups: [Jeff
 Leek](http://jtleek.com/codedata.html) and [Ben
-Marwick](https://faculty.washington.edu/bmarwick/#publications).
+Marwick](https://faculty.washington.edu/bmarwick/#publications). Or
+[Steno Aarhus' GitHub account](https://github.com/steno-aarhus/)!
 
 ::: notes
 But that doesn't even matter, because we can't have reproducibility if
@@ -53,85 +123,25 @@ very very few people who do. And this isn't a niche, this is a gaping
 hole in our modern scientific process. A huge hole.
 :::
 
-# Not going to lie, there are very strong...
+# Multiple benefits, from personal to philosophical
 
-## Institutional barriers
+## It's a core principle of the scientific method: Verification {.center}
 
-. . .
+## Learning more from others: For PhD students to senior researchers {.center}
 
--   Lack of adequate awareness, support, infrastructure, training
+## More exposure and visibility: More output to show and be seen {.center}
 
-. . .
+## So few are doing open science, this is a great niche! {.center}
 
--   Research culture values publications over all else
+## Easier and quicker collaboration (aside from the learning part) {.center}
 
-. . .
-
--   More traditional academics don't understand or resist change
-
-. . .
-
--   'Business as usual' is easier
+## Finding better opportunities outside of academia {.center}
 
 ::: notes
-You will encounter a lot of resistance, a lot of barriers and hardship.
-
-At the institutional level, there is no real awareness of this, no
-support or infrastructure. You're basically doing this on your own.
-Which probably isn't that uncommon anyway.
-
-Research culture and incentives pretty much only care about publishing
-journal articles. Creating software tools, meh. Making teaching
-materials to help other researchers, meh. Communicating your science to
-the public, meh. Doing actual science that might take years and not lead
-to any "hard papers", meh.
-
-We have a large portion of traditional academics who have benefitted
-from and succeeded in this system and are invested in continuing it.
-Probably because they don't understand the scope of the problem or just
-resist change.
-
-We have a system that favours each individual person repeating the same
-mistakes that others make because the system doesn't allow for us to
-take the time to create tools and infrastructure that helps ourselves
-and others out.
-
-Because business as usual is the easiest way in the short term. Our
-current scientific culture is just not prepared for this, for the rising
-modern analytic and computational era.
-:::
-
-## ...and personal barriers
-
--   Fear of:
-    -   Fear of being scooped or ideas being stolen
-    -   Not being credited for ideas
-    -   Errors and public humiliation
-    -   Risk to reputation
-
-. . .
-
--   Need to constantly stay updated
-
--   Finding better opportunities outside of academia
-
-::: aside
-More detail on barriers here: [Tennant
-(2017)](https://doi.org/10.6084/m9.figshare.5383711.v1)
-:::
-
-::: notes
-And there aren't just institutional barriers. We as researchers have
-fears of being scooped, of embarrassment and humiliation for your
-methods being *gasp* wrong. Which is actually just part of science.
-
-You also have to constantly stay updated, and that can be tiring.
-
-And the last barrier, which may actually be a benefit, is that one
-reason you don't see a lot of researchers sharing their code or being
-more reproducible is.. they end up getting picked up by industry and
-paid really well or decide to leave academia for the reasons I
-mentioned.
+And the last one is that one reason you don't see a lot of researchers
+sharing their code or being more reproducible is.. they end up getting
+picked up by industry and paid really well or decide to leave academia
+because of the barriers.
 
 Just as an example, I found a Norwegian group who had a really
 inefficient workflow and decided to re-build their workflow to make use
@@ -142,72 +152,110 @@ software engineers, probably making a lot of money and having
 potentially a less stressful life.
 :::
 
-# So... what you can do right now?
-
-## Easiest thing: Start sharing your code {.center}
+# Strong instutional barriers, such as ... {.center}
 
 ::: notes
-If you do nothing else: share your code.
-
-If its ugly, that's fine! The point is you start and that you get more
-comfortable doing it until it becomes second nature to share and in the
-process, your code gets better because you know someone might look at
-your code.
+You will encounter a lot of resistance, a lot of barriers and hardship.
 :::
 
-## How do you share?
-
--   [GitHub](https://github.com/)
-
--   [Zenodo](https://zenodo.org/)
-
--   [figshare](https://figshare.com/)
-
--   [Open Science Framework](https://osf.io/)
+## Lack of adequate awareness, support, infrastructure, training {.center}
 
 ::: notes
-How do you share? Put your code up on any of these sites. I prefer a
-combination of GitHub and Zenodo, but the others are also quite good as
-well.
+At the institutional level, there is no real awareness of this, no
+support or infrastructure. You're basically doing this on your own.
+Which probably isn't that uncommon anyway.
 
-When do you share? I say right away. As soon as I have an analysis
-project, my code is up on either GitHub or GitLab (another service like
-GitHub). Alternatively, you can upload it when you also finish your
-manuscript.
+Your organization is moving in the right direction to resolve this
+issue, but actions tell more than words.
 :::
 
-## What else can you do?
+## Research culture values publications over all else {.center}
 
--   Find or start building a community of people using R
-
--   Start doing code reviews within your group
-
--   Start new projects or collaborations by:
-
-    -   Using R, Quarto / R Markdown, Git, and GitHub
-    -   Aiming to share and be reproducible
-
-::: aside
-Code reviews: Reviewing each others code like you would review a
-manuscript.
-:::
+What would you spend your time on if we didn't have this
+publication-obsession?
 
 ::: notes
-The other things you can start doing is find or start building a
-community of people who also use R or are doing reproducibility or any
-other computational work. Use them as support and help and also give
-back too.
+Research culture and incentives pretty much only care about publishing
+journal articles. Creating software tools or datasets to be shared, meh.
+Making teaching materials to help other researchers, meh. Communicating
+your science to the public and doing outreach, meh. Doing actual science
+that might take years and not lead to any "hard papers", meh.
 
-Start doing code reviews in your research group. Code review would be
-where you look over each others code, check that it works, check that it
-makes sense, that it's readable and understandable. The nice thing with
-doing code reviews is that it dispels the mystery around code and about
-criticising it and trying to improve it. We review manuscripts, why not
-code? I personally though have had a really hard time getting groups
-I've been part of now and in the past to do this, but baby steps.
+Imagine if the number of publications and where you published didn't
+matter for getting funding or getting a research job. What would you
+spend your time on? What would you do differently compared to now?
 :::
 
-## And teaching others is a great way to learn :wink: {.center}
+## Legal and privacy concerns about sharing data, intellectual property protection, patents {.center}
+
+::: notes
+Legal and privacy concerns are big topics that institutions in
+particular focus on a lot, about ownership and so on, since research can
+lead to commercialization and the potential for profit. For individual
+researchers, we often worry about these concerns too much and sometimes
+stops us from doing work because we're afraid we're doing something
+wrong
+:::
+
+# Strong personal barriers like ... {.center}
+
+## Fear of ... {.center}
+
+-   Fear of being scooped or ideas being stolen
+-   Errors and public humiliation
+
+::: notes
+And there aren't just institutional barriers. We as researchers have
+fears of being scooped, of embarrassment and humiliation for your
+methods being *gasp* wrong. Which is actually just part of science.
+:::
+
+## Overwhelmed with everything that we *should* do better {.center}
+
+::: notes
+It is also really overwhelming, having so many things to think about to
+make sure you're doing solid science. No researcher in the past had to
+consider and think and know as much as we have to know and to do.
+Another reason why we need more team science, to distribute the tasks
+and skills.
+:::
+
+## Need to constantly stay updated {.center}
+
+::: notes
+You also have to constantly stay updated, and that can be tiring.
+:::
+
+# So... what you can do right now to be more open and reproducible?
+
+## Follow some core principles {.center}
+
+-   Use open source tools wherever possible
+
+-   Use plain text as often as possible
+
+-   Upload and share publicly early and often (e.g. to GitHub or
+    [Zenodo](https://zenodo.org))
+
+-   Upload and share publicly as many things as possible
+
+-   Archive to get a DOI/version for major milestones
+
+## Use social actions to be more open
+
+-   Do code/paper reviews through *through GitHub*
+
+. . .
+
+-   Require writing *everything* in Markdown
+
+. . .
+
+-   Agree on a standard folder and file structure for projects
+
+## Teach others! {.center}
+
+It's also a great way to learn :wink: :wink:
 
 ::: notes
 Lastly.. you can teach. Teach others. Use these teaching materials. Or

@@ -1,0 +1,24 @@
+name: Add to project board
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+      - transferred
+  pull_request:
+    types:
+      - reopened
+      - opened
+
+permissions:
+  pull-requests: write
+
+jobs:
+  add-to-project:
+    uses: rostools/.github/.github/workflows/reusable-add-to-project.yml@main
+    with:
+      board-number: 12
+    secrets:
+      add-to-board-token: ${{ secrets.ADD_TO_BOARD }}
+      gh-token: ${{ secrets.GITHUB_TOKEN }}

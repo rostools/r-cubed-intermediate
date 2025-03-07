@@ -7,7 +7,6 @@ library(fs)
 library(tidyverse)
 load(here("_temp/functionals.RData"))
 source(here("R/functions.R"))
-options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the "*Workflow*" block and start moving over
@@ -19,12 +18,22 @@ covering.](/images/overview-create-project-data.svg){#fig-overview-create-projec
 
 ## Learning objectives
 
-1.  Learn what regular expressions are and how to use them on character
-    data.
-2.  Learn about and apply the various ways data can be joined.
-3.  Apply functionals when repeatedly joining multiple datasets.
-4.  Apply the function `case_when()` when you need nested conditionals
-    for cleaning.
+The overall learning outcome for this session is to:
+
+1.  Describe a few ways of joining data and processing character data,
+    and applying them to an existing sequence of data processing.
+
+Specific objectives are to:
+
+1.  Describe what regular expressions are in very simple terms, and then
+    use a regular expression on character data.
+2.  Describe a few ways that data can be joined and identify which join
+    is appropriate for a given situation. Then apply one join type to
+    two datasets to create a single dataset.
+3.  Demonstrate how to use functionals to repeatedly join more than two
+    datasets together.
+4.  Apply the function `case_when()` in situations that require nested
+    conditionals (if-else).
 5.  Use the `usethis::use_data()` function to save the final, fully
     joined dataset as an `.Rda` file in `data/`.
 
@@ -111,9 +120,9 @@ More or less, this section and exercise are to introduce the idea and
 concept of regex, but not to really teach it since that is well beyond
 the scope of this course and this time frame.
 
-Go over the solution. Explanation is that the pattern will find anything
-that has `user_` followed by a number from 1 to 9 and maybe followed by
-another number from 0 to 9.
+Go over the solution. The explanation is that the pattern will find
+anything that has `user_` followed by a number from 1 to 9 and maybe
+followed by another number from 0 to 9.
 :::
 
 ## Using regular expressions to extract text
@@ -202,6 +211,24 @@ and extracts the user ID from it. **First step**: While in the
 `doc/learning.qmd` file, convert this code into a function, using the
 same process you've done previously.
 
+Use this code as a guide to help complete the exercise tasks below:
+
+``` {.r filename="doc/learning.qmd"}
+extract_user_id <- ___(___) {
+    ___ <- ___ |>
+        ___mutate(
+            user_id = ___str_extract(file_path_id,
+                                     "user_[0-9][0-9]?"),
+            .before = file_path_id
+        ) |>
+        ___select(-file_path_id)
+    return(___)
+}
+
+# This tests that it works:
+# extract_user_id(user_info_df)
+```
+
 1.  Call the new function `extract_user_id` and add one argument called
     `imported_data`.
     -   Remember to output the code into an object and `return()` it at
@@ -222,32 +249,6 @@ same process you've done previously.
     reproducible with {{< var keybind.render >}}.
 6.  Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
-
-::: callout-tip
-If you don't know what package a function comes from when you need to
-append the package when using `::`, you can find out what the package is
-by using the help documentation `?functionname` (can also be done by
-pressing F1 when the cursor is over the function). The package name is
-at the very top left corner, surrounded by `{ }`.
-:::
-
-Use this code as a guide to help complete this exercise:
-
-``` {.r filename="doc/learning.qmd"}
-extract_user_id <- ___(___) {
-    ___ <- ___ |>
-        ___mutate(
-            user_id = ___str_extract(file_path_id,
-                                     "user_[0-9][0-9]?"),
-            .before = file_path_id
-        ) |>
-        ___select(-file_path_id)
-    return(___)
-}
-
-# This tests that it works:
-# extract_user_id(user_info_df)
-```
 
 ```{r solution-user-id-extract}
 #| eval: true
@@ -297,7 +298,7 @@ import_multiple_files <- function(file_pattern, import_function) {
 
   combined_data <- purrr::map(data_files, import_function) |>
     purrr::list_rbind(names_to = "file_path_id") |>
-    extract_user_id() # Add the function here.
+    extract_user_id() # Add the function here
   return(combined_data)
 }
 ```
@@ -322,26 +323,30 @@ to use `user_id` instead of `file_path_id`:
 ```{r}
 #| filename: "doc/learning.qmd"
 summarised_rr_df <- rr_df |>
-  group_by(user_id, day) |>
-  summarise(across(ibi_s, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  group_by(user_id, day) |> # change file_path_id to user_id here
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 
 summarised_actigraph_df <- actigraph_df |>
-  group_by(user_id, day) |>
+  group_by(user_id, day) |> # change file_path_id to user_id here
   # These statistics will probably be different for you
-  summarise(across(hr, list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    sd = \(x) sd(x, na.rm = TRUE)
-  ))) |>
-  ungroup()
+  summarise(
+    across(hr, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 ```
 
 Let's render the `doc/learning.qmd` document using
-{{< var keybind.render >}}to make sure everything still runs fine. Then,
-**add and commit** all the changed files into the Git history with
+{{< var keybind.render >}} to make sure everything still runs fine.
+Then, **add and commit** all the changed files into the Git history with
 {{< var keybind.git >}}.
 
 ## Join datasets together
@@ -368,9 +373,9 @@ There are many ways to join datasets in `{dplyr}` that are described in
     and columns in `x`. *Columns* that exist in `y` but not `x` are
     joined to `x`.
 
-![Left joining in `{dplyr}`. Notice how the row with `D` in column `A`
-in the blue data is not included in the outputted data on the right.
-Modified from the RStudio `{dplyr}`
+![Left joining in `{dplyr}`. Notice how the last row in the blue data
+(the row with `d` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
 width="90%"}
 
@@ -378,27 +383,30 @@ width="90%"}
     columns in `x` that match rows and columns in `y`. *Columns* that
     exist in `x` but not `y` are joined to `y`.
 
-![Right joining in `{dplyr}`. Notice how the row with `C` in column `A`
-in the green data is not included in the outputted data on the right.
-Modified from the RStudio `{dplyr}`
+![Right joining in `{dplyr}`. Notice how the last row in the green data
+(the row with `c` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
 width="90%"}
 
 -   `full_join(x, y)`: Join all rows and columns in `y` that match rows
     and columns in `x`. Columns *and* **rows** that exist in `y` but not
-    `x` are joined to `x`.
+    `x` are joined to `x`. A full join keeps all the data from both `x`
+    and `y`.
 
 ![Full joining in `{dplyr}`. Notice how all rows and columns are
 included in the outputted data on the right, and that some missingness
 is introduced because those values don't exist when the data are
-combined in this way. Modified from the RStudio `{dplyr}`
+combined in this way. Modified from the Posit `{dplyr}`
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
 width="90%"}
 
-In our case, we want to use `full_join()`, since we want all the data
-from both datasets. This function takes two datasets and lets you
-indicate which column to join by using the `by` argument. Here, both
-datasets have the column `user_id` so we will join by them.
+Now, we want to start joining our datasets. Let's start with the
+`user_info_df` and `saliva_df`. In this case, we want to use
+`full_join()`, since we want all the data from both datasets. This
+function takes two datasets and lets you indicate which column to join
+by using the `by` argument. Here, both datasets have the column
+`user_id` so we will join by that column.
 
 ```{r}
 full_join(user_info_df, saliva_df, by = "user_id")
@@ -406,8 +414,8 @@ full_join(user_info_df, saliva_df, by = "user_id")
 
 `full_join()` is useful if we want to include all values from both
 datasets, as long as each participant ("user") had data collected from
-that dataset. When the two datasets have rows that don't match, we will
-get missingness in that row, but that's ok in this case.
+either dataset. When the two datasets have rows that don't match, we
+will get missingness in that row, but that's ok in this case.
 
 We also eventually have other datasets to join together later on. Since
 `full_join()` can only take two datasets at a time, do we then just keep
@@ -415,13 +423,14 @@ using `full_join()` until all the other datasets are combined? What if
 we get more data later on? Well, that's where more functional
 programming comes in. Again, we have a simple goal: For a set of data
 frames, join them all together. Here we use another functional
-programming concept called `reduce()`. Like `map()`, which "maps" a
-function onto a set of items, `reduce()` applies a function to each item
-of a vector or list, each time reducing the set of items down until only
-one remains: the output. Let's use an example with our simple function
-`add_numbers()` we had created before (but later deleted) and add up 1
-to 5. Since `add_numbers()` only takes two numbers, we have to give it
-two numbers at a time and repeat until we reach 5.
+programming concept from the `{purrr}` package called `reduce()`. Like
+`map()`, which "maps" a function onto a set of items, `reduce()` applies
+a function to each item of a vector or list, each time reducing the set
+of items down until only one remains: the output. Let's use an example
+with our simple function `add_numbers()` we had created earlier on (but
+later deleted) and add up 1 to 5. Since `add_numbers()` only takes two
+numbers, we have to give it two numbers at a time and repeat until we
+reach 5.
 
 ```{r}
 # Add from 1 to 5
@@ -441,16 +450,17 @@ reduce(1:5, add_numbers)
 
 ![A functional that iteratively uses a function on a set of items until
 only one output remains. Notice how the output of the first iteration of
-the `func()` function is placed in the first position of `func()` in the
-next iteration, and so on. Modified from the RStudio purrr
+`func()` is placed in the first position of `func()` in the next
+iteration, and so on. Modified from the Posit purrr
 [cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
-If we look at `?reduce`, we see that `reduce()`, like `map()`, takes
-either a vector or a list as an input. Since data frames can only be put
-together as a list and not as a vector (a data frame has vectors for
-columns and so can't be a vector itself), we need to combine the
-datasets together in a `list()` and reduce them with `full_join()`.
+If we look at the documentation for `reduce()` by writing `?reduce` in
+the Console, we see that`reduce()`, like`map()`, takes either a vector
+or a list as an input. Since data frames can only be put together as a
+list and not as a vector (a data frame has vectors for columns and so it
+can't be a vector itself), we need to combine the datasets together in a
+`list()` to be able to reduce them with `full_join()`.
 :::
 
 Let's code this together, using `reduce()`, `full_join()`, and `list()`
@@ -599,7 +609,7 @@ saliva_with_day_df
 #| filename: "doc/learning.qmd"
 list(
   user_info_df,
-  saliva_df,
+  saliva_with_day_df,
   summarised_rr_df,
   summarised_actigraph_df
 ) |>
@@ -611,46 +621,47 @@ to the Git history with {{< var keybind.git >}}.
 
 ## Wrangling data into final form
 
-Now that we've got several datasets processed and joined, its now time
-to bring it all together and put it into the `data-raw/mmash.R` script
-so we can create a final working dataset.
+Now that we've got several datasets processed and joined, it's time to
+bring it all together and put it into the `data-raw/mmash.R` script so
+we can create a final working dataset.
 
-Open up the `data-raw/mmash.R` file and the top of the file, add the
-`{tidyverse}` package to the end of the list of other packages if it
-isn't there already. Move the code `library(fs)` to go with the other
-packages as well. It should look something like this now:
+Open up the `data-raw/mmash.R` file and the top of the file move the
+code `library(fs)` to go with the other packages as well. It should look
+something like this now:
 
 ```{r}
 #| filename: "data-raw/mmash.R"
 library(here)
 library(tidyverse)
 library(fs)
+source(here("R/functions.R"))
 ```
 
-Then, we will comment out the `download.file()`, `unzip()`,
-`file_delete()`, and `file_move()` code, since we don't want to download
-and unzip the data every single time we run this script. It should look
-like this:
+Next, as we have altered `import_multiple_files()` to use `file_path`
+instead of `file_path_id`, we'll need to update how we `group_by()` when
+creating `summarised_rr_df` and `summarised_actigraph_df`.
 
-```{r data-raw-mmash-comment-out}
+```{r data-raw-mmash-update}
 #| filename: "data-raw/mmash.R"
-#| eval: false
-# Download
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+summarised_rr_df <- rr_df |>
+  group_by(user_id, day) |>
+  summarise(
+    across(ibi_s, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 
-# Unzip
-# unzip(here("data-raw/mmash-data.zip"),
-#       exdir = here("data-raw"),
-#       junkpaths = TRUE)
-# unzip(here("data-raw/MMASH.zip"),
-#       exdir = here("data-raw"))
-
-# Remove/tidy up left over files
-# file_delete(here(c("data-raw/MMASH.zip",
-#                    "data-raw/SHA256SUMS.txt",
-#                    "data-raw/LICENSE.txt")))
-# file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+summarised_actigraph_df <- actigraph_df |>
+  group_by(user_id, day) |>
+  summarise(
+    across(hr, list(
+      mean = \(x) mean(x, na.rm = TRUE),
+      sd = \(x) sd(x, na.rm = TRUE)
+    )),
+    .groups = "drop"
+  )
 ```
 
 Go into the `doc/learning.qmd` and cut the code used to create the
@@ -670,7 +681,7 @@ saliva_with_day_df <- saliva_df |>
 
 mmash <- list(
   user_info_df,
-  saliva_df,
+  saliva_with_day_df,
   summarised_rr_df,
   summarised_actigraph_df
 ) |>

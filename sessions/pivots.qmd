@@ -9,7 +9,6 @@ library(tidyverse)
 source(here("R/functions.R"))
 load(here("_temp/dplyr-joins.RData"))
 load(here("data/mmash.rda"))
-options(dplyr.summarise.inform = FALSE)
 ```
 
 Here we will continue using the *Workflow* block as we cover the fourth
@@ -27,8 +26,21 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-1.  Using the concept of "pivoting" to arrange data from long to wide
-    and vice versa.
+The overall learning outcome for this session is to:
+
+1.  Describe what long and wide data are, what pivoting means in this
+    context, and demonstrate how to switch between the two.
+
+Specific objectives are to:
+
+1.  Describe the concept of "pivoting" data to convert data in a "long"
+    format to a "wide" format and vice versa.
+2.  Identify situations when data in the long or wide format are more
+    appropriate to use.
+3.  Apply the `pivot_longer()` and `pivot_wider()` functions from the
+    `{tidyr}` package to pivot data.
+4.  Continue extending functions to make use of pivots for processing
+    and cleaning data.
 
 ## Setup for the analysis in Quarto
 
@@ -54,19 +66,6 @@ you are writing and coding will at least be reproducible on your
 computer, since Quarto is designed to ensure the document is
 reproducible.
 
-For this specific workflow and for checking reproducibility, you should
-output to HTML rather than to a Word document. While you can create a
-Word document by changing the `format: html` to `format: docx` (for
-Quarto only) at the top in the YAML header, you'd only do this when you
-need to submit to a journal or need to email to co-authors for review.
-The reason is simple: After you generate the Word document from Quarto,
-the Word file opens up and consequently Word locks the file from further
-edits. What that means is that every time you generate the Word
-document, you have to close it before you can generate it again,
-otherwise knitting / rendering will fail. This can get annoying very
-quickly (trust me), since you don't always remember to close the Word
-document. If you output to HTML, this won't be a problem.
-
 ## Re-arranging data for easier summarizing
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -83,18 +82,19 @@ which is usually quite difficult to grasp for those new to it.
 
 Now that we have the final dataset to work with, we want to explore it a
 bit with some simple descriptive statistics. One extremely useful and
-powerful tool to summarizing data is by "pivoting" your data. Pivoting
-is when you convert data between longer forms (more rows) and wider
-forms (more columns). The `{tidyr}` package within `{tidyverse}`
-contains two wonderful functions for pivoting: `pivot_longer()` and
-`pivot_wider()`. There is a well written documentation on pivoting in
-the [tidyr website](https://tidyr.tidyverse.org/articles/pivot.html)
-that can explain more about it. The first thing we'll use, and probably
-the more commonly used in general, is `pivot_longer()`. This function is
-commonly used because entering data in the wide form is easier and more
-time efficient than entering data in long form. For instance, if you
-were measuring glucose values over time in participants, you might enter
-data in like this:
+powerful tool to summarizing as well as processing/wrangling data is by
+"pivoting" your data. Pivoting is when you convert data between longer
+forms (more rows) and wider forms (more columns). The `{tidyr}` package
+within `{tidyverse}` contains two wonderful functions for pivoting:
+`pivot_longer()` and `pivot_wider()`. There is a well written
+documentation on pivoting in the [tidyr
+website](https://tidyr.tidyverse.org/articles/pivot.html) that can
+explain more about it. The first thing we'll use, and probably the more
+commonly used in general, is `pivot_longer()`. This function is commonly
+used because entering data in the wide form is easier and more time
+efficient than entering data in long form. For instance, if you were
+measuring glucose values over time in participants, you might enter data
+in like this:
 
 ```{r table-example-wide}
 #| echo: false
@@ -130,7 +130,8 @@ pivoting would look like what is shown in @fig-pivot-longer-id.
 called 'name' and 'value', as well as the old 'id' column. Notice how,
 unlike the previous image, the `id` column is excluded when pivotting
 into the data on the
-right.](/images/pivot-longer-id.png){#fig-pivot-longer-id width="90%"}
+right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
+width="90%"}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 disheartened if you can't understand how it works yet. As you practice
@@ -220,7 +221,7 @@ mmash |>
     on the `value` column and find the mean and standard deviation (put
     them into a named list like we did previously). Don't forget to use
     `na.rm = TRUE` to exclude missing values.
-3.  Stop the grouping effect with `ungroup()`.
+3.  Stop the grouping effect with `.groups = "drop"` in `summarise()`.
 4.  Run `{styler}` while in the `doc/learning.qmd` file with
     {{< var keybind.styler >}}.
 5.  Render the Quarto file into HTML with {{< var keybind.render >}}.
@@ -236,14 +237,16 @@ mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup()
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  )
 ```
 
 ## Pivot data to wider form
@@ -309,14 +312,16 @@ mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup() |>
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  ) |>
   pivot_wider(names_from = day)
 ```
 
@@ -333,14 +338,16 @@ mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup() |>
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  ) |>
   pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -364,14 +371,16 @@ mmash |>
   pivot_longer(c(-user_id, -day, -gender)) |>
   drop_na(day, gender) |>
   group_by(gender, day, name) |>
-  summarise(across(
-    value,
-    list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )
-  )) |>
-  ungroup() |>
+  summarise(
+    across(
+      value,
+      list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd = \(x) sd(x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  ) |>
   pivot_wider(names_from = day, values_from = starts_with("value"))
 ```
 
@@ -407,15 +416,6 @@ the code we just wrote above into a function.
 9.  Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
 
-Use this code to refresh your memory on how functions are structured and
-to use as a starting point:
-
-``` r
-___ <- function(___) {
-    
-}
-```
-
 ```{r solution-summarise-function}
 #| eval: true
 #| output: false
@@ -433,14 +433,16 @@ tidy_summarise_by_day <- function(data) {
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
     dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(dplyr::across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    )) |>
-    dplyr::ungroup() |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        list(
+          mean = \(x) mean(x, na.rm = TRUE),
+          sd = \(x) sd(x, na.rm = TRUE)
+        )
+      ),
+      .groups = "drop"
+    ) |>
     tidyr::pivot_wider(
       names_from = day,
       values_from = dplyr::starts_with("value")
@@ -487,19 +489,21 @@ that `start_with()` the word `"value"` to 2 digits.
 ```{r rounding-summary-function-output}
 #| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data) {
-  data |>
+  daily_summary <- data |>
     dplyr::select(-samples) |>
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
     dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(dplyr::across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    )) |>
-    dplyr::ungroup() |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        list(
+          mean = \(x) mean(x, na.rm = TRUE),
+          sd = \(x) sd(x, na.rm = TRUE)
+        )
+      ),
+      .groups = "drop"
+    ) |>
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       \(x) round(x, digits = 2)
@@ -508,6 +512,7 @@ tidy_summarise_by_day <- function(data) {
       names_from = day,
       values_from = dplyr::starts_with("value")
     )
+  return(daily_summary)
 }
 ```
 
@@ -538,16 +543,18 @@ function.
 ```{r generalize-summary-function}
 #| filename: "R/functions.R"
 tidy_summarise_by_day <- function(data, summary_fn) {
-  data |>
+  daily_summary <- data |>
     dplyr::select(-samples) |>
     tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
     tidyr::drop_na(day, gender) |>
     dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(dplyr::across(
-      value,
-      summary_fn
-    )) |>
-    dplyr::ungroup() |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        summary_fn
+      ),
+      .groups = "drop"
+    ) |>
     dplyr::mutate(dplyr::across(
       dplyr::starts_with("value"),
       \(x) round(x, digits = 2)
@@ -556,6 +563,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
       names_from = day,
       values_from = dplyr::starts_with("value")
     )
+  return(daily_summary)
 }
 ```
 
@@ -581,8 +589,65 @@ mmash |>
   ))
 ```
 
-Before continuing, let's render the Quarto document with
-{{< var keybind.render >}} to check reproducibility.
+While everything now works, the column names are not very clear. For
+example, what does `value_median_1` or `1` mean? It would be nice if it
+said something like `median_day_1` or `day_1`. And with `pivot_wider()`,
+we can do that with the `name_glue` argument! With this argument, we can
+write a custom variable naming scheme that involves combining the use of
+`{}` and a special `{.value}` keyword within a string in the argument to
+create these custom column names in the wider dataset. So this would
+look like `{.value}_day_{day}`, where `{.value}` refers to the values of
+the column(s) used in `values_from` and the `{day}` refers to the column
+used in `names_from`.
+
+We can then pipe the output to `rename_with()` from the `{dplyr}`
+package, which acts like `map()` (but for renaming columns) and can take
+an anonymous function. We can use this to then remove the `value_` from
+the start of the column name.
+
+```{r finalize-summary-function}
+#| filename: "R/functions.R"
+tidy_summarise_by_day <- function(data, summary_fn) {
+  daily_summary <- data |>
+    dplyr::select(-samples) |>
+    tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
+    tidyr::drop_na(day, gender) |>
+    dplyr::group_by(gender, day, name) |>
+    dplyr::summarise(
+      dplyr::across(
+        value,
+        summary_fn
+      ),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      \(x) round(x, digits = 2)
+    )) |>
+    tidyr::pivot_wider(
+      names_from = day,
+      values_from = dplyr::starts_with("value"),
+      names_glue = "{.value}_day_{day}"
+    ) |>
+    dplyr::rename_with(\(x) stringr::str_remove(x, "value_"))
+  return(daily_summary)
+}
+```
+
+Let's see how it looks by rendering the `doc/learning.qmd` file again
+with {{< var keybind.render >}}. One of the output tables show now look
+something like:
+
+```{r test-even-tidier-summary}
+#| echo: false
+mmash |>
+  tidy_summarise_by_day(list(
+    median = \(x) median(x, na.rm = TRUE),
+    max = \(x) max(x, na.rm = TRUE)
+  ))
+```
+
+Nice!! :grin: :tada:
 
 ## Making prettier output in Quarto
 
@@ -622,3 +687,4 @@ history with {{< var keybind.git >}}.
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
+

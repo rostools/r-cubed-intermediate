@@ -9,7 +9,7 @@ project:
     - slides/*.html
 
 book:
-  title: "Reproducible Research in R"
+  title: "Intermediate Reproducible Research in R"
   subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
   author: "Luke W. Johnston"
   date: last-modified

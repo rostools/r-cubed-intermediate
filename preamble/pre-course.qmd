@@ -156,7 +156,7 @@ Checking Git config settings:
 survey questions**. *Note* that while GitHub is a natural connection to
 using Git, given the limited time available, we will not be going over
 how to use GitHub. If you want to learn about using GitHub, check out
-the
+this
 [session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
 on it in the introduction course.
 
@@ -264,6 +264,9 @@ usethis::with_project(
 )
 ```
 
+Throughout the course, we will use this document as a sandbox to test
+code out and then move the finished code to other files.
+
 ## Download the course data {#sec-download-data}
 
 To best demonstrate the concepts in the course, we ideally should work
@@ -290,8 +293,9 @@ website](https://physionet.org/content/mmash/1.0.0/):
     use personal data, but it *does not prohibit sharing it or making it
     public*! GDPR and Open Data are not in conflict.
 
-> *Note*: Sometimes the PhysioNet website is slow. If that's the case,
-> use [**this alternative link**](resources/mmash-page.html) instead.
+> *Note*: Sometimes the PhysioNet website, where the MMASH data is
+> described, is slow. If that's the case, use [**this alternative
+> link**](resources/mmash-page.html) instead.
 
 After looking over the MMASH website, you need to setup where to store
 the dataset to prepare it for later processing. While in your `LearnR3`
@@ -470,14 +474,40 @@ A quick comment about whether you should save your *raw* data in
     projects to it and use their individual `data-raw/` R scripts as the
     record for how you processed the raw data.
 
-Unzip the zip files by using the `unzip()` function and writing it in
-`data-raw/mmash.R` below the `download.file()` function. The main
-argument for `unzip()` is the zip file and the next important one is
-called `exdir` that tells `unzip()` which folder you want to extract the
-files to. The argument `junkpaths` is used here to tell `unzip()` to
-extract everything to the `data-raw/` folder (no idea why it's called
-"junkpaths"). This code should be written and executed in the
-`data-raw/mmash.R` script.
+We will eventually want to unzip the file, but before we begin, we want
+to include some code to always delete the unzipped output folder. We
+want to do this because sometimes unzipping can cause issues and because
+we want the script to always run everything cleanly from beginning to
+end whenever we `source()` it. In order to delete the folder, we'll use
+the `{fs}` package to handle filesystem actions. Load the `{fs}` package
+with `library()` right below the other `library()` function at the top
+of the script:
+
+```{r}
+#| filename: "data-raw/mmash.R"
+library(here)
+library(fs)
+```
+
+Next, we'll use the `dir_delete()` to tell `{fs}` to always delete the
+`data-raw/mmash/` output folder that we will create shortly. Put this
+below the `dowload.file()` code:
+
+```{r}
+#| filename: "data-raw/mmash.R"
+#| eval: false
+# Remove leftover folder so unzipping is always clean
+dir_delete(here("data-raw/mmash"))
+```
+
+Now we can unzip the zip files by using the `unzip()` function and
+writing it in `data-raw/mmash.R` below the `download.file()` function.
+The main argument for `unzip()` is the zip file and the next important
+one is called `exdir` that tells `unzip()` which folder you want to
+extract the files to. The argument `junkpaths` is used here to tell
+`unzip()` to extract everything to the `data-raw/` folder (no idea why
+it's called "junkpaths"). This code should be written and executed in
+the `data-raw/mmash.R` script.
 
 ```{r admin-mmash-dir-exists}
 #| include: false
@@ -558,8 +588,8 @@ If your files and folders in the `data-raw/` folder do not look like
 this, start over by deleting all the files *except for* the `mmash.R`
 and `mmash-data.zip` files. Then re-run the code from beginning to end.
 
-To tidy up the files, first, use the `file_delete()` function from fs to
-delete all the files we originally extracted (`LICENSE.txt`,
+To tidy up the files, first, use the `file_delete()` function from
+`{fs}` to delete all the files we originally extracted (`LICENSE.txt`,
 `SHA256SUMS.txt`, and `MMASH.zip`). Then use `file_move()` to rename the
 new folder `data-raw/DataPaper/` to something more explicit like
 `data-raw/mmash/`. Add these lines of code to the `data-raw/mmash.R`
@@ -568,7 +598,6 @@ script and run them:
 ```{r delete-rename-files}
 #| filename: "data-raw/mmash.R"
 #| eval: !expr skip
-library(fs)
 file_delete(here(c(
   "data-raw/MMASH.zip",
   "data-raw/SHA256SUMS.txt",
@@ -646,6 +675,16 @@ fs::file_copy(
   overwrite = TRUE
 )
 ```
+
+Notice that in the file above, we have added comments to help segment
+sections in the code and explain what is happening in the script. In
+general, adding comments to your code helps not only when others read
+the script, but also you in the future, if/when you forget what was done
+or why it was done. It also creates sections in your code that makes it
+easier to get an overview of the code. However, there is a balance here.
+Too many comments can negatively impact readability, so as much as
+possible, write code in a way that explains what the code is doing,
+rather than rely on comments.
 
 You now have the data ready for the course! At this point, please run
 this function in the Console:
@@ -742,3 +781,4 @@ withr::with_dir(
   }
 )
 ```
+
