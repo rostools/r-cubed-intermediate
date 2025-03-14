@@ -8,6 +8,7 @@
 _ignore
 bin/
 dev/
+_temp/
 
 # Temporary files
 *.tmp
@@ -28,4 +29,3 @@ public
 site
 slides/*.html
 _freeze
-
