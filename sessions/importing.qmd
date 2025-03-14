@@ -16,7 +16,6 @@ usethis::with_project(
   project_path,
   {
     fs::file_delete("TODO.md")
-    fs::file_delete("doc/report.Rmd")
     gert::git_add(".")
     gert::git_commit("Added initial files")
   }

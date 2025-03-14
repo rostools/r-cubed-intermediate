@@ -24,7 +24,7 @@ the keyboard.
 
 ## The Big Picture
 
-::: callout-note
+:::: callout-note
 ## Reading task: \~10 minutes
 
 This section provides an bigger picture view of what we will be doing,
@@ -195,7 +195,7 @@ Our workflow and process will be something like:
     -   **Note**: While we covered GitHub in the introductory course, we
         can't assume everyone will have taken that course. Because of
         that, we won't be using GitHub in this course.
-:::
+::::
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -248,7 +248,6 @@ In the **Console**, type out:
 
 ``` {.r filename="Console"}
 fs::file_delete("TODO.md")
-fs::file_delete("doc/report.Rmd")
 ```
 
 Then, open up the `data-raw/mmash.R` file and we'll add something that

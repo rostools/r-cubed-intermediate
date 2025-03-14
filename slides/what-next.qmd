@@ -1,7 +1,7 @@
 ---
 search: false
 format: r3-theme-revealjs
-bibliography: "..includes/references.bib"
+bibliography: "../includes/references.bib"
 csl: "../includes/vancouver.csl"
 knitr:
   opts_chunk:

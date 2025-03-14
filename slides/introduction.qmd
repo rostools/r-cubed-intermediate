@@ -1,13 +1,13 @@
 ---
 search: false
 format: r3-theme-revealjs
-bibliography: "..includes/references.bib"
+bibliography: "../includes/references.bib"
 csl: "../includes/vancouver.csl"
 ---
 
 # Welcome to the Intermediate R^3^ course!
 
-::: columns
+::::: columns
 ::: {.column width="70%"}
 -   :heavy_check_mark: Pick a group from the basket and go to that table
 -   :heavy_check_mark: Introduce yourself
@@ -38,7 +38,7 @@ data-raw/
 └── mmash.R
 ```
 :::
-:::
+:::::
 
 ::: notes
 Introduce instructors and helpers.
@@ -83,7 +83,7 @@ American Statistical Association
 
 . . .
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 ### Replicability
 
@@ -100,7 +100,7 @@ American Statistical Association
 -   *Question*: If we can't even *reproduce* a study's results, how can
     we expect to replicate it?
 :::
-:::
+:::::
 
 ## These issues can be fixed by creating and nurturing a culture of openness {.center}
 
@@ -110,7 +110,7 @@ American Statistical Association
 
 ## Setup and layout {.smaller}
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 -   Course is mix of:
     -   "Code-alongs" (we type and explain, you type along)
@@ -133,7 +133,7 @@ American Statistical Association
 -   Feedback collected at end of every day, it is so helpful and
     important for improving the course :grin:
 :::
-:::
+:::::
 
 ::: notes
 Explain a bit more about the reading, why doing it, and that this course
@@ -147,7 +147,7 @@ and so on.
 
 ## Getting or asking for help :raising_hand_woman::raising_hand_man: {.center}
 
-::: columns
+::::: columns
 ::: column
 -   Put the origami hat on your laptop to get help
     -   There are lots of helpers
@@ -159,7 +159,7 @@ and so on.
     -   This is a supportive and safe environment
     -   Remember our [Code of Conduct](conduct.html)
 :::
-:::
+:::::
 
 ## Practice using origami hats: Does your `data-raw/` look as this? {.center}
 

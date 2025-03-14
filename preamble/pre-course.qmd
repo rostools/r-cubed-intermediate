@@ -210,7 +210,6 @@ When the RStudio Project opens up again, run these three commands in the
 R Console:
 
 ``` {.r filename="Console"}
-prodigenr::setup_with_git()
 usethis::use_blank_slate()
 usethis::use_r("functions", open = FALSE)
 ```
@@ -220,7 +219,6 @@ usethis::use_r("functions", open = FALSE)
 usethis::with_project(
   path = project_path,
   {
-    prodigenr::setup_with_git()
     usethis::use_blank_slate()
     usethis::use_r("functions", open = FALSE)
   }
@@ -663,7 +661,7 @@ The `data-raw/mmash.R` script should look like this at this point:
 
 ```{r pre-course-state-of-script}
 #| filename: "data-raw/mmash.R"
-#| file: R/pre-course-script.R
+#| file: "../R/pre-course-script.R"
 #| eval: false
 ```
 
@@ -781,4 +779,3 @@ withr::with_dir(
   }
 )
 ```
-
