@@ -53,7 +53,7 @@ functionals are better coding patterns to use compared to loops. Doing
 the code-along should also help reinforce this concept.
 
 Also highlight that the resources appendix has some links for continued
-learning for this and that the Posit `{purrr}` cheatsheet is an amazing
+learning for this and that the Posit `{purrr}` cheat sheet is an amazing
 resource to use.
 :::
 
@@ -86,7 +86,7 @@ entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it.
 ![A function using vectorization. Notice how a set of items is included
 *all at once* in the `func()` function and outputs a single item on the
 right. Modified from the [Posit purrr
-cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
+cheat sheet](https://raw.githubusercontent.com/rstudio/cheat sheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
 width="45%"}
 
 For example, in R, there is a vectorized function called `sum()` that
@@ -135,7 +135,7 @@ on each item in a set of items.
 a vector. Notice how each of the green coloured boxes are placed into
 the `func()` function and outputs the same number of blue boxes as there
 are green boxes. Modified from the [Posit purrr
-cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
+cheat sheet](https://raw.githubusercontent.com/rstudio/cheat sheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
 width="90%"}
 
 Here's a simple toy example to show how it works. We'll use `paste()` on

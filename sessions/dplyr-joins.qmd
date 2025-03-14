@@ -376,7 +376,7 @@ There are many ways to join datasets in `{dplyr}` that are described in
 ![Left joining in `{dplyr}`. Notice how the last row in the blue data
 (the row with `d` in column `A`) is not included in the outputted data
 on the right. Modified from the Posit `{dplyr}`
-[cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
 width="90%"}
 
 -   `right_join(x, y)`: The opposite of `left_join()`. Join all rows and
@@ -386,7 +386,7 @@ width="90%"}
 ![Right joining in `{dplyr}`. Notice how the last row in the green data
 (the row with `c` in column `A`) is not included in the outputted data
 on the right. Modified from the Posit `{dplyr}`
-[cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
 width="90%"}
 
 -   `full_join(x, y)`: Join all rows and columns in `y` that match rows
@@ -398,7 +398,7 @@ width="90%"}
 included in the outputted data on the right, and that some missingness
 is introduced because those values don't exist when the data are
 combined in this way. Modified from the Posit `{dplyr}`
-[cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
 width="90%"}
 
 Now, we want to start joining our datasets. Let's start with the
@@ -452,7 +452,7 @@ reduce(1:5, add_numbers)
 only one output remains. Notice how the output of the first iteration of
 `func()` is placed in the first position of `func()` in the next
 iteration, and so on. Modified from the Posit purrr
-[cheatsheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
 width="90%"}
 
 If we look at the documentation for `reduce()` by writing `?reduce` in
