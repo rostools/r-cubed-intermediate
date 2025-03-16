@@ -9,11 +9,11 @@ Authors@R:
 Description: Reproducibility and open scientific practices are
     increasingly being requested or required of scientists and
     researchers, but training on these practices has not kept pace. This
-    course intends to help bridge that gap and covers the fundamentals and
+    workshop intends to help bridge that gap and covers the fundamentals and
     workflow of data analysis in R. This repository contains the lesson,
-    lecture, and assignment material for the course, including the website
-    source files and other associated course administration files. For
-    more details on the course, check out the <a
+    lecture, and assignment material for the workshop, including the website
+    source files and other associated workshop administration files. For
+    more details on the workshop, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
 Depends: 

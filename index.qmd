@@ -22,30 +22,30 @@ even though this work is highly time-consuming and technical. As a
 consequence of an unawareness of the need for these skills, how
 *exactly* data is processed is poorly, if at all, described in
 scientific studies. This hidden aspect of research could have major
-impacts on the reproducibility of studies. Therefore, this course was
+impacts on the reproducibility of studies. Therefore, this workshop was
 created specifically to start addressing these types of problems.
 
-The course is designed as a series of participatory live-coding lessons,
+The workshop is designed as a series of participatory live-coding lessons,
 where the instructor and learners code together, and is interspersed
 with hands-on exercises and group work using real-world datasets. This
-website contains all of the material for the course, from reading
+website contains all of the material for the workshop, from reading
 material to exercises to images. It is structured as a book, with
 "chapters" as lessons, given in order of appearance. We make heavy use
-of the website throughout the course where code-along sessions follow
+of the website throughout the workshop where code-along sessions follow
 the material on the website nearly exactly (with slight modifications
 for time or more detailed explanations).
 
-The course material was created using [Quarto](https://quarto.org) to
+The workshop material was created using [Quarto](https://quarto.org) to
 write the lessons and create the book format,
 [GitHub](https://github.com/) to host the [Git](https://git-scm.com/)
 repository of the material, and [GitHub
 Actions](https://github.com/features/actions) with
 [Netlify](https://www.netlify.com/) to build and host the website. The
-original source material for this course is found on the
+original source material for this workshop is found on the
 [`r-cubed-intermediate`](https://github.com/rostools/r-cubed-intermediate)
 GitHub repository.
 
-Want to contribute to this course? Check out the
+Want to contribute to this workshop? Check out the
 [README](https://github.com/rostools/r-cubed-intermediate/blob/main/README.md)
 file as well as the
 [CONTRIBUTING](https://github.com/rostools/r-cubed-intermediate/blob/main/CONTRIBUTING.md)
@@ -58,9 +58,9 @@ make comments and give feedback for the material.
 
 This website and its content are targeted to three groups:
 
-1.  For the **learners** to use during the course, both to follow along
+1.  For the **learners** to use during the workshop, both to follow along
     in case they get lost and also to use as a reference after the
-    course ends. The learner is someone who is currently or will soon
+    workshop ends. The learner is someone who is currently or will soon
     actively be doing research (e.g. a PhD or postdoc), who is likely in
     biomedical research, and who has no or little knowledge on coding
     in R. A more detailed description of who the learner is can be found
@@ -75,14 +75,14 @@ This website and its content are targeted to three groups:
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License" style="border-width:0"/></a>
 
-The course is licensed under the [Creative Commons Attribution 4.0
+The workshop is licensed under the [Creative Commons Attribution 4.0
 International License](https://creativecommons.org/licenses/by/4.0/) so
 the material can be used, re-used, and modified, as long as there is
 attribution to this source.
 
 ## Acknowledgements
 
-The course material draws inspiration from these excellent resources:
+The workshop material draws inspiration from these excellent resources:
 
 -   [R for Data Science](https://r4ds.had.co.nz/)
 -   [Advanced R](https://adv-r.hadley.nz/)
@@ -94,7 +94,7 @@ The course material draws inspiration from these excellent resources:
 
 The [Danish Diabetes and Endocrinology
 Academy](https://www.ddeacademy.dk/) hosted, organized, and sponsored
-this course. A huge thanks to them for their involvement, support, and
+this workshop. A huge thanks to them for their involvement, support, and
 sponsorship! [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/)
 and [Aarhus University](https://international.au.dk/) employs Luke, who
 is the lead instructor and curriculum developer.

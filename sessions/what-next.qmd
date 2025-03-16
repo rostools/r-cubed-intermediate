@@ -32,13 +32,13 @@ criticizing it and trying to improve it. We review manuscripts, why not
 code? Do note though, that this is way easier said than done!
 
 You can teach! Teach others. Use these teaching materials. Or get
-involved with this course next year. Or now! Several participants from
-these courses are or will soon be helping to improve the material for
+involved with this workshop next year. Or now! Several participants from
+these workshops are or will soon be helping to improve the material for
 next year. There are also so many other things you can get involved in,
-aside from this course. Let us know if you're interested!
+aside from this workshop. Let us know if you're interested!
 
 If you want to stay updated on when registration opens for upcoming
-courses, along with keeping informed on other activities related to R,
+workshops, along with keeping informed on other activities related to R,
 you can join our [r-cubed Discord
 server](https://discord.gg/xHPyj7dxJx).
 

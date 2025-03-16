@@ -11,7 +11,7 @@ temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
 
 untar(
-  tarfile = here::here("_temp", "pre-course.tar.gz"),
+  tarfile = here::here("_temp", "pre-workshop.tar.gz"),
   exdir = project_path
 )
 ```
@@ -102,7 +102,7 @@ yourself later. Making functions always has a basic structure of:
 ## Instructor note
 
 Emphasize that we will be using this workflow for creating functions all
-the time throughout course and that this workflow is also what you'd use
+the time throughout workshop and that this workflow is also what you'd use
 in your daily work.
 :::
 
@@ -234,7 +234,7 @@ Making functions is a series of steps:
 ## Instructor note
 
 Emphasize that we will be using this workflow for creating functions all
-the time throughout course and that this workflow is also what you'd use
+the time throughout workshop and that this workflow is also what you'd use
 in your daily work.
 :::
 
@@ -597,7 +597,7 @@ usethis::with_project(
 ```
 
 Since we will also make use of the tidyverse set of packages later in
-the course, we'll also add tidyverse as a dependency. Since the
+the workshop, we'll also add tidyverse as a dependency. Since the
 tidyverse is a large collection of packages, the recommended way to add
 this particular dependency is with:
 
@@ -619,7 +619,7 @@ usethis::with_project(
 If you look in the `DESCRIPTION` file now, you see that the new
 `Depends` field has been added with `tidyverse` right below it. There
 are fairly technical reasons why we need to put tidyverse in the
-`Depends` field that you don't need to know about for this course, aside
+`Depends` field that you don't need to know about for this workshop, aside
 from the fact that it is a common practice in R projects. At least in
 this context, we use the `Depends` field for tidyverse because of one
 big reason: the `usethis::use_package()` function will complain if we
@@ -672,7 +672,7 @@ This is *very* **bad practice** and can have some unintended and serious
 consequences that you might not notice or that won't give any warning or
 error. The correct way of indicating which package a function comes from
 is instead by using `packagename::functionname`, which you've seen and
-used many times in this course. We won't get into the reasons why this
+used many times in this workshop. We won't get into the reasons why this
 is incorrect because it can quickly get quite technical.
 
 ::: {.callout-note appearance="minimal" collapse="true"}

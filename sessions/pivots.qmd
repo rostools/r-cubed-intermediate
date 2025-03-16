@@ -61,7 +61,7 @@ load(here("data/mmash.rda"))
 
 As we write more R code and do some simple analyses of the data, we are
 going to be knitting fairly often (depending on how long the analysis
-takes of course). The main reason for this is to ensure that whatever
+takes of workshop). The main reason for this is to ensure that whatever
 you are writing and coding will at least be reproducible on your
 computer, since Quarto is designed to ensure the document is
 reproducible.
@@ -150,7 +150,7 @@ argument is the data itself. The other arguments are:
 
 Both `pivot_longer()` and its opposite `pivot_wider()`, which we will
 cover later in the session, are incredibly powerful functions. We can't
-show close to everything it can do in this course, but if you want to
+show close to everything it can do in this workshop, but if you want to
 learn more, read up on the
 [documentation](https://tidyr.tidyverse.org/articles/pivot.html) for it.
 :::
@@ -391,7 +391,7 @@ Now that that works, let's render the document to HTML with
 
 > Time: 15 minutes.
 
-Using the same workflow we've been doing throughout this course, convert
+Using the same workflow we've been doing throughout this workshop, convert
 the code we just wrote above into a function.
 
 1.  Name the function `tidy_summarise_by_day`.

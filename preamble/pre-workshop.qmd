@@ -1,4 +1,4 @@
-# Pre-course tasks {#sec-pre-course}
+# Pre-workshop tasks {#sec-pre-workshop}
 
 ```{r setup}
 #| include: false
@@ -6,13 +6,13 @@ temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
 ```
 
-In order to participate in this course, you must complete this section
-for the pre-course tasks and finish with **completing the
+In order to participate in this workshop, you must complete this section
+for the pre-workshop tasks and finish with **completing the
 [survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)**
 at the end. These tasks are designed to make it easier for everyone to
-start the course with everything set up. For some of the tasks, you
+start the workshop with everything set up. For some of the tasks, you
 might not understand why you need to do them, but you will likely
-understand why once the course begins.
+understand why once the workshop begins.
 
 Depending on your skills and knowledge, these tasks could take between
 **3-7 hrs to finish**, so we suggest planning a full day to complete
@@ -25,8 +25,8 @@ to make sure everything is properly installed and set up.
 Here's the list of tasks you need to do. Specific details about them are
 found as you work through the tasks.
 
-1.  Read the learning objectives in @sec-pre-course-learning-objectives
-    for the pre-course tasks (below).
+1.  Read the learning objectives in @sec-pre-workshop-learning-objectives
+    for the pre-workshop tasks (below).
 2.  Read on how to read this website in @sec-reading-website.
 3.  Follow the installation instructions in @sec-install-programs.
     Install a version of R, RStudio, and Git that is as updated as
@@ -34,7 +34,7 @@ found as you work through the tasks.
     can take the **longest amount of time** because you have to contact
     your IT to install these packages.
 4.  Install the necessary R packages in @sec-install-r-packages.
-5.  Read about Git from the introduction course and configure Git on
+5.  Read about Git from the introduction workshop and configure Git on
     your computer in @sec-setup-git. If you haven't used Git before,
     this task could take a while because of the reading. Run the checks
     in this subsection to see if everything works. You'll later need to
@@ -47,20 +47,20 @@ found as you work through the tasks.
     maybe 30-90 minutes. Run a check in this subsection to see that
     everything is as expected. You'll later need to paste this output
     into the survey.
-9.  Read about the basic course details in @sec-course-details.
+9.  Read about the basic workshop details in @sec-workshop-details.
 10. Read the syllabus in @sec-syllabus.
 11. Read the [Code of
     Conduct](https://guides.rostools.org/conduct.html).
-12. **Complete the pre-course
+12. **Complete the pre-workshop
     [survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)**.
     This survey is pretty quick, maybe \~10 minutes.
 
 Check each section for exact details on completing these tasks.
 
-## Learning objectives {#sec-pre-course-learning-objectives}
+## Learning objectives {#sec-pre-workshop-learning-objectives}
 
-In general, these pre-course tasks are meant to help prepare you for the
-course and make sure everything is setup properly so the first session
+In general, these pre-workshop tasks are meant to help prepare you for the
+workshop and make sure everything is setup properly so the first session
 runs smoothly. However, some of these tasks are meant for learning as
 well as for general setup, so we have defined the following learning
 objectives for this page:
@@ -72,7 +72,7 @@ objectives for this page:
     record of what was done to process the data before analyzing it, and
     why that's important.
 
-## Reading the course website {#sec-reading-website}
+## Reading the workshop website {#sec-reading-website}
 
 ```{r}
 #| echo: false
@@ -101,16 +101,16 @@ cat(r3admin::read_template_pkg_install("inter"), sep = "\n")
 
 ## Setting up Git {#sec-setup-git}
 
-Since Git has already been covered in the Introduction course, we won't
-cover *learning it* during this course. However, since version control
+Since Git has already been covered in the Introduction workshop, we won't
+cover *learning it* during this workshop. However, since version control
 is a fundamental component of any modern data analysis workflow and
-*should be used*, we **will be using it throughout the course**. If you
+*should be used*, we **will be using it throughout the workshop**. If you
 have used or currently use Git, you can skip this section. If you
 haven't used it, please do these tasks:
 
-1.  Follow the [pre-course tasks for
-    Git](https://r-cubed-intro.rostools.org/preamble/pre-course.html#setting-up-git-and-github)
-    (*not* the GitHub tasks) from the introduction course. Specifically,
+1.  Follow the [pre-workshop tasks for
+    Git](https://r-cubed-intro.rostools.org/preamble/pre-workshop.html#setting-up-git-and-github)
+    (*not* the GitHub tasks) from the introduction workshop. Specifically,
     type in the RStudio Console:
 
     ``` {.r filename="Console"}
@@ -121,12 +121,12 @@ haven't used it, please do these tasks:
 
 2.  **Please read** through the [Version Control
     lesson](https://r-cubed-intro.rostools.org/sessions/version-control.html)
-    of the introduction course. *You don't need to do any of the
+    of the introduction workshop. *You don't need to do any of the
     exercises or activities*, but you are welcome to do them if it will
-    help you learn or understand it better. For most of the course, we
+    help you learn or understand it better. For most of the workshop, we
     will be using Git as shown in the [Using Git in
     RStudio](https://r-cubed-intro.rostools.org/sessions/version-control.html#using-git-in-rstudio)
-    section. Later on during the course, we might connect our projects
+    section. Later on during the workshop, we might connect our projects
     to GitHub, which is described in the [Synchronizing with
     GitHub](https://r-cubed-intro.rostools.org/sessions/version-control.html#synchronizing-with-github)
     section.
@@ -158,7 +158,7 @@ using Git, given the limited time available, we will not be going over
 how to use GitHub. If you want to learn about using GitHub, check out
 this
 [session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
-on it in the introduction course.
+on it in the introduction workshop.
 
 ## Create an R Project {#sec-create-r-project}
 
@@ -166,7 +166,7 @@ One of the basic steps to reproducibility and modern workflows in data
 analysis is to keep everything contained in a single location. In
 RStudio, this is done with R Projects. Please read all of [Section
 7.1](https://r-cubed-intro.rostools.org/sessions/project-management.html#what-is-a-project-and-why-use-it)
-from the introduction course to learn about R Projects and how they help
+from the introduction workshop to learn about R Projects and how they help
 keeping things self-contained. *You don't need to do any of the
 exercises or activities*.
 
@@ -186,7 +186,7 @@ we strongly strongly encourage:
     computer, like the `C:` drive in Windows or `/Users/` on Mac.
 
 These two things are the biggest source of errors, troubleshooting, and
-issues with participants when they do the course.
+issues with participants when they do the workshop.
 :::
 
 There are several ways to organise a project folder. We'll be using the
@@ -239,7 +239,7 @@ analysis. Please do these two tasks:
 
 1.  Please read over the [Quarto
     section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-quarto)
-    of the introduction course. If you use Quarto already, you can skip
+    of the introduction workshop. If you use Quarto already, you can skip
     this step.
 
 2.  Open up the `LearnR3` project, either by clicking the
@@ -262,30 +262,30 @@ usethis::with_project(
 )
 ```
 
-Throughout the course, we will use this document as a sandbox to test
+Throughout the workshop, we will use this document as a sandbox to test
 code out and then move the finished code to other files.
 
-## Download the course data {#sec-download-data}
+## Download the workshop data {#sec-download-data}
 
-To best demonstrate the concepts in the course, we ideally should work
+To best demonstrate the concepts in the workshop, we ideally should work
 on a real dataset to apply what we're going to learn. So for this
-course, we're going to use an openly licensed dataset on monitoring
+workshop, we're going to use an openly licensed dataset on monitoring
 sleep and activity (MMASH) [@Rossi2020; @Rossi2020a]. To begin learning
 about being reproducible and applying modern approaches to data
 analysis, we're going to write and save R code to download a dataset,
 prepare it a bit so it's at least a little usable, and then save it to
-your computer. The goal at the end of the course is to create a pipeline
+your computer. The goal at the end of the workshop is to create a pipeline
 to download the data, process and clean it, and save it in a form that
 makes it easier to analyze. Why don't we get you to download an already
 cleaned and prepared dataset? Because in the real world, the data you
-get is rarely all cleaned up and ready for you, and this course is about
+get is rarely all cleaned up and ready for you, and this workshop is about
 learning more advanced tools to do the data wrangling. Look over these
 tasks and then switch over to the [MMASH
 website](https://physionet.org/content/mmash/1.0.0/):
 
 1.  Look through the Data Description to get familiar with the dataset
     and see what is contained inside of it. We'll refer back to the Data
-    Description throughout the course as well as in the exercises.
+    Description throughout the workshop as well as in the exercises.
 2.  Look over the open license that allows you to re-use it, even for
     research purposes. Note: GDPR makes it stricter on how to share and
     use personal data, but it *does not prohibit sharing it or making it
@@ -331,10 +331,10 @@ library(here)
 
 The `{here}` package was described in the [Data management and
 wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html)
-of the introductory course and makes it easier to refer to other files
+of the introductory workshop and makes it easier to refer to other files
 in an R project. Read through the [section about the here
 package](https://r-cubed-intro.rostools.org/sessions/data-management.html#saving-datasets-as-files)
-in the introductory R course.
+in the introductory R workshop.
 
 R works based on the current *working directory*, which you can see on
 the top of the RStudio Console pane, which you can see in the red box
@@ -358,7 +358,7 @@ Project, or with `source()`), R runs everything assuming it starts in
 the `data-raw/` folder. This can make things tricky. What `here()` does
 is tell R to first look for the `.Rproj` file and then start looking for
 the file we actually want. This might not make sense yet, but as we go
-through the course, you will see why this is important to consider.
+through the workshop, you will see why this is important to consider.
 
 ::: {.callout-note appearance="default"}
 You don't need to run the below code. But if you want to see the
@@ -659,16 +659,16 @@ usethis::with_project(
 
 The `data-raw/mmash.R` script should look like this at this point:
 
-```{r pre-course-state-of-script}
+```{r pre-workshop-state-of-script}
 #| filename: "data-raw/mmash.R"
-#| file: "../R/pre-course-script.R"
+#| file: "../R/pre-workshop-script.R"
 #| eval: false
 ```
 
-```{r admin-pre-course-state-of-script}
+```{r admin-pre-workshop-state-of-script}
 #| include: false
 fs::file_copy(
-  here::here("R/pre-course-script.R"),
+  here::here("R/pre-workshop-script.R"),
   fs::path(project_path, "data-raw", "mmash.R"),
   overwrite = TRUE
 )
@@ -684,7 +684,7 @@ Too many comments can negatively impact readability, so as much as
 possible, write code in a way that explains what the code is doing,
 rather than rely on comments.
 
-You now have the data ready for the course! At this point, please run
+You now have the data ready for the workshop! At this point, please run
 this function in the Console:
 
 ``` {.r filename="Console"}
@@ -740,32 +740,32 @@ doesn't, start over by deleting all *but* the `mmash.R` and
 your output looks a bit like this, then copy and paste the output into
 the survey question at the end.
 
-## Basic course details {#sec-course-details}
+## Basic workshop details {#sec-workshop-details}
 
-Most of the course description is found in the syllabus in
+Most of the workshop description is found in the syllabus in
 @sec-syllabus. If you haven't read it, **please read it now**. Read over
-what the course will cover, what we expect you to learn at the end of
+what the workshop will cover, what we expect you to learn at the end of
 it, and what our basic assumptions are about who you are and what you
-know. The final pre-course task is a survey that asks some questions on
+know. The final pre-workshop task is a survey that asks some questions on
 if you've read and understood it.
 
-One goal of the course is to teach about open science, and true to our
-mission, we practice what we preach. The course material is publicly
+One goal of the workshop is to teach about open science, and true to our
+mission, we practice what we preach. The workshop material is publicly
 accessible (all on this website) and [openly
 licensed](index.html#licensing) so you can use and re-use it for free!
 The material and table of contents on the side is listed in the order
-that we will cover in the course.
+that we will cover in the workshop.
 
 We have a [Code of Conduct](https://guides.rostools.org/conduct.html).
 If you haven't read it, **read it now**. The survey at the end will ask
-about Conduct. We want to make sure this course is a supportive and safe
+about Conduct. We want to make sure this workshop is a supportive and safe
 environment for learning, so this Code of Conduct is important.
 
-You're almost done. Please fill out the [**pre-course
+You're almost done. Please fill out the [**pre-workshop
 survey**](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)
 to finish this assignment.
 
-See you at the course!
+See you at the workshop!
 
 ```{r admin-save-project}
 #| include: false
@@ -773,7 +773,7 @@ withr::with_dir(
   project_path,
   {
     tar(
-      tarfile = here::here("_temp", "pre-course.tar.gz"),
+      tarfile = here::here("_temp", "pre-workshop.tar.gz"),
       files = fs::dir_ls(".", all = TRUE, recurse = TRUE)
     )
   }

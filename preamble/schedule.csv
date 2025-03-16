@@ -1,6 +1,6 @@
 Day,Time,Session topic,icon,link
 Day 1,9:30,Arrival; coffee and snacks,mug-hot,
-Day 1,10:00,Introduction to the course,person-chalkboard,../slides/introduction.html
+Day 1,10:00,Introduction to the workshop,person-chalkboard,../slides/introduction.html
 Day 1,10:30,Basic setup and workflow,laptop-code,../sessions/introduction.html
 Day 1,11:00,"Importing data, fast! (with short break)",laptop-code,../sessions/importing.html
 Day 1,12:30,Lunch,utensils,

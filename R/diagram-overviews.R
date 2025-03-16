@@ -1,6 +1,6 @@
 library(here)
 
-#' Create a diagram of the overview of the course and workflow.
+#' Create a diagram of the overview of the workshop and workflow.
 #'
 #' @param section_num A number indicating which section to highlight. 0 = none.
 #'

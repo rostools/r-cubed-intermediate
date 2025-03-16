@@ -121,7 +121,7 @@ Emphasize this next paragraph.
 Writing effective and proper for loops is actually quite tricky and
 difficult to easily explain. Because of this and because there are
 better and easier ways of writing R code to replace for loops, we will
-**not** be covering loops in this course.
+**not** be covering loops in this workshop.
 
 A **functional** on the other hand is a function that can also use a
 function as one of its arguments. @fig-functionals shows how the
@@ -481,7 +481,7 @@ user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
 
-<!-- TODO: Delete the text about the library(fs), since that will be fixed after the course -->
+<!-- TODO: Delete the text about the library(fs), since that will be fixed after the workshop -->
 
 To test that things work, we'll create an HTML document from our Quarto
 document by using the "Render" / "Knit" button at the top of the pane or
@@ -522,7 +522,7 @@ We're taking a quick detour to briefly talk about a concept that
 perfectly illustrates how vectorization and functionals fit into doing
 data analysis. The concept is called the
 [split-apply-combine](https://r-cubed-intro.rostools.org/sessions/data-management.html#split-apply-combine-summarizing-data)
-technique, which we covered in the beginner R course. The method is:
+technique, which we covered in the beginner R workshop. The method is:
 
 1.  Split the data into groups (e.g. diabetes status).
 2.  Apply some analysis or statistics to each group (e.g. finding the
@@ -559,7 +559,7 @@ There are many "verbs" in `{dplyr}`, like `select()`, `rename()`,
 `mutate()`, `summarise()`, and `group_by()` (covered in more detail in
 the [Data Management and
 Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
-session of the beginner course). The common usage of these verbs is
+session of the beginner workshop). The common usage of these verbs is
 through acting on and directly using the column names (e.g. without `"`
 quotes around the column name like with
 `saliva_df |> select(cortisol_norm)`). But many `{dplyr}` verbs can also
@@ -579,7 +579,7 @@ saliva_df |>
 ::: aside
 Don't know what the `|>` pipe is? Check out [the section on
 it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
-from the beginner course.
+from the beginner workshop.
 :::
 
 If you want to calculate the mean of multiple columns, you might think
