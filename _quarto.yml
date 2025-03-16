@@ -22,7 +22,7 @@ book:
       chapters:
       - preamble/syllabus.qmd
       - preamble/schedule.qmd
-      - preamble/pre-course.qmd
+      - preamble/pre-workshop.qmd
     - part: "Sessions"
       chapters:
       - sessions/introduction.qmd

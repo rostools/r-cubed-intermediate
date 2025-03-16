@@ -8,7 +8,7 @@ temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
 
 untar(
-  tarfile = here::here("_temp", "pre-course.tar.gz"),
+  tarfile = here::here("_temp", "pre-workshop.tar.gz"),
   exdir = project_path
 )
 
@@ -25,7 +25,7 @@ usethis::with_project(
 During this session we'll be introducing concepts for both the
 "*Download raw data*" block as well as the "*Workflow*" block in
 @fig-overview-download-data. You already downloaded and unzipped the raw
-data during the [pre-course](/preamble/pre-course.qmd) tasks and here
+data during the [pre-workshop](/preamble/pre-workshop.qmd) tasks and here
 we'll continue the process by now importing it into R.
 
 ![Section of the overall workflow we will be

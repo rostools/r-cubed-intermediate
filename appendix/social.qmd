@@ -2,7 +2,7 @@
 
 As you get more experienced in coding, the role of your network becomes
 increasingly important both for continued learning, but also for
-collaboration with others skilled in R. So, part of the course is also
+collaboration with others skilled in R. So, part of the workshop is also
 about getting to know others!
 
 So while we have formal social activities, try to seek out someone you

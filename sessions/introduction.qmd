@@ -1,4 +1,4 @@
-# Introduction to course {#sec-introduction}
+# Introduction to workshop {#sec-introduction}
 
 ```{r, include=FALSE}
 # To trigger downlit usage.
@@ -37,12 +37,12 @@ Big picture aim:
 > downloading multiple data files, processing and cleaning them, and
 > saving them as a single data file.
 
-In our case during the course, we ultimately want to process the MMASH
+In our case during the workshop, we ultimately want to process the MMASH
 data so that we have a single dataset to work with for later
 (hypothetical) analyses.
 
 We also want to make sure that whatever processing we do to the data is
-reproducible. So everything we'll do throughout the course is done in
+reproducible. So everything we'll do throughout the workshop is done in
 order to achieve our aim of making a single dataset and to make things
 reproducible.
 
@@ -85,7 +85,7 @@ LearnR3
 └── TODO.md
 ```
 
-### End of course: {.unnumbered}
+### End of workshop: {.unnumbered}
 
 ```         
 LearnR3
@@ -130,7 +130,7 @@ covering.](/images/overview.svg){#fig-overview}
 Our workflow and process will be something like:
 
 -   Make an R script (`data-raw/mmash.R`) to download the dataset
-    (`data-raw/mmash/`), which you already did in the pre-course tasks.
+    (`data-raw/mmash/`), which you already did in the pre-workshop tasks.
     -   We do this to keep the code for downloading and processing the
         data together with the raw data.
 -   Use Quarto (`doc/learning.qmd`) to write and test out code, convert
@@ -192,9 +192,9 @@ Our workflow and process will be something like:
         to doing better science since it fits with the philosophy of
         doing science (e.g., transparency, reproducibility, and
         documentation).
-    -   **Note**: While we covered GitHub in the introductory course, we
-        can't assume everyone will have taken that course. Because of
-        that, we won't be using GitHub in this course.
+    -   **Note**: While we covered GitHub in the introductory workshop, we
+        can't assume everyone will have taken that workshop. Because of
+        that, we won't be using GitHub in this workshop.
 ::::
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -233,7 +233,7 @@ mean, as well as where the history is located.
 
 Now that we've gone over the overview, let's get our project ready for
 the next steps. But first, we need to do a few things. Since we did all
-that work in the pre-course tasks downloading the data and unzipping it,
+that work in the pre-workshop tasks downloading the data and unzipping it,
 we need to save these changes to the Git history. Open the Git interface
 with either the Git icon at the top near the menu bar, or with
 {{< var keybind.git >}}. When the Git interface opens up we'll click the
@@ -251,12 +251,12 @@ fs::file_delete("TODO.md")
 ```
 
 Then, open up the `data-raw/mmash.R` file and we'll add something that
-will make the rest of the course a bit easier. We'll include some code
+will make the rest of the workshop a bit easier. We'll include some code
 to delete the created `data-raw/mmash/` folder so this script can run
 cleanly each time. Place the code right below where the
 `download.file()` code is.
 
-<!-- TODO: Remove this after course ends, since the same info is in pre-course now -->
+<!-- TODO: Remove this after workshop ends, since the same info is in pre-workshop now -->
 
 ```{r data-raw-mmash-comment-out}
 #| filename: "data-raw/mmash.R"
@@ -278,12 +278,12 @@ that, we'll follow a the tidyverse [style
 guide](https://style.tidyverse.org/) and use the package called
 `{styler}`, which automatically fixes code to fit the style guide. With
 `{styler}` you can style multiple files at once, one file at a time, or
-based on code you select and highlight. Throughout the course, we will
+based on code you select and highlight. Throughout the workshop, we will
 re-style the file were are working on a lot. We'll do that by using the
 Command Palette by typing {{< var keybind.palette >}}, followed by
 typing "style file". The first one that pops up, which should say "Style
 active file", will be the one to select and use. We'll get lots of
-chances to use it as we go through the course. The thing to note is that
+chances to use it as we go through the workshop. The thing to note is that
 `{styler}` isn't always perfect, so you might need to sometimes manually
 fix code
 

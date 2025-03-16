@@ -1,9 +1,9 @@
 # Schedule {#sec-schedule}
 
-The course is structured as a series of participatory live-coding
+The workshop is structured as a series of participatory live-coding
 sessions interspersed with hands-on exercises and group work, using a
 real-world dataset. There are some lectures given, mainly at the start
-and end of the course. The general schedule outline is shown in the
+and end of the workshop. The general schedule outline is shown in the
 below table. This is **not a fixed schedule** of the timings of each
 session --- some may be shorter and others may be longer. Instead, it is
 meant to be an approximate guide and overview.
