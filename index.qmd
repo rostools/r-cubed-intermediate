@@ -15,28 +15,29 @@ knitr::write_bib(
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
 environments. As our tools for generating data become more sophisticated
-and powerful, we also need to start using more sophisticated and
-powerful tools for processing it. Training on how to use these tools and
-how to build modern data analysis skills is lacking for researchers,
-even though this work is highly time-consuming and technical. As a
-consequence of an unawareness of the need for these skills, how
+and powerful, we also need to use more sophisticated and powerful tools
+for processing the data. Training on how to use these tools and how to
+build modern data processing skills is lacking for researchers, even
+though this work is extremely time-consuming and technical. As a
+consequence of this lack of awareness for the need of these skills, how
 *exactly* data is processed is poorly, if at all, described in
 scientific studies. This hidden aspect of research could have major
-impacts on the reproducibility of studies. Therefore, this workshop was
-created specifically to start addressing these types of problems.
+impacts on the reproducibility of studies. This workshop is therefore
+aimed to specifically to start addressing these types of problems.
 
-The workshop is designed as a series of participatory live-coding lessons,
-where the instructor and learners code together, and is interspersed
-with hands-on exercises and group work using real-world datasets. This
-website contains all of the material for the workshop, from reading
-material to exercises to images. It is structured as a book, with
-"chapters" as lessons, given in order of appearance. We make heavy use
-of the website throughout the workshop where code-along sessions follow
-the material on the website nearly exactly (with slight modifications
-for time or more detailed explanations).
+The workshop is designed as a series of participatory live-coding
+lessons, where the instructor and learners code together, and is
+interspersed with hands-on exercises, discussion time, reading tasks,
+and group project work, all while using a real-world (open) dataset.
+This website contains *all* of the material for the workshop, including
+for both the learner and the instructor. It is structured as a book,
+with "chapters" as sessions, given in order of appearance. We make heavy
+use of the website throughout the workshop where code-along sessions
+follow the material on the website nearly exactly (with slight
+modifications for time or more detailed explanations).
 
 The workshop material was created using [Quarto](https://quarto.org) to
-write the lessons and create the book format,
+write the material and create the book format,
 [GitHub](https://github.com/) to host the [Git](https://git-scm.com/)
 repository of the material, and [GitHub
 Actions](https://github.com/features/actions) with
@@ -58,22 +59,22 @@ make comments and give feedback for the material.
 
 This website and its content are targeted to three groups:
 
-1.  For the **learners** to use during the workshop, both to follow along
-    in case they get lost and also to use as a reference after the
-    workshop ends. The learner is someone who is currently or will soon
-    actively be doing research (e.g. a PhD or postdoc), who is likely in
-    biomedical research, and who has no or little knowledge on coding
-    in R. A more detailed description of who the learner is can be found
-    in @sec-is-it-for-you.
+1.  For the **learners** to use during the workshop, both to follow
+    along in case they get lost and also to use as a reference after the
+    workshop ends. We assume the learner is someone who is currently or
+    will soon actively be doing research (e.g. a PhD or postdoc), who is
+    likely in biomedical research (but doesn't have to be), and who has
+    limited knowledge on coding in R aside from at least having taken
+    the [introductory workshop](https://r-cubed-intro.rostools.org). A
+    more detailed description of who the learner is can be found in
+    @sec-is-it-for-you.
 2.  For the **instructors** to use as a guide for when they do the
-    code-along sessions and lectures.
+    code-along sessions and presentations.
 3.  For those who are **interested in teaching**, who may not have much
     experience or may not know where to start, to use this website as a
     guide to running and instructing their own workshops.
 
 ## Re-use and licensing {#licensing}
-
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License" style="border-width:0"/></a>
 
 The workshop is licensed under the [Creative Commons Attribution 4.0
 International License](https://creativecommons.org/licenses/by/4.0/) so
@@ -94,10 +95,11 @@ The workshop material draws inspiration from these excellent resources:
 
 The [Danish Diabetes and Endocrinology
 Academy](https://www.ddeacademy.dk/) hosted, organized, and sponsored
-this workshop. A huge thanks to them for their involvement, support, and
-sponsorship! [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/)
-and [Aarhus University](https://international.au.dk/) employs Luke, who
-is the lead instructor and curriculum developer.
+this workshop many times. A huge thanks to them for their involvement,
+support, and sponsorship! [Steno Diabetes Center
+Aarhus](https://www.stenoaarhus.dk/) and [Aarhus
+University](https://international.au.dk/) employs Luke, who is the lead
+instructor and educational resource developer.
 
 ::: {layout-ncol="2"}
 ![](/images/ddea-logo.png){width="220px" fig-align="center"

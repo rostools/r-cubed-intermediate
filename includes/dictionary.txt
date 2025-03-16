@@ -8,6 +8,7 @@ callout
 coloured
 CRU
 csv
+ddea
 DOI
 dplyr
 EEB
@@ -31,3 +32,4 @@ Netlify
 OneDrive
 Revealjs
 Rproj
+SDCA
