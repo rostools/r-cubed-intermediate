@@ -11,44 +11,45 @@ requested or required of scientists and researchers, but training on
 these practices has not kept pace. This workshop intends to help bridge
 that gap and covers the fundamentals and workflow of data analysis in R.
 
-This repository contains the lesson, lecture, and assignment material
-for the workshop, including the website source files and other associated
-workshop administration files.
+This repository contains the educational material (code-alongs,
+exercises, activities, presentations), including the website source
+files and other associated workshop administration files.
 
 For more detail on the workshop, check out the
 [syllabus](https://r-cubed-intermediate.rostools.org/preamble/syllabus.html).
 
 ## Instructional Design
 
-The lectures and lessons in this workshop are designed to be presented
-primarily with a participatory live-coding approach. This involves an
-instructor typing and running code in
-[RStudio](https://www.rstudio.com/) in front of the class, while the
-class follows along using their own computers. Challenges are
-interspersed in the lesson material, allowing participants to
-collaboratively work on smaller coding problems for a few minutes. All
-lesson materials are provided ahead of time on the workshop website for
-participants to refer to during lectures. Throughout the workshop,
-participants work in small groups to complete the exercises together.
+The workshop is designed primary for in-person instruction with a
+participatory live-coding approach. This involves an instructor typing
+and running code in [RStudio](https://www.rstudio.com/) in front of the
+class, while participants follow along using their own computers. A
+variety of learning activities, like hands-on exercises, discussion
+time, reading tasks, and group project work, are interspersed throughout
+the material in order to reinforce learning. All the material is
+provided ahead of time on the workshop website for participants to refer
+to during and after the workshop. Throughout the workshop, participants
+sit in small groups to get to know one another and to do the activities
+together.
 
-## Lesson content
+## Educational content
 
-The teaching material is found mainly in the project folders:
+The material is found mainly in the folders:
 
 -   `preamble/`: Contains the syllabus and the schedule files.
 -   `sessions/`: Contains the code-along teaching material, as well as
-    associated links to the lecture slides.
+    associated links to the presentation slides.
 -   `slides/`: Contains the slides, created as Revealjs HTML slides by
     using Quarto.
 
-The website is generated from [Quarto](https://quarto.org), so follows
-the file and folder structure conventions from that package.
+The website is generated from [Quarto](https://quarto.org), so it
+follows Quarto's structure and conventions.
 
 ## Installing necessary packages
 
 Packages used and depended on for this workshop are included in the
 `DESCRIPTION` file. To install the packages, run this function in the
-root directory (where the `r-cubed-intermediate.Rproj` file is located:
+root directory (where the `r-cubed-intermediate.Rproj` file is located):
 
 ``` r
 # install.packages("pak")
@@ -70,13 +71,8 @@ Much of the lesson material was taken and modified from multiple sources
 including:
 
 -   [UofTCoders Reproducible Quantitative Methods for
-    EEB](https://uoftcoders.github.io/rcourse/) (which I helped develop
-    and is the inspiration and basis for this workshop)
+    EEB](https://uoftcoders.github.io/rcourse/)
 -   [Software and Data Carpentry](https://carpentries.org/) workshop
     material
 -   [UofTCoders
-    material](https://uoftcoders.github.io/studyGroup/lessons/) and [AU
-    CRU material](https://au-cru.github.io/site/material/), from the
-    peer led and contributed lessons
--   Some material from my [*"Reproducible Quantitative Methods: Data
-    analysis workflow using R"*](https://v1--dda-rcourse.netlify.com/)
+    material](https://uoftcoders.github.io/studyGroup/lessons/)
