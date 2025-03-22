@@ -1,4 +1,4 @@
-# Importing data, fast! {#sec-import-data}
+# Pre-process data as you import it {#sec-importing}
 
 ```{r setup}
 #| include: false
@@ -25,8 +25,8 @@ usethis::with_project(
 During this session we'll be introducing concepts for both the
 "*Download raw data*" block as well as the "*Workflow*" block in
 @fig-overview-download-data. You already downloaded and unzipped the raw
-data during the [pre-workshop](/preamble/pre-workshop.qmd) tasks and here
-we'll continue the process by now importing it into R.
+data during the [pre-workshop](/preamble/pre-workshop.qmd) tasks and
+here we'll continue the process by now importing it into R.
 
 ![Section of the overall workflow we will be
 covering.](/images/overview-download-data.svg){#fig-overview-download-data}
@@ -121,63 +121,8 @@ You'll see the output mention using `spec()` to use in the argument
 `col_types`. And that it has 5 columns, one called `...1`. If we look at
 the CSV file though, we see that there are only four columns with names,
 but that technically there is a first empty column without a column
-header. So, let's figure out what this message means. Let's go to the
-**Console** and type out:
-
-``` {.r filename="Console"}
-?readr::spec
-```
-
-In the documentation, we see that it says:
-
-> "extracts the full column specification from a tibble..."
-
-Without seeing the output, it's not clear what "specification" means.
-Use `spec()` on the dataset object. In the **Console** again:
-
-```{r}
-#| filename: "Console"
-spec(user_1_info_data)
-```
-
-This shows that a specification is a list and description of which
-columns are imported into R and what data types they are given. For
-instance, `col_double()` means numeric (double is how computers
-represent non-integer numbers) and `col_character()` means a character
-data type. Next, let's see what the message meant about `col_types`.
-Let's check out the help documentation for `read_csv()` by typing in the
-**Console**:
-
-``` {.r filename="Console"}
-?readr::read_csv
-```
-
-And if we scroll down to the explanation of `col_types`:
-
-> "One of NULL, a cols() specification, or a string. See
-> vignette("readr") for more details."
-
-It says to use a "cols() specification", which is the output of
-`spec()`. Copy the output from `spec()` and paste it into the
-`col_types` argument of `read_csv()`.
-
-```{r read-csv-with-error}
-#| filename: "doc/learning.qmd"
-user_1_info_data <- read_csv(
-  user_1_info_file,
-  col_types = cols(
-    ...1 = col_double(),
-    Gender = col_character(),
-    Weight = col_double(),
-    Height = col_double(),
-    Age = col_double()
-  )
-)
-```
-
-We get a funny message though. We copied and pasted, so what's going on?
-If you recall, the `user_info.csv` file has an empty column name.
-Looking at the [data
+header. If you recall, the `user_info.csv` file has an empty column
+name. Looking at the [data
 dictionary](https://physionet.org/content/mmash/1.0.0/) it doesn't seem
 there is any reference to this column, so it likely isn't important.
 More than likely, `{readr}` is complaining about this empty column name
@@ -206,14 +151,7 @@ could drop the first column with `col_select = -1`!
 #| filename: "doc/learning.qmd"
 user_1_info_data <- read_csv(
   user_1_info_file,
-  col_select = -1,
-  col_types = cols(
-    ...1 = col_double(),
-    Gender = col_character(),
-    Weight = col_double(),
-    Height = col_double(),
-    Age = col_double()
-  )
+  col_select = -1
 )
 ```
 
@@ -251,72 +189,18 @@ about this in later sessions.
 user_1_info_data <- read_csv(
   user_1_info_file,
   col_select = -1,
-  col_types = cols(
-    ...1 = col_double(),
-    Gender = col_character(),
-    Weight = col_double(),
-    Height = col_double(),
-    Age = col_double()
-  ),
   name_repair = snakecase::to_snake_case
 )
 ```
 
-Now we have another warning though. It's probably because the names are
-repaired to snake case before the `col_types` are used. Let's try
-repeating the `read_csv()` to `spec()` to `read_csv()` workflow we just
-used to see if that fixes the problem.
-
-```{r use-spec-after-name-repair}
-#| filename: "doc/learning.qmd"
-user_1_info_data <- read_csv(
-  user_1_info_file,
-  col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
-spec(user_1_info_data)
-user_1_info_data <- read_csv(
-  user_1_info_file,
-  col_select = -1,
-  col_types = cols(
-    col_skip(),
-    gender = col_character(),
-    weight = col_double(),
-    height = col_double(),
-    age = col_double()
-  ),
-  name_repair = snakecase::to_snake_case
-)
-```
-
-That fixed it! No more messages or warnings! We can now look at the
-data:
+We can now look at the data:
 
 ```{r print-user-info-data}
 #| filename: "Console"
 user_1_info_data
 ```
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Verbally emphasize that when you read from a larger dataset (that isn't
-your project specific dataset), its better to *explicitly* select the
-columns you want. It's faster to import and you make it clear from the
-beginning which variables you want.
-:::
-
-Why might we use `spec()` and `col_types`? It's good practice, at least
-when reading from a larger dataset and not your project specific
-dataset, to read *only* the columns you need. Depending on the size of
-the dataset, it could take a long time to load everything, which may not
-be very efficient if you only intend to use some parts of the dataset
-and not all of it. And sometimes, `spec()` incorrectly guesses the
-column types, so using `col_types = cols()` can fix those problems.
-
-If you have a lot of columns in your dataset, then you can make use of
-`col_select` or `cols_only()` to keep only the columns you want. Before
-moving on to the exercise, run `{styler}` with
+Before moving on to the exercise, run `{styler}` with
 {{< var keybind.styler >}}, then **add and commit** the changes to the
 Git history through the RStudio Git interface with
 {{< var keybind.git >}}.
@@ -342,17 +226,10 @@ data.
 
 ``` {.r filename="doc/learning.qmd"}
 user_1_saliva_file <- here("data-raw/mmash/user_1/___")
-user_1_saliva_data_prep <- read_csv(
-    user_1_saliva_file,
-    col_select = ___,
-    name_repair = ___
-)
-___(user_1_saliva_data_prep)
 
 user_1_saliva_data <- read_csv(
     user_1_saliva_file,
     col_select = ___,
-    col_types = ___,
     name_repair = ___
 )
 ```
@@ -363,22 +240,10 @@ user_1_saliva_data <- read_csv(
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
-user_1_saliva_data_prep <- read_csv(
-  user_1_saliva_file,
-  col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
-spec(user_1_saliva_data_prep)
 
 user_1_saliva_data <- read_csv(
   user_1_saliva_file,
   col_select = -1,
-  col_types = cols(
-    col_skip(),
-    samples = col_character(),
-    cortisol_norm = col_double(),
-    melatonin_norm = col_double()
-  ),
   name_repair = snakecase::to_snake_case
 )
 ```
@@ -389,9 +254,9 @@ Sometimes you may have a dataset that's just a bit too large. Sometimes
 `{readr}` may not have enough information to guess the data type of the
 column. Or maybe there are hundreds or thousands of columns in your data
 and you only want to import specific columns. In these cases, we can do
-a trick: read in the first few lines of the dataset, use `spec()` and
-paste in the output into the `col_type` argument, and then keep only the
-columns you want to keep.
+a trick: read in the first few lines of the dataset to prototype your code
+to make sure it works. Reading fewer data into R is much faster than
+reading in the entire dataset.
 
 Let's do this on the `RR.csv` file. We can see from the file size that
 it is bigger than most of the other files (\~2Mb). So, we'll use this
@@ -408,50 +273,16 @@ column that we will drop.
 ```{r import-some-of-data-trick}
 #| filename: "doc/learning.qmd"
 user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
-user_1_rr_data_prep <- read_csv(
+user_1_rr_data <- read_csv(
   user_1_rr_file,
   n_max = 100,
   col_select = -1,
   name_repair = snakecase::to_snake_case
 )
-spec(user_1_rr_data_prep)
 ```
 
-::: {.callout-warning appearance="default"}
-Some people may see `time` set as something like `col_double()` or
-`col_character()`. This is great example of why we would use `spec()`
-and `col_types` to explicitly tell R what the data type the variable
-should be. If yours is not `col_time()`, after you paste the spec output
-into the `col_type` argument of `readr::read_csv()`, fix it so it is
-`col_time(format = "")`.
-:::
-
-Like with last time, copy and paste the output into a new use of
-`read_csv()`. Add the `name_repair` argument with
-`snakecase::to_snake_case`. Don't forget to also remove the last `,` at
-the end! Make sure to remove the `n_max` argument, since we want to
-import in the whole dataset.
-
-```{r}
-#| filename: "doc/learning.qmd"
-user_1_rr_data <- read_csv(
-  user_1_rr_file,
-  col_select = -1,
-  col_types = cols(
-    col_skip(),
-    ibi_s = col_double(),
-    day = col_double(),
-    # Converts to seconds
-    time = col_time(format = "")
-  ),
-  name_repair = snakecase::to_snake_case
-)
-```
-
-There's a new column type: `col_time()`. To see all the other types of
-column specifications, in the **Console** type out `col_` and then hit
-the Tab key. You'll see other types, like `col_date`, `col_factor`, and
-so on. Right, back to the data, what does it look like?
+We'll use `n_max` to help us prototype our code, since it is faster to
+import only a few rows. We can look at the data:
 
 ```{r}
 #| filename: "Console"
@@ -483,11 +314,9 @@ the `Actigraph.csv` file from `user_1/`.
 1.  Set the file path to the dataset with `here()`.
 2.  Read in a max of 100 rows for `n_max` and exclude the first column
     with `col_select = -1`.
-3.  Use `spec()` to output the column specification and paste the
-    results into `col_types()`.
-4.  Render the Quarto document with {{< var keybind.render >}} to
+3.  Render the Quarto document with {{< var keybind.render >}} to
     regenerate the HTML document.
-5.  If everything works, run `{styler}` with {{< var keybind.styler >}}
+4.  If everything works, run `{styler}` with {{< var keybind.styler >}}
     and then **add and commit** the new changes to the Git history with
     {{< var keybind.git >}}
 
@@ -495,21 +324,11 @@ Use this template as a guide for completing this exercise.
 
 ``` {.r filename="doc/learning.qmd"}
 user_1_actigraph_file <- here("data-raw/mmash/user_1/___")
-user_1_actigraph_data_prep <- ___(
+user_1_actigraph_data <- ___(
     ___,
     n_max = ___,
     col_select = ___,
     name_repair = ___
-)
-___(user_1_actigraph_data_prep)
-
-user_1_actigraph_data <- ___(
-    user_1_actigraph_file,
-    col_select = ___,
-    col_types = ___(
-        ___
-    ),
-    ___ = ___
 )
 ```
 
@@ -519,42 +338,20 @@ user_1_actigraph_data <- ___(
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
 # Use first 100 or so lines to get spec
 user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
-user_1_actigraph_data_prep <- read_csv(
+user_1_actigraph_data <- read_csv(
   user_1_actigraph_file,
   n_max = 100,
   col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
-spec(user_1_actigraph_data_prep)
-
-user_1_actigraph_data <- read_csv(
-  user_1_actigraph_file,
-  col_select = -1,
-  col_types = cols(
-    col_skip(),
-    axis_1 = col_double(),
-    axis_2 = col_double(),
-    axis_3 = col_double(),
-    steps = col_double(),
-    hr = col_double(),
-    inclinometer_off = col_double(),
-    inclinometer_standing = col_double(),
-    inclinometer_sitting = col_double(),
-    inclinometer_lying = col_double(),
-    vector_magnitude = col_double(),
-    day = col_double(),
-    time = col_time(format = "")
-  ),
   name_repair = snakecase::to_snake_case
 )
 ```
 
 ## :speech_balloon: Discussion activity: Experiences with cleaning data
 
-**Time: ~10 minutes.**
+**Time: \~10 minutes.**
 
-As we prepare for the next session, get up and discuss with you neighbour 
-some of the following questions:
+As we prepare for the next session, get up and discuss with you
+neighbour some of the following questions:
 
 -   Share a positive or exciting experience you had with cleaning,
     processing, and preparing data for later analysis. It can be recent
@@ -578,9 +375,8 @@ next session.
     (e.g. for `.xlsx` use `{readxl}`).
 -   Use `read_csv()` for fast importing of plain text type files (e.g.
     csv).
--   Use `spec()` to diagnose importing issues.
--   Use `col_types =` and `col_select =` arguments in `read_csv()` to
-    import only the data you need.
+-   Use `col_select =` arguments in `read_csv()` to import only the data
+    you need.
 -   Fix column names to match a style using `name_repair =` argument in
     `read_csv()`.
 -   For very large datasets, importing in the first 100-1000 rows using
