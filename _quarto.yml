@@ -34,7 +34,6 @@ book:
       - sessions/hands-on-work.qmd
       - sessions/what-next.qmd
   appendices:
-    - appendix/social.qmd
     - appendix/for-instructors.qmd
     - appendix/extras.qmd
     - LICENSE.md

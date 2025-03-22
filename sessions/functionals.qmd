@@ -940,6 +940,19 @@ Next, go to the Quarto document and again delete **everything** below
 the `setup` code chunk. After it has been deleted, add and commit the
 changes to the Git history with {{< var keybind.git >}}.
 
+## :speech_balloon: Discussion activity: Incorporating functionals in your own work
+
+**Time: ~10 minutes.**
+
+As we prepare for the next session, discuss with your neighbour or group
+the following question:
+
+-   Think about the functions and functionals sessions. Discuss with
+    your group some ideas on how you can implement making functions and
+    using functionals in your work. What are some things you do
+    repetitively (in code or general work) that you think would be great
+    to have simplified or automated.
+
 ## Summary
 
 -   R is a functional programming language:
