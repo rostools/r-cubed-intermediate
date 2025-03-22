@@ -2,7 +2,7 @@
     just --list --unsorted
 
 # Run all recipes
-run-all: install-dependencies spell-check style build-site
+run-all: install-dependencies spell-check style build-site 
 
 # Install package dependencies
 install-dependencies:
@@ -26,7 +26,10 @@ spell-check:
 # Style all R code
 style:
   #!/usr/bin/Rscript
-  styler::style_dir(here::here())
+  styler::style_dir(
+    here::here(),
+    exclude_dirs = c(".quarto", "_extensions"),
+  )
 
 # Build Quarto website
 build-site:
