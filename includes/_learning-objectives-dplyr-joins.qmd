@@ -1,0 +1,11 @@
+1.  Describe some ways to join or "bind" data and identify which join is
+    appropriate for a given situation. Then apply `{dplyr}`'s
+    `full_join()` function to join two datasets together into one single
+    dataset.
+
+2.  Demonstrate how to use functionals to repeatedly join more than two
+    datasets together.
+
+3.  Apply the function `case_when()` in situations that require nested
+    conditionals (if-else).
+
