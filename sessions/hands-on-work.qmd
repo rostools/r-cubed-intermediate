@@ -26,8 +26,7 @@ process, clean, join, and eventually analyze your datasets. Listed below
 are the general workflows we've covered and that you can use as a
 guideline to complete the following (optional) exercises and group work.
 
--   Import with the `read_csv()`, and optionally use `spec()` to
-    `read_csv()` again to select specific variables.
+-   Import with the `read_csv()`.
 -   Convert importing into a function in a Quarto document, move to the
     `R/function.R` script, restarting R, and `source()`.
 -   Test that joining datasets into a final form works properly while in
@@ -58,8 +57,8 @@ other datasets. Complete these tasks in the `doc/learning.qmd` file:
 1.  Create a new header called `## Exercise: Importing activity data`
 2.  Create a new code chunk below this new header
     {{< var keybind.chunk >}}.
-3.  Starting the workflow from the beginning (e.g. with the `spec()`
-    process), write code that imports the `Activity.csv` data into R.
+3.  Starting the workflow from the beginning, write code that imports 
+    the `Activity.csv` data into R.
 4.  Convert this code into a new function using the workflow you've used
     from this workshop:
     -   Call the new function `import_activity`.

@@ -351,7 +351,7 @@ Interface by using {{< var keybind.git >}}.
 > Time: 15 minutes.
 
 Take the code you created for importing the saliva data set from
-@sec-ex-import-saliva (*not* the code related to using `spec()`) and
+@sec-ex-import-saliva and
 make it into a function. It looks like the code below.
 
 ``` {.r filename="doc/learning.qmd"}
