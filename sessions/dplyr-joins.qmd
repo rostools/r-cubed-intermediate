@@ -18,7 +18,7 @@ covering.](/images/overview-create-project-data.svg){#fig-overview-create-projec
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-joins.qmd >}}
+{{< include /includes/_learning-objectives-dplyr-joins.qmd >}}
 
 ## Processing character data
 

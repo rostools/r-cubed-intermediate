@@ -29,11 +29,11 @@ is to enable you to:
 This aim is broken down into specific learning objectives that are
 spread across the workshop's sessions. The workshop will enable you to:
 
-{{< include /include/_learning-objectives-importing.qmd >}}
-{{< include /include/_learning-objectives-functions.qmd >}}
-{{< include /include/_learning-objectives-functionals.qmd >}}
-{{< include /include/_learning-objectives-dplyr-joins.qmd >}}
-{{< include /include/_learning-objectives-pivots.qmd >}}
+{{< include /includes/_learning-objectives-importing.qmd >}}
+{{< include /includes/_learning-objectives-functions.qmd >}}
+{{< include /includes/_learning-objectives-functionals.qmd >}}
+{{< include /includes/_learning-objectives-dplyr-joins.qmd >}}
+{{< include /includes/_learning-objectives-pivots.qmd >}}
 
 To simplify this into tangible tools and methods, during the workshop we
 will:
