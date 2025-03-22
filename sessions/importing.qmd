@@ -549,6 +549,22 @@ user_1_actigraph_data <- read_csv(
 )
 ```
 
+## :speech_balloon: Discussion activity: Experiences with cleaning data
+
+**Time: ~10 minutes.**
+
+As we prepare for the next session, get up and discuss with you neighbour 
+some of the following questions:
+
+-   Share a positive or exciting experience you had with cleaning,
+    processing, and preparing data for later analysis. It can be recent
+    or in the past, but as long as it was a memorable and positive. What
+    made it positive? Do you try to repeat that experience, or at least
+    the feeling of it?
+-   Share a challenging experience or barriers that you encounter while
+    cleaning, processing, and preparing data. Why was it challenging or
+    had barriers and how could you limit those for for next time?
+
 ## Summary
 
 ::: {.callout-note appearance="minimal" collapse="true"}
