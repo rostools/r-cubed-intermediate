@@ -25,21 +25,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe a basic workflow for creating functions and then apply this
-    workflow to import data.
-
-Specific objectives are to:
-
-1.  Explain what functional programming, vectorization, and functionals
-    are within R and identify when code is a functional or uses
-    functional programming. Then apply this knowledge using the
-    `{purrr}` package.
-2.  Review the split-apply-combine technique and identify how these
-    concepts connect to functional programming.
-3.  Apply functional programming to summarize data using the
-    split-apply-combine technique.
+{{< include /includes/_learning-objectives-functionals.qmd >}}
 
 ## Functional programming
 

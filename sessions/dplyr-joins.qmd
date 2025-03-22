@@ -18,24 +18,7 @@ covering.](/images/overview-create-project-data.svg){#fig-overview-create-projec
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe a few ways of joining data and processing character data,
-    and applying them to an existing sequence of data processing.
-
-Specific objectives are to:
-
-1.  Describe what regular expressions are in very simple terms, and then
-    use a regular expression on character data.
-2.  Describe a few ways that data can be joined and identify which join
-    is appropriate for a given situation. Then apply one join type to
-    two datasets to create a single dataset.
-3.  Demonstrate how to use functionals to repeatedly join more than two
-    datasets together.
-4.  Apply the function `case_when()` in situations that require nested
-    conditionals (if-else).
-5.  Use the `usethis::use_data()` function to save the final, fully
-    joined dataset as an `.Rda` file in `data/`.
+{{< include /includes/_learning-objectives-joins.qmd >}}
 
 ## Processing character data
 

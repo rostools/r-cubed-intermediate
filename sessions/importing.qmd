@@ -33,28 +33,7 @@ covering.](/images/overview-download-data.svg){#fig-overview-download-data}
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe the general process for inspecting data and identifying
-    specific strategies for effective importing of data, and then
-    applying this process to import data as fast and as robustly as
-    possible.
-
-Specific objectives are to:
-
-1.  Explain the utility and importance of explicitly selecting columns
-    at the import stage, including explicitly setting their data type.
-2.  Identify what the appropriate package is to use to import data given
-    its storage format.
-3.  Describe why the `{readr}` package is recommended as the default
-    package to use to import CSV and other text-based data and to use it
-    to import data and do some basic initial cleaning.
-4.  Describe and use some common strategies when encountering problems
-    during the import of data stage.
-5.  Identify situations when "pre-importing" a subset of data can help
-    improve importing the full dataset.
-6.  Continue practicing basic reproducible and open workflows, such as
-    using Git version control and using `{styler}` to format your code.
+{{< include /includes/_learning-objectives-importing.qmd >}}
 
 ## Importing in the raw data
 
