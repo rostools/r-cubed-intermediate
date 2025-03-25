@@ -15,7 +15,7 @@ might not understand why you need to do them, but you will likely
 understand why once the workshop begins.
 
 Depending on your skills and knowledge, these tasks could take between
-**3-7 hrs to finish**, so we suggest planning a full day to complete
+**4-6 hrs to finish**, so we suggest planning a full day to complete
 them. Depending on your institution and how they handle installing
 software on work computers, you also might have to contact IT very early
 to make sure everything is properly installed and set up.
@@ -74,21 +74,11 @@ objectives for this page:
 
 ## Reading the workshop website {#sec-reading-website}
 
-```{r}
-#| echo: false
-#| eval: true
-#| output: asis
-cat(r3admin::read_common("reading-website.md"), sep = "\n")
-```
+{{< include _extensions/rostools/r3-theme/includes/reading-website-r.md >}}
 
 ## Installing the latest programs {#sec-install-programs}
 
-```{r}
-#| echo: false
-#| eval: true
-#| output: asis
-cat(r3admin::read_common("installing-programs.md"), sep = "\n")
-```
+{{< include _extensions/rostools/r3-theme/includes/installing-programs-r.md >}}
 
 ## Installing the R packages {#sec-install-r-packages}
 
