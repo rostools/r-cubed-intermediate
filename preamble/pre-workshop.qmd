@@ -10,15 +10,26 @@ In order to participate in this workshop, you must complete this section
 for the pre-workshop tasks and finish with **completing the
 [survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)**
 at the end. These tasks are designed to make it easier for everyone to
-start the workshop with everything set up. For some of the tasks, you
-might not understand why you need to do them, but you will likely
+start the workshop with everything set up. 
+
+TODO: Include?
+
+For some of the tasks, you
+may not understand why you need to do them, but you will likely
 understand why once the workshop begins.
 
-Depending on your skills and knowledge, these tasks could take between
-**4-6 hrs to finish**, so we suggest planning a full day to complete
-them. Depending on your institution and how they handle installing
-software on work computers, you also might have to contact IT very early
-to make sure everything is properly installed and set up.
+
+<!-- TODO: Convert this into an include/snippet? -->
+
+These tasks could take between
+**2-6 hrs to finish** depending on:
+
+- Your current skill and knowledge level when it comes to computers, installing programs,
+and previous experience in working with the material we will cover in this workshop.
+- If you will be using a work laptop and if your institution has more restrictive policies on what you can install on your computer. You may need to contact your work IT sooner than later for help or to get permissions. From our experience, this can be the hardest part of these pre-workshop tasks since it can be out of your control.
+
+So, we suggest planning at least a full day to complete
+these pre-workshop tasks and to start them sooner than later.
 
 ## List of tasks
 
@@ -30,9 +41,7 @@ found as you work through the tasks.
 2.  Read on how to read this website in @sec-reading-website.
 3.  Follow the installation instructions in @sec-install-programs.
     Install a version of R, RStudio, and Git that is as updated as
-    possible. For some people, depending on their institution, this task
-    can take the **longest amount of time** because you have to contact
-    your IT to install these packages.
+    possible.
 4.  Install the necessary R packages in @sec-install-r-packages.
 5.  Read about Git from the introduction workshop and configure Git on
     your computer in @sec-setup-git. If you haven't used Git before,
@@ -42,9 +51,8 @@ found as you work through the tasks.
 6.  Create an R Project in @sec-create-r-project, including the folder
     and files.
 7.  Create a Quarto file in @sec-quarto.
-8.  Write R code to download the data in @sec-download-data and save it
-    to your computer. This task will probably take up the most time,
-    maybe 30-90 minutes. Run a check in this subsection to see that
+8.  Download the data in @sec-download-data and save it
+    to your computer. Run a check in this subsection to see that
     everything is as expected. You'll later need to paste this output
     into the survey.
 9.  Read about the basic workshop details in @sec-workshop-details.
@@ -61,9 +69,10 @@ Check each section for exact details on completing these tasks.
 
 In general, these pre-workshop tasks are meant to help prepare you for the
 workshop and make sure everything is setup properly so the first session
-runs smoothly. However, some of these tasks are meant for learning as
-well as for general setup, so we have defined the following learning
-objectives for this page:
+runs smoothly. As part of the preparation are some tasks for you to do
+some pre-requisite reading and learning, to best prepare you and your fellow
+learners for the workshop. So in the learning objectives for this section
+will enable you to:
 
 1.  Learn about making reproducible documents with Quarto.
 2.  Learn about filesystems, relative and absolute paths, and how to
@@ -82,6 +91,8 @@ objectives for this page:
 
 ## Installing the R packages {#sec-install-r-packages}
 
+TODO: Convert this to includes, with params at the top.
+
 ```{r}
 #| echo: false
 #| eval: true
@@ -89,46 +100,53 @@ objectives for this page:
 cat(r3admin::read_template_pkg_install("inter"), sep = "\n")
 ```
 
-## Setting up Git {#sec-setup-git}
+## The basics of Git {#sec-what-is-git}
 
-Since Git has already been covered in the Introduction workshop, we won't
+Since Git has already been covered in the [Introduction workshop](https://r-cubed-intro.rostools.org), we won't
 cover *learning it* during this workshop. However, since version control
-is a fundamental component of any modern data analysis workflow and
-*should be used*, we **will be using it throughout the workshop**. If you
-have used or currently use Git, you can skip this section. If you
-haven't used it, please do these tasks:
+is a fundamental component of any modern and reproducible data analysis workflow and
+*should be used*, we **will be using it throughout the workshop**.
 
-1.  Follow the [pre-workshop tasks for
-    Git](https://r-cubed-intro.rostools.org/preamble/pre-workshop.html#setting-up-git-and-github)
-    (*not* the GitHub tasks) from the introduction workshop. Specifically,
-    type in the RStudio Console:
+::: callout-important
+If you have used or currently use Git, you can skip this section and move on to @sec-confirm-git-setup.
+:::
 
-    ``` {.r filename="Console"}
-    # A pop-up to type in your name (first and last), 
-    # as well as your email
-    r3::setup_git_config()
-    ```
+Git itself isn't too difficult to use. But the concepts that Git uses are very difficult to learn and use.
+That's because Git requires you to view your files and folders and computer *very differently* to how you may
+normally be used to working with them. And because we will be using Git throughout the workshop, 
+to ensure you have the smoothest experience, we want you to at least be aware of and have read a bit about
+Git. So, from the introduction workshop, please read these sections:
 
-2.  **Please read** through the [Version Control
-    lesson](https://r-cubed-intro.rostools.org/sessions/version-control.html)
-    of the introduction workshop. *You don't need to do any of the
-    exercises or activities*, but you are welcome to do them if it will
-    help you learn or understand it better. For most of the workshop, we
-    will be using Git as shown in the [Using Git in
-    RStudio](https://r-cubed-intro.rostools.org/sessions/version-control.html#using-git-in-rstudio)
-    section. Later on during the workshop, we might connect our projects
-    to GitHub, which is described in the [Synchronizing with
-    GitHub](https://r-cubed-intro.rostools.org/sessions/version-control.html#synchronizing-with-github)
-    section.
+1. [What is version control?](https://r-cubed-intro.rostools.org/sessions/version-control#sec-what-is-version-control)
+2. [What is Git?](https://r-cubed-intro.rostools.org/sessions/version-control#sec-what-is-git)
+3. [Basics of Git](https://r-cubed-intro.rostools.org/sessions/version-control#sec-basics-of-git)
 
-Regardless of whether you've done the steps above or not, *everyone*
-needs to run:
+After reading them, in your RStudio in the R Console, run this function that should
+open up a pop-up window to type in your name and email:
+
+``` {.r filename="Console"}
+r3::setup_git_config()
+```
+
+For most of the workshop, we
+will be using Git as shown in the [Using Git in
+RStudio](https://r-cubed-intro.rostools.org/sessions/version-control#using-git-in-rstudio)
+section. Later on during the workshop, we might connect our projects
+to GitHub, which is described in the [Synchronizing with
+GitHub](https://r-cubed-intro.rostools.org/sessions/github#synchronizing-with-github)
+section.
+
+## Confirming your Git setup {#sec-confirm-git-setup}
+
+Since we will be using Git regularly throughout the workshop, please run
+this check to ensure everything is setup correctly. In R Console while in RStudio,
+run this function:
 
 ``` {.r filename="Console"}
 r3::check_setup()
 ```
 
-The output you'll get for success will look something like this:
+The output you'll get for success should look something like this:
 
 ```         
 Checking R version:
@@ -143,26 +161,32 @@ Checking Git config settings:
 ```
 
 **Eventually you will need to copy and paste the output into one of the
-survey questions**. *Note* that while GitHub is a natural connection to
-using Git, given the limited time available, we will not be going over
+survey questions**. 
+
+::: callout-note
+While GitHub is a natural connection to
+using Git, given the limited time available in the workshop, we will not be going over
 how to use GitHub. If you want to learn about using GitHub, check out
 this
-[session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
+[session](https://r-cubed-intro.rostools.org/sessions/github)
 on it in the introduction workshop.
+:::
 
 ## Create an R Project {#sec-create-r-project}
 
-One of the basic steps to reproducibility and modern workflows in data
-analysis is to keep everything contained in a single location. In
+One of the first, basic steps to ensuring a reproducible and modern data
+analysis workflow is to keep everything self-contained in a single location. In
 RStudio, this is done with R Projects. Please read all of [Section
 7.1](https://r-cubed-intro.rostools.org/sessions/project-management.html#what-is-a-project-and-why-use-it)
 from the introduction workshop to learn about R Projects and how they help
 keeping things self-contained. *You don't need to do any of the
 exercises or activities*.
 
-::: callout-danger
+::: callout-note
+Depending on your 
+
 Before creating and setting up the project folder, there are two things
-we strongly strongly encourage:
+we strongly encourage:
 
 1.  Don't create the project on your Dropbox, OneDrive, or other
     backup/synching service. The reason being that they don't integrate
@@ -200,7 +224,6 @@ When the RStudio Project opens up again, run these three commands in the
 R Console:
 
 ``` {.r filename="Console"}
-usethis::use_blank_slate()
 usethis::use_r("functions", open = FALSE)
 ```
 
@@ -209,7 +232,6 @@ usethis::use_r("functions", open = FALSE)
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_blank_slate()
     usethis::use_r("functions", open = FALSE)
   }
 )
@@ -260,7 +282,16 @@ code out and then move the finished code to other files.
 To best demonstrate the concepts in the workshop, we ideally should work
 on a real dataset to apply what we're going to learn. So for this
 workshop, we're going to use an openly licensed dataset on monitoring
-sleep and activity (MMASH) [@Rossi2020; @Rossi2020a]. To begin learning
+sleep and activity ([DIME](https://zenodo.org/records/8268744)) [@Traka2023]. 
+
+TODO: Add link to script that downloads the data.
+
+If you want to see
+Much of the same concepts and skills you will learn in this workshop were
+used to process and prepare this dataset for you to use in this workshop.
+So 
+
+To begin learning
 about being reproducible and applying modern approaches to data
 analysis, we're going to write and save R code to download a dataset,
 prepare it a bit so it's at least a little usable, and then save it to
@@ -269,9 +300,7 @@ to download the data, process and clean it, and save it in a form that
 makes it easier to analyze. Why don't we get you to download an already
 cleaned and prepared dataset? Because in the real world, the data you
 get is rarely all cleaned up and ready for you, and this workshop is about
-learning more advanced tools to do the data wrangling. Look over these
-tasks and then switch over to the [MMASH
-website](https://physionet.org/content/mmash/1.0.0/):
+learning more advanced tools to do the data wrangling. 
 
 1.  Look through the Data Description to get familiar with the dataset
     and see what is contained inside of it. We'll refer back to the Data
@@ -281,16 +310,12 @@ website](https://physionet.org/content/mmash/1.0.0/):
     use personal data, but it *does not prohibit sharing it or making it
     public*! GDPR and Open Data are not in conflict.
 
-> *Note*: Sometimes the PhysioNet website, where the MMASH data is
-> described, is slow. If that's the case, use [**this alternative
-> link**](resources/mmash-page.html) instead.
-
 After looking over the MMASH website, you need to setup where to store
 the dataset to prepare it for later processing. While in your `LearnR3`
 R Project, go to the Console pane in RStudio and type out:
 
 ``` {.r filename="Console"}
-usethis::use_data_raw("mmash")
+fs::use_data_raw("dime", open = FALSE)
 ```
 
 ```{r admin-create-data-raw}
@@ -375,8 +400,8 @@ withr::with_dir(
 Alright, the next step is to download the dataset. Paste this code into
 the `data-raw/mmash.R` script:
 
-``` {.r filename="data-raw/mmash.R"}
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
+``` {.r filename="data-raw/dime.R"}
+dime_link <- ""
 ```
 
 > *Note*: Sometimes the PhysioNet website is slow. If that's the case,
