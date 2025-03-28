@@ -114,7 +114,7 @@ pivoting would look like what is shown in @fig-pivot-longer-id.
 
 ![Pivot longer in tidyr, excluding an 'id' column. New columns are
 called 'name' and 'value', as well as the old 'id' column. Notice how,
-unlike the previous image, the `id` column is excluded when pivotting
+unlike the previous image, the `id` column is excluded when pivoting
 into the data on the
 right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
 width="90%"}
