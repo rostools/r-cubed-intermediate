@@ -4,26 +4,26 @@ library(fs)
 
 # Download
 dime_url <- "https://zenodo.org/api/records/8268744/files-archive"
-download.file(dime_url, destfile = here("data-raw/dime-data.zip"))
+download.file(dime_url, destfile = here("data-raw/dime-raw.zip"))
 
 # Unzip
 unzip(
-  here("data-raw/dime-data.zip"),
-  exdir = here("data-raw/dime-data/")
+  here("data-raw/dime-cleaning.zip"),
+  exdir = here("data-raw/dime-cleaning/")
 )
 Sys.sleep(1)
 unzip(
   here("data-raw/dime-data/CGM.zip"),
-  exdir = here("data-raw/dime-data/cgm/")
+  exdir = here("data-raw/dime-cleaning/cgm/")
 )
 Sys.sleep(1)
 unzip(
   here("data-raw/dime-data/DIME_sleep_raw_data.zip"),
-  exdir = here("data-raw/dime-data/sleep/")
+  exdir = here("data-raw/dime-cleaning/sleep/")
 )
 
 # Remove this extra directory, has the same files
-dir_delete(here("data-raw/dime-data/cgm/__MACOSX"))
+dir_delete(here("data-raw/dime-cleaning/cgm/__MACOSX"))
 
 # Processing the CGM data -------------------------------------------------
 
@@ -53,18 +53,18 @@ process_cgm <- function(path) {
 }
 
 paths <- tibble(
-  original = here("data-raw/dime-data/cgm") |>
+  original = here("data-raw/dime-cleaning/cgm") |>
     dir_ls(),
   renamed = original |>
     path_file() |>
     # This is the participant ID from the path.
     str_extract("^[:number:]+ ") |>
     str_replace(" ", ".csv") |>
-    map_chr(\(path) here("data-raw/dime-data/cleaned/cgm", path))
+    map_chr(\(path) here("data-raw/dime-cleaning/cleaned/cgm", path))
 )
 
-dir_create(here("data-raw/dime-data/cleaned"))
-dir_create(here("data-raw/dime-data/cleaned/cgm"))
+dir_create(here("data-raw/dime-cleaning/cleaned"))
+dir_create(here("data-raw/dime-cleaning/cleaned/cgm"))
 pwalk(
   paths,
   \(original, renamed) {
@@ -76,7 +76,7 @@ pwalk(
 # Processing the participant data ----------------------------------------
 
 readxl::read_excel(
-  here::here("data-raw/dime-data/2023-08-21_Corrected_Participant_metadata.xlsx"),
+  here::here("data-raw/dime-cleaning/2023-08-21_Corrected_Participant_metadata.xlsx"),
   sheet = 1
 ) |>
   select(-starts_with("Biosamples")) |>
@@ -112,11 +112,11 @@ readxl::read_excel(
   ) |>
   rename_with(snakecase::to_snake_case) |>
   relocate(gender, .before = age_years) |>
-  write_csv(here("data-raw/dime-data/cleaned/participant_details.csv"))
+  write_csv(here("data-raw/dime-cleaning/cleaned/participant_details.csv"))
 
 # Processing the sleep data ----------------------------------------------
 
-sleep_paths <- dir_ls(here("data-raw/dime-data/sleep"))
+sleep_paths <- dir_ls(here("data-raw/dime-cleaning/sleep"))
 
 read_sleep_fitbit <- function(path) {
   empty_lines <- read_lines(path) |>
@@ -146,19 +146,19 @@ sleep <- sleep_paths |>
   list_rbind() |>
   select(ID = X2, Date = X4, Sleep_type = X5, Seconds = X6)
 
-dir_create(here("data-raw/dime-data/cleaned/sleep"))
+dir_create(here("data-raw/dime-cleaning/cleaned/sleep"))
 split(sleep, sleep$ID) |>
   iwalk(
     \(data, id) {
       data |>
         select(-ID) |>
-        write_csv(here("data-raw/dime-data/cleaned/sleep", str_c(id, ".csv")))
+        write_csv(here("data-raw/dime-cleaning/cleaned/sleep", str_c(id, ".csv")))
     }
   )
 
-withr::with_dir(here("data-raw/dime-data/cleaned/"), {
+withr::with_dir(here("data-raw/dime-cleaning/cleaned/"), {
   zip::zip(
-    zipfile = here("data/dime-data.zip"),
+    zipfile = here("data/dime.zip"),
     files = dir_ls()
   )
 })
