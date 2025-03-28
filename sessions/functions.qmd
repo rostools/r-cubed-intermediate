@@ -412,7 +412,6 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 ```
 
 ```{r solution-repeat-saliva}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -769,7 +768,6 @@ ___ <- function(___) {
 ```
 
 ```{r solution-update-other-functions}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."

@@ -235,7 +235,6 @@ user_1_saliva_data <- read_csv(
 ```
 
 ```{r solution-import-the-saliva-data}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."

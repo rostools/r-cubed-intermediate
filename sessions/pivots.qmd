@@ -215,7 +215,6 @@ mmash |>
     `doc/learning.qmd` with {{< var keybind.git >}}
 
 ```{r solution-pivot-summarize}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -403,7 +402,6 @@ the code we just wrote above into a function.
     {{< var keybind.git >}}.
 
 ```{r solution-summarise-function}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
