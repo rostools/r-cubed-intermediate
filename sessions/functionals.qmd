@@ -417,7 +417,6 @@ ___ <- ___(___, ___) {
     the Git history, using {{< var keybind.git >}}.
 
 ```{r solution-import-multiple-files}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -889,7 +888,6 @@ Environments pane to view it. For many computers, your R session will
     {{< var keybind.git >}}.
 
 ```{r solution-summarise-actigraph}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."

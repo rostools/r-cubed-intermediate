@@ -16,6 +16,10 @@ book:
   date: last-modified
   repo-url: "https://github.com/rostools/r-cubed-intermediate"
   site-url: "https://r-cubed-intermediate.rostools.org"
+  body-header: |
+    ::: {.callout-warning appearance="default"}
+    🚧 We are doing **major** changes to this workshop, so much of the content will be changed. 🚧
+    :::
   chapters:
     - index.qmd
     - part: "Preamble"
@@ -62,6 +66,7 @@ editor:
     canonical: true
 
 execute:
+  eval: false
   # Need to show warnings for many bits of code as part of learning.
   warning: true
 
