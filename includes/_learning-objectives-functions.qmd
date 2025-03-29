@@ -1,0 +1,14 @@
+1.  Describe and identify the individual components of a function as
+    well as the workflow to creating them, and then use this workflow to
+    make one to import some data.
+
+2.  Explain what R package dependency management is, why it is necessary
+    when writing code and ensuring reproducibility, and apply tools like
+    `usethis::use_package()` to manage dependencies in an R project.
+
+3.  Describe and apply a workflow of prototyping code into a working
+    function in a Quarto document, moving the function into a script
+    (called, e.g., `functions.R`) once prototyped and tested, and then
+    using `source()` to load the functions into the R session. End this
+    workflow with rendering the Quarto document with
+    {{< var keybind.render >}} to ensure reproducibility.

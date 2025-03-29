@@ -1,6 +1,4 @@
-# Course syllabus {#sec-syllabus}
-
-<!-- TODO: Convert to be similar to the advanced course -->
+# Workshop syllabus {#sec-syllabus}
 
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
@@ -16,39 +14,61 @@ code sharing among researchers. All together, this aspect of research is
 often completely hidden and may likely to be the source of many
 irreproducible results.
 
-With this course, we aim to begin addressing this gap. Using a highly
-practical approach that revolves around code-along sessions (instructor
-and learner coding together), hands-on exercises, and group work,
-participants of the course will know:
+With this workshop, we aim to begin addressing this gap. We use a highly
+practical, mixed-methods, hands-on approach to learning that revolves
+around code-along sessions (instructor and you, the learner, coding
+together), hands-on exercises, discussion activities, reading tasks, and
+group project work. The learning outcome and overall aim of the workshop
+is to enable you to:
 
-1.  How to demonstrate what an open and reproducible data processing and
-    analysis workflow looks like.
-2.  How to apply some fundamental concepts, techniques, and skills
-    needed for processing and managing data in a reproducible and
-    well-documented way.
-3.  Where to go to get help and to continue learning modern data science
-    and analysis skills.
+1.  Demonstrate an open and reproducible workflow in R that makes use of
+    the effective and powerful functional programming approach for
+    working with data, and apply it to import and process some
+    real-world data.
 
-By the end of the course, participants will:
+This aim is broken down into specific learning objectives that are
+spread across the workshop's sessions. The workshop will enable you to:
 
-1.  Have improved their competency in processing and wrangling datasets;
-2.  Have improved their proficiency in using the
-    [R](https://www.r-project.org/) statistical computing language;
-3.  Know how to write re-usable and well-documented code;
-4.  Know how to make modern and reproducible data analysis projects.
+{{< include /includes/_learning-objectives-importing.qmd >}}
+{{< include /includes/_learning-objectives-functions.qmd >}}
+{{< include /includes/_learning-objectives-functionals.qmd >}}
+{{< include /includes/_learning-objectives-dplyr-joins.qmd >}}
+{{< include /includes/_learning-objectives-pivots.qmd >}}
 
-## Is this course for you? {#sec-is-it-for-you}
+To simplify this into tangible tools and methods, during the workshop we
+will:
 
-This course is designed in a specific way and is ideal for you if:
+1.  Use a function-based workflow to writing code.
+2.  Use `{usethis}`'s `use_package()` function to manage package
+    dependencies.
+3.  Use [Quarto](https://quarto.org) to write reproducible documents.
+4.  Use [Git](https://git-scm.com) and [GitHub](https://github.com) to
+    manage code and version control.
+5.  Use the functional programming tools with `{purrr}`'s `map()` and
+    `reduce()` functions.
+6.  Use the split-apply-combine technique to summarize data with
+    `{dplyr}`'s `group_by()`, `summarise()`, and `across()` functions.
+7.  Use the `{dplyr}` package to `full_join()` datasets together.
+8.  Use the `{tidyr}` package to pivot data from long with
+    `pivot_longer()` to wide with `pivot_wider()`.
+
+Learning and coding are not just solo activities, they are also very
+much social activities. So throughout the workshop, we provide plenty of
+opportunity to meet new people, share experiences, have discussion
+activities, and work in groups.
+
+## Is this workshop for you? {#sec-is-it-for-you}
+
+This workshop is designed in a specific way and is ideal for you if:
 
 -   You are a researcher, preferably working in the biomedical field
-    (ranging from experimental to epidemiological). Specifically, this
-    course targets those working on topics in diabetes and metabolism.
+    (ranging from experimental to clinical to epidemiological).
 -   You currently are or will soon do quantitative data analysis.
 -   You either:
     -   have taken the [introduction to Reproducible Research in R
-        course](https://r-cubed-intro.rostools.org/), since this course
-        is a natural extension to that one;
+        workshop](https://r-cubed-intro.rostools.org/), as this
+        intermediate workshop is a natural extension to that the
+        introduction one;
     -   know a *little* to a *moderate* amount of R (or computing in
         general);
     -   know how to use R and have *some* familiarity with the
@@ -56,30 +76,33 @@ This course is designed in a specific way and is ideal for you if:
         [RStudio](https://rstudio.com/).
 
 Considering that this is a natural extension of the [introductory
-r-cubed course](https://r-cubed-intro.rostools.org/), this course
-incorporates tools learned during that course, including basic Git usage
-as well as the use of RStudio R Projects. If you *do not* have
+r-cubed workshop](https://r-cubed-intro.rostools.org/), this workshop
+incorporates tools learned during that workshop, including basic Git
+usage as well as the use of RStudio R Projects. If you *do not* have
 familiarity with these tools, you will need to go over the material from
-the introduction course beforehand (more details about pre-course tasks
-will be sent out a couple of weeks before the course).
+the introduction workshop beforehand (more details about pre-workshop
+tasks will be sent out a couple of weeks before the workshop).
 
-While having these assumptions help to focus the content of the course,
-if you have an interest in learning R but don't fit any of the above
-assumptions, **you are still welcome to attend the course**! We welcome
-everyone, that is until the course capacity is reached.
+We make these assumptions about you as the learner to help focus the
+content of the workshop, however, if you have an interest in learning R
+but don't fit any of the above assumptions, **you are still welcome to
+attend the workshop**! We welcome everyone, that is until the workshop
+capacity is reached.
 
-During the course, we **will**:
+During the workshop, we **will**:
 
--   Learn how to use R, specifically those in the mid-beginner to
+-   Learn how to use R, specifically in the mid-beginner to
     early-intermediate level.
 -   Focus only on the data processing and cleaning stage of a data
     analysis project.
 -   Teach from a reproducible research and open scientific perspective
     (e.g. by making use of Git).
 -   Be using practical, applied, and hands-on lessons and exercises.
+-   Apply evidence-based teaching practices.
+-   Use a real-world dataset to work with.
 
-And we **will not** learn:
+And we **will not**:
 
--   The basics of using R and RStudio.
--   Statistics (these are already covered by most university
-    curriculum).
+-   Go over the basics of using R and RStudio.
+-   Cover any statistics, as these are already covered by most
+    university curriculum.

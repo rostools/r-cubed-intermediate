@@ -1,0 +1,9 @@
+1.  Describe the concept of "pivoting" data to convert data in a "long"
+    format to a "wide" format and vice versa.
+
+2.  Identify situations where it is more appropriate that data is in the
+    long or wide format.
+
+3.  Apply the `pivot_longer()` and `pivot_wider()` functions from the
+    `{tidyr}` package to pivot data.
+

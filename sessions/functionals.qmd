@@ -25,21 +25,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe a basic workflow for creating functions and then apply this
-    workflow to import data.
-
-Specific objectives are to:
-
-1.  Explain what functional programming, vectorization, and functionals
-    are within R and identify when code is a functional or uses
-    functional programming. Then apply this knowledge using the
-    `{purrr}` package.
-2.  Review the split-apply-combine technique and identify how these
-    concepts connect to functional programming.
-3.  Apply functional programming to summarize data using the
-    split-apply-combine technique.
+{{< include /includes/_learning-objectives-functionals.qmd >}}
 
 ## Functional programming
 
@@ -121,7 +107,7 @@ Emphasize this next paragraph.
 Writing effective and proper for loops is actually quite tricky and
 difficult to easily explain. Because of this and because there are
 better and easier ways of writing R code to replace for loops, we will
-**not** be covering loops in this course.
+**not** be covering loops in this workshop.
 
 A **functional** on the other hand is a function that can also use a
 function as one of its arguments. @fig-functionals shows how the
@@ -431,7 +417,6 @@ ___ <- ___(___, ___) {
     the Git history, using {{< var keybind.git >}}.
 
 ```{r solution-import-multiple-files}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -481,7 +466,7 @@ user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
 
-<!-- TODO: Delete the text about the library(fs), since that will be fixed after the course -->
+<!-- TODO: Delete the text about the library(fs), since that will be fixed after the workshop -->
 
 To test that things work, we'll create an HTML document from our Quarto
 document by using the "Render" / "Knit" button at the top of the pane or
@@ -522,7 +507,7 @@ We're taking a quick detour to briefly talk about a concept that
 perfectly illustrates how vectorization and functionals fit into doing
 data analysis. The concept is called the
 [split-apply-combine](https://r-cubed-intro.rostools.org/sessions/data-management.html#split-apply-combine-summarizing-data)
-technique, which we covered in the beginner R course. The method is:
+technique, which we covered in the beginner R workshop. The method is:
 
 1.  Split the data into groups (e.g. diabetes status).
 2.  Apply some analysis or statistics to each group (e.g. finding the
@@ -559,7 +544,7 @@ There are many "verbs" in `{dplyr}`, like `select()`, `rename()`,
 `mutate()`, `summarise()`, and `group_by()` (covered in more detail in
 the [Data Management and
 Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
-session of the beginner course). The common usage of these verbs is
+session of the beginner workshop). The common usage of these verbs is
 through acting on and directly using the column names (e.g. without `"`
 quotes around the column name like with
 `saliva_df |> select(cortisol_norm)`). But many `{dplyr}` verbs can also
@@ -579,7 +564,7 @@ saliva_df |>
 ::: aside
 Don't know what the `|>` pipe is? Check out [the section on
 it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
-from the beginner course.
+from the beginner workshop.
 :::
 
 If you want to calculate the mean of multiple columns, you might think
@@ -903,7 +888,6 @@ Environments pane to view it. For many computers, your R session will
     {{< var keybind.git >}}.
 
 ```{r solution-summarise-actigraph}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -953,6 +937,19 @@ summarised_rr_df <- rr_df |>
 Next, go to the Quarto document and again delete **everything** below
 the `setup` code chunk. After it has been deleted, add and commit the
 changes to the Git history with {{< var keybind.git >}}.
+
+## :speech_balloon: Discussion activity: Incorporating functionals in your own work
+
+**Time: ~10 minutes.**
+
+As we prepare for the next session, discuss with your neighbour or group
+the following question:
+
+-   Think about the functions and functionals sessions. Discuss with
+    your group some ideas on how you can implement making functions and
+    using functionals in your work. What are some things you do
+    repetitively (in code or general work) that you think would be great
+    to have simplified or automated.
 
 ## Summary
 

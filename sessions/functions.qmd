@@ -11,7 +11,7 @@ temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
 
 untar(
-  tarfile = here::here("_temp", "pre-course.tar.gz"),
+  tarfile = here::here("_temp", "pre-workshop.tar.gz"),
   exdir = project_path
 )
 ```
@@ -24,30 +24,7 @@ covering.](/images/overview-workflow.svg){#fig-overview-workflow}
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe a basic workflow for creating functions and then apply this
-    workflow to import data.
-
-Specific objectives are to:
-
-1.  Describe and identify the individual components of a function as
-    well as the workflow to creating them, and then use this workflow to
-    make one to import some data.
-2.  Describe a workflow for developing code that combines using Quarto,
-    `source()`'ing with {{< var keybind.source >}}, and restarting R
-    with {{< var keybind.restart-r >}}, explain its usefulness in
-    assessing correctness and re-usability of code, and then apply this
-    workflow when developing functions.
-3.  Explain what R package dependency management is, why it is necessary
-    when writing code and ensuring reproducibility, and apply tools like
-    `usethis::use_package()` to manage dependencies in an R project.
-4.  Describe and apply a workflow of prototyping code in a Quarto
-    document and then moving it into a script (called, e.g.,
-    `functions.R`) once finished and tested, then using `source()` to
-    load the functions into the R session.
-5.  Continue practicing Git version control to manage changes to your
-    files.
+{{< include /includes/_learning-objectives-functions.qmd >}}
 
 ## The basics of a function
 
@@ -102,7 +79,7 @@ yourself later. Making functions always has a basic structure of:
 ## Instructor note
 
 Emphasize that we will be using this workflow for creating functions all
-the time throughout course and that this workflow is also what you'd use
+the time throughout workshop and that this workflow is also what you'd use
 in your daily work.
 :::
 
@@ -234,7 +211,7 @@ Making functions is a series of steps:
 ## Instructor note
 
 Emphasize that we will be using this workflow for creating functions all
-the time throughout course and that this workflow is also what you'd use
+the time throughout workshop and that this workflow is also what you'd use
 in your daily work.
 :::
 
@@ -374,7 +351,7 @@ Interface by using {{< var keybind.git >}}.
 > Time: 15 minutes.
 
 Take the code you created for importing the saliva data set from
-@sec-ex-import-saliva (*not* the code related to using `spec()`) and
+@sec-ex-import-saliva and
 make it into a function. It looks like the code below.
 
 ``` {.r filename="doc/learning.qmd"}
@@ -435,7 +412,6 @@ ___(here("data-raw/mmash/user_1/saliva.csv"))
 ```
 
 ```{r solution-repeat-saliva}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -597,7 +573,7 @@ usethis::with_project(
 ```
 
 Since we will also make use of the tidyverse set of packages later in
-the course, we'll also add tidyverse as a dependency. Since the
+the workshop, we'll also add tidyverse as a dependency. Since the
 tidyverse is a large collection of packages, the recommended way to add
 this particular dependency is with:
 
@@ -619,7 +595,7 @@ usethis::with_project(
 If you look in the `DESCRIPTION` file now, you see that the new
 `Depends` field has been added with `tidyverse` right below it. There
 are fairly technical reasons why we need to put tidyverse in the
-`Depends` field that you don't need to know about for this course, aside
+`Depends` field that you don't need to know about for this workshop, aside
 from the fact that it is a common practice in R projects. At least in
 this context, we use the `Depends` field for tidyverse because of one
 big reason: the `usethis::use_package()` function will complain if we
@@ -672,7 +648,7 @@ This is *very* **bad practice** and can have some unintended and serious
 consequences that you might not notice or that won't give any warning or
 error. The correct way of indicating which package a function comes from
 is instead by using `packagename::functionname`, which you've seen and
-used many times in this course. We won't get into the reasons why this
+used many times in this workshop. We won't get into the reasons why this
 is incorrect because it can quickly get quite technical.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -792,7 +768,6 @@ ___ <- function(___) {
 ```
 
 ```{r solution-update-other-functions}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."

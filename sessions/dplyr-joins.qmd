@@ -18,24 +18,7 @@ covering.](/images/overview-create-project-data.svg){#fig-overview-create-projec
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe a few ways of joining data and processing character data,
-    and applying them to an existing sequence of data processing.
-
-Specific objectives are to:
-
-1.  Describe what regular expressions are in very simple terms, and then
-    use a regular expression on character data.
-2.  Describe a few ways that data can be joined and identify which join
-    is appropriate for a given situation. Then apply one join type to
-    two datasets to create a single dataset.
-3.  Demonstrate how to use functionals to repeatedly join more than two
-    datasets together.
-4.  Apply the function `case_when()` in situations that require nested
-    conditionals (if-else).
-5.  Use the `usethis::use_data()` function to save the final, fully
-    joined dataset as an `.Rda` file in `data/`.
+{{< include /includes/_learning-objectives-dplyr-joins.qmd >}}
 
 ## Processing character data
 
@@ -59,7 +42,7 @@ users. That's because certain characters like `[` or `?` have special
 meanings. For instance, `[aeiou]` is regex for "find one character in a
 string that is either a, e, i, o, or u". The `[]` in this case mean
 "find the character in between the two brackets". We won't cover regex
-too much in this course, some great resources for learning them are the
+too much in this workshop, some great resources for learning them are the
 [R for Data Science regex
 section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
 the [stringr regex
@@ -118,7 +101,7 @@ are some basic things you can do with it that are quite powerful.
 
 More or less, this section and exercise are to introduce the idea and
 concept of regex, but not to really teach it since that is well beyond
-the scope of this course and this time frame.
+the scope of this workshop and this time frame.
 
 Go over the solution. The explanation is that the pattern will find
 anything that has `user_` followed by a number from 1 to 9 and maybe
@@ -700,7 +683,7 @@ usethis::use_data(mmash, overwrite = TRUE)
 
 We're adding `overwrite = TRUE` so every time we re-run this script, the
 dataset will be saved. Alternatively, we could (but won't in this
-course) save it as a `.csv` file with:
+workshop) save it as a `.csv` file with:
 
 ```{r}
 #| eval: false

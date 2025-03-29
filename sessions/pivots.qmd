@@ -26,21 +26,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-The overall learning outcome for this session is to:
-
-1.  Describe what long and wide data are, what pivoting means in this
-    context, and demonstrate how to switch between the two.
-
-Specific objectives are to:
-
-1.  Describe the concept of "pivoting" data to convert data in a "long"
-    format to a "wide" format and vice versa.
-2.  Identify situations when data in the long or wide format are more
-    appropriate to use.
-3.  Apply the `pivot_longer()` and `pivot_wider()` functions from the
-    `{tidyr}` package to pivot data.
-4.  Continue extending functions to make use of pivots for processing
-    and cleaning data.
+{{< include /includes/_learning-objectives-pivots.qmd >}}
 
 ## Setup for the analysis in Quarto
 
@@ -61,7 +47,7 @@ load(here("data/mmash.rda"))
 
 As we write more R code and do some simple analyses of the data, we are
 going to be knitting fairly often (depending on how long the analysis
-takes of course). The main reason for this is to ensure that whatever
+takes of workshop). The main reason for this is to ensure that whatever
 you are writing and coding will at least be reproducible on your
 computer, since Quarto is designed to ensure the document is
 reproducible.
@@ -128,7 +114,7 @@ pivoting would look like what is shown in @fig-pivot-longer-id.
 
 ![Pivot longer in tidyr, excluding an 'id' column. New columns are
 called 'name' and 'value', as well as the old 'id' column. Notice how,
-unlike the previous image, the `id` column is excluded when pivotting
+unlike the previous image, the `id` column is excluded when pivoting
 into the data on the
 right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
 width="90%"}
@@ -150,7 +136,7 @@ argument is the data itself. The other arguments are:
 
 Both `pivot_longer()` and its opposite `pivot_wider()`, which we will
 cover later in the session, are incredibly powerful functions. We can't
-show close to everything it can do in this course, but if you want to
+show close to everything it can do in this workshop, but if you want to
 learn more, read up on the
 [documentation](https://tidyr.tidyverse.org/articles/pivot.html) for it.
 :::
@@ -229,7 +215,6 @@ mmash |>
     `doc/learning.qmd` with {{< var keybind.git >}}
 
 ```{r solution-pivot-summarize}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
@@ -391,7 +376,7 @@ Now that that works, let's render the document to HTML with
 
 > Time: 15 minutes.
 
-Using the same workflow we've been doing throughout this course, convert
+Using the same workflow we've been doing throughout this workshop, convert
 the code we just wrote above into a function.
 
 1.  Name the function `tidy_summarise_by_day`.
@@ -417,7 +402,6 @@ the code we just wrote above into a function.
     {{< var keybind.git >}}.
 
 ```{r solution-summarise-function}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
