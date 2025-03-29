@@ -234,7 +234,6 @@ extract_user_id <- ___(___) {
     {{< var keybind.git >}}.
 
 ```{r solution-user-id-extract}
-#| eval: true
 #| output: false
 #| code-fold: true
 #| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
