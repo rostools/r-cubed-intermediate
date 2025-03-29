@@ -61,13 +61,8 @@ This website and its content are targeted to three groups:
 
 1.  For the **learners** to use during the workshop, both to follow
     along in case they get lost and also to use as a reference after the
-    workshop ends. We assume the learner is someone who is currently or
-    will soon actively be doing research (e.g. a PhD or postdoc), who is
-    likely in biomedical research (but doesn't have to be), and who has
-    limited knowledge on coding in R aside from at least having taken
-    the [introductory workshop](https://r-cubed-intro.rostools.org). A
-    more detailed description of who the learner is can be found in
-    @sec-is-it-for-you.
+    workshop ends. See @sec-is-it-for-you for a more detailed description
+    of who the learner is.
 2.  For the **instructors** to use as a guide for when they do the
     code-along sessions and presentations.
 3.  For those who are **interested in teaching**, who may not have much
