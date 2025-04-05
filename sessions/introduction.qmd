@@ -1,16 +1,21 @@
+---
+execute:
+  eval: true
+---
+
 # Introduction to workshop {#sec-introduction}
 
 ```{r, include=FALSE}
 # To trigger downlit usage.
-library(styler)
+library(downlit)
 ```
 
-> [**Introduction slides**](../slides/introduction.html)
+> [**Introduction slides**](/slides/introduction.html)
 
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="../slides/introduction.html"></iframe>
+<iframe class="slide-deck" src="/slides/introduction.html"></iframe>
 ```
 
 </div>
@@ -22,40 +27,56 @@ The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
 :::
 
-## The Big Picture
+## :book: Reading task: The big picture
 
-:::: callout-note
-## Reading task: \~10 minutes
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Go over the text again, to reinforce the workflows shown in the diagrams
+and, briefly, the reasons why we do certain things. Especially reinforce
+why we have the separation between `learning.qmd` and `functions.R`.
+:::
+
+**Time: \~15 minutes.**
 
 This section provides an bigger picture view of what we will be doing,
 why we want to do it, how we will be going about doing it, and what it
-will look like in the end.
+will look like in the end. So the overall practical aim of this workshop
+is:
 
-Big picture aim:
+*To apply a reproducible and programmatic approach to efficiently
+downloading a dataset that has multiple data files, then processing and
+cleaning them all, and saving them as a single data file to use for
+later analysis.*
 
-> To apply a reproducible and programmatic approach to efficiently
-> downloading multiple data files, processing and cleaning them, and
-> saving them as a single data file.
+In our case, during the workshop we want to process the DIME data so
+that we have a single dataset to work with for later (hypothetical)
+analyses. Which can be visually summarised as:
 
-In our case during the workshop, we ultimately want to process the MMASH
-data so that we have a single dataset to work with for later
-(hypothetical) analyses.
+```{mermaid}
+%%| label: "fig-big-picture-aim"
+%%| fig-cap: "Big picture aim of the workshop."
+%%| fig-alt: "A diagram representing the overall flow from start to end of the workshop, with nodes for files pointing into code and outputting a final dataframe."
+flowchart LR
+  file_a[/"data-raw/cgm/101.csv"/]
+  file_etc[/"data-raw/cgm/*.csv"/]
+  file_z[/"data-raw/cgm/127.csv"/]
+  file_a & file_etc & file_z --> code(R code to<br>process data)
+  code --> final_data[(Dataframe<br>for analysis)]
+```
 
 We also want to make sure that whatever processing we do to the data is
-reproducible. So everything we'll do throughout the workshop is done in
-order to achieve our aim of making a single dataset and to make things
-reproducible.
+reproducible, so we'll be writing the code in a way that enables and
+enforces reproducibility of the code.
 
-Both the folder and file structures below as well as the Figure
-@fig-overview show exactly what we will be doing and how it will look
-like at the file level (not at the R code level). Hopefully with this
-overview, you can better understand where we are and where we want to
-get to.
-
-Everyone's project structure starts off looking like the one on the
-left, and ends with the one on the right. You'll notice very little
-changes between the two, except for some files removed (e.g. `TODO.md`),
-and others added (e.g. `data/mmash.rda` and `doc/learning.html`).
+So how specifically will we do this? At the highest level, everything
+revolves around files and folders. Below is what the project currently
+looks like and what it will look like at the end of the workshop.
+Notice, the only differences here are the addition of a new file in the
+`data/` folder and a new HTML file in the `docs/` folder. The new file
+in the `data/` folder is the final dataset we will be creating, and the
+new HTML file in the `docs/` folder is the rendered Quarto document that
+we will be creating.
 
 ::: {layout-ncol="2"}
 ### Currently looks like: {.unnumbered}
@@ -66,13 +87,13 @@ LearnR3
 │   └── README.md
 ├── data-raw/
 │   ├── README.md
-│   ├── mmash-data.zip
-│   ├── mmash/
-│   │  ├── user_1
-│   │  ├── ...
-│   │  └── user_22
-│   └── mmash.R
-├── doc/
+│   ├── dime.zip
+│   ├── dime/
+│   │  ├── cgm/
+│   │  ├── sleep/
+│   │  └── participant_details.csv
+│   └── dime.R
+├── docs/
 │   ├── README.md
 │   └── learning.qmd
 ├── R/
@@ -91,26 +112,27 @@ LearnR3
 LearnR3
 ├── data/
 │   ├── README.md
-│   └── mmash.rda
+│   └── dime.csv <- Added
 ├── data-raw/
 │   ├── README.md
-│   ├── mmash-data.zip
-│   ├── mmash/
-│   │  ├── user_1
-│   │  ├── ...
-│   │  └── user_22
-│   └── mmash.R
-├── doc/
+│   ├── dime.zip
+│   ├── dime/
+│   │  ├── cgm/
+│   │  ├── sleep/
+│   │  └── participant_details.csv
+│   └── dime.R
+├── docs/
 │   ├── README.md
-│   ├── learning.html
+│   ├── learning.html <- Added
 │   └── learning.qmd
 ├── R/
-│   ├── README.md
-│   └── functions.R
+│   ├── functions.R
+│   └── README.md
 ├── .gitignore
 ├── DESCRIPTION
 ├── LearnR3.Rproj
-└── README.md
+├── README.md
+└── TODO.md
 ```
 :::
 
@@ -118,111 +140,170 @@ Why do we structure it this way? Because we want to follow some standard
 conventions in R, like having a `DESCRIPTION` metadata file, keeping raw
 data in the `data-raw/` folder, and keeping (most) R scripts in the
 `R/`. We also want to keep things structured to make it easier for
-others and ourselves to reproduce the work.
+others and ourselves to reproduce the work. Below are sections for the
+different workflows we will be using in the workshop.
 
-Our workflow will generally look like Figure @fig-overview, with each
-block representing one or two sessions. We've already done a bit of the
-first block, *"Download raw data"*.
+### Download or copy data to `data-raw/`, only change with R {.unnumbered}
 
-![Overview of the workflow we will be using and
-covering.](/images/overview.svg){#fig-overview}
+In general, you want to store your original raw data that you'd use for
+your project within a folder in your R Project and *never change it*.
+This is because you want to keep the original data intact, so you can
+always go back to it if you need to. Since the raw data is rarely
+directly used for analyses, you'd use R to process the data and save the
+processed data to a new file that you'd then use for your analysis. This
+workflow is visually represented below in @fig-download-to-data-raw
 
-Our workflow and process will be something like:
+In R Projects, the common convention is to keep the raw data in the
+`data-raw/` folder, which is what you've already done during the
+pre-workshop tasks. This is where you would download or copy the data
+files you need for your project.
 
--   Make an R script (`data-raw/mmash.R`) to download the dataset
-    (`data-raw/mmash/`), which you already did in the pre-workshop tasks.
-    -   We do this to keep the code for downloading and processing the
-        data together with the raw data.
--   Use Quarto (`doc/learning.qmd`) to write and test out code, convert
-    it into a function, test it, and then move it into `R/functions.R`.
-    Later we will also move code into the `data-raw/mmash.R`. We use
-    this workflow because:
-    -   It's easier to quickly test code out and make sure it works
-        before moving the code over into a more formal location and
-        structure. Think of using the Quarto file as a sandbox to test
-        out and play with code, without fear of messing things up.
-    -   We also test code out in the Quarto because it's easier from a
-        teaching perspective to interweave text and comments with code
-        as we do the code-alongs and because it forces you to practice
-        working within Quarto documents, which are key components to a
-        reproducible workflow in R.
-    -   Rendering a Quarto file runs all the code from beginning to end
-        in a new environment (so completely clean), meaning we can test
-        the reproducibility of our code. Because of this feature, it
-        allows us to detect errors and issues with the code, making
-        Quarto an excellent prototyping tool.
-    -   We keep the functions in a separate file because we will
-        frequently `source()` from it as we prototype and test out code
-        in the Quarto file. It also creates a clear separation between
-        "finalized" code and prototyping code.
--   Use a combination of restarting R ({{< var keybind.restart-r >}})
-    and using `source()` with {{< var keybind.source >}} while in
-    `R/functions.R` to run the functions inside of `R/functions.R`.
-    -   We restart R because it is the only sure way there is to
-        clearing up the R workspace and starting for a "clean plate".
-        And for reproducibility, we should always aim to working from a
-        clean plate.
--   Replace the old code in the Quarto document (`doc/learning.qmd`)
-    with the new function.
--   Finish building functions that prepare the dataset, use them in the
-    cleaning script (`data-raw/mmash.R`), run the script and save the
-    data as an `.rda` file (`data/mmash.rda`).
-    -   Like with the `R/functions.R` script, we move the finalized data
-        processing code over from the Quarto into the `data-raw/mmash.R`
-        script to have a clear separation of completed code and
-        prototyping code.
-    -   Why is the `data-raw/mmash.R` script not a Quarto file instead?
-        Because our *aim* for the R script is to produce a specific
-        dataset output, while the *aim* of a Quarto file is to create an
-        output *document* (like HTML) and to test reproducibility. We
-        use specific tools or file formats for specific purposes based
-        on their design.
--   Remove the old code from the Quarto document (`doc/learning.qmd`).
-    -   Once we've finished prototyping code and moved it over into a
-        more "final" location, we remove left over code because it isn't
-        necessary and we don't want our files to be littered with left
-        over code. Again, like with restarting R often, we want to work
-        from a clean plate.
--   Whenever we complete a task, we *add and commit* those file changes
-    and save them into the Git history.
-    -   We use Git because it is the best way of keeping track of what
-        was done to your files, when, and why. It keeps your work
-        transparent and makes it easier to share your code by uploading
-        to GitHub. Using version control should be a standard practice
-        to doing better science since it fits with the philosophy of
-        doing science (e.g., transparency, reproducibility, and
-        documentation).
-    -   **Note**: While we covered GitHub in the introductory workshop, we
-        can't assume everyone will have taken that workshop. Because of
-        that, we won't be using GitHub in this workshop.
-::::
+```{mermaid}
+%%| echo: false
+%%| label: "fig-download-to-data-raw"
+%%| fig-cap: "Workflow for downloading or copying data to the `data-raw/` folder and processing it into the `data/` folder."
+%%| fig-alt: "A diagram representing the workflow for downloading or copying data to the data-raw folder, then processed with R, and finally saved in the data folder."
+flowchart TD
+  data_file("Original<br>data file(s)") -- "Download<br>or copy" --> data_raw[/"data-raw/<br>folder"/]
+  data_raw -- "Read only" --> process("Process data with R,<br>raw data not changed")
+  process -- "Save"--> data[/"data/<br>folder"/]
+```
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+### Use Quarto as a sandbox to prototype code {.unnumbered}
 
-Go over the text again, to reinforce the workflow, and the reasons why
-we do certain things. Especially reinforce why we have the separation
-between `mmash.R`, `learning.qmd`, and `functions.R`.
+Quarto is an incredibly powerful tool when working to ensure your code
+is reproducible. For this workshop, the Quarto document we use is at
+`docs/learning.qmd`.
+
+With Quarto, it's easy to quickly test code out and make sure it works.
+Think of using the Quarto file as a sandbox to test out and play with
+code, without fear of messing things up. And with Quarto, when you
+render the document to, for example, HTML and it runs all the code from
+beginning to end in a new environment (so completely clean). Which means
+you can test a part of the reproducibility of your code. Because of this
+feature, it allows you to detect errors and issues with the code, making
+Quarto an excellent prototyping tool. The workflow is represented below
+in @fig-quarto-prototyping.
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-quarto-prototyping"
+%%| fig-cap: "Workflow for using Quarto to prototype code, assess reproducibility, and fix issues."
+%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype code, with nodes for the Quarto file, rendering, and HTML output."
+flowchart TD
+  quarto[/"Quarto:<br>docs/learning.qmd"/] --> prototype(Prototyping<br>R code)
+  prototype -- "Check<br>reproducibility" --> render("Render")
+  render --> html[/"HTML file:<br>docs/learning.html"/]
+  render -- "Continue<br>or fix issues" --> quarto 
+```
+
+For this workshop, we also use Quarto because it's easier from a
+teaching perspective. You as the learner can easily mix together text
+and notes to yourself as you learn, alongside the code you write out
+during the code-alongs and the exercises. We also use it to force you to
+practice working within Quarto documents, which is a key component to
+reproducibility, in a learning and supportive environment.
+
+### Use `R/functions.R` to keep stable, tested code {.unnumbered}
+
+While you use Quarto to test out and prototype code, you'll use R
+scripts like `R/functions.R` to keep the code you have tested out
+already and are fairly confident that it works as you want it to.
+
+So you'll use Quarto (`doc/learning.qmd`) to write and test out code,
+convert it into a function (that we will cover in this workshop), and
+then move it into `R/functions.R` script. We have this split to
+cognitively and physically have a separation between prototyping code
+and keeping finalized, tested code. This is also a very common workflow
+in R and fits with other workflows we will encounter in the [advanced
+workshop](https://r-cubed-advanced.rostools.org). Then, within the
+Quarto document we can `source()` the `R/functions.R` script so we have
+access to the stable and tested code. This workflow is represented below
+in @fig-quarto-to-functions.
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-quarto-to-functions"
+%%| fig-cap: "Workflow for prototyping code in Quarto, moving it to an R script, then sourcing the script from Quarto."
+%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype and test code, moving that tested code to the R functions script, and sourcing back into the Quarto document."
+flowchart TD
+  quarto[/"Quarto:<br>docs/learning.qmd"/] --> code(Prototyping<br>R code)
+  code --> test("Testing that<br>code works")
+  test -- "Cut & paste<br>Commit to Git"--> functions[/"R/functions.R"/]
+  functions -- "source()" --> quarto
+```
+
+### Workflow for prototyping code {.unnumbered}
+
+At the level of the code, the way you prototype code is to:
+
+1.  Write it out in Quarto so that does what you want.
+2.  Convert that code into a function.
+3.  Test that the function works either in the Quarto document or in the
+    R Console.
+4.  Fix the function if it doesn't work.
+5.  Restart the R console with {{< var keybind.restart-r >}} or render
+    with {{< var keybind.render >}} to test that the function works.
+6.  Whenever the function works, *add and commit* the changes to the Git
+    history with {{< var keybind.git >}}.
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-workflow-prototyping"
+%%| fig-cap: "Workflow for prototyping code in Quarto, converting to a function, testing it, rendering or restarting, and committing to Git."
+%%| fig-alt: "A diagram representing the workflow for prototyping code in Quarto, converting it to a function, testing it, rendering or restarting, and committing to Git."
+flowchart TD
+    code("Write code<br>in Quarto") --> as_function("Convert to<br>function")
+    as_function --> test("Test function in<br>Quarto or Console")
+    test --> fix_function("Fix function")
+    test -- "Commit" --> git("Git history")
+    fix_function --> test
+    fix_function --> either([Either:])
+    either -. As needed .-> restart("Restart R<br>session")
+    either -. As needed .-> render("Render<br>Quarto")
+    restart -.-> test
+    render -.-> test
+```
+
+Either restarting R or rendering the Quarto document is the only way
+there is to be certain the R workspace is in a clean state. When code
+runs after a clean state, it improves the chances your code and project
+will be reproducible.
+
+We use Git because it is the best way of keeping track of what was done
+to your files, when, and why. It helps to keep your work transparent and
+makes it easier for you to share your code by uploading to GitHub. Using
+version control should be a standard practice to doing better science
+since it fits with the philosophy of doing science (e.g., transparency,
+reproducibility, and documentation).
+
+::: callout-note
+While we covered GitHub in the introductory workshop, we can't assume
+everyone will have taken that workshop. Because of that, we won't be
+using GitHub in this workshop.
 :::
 
-## Exercise: Discuss the types of workflows you use
+{{< text_snippet sticky_up >}}
 
-> Time: 15 minutes.
+## :technologist: Exercise: What types of workflows do you use?
 
--   Take 2 min to think about your workflow you use in your work. How do
-    you *exactly* do the things you do (like what apps you use, how you
-    collaborate, how you name your files and folders, where you save
-    your work)?
+**Time: \~8 minutes.**
 
--   Then for about 10 min, in your group/table share and discuss each
-    others workflows. How do they compare to each other? What are things
-    you'd like to try out in your own work? How do all your workflows
-    compare with what has been described so far?
+The process of learning is about taking the content you just learned and
+trying to integrate it into your own context and situation, as well as
+talking about it to enforce it into your brain. So:
 
--   For the remaining time, as the whole group, we'll briefly share what
-    you've all thought and discussed.
+-   Take 2 minutes to think about the workflows you use in your own work
+    and how they compare to the ones you've read about above and that we
+    all went over briefly. Try to be exact and specific in what you do
+    and how you do it.
+-   Then, with your neighbour, take 6 minutes where each of you share
+    what you've thought about and discuss it. How do both of your ways
+    of working compare to each other and to what was described above?
 
-## Setting up our project
+{{< text_snippet sticky_up >}}
+
+## Saving the current state of the project in Git
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -231,64 +312,13 @@ Take this time to briefly explain the Git interface, what add and commit
 mean, as well as where the history is located.
 :::
 
-Now that we've gone over the overview, let's get our project ready for
-the next steps. But first, we need to do a few things. Since we did all
-that work in the pre-workshop tasks downloading the data and unzipping it,
-we need to save these changes to the Git history. Open the Git interface
-with either the Git icon at the top near the menu bar, or with
-{{< var keybind.git >}}. When the Git interface opens up we'll click the
-checkbox beside the `.gitignore` and `data-raw/mmash.R` files. Then we
-write a commit message in the text box on the right, something like
-`Code to download data zip file`. Click the "Commit" button and close
-the Git interface.
-
-Next, delete these two files we don't need by using the `{fs}` package.
-
-In the **Console**, type out:
-
-``` {.r filename="Console"}
-fs::file_delete("TODO.md")
-```
-
-Then, open up the `data-raw/mmash.R` file and we'll add something that
-will make the rest of the workshop a bit easier. We'll include some code
-to delete the created `data-raw/mmash/` folder so this script can run
-cleanly each time. Place the code right below where the
-`download.file()` code is.
-
-<!-- TODO: Remove this after workshop ends, since the same info is in pre-workshop now -->
-
-```{r data-raw-mmash-comment-out}
-#| filename: "data-raw/mmash.R"
-#| eval: false
-# Download
-mmash_link <- "https://physionet.org/static/published-projects/mmash/multilevel-monitoring-of-activity-and-sleep-in-healthy-people-1.0.0.zip"
-# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
-
-# Remove previous `mmash/` folder to have clean update
-dir_delete(here("data-raw/mmash/"))
-```
-
-## Styling your files
-
-Before moving to the next session, there's one more "setup" thing to do.
-Since we write code for other humans (including ourselves in the
-future), code should also *look* pretty, clean, and organized. To do
-that, we'll follow a the tidyverse [style
-guide](https://style.tidyverse.org/) and use the package called
-`{styler}`, which automatically fixes code to fit the style guide. With
-`{styler}` you can style multiple files at once, one file at a time, or
-based on code you select and highlight. Throughout the workshop, we will
-re-style the file were are working on a lot. We'll do that by using the
-Command Palette by typing {{< var keybind.palette >}}, followed by
-typing "style file". The first one that pops up, which should say "Style
-active file", will be the one to select and use. We'll get lots of
-chances to use it as we go through the workshop. The thing to note is that
-`{styler}` isn't always perfect, so you might need to sometimes manually
-fix code
-
-After cleaning everything up and running `{styler}`, now we need to use
-Git to add and commit all the current files into the history. Open up
-the Git interface in RStudio with {{< var keybind.git >}} or through the
-Git button. Write a message in the commit text box saying
-`Added initial files`.
+Now that we've gone over the bigger picture and some workflows we will
+use in the workshop, let's get our project ready for the next session.
+While you did that work in the pre-workshop tasks downloading the data
+and unzipping it, we need to save these changes to the Git history. Open
+the Git interface with either the Git icon at the top near the menu bar
+or with {{< var keybind.git >}}. Then select all the current changes by
+clicking the checkbox beside the files and stage them. Then we write a
+commit message in the text box on the right, something like
+`Setting up the project`. Click the "Commit" button, then close the Git
+interface.
