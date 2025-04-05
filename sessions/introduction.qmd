@@ -136,12 +136,15 @@ LearnR3
 ```
 :::
 
-Why do we structure it this way? Because we want to follow some standard
-conventions in R, like having a `DESCRIPTION` metadata file, keeping raw
-data in the `data-raw/` folder, and keeping (most) R scripts in the
-`R/`. We also want to keep things structured to make it easier for
-others and ourselves to reproduce the work. Below are sections for the
-different workflows we will be using in the workshop.
+This structure, particularly the use of the `.Rproj` file and the
+`DESCRIPTION` file (that we will cover in this workshop) are part of a
+"project-based workflow" that is commonly used. We use this type of
+workflow because we want to follow some standard conventions in R, like
+having a `DESCRIPTION` metadata file, keeping raw data in the
+`data-raw/` folder, and keeping (most) R scripts in the `R/`. We also
+want to keep things structured to make it easier for others and
+ourselves to reproduce the work. Below are sections for the different
+workflows we will be using in the workshop.
 
 ### Download or copy data to `data-raw/`, only change with R {.unnumbered}
 
@@ -208,18 +211,21 @@ reproducibility, in a learning and supportive environment.
 
 While you use Quarto to test out and prototype code, you'll use R
 scripts like `R/functions.R` to keep the code you have tested out
-already and are fairly confident that it works as you want it to.
+already and are fairly confident that it works as you want it to. This
+workflow, of creating code and converting it into a function, is called
+a "function-based workflow". This is an incredibly common workflow in R
+projects and forms the basis for many other workflows and tools, such as
+ones that are covered in the [advanced
+workshop](https://r-cubed-advanced.rostools.org).
 
 So you'll use Quarto (`doc/learning.qmd`) to write and test out code,
 convert it into a function (that we will cover in this workshop), and
 then move it into `R/functions.R` script. We have this split to
 cognitively and physically have a separation between prototyping code
-and keeping finalized, tested code. This is also a very common workflow
-in R and fits with other workflows we will encounter in the [advanced
-workshop](https://r-cubed-advanced.rostools.org). Then, within the
-Quarto document we can `source()` the `R/functions.R` script so we have
-access to the stable and tested code. This workflow is represented below
-in @fig-quarto-to-functions.
+and keeping finalized, tested code. Then, within the Quarto document we
+can `source()` the `R/functions.R` script so we have access to the
+stable and tested code. This workflow is represented below in
+@fig-quarto-to-functions.
 
 ```{mermaid}
 %%| echo: false
