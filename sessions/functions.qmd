@@ -16,12 +16,6 @@ untar(
 )
 ```
 
-Here we will cover the second block, "*Workflow*" in
-@fig-overview-workflow.
-
-![Section of the overall workflow we will be
-covering.](/images/overview-workflow.svg){#fig-overview-workflow}
-
 ## Learning objectives
 
 {{< include /includes/_learning-objectives-functions.qmd >}}

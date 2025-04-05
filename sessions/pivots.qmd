@@ -11,12 +11,6 @@ load(here("_temp/dplyr-joins.RData"))
 load(here("data/mmash.rda"))
 ```
 
-Here we will continue using the *Workflow* block as we cover the fourth
-block, "*Work with project data*" in @fig-overview-analyze-project-data.
-
-![Section of the overall workflow we will be
-covering.](/images/overview-analyze-project-data.svg){#fig-overview-analyze-project-data}
-
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
