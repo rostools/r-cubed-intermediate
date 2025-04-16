@@ -1,0 +1,3 @@
+1.  Explain what R package dependency management is, why it is necessary
+    when writing code and ensuring reproducibility, and apply tools like
+    `usethis::use_package()` to manage dependencies in an R project.

@@ -248,6 +248,8 @@ repair". Since there is already a `{snakecase}` with some functions to
 help with converting to snake case, we will use this option to give the
 `name_repair` the function from the `{snakecase}`.
 
+<!-- TODO: Don't do snakecase:: here? -->
+
 To find out the name of the function to use, go to the **Console** and
 start to type out `snakecase::`. As we type we will see a list of
 possible functions to use. We want to use the snakecase one, so scroll

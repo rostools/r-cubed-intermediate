@@ -28,7 +28,7 @@ and overview.
 | 13:00 | {{< fa laptop-code >}} [Bundling code into functions](/sessions/functions.qmd) |
 | 13:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 14:00 | {{< fa mug-hot >}} Break with coffee and snacks |
-| 14:15 | {{< fa laptop-code >}} [Managing other packages you need and use](/sessions/dependency-management.qmd) |
+| 14:15 | {{< fa laptop-code >}} [Managing other packages you need and use](/sessions/dependencies.qmd) |
 | 16:15 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 
 ## Day 2 {.unnumbered}

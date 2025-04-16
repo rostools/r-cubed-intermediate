@@ -32,6 +32,7 @@ book:
       - sessions/introduction.qmd
       - sessions/importing.qmd
       - sessions/functions.qmd
+      - sessions/dependencies.qmd
       - sessions/functionals.qmd
       - sessions/dplyr-joins.qmd
       - sessions/pivots.qmd
