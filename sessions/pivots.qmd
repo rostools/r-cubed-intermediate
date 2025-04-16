@@ -8,7 +8,7 @@ library(fs)
 library(tidyverse)
 source(here("R/functions.R"))
 load(here("_temp/dplyr-joins.RData"))
-load(here("data/mmash.rda"))
+mmash <- read_csv(here("data/mmash.csv"))
 ```
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -36,7 +36,7 @@ the `setup` code chunk:
 #| filename: "docs/learning.qmd"
 #| eval: false
 source(here("R/functions.R"))
-load(here("data/mmash.rda"))
+mmash <- read_csv(here("data/mmash.csv"))
 ```
 
 As we write more R code and do some simple analyses of the data, we are

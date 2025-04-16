@@ -33,12 +33,12 @@ guideline to complete the following (optional) exercises and group work.
     a Quarto document, then cut and paste the code into a data
     processing R script in the `data-raw/` folder (alternatively, you
     can directly write and test code while in the `data-raw/` R script).
--   Restart R and generate the `.rda` dataset in the `data/` folder by
+-   Restart R and generate the `.csv` dataset in the `data/` folder by
     sourcing the `data-raw/` R script.
 -   Restart R, load the new dataset with `load()` and put the loading
     code into a Quarto document.
 -   Add any additional cleaning code to the data processing R script in
-    `data-raw/` and update the `.rda` dataset in `data/` whenever you
+    `data-raw/` and update the `.csv` dataset in `data/` whenever you
     encounter problems in the dataset.
 -   Write R in code chunks in a Quarto document to further analyze your
     data and check reproducibility by often rendering to HTML.
@@ -126,10 +126,10 @@ tasks to clean the data up more.
     documentation on the [MMASH
     website](https://physionet.org/content/mmash/1.0.0/) and try to
     figure how what happened. How you might fix the problem? Try your
-    fix within the `data-raw/mmash.R` cleaning script.
+    fix within the `docs/learning.qmd` cleaning script.
 
     ```{r}
-#| filename: "data-raw/mmash.R"
+#| filename: "docs/learning.qmd"
 #| eval: false
 mmash |>
   filter(user_id == "user_21")
@@ -149,7 +149,7 @@ mmash |>
     website](https://physionet.org/content/mmash/1.0.0/) and see if you
     can find an explanation for this. How would you go about solving
     this issue? Write up code to fix this issue in the
-    `data-raw/mmash.R` script.
+    `docs/learning.qmd` file.
 
     -   **Hint**: Find the users that have this value and look into
         their data `.csv` files that have `day` (or `Day`) variables.
@@ -163,7 +163,7 @@ There are still a few datasets that you can join in with the current
 datasets like `sleep.csv` and `questionnaire.csv`. Using the workflows
 in @sec-general-workflow as a guide, start from the beginning and
 import, process, clean, make functions, and join these two datasets in
-with the others so that they get included in the `data/mmash.rda` final
+with the others so that they get included in the `data/mmash.csv` final
 dataset. Afterwards, do some descriptive analysis using the function
 `tidy_summarise_by_day()`.
 
@@ -185,7 +185,7 @@ dataset of only the `Actigraph.csv` and `RR.csv` datasets.
 
 -   Join only these two datasets by `user_id`, `day`, and `time`.
 -   Name the new dataset `actigraph_rr` and save it to `data/` by using
-    another `usethis::use_data()` line in the `data-raw/mmash.R` script.
+    another `write_csv()` line in the `docs/learning.qmd` script.
 
 Than think of how some of these questions might be answered, using the
 [Data Description](https://physionet.org/content/mmash/1.0.0/) as a

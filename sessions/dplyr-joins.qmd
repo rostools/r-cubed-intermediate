@@ -597,85 +597,21 @@ to the Git history with {{< var keybind.git >}}.
 ## Wrangling data into final form
 
 Now that we've got several datasets processed and joined, it's time to
-bring it all together and put it into the `data-raw/mmash.R` script so
+bring it all together so
 we can create a final working dataset.
 
-Open up the `data-raw/mmash.R` file and the top of the file move the
-code `library(fs)` to go with the other packages as well. It should look
-something like this now:
-
-```{r}
-#| filename: "data-raw/mmash.R"
-library(here)
-library(tidyverse)
-library(fs)
-source(here("R/functions.R"))
-```
-
-Next, as we have altered `import_multiple_files()` to use `file_path`
-instead of `file_path_id`, we'll need to update how we `group_by()` when
-creating `summarised_rr_df` and `summarised_actigraph_df`.
-
-```{r data-raw-mmash-update}
-#| filename: "data-raw/mmash.R"
-summarised_rr_df <- rr_df |>
-  group_by(user_id, day) |>
-  summarise(
-    across(ibi_s, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
-  )
-
-summarised_actigraph_df <- actigraph_df |>
-  group_by(user_id, day) |>
-  summarise(
-    across(hr, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
-  )
-```
-
-Go into the `docs/learning.qmd` and cut the code used to create the
-`saliva_with_day_df` as well as the code to `full_join()` all the
-datasets together with `reduce()` and paste it at the bottom of the
-`data-raw/mmash.R` script. Assign the output into a new variable called
-`mmash`, like this:
-
-```{r data-raw-mmash-to-final}
-#| filename: "data-raw/mmash.R"
-saliva_with_day_df <- saliva_df |>
-  mutate(day = case_when(
-    samples == "before sleep" ~ 1,
-    samples == "wake up" ~ 2,
-    TRUE ~ NA_real_
-  ))
-
-mmash <- list(
-  user_info_df,
-  saliva_with_day_df,
-  summarised_rr_df,
-  summarised_actigraph_df
-) |>
-  reduce(full_join)
-```
-
-Lastly, we have to save this final dataset into the `data/` folder.
-We'll use the function `usethis::use_data()` to create the folder and
-save the data as an `.rda` file. We'll add this code to the very bottom
-of the script:
+We do this by saving our last, final dataset we created as `dime` into the `data/` folder.
+We'll use the function `readr::write_csv()` to do this, but first we need to create the folder.
+So at the bottom of the `docs/learning.qmd` file, create a header
+called `## Saving the final data` and then make a new code chunk with {{< var keybind.r >}}. 
+In this code chunk, we'll use `fs::dir_create()` to make the folder:
 
 ```{r save-data}
-#| filename: "data-raw/mmash.R"
-usethis::use_data(mmash, overwrite = TRUE)
+#| filename: "docs/learning.qmd"
+fs::dir_create(here("data"))
 ```
 
-We're adding `overwrite = TRUE` so every time we re-run this script, the
-dataset will be saved. Alternatively, we could (but won't in this
-workshop) save it as a `.csv` file with:
+Then we save it with `write_csv()`:
 
 ```{r}
 #| eval: false
@@ -686,14 +622,13 @@ And later load it in with `read_csv()` (since it is so fast). Alright,
 we're finished creating this dataset! Let's generate it by:
 
 -   First running `{styler}` with {{< var keybind.styler >}}.
--   Restarting the R session with {{< var keybind.restart-r >}}.
--   Sourcing the `data-raw/mmash.R` script with
-    {{< var keybind.source >}}.
+-   Rendering the `docs/learning.qmd` file with
+    {{< var keybind.render >}}.
 
 We now have a final dataset to start working on! The main way to load
-data is with `load(here::here("data/mmash.rda"))`. Lastly, **add and commit** 
+data is with `read_csv(here("data/mmash.csv"))`. Lastly, **add and commit** 
 all the changes, including adding
-the final `mmash.rda` data file, to the Git history by using
+the final `mmash.csv` data file, to the Git history by using
 {{< var keybind.git >}}.
 
 ## Summary

@@ -34,8 +34,7 @@ data-raw/
 │   ├── user_7
 │   ├── user_8
 │   └── user_9
-├── mmash-data.zip
-└── mmash.R
+└── mmash-data.zip
 ```
 :::
 :::::
@@ -175,8 +174,7 @@ data-raw/
 │   ├── user_7
 │   ├── user_8
 │   └── user_9
-├── mmash-data.zip
-└── mmash.R
+└── mmash-data.zip
 ```
 
 # Activities

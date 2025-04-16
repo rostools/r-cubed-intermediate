@@ -431,39 +431,6 @@ summarised_actigraph_df <- actigraph_df |>
   )
 ```
 
-## Cleaning up and adding to the processing script
-
-**We'll do this all together**. We've tested out, imported, and
-processed two new datasets, the RR and the Actigraph datasets. First, in
-the Quarto document, cut the code that we used to import and process the
-`rr_df` and `actigraph_df` data. Then open up the `data-raw/mmash.R`
-file and paste the cut code into the bottom of the script. It should
-look something like this:
-
-```{r add-import-functions-to-data-raw-script}
-#| filename: "data-raw/mmash.R"
-#| eval: false
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-rr_df <- import_multiple_files("RR.csv", import_rr)
-actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
-
-summarised_rr_df <- rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(
-    across(ibi_s, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
-  )
-
-# Code pasted here that was made from the above exercise
-```
-
-Next, add and commit the
-changes to the Git history with {{< var keybind.git >}}.
-
 ## :speech_balloon: Discussion activity: Incorporating functionals in your own work
 
 **Time: ~10 minutes.**

@@ -428,57 +428,6 @@ import_multiple_files <- function(file_pattern, import_function) {
 import_multiple_files("saliva.csv", import_saliva)
 ```
 
-## Adding to the processing script and clean up Quarto document
-
-Now that we've made a function that imports multiple data files based on
-the type of data file, we can start using this function directly, like
-we did in the exercise above for the saliva data. We've already imported
-the `user_info_df` previously, but now we should do some tidying up of
-our Quarto file and to start updating the `data-raw/mmash.R` script. Why
-are we doing that? Because the Quarto file is only a sandbox to test
-code out and in the end we want a script that takes the raw data,
-processes it, and creates a working dataset we can use for analysis.
-
-Fist, we will restart
-the R session with {{< var keybind.restart-r >}} and we'll create a new
-code chunk at the bottom of the file where we will use the
-`import_multiple_files()` function to import the user info and saliva
-data.
-
-```{r}
-#| filename: "docs/learning.qmd"
-user_info_df <- import_multiple_files("user_info.csv", import_user_info)
-saliva_df <- import_multiple_files("saliva.csv", import_saliva)
-```
-
-<!-- TODO: Delete the text about the library(fs), since that will be fixed after the workshop -->
-
-To test that things work, we'll create an HTML document from our Quarto
-document by using the "Render" / "Knit" button at the top of the pane or
-with {{< var keybind.render >}}. Once it creates the file, it should
-either pop up or open in the Viewer pane on the side. If it works, then
-we can move on and open up the `data-raw/mmash.R` script. If not, it
-means that there is an issue in your code and that it won't be
-reproducible.
-
-Before continuing, we'll collect our imported packages in the top of the
-script by adding the `library(fs)` line to right below `library(here)`.
-Then, inside `data-raw/mmash.R`, copy and paste the two lines of code
-that creates the `user_info_df` and `saliva_df` to the bottom of the
-script (i.e., the two lines in the code chunk above). Afterwards, go the
-top of the script and right below the `library(fs)` code, add these two
-lines of code, so it looks like this:
-
-``` {.r filename="data-raw/mmash.R"}
-library(here)
-library(fs)
-library(tidyverse)
-source(here("R/functions.R"))
-```
-
-Save the files, then add and commit the changes to the Git history with
-{{< var keybind.git >}}.
-
 ## :speech_balloon: Discussion activity: Incorporating functionals in your own work
 
 **Time: ~10 minutes.**
