@@ -31,7 +31,9 @@ spread across the workshop's sessions. The workshop will enable you to:
 
 {{< include /includes/_learning-objectives-importing.qmd >}}
 {{< include /includes/_learning-objectives-functions.qmd >}}
+{{< include /includes/_learning-objectives-dependencies.qmd >}}
 {{< include /includes/_learning-objectives-functionals.qmd >}}
+{{< include /includes/_learning-objectives-split-apply-combine.qmd >}}
 {{< include /includes/_learning-objectives-dplyr-joins.qmd >}}
 {{< include /includes/_learning-objectives-pivots.qmd >}}
 

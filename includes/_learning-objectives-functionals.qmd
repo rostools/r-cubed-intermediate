@@ -2,10 +2,3 @@
     are within R and identify when code is a functional or uses
     functional programming. Then apply this knowledge using the
     `{purrr}` package's `map()` function.
-
-2.  Review the split-apply-combine technique and identify how these
-    concepts make use of functional programming.
-
-3.  Apply functional programming to summarize data using the
-    split-apply-combine technique with `{dplyr}`'s `group_by()`,
-    `summarise()`, and `across()` functions.

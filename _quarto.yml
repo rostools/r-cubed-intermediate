@@ -34,6 +34,7 @@ book:
       - sessions/functions.qmd
       - sessions/dependencies.qmd
       - sessions/functionals.qmd
+      - sessions/split-apply-combine.qmd
       - sessions/dplyr-joins.qmd
       - sessions/pivots.qmd
       - sessions/hands-on-work.qmd
