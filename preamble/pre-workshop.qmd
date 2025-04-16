@@ -214,7 +214,7 @@ they can sometimes have these programs installed and setup for them too.
 
 Unfortunately, these types of software can cause very subtle, small
 issues when working with Git, R, and RStudio that are very difficult to
-troubleshoot, for both you and for us as the instructors. They cause
+troubleshoot, for both you and for us as the teachers. They cause
 these subtle issues because they are constantly working to synchronize
 files and folders. This can sometimes cause conflicts with files when
 using Git and especially when doing more data intensive work that

@@ -38,7 +38,6 @@ book:
       - sessions/hands-on-work.qmd
       - sessions/what-next.qmd
   appendices:
-    - appendix/for-instructors.qmd
     - appendix/extras.qmd
     - LICENSE.md
     - appendix/references.qmd
@@ -48,6 +47,8 @@ book:
         href: LICENSE.html
       - text: "Code of Conduct"
         href: "https://guides.rostools.org/conduct.html"
+      - text: "Teacher guide"
+        href: "https://guides.rostools.org/"
 
 format:
   r3-theme-html:

@@ -20,8 +20,8 @@ For more detail on the workshop, check out the
 
 ## Instructional Design
 
-The workshop is designed primary for in-person instruction with a
-participatory live-coding approach. This involves an instructor typing
+The workshop is designed primary for in-person teaching with a
+participatory live-coding approach. This involves an teacher typing
 and running code in [RStudio](https://www.rstudio.com/) in front of the
 class, while participants follow along using their own computers. A
 variety of learning activities, like hands-on exercises, discussion

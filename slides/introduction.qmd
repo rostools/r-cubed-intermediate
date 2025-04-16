@@ -41,7 +41,7 @@ data-raw/
 :::::
 
 ::: notes
-Introduce instructors and helpers.
+Introduce teachers and helpers.
 :::
 
 # Motivation for this workshop {.center}
@@ -57,9 +57,9 @@ never teaching the bigger picture... How do researchers in their daily
 work write R code and do their data analysis?
 
 This question is the reason why the overall workflow is the primary
-focus in this workshop and partly with the beginner one. I try to focus on
-the bigger picture and the overall workflow you would do for doing data
-analysis.
+focus in this workshop and partly with the beginner one. I try to focus
+on the bigger picture and the overall workflow you would do for doing
+data analysis.
 
 So, why is it that there isn't much information on how researchers do
 data analysis?
@@ -136,8 +136,9 @@ American Statistical Association
 :::::
 
 ::: notes
-Explain a bit more about the reading, why doing it, and that this workshop
-in particular has a lot more of it than more advanced workshops.
+Explain a bit more about the reading, why doing it, and that this
+workshop in particular has a lot more of it than more advanced
+workshops.
 
 About feedback, will improve this workshop, we're collaborating together
 to make it better. You're learning, but also helping to improve the
@@ -198,8 +199,8 @@ statistics workshop, it doesn't really count.
 ## :walking_woman::walking: Who has struggled with using R? {.center}
 
 ::: notes
-One side of the room if yes, other side if no, middle if you've sort have
-struggled.
+One side of the room if yes, other side if no, middle if you've sort
+have struggled.
 :::
 
 ## :raising_hand: Who has seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)? {.center}
@@ -219,3 +220,4 @@ Question, mostly for my own information...
 ## Return to your seats! :chair: {.center}
 
 # References
+

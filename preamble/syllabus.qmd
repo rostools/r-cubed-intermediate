@@ -16,7 +16,7 @@ irreproducible results.
 
 With this workshop, we aim to begin addressing this gap. We use a highly
 practical, mixed-methods, hands-on approach to learning that revolves
-around code-along sessions (instructor and you, the learner, coding
+around code-along sessions (teacher and you, the learner, coding
 together), hands-on exercises, discussion activities, reading tasks, and
 group project work. The learning outcome and overall aim of the workshop
 is to enable you to:

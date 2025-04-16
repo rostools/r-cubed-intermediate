@@ -26,11 +26,11 @@ impacts on the reproducibility of studies. This workshop is therefore
 aimed to specifically to start addressing these types of problems.
 
 The workshop is designed as a series of participatory live-coding
-lessons, where the instructor and learners code together, and is
+lessons, where the teacher and learners code together, and is
 interspersed with hands-on exercises, discussion time, reading tasks,
 and group project work, all while using a real-world (open) dataset.
 This website contains *all* of the material for the workshop, including
-for both the learner and the instructor. It is structured as a book,
+for both the learner and the teacher. It is structured as a book,
 with "chapters" as sessions, given in order of appearance. We make heavy
 use of the website throughout the workshop where code-along sessions
 follow the material on the website nearly exactly (with slight
@@ -63,11 +63,11 @@ This website and its content are targeted to three groups:
     along in case they get lost and also to use as a reference after the
     workshop ends. See @sec-is-it-for-you for a more detailed description
     of who the learner is.
-2.  For the **instructors** to use as a guide for when they do the
+2.  For the **teachers** to use as a guide for when they do the
     code-along sessions and presentations.
 3.  For those who are **interested in teaching**, who may not have much
     experience or may not know where to start, to use this website as a
-    guide to running and instructing their own workshops.
+    guide to running and teaching their own workshops.
 
 ## Re-use and licensing {#licensing}
 
@@ -94,7 +94,7 @@ this workshop many times. A huge thanks to them for their involvement,
 support, and sponsorship! [Steno Diabetes Center
 Aarhus](https://www.stenoaarhus.dk/) and [Aarhus
 University](https://international.au.dk/) employs Luke, who is the lead
-instructor and educational resource developer.
+teacher and educational resource developer.
 
 ::: {layout-ncol="2"}
 ![](/images/ddea-logo.png){width="220px" fig-align="center"

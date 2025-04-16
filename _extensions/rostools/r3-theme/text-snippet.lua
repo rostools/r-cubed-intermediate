@@ -18,7 +18,7 @@ local sticky_up = [[
 ## Sticky/hat up!
 
 When you're ready to continue, place the sticky/paper hat on your
-computer to indicate this to the instructor :womans_hat: :tophat:
+computer to indicate this to the teacher :womans_hat: :tophat:
 :::
 ]]
 
