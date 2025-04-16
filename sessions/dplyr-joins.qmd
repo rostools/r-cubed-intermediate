@@ -402,8 +402,8 @@ programming concept from the `{purrr}` package called `reduce()`. Like
 `map()`, which "maps" a function onto a set of items, `reduce()` applies
 a function to each item of a vector or list, each time reducing the set
 of items down until only one remains: the output. Let's use an example
-with our simple function `add_numbers()` we had created earlier on (but
-later deleted) and add up 1 to 5. Since `add_numbers()` only takes two
+with our simple function `add_numbers()` we had created earlier on 
+and add up 1 to 5. Since `add_numbers()` only takes two
 numbers, we have to give it two numbers at a time and repeat until we
 reach 5.
 
@@ -691,10 +691,8 @@ we're finished creating this dataset! Let's generate it by:
     {{< var keybind.source >}}.
 
 We now have a final dataset to start working on! The main way to load
-data is with `load(here::here("data/mmash.rda"))`. Go into the
-`docs/learning.qmd` file and delete **everything** again, except for the
-YAML header and `setup` code chunk, so that we are ready for the next
-session. Lastly, **add and commit** all the changes, including adding
+data is with `load(here::here("data/mmash.rda"))`. Lastly, **add and commit** 
+all the changes, including adding
 the final `mmash.rda` data file, to the Git history by using
 {{< var keybind.git >}}.
 

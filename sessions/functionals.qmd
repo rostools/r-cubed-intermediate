@@ -208,14 +208,6 @@ But what does functionals have to do with what we are doing now? Well,
 our `import_user_info()` function only takes in one data file. But we
 have 22 files that we could load all at once if we used functionals.
 
-Before we continue, let's clean up the `docs/learning.qmd` file by
-deleting **everything** below the `setup` code chunk that contains the
-`library()` and `source()` code. Why do we delete everything? Because it
-keeps things cleaner and makes it easier to look through the file (both
-for you and for us as teachers). And because we use Git, nothing is
-truly gone so you can always go back to the text later. Next, we restart
-the R session with {{< var keybind.restart-r >}}.
-
 Before we'll use the `map()` functional, we need to get a vector or list
 of all the dataset files available to us. We will return to using the
 `{fs}` package, which has a function called `dir_ls()` that finds files
@@ -447,10 +439,9 @@ are we doing that? Because the Quarto file is only a sandbox to test
 code out and in the end we want a script that takes the raw data,
 processes it, and creates a working dataset we can use for analysis.
 
-Like we did before, delete **everything** below the `setup` code chunk
-that contains the `library()` and `source()` code. Then, we will restart
+Fist, we will restart
 the R session with {{< var keybind.restart-r >}} and we'll create a new
-code chunk below the `setup` chunk where we will use the
+code chunk at the bottom of the file where we will use the
 `import_multiple_files()` function to import the user info and saliva
 data.
 
@@ -928,8 +919,7 @@ summarised_rr_df <- rr_df |>
 # Code pasted here that was made from the above exercise
 ```
 
-Next, go to the Quarto document and again delete **everything** below
-the `setup` code chunk. After it has been deleted, add and commit the
+Next, add and commit the
 changes to the Git history with {{< var keybind.git >}}.
 
 ## :speech_balloon: Discussion activity: Incorporating functionals in your own work
