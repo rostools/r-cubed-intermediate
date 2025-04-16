@@ -76,21 +76,13 @@ efficient than entering data in long form. For instance, if you were
 measuring glucose values over time in participants, you might enter data
 in like this:
 
-```{r table-example-wide}
-#| echo: false
-example_wide <- tribble(
-  ~person_id, ~glucose_0, ~glucose_30, ~glucose_60,
-  1, 5.6, 7.8, 4.5,
-  2, 4.7, 9.5, 5.3,
-  3, 5.1, 10.2, 4.2
-)
+| person_id | glucose_0 | glucose_30 | glucose_60 |
+|:----------|:----------|:-----------|:-----------|
+| 1         | 5.6       | 7.8        | 4.5        |
+| 2         | 4.7       | 9.5        | 5.3        |
+| 3         | 5.1       | 10.2       | 4.2        |
 
-example_wide |>
-  knitr::kable(
-    caption = "Example of a **wide** dataset that is useful for data entry.",
-    align = "c"
-  )
-```
+: This is a **wide** dataset that is useful for data entry.
 
 However, when it comes time to analyze the data, this wide form is very
 inefficient and difficult to computationally and statistically work
@@ -626,38 +618,6 @@ mmash |>
 ```
 
 Nice!! :grin: :tada:
-
-## Making prettier output in Quarto
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Can go over this quite quickly after they've (optionally) finished the
-previous exercise.
-:::
-
-What we created is nice and all, but since we are working in a Quarto
-document and generating to HTML, let's make it easier for others
-(including yourself) to read the document. Let's make the output as an
-actual table. We can do that with `knitr::kable()` (meaning "knitr
-table"). We can also add a table caption with the `caption` argument.
-
-```{r knitr-table}
-#| filename: "docs/learning.qmd"
-mmash |>
-  tidy_summarise_by_day(list(
-    mean = \(x) mean(x, na.rm = TRUE),
-    min = \(x) min(x, na.rm = TRUE),
-    max = \(x) max(x, na.rm = TRUE)
-  )) |>
-  knitr::kable(caption = "Descriptive statistics of some variables.")
-```
-
-Then render the document with {{< var keybind.render >}} and check out
-the HTML file. So pretty! :grin: Well, there's lots of things to fix up,
-but its a good starting place. Let's finish by running `{styler}` with
-{{< var keybind.styler >}} and then committing the changes to the Git
-history with {{< var keybind.git >}}.
 
 ## Summary
 
