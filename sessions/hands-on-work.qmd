@@ -52,7 +52,7 @@ guideline to complete the following (optional) exercises and group work.
 
 We have a few other datasets that we could join together, but would
 likely require more processing in order to appropriately join with the
-other datasets. Complete these tasks in the `doc/learning.qmd` file:
+other datasets. Complete these tasks in the `docs/learning.qmd` file:
 
 1.  Create a new header called `## Exercise: Importing activity data`
 2.  Create a new code chunk below this new header
@@ -67,7 +67,7 @@ other datasets. Complete these tasks in the `doc/learning.qmd` file:
     -   Add Roxygen documentation with {{< var keybind.roxygen >}} and
         explicit package links (`::`) with the functions.
     -   Move the newly created function into the `R/functions.R`.
-    -   Use the new function in `doc/learning.qmd` and use `source()`
+    -   Use the new function in `docs/learning.qmd` and use `source()`
         {{< var keybind.source >}} to run it.
 5.  Import all the `user_` datasets with `import_multiple_files()` and
     the `import_activity()` function.

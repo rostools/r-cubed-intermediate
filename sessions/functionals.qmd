@@ -208,11 +208,11 @@ But what does functionals have to do with what we are doing now? Well,
 our `import_user_info()` function only takes in one data file. But we
 have 22 files that we could load all at once if we used functionals.
 
-Before we continue, let's clean up the `doc/learning.qmd` file by
+Before we continue, let's clean up the `docs/learning.qmd` file by
 deleting **everything** below the `setup` code chunk that contains the
 `library()` and `source()` code. Why do we delete everything? Because it
 keeps things cleaner and makes it easier to look through the file (both
-for you and for us as instructors). And because we use Git, nothing is
+for you and for us as teachers). And because we use Git, nothing is
 truly gone so you can always go back to the text later. Next, we restart
 the R session with {{< var keybind.restart-r >}}.
 
@@ -220,7 +220,7 @@ Before we'll use the `map()` functional, we need to get a vector or list
 of all the dataset files available to us. We will return to using the
 `{fs}` package, which has a function called `dir_ls()` that finds files
 of a certain pattern. So, let's add `library(fs)` to the `setup` code
-chunk. Then, go to the bottom of the `doc/learning.qmd` document, create
+chunk. Then, go to the bottom of the `docs/learning.qmd` document, create
 a new header called `## Using map`, and create a code chunk below that
 with {{< var keybind.chunk >}}
 
@@ -233,7 +233,7 @@ our case, the pattern is `user_info.csv`, so the code should look like
 this:
 
 ```{r list-user-info-files}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_files <- dir_ls(here("data-raw/mmash/"),
   regexp = "user_info.csv",
   recurse = TRUE
@@ -244,7 +244,7 @@ Then let's see what the output looks like. For the website, we are only
 showing the first 3 files. Your output will look slightly different from
 this.
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 user_info_files
 ```
 
@@ -265,7 +265,7 @@ Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
 with `library()`. So let's try it!
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_list <- map(user_info_files, import_user_info)
 ```
 
@@ -274,7 +274,7 @@ object, it will give us 22 tibbles (data.frames). Here we'll only show
 the first one:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_list[[1]]
 ```
 
@@ -295,7 +295,7 @@ the user ID information in it. So, let's use it and create a new column
 called `file_path_id`.
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 ```
@@ -303,7 +303,7 @@ user_info_df <- map(user_info_files, import_user_info) |>
 Your `file_path_id` variable will look different. Don't worry, we're
 going to tidy up the `file_path_id` variable later.
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 user_info_df
 ```
 
@@ -352,13 +352,13 @@ Since we **do not** want to repeat ourselves, this is a perfect chance
 to convert this code above into a function, so we can use this new
 function to import the other datasets without repeating ourselves.
 
-So inside `doc/learning.qmd`, convert this bit of code into a function
+So inside `docs/learning.qmd`, convert this bit of code into a function
 that works to import the other three datasets.
 
 Complete the tasks below and use this below code as a guide to help
 complete this exercise:
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 ___ <- ___(___, ___) {
   ___ <- ___dir_ls(___here("data-raw/mmash/"),
     regexp = ___,
@@ -455,7 +455,7 @@ code chunk below the `setup` chunk where we will use the
 data.
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 ```
@@ -550,7 +550,7 @@ calculate the mean of cortisol in the saliva dataset, you would usually
 type out:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_df |>
   summarise(cortisol_mean = mean(cortisol_norm))
 ```
@@ -565,7 +565,7 @@ If you want to calculate the mean of multiple columns, you might think
 you'd have to do something like:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_df |>
   summarise(
     cortisol_mean = mean(cortisol_norm),
@@ -647,7 +647,7 @@ Let's try out some examples. To calculate the mean of `cortisol_norm`
 like we did above, we'd do:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_df |>
   summarise(across(cortisol_norm, mean))
 ```
@@ -655,7 +655,7 @@ saliva_df |>
 To calculate the mean of another column:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_df |>
   summarise(across(c(cortisol_norm, melatonin_norm), mean))
 ```
@@ -683,7 +683,7 @@ list(ave = mean)
 Let's stick with `list(mean = mean)`:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_df |>
   summarise(across(cortisol_norm, list(mean = mean)))
 ```
@@ -692,7 +692,7 @@ Now, let's collect some of the concepts from above to calculate the mean
 and standard deviation for all numeric columns in the `saliva_df`:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_df |>
   summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
 ```
@@ -715,7 +715,7 @@ taking the mean of `ibi_s` (which is the inter-beat interval in
 seconds).
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 rr_df <- import_multiple_files("RR.csv", import_rr)
 rr_df |>
@@ -736,7 +736,7 @@ While there are no missing values here, let's add the argument
 `na.rm = TRUE` just in case. In order add this argument to the mean, we
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 rr_df |>
   group_by(file_path_id, day) |>
@@ -755,7 +755,7 @@ Let's also add standard deviation as another measure from the RR
 datasets:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
@@ -788,7 +788,7 @@ Whenever you are finished with a grouping effect, it's good practice to
 end the `group_by()` with `.groups = "drop"`. Let's add it to the end:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 summarised_rr_df <- rr_df |>
   group_by(file_path_id, day) |>
@@ -874,9 +874,9 @@ Environments pane to view it. For many computers, your R session will
     functions you chose. Assign the newly summarised data frame to a new
     data frame and call it `summarised_actigraph_df`.
 7.  End the grouping effect with `.groups = "drop"` in `summarise()`.
-8.  Run `{styler}` while in the `doc/learning.qmd` file with
+8.  Run `{styler}` while in the `docs/learning.qmd` file with
     {{< var keybind.styler >}}.
-9.  Knit the `doc/learning.qmd` document with {{< var keybind.render >}}
+9.  Knit the `docs/learning.qmd` document with {{< var keybind.render >}}
     to make sure everything works.
 10. **Add and commit** the changes you've made into the Git history with
     {{< var keybind.git >}}.

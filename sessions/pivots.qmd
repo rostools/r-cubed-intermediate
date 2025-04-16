@@ -33,7 +33,7 @@ We will now add the `load()` code right below the `source()` function in
 the `setup` code chunk:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 source(here("R/functions.R"))
 load(here("data/mmash.rda"))
@@ -144,13 +144,13 @@ by running this in the Console:
 usethis::use_package("tidyr")
 ```
 
-Let's try this out with `mmash`. In your `doc/learning.qmd` file, create
+Let's try this out with `mmash`. In your `docs/learning.qmd` file, create
 a new header called `## Pivot longer` and create a new code chunk below
 that with {{< var keybind.chunk >}}. Now we can start typing in our
 code:
 
 ```{r pivot-everything-error}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| error: true
 mmash |>
   # pivot every column
@@ -162,7 +162,7 @@ We can't have character data and number data in the same column. Let's
 pivot only numbers.
 
 ```{r pivot-numeric}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 mmash |>
   pivot_longer(where(is.numeric))
 ```
@@ -173,7 +173,7 @@ and `day`. Let's drop the `samples` column before pivoting since `day`
 gives us the same information:
 
 ```{r pivot-longer-example}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender))
@@ -187,7 +187,7 @@ Using the `group_by()` and `summarise()` functions we learned in
 @sec-summarise-with-functionals, complete these tasks starting from this
 code.
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 mmash |> 
   select(-samples) |> 
   pivot_longer(c(-user_id, -day, -gender)) |> 
@@ -202,11 +202,11 @@ mmash |>
     them into a named list like we did previously). Don't forget to use
     `na.rm = TRUE` to exclude missing values.
 3.  Stop the grouping effect with `.groups = "drop"` in `summarise()`.
-4.  Run `{styler}` while in the `doc/learning.qmd` file with
+4.  Run `{styler}` while in the `docs/learning.qmd` file with
     {{< var keybind.styler >}}.
 5.  Render the Quarto file into HTML with {{< var keybind.render >}}.
 6.  Open up the Git interface and **add and commit** the changes to
-    `doc/learning.qmd` with {{< var keybind.git >}}
+    `docs/learning.qmd` with {{< var keybind.git >}}
 
 ```{r solution-pivot-summarize}
 #| output: false
@@ -285,7 +285,7 @@ and SD values. Let's use `pivot_wider()` on `day` to see differences
 between days.
 
 ```{r pivot-wider-from-summarised}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| error: true
 mmash |>
   select(-samples) |>
@@ -312,7 +312,7 @@ works similar to `select()`, we can use `starts_with()` to select the
 columns starting with `"values"`.
 
 ```{r pivot-wider-from-summarised-starts-with}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
@@ -344,7 +344,7 @@ We also don't care about missing `gender` values, so we'll drop them as
 well. Add it in the pipe right before `group_by()`.
 
 ```{r pivot-wider-from-summarised-drop-na}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 mmash |>
   select(-samples) |>
   pivot_longer(c(-user_id, -day, -gender)) |>
@@ -387,7 +387,7 @@ the code we just wrote above into a function.
 6.  Run `{styler}` while in the `R/functions.R` file with
     {{< var keybind.styler >}}.
 7.  Restart R with {{< var keybind.restart-r >}}, go into the
-    `doc/learning.qmd` file and run the `setup` code chunk in the Quarto
+    `docs/learning.qmd` file and run the `setup` code chunk in the Quarto
     document with the `source()` and `load()` commands. Then test that
     the new function works in a code chunk at the bottom of the
     document.
@@ -554,10 +554,10 @@ tidy_summarise_by_day(mmash, \(x) max(x, na.rm = TRUE))
 ```
 
 Now that it works, let's add some summary statistics to the
-`doc/learning.qmd` file.
+`docs/learning.qmd` file.
 
 ```{r test-tidier-summary}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 mmash |>
   tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
 mmash |>
@@ -612,7 +612,7 @@ tidy_summarise_by_day <- function(data, summary_fn) {
 }
 ```
 
-Let's see how it looks by rendering the `doc/learning.qmd` file again
+Let's see how it looks by rendering the `docs/learning.qmd` file again
 with {{< var keybind.render >}}. One of the output tables show now look
 something like:
 
@@ -643,7 +643,7 @@ actual table. We can do that with `knitr::kable()` (meaning "knitr
 table"). We can also add a table caption with the `caption` argument.
 
 ```{r knitr-table}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 mmash |>
   tidy_summarise_by_day(list(
     mean = \(x) mean(x, na.rm = TRUE),

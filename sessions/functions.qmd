@@ -106,7 +106,7 @@ Let's write a simple example. First, create a new Markdown header called
 this code out:
 
 ```{r create-add-function}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 add_numbers <- function(num1, num2) {
   added <- num1 + num2
   return(added)
@@ -117,7 +117,7 @@ You can use the new function by running the above code and writing out
 your new function, with arguments to give it.
 
 ```{r call-function}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 add_numbers(1, 2)
 ```
 
@@ -129,7 +129,7 @@ documentation to the function. Use the "Insert Roxygen Skeleton" in the
 template documentation right above the function. It looks like:
 
 ```{r roxygen-docs-1}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #' Title
 #'
 #' @param num1
@@ -162,7 +162,7 @@ are:
     documentation for this function:
 
 ```{r roxygen-docs-2}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #' Add two numbers together.
 #'
 #' @param num1 A number here.
@@ -209,7 +209,7 @@ the time throughout workshop and that this workflow is also what you'd use
 in your daily work.
 :::
 
-In `doc/learning.qmd`, create a new Markdown header called
+In `docs/learning.qmd`, create a new Markdown header called
 `## Import the user data with a function` and create a code chunk below
 that with {{< var keybind.chunk >}} .
 
@@ -217,7 +217,7 @@ So, step one. Let's take the code we wrote for importing the `user_info`
 data and convert that as a function:
 
 ```{r function-creation-step-1}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 user_1_info_data <- read_csv(
   user_1_info_file,
@@ -236,7 +236,7 @@ Next we wrap it in the function call and give it an appropriate name. In
 this case, `import_user_info` is descriptive and meaningful.
 
 ```{r function-creation-step-2}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 import_user_info <- function() {
   user_1_info_data <- read_csv(
@@ -258,7 +258,7 @@ Here, we have only one thing that we would change: The file path to the
 dataset. So, a good name might be `file_path`.
 
 ```{r function-creation-step-3}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 import_user_info <- function(file_path) {
   user_1_info_data <- read_csv(
@@ -281,7 +281,7 @@ like to also import more than just `user_1`. A nice object name would be
 want your function to output.
 
 ```{r function-creation-step-4}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 import_user_info <- function(file_path) {
   info_data <- read_csv(
     file_path,
@@ -302,7 +302,7 @@ Great! Now we need to test it out. Let's try on two datasets, two
 `user_info.csv` files in the `user_1` and `user_2` folders.
 
 ```{r function-creation-step-5}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
 import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
 ```
@@ -310,7 +310,7 @@ import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
 Awesome! It works. The final stage is adding the Roxygen documentation.
 
 ```{r function-creation-step-6}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #' Import MMASH user info data file.
 #'
 #' @param file_path Path to user info data file.
@@ -348,7 +348,7 @@ Take the code you created for importing the saliva data set from
 @sec-ex-import-saliva and
 make it into a function. It looks like the code below.
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 user_1_saliva_data <- read_csv(
     user_1_saliva_file,
     col_select = -1,
@@ -383,14 +383,14 @@ right corner of the Quarto pane or by using {{< var keybind.outline >}}.
     -   Run the function and then test that it works
     -   Create the Roxygen documentation by adding it with
         {{< var keybind.roxygen >}}
-4.  Run `{styler}` while in the `doc/learning.qmd` file with
+4.  Run `{styler}` while in the `docs/learning.qmd` file with
     {{< var keybind.styler >}}.
 5.  Then, **add and commit** the changes to the Git history, using
     {{< var keybind.git >}}.
 
 Use the below code as a guide:
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 # Need to also add the Roxygen documentation 
 import_saliva <- function(file_path) {
     # Paste the code to import saliva data you created 
@@ -439,12 +439,12 @@ import_saliva <- function(file_path) {
 ## Instructor note
 
 Really emphasize to **cut** and paste, so that the function in the
-`doc/learning.qmd` file is **deleted** and no longer kept in the Quarto
+`docs/learning.qmd` file is **deleted** and no longer kept in the Quarto
 document.
 :::
 
 We've created two functions. Now we need to move those functions from
-the `doc/learning.qmd` file and into the `R/` folder by **cutting and
+the `docs/learning.qmd` file and into the `R/` folder by **cutting and
 pasting** (not just copying). We do this for a few reasons:
 
 1.  To prevent the Quarto document from becoming too long and having a
@@ -454,17 +454,17 @@ pasting** (not just copying). We do this for a few reasons:
 
 We want to store our functions in the file `R/functions.R` script so its
 easier to source them. Cut and paste *only* the `import_user_info()`
-function we created in `doc/learning.qmd`, including the Roxygen
+function we created in `docs/learning.qmd`, including the Roxygen
 documentation, and paste it into the newly created `R/functions.R`.
 
 Once we have it in there, let's test out the workflow. Restart our R
 session with by either going to the "Session -\> Restart R" menu item or
 by using the keybindings {{< var keybind.restart-r >}}. Move back into
-the `doc/learning.qmd` and add `source(here("R/functions.R"))` to the
+the `docs/learning.qmd` and add `source(here("R/functions.R"))` to the
 code chunk called `setup` at the top. Run all the code inside the
 `setup` code chunk. Then go to where you wrote:
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
@@ -716,7 +716,7 @@ code you worked on previously that imported the `RR.csv` and
 `Actigraph.csv` data.
 
 1.  Convert the importing code into functions while in the
-    `doc/learning.qmd` file. Include the Roxygen documentation and use
+    `docs/learning.qmd` file. Include the Roxygen documentation and use
     `packagename::` to be explicit about where the function comes from.
 
     -   Name the new functions `import_rr` and `import_actigraph`.

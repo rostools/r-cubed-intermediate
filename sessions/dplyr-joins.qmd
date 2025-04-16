@@ -123,7 +123,7 @@ We're also using an argument to `mutate()` you might not have seen
 previously, called `.before`. This will insert the new `user_id` column
 before the column we use and we do this entirely for visual reasons,
 since it is easier to see the newly created column when we run the code.
-In your `doc/learning.qmd` file, create a new header called
+In your `docs/learning.qmd` file, create a new header called
 `## Using regex for user ID` at the bottom of the document, and create a
 new code chunk below that.
 
@@ -135,7 +135,7 @@ mutate, and about the `{stringr}` function.
 :::
 
 ```{r extract-user-id}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 #| eval: false
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 # Note: your file paths and data may look slightly different.
@@ -166,7 +166,7 @@ Since we don't need the `file_path_id` column anymore, let's drop it
 using `select()` and `-`.
 
 ```{r drop-file-path-id}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_df |>
   mutate(
     user_id = str_extract(
@@ -184,12 +184,12 @@ user_info_df |>
 
 We now have code that takes the data that has the `file_path_id` column
 and extracts the user ID from it. **First step**: While in the
-`doc/learning.qmd` file, convert this code into a function, using the
+`docs/learning.qmd` file, convert this code into a function, using the
 same process you've done previously.
 
 Use this code as a guide to help complete the exercise tasks below:
 
-``` {.r filename="doc/learning.qmd"}
+``` {.r filename="docs/learning.qmd"}
 extract_user_id <- ___(___) {
     ___ <- ___ |>
         ___mutate(
@@ -214,14 +214,14 @@ extract_user_id <- ___(___) {
     and paste) the function into `R/functions.R`.
 3.  Run `{styler}` while in the `R/functions.R` file with
     {{< var keybind.styler >}}.
-4.  Replace the code in the `doc/learning.qmd` file with the function
+4.  Replace the code in the `docs/learning.qmd` file with the function
     name so it looks like `extract_user_id(user_info_df)`, restart the R
     session, source everything with `source()` with
     {{< var keybind.source >}}, and run the new function in the code
-    chunk inside the `doc/learning.qmd` to test that it works. This
+    chunk inside the `docs/learning.qmd` to test that it works. This
     should automatically run the `setup` code chunk, otherwise, run that
     chunk if it doesn't.
-5.  Knit / render the `doc/learning.qmd` file to make sure things remain
+5.  Knit / render the `docs/learning.qmd` file to make sure things remain
     reproducible with {{< var keybind.render >}}.
 6.  Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
@@ -282,10 +282,10 @@ We'll re-source the functions with `source()` using
 {{< var keybind.source >}}. Then re-run these pieces of code you wrote
 during the exercise in @sec-ex-function-import-all-data to update them
 based on the new code in the `import_multiple_files()` function. Add
-this to your `doc/learning.qmd` file for now.
+this to your `docs/learning.qmd` file for now.
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 user_info_df <- import_multiple_files("user_info.csv", import_user_info)
 saliva_df <- import_multiple_files("saliva.csv", import_saliva)
 rr_df <- import_multiple_files("RR.csv", import_rr)
@@ -296,7 +296,7 @@ As well as adding the `summarised_rr_df` and `summarised_actigraph_df`
 to use `user_id` instead of `file_path_id`:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 summarised_rr_df <- rr_df |>
   group_by(user_id, day) |> # change file_path_id to user_id here
   summarise(
@@ -319,7 +319,7 @@ summarised_actigraph_df <- actigraph_df |>
   )
 ```
 
-Let's render the `doc/learning.qmd` document using
+Let's render the `docs/learning.qmd` document using
 {{< var keybind.render >}} to make sure everything still runs fine.
 Then, **add and commit** all the changed files into the Git history with
 {{< var keybind.git >}}.
@@ -439,10 +439,10 @@ can't be a vector itself), we need to combine the datasets together in a
 :::
 
 Let's code this together, using `reduce()`, `full_join()`, and `list()`
-while in the `doc/learning.qmd` file.
+while in the `docs/learning.qmd` file.
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 list(
   user_info_df,
   saliva_df
@@ -454,7 +454,7 @@ We now have the data in a form that would make sense to join it with the
 other datasets. So lets try it:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 list(
   user_info_df,
   saliva_df,
@@ -563,13 +563,13 @@ user_info_df |>
 Briefly review the content again, to reinforce what they read.
 :::
 
-While still in the `doc/learning.qmd` file, we can use the `case_when()`
+While still in the `docs/learning.qmd` file, we can use the `case_when()`
 function to set `"before sleep"` as day 1 and `"wake up"` as day 2 by
 creating a new column called `day`. (We will use `NA_real_` because the
 other `day` columns are numeric, not integer.)
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 saliva_with_day_df <- saliva_df |>
   mutate(day = case_when(
     samples == "before sleep" ~ 1,
@@ -581,7 +581,7 @@ saliva_with_day_df
 ...Now, let's use the `reduce()` with `full_join()` again:
 
 ```{r}
-#| filename: "doc/learning.qmd"
+#| filename: "docs/learning.qmd"
 list(
   user_info_df,
   saliva_with_day_df,
@@ -639,7 +639,7 @@ summarised_actigraph_df <- actigraph_df |>
   )
 ```
 
-Go into the `doc/learning.qmd` and cut the code used to create the
+Go into the `docs/learning.qmd` and cut the code used to create the
 `saliva_with_day_df` as well as the code to `full_join()` all the
 datasets together with `reduce()` and paste it at the bottom of the
 `data-raw/mmash.R` script. Assign the output into a new variable called
@@ -692,7 +692,7 @@ we're finished creating this dataset! Let's generate it by:
 
 We now have a final dataset to start working on! The main way to load
 data is with `load(here::here("data/mmash.rda"))`. Go into the
-`doc/learning.qmd` file and delete **everything** again, except for the
+`docs/learning.qmd` file and delete **everything** again, except for the
 YAML header and `setup` code chunk, so that we are ready for the next
 session. Lastly, **add and commit** all the changes, including adding
 the final `mmash.rda` data file, to the Git history by using
