@@ -1,3 +1,8 @@
+---
+execute:
+  eval: true
+---
+
 # Pre-process data as you import it {#sec-importing}
 
 ```{r setup}
@@ -11,54 +16,27 @@ untar(
   tarfile = here::here("_temp", "pre-workshop.tar.gz"),
   exdir = project_path
 )
-
-usethis::with_project(
-  project_path,
-  {
-    fs::file_delete("TODO.md")
-    gert::git_add(".")
-    gert::git_commit("Added initial files")
-  }
-)
 ```
 
 ## Learning objectives
 
 {{< include /includes/_learning-objectives-importing.qmd >}}
 
-## Importing in the raw data
+## :book: Reading task: Packages for importing specific data file formats
 
-The ultimate goal for the beginning phases of a data analysis project is
-to eventually save a version of the raw data that is specific to your
-research questions and enables you to conduct your analyses. The first
-step to processing data is to import it into R so we can work on it. So
-for now, we'll open up the `doc/learning.qmd` file so we can start
-building and testing out the code. There should be a `setup` code chunk
-already be in the file, where we will put the `library()` code for
-loading the `{tidyverse}` package, which has `{readr}` bundled with it,
-as well as `library(here)`. It should look like this:
+**Time: \~5 minutes.**
 
-```{{r setup}}
-library(tidyverse)
-library(here)
-```
+Before you can effectively analyse your project's data, you will very
+likely need to first clean and process it into a format and structure
+that fits your project's specific needs. So this first phase of an
+analysis project is to import the data into R, check it out, and clean
+and process it. Eventually, you want to have a version of the raw (or
+original) data saved in `data/` ready for your analysis.
 
-This `setup` code chunk is a special, named code chunk that tells R to
-run this code chunk first whenever you open this Quarto file and run
-code inside of the file. It's in this `setup` code chunk that we will
-add `library()` functions when we want to load other packages. After
-adding this code chunk, create a new header below the `setup` code chunk
-by typing out `## Importing raw data`, followed by creating a new code
-chunk right below it using {{< var keybind.chunk >}}.
-
-::: callout-note
-## Reading task: \~5 minutes
-
-What is `{readr}`? It is a package designed to load in data,
-specifically text-based data files such as CSV. In R there are several
-packages that you can use to load in data and of different types of file
-formats. We won't cover these other packages, so you can use this as a
-reference for when or if you ever have to load other file types:
+There are many different ways to import data into R, and it all depends
+on what file format the data is stored in. For most file formats, there
+is usually a specific R package designed to import it. For instance, the
+below is a list of packages to load common file formats:
 
 -   `{haven}`: For reading (also known as importing or loading) in SAS,
     SPSS, and Stata files.
@@ -66,299 +44,367 @@ reference for when or if you ever have to load other file types:
     file endings.
 -   `{googlesheets4}`: For reading in Google Sheets from their cloud
     service.
--   `{vroom}`: We originally taught this package, but since then it has
-    been merged in with the `{readr}` package, which is why we now teach
-    that instead. This package was designed to read in text-based data
-    files really fast.
 -   `utils::read.delim()`: This function comes from the core R package
-    utils and includes other functions like `utils::read.csv()` (note
-    the `.` in the name, rather than `_` in the `readr::read_csv()`
-    version).
+    `{utils}` and includes other functions like `utils::read.csv()`.
 -   `data.table::fread()`: From the `{data.table}` package, this
     function is used to load in CSV files.
+-   `arrow::read_parquet()`: This function is used to read in Parquet
+    files, which are an increasingly common file format for storing
+    large datasets. This is also becoming more common in data analysis
+    work because it can easily connect the imported Parquet data into
+    the powerful [duckdb](https://duckdb.org/) engine through
+    [duckplyr](https://duckplyr.tidyverse.org/index.html). We won't
+    cover this during the workshop, but like Parquet, it is also
+    becoming increasingly common to use when working with large
+    datasets. The advantage of using
+    [duckplyr](https://duckplyr.tidyverse.org/index.html) is that it
+    uses the same syntax as `{dplyr}` so it is very easy to switch
+    between using it and using `{dplyr}`.
+-   `{readr}`: A package that is part of the `{tidyverse}` that is
+    designed to load in data stored in text-based files such as CSV with
+    `readr::read_csv()` and is incredibly fast at importing data. Notice
+    the `_` in the function name, compared to the `.` in the
+    `utils::read.csv()` function name above. This small difference can
+    confuse people, and it is often the cause of the first errors we
+    have when teaching this workshop.
 
-We're using the `{readr}` package because it is well integrated within
-the `{tidyverse}` universe of packages. It also runs `{vroom}`
-internally. How fast is `{vroom}`? The website has a [benchmark
-page](https://vroom.r-lib.org/articles/benchmarks.html) showing how fast
-it is. For many people, loading in the data can be one of the most
-time-consuming parts of starting an analysis. Hopefully by using this
-package, that time can be reduced.
+The most common type of file format for data that you will likely
+encounter is a CSV file (or Excel), as spreadsheet structured data is
+often the most common way to record and store data. CSV's are also open
+and transparent since they are simply text files that are both
+human-readable and machine-readable. And you don't need special software
+to open them, like, for example, you might need for Excel spreadsheets.
+Because CSV is so common, we will be using `readr::read_csv()` and won't
+cover the other packages listed above. We list these other packages for
+your reference and information only.
+
+We're going to use the `{readr}` package because it is well integrated
+within the `{tidyverse}` universe of packages. It's also very fast at
+loading in data, which for large datasets can be one of the more
+time-consuming parts of starting an analysis.
 
 The packages `{readr}`, `{vroom}`, `{haven}`, `{readxl}`, and
 `{googlesheets4}` all are very similar in how you use them and their
 documentation are almost identical. So the skills you learn in this
-session with `{readr}` can mostly be applied to these other packages.
+workshop with `{readr}` can mostly be applied to these other packages.
 And because `{readr}` (which the other packages are based on) has been
 around for awhile, there is a large amount of support and help for using
 it.
 
-If your data is in CSV format, `{readr}` is perfect. The CSV file format
-is a commonly used format for data because it is open and transparent,
-readable by any computer, and doesn't depend on any special software to
-open (unlike for e.g. Excel spreadsheets).
+If your data is in CSV format, `{readr}` is perfect.
+
+{{< text_snippet sticky_up >}}
+
+## Importing in the raw data
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Take this time to briefly explain the Git interface, what add and commit
+mean, as well as where the history is located.
 :::
 
-Let's first start by creating an object that has the file path to the
-dataset, then we'll use `read_csv()` to import that dataset.
+Now it's time to import in the data! Before we do that though, we should
+do one thing first. While you downloaded the data during the
+pre-workshop tasks, you hadn't yet committed your changes to the Git
+history. So we will start with that first.
 
-```{r first-load-in-user-info}
-#| filename: "doc/learning.qmd"
-user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
-user_1_info_data <- read_csv(user_1_info_file)
+Open the Git interface with either the Git icon at the top near the menu
+bar or with {{< var keybind.git >}}. In the interface, select all the
+current changes by clicking the checkbox beside the files and stage
+them. Then write a commit message in the text box on the right,
+something like `Setting up the project`. Click the "Commit" button, and
+finally close the Git interface.
+
+Now, let's get to importing some data! Open up the `docs/learning.qmd`.
+A quick way of opening a file in RStudio is to type
+{{< var keybind.open-file >}} (dot or period) and then typing `learning`
+which should bring up the file we want to open. Hitting enter should now
+open the file.
+
+Now with `docs/learning.qmd` open, we should see a `setup` code chunk
+already in the file. This code chunk is where we will put the
+`library()` code for loading the `{tidyverse}` package, which has
+`{readr}` bundled with it, as well as `library(here)`. It should look
+like this:
+
+```{{r setup}}
+library(tidyverse)
+library(here)
 ```
 
-You'll see the output mention using `spec()` to use in the argument
-`col_types`. And that it has 5 columns, one called `...1`. If we look at
-the CSV file though, we see that there are only four columns with names,
-but that technically there is a first empty column without a column
-header. If you recall, the `user_info.csv` file has an empty column
-name. Looking at the [data
-dictionary](https://physionet.org/content/mmash/1.0.0/) it doesn't seem
-there is any reference to this column, so it likely isn't important.
-More than likely, `{readr}` is complaining about this empty column name
-and the use of `...1` to represent it. We don't need it, so we'll get
-rid of it when we load in the dataset. But how? Look at the help
-documentation again. Go to the **Console** and type out:
+This `setup` code chunk is a special, named code chunk. Whenever you
+first open a Quarto file or after you restart your R session and then
+start running R code, RStudio will first look through the Quarto file
+for any code chunk named `setup`. When it finds one, it will run the R
+code in that chunk first.
 
-``` {.r filename="Console"}
-?readr::read_csv
+So it's good practice to put `library()` functions as well as functions
+that load your data in the `setup` code chunk. For this session, we will
+only put the `library()` functions there.
+
+After adding the code to this chunk, run it with
+{{< var keybind.run-code >}} so that the packages get loaded. Then,
+create a new header below the `setup` code chunk by typing out
+`## Importing raw data`, followed by creating a new code chunk right
+below it using {{< var keybind.chunk >}}.
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Very briefly explain what `here()` is doing and why it's important to
+use it when working with projects. Specifically, that it ensures
+reproducibility and that the project is self-contained.
+:::
+
+The first argument to the `read_csv()` function is the path to the file
+you want to import. We use the `here()` function to help us with this.
+The `here()` function is a function that helps us find the path to the
+file we want to import, relative to the R Project file. Any time we want
+a file path, we use `here()` to ensure our project is reproducible and
+self-contained.
+
+::: callout-tip
+We covered the `here()` function in more detail in the
+[Introductory](https://r-cubed-intro.rostools.org/sessions/import-data.html)
+workshop, so won't go over it in much detail here.
+:::
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Emphasize and take your time explaining the `|>` pipe operator,
+describing the output of the function goes into the first argument of
+the next function.
+:::
+
+We'll use the `|>` pipe operator to pipe the output of `here()` into
+`read_csv()`. The pipe operator is a way to give the output of one
+function as the input to the next function. We will use this a lot
+throughout the workshop.
+
+There's a lot of data we could import, so let's start with importing the
+continuous glucose monitor data in the `cgm/` folder. For now, we will
+only import participant 101's data, which is in the `101.csv` file. We
+will assign the output of this code to `cgm_101` so we can use it later:
+
+```{r first-load-cgm-101}
+#| filename: "docs/learning.qmd"
+cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+  read_csv()
 ```
 
-Looking at the list of arguments, there is an argument called
-`col_select` that sounds like we could use that to keep or drop columns.
-It says that it is used similar to `dplyr::select()`, which normally is
-used with actual column names. Our column doesn't have a name, that's
-the problem. Next check the Example section of the help. Scrolling down,
-you'll eventually see:
+Run this code with {{< var keybind.run-code >}}. Before looking at the
+data, let's look through the message it creates. The columns data types
+inside of a CSV files are not clear since CSV is plain text without
+metadata attached. So when you load data from a CSV file into R with
+`read_csv()`, the function will try to guess what the data types are for
+each column. Usually it guesses accurately, but it isn't perfect. So
+this message
 
-> `read_csv(input_file, col_select = c(1, 3, 11))`
+To remove this message, there are two things we can do:
 
-So, it takes numbers! With `dplyr::select()`, using the `-` before the
-column name (or number) means to drop the column, so in this case, we
-could drop the first column with `col_select = -1`!
+1.  Explicitly tell `read_csv()` what the column names and data types
+    are using the argument `col_types`. This is a very tedious, but
+    often very powerful and useful step depending on the issues your
+    data may have.
+2.  Tell `read_csv()` to just guess and to hide the message using
+    `show_col_types = FALSE`. Usually, `read_csv()` does a good job of
+    guessing, so for this workshop we will use this option.
 
-```{r second-load-in-info-no-error}
-#| filename: "doc/learning.qmd"
-user_1_info_data <- read_csv(
-  user_1_info_file,
-  col_select = -1
-)
+So in the code, we will add `show_col_types = FALSE` to `read_csv()` and
+then run the code:
+
+```{r quiet-import-message-cgm-101}
+#| filename: "docs/learning.qmd"
+cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+  read_csv(show_col_types = FALSE)
 ```
 
-Hmm, we still have the message. You may or may not see this message
-depending on the version of your packages (the most updated packages
-will show this), but you can see it in the code chunk above.
+When we run it, we no longer see the message. Great! Now let's look at
+the data itself. In the **Console**, type out `cgm_101` and hit enter:
 
-This is `read_csv()` letting you know that a column was renamed because
-it found an empty column with no column name and is letting you know it
-had to rename it. Even though we excluded it with `col_select = -1`,
-that only excludes it after reading the column names, before importing
-the data.
+```{r print-cgm-101}
+#| filename: "Console"
+cgm_101
+```
 
-To remove this new message, we need to tell `read_csv()` exactly how to
-handle renaming cases. Let's look at the help docs of `{readr}`:
-`?read_csv`. Scroll down and we see an argument called `name_repair`
-that handles naming of columns. It says that it treats problematic
-column names, of which a missing column name is definitely a problem.
-There are several options here, but the one I want to focus on is the
-comment about "function: apply custom name repair". This is an important
-one because we eventually want to rename the columns to match the [style
-guide](https://style.tidyverse.org/) by using `snake_case`, since there
-is a package to do that called `{snakecase}`.
+One thing to notice is that the column names are not in a format that we
+can easily use. For example, the first column is called
+`"Device Timestamp"` and the space in the name will make it harder to
+work with. So, we will need to fix the column names up to follow a
+common style and that is easier to code with. That style is `snake_case`
+that uses `_` for spaces and is all lower case. Snake case is even
+recommended in the [tidyverse style guide](https://style.tidyverse.org/)
+and there's even a package called `{snakecase}` that can help us with
+this!
 
-In the **Console**, type out `snakecase::` and hit Tab. You'll see a
-list of possible functions to use. We want to use the snakecase one, so
-scroll down and find the `to_snake_case()`. That's the one we want to
-use. So to remove the messages and convert the variable names to snake
-case, we would add `name_repair = snakecase::to_snake_case` to the code.
+But how do we fix this as we import the data? Let's look at the help
+docs of `{readr}`: `?read_csv`. Scroll down in the help document and we
+will see an argument called `name_repair` that handles naming of
+columns. There are several options here, none of which will fix to
+`snake_case`. But there is one that says "function: apply custom name
+repair". Since there is already a `{snakecase}` with some functions to
+help with converting to snake case, we will use this option to give the
+`name_repair` the function from the `{snakecase}`.
+
+To find out the name of the function to use, go to the **Console** and
+start to type out `snakecase::`. As we type we will see a list of
+possible functions to use. We want to use the snakecase one, so scroll
+down and find the `to_snake_case()` function. That's the one we want to
+use in `name_repair`. To convert the variable names to snake case, we
+would add `name_repair = snakecase::to_snake_case` to the code, like so:
+
+```{r use-name-repair}
+#| filename: "docs/learning.qmd"
+cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = snakecase::to_snake_case
+  )
+```
+
 Notice the lack of `()` when using the function. We'll explain more
 about this in later sessions.
 
-```{r use-name-repair}
-#| filename: "doc/learning.qmd"
-user_1_info_data <- read_csv(
-  user_1_info_file,
-  col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
-```
+We can now look at the data by going to the **Console** and typing:
 
-We can now look at the data:
-
-```{r print-user-info-data}
+```{r print-cgm-101-snakecase}
 #| filename: "Console"
-user_1_info_data
+cgm_101
 ```
 
-Before moving on to the exercise, run `{styler}` with
-{{< var keybind.styler >}}, then **add and commit** the changes to the
-Git history through the RStudio Git interface with
-{{< var keybind.git >}}.
+## Import less data while prototyping code
 
-## Exercise: Import the saliva data {#sec-ex-import-saliva}
+As you write code, if it is a bit slow to run, it will make it harder
+for you to be quick with writing code, trying things, and fixing things.
+Not just harder from a technical point of view, but also from a
+motivation and cognitive load perspective. If running code takes a
+while, you will be less likely to *want* to test things out, fix things,
+and get things right. There will be that cognitive overhead.
 
-> Time: 15 minutes.
+A big reason for slower code is when the dataset you are working with is
+larger. This is especially true when:
 
-Practice importing data files by doing the same process with the saliva
+-   you first read the data into R, as larger data will be slower to
+    load into R than smaller data.
+-   your work computer is not the most powerful or has other programs
+    (installed or setup by your IT) that can slow your computer down.
+
+In both those cases, less data to work with will mean faster code that
+runs and less stress and frustration you will have because you get
+faster feedback on if your code works or not. So a good practice as you
+write and test code is to only import some of the data. Then when you
+are sure it works as you want it and when you are ready to do a full
+analysis, you can import all the data and run the code with the full
 data.
 
-1.  Create a new header at the bottom of the `doc/learning.qmd` file and
-    call it `## Exercise: Import the saliva data`.
+So, until the end of the workshop, we will only import less rows of
+data. `read_csv()` has an argument called `n_max` that allows you to
+specify how many rows to import, which we can read about by looking at
+the `?read_csv` help documentation.
+
+For the data we are importing right now, let's add this `n_max` argument
+to only load in the first 100 rows. It can be less or more, but it's
+good to get enough data that `read_csv()` can effectively guess the
+columns data types but not so large as to slow things down. In the code
+we've already written, add:
+
+```{r import-fewer-rows-prototyping}
+#| filename: "docs/learning.qmd"
+cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = snakecase::to_snake_case,
+    n_max = 100,
+  )
+```
+
+When we look at the data by going to the **Console** and typing out the
+data object:
+
+```{r}
+#| filename: "Console"
+cgm_101
+```
+
+We see that the amount of data we've imported is much smaller now.
+Before moving on to the exercise, let's:
+
+-   Tidy up the code using `{styler}` with {{< var keybind.styler >}}
+-   Make sure everything is reproducible in the `docs/learning.qmd` file
+    by rendering the Quarto document to an an HTML file. Click the
+    "Render" button at the top of the Source pane or by typing
+    {{< var keybind.render >}}. If it generates an HTML document without
+    problems, we know our code is at least starting to be reproducible.
+-   **Add and commit** the changes to the Git history through the
+    RStudio Git interface with {{< var keybind.git >}}.
+
+## :technologist: Exercise: Import participant 101's sleep data
+
+**Time: \~15 minutes.**
+
+An important part of learning is to try what we've just covered on your
+own and in a practical way. So, using the same steps as what we just
+did, import in participant 101's sleep data.
+
+1.  Create a new header at the bottom of the `docs/learning.qmd` file
+    and call it `## Exercise: Import 101's sleep data`.
 2.  Below the header, create a new code chunk with
     {{< var keybind.chunk >}}.
 3.  Copy and paste the code template below into the new code chunk.
     Begin replacing the `___` with the correct R functions or other
     information.
+    -   Give the correct file path in `here()` to 101's sleep data in
+        the `sleep/` folder.
+    -   Use `read_csv()` (not `read.csv()`).
+    -   Use `show_col_types = FALSE` to hide the importing message.
+    -   Convert the columns `to_snake_case` using the `name_repair`
+        argument in `read_csv()`. Don't forgot to attach the
+        `{snakecase}` to the function with `::` and don't use the `()`
+        at the end of the function.
+    -   Import only first many rows with `n_max`. Instead of 100 like we
+        did above, use another number of your choosing. Maybe fewer
+        rows? Maybe a bit more?
 4.  Once you have the code working, run `{styler}` with
-    {{< var keybind.styler >}} and then use the RStudio Git interface to
-    **add and commit** the changes to the Git history using
-    {{< var keybind.git >}}.
+    {{< var keybind.styler >}}, render the Quarto document to HTML to
+    check reproducibility using {{< var keybind.render >}}, and then use
+    the RStudio Git interface to **add and commit** the changes to the
+    Git history using {{< var keybind.git >}}.
 
-``` {.r filename="doc/learning.qmd"}
-user_1_saliva_file <- here("data-raw/mmash/user_1/___")
-
-user_1_saliva_data <- read_csv(
-    user_1_saliva_file,
-    col_select = ___,
-    name_repair = ___
-)
-```
-
-```{r solution-import-the-saliva-data}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
-
-user_1_saliva_data <- read_csv(
-  user_1_saliva_file,
-  col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
-```
-
-## Importing larger datasets
-
-Sometimes you may have a dataset that's just a bit too large. Sometimes
-`{readr}` may not have enough information to guess the data type of the
-column. Or maybe there are hundreds or thousands of columns in your data
-and you only want to import specific columns. In these cases, we can do
-a trick: read in the first few lines of the dataset to prototype your code
-to make sure it works. Reading fewer data into R is much faster than
-reading in the entire dataset.
-
-Let's do this on the `RR.csv` file. We can see from the file size that
-it is bigger than most of the other files (\~2Mb). So, we'll use this
-technique to decide what we want to keep. First, create a new header
-`## Import larger datasets` and a new code chunk below it using
-{{< var keybind.chunk >}}.
-
-Do the same thing that we've been doing, but this time we are going to
-use the argument `n_max`, which tells `{readr}` how many rows to read
-into R. In this case, let's read in 100, since that is the amount
-`{readr}` will guess until. This dataset, like the others, has an empty
-column that we will drop.
-
-```{r import-some-of-data-trick}
-#| filename: "doc/learning.qmd"
-user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
-user_1_rr_data <- read_csv(
-  user_1_rr_file,
-  n_max = 100,
-  col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
-```
-
-We'll use `n_max` to help us prototype our code, since it is faster to
-import only a few rows. We can look at the data:
-
-```{r}
-#| filename: "Console"
-user_1_rr_data
-```
-
-To make sure everything is so far reproducible within the
-`doc/learning.qmd` file, we will render the Quarto document to output an
-HTML file. Click the "Render" button at the top of the Source pane or by
-typing {{< var keybind.render >}}. If it generates an HTML document
-without problems, we know our code is at least starting to be
-reproducible.
-
-## Exercise: Import the Actigraph data
-
-> Time: 15 minutes.
-
-Practice some more. Do the same thing with the `Actigraph.csv` dataset
-as we did for the `RR.csv`. But first:
-
-1.  Create a new header at the bottom of the `doc/learning.qmd` file and
-    call it `## Exercise: Import the Actigraph data`.
-2.  Below the header, create a new code chunk with
-    {{< var keybind.chunk >}}.
-
-Use the *same technique* as we used for the `RR.csv` data and read in
-the `Actigraph.csv` file from `user_1/`.
-
-1.  Set the file path to the dataset with `here()`.
-2.  Read in a max of 100 rows for `n_max` and exclude the first column
-    with `col_select = -1`.
-3.  Render the Quarto document with {{< var keybind.render >}} to
-    regenerate the HTML document.
-4.  If everything works, run `{styler}` with {{< var keybind.styler >}}
-    and then **add and commit** the new changes to the Git history with
-    {{< var keybind.git >}}
-
-Use this template as a guide for completing this exercise.
-
-``` {.r filename="doc/learning.qmd"}
-user_1_actigraph_file <- here("data-raw/mmash/user_1/___")
-user_1_actigraph_data <- ___(
+``` {.r filename="docs/learning.qmd"}
+sleep_101 <- here(___) |>
+  ___(
+    ___, 
     ___,
-    n_max = ___,
-    col_select = ___,
-    name_repair = ___
-)
+    ___
+  )
+sleep_101
 ```
 
-```{r solution-import-the-actigraph-data}
-#| eval: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-# Use first 100 or so lines to get spec
-user_1_actigraph_file <- here("data-raw/mmash/user_1/Actigraph.csv")
-user_1_actigraph_data <- read_csv(
-  user_1_actigraph_file,
-  n_max = 100,
-  col_select = -1,
-  name_repair = snakecase::to_snake_case
-)
+The output of the code might look a bit like:
+
+```{r solution-import-sleep-on-101}
+#| echo: false
+#| warning: false
+#| message: false
+sleep_101 <- here("data-raw/dime/sleep/101.csv") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = snakecase::to_snake_case,
+    n_max = 100
+  )
+sleep_101
 ```
 
-## :speech_balloon: Discussion activity: Experiences with cleaning data
+{{< text_snippet sticky_up >}}
 
-**Time: \~10 minutes.**
-
-As we prepare for the next session, get up and discuss with you
-neighbour some of the following questions:
-
--   Share a positive or exciting experience you had with cleaning,
-    processing, and preparing data for later analysis. It can be recent
-    or in the past, but as long as it was a memorable and positive. What
-    made it positive? Do you try to repeat that experience, or at least
-    the feeling of it?
--   Share a challenging experience or barriers that you encounter while
-    cleaning, processing, and preparing data. Why was it challenging or
-    had barriers and how could you limit those for for next time?
-
-## Summary
+## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
-Quickly cover this before finishing the session and when starting the
-next session.
+Quickly cover this before moving on to the discussion activity.
 :::
 
 -   Use the appropriate package when importing a specific data file
@@ -373,7 +419,17 @@ next session.
     `n_max =` to test that importing works fine before importing the
     full dataset.
 
-```{r store-session-code}
-#| include: false
-save.image(here::here("_temp/importing.RData"))
-```
+## :speech_balloon: Discussion activity: Experiences with cleaning data
+
+**Time: \~8 minutes.**
+
+As we prepare for the next session, get up, walk around, and discuss
+with your neighbour some of the following questions:
+
+-   How tidy and clean is your data in your research? Do you have to do
+    a lot of processing before you can analyse it?
+-   What are some struggles you have with processing, importing, and
+    generally working with data?
+-   What file format is your data is stored in? Is it easy to work with?
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
