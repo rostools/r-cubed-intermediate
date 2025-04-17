@@ -1,3 +1,6 @@
+hrs
+math
+alt
 Aarhus
 accelerometry
 alongs
@@ -9,6 +12,8 @@ center
 coloured
 colwidths
 CRU
+CGM
+CSVs
 csv
 ddea
 DOI

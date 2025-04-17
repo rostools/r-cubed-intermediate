@@ -1,9 +1,15 @@
+---
+execute:
+  eval: true
+---
+
 # Bundling code into functions {#sec-functions}
 
 ```{r setup}
 #| include: false
 library(fs)
 library(tidyverse)
+library(snakecase)
 library(readr)
 library(here)
 temp_path <- fs::path_temp()
@@ -19,69 +25,139 @@ untar(
 
 {{< include /includes/_learning-objectives-functions.qmd >}}
 
-## The basics of a function
+## :book: Reading task: The basics of a function
 
-::: callout-note
-## Reading task: \~5 minutes
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
 
-We've mentioned functions multiple times, but what is a function? At its
-core, a function in R is anything that does an action. A function is a
-bundled sequence of steps that achieve a specific action. For instance,
-the `+` (to add) is a function, `mean()` is a function, `[]` (to subset
-or extract) is a function, and so on. In simple terms, functions are
-made of a function call, its arguments, and the function body:
+Repeat and reinforce the part of what functions are made of, their
+structure, that all actions are functions, and all functions are objects
+(but not that all objects are functions).
+:::
+
+**Time: \~5 minutes.**
+
+The first thing to know about R is that everything is an "object" and
+that some objects can do an action. These objects that do an action are
+called functions. You've heard or read about functions before during the
+workshop, but what is a function?
+
+A function is a bundled sequence of steps that achieve a specific action
+and you can usually tell if an object is an action if it has a `()` at
+the end of it's name. For example, `mean()` is function to calculate the
+mean or `sd()` is a function to calculate the standard deviation. It
+isn't always true that functions end in `()` though, which you'll read
+about shortly. For instance, the `+` is a function that adds two numbers
+together, the `[]` is a function that is used to subset or extract an
+item from a list of items like getting a column from a data frame, or
+`<-` is a function that creates a new object from some value.
+
+All created functions have the same structure: they are assigned a
+function name with `<-`, it uses `function()` to give it its parameters
+or arguments, and it has the internal sequence of steps called the
+function body that are wrapped in `{}`:
 
 ``` {.r filename="Console"}
-function(argument1, argument2){ 
+function_name <- function(argument1, argument2) { 
   # body of function with R code
 }
 ```
 
+Notice that this uses two functions to create this `function_name`
+function object:
+
+-   `<-` is the action (function) that will create the new object
+    `function_name`.
+-   `function()` is the action (function) to tell R that this object is
+    an action (function) whenever it is used with a `()` at the end,
+    e.g. `function_name()`.
+
 Because R is open source, anyone can see how things work underneath. So,
-if we want to see what a function does underneath, we type out the
-function name without the `()` into the **Console** and run it. If we do
-it with the function `sd()` which calculates the standard deviation, we
-see:
+if you want to see what a function does underneath, you would type out
+the function name without the `()` into the **Console** and run it. If
+we do it with the function `sd()` which calculates the standard
+deviation, we see:
 
 ```{r show-sd-internals}
 #| filename: "Console"
 sd
 ```
 
-Here you see `sd()` as the arguments `x` and `na.rm`. Within the
-function body is how it calculates the standard deviation, which is the
+Here you see `sd()` as the arguments `x` and `na.rm`. In the function
+body it shows how it calculates the standard deviation, which is the
 square root of the variance. In this code, the `var()` is inside the
-`sqrt()` function, which is exactly what it should be.
+`sqrt()` function, which is exactly what it should be if you know the
+math (you don't need to).
 
-So, if you learn how to create your own functions, it can make doing
-your work easier and more efficient because you don't have to repeat
-yourself later. Making functions always has a basic structure of:
+Normally you can tell if something is a function if it has `()` at the
+end of the name. But there are special functions, like `+`, `[]`, or
+even `<-`, that do an action but that don't have `()` at the end. These
+are called *operator* functions. Which is why the `<-` is called the
+assignment operator, because it assigns something to a new object. To
+see how they work internally, you would wrap \` around the operator. So
+for `+` or `<-` it would be:
 
-1.  Giving a name to the function (e.g. `mean`).
-2.  Starting the function call using `function()`, assigning it to the
-    name with `<-`. This tells R that the name is a function object.
-3.  Optionally providing arguments to give to the function call, for
-    instance `function(argument1, argument2, argument3)`.
-4.  Filling out the body of the function, with the arguments (if any)
-    contained inside, that does some action.
-5.  Optionally, use `return()` to indicate what you want the function to
-    output. For learning purposes, we'll always use `return()` to help
-    show us what is the final function output.
+```{r show-operators-internals}
+#| filename: "Console"
+`+`
+`<-`
+```
+
+You'll see something called `.Primitive`. Often operators are written in
+very low level computer code to work, which are called "primitives".
+This is *way* beyond the scope of this workshop to explain primitives
+and so we won't go into what that means and why.
+
+To show that they are a function, you can even use them with their `()`
+version like this:
+
+```{r show-how-operators-work}
+1 + 2
+`+`(1, 2)
+
+`<-`(x, 1)
+x
+x <- 1
+x
+```
+
+But hopefully you can see that using it with the `()` isn't very nice to
+read or use!
+
+If you can learn to make your own functions, it can help make your life
+and work much easier and more efficient! That's because you can make a
+sequence of actions that you can then reuse again and again. And
+luckily, you will be making many functions throughout this workshop.
+Making a function always follows a basic structure:
+
+1.  Give a name to the function (e.g. `mean`).
+2.  Use `function()` to tell R the new object will be a function and
+    assigning it to the name with `<-`.
+3.  Optionally provide arguments to the function object, for example
+    `function(argument1, argument2, argument3)`.
+4.  Fill out the body of the function, with the arguments (if any)
+    contained inside, that does some sequence of actions.
+5.  Optionally, use `return()` to indicate what final output you want
+    the function to have. For learning purposes, we'll always use
+    `return()` to help show us what is the final function output but it
+    isn't necessary.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
 Emphasize that we will be using this workflow for creating functions all
-the time throughout workshop and that this workflow is also what you'd use
-in your daily work.
+the time throughout workshop and that this workflow is also what you'd
+use in your daily work.
 :::
 
 While there is no minimum or maximum number of arguments you can provide
 for a function (e.g. you could have zero or dozens of arguments), its
-good practice for yourself and for others to have as few arguments as
-necessary to get the job done. So, the structure is:
+generally good practice and design to have as few arguments as necessary
+to get the job done. Part of making functions is to reduce your own and
+others cognitive load when working with or reading code. The fewer
+arguments you use, the lower the cognitive load. So, the structure is:
 
-``` {.r filename="Console"}
+``` r
 name <- function(argument1, argument2) {
     # body of function
     output <- ... code ....
@@ -91,18 +167,32 @@ name <- function(argument1, argument2) {
 
 Writing your own functions can be absolutely amazing and fun and
 powerful, but you also often want to pull your hair out with frustration
-at errors that are difficult to understand and fix. The best way to deal
-with this is by debugging. Due to time and to the challenge of making
-meaningful debugging exercises (solutions to problems are very dependent
-on the project), read @sec-extra-material in your own time for some
-instructions on debugging and dealing with another common problem you
-might encounter with R.
+at errors that are difficult to understand and fix. One of the best ways
+to deal with this is by making functions that are small and simple, and
+testing them as you use them. The smaller they are, the less chance you
+will have that there will be an error or issue that you can't figure
+out. There's also some formal debugging steps you can do but due to time
+and to the challenge of making meaningful debugging exercises since
+solutions to problems are very dependent on the project and context,
+there is some extra material in @sec-extra-material that you can look
+over in your own time. It contains some instructions on debugging and
+dealing with some common problems you might encounter with R.
+
+{{< text_snippet sticky_up >}}
+
+## Creating our first function
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Take your time slowly going over this, especially taking about the
+Roxygen documentation template.
 :::
 
-Let's write a simple example. First, create a new Markdown header called
-`## Making a function` and create a code chunk below that with
-{{< var keybind.chunk >}} . Then, inside the code chunk, we'll write
-this code out:
+Let's create a really basic function to show the process. First, create
+a new Markdown header called `## Making a function to add` and create a
+code chunk below that with {{< var keybind.chunk >}} . Then, inside the
+code chunk, we'll write this code:
 
 ```{r create-add-function}
 #| filename: "docs/learning.qmd"
@@ -125,7 +215,9 @@ numbers". While we generally want to write code that describes what it
 does by reading it, it's also good practice to add some formal
 documentation to the function. Use the "Insert Roxygen Skeleton" in the
 "Code" menu, by typing {{< var keybind.roxygen >}}, and you can add
-template documentation right above the function. It looks like:
+template documentation right above the function. Make sure your cursor
+is within the function in order for the Roxygen template to be added to
+your function. It looks like:
 
 ```{r roxygen-docs-1}
 #| filename: "docs/learning.qmd"
@@ -175,24 +267,34 @@ add_numbers <- function(num1, num2) {
 }
 ```
 
-Once we've created that, let's open up the Git Interface with
-{{< var keybind.git >}} and **add and commit** these changes to our
+Once we've created that and before moving on, let's style our code with
+{{< var keybind.styler >}}, render the Quarto document with
+{{< var keybind.render >}}, and then open up the Git Interface with
+{{< var keybind.git >}} to **add and commit** these changes to the Git
 history.
 
 ## Making a function for importing our data
 
 Now that we have a basic understanding of what a function looks like,
-let's apply it to something we're doing right now: Importing our data.
+let's apply that what we're doing right now: Importing our data.
 
-Making functions is a series of steps:
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Emphasize that we will be using this workflow for creating functions all
+the time throughout workshop and is also a common workflow when making
+functions in R.
+:::
+
+Making a function is a series of steps:
 
 1.  Write code that works and does what you want.
 2.  Enclose it as a function with `name <- function() { ... }`, with an
     appropriate and descriptive name.
 3.  Create arguments in the function call
     (`function(argument1, argument2)`) with appropriate and descriptive
-    names, then replace the code with the argument names where
-    appropriate.
+    names, then replace the code in the function body with the argument
+    names where appropriate.
 4.  Rename any objects created to be more generic and include the
     `return()` function at the end to indicate what the function will
     output.
@@ -200,165 +302,128 @@ Making functions is a series of steps:
 6.  Add the Roxygen documentation tags with {{< var keybind.roxygen >}}
     while the cursor is in the function.
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Emphasize that we will be using this workflow for creating functions all
-the time throughout workshop and that this workflow is also what you'd use
-in your daily work.
-:::
-
 In `docs/learning.qmd`, create a new Markdown header called
-`## Import the user data with a function` and create a code chunk below
+`## Import 101's cgm data with a function` and create a code chunk below
 that with {{< var keybind.chunk >}} .
 
-So, step one. Let's take the code we wrote for importing the `user_info`
-data and convert that as a function:
+So, step one. Let's copy and paste the code we previously for importing
+the `cgm_101` data and convert that as a function:
 
 ```{r function-creation-step-1}
 #| filename: "docs/learning.qmd"
-#| eval: false
-user_1_info_data <- read_csv(
-  user_1_info_file,
-  col_select = -1,
-  col_types = cols(
-    gender = col_character(),
-    weight = col_double(),
-    height = col_double(),
-    age = col_double()
-  ),
-  name_repair = snakecase::to_snake_case
-)
+#| output: false
+cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = to_snake_case,
+    n_max = 100,
+  )
 ```
 
 Next we wrap it in the function call and give it an appropriate name. In
-this case, `import_user_info` is descriptive and meaningful.
+this case, `import_cgm` is descriptive and meaningful.
 
 ```{r function-creation-step-2}
 #| filename: "docs/learning.qmd"
 #| eval: false
-import_user_info <- function() {
-  user_1_info_data <- read_csv(
-    user_1_info_file,
-    col_select = -1,
-    col_types = cols(
-      gender = col_character(),
-      weight = col_double(),
-      height = col_double(),
-      age = col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
+import_cgm <- function() {
+  cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
 }
 ```
 
 Then, we add arguments in the function and replace within the code.
 Here, we have only one thing that we would change: The file path to the
-dataset. So, a good name might be `file_path`.
+dataset. So, a good name might be `file_path`. It's also good practice
+to not hard code the use of `here()` within a function. Instead, it's
+good design to give functions a full file path that it can use
+internally. Then when we use the function, we would use `here()` with
+the correct path in the function argument. So it would be:
 
 ```{r function-creation-step-3}
 #| filename: "docs/learning.qmd"
 #| eval: false
-import_user_info <- function(file_path) {
-  user_1_info_data <- read_csv(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      gender = col_character(),
-      weight = col_double(),
-      height = col_double(),
-      age = col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
+import_cgm <- function(file_path) {
+  cgm_101 <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
 }
 ```
 
-Then we clean things up by renaming `user_1_info_data` since we would
-like to also import more than just `user_1`. A nice object name would be
-`info_data`. Add the `return()` function at the end with the object you
-want your function to output.
+Then we simplify things internally by renaming `cgm_101` to simply
+`cgm`, since we would like to be able to import other participant CGM
+data later. Finally, we will add the `return()` function at the end with
+the object we want the function to output.
 
 ```{r function-creation-step-4}
 #| filename: "docs/learning.qmd"
-import_user_info <- function(file_path) {
-  info_data <- read_csv(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      gender = col_character(),
-      weight = col_double(),
-      height = col_double(),
-      age = col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(info_data)
+import_cgm <- function(file_path) {
+  cgm <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
+  return(cgm)
 }
 ```
 
-Great! Now we need to test it out. Let's try on two datasets, two
-`user_info.csv` files in the `user_1` and `user_2` folders.
+Great! Now we need to test it out. Let's try on two `cgm` datasets for
+101's and 102's files:
 
 ```{r function-creation-step-5}
 #| filename: "docs/learning.qmd"
-import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
-import_user_info(here("data-raw/mmash/user_2/user_info.csv"))
+import_cgm(here("data-raw/dime/cgm/101.csv"))
+import_cgm(here("data-raw/dime/cgm/102.csv"))
 ```
 
-Awesome! It works. The final stage is adding the Roxygen documentation.
+Awesome! It works :tada: The final stage is to add the Roxygen
+documentation.
 
 ```{r function-creation-step-6}
 #| filename: "docs/learning.qmd"
-#' Import MMASH user info data file.
+#' Import one participants CGM data from the DIME dataset.
 #'
-#' @param file_path Path to user info data file.
+#' @param file_path Path to the CGM data file.
 #'
 #' @return Outputs a data frame/tibble.
 #'
-import_user_info <- function(file_path) {
-  info_data <- read_csv(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      gender = col_character(),
-      weight = col_double(),
-      height = col_double(),
-      age = col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(info_data)
+import_cgm <- function(file_path) {
+  cgm <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
+  return(cgm)
 }
 ```
 
 A massive advantage of using functions is that if you want to make a
-change to all your code, you can very easily do it by modifying the
-function and it will change all your other code too. Now that we have a
-working function, run `{styler}` with {{< var keybind.styler >}} and
-then let's **add and commit** it to the Git history with the RStudio Git
-Interface by using {{< var keybind.git >}}.
+change to what your code does, like if you fix a mistake, you can very
+easily do it by modifying the function and it will change all your other
+code too.
 
-## Exercise: Repeat with the saliva data
+Now that we have a working function, run `{styler}` with
+{{< var keybind.styler >}}, render with {{< var keybind.render >}}, and
+then add and commit the changes to the Git history with
+{{< var keybind.git >}}.
 
-> Time: 15 minutes.
+## :technologist: Exercise: Convert the sleep code into a function
 
-Take the code you created for importing the saliva data set from
-@sec-ex-import-saliva and
-make it into a function. It looks like the code below.
+**Time: \~10 minutes.**
 
-``` {.r filename="docs/learning.qmd"}
-user_1_saliva_data <- read_csv(
-    user_1_saliva_file,
-    col_select = -1,
-    col_types = cols(
-        samples = col_character(),
-        cortisol_norm = col_double(),
-        melatonin_norm = col_double()  
-    ), 
-    name_repair = snakecase::to_snake_case
-)
-```
+We've converted the code to import the CGM data into a function. Now,
+let's do the same for the sleep data. Use the code you made from the
+exercise in @sec-exercise-import-sleep and convert that into a function
+using the same steps we did from above.
 
 ::: {.callout-tip appearance="default"}
 A helpful tip: To move around a Quarto or R script more easily, open up
@@ -366,93 +431,98 @@ the "Document Outline" on the side by clicking the button in the top
 right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 :::
 
-1.  Create a new markdown header
-    `## Exercise for importing the saliva data as a function`.
-2.  Create a new code chunk below the header with
+1.  Create a new Markdown header at the bottom of `docs/learning.qmd`
+    called `## Exercise to make function to import sleep data`.
+2.  Below the Markdown header, create a new code chunk with
     {{< var keybind.chunk >}}.
-3.  Paste the code you used from the exercise (shown above) into the
-    code chunk and begin converting it into a function, like we did
-    above.
-    -   Wrap it with the `function() {...}`
-    -   Make a meaningful name (use `import_saliva`)
-    -   Make an argument for the file path (`file_path`) and replace
-        `user_1_saliva_file` with `file_path` in the `read_csv()` code
-    -   Rename the output object to `saliva_data` and put it in the
-        `return()` function
-    -   Run the function and then test that it works
-    -   Create the Roxygen documentation by adding it with
-        {{< var keybind.roxygen >}}
+3.  Paste the code you used from the exercise in
+    @sec-exercise-import-sleep into the code chunk and begin converting
+    it into a function, like we did above.
+    -   Wrap it with the `function() {...}`.
+    -   Make a meaningful name (use `import_sleep`).
+    -   Make an argument for the file path (`file_path`) and replace the
+        `here("")` code with `file_path`.
+    -   Rename the output object from `sleep_101` to simply `sleep`.
+    -   End the function with using `return()` to output the `sleep`
+        object.
+    -   Use the function and run it in the code chunk to test that it
+        works on both `101` and `102`'s sleep data.
+    -   Add the Roxygen documentation with {{< var keybind.roxygen >}}
+        and then fill in the details, like we did above.
 4.  Run `{styler}` while in the `docs/learning.qmd` file with
     {{< var keybind.styler >}}.
-5.  Then, **add and commit** the changes to the Git history, using
+5.  Render the Quarto document with {{< var keybind.render >}}.
+6.  Finally, **add and commit** the changes to the Git history, using
     {{< var keybind.git >}}.
 
-Use the below code as a guide:
-
-``` {.r filename="docs/learning.qmd"}
-# Need to also add the Roxygen documentation 
-import_saliva <- function(file_path) {
-    # Paste the code to import saliva data you created 
-    # from previous exercise
-    saliva_data <- ___(
-        ___
-    )
-    return(saliva_data)
-}
-
-# Test that the function works
-___(here("data-raw/mmash/user_1/saliva.csv"))
-```
+The code that you write to test that the function works should look and
+what it should output should be similar to the below code chunk:
 
 ```{r solution-repeat-saliva}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import the MMASH saliva file.
+#| echo: false
+#' Import a participant's sleep data from DIME.
 #'
-#' @param file_path Path to the user saliva data file.
+#' @param file_path Path to the participant's sleep file.
 #'
 #' @return Outputs a data frame/tibble.
 #'
-import_saliva <- function(file_path) {
-  saliva_data <- read_csv(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      samples = col_character(),
-      cortisol_norm = col_double(),
-      melatonin_norm = col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(saliva_data)
+import_sleep <- function(file_path) {
+  sleep <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
+  return(sleep)
 }
-
-# Test that this works
-# import_saliva(here("data-raw/mmash/user_1/saliva.csv"))
 ```
 
-## Summary
+```{r solution-sleep-function-output}
+import_sleep(here("data-raw/dime/sleep/101.csv"))
+import_sleep(here("data-raw/dime/sleep/102.csv"))
+```
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+<!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->
 
-Quickly cover this before finishing the session and when starting the
-next session.
+{{< text_snippet sticky_up >}}
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Mention that the `import_sleep()` function is identical to the
+`import_cgm()`. Briefly say that in the next session we will go over
+making more general functions.
 :::
 
--   Functions in R are anything that does an action.
+## Key takeaways
+
+-   Everything in R is an object.
+-   Every action in R is a function and every function is an object.
+-   Functions contain a sequence of steps that do actions to an object.
 -   Functions have five components:
-    -   The three required ones are the function call with
-        `function() { }`, the function body between the `{ }`, and an
-        output (usually set with `return()`).
-    -   The two optional ones are assigning the function to a named
-        object with `<-` and the function arguments put within
-        `function()`.
--   Write function documentation by using Roxygen.
+    -   The three required ones are using `function() { }`, the code in
+        the function body between the `{ }`, and an output (usually set
+        with `return()`).
+    -   The two optional ones are assigning the function as a new object
+        with `<-` and the function arguments put within `function()`.
+-   Document functions by using Roxygen.
+-   Keep functions small and simple, so it is easier to test and fix
+    them.
+-   Use few arguments in functions to reduce cognitive load.
 
 ```{r store-session-code}
 #| include: false
 save.image(here::here("_temp/functions.RData"))
 ```
 
+## :speech_balloon: Discussion activity: What are some tasks that could be functions?
+
+**Time: \~6 minutes.**
+
+As we prepare for the next session, get up, walk around, and discuss
+with your neighbour some of the following questions:
+
+-   What are some tasks you do that are repetitive or that you do
+    multiple times with very small changes each time you do the task?
+-   How might you use functions in your work? Can you think of specific
+    tasks or situations where you could use one?

@@ -4,7 +4,7 @@ Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
 environments. We increasingly produce larger and more complex amounts of
 data that often need to be heavily cleaned, reorganized, and processed
-before it can be analyzed. This data processing often consumes the
+before it can be analysed. This data processing often consumes the
 majority of the time spent coding and doing data analysis. And even
 though this stage of data analysis is so time-consuming, there is little
 to no training and support provided for it. This has led to minimal
