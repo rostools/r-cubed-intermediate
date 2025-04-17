@@ -70,7 +70,7 @@ below is a list of packages to load common file formats:
 
 The most common type of file format for data that you will likely
 encounter is a CSV file (or Excel), as spreadsheet structured data is
-often the most common way to record and store data. CSV's are also open
+often the most common way to record and store data. CSVs are also open
 and transparent since they are simply text files that are both
 human-readable and machine-readable. And you don't need special software
 to open them, like, for example, you might need for Excel spreadsheets.
