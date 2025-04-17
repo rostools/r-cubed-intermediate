@@ -342,7 +342,7 @@ Before moving on to the exercise, let's:
 -   **Add and commit** the changes to the Git history through the
     RStudio Git interface with {{< var keybind.git >}}.
 
-## :technologist: Exercise: Import participant 101's sleep data
+## :technologist: Exercise: Import participant 101's sleep data {#sec-exercise-import-sleep}
 
 **Time: \~15 minutes.**
 
