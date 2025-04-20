@@ -1,0 +1,5 @@
+---
+solutions: true
+---
+
+{{< include /includes/exercises/_set-dependencies.qmd >}}
