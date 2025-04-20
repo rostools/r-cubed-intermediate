@@ -1,20 +1,18 @@
-hrs
-math
-alt
 Aarhus
 accelerometry
 alongs
+alt
 Anders
 Askeland
 bioinformatics
 callout
 center
+CGM
 coloured
 colwidths
 CRU
-CGM
-CSVs
 csv
+CSVs
 ddea
 DOI
 dplyr
@@ -32,6 +30,7 @@ GDPR
 GDPR's
 googlesheets
 Homebrew
+hrs
 inspectability
 inspectable
 irreplicability
@@ -44,6 +43,7 @@ knitr
 LearnR
 libre
 Marwick
+math
 ncol
 Netlify
 OneDrive
@@ -57,6 +57,7 @@ readxl
 regex
 replicability
 Replicability
+reusability
 Revealjs
 rostools
 roxygen
@@ -84,5 +85,6 @@ UofTCoders
 usethis
 var
 walkthrough
+withr
 YAML
 Zenodo
