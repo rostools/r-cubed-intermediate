@@ -41,6 +41,7 @@ book:
       - sessions/what-next.qmd
   appendices:
     - appendix/extras.qmd
+    - appendix/solutions.qmd
     - LICENSE.md
     - appendix/references.qmd
   page-footer:
