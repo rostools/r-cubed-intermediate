@@ -1,5 +1,110 @@
 # Extra material {#sec-extra-material}
 
+## Debugging functions
+
+Debugging is one of activities that seems really scary and difficult,
+but once you try it and use it, is not nearly as intimidating as it
+seemed. To debug, which means to find and fix problems in your code,
+there are several ways, the simplest of which is by inserting the
+`browser()` function into the the start of your function, re-running the
+function by either manually running it or using source with
+{{< var keybind.source >}}, and using it again.
+
+For instance, we have a function like this:
+
+```{r}
+test_debugging <- function(number) {
+  new_number <- number + number
+  return(new_number)
+}
+test_debugging(5)
+```
+
+To start the debugger, insert the `browser()` function into your
+function:
+
+```{r}
+#| eval: false
+test_debugging <- function(number) {
+  browser()
+  new_number <- number + number
+  return(new_number)
+}
+test_debugging(5)
+```
+
+And re-run and use the function again, which will pop up a new debugging
+panel in RStudio. Sadly, we can't show this on the website since it only
+works in RStudio. When you are in RStudio, the
+debugger will open up and it will show a few things:
+
+-   A yellow line will highlight the code in the function, along with a
+    green arrow on the left of the line number.
+-   The Console will now start with `Browse[1]>` and will have text like
+    `debug at ...`.
+-   There will be new buttons on the top of the Console like "Next",
+    "Continue", and "Stop".
+-   The Environment pane will be empty and will say "Traceback".
+
+In this mode you can really investigate what is happening with your code
+and how to fix it. The way to figure out what's wrong is by running the
+code bit by bit. This debug environment is empty except for the actions
+that occur within it, so it really can help figure things out.
+
+## Non-standard evaluation (NSE)
+
+Writing your own functions that use `{tidyverse}` functions, you may
+eventually encounter an error that might not be very easy to figure out.
+Here's an example where you want to use your own arguments in
+`filter()`.
+
+```{r}
+#| error: true
+test_nse <- function(data, filter_condition) {
+  data |>
+    dplyr::filter(filter_condition)
+}
+
+CO2 |>
+  tibble() |>
+  test_nse(conc > 100)
+```
+
+The error occurs of something called "[non-standard
+evaluation](https://adv-r.had.co.nz/Computing-on-the-language.html)" (or
+NSE). NSE is a feature of R and is used quite a lot throughout R (e.g.
+`library()`), but is especially used in the `{tidyverse}` packages. It's
+one of the first things programmers who use other languages complain about when they use
+R, because it is such a foreign thing in other programming languages.
+
+But NSE is what allows you to use formulas (e.g. `y ~ x + x2` in
+modeling) or allows you to type out `select(Gender, BMI)` or
+`library(purrr)`. In "standard evaluation", these would instead be
+`select("Gender", "BMI")` or `library("purrr")`. So NSE gives
+flexibility and ease of use for the user (we don't have to type quotes
+every time) when doing data analysis, but can give some headaches when
+programming in R, like when making functions. There's more detail about
+this on the [dplyr
+website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
+which will give a few options to deal with NSE while programming with
+`{tidyverse}` packages, the simplest of which is to wrap the argument
+with `{{}}`.
+
+```{r}
+test_nse <- function(data, filter_condition) {
+  data |>
+    dplyr::filter({{ filter_condition }})
+}
+
+CO2 |>
+  tibble() |>
+  test_nse(conc > 100)
+
+CO2 |>
+  tibble() |>
+  test_nse(uptake < 30)
+```
+
 ## Functionals and for loops {#sec-alternative-loop-explanation}
 
 The concept of functional programming can be difficult to grasp. As an
@@ -82,109 +187,4 @@ function with `\()` (or either `function()` or `~`).
 ```{r}
 # Anonymous function
 map(numbers, \(x) if (x > 5) TRUE else FALSE)
-```
-
-## Debugging functions
-
-Debugging is one of activities that seems really scary and difficult,
-but once you try it and use it, is not nearly as intimidating as it
-seemed. To debug, which means to find and fix problems in your code,
-there are several ways, the simplest of which is by inserting the
-`browser()` function into the the start of your function, re-running the
-function by either manually running it or using source with
-{{< var keybind.source >}}, and using it again.
-
-For instance, we have a function like this:
-
-```{r}
-test_debugging <- function(number) {
-  number + number
-}
-```
-
-To start the debugger, insert the `browser()` function into your
-function:
-
-```{r, eval=FALSE}
-test_debugging <- function(number) {
-  browser()
-  number + number
-}
-```
-
-And re-run and use the function again, which will pop up a new debugging
-panel in RStudio. Sadly, we can't show this on the website since it only
-works in RStudio (we may add a video as some point). When you are in the
-debugger will open up and it will show a few things:
-
-<!-- TODO: eventually add an image or video.. but for next year. -->
-
--   A yellow line will highlight the code in the function, along with a
-    green arrow on the left of the line number.
--   The Console will now start with `Browse[1]>` and will have text like
-    `debug at ...`.
--   There will be new buttons on the top of the Console like "Next",
-    "Continue", and "Stop".
--   The Environment pane will be empty and will say "Traceback".
-
-<!-- TODO: Add image or video of this or extend it from previous video? -->
-
-<!-- TODO: Image of debugging changes, with descriptions -->
-
-In this mode you can really investigate what is happening with your code
-and how to fix it. The way to figure out what's wrong is by running the
-code bit by bit. This debug environment is empty except for the actions
-that occur within it, so it really can help figure things out.
-
-## Non-standard evaluation (NSE)
-
-Writing your own functions that use `{tidyverse}` functions, you may
-eventually encounter an error that might not be very easy to figure out.
-Here's an example where you want to use your own arguments in
-`filter()`.
-
-```{r test-nse, error=TRUE}
-test_nse <- function(data, filter_condition) {
-  data |>
-    dplyr::filter(filter_condition)
-}
-
-CO2 |>
-  tibble() |>
-  test_nse(conc > 100)
-```
-
-The error occurs of something called "[non-standard
-evaluation](https://adv-r.had.co.nz/Computing-on-the-language.html)" (or
-NSE). NSE is a feature of R and is used quite a lot throughout R (e.g.
-`library()`), but is especially used in the `{tidyverse}` packages. It's
-one of the first things computer scientists complain about when they use
-R, because it is such a foreign thing in other programming languages.
-But NSE is what allows you to use formulas (e.g. `y ~ x + x2` in
-modeling) or allows you to type out `select(Gender, BMI)` or
-`library(purrr)`. In "standard evaluation", these would instead be
-`select("Gender", "BMI")` or `library("purrr")`. So NSE gives
-flexibility and ease of use for the user (we don't have to type quotes
-every time) when doing data analysis, but can give some headaches when
-programming in R, like when making functions. There's more detail about
-this on the [dplyr
-website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
-which will give a few options to deal with NSE while programming with
-`{tidyverse}` packages, the simplest of which is to wrap the argument
-with `{{}}`.
-
-```{r test-nse-fixed}
-#| error: true
-test_nse <- function(data, filter_condition) {
-  data |>
-    dplyr::filter({{ filter_condition }})
-}
-
-CO2 |>
-  tibble() |>
-  test_nse(conc > 100)
-
-CO2 |>
-  tibble() |>
-  test_nse(uptake < 30)
 ```
