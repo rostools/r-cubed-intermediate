@@ -799,7 +799,7 @@ withr::with_dir(
   project_path,
   {
     tar(
-      tarfile = here::here("_temp", "pre-workshop.tar.gz"),
+      tarfile = here::here("_temp", "project.tar.gz"),
       files = fs::dir_ls(".", all = TRUE, recurse = TRUE)
     )
   }
