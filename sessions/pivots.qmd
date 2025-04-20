@@ -371,8 +371,8 @@ the code we just wrote above into a function.
     function outputs it.
 3.  Test that the function works.
 4.  Add Roxygen documentation with {{< var keybind.roxygen >}} and use
-    explicit function calls with `packagename::`.
-    -   Don't forget, you can use `?functionname` to find out which
+    explicit function calls with `package_name::`.
+    -   Don't forget, you can use `?function_name` to find out which
         package the function comes from.
 5.  Move (**cut** and paste) the newly created function over into the
     `R/functions.R` file.

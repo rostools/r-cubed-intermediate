@@ -388,7 +388,7 @@ ___ <- ___(___, ___) {
         the imported data frame.
     -   Create and write Roxygen documentation to describe the new
         function by using {{< var keybind.roxygen >}}.
-    -   Append `packagename::` to the individual functions (there are
+    -   Append `package_name::` to the individual functions (there are
         three packages used: `{fs}`, `{here}`, and `{purrr}`)
     -   Run it and check that it works on `saliva.csv` by using
         `import_multiple_files("saliva.csv", import_saliva)`.
