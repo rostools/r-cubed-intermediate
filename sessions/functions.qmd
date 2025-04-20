@@ -10,15 +10,7 @@ execute:
 library(fs)
 library(tidyverse)
 library(snakecase)
-library(readr)
 library(here)
-temp_path <- fs::path_temp()
-project_path <- fs::path(temp_path, "LearnR3")
-
-untar(
-  tarfile = here::here("_temp", "pre-workshop.tar.gz"),
-  exdir = project_path
-)
 ```
 
 ## Learning objectives
