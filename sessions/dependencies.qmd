@@ -1,78 +1,119 @@
-# Managing other packages you need and use {#sec-dependencies}
+---
+execute:
+  eval: true
+---
+
+# Making robust and general-purpose functions {#sec-robust-functions}
 
 ```{r setup}
 #| include: false
 library(fs)
 library(tidyverse)
+library(snakecase)
 library(readr)
 library(here)
+load(here("_temp/functions.RData"))
 temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
 
 untar(
-  tarfile = here::here("_temp", "pre-workshop.tar.gz"),
+  tarfile = here::here("_temp", "project.tar.gz"),
   exdir = project_path
 )
 ```
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-dependencies.qmd >}}
+{{< include /includes/_learning-objectives-robustness.qmd >}}
 
-## Continuing the workflow
+## :speech_balloon: Discussion activity: How might you make your functions more general-purpose?
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+**Time: \~8 minutes.**
 
-Really emphasize to **cut** and paste, so that the function in the
-`docs/learning.qmd` file is **deleted** and no longer kept in the Quarto
-document.
-:::
+One of the more powerful features of making functions is that you can
+easily reuse them in other sections of the file or in other files, which
+we will cover how to do later in this session. Part of that power comes
+from knowing how to make functions that are general enough to be used in
+other settings too.
 
-We've created two functions. Now we need to move those functions from
-the `docs/learning.qmd` file and into the `R/` folder by **cutting and
-pasting** (not just copying). We do this for a few reasons:
+From the previous session, we made the `import_cgm()` function together
+and in the exercises you made the `import_sleep()` function. These two
+functions basically do the same thing. So why have two? We don't need
+two! So let's refactor the `import_cgm()` function so it is clearer what
+it does and can do.
 
-1.  To prevent the Quarto document from becoming too long and having a
-    large portion of R code over other text.
-2.  To make it easier to maintain and find things in your project.
-3.  To make use of the `source()` function.
+The first step is to look at the code to see what it does and see how
+you can modify it to be more general-purpose.
 
-We want to store our functions in the file `R/functions.R` script so its
-easier to source them. Cut and paste *only* the `import_user_info()`
-function we created in `docs/learning.qmd`, including the Roxygen
-documentation, and paste it into the newly created `R/functions.R`.
+1.  Take 2 minutes to look over the two functions you made and think
+    about what you could do to make it more general-purpose.
+2.  Take 3 minutes to discuss with your neighbour what you think could
+    be done to make it more general-purpose and try to come to a
+    conclusion.
+3.  Then all together and in the remaining time, everyone will share
+    what they've thought of.
 
-Once we have it in there, let's test out the workflow. Restart our R
-session with by either going to the "Session -\> Restart R" menu item or
-by using the keybindings {{< var keybind.restart-r >}}. Move back into
-the `docs/learning.qmd` and add `source(here("R/functions.R"))` to the
-code chunk called `setup` at the top. Run all the code inside the
-`setup` code chunk. Then go to where you wrote:
+Try not to look ahead 😜 We won't generalise the function yet, first we
+will make it more robust, and then we will generalise it.
 
-``` {.r filename="docs/learning.qmd"}
-import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
+## :book: Reading task: Making your function more robust with explicit dependencies
+
+**Time: \~10 minutes.**
+
+Before we make the function more general-purpose, this is a good time to
+talk about package dependencies and making your function more robust and
+trust-worthy.
+
+So what is a package dependency and how do you manage it? Whenever you
+use an R package in your project, you depend on it in order for your
+code to work. The informal way to "manage" dependencies is by doing what
+you've already done before: using the `library()` function to load the
+package into R.
+
+As you read others code online or from other researchers, you may notice
+that sometimes the function `require()` is used to load packages like
+the `library()` function is used. The problem with `require()` is that
+if the package can't be loaded, it doesn't give an error. That's because
+`require()` only *checks* if the package is available and will otherwise
+continue running the code. As we'll cover in this course, this can be a
+very bad thing because if a package isn't loaded, it can change the
+behaviour of some of your code and give you potentially wrong results.
+On the other hand, `library()` will give an error if it can't find the
+package, which is what you expect if your code depends on a package.
+
+So, what happens if you come back to the project, or get a new computer,
+or someone else is working on your project too and they want to make
+sure they have the packages your project needs? How will they know what
+packages your project uses? What do they do to get those packages
+installed? Do they have to search through all your files just to find
+all `library()` functions you used and then install those packages
+individually and manually? A much better way here is to formally
+indicate your package dependency so that installing dependencies is
+easy! And we do this by making use of the `DESCRIPTION` file.
+
+The advantage of using the `DESCRIPTION` file is that it is a standard
+file used by R projects to store metadata about the project, including
+which packages are needed to run the project. It also means there are
+many helper tools available that use this `DESCRIPTION` file, including
+tools to install all the packages you need.
+
+So, if you or someone else wants to install all the packages your
+project depends on, all you or they have to do is go to the **Console**
+and type out (you don't need to do this right now):
+
+``` {.r filename="Console"}
+pak::pak()
 ```
 
-Now run this line. What happens now? You *may* get an error about not
-finding the `read_csv()` function. If you put `library(tidyverse)` in
-the `setup` code chunk, you might not get an error. If you did get an
-error, that's because R doesn't know what the `read_csv()` function is.
-This is where we start getting into package dependency management.
+This function looks into the `DESCRIPTION` file and installs all the
+packages listed as dependencies there.
 
-What is package dependency management? Whenever you use an R package,
-you depend on it for your code to work. The informal way to show what
-packages you use is by using the `library()` function. But if you come
-back to the project, or get a new computer, or someone else is working
-on your project too, how will they know which packages your project
-depends on? Do they have to search through all your files just to find
-all `library()` functions you used and then install those packages
-individually? A much better way here is to formally indicate your
-package dependency so that installing dependencies is easy. We do this
-by making use of the `DESCRIPTION` file.
-
-Open up the `DESCRIPTION` file. You may or may not see something that
-looks like:
+Where are these package dependencies listed in the `DESCRIPTION` file?
+Open up your `DESCRIPTION` file, which you can do quickly with
+{{< var keybind.open-file >}}, typing the file name out, and hitting
+enter to open it. Your file may or may not look like the below text. If
+it doesn't, it isn't a problem as the text is just to give you an idea
+of what it might look like.
 
 ```{r admin-print-desc}
 #| echo: false
@@ -86,21 +127,36 @@ usethis::with_project(
 )
 ```
 
-If it doesn't look like this, replace all of your current text with the
-text above. Notice the `Imports:` key. This is where information about
-packages are added. To quickly add a package, go to the **Console** and
-type out:
+Notice the `Imports:` key. This is where information about package
+dependencies is added. In the next section, we will go over how to add
+packages to this field.
+
+{{< text_snippet sticky_up >}}
+
+## Explicitly state a project's package dependencies
+
+There are a few ways to add package dependencies to the `DESCRIPTION`
+file. The most straightforward way is to manually write the package you
+need in the `Imports:` section of `DESCRIPTION` file. But, there are a
+few issues with that, mainly, you may not add it correctly. The other,
+better way to add dependencies is to use the `usethis::use_package()`
+function.
+
+Since we've used the `{here}` package in our code, let's add it as a
+dependency. Go to the **Console** and let's type out how to add it.
+Don't write this code in your Quarto document, since you don't want to
+run it every time you render the document.
 
 ``` {.r filename="Console"}
-usethis::use_package("readr")
+usethis::use_package("here")
 ```
 
-```{r admin-use-package-readr}
+```{r admin-use-package-here}
 #| echo: false
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_package("readr")
+    usethis::use_package("here")
   },
   quiet = TRUE
 )
@@ -121,41 +177,28 @@ usethis::with_project(
 )
 ```
 
-Now, if you or someone else wants to install all the packages your
-project depends on, they can do that by going to the **Console** and
-running:
+Since we will also make use of the `{tidyverse}` set of packages later
+in the workshop, we'll also add `{tidyverse}` as a dependency.
 
 ``` {.r filename="Console"}
-pak::pak()
-```
-
-This function finds the `DESCRIPTION` file and installs all the packages
-in `Imports`. Let's add the other dependencies by typing in the
-**Console**:
-
-``` {.r filename="Console"}
-usethis::use_package("here")
-usethis::use_package("fs")
-usethis::use_package("snakecase")
+usethis::use_package("tidyverse")
 ```
 
 ```{r admin-use-packages-several}
 #| echo: false
+#| error: true
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_package("here")
-    usethis::use_package("fs")
-    usethis::use_package("snakecase")
+    usethis::use_package("tidyverse")
   },
   quiet = TRUE
 )
 ```
 
-Since we will also make use of the tidyverse set of packages later in
-the workshop, we'll also add tidyverse as a dependency. Since the
-tidyverse is a large collection of packages, the recommended way to add
-this particular dependency is with:
+This gives an error though. That's because the `{tidyverse}` is a large
+collection of packages, so as stated by the message, the recommended way
+to add this particular dependency is with:
 
 ``` {.r filename="Console"}
 usethis::use_package("tidyverse", type = "Depends")
@@ -173,14 +216,7 @@ usethis::with_project(
 ```
 
 If you look in the `DESCRIPTION` file now, you see that the new
-`Depends` field has been added with `tidyverse` right below it. There
-are fairly technical reasons why we need to put tidyverse in the
-`Depends` field that you don't need to know about for this workshop, aside
-from the fact that it is a common practice in R projects. At least in
-this context, we use the `Depends` field for tidyverse because of one
-big reason: the `usethis::use_package()` function will complain if we
-try to put tidyverse in the `Imports` and it recommends putting it in
-the `Depends` field.
+`Depends` field has been added with `{tidyverse}` right below it.
 
 ```{r admin-print-desc-add-tidyverse}
 #| echo: false
@@ -194,21 +230,46 @@ usethis::with_project(
 )
 ```
 
+There are fairly technical reasons why we need to put tidyverse in the
+`Depends` field that you don't need to know about for this workshop,
+aside from the fact that it is a common practice in R projects. At least
+in this context, we use the `Depends` field for `{tidyverse}` because of
+one big reason: the `usethis::use_package()` function will complain if
+we try to put `{tidyverse}` in the `Imports` and it recommends putting
+it in the `Depends` field. The other reason is that you never *directly*
+use the `{tidyverse}` package, but rather the individual packages that
+it loads.
+
 Great! Now that we've formally established package dependencies in our
 project, we also need to formally declare which package each function
 comes from inside our own functions.
 
-::: callout-note
-## Reading task: \~5 minutes
+## Explicitly state which package a function comes from
 
-Before getting into the correct way, we need to quickly cover the
-incorrect way that you may or may not have seen how others have done it
-on websites or in script files. Sometimes people use `library()` or
-`require()` inside functions like:
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Put on the project the callout block below and explain why we want to
+make dependencies within functions more explicit and why using
+`library()` and `require()` is a bad idea.
+:::
+
+One important way of making more robust functions is by coding the exact
+packages each of our functions come from that we use in our own
+function. That makes it much easier to reuse, won't break as easily, and
+will give more predictable results each time you run it.
+
+::: callout-important
+Regarding the use of `library()` and `require()`, you may think that one
+way of telling your function what package to use is to include
+`library()` or `require()` inside the function. This is an incorrect way
+to do it and can often give completely wrong results without giving any
+error or warning. Sometimes, on some websites and help forums, you may
+see code that looks like this:
 
 ``` r
 add_numbers <- function(num1, num2) {
-    library(packagename)
+    library(package_name)
     ...code...
     return(added)
 }
@@ -218,226 +279,335 @@ Or:
 
 ``` r
 add_numbers <- function(num1, num2) {
-    require(packagename)
+    require(package_name)
     ...code...
     return(added)
 }
 ```
 
 This is *very* **bad practice** and can have some unintended and serious
-consequences that you might not notice or that won't give any warning or
-error. The correct way of indicating which package a function comes from
-is instead by using `packagename::functionname`, which you've seen and
-used many times in this workshop. We won't get into the reasons why this
-is incorrect because it can quickly get quite technical.
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-You can also talk about why `require()` shouldn't be used compared to
-`library()`. The problem with `require()` is that if the package can't
-be loaded, it won't throw an error, it only *checks* if the package is
-available and will otherwise continue running the code. On the other
-hand, `library()` will throw an error if it can't find the package,
-which is what you expect if your code depends on a package.
+consequences without giving any warning or error. We won't get into the
+reasons why this is incorrect because it can quickly get quite technical
+and is out of the scope of this workshop.
 :::
 
-Another reason to use `packagename::functionname` for each function from
-an R package you use in your own function is that it explicitly tells R
-(and us the readers) where the function comes from. Because the same
-function name can be used by multiple packages, if you don't explicitly
-state which package the function is from, R will use the function that
-it finds first - which isn't always the function you meant to use. We
-also do this step at the end of making the function because doing it
-while we create it can be quite tedious.
+The correct way to explicitly use a function from a package is using
+something we've already used before with `usethis::use_package()`: By
+using `::`! For every function inside your package, aside from functions
+that come from `{base}`, use `package_name::function_name()`.
 
-::: {.callout-tip appearance="default"}
-If you don't know what package a function comes from when you need to
-append the package when using `::`, you can find out what the package is
-by using the help documentation `?functionname` (can also be done by
-pressing F1 when the cursor is over the function). The package name is
-at the very top left corner, surrounded by `{ }`.
-:::
-:::
+When we use `package_name::function_name` for each function in our
+function, we are explicitly telling R (and us the readers) where the
+function comes from. This can be important because sometimes the same
+function name can be used by multiple packages, for example the
+`filter()` function. So if you don't explicitly state which package the
+function is from, R will use the function that it finds first---which
+isn't always the function you wanted to use. We also do this step at the
+end of making the function because doing it while we create it can be
+quite tedious.
 
-Alright, let's go into `R/functions.R` and add `readr::` to each of the
-`{readr}` functions we've used:
-
-```{r explicit-function-calls}
-#| filename: "R/functions.R"
-import_user_info <- function(file_path) {
-  info_data <- readr::read_csv(
-    file_path,
-    col_select = -1,
-    col_types = readr::cols(
-      gender = readr::col_character(),
-      weight = readr::col_double(),
-      height = readr::col_double(),
-      age = readr::col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(info_data)
-}
-```
-
-Test that it works by restart the R session with
-{{< var keybind.restart-r >}} and source the file with
-{{< var keybind.source >}}, then go to the **Console** and type out:
+Let's start doing that with our function. We may not always know which
+package a function comes from, but we can easily find that out. Let's
+start with the first action in our function: `read_csv()`. In the
+**Console**:
 
 ``` {.r filename="Console"}
-import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
+?read_csv
 ```
 
-It should work as expected! Now that we've done that, let's **add and
-commit** the changes made through the Git interface, using
+This will open the help page for the `read_csv()` function. If you look
+at the top left corner, you'll see the package name in curly brackets
+`{}`. This tells you which package the function comes from. In this
+case, it is `{readr}`. So, we can update our function to use
+`readr::read_csv()` instead of just `read_csv()`:
+
+```{r}
+import_cgm <- function(file_path) {
+  cgm <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100
+    )
+  return(cgm)
+}
+```
+
+There is still more to do, but now it's your turn to try.
+
+{{< include /includes/exercises/_set-dependencies.qmd >}}
+
+## :book: Reading task: Principles to make general-purpose and reusable functions
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Briefly reinforce what they read by slowly going through these points
+below about making generalised functions. Emphasise the principles
+below, especially the "do one thing" and "keep it small".
+:::
+
+**Time: \~3 minutes.**
+
+Recall from our discussion at the start of this session about making our
+`import_cgm()` function more general. There are a few ways we could do
+it, before first, let's go over some general principles of making
+functions that are more general-purpose and reusable. These principles
+are:
+
+1.  Have the function's input (the arguments) be generic enough to take
+    different types of objects as long as they are the same "type". In
+    our case, we have two functions that both take a path "type". A path
+    is a very general input, so we can keep it as is.
+2.  Have the function's output be a common "type", like a vector or data
+    frame. When working in R, it's a very good practice to have
+    functions output a data frame, since many functions, especially in
+    the `{tidyverse}`, take a data frame as input.
+3.  Make the first argument of the function be something that can be
+    "pipe-able". That way you can chain together your functions with the
+    `|>` operator. In this case, either always have `data` as the first
+    argument to work well with piping from `{tidyverse}` functions.
+4.  Make your function do one conceptual thing well. For example, read
+    data from a file and make it cleaner. Or convert all columns that
+    are characters into numbers.
+5.  Keep the function small. It is easier to be reused, easier to test,
+    and easier to debug when it has fewer lines of code.
+
+{{< text_snippet sticky_up >}}
+
+## Generalising our import function
+
+So, let's make our `import_cgm()` function more general-purpose. We know
+that both the `import_cgm()` and `import_sleep()` functions do basically
+the same thing:
+
+1.  Have a file path as an argument.
+2.  Read in the path to a CSV file with `readr::read_csv()`.
+3.  Convert column names to snake case with
+    `snakecase::to_snake_case()`.
+4.  Limit the number of rows imported with `n_max`.
+5.  Quiet the message about the column types with
+    `show_col_types = FALSE`.
+6.  Output the imported data frame.
+
+So, we can combine the two functions into one function that does all of
+these things. We could call the function a lot of different names
+(naming is really hard in coding), but let's keep it simple and call it
+`import_dime()`. We want this function to be able to import different
+CSV files, for example:
+
+``` {.r filename="docs/learning.qmd"}
+import_dime(here("data-raw/cgm/101.csv"))
+import_dime(here("data-raw/sleep/101.csv"))
+```
+
+Let's generalise the function! Rather than internally say `cgm` or
+`sleep`, we can keep it simple can call it `data`. Create a new header
+at the bottom of the `docs/learning.qmd` file called
+`## Import DIME data function` and create a code chunk with
+{{< var keybind.chunk >}}. Then we'll write the new function from
+scratch:
+
+```{r import-dime-data-function}
+#| filename: "docs/learning.qmd"
+import_dime <- function(file_path) {
+  data <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(data)
+}
+```
+
+Before testing it out, let's make the Roxygen documentation for it with
+{{< var keybind.roxygen >}}:
+
+```{r import-dime-roxygen}
+#| filename: "docs/learning.qmd"
+#' Import data from the DIME study dataset.
+#'
+#' @param file_path Path to the CSV file.
+#'
+#' @returns A data frame.
+#'
+import_dime <- function(file_path) {
+  data <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(data)
+}
+```
+
+Below the function, write out these two lines of code to test that it
+works:
+
+```{r test-import-dime}
+#| filename: "docs/learning.qmd"
+import_dime(here("data-raw/cgm/101.csv"))
+import_dime(here("data-raw/sleep/101.csv"))
+```
+
+This should work without any problems :tada: Let's style the code with
+{{< var keybind.styler >}} and then render the document with
+{{< var keybind.render >}} to test that everything works. If everything
+works, let's add and commit the changes to the Git history using
 {{< var keybind.git >}}.
 
-## Exercise: Move and update the rest of the functions
-
-> Time: \~30 minutes.
-
-Repeat this process of making functions by doing this to the rest of the
-code you worked on previously that imported the `RR.csv` and
-`Actigraph.csv` data.
-
-1.  Convert the importing code into functions while in the
-    `docs/learning.qmd` file. Include the Roxygen documentation and use
-    `packagename::` to be explicit about where the function comes from.
-
-    -   Name the new functions `import_rr` and `import_actigraph`.
-
-2.  Move (by **cutting** and pasting) **only** the function into
-    `R/functions.R`.
-
-3.  Restart R, `source()` the functions file, using
-    {{< var keybind.source >}}, and test that the functions work by
-    running them in the **Console**. The below code should run without a
-    problem if you did it right:
-
-    ``` {.r filename="Console"}
-    import_rr(here::here("data-raw/mmash/user_1/RR.csv"))
-    import_actigraph(here::here("data-raw/mmash/user_1/Actigraph.csv"))
-    ```
-
-4.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.styler >}}.
-
-Also update the `import_saliva()` function you created by being explicit
-about where the functions come from (e.g. with the `packagename::`).
-Then **cut and paste** this function along with its Roxygen
-documentation over into the `R/functions.R` file. Run `{styler}` with
-{{< var keybind.styler >}} and afterwards, **add and commit** the
-changes to the Git history, using {{< var keybind.git >}}.
-
-Use this code template as a guide for making the functions.
-
-``` r
-# Insert Roxygen documentation too
-___ <- function(___) {
-    ___ <- ___::___(
-        ___,
-        col_select = ___,
-        col_types = ___::cols(
-            ___
-        ),
-        name_repair = snakecase::to_snake_case
-    )
-    return(___)
-}
-```
-
-```{r solution-update-other-functions}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import the MMASH saliva file
-#'
-#' @param file_path Path to the user saliva data file.
-#'
-#' @return Outputs a data frame/tibble.
-#'
-import_saliva <- function(file_path) {
-  saliva_data <- readr::read_csv(
-    file_path,
-    col_select = -1,
-    col_types = readr::cols(
-      samples = readr::col_character(),
-      cortisol_norm = readr::col_double(),
-      melatonin_norm = readr::col_double()
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(saliva_data)
-}
-
-#' Import the MMASH RR file (heart beat-to-beat interval).
-#'
-#' @param file_path Path to the user RR data file.
-#'
-#' @return Outputs a data frame/tibble.
-#'
-import_rr <- function(file_path) {
-  rr_data <- readr::read_csv(
-    file_path,
-    col_select = -1,
-    col_types = readr::cols(
-      ibi_s = readr::col_double(),
-      day = readr::col_double(),
-      # Converts to seconds
-      time = readr::col_time(format = "")
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(rr_data)
-}
-
-#' Import the MMASH Actigraph file (accelerometer).
-#'
-#' @param file_path Path to the user Actigraph data file.
-#'
-#' @return Outputs a data frame/tibble.
-#'
-import_actigraph <- function(file_path) {
-  actigraph_data <- readr::read_csv(
-    file_path,
-    col_select = -1,
-    col_types = readr::cols(
-      axis_1 = readr::col_double(),
-      axis_2 = readr::col_double(),
-      axis_3 = readr::col_double(),
-      steps = readr::col_double(),
-      hr = readr::col_double(),
-      inclinometer_off = readr::col_double(),
-      inclinometer_standing = readr::col_double(),
-      inclinometer_sitting = readr::col_double(),
-      inclinometer_lying = readr::col_double(),
-      vector_magnitude = readr::col_double(),
-      day = readr::col_double(),
-      time = readr::col_time(format = "")
-    ),
-    name_repair = snakecase::to_snake_case
-  )
-  return(actigraph_data)
-}
-```
-
-## Summary
+## Easily reuse stable, robust functions by storing them in the `R/` folder
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
-Quickly cover this before finishing the session and when starting the
-next session.
+Really emphasize to **cut** and paste, so that the function in the
+`docs/learning.qmd` file is **deleted** and no longer kept in the Quarto
+document.
 :::
 
--   Use `use_package()` for the `DESCRIPTION` file as well as
-    `packagename::functionname()` to explicit state the packages your
-    function depends on.
-    -   Don't use `library()` or `require()` *within* your function.
+We've now created one general-purpose function that we can use later to
+import many different types of data files. We've made it more robust and
+have tested it so we can be certain it is fairly stable now. So, let's
+move the function into a location that we could be able to re-use it in
+other Quarto documents (if we had more). Since we already have a file
+called `R/functions.R`, we will keep all our stable and tested functions
+in there.
 
-```{r store-session-code}
-#| include: false
-save.image(here::here("_temp/functions.RData"))
+So, in the `docs/learning.qmd` file, **only cut** the function and it's
+Roxygen documentation, open the `R/functions.R` with
+{{< var keybind.open-file >}}, and then paste into this file.
+
+The code in the `R/functions.R` file should now look like this:
+
+```{r import-dime-functions-r-file}
+#| filename: "R/functions.R"
+#' Import data from the DIME study dataset.
+#'  
+#' @param file_path Path to the CSV file.
+#' 
+#' @returns A data frame.
+#' 
+import_dime <- function(file_path) {
+  data <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(data)
+}
 ```
 
+We move the function over into this file for a few reasons:
+
+1.  To the Quarto document from becoming too long and having too many
+    different functions and code throughout it.
+2.  To make it easier to maintain and find things in your project since
+    you know that all stable, tested functions are in the `R/` folder.
+3.  To make use of the `source()` function to load the functions into
+    any Quarto document you want to use them in.
+
+Once we have cut and pasted it into the `R/functions.R` file, let's
+include `source()` in the Quarto document. Open the `docs/learning.qmd`
+file and go to the top of the file to the `setup` code chunk. Add the
+line `source(here("R/functions.R"))` to the bottom of the code chunk.
+This will load the functions into the Quarto document when it is
+rendered. This means that we can use the functions in the
+`R/functions.R` file without having the actual code be in the Quarto
+document.
+
+Since we've also explicitly used the `snakecase::to_snake_case()`
+function in the `import_dime()` function, we don't need the
+`library(snakecase)` line from the `setup` code chunk. So let's also
+remove that.
+
+The `setup` code chunk should look like this now:
+
+```` markdown
+```{{r setup}}
+library(tidyverse)
+library(here)
+source(here("R/functions.R"))
+```
+````
+
+And the bottom of the Quarto document should still have the code:
+
+```{r test-import-dime}
+#| filename: "docs/learning.qmd"
+import_dime(here("data-raw/cgm/101.csv"))
+import_dime(here("data-raw/sleep/101.csv"))
+```
+
+But **not** have the code to make the `import_dime()` in the Quarto
+document.
+
+Let's test it that it works. Render the document with
+{{< var keybind.render >}} and check that it works. If it does, then we
+can add and commit the changes to both the `docs/learning.qmd` and
+`R/functions.R` file.
+
+## Key takeaways
+
+-   Make it easier to collaborate with yourself in the future and with
+    others by explicitly setting which packages your project depends on.
+    Use `usethis::use_package()` to set the dependency for you in the
+    `DESCRIPTION` file.
+-   Create more re-usable and easier to test and debug functions by
+    keeping them small (few lines of code) and that do one (conceptual)
+    thing at a time. Less is more!
+-   Make your function more robust by explicitly stating which packages
+    the code you use in your function comes from by using
+    `package_name::function_name()`.
+    -   Don't use `library()` or `require()` *within* your functions.
+-   Keep your stable, robust functions in a separate file for easier
+    re-use across your files, for instance, in the `R/functions.R` file.
+    You can re-use the functions by using
+    `source(here("R/functions.R"))` in your Quarto documents.
+
+## :speech_balloon: Discussion activity: How robust might your code be or code that you've read?
+
+**Time: \~6 minutes.**
+
+As we prepare for the next session and to help reinforce what you've
+learned in this session, get up and walk around with your neighbour and
+talk about some of these questions.
+
+::: callout-tip
+Part of improving your coding skills is to think about how you can
+improve your code and the code of others. **No one** writes perfect code
+and no one writes great code the first time. Or the second, or the third
+time. Often code will be refactored multiple times before it is
+(sufficiently) stable and robust. That is just how coding works.
+
+Being open and receptive to *constructive* critique and feedback is an
+essential skill to have as both a researcher and for coding. So it's
+important to seek out feedback and to give feedback on your own and
+others' code, and try to improve it.
+:::
+
+1.  Think about code you've written or that you've read from others
+    (online or colleagues). How robust do you think it was? What are
+    some things you could do to make it more robust?
+2.  Together with your neighbour, discuss some of these things you've
+    thought about. Try to find out if you have similar thoughts or ideas
+    on how to improve things.
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+
+```{r admin-save-project-and-session-code}
+#| include: false
+save.image(here::here("_temp/robustness.RData"))
+withr::with_dir(
+  project_path,
+  {
+    tar(
+      tarfile = here::here("_temp", "project.tar.gz"),
+      files = fs::dir_ls(".", all = TRUE, recurse = TRUE)
+    )
+  }
+)
+```
