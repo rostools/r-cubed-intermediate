@@ -165,7 +165,7 @@ usethis::with_project(
 You will see a bunch of text about adding it to `Imports`. If you look
 in your `DESCRIPTION` file now, you'll see something like:
 
-```{r admin-print-desc-add-readr}
+```{r admin-print-desc-add-here}
 #| echo: false
 #| comment: ""
 usethis::with_project(
@@ -184,7 +184,7 @@ in the workshop, we'll also add `{tidyverse}` as a dependency.
 usethis::use_package("tidyverse")
 ```
 
-```{r admin-use-packages-several}
+```{r admin-use-packages-tidyverse}
 #| echo: false
 #| error: true
 usethis::with_project(
@@ -204,7 +204,7 @@ to add this particular dependency is with:
 usethis::use_package("tidyverse", type = "Depends")
 ```
 
-```{r admin-use-packages-tidyverse}
+```{r admin-use-packages-tidyverse-depends}
 #| echo: false
 usethis::with_project(
   path = project_path,
@@ -397,8 +397,8 @@ these things. We could call the function a lot of different names
 CSV files, for example:
 
 ``` {.r filename="docs/learning.qmd"}
-import_dime(here("data-raw/cgm/101.csv"))
-import_dime(here("data-raw/sleep/101.csv"))
+import_dime(here("data-raw/dime/cgm/101.csv"))
+import_dime(here("data-raw/dime/sleep/101.csv"))
 ```
 
 Let's generalise the function! Rather than internally say `cgm` or
@@ -448,8 +448,8 @@ works:
 
 ```{r test-import-dime}
 #| filename: "docs/learning.qmd"
-import_dime(here("data-raw/cgm/101.csv"))
-import_dime(here("data-raw/sleep/101.csv"))
+import_dime(here("data-raw/dime/cgm/101.csv"))
+import_dime(here("data-raw/dime/sleep/101.csv"))
 ```
 
 This should work without any problems :tada: Let's style the code with
@@ -485,11 +485,11 @@ The code in the `R/functions.R` file should now look like this:
 ```{r import-dime-functions-r-file}
 #| filename: "R/functions.R"
 #' Import data from the DIME study dataset.
-#'  
+#'
 #' @param file_path Path to the CSV file.
-#' 
+#'
 #' @returns A data frame.
-#' 
+#'
 import_dime <- function(file_path) {
   data <- file_path |>
     readr::read_csv(
@@ -536,10 +536,10 @@ source(here("R/functions.R"))
 
 And the bottom of the Quarto document should still have the code:
 
-```{r test-import-dime}
+```{r}
 #| filename: "docs/learning.qmd"
-import_dime(here("data-raw/cgm/101.csv"))
-import_dime(here("data-raw/sleep/101.csv"))
+import_dime(here("data-raw/dime/cgm/101.csv"))
+import_dime(here("data-raw/dime/sleep/101.csv"))
 ```
 
 But **not** have the code to make the `import_dime()` in the Quarto

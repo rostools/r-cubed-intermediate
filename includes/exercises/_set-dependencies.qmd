@@ -20,7 +20,7 @@ Include `solutions: true` in header to show solutions.
 
 This is what the function should look like after using `::`.
 
-```{r solution-set-function-dependencies}
+```{r solution-includes-set-function-dependencies}
 #| echo: false
 import_cgm <- function(file_path) {
   cgm <- file_path |>
@@ -45,7 +45,7 @@ import_cgm <- function(file_path) {
 ::: {.content-hidden unless-meta="solutions"}
 Run these in the **Console** to add the packages to the `DESCRIPTION` file.
 
-```{r solution-set-project-dependencies}
+```{r solution-includes-set-project-dependencies}
 #| filename: Console
 #| eval: false
 usethis::use_package("readr")
@@ -54,9 +54,9 @@ usethis::use_package("fs")
 ```
 :::
 
-```{r admin-print-desc-add-readr}
+```{r admin-includes-print-desc-add-others}
 #| echo: false
-usethis::with_project( 
+usethis::with_project(
   path = project_path,
   {
     usethis::use_package("readr")
