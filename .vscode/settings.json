@@ -39,5 +39,11 @@
     },
     "custom": true, // Enable the `custom` dictionary
     "internal-terms": false // Disable the `internal-terms` dictionary
-  }
+  },
+  "[r]": {
+    "editor.formatOnSave": true
+  },
+  "[quarto]": {
+    "editor.formatOnSave": true
+  },
 }

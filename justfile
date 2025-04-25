@@ -25,11 +25,8 @@ spell-check:
 
 # Style all R code
 style:
-  #!/usr/bin/Rscript
-  styler::style_dir(
-    here::here(),
-    exclude_dirs = c(".quarto", "_extensions"),
-  )
+  # Need to install air first
+  air format .
 
 # Build Quarto website
 build-site:
