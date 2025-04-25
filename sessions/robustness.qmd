@@ -3,7 +3,7 @@ execute:
   eval: true
 ---
 
-# Making robust and general-purpose functions {#sec-robust-functions}
+# Making robust and general-purpose functions {#sec-robustness}
 
 ```{r setup}
 #| include: false

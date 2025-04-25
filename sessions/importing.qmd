@@ -176,6 +176,16 @@ We'll use the `|>` pipe operator to pipe the output of `here()` into
 function as the input to the next function. We will use this a lot
 throughout the workshop.
 
+::: {.callout-note appearance="default"}
+You may have seen the `{magrittr}` pipe `%>%` before. We are using the
+base `|>` R pipe operator instead because more documentation and
+packages are using or relying on it. In terms of functionality, they are
+nearly the same, with some small differences. It ultimately doesn't
+matter which one you use, but we're using the base R `|>` pipe to be
+consistent with other documentation and with the general trend to
+recommend it over the `{magrittr}` pipe.
+:::
+
 There's a lot of data we could import, so let's start with importing the
 continuous glucose monitor data in the `cgm/` folder. For now, we will
 only import participant 101's data, which is in the `101.csv` file. We
