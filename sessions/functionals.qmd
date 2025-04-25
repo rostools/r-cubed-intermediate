@@ -1,13 +1,17 @@
+---
+execute:
+  eval: true
+---
+
 # Doing many things at once with functionals {#sec-functionals}
 
 ```{r setup}
 #| include: false
 library(here)
-library(dplyr)
-library(purrr)
+library(tidyverse)
 library(fs)
-load(here("_temp/functions.RData"))
 source(here("R/functions.R"))
+load(here("_temp/robustness.RData"))
 ```
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -21,7 +25,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 {{< include /includes/_learning-objectives-functionals.qmd >}}
 
-## Functional programming
+## :book: Reading task: Functional programming
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
@@ -37,15 +41,33 @@ learning for this and that the Posit `{purrr}` cheat sheet is an amazing
 resource to use.
 :::
 
-::: callout-note
-## Reading task: \~15 minutes
+**Time: \~10 minutes.**
 
 Unlike many other programming languages, R's primary strength and
-approach to programming is in functional programming. So what is it? It
-is programming that:
+approach to programming is in functional programming. So what is
+"functional programming"? At its simplest, functional programming is a
+way of thinking about and doing programming that is declarative rather
+than imperative. A functional ("declarative") way of thinking is
+actually how we humans intuitively think about the world. Unfortunately,
+many programming languages are imperative, and even the computer at its
+core needs imperative instructions. This is part of the reason why
+programming is so hard for humans.
+
+A useful analogy is that functional programming is like how you talk to
+an adult about what you want done and letting the adult do it, e.g.
+"move these chairs to this room". "Imperative" is how you'd talk to a
+very young child to make sure it is done exactly as you say, without
+deviations from those instructions. Using the chair example, it would
+like saying "take this chair, walk over to that room, drop of the chair
+in the corner, come back, take that next chair, walk back to the room
+and put it beside the other chair, ..." and so on. There's a lot of room
+for error because, e.g. "take" or "walk" or "drop" can mean many
+different things.
+
+Functional programming, in R, is programming that:
 
 -   Uses functions (like `function()`).
--   Applies functions to vectors all at once (called
+-   Applies actions as a function to vectors all at once (called
     [vectorisation](https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html)),
     rather than one at a time.
     -   Vectors are multiple items, like a sequence of numbers from 1 to
@@ -53,34 +75,38 @@ is programming that:
         weight in a dataset is a vector of numbers.
 -   Can use functions as input to other functions to then output a
     vector (called a
-    [functional](https://adv-r.hadley.nz/functionals.html)).
+    [functional](https://adv-r.hadley.nz/functionals.html) or
+    "higher-order function").
 
 We've already covered functions. You've definitely already used
 vectorization since it is one of R's big strengths. For instance,
-functions like `mean()`, `sd()`, `sum()` are vectorized in that you give
-them a vector of numbers and they do something to all the values in the
-vector at once. In vectorized functions, you can give the function an
-entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with it.
-@fig-vectorization shows how a function conceptually uses vectorization.
+functions like `mean()`, `sd()`, or `sum()` are vectorized in that you
+give them a vector of numbers and they do something to all the values in
+the vector at once. In vectorized functions, you can give the function
+an entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with
+it. @fig-vectorization shows how a function conceptually uses
+vectorization.
 
 ![A function using vectorization. Notice how a set of items is included
 *all at once* in the `func()` function and outputs a single item on the
-right. Modified from the [Posit purrr
-cheat sheet](https://raw.githubusercontent.com/rstudio/cheat sheets/master/purrr.pdf).](/images/vectorization.png){#fig-vectorization
+right. Modified from the [Posit purrr cheat
+sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
+Image license is CC-BY-SA
+4.0.](/images/vectorization.png){#fig-vectorization
 width="45%"}
 
 For example, in R, there is a vectorized function called `sum()` that
-takes the entire vector of `values` and outputs the total sum, without
-needing a for loop.
+takes the entire vector of `values` and outputs the total sum.
 
-```{r}
+```{r example-vec-sum}
 values <- 1:10
 # Vectorized
 sum(values)
 ```
 
-As a comparison, in other programming languages, if you wanted to
-calculate the sum you would need a loop:
+In many other programming languages, you would need to use a loop to
+calculate the sum because the language doesn't support vectorization. In
+R, a loop to calculate the sum would look like this:
 
 ```{r using-for-loop}
 total_sum <- 0
@@ -98,28 +124,33 @@ total_sum
 Emphasize this next paragraph.
 :::
 
-Writing effective and proper for loops is actually quite tricky and
-difficult to easily explain. Because of this and because there are
-better and easier ways of writing R code to replace for loops, we will
+Writing effective and correct loops is surprisingly difficult and
+tricky. Because of this and because there are better and easier ways of
+writing R code to replace loops, we **strongly** recommend not using
+loops. If you think you need to, you probably don't. This is why we will
 **not** be covering loops in this workshop.
 
-A **functional** on the other hand is a function that can also use a
-function as one of its arguments. @fig-functionals shows how the
-functional `map()` from the `{purrr}` package works by taking a vector
-(or list), applying a function to each of those items, and outputting
-the results from each function. The name `map()` doesn't mean a
-geographic map, it is the mathematical meaning of map: To use a function
-on each item in a set of items.
+A **functional** is R's native way of doing loops. A functional is a
+function where you *give* it a function as one of its arguments.
+@fig-functionals shows how the functional `map()` from the `{purrr}`
+package works by taking a vector (or list), applying a function to each
+of those items, and outputting the results from each function. The name
+`map()` doesn't mean a geographic map, it is the mathematical meaning of
+map: To use a function on each item in a set of items.
 
 ![A functional, in this case `map()`, applies a function to each item in
 a vector. Notice how each of the green coloured boxes are placed into
 the `func()` function and outputs the same number of blue boxes as there
-are green boxes. Modified from the [Posit purrr
-cheat sheet](https://raw.githubusercontent.com/rstudio/cheat sheets/master/purrr.pdf).](/images/functionals.png){#fig-functionals
-width="90%"}
+are green boxes. Modified from the [Posit purrr cheat
+sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
+Image license is CC-BY-SA
+4.0.](/images/functionals.png){#fig-functionals width="90%"}
 
-Here's a simple toy example to show how it works. We'll use `paste()` on
-each item of `1:5`.
+Here's a simple example to show how it works. We'll use `paste()` on
+each item of `1:5` to simple output the same number as the input. We
+will load in `{purrr}` to be clear which package it comes from, but
+`{purrr}` is loaded with the `{tidyverse}` package, so you don't need to
+load it if you are using the `{tidyverse}` package.
 
 ```{r}
 library(purrr)
@@ -127,10 +158,17 @@ map(1:5, paste)
 ```
 
 You'll notice that `map()` outputs a list, with all the `[[1]]` printed.
-`map()` will always output a list. Also notice that the `paste()`
-function is given *without* the `()` brackets. Without the brackets, the
-function can be used by the `map()` functional and treated like any
-other object in R.
+A list is a specific type of object that can contain different types of
+objects. For example, a data frame is actually a special type of list
+where which column is a list item that contains the values of that
+column. `map()` will always output a list, so it is very predictable.
+Notice also that the `paste()` function is given *without* the `()`
+brackets. Without the brackets, the function can be used by the `map()`
+functional and treated like any other object in R. Remember how we said
+that a function is an action when it has `()` at the end. In this case,
+we do *not* want R to do the action *yet*, we want R to use the action
+on each item in the `map()`. In order `map()` to do that, you need to
+give the function as an object so it can do the action later.
 
 Let's say we wanted to paste together the number with the sentence
 "seconds have passed". Normally it would look like:
@@ -152,22 +190,43 @@ for (num in 1:5) {
 }
 ```
 
-With `map()`, we'd do this a bit differently. `{purrr}` allows us to
-create anonymous functions (functions that are used once and disappear
-after usage) to extend its capabilities. Anonymous functions are created
-by writing `function(x)` (the short version is `\(x)`), followed by the
-function definition inside of `map()`. Using `map()` with an anonymous
-function allows us to do more things to the input vector (e.g. `1:5`).
-Here is an example:
+Using `map()` we can give it something called "anonymous" functions.
+"Anonymous" because it isn't named with `name <- function()` like we've
+done before. Anonymous functions are functions that you use once and
+don't remember in the your environment (like named functions do). As you
+might guess, you can make an anonymous function by simply *not* naming
+it! For instance:
 
-```{r}
-map(1:5, function(x) paste(x, "seconds have passed"))
-# Or with the short version
-map(1:5, \(x) paste(x, "seconds have passed"))
+```{r anonymous-func}
+#| output: false
+function(number) {
+  paste(number, "seconds have passed")
+}
 ```
 
-::: {.callout-note appearance="default"}
-`{purrr}` supports the use of a syntax shortcut to write anonymous
+There is a shortened version of this using `\(x)`:
+
+```{r anonymous-func-short}
+#| output: false
+\(number) paste(number, "seconds have passed")
+```
+
+Both forms of anonymous functions are equivalent and can be used in
+`map()`:
+
+```{r}
+map(1:5, function(number) paste(number, "seconds have passed"))
+# Or with the short version
+map(1:5, \(number) paste(number, "seconds have passed"))
+```
+
+So `map()` will take each number in `1:5`, put it into the anonymous
+function in the `number` argument we made, and then run the `paste()`
+function on it. The output will be a list of the results of the
+`paste()` function.
+
+::: callout-note
+`{purrr}` also supports the use of a syntax shortcut to write anonymous
 functions. This shortcut is using `~` (tilde) to start the function and
 `.x` as the replacement for the vector item. `.x` is used instead of `x`
 in order to avoid potential name collisions in functions where `x` is an
@@ -179,11 +238,11 @@ as above, now using the `~` shortcut:
 map(1:5, ~ paste(.x, "seconds have passed"))
 ```
 
-However, the package authors now strongly recommend using the more
-recent `\(x)` R syntax instead of `~` for anonymous functions. This is
-mostly to be consistent with base R and to make use of the clearer
-argument naming within the anonymous function, rather than rely on `.x`
-or `.y` as the argument names.
+The `~` was made before `\()` was made in R. After this new, native R
+version was made, the `{purrr}` authors now strongly recommend using it
+rather then their `~` for anonymous functions. The `\()` is also a bit
+clearer because you give it the name of the argument, e.g. `number`,
+rather than be forced to use `.x`.
 :::
 
 `map()` will always output a list, but sometimes we might want to output
@@ -191,270 +250,291 @@ a different data type. If we look into the help documentation with
 `?map`, it shows several other types of map that all start with `map_`:
 
 -   `map_chr()` outputs a character vector.
--   `map_int()` outputs an integer.
+-   `map_int()` outputs an integer vector.
 -   `map_dbl()` outputs a numeric value, called a "double" in
     programming.
 
-This is the basics of using functionals. Functions, vectorization, and
-functionals provide expressive and powerful approaches to a simple task:
-*Doing an action on each item in a set of items*. And while technically
-using a for loop lets you "not repeat yourself", they tend to be more
-error prone and harder to write and read compared to these other tools.
-For some alternative explanations of this, see
-@sec-alternative-loop-explanation.
-:::
+This is the basics of functionals like `map()`. Functions,
+vectorization, and functionals provide expressive and powerful
+approaches to a simple task: *Doing an action on each item in a set of
+items*. And while technically using a for loop lets you "not repeat
+yourself", they tend to be more error prone and harder to write and read
+compared to these other tools. For some alternative explanations of
+this, see @sec-alternative-loop-explanation.
+
+{{< text_snippet sticky_up >}}
+
+## Using functionals to import multiple datasets
 
 But what does functionals have to do with what we are doing now? Well,
-our `import_user_info()` function only takes in one data file. But we
-have 22 files that we could load all at once if we used functionals.
+we have the `import_dime()` that only imports one CSV file. But we have
+many more! Well, we can use functionals to import them all at once
+:grin:
 
-Before we'll use the `map()` functional, we need to get a vector or list
-of all the dataset files available to us. We will return to using the
-`{fs}` package, which has a function called `dir_ls()` that finds files
-of a certain pattern. So, let's add `library(fs)` to the `setup` code
-chunk. Then, go to the bottom of the `docs/learning.qmd` document, create
-a new header called `## Using map`, and create a code chunk below that
-with {{< var keybind.chunk >}}
+Before we can use `map()` though, we need to have a vector or list of
+the file paths for all the CSV files we want to import. For that, we can
+use the `{fs}` package, which has a function called `dir_ls()` that
+finds files in a folder (directory).
 
-The `dir_ls()` function takes the path that we want to search
-(`data-raw/mmash/`), uses the argument `regexp` (short for [regular
-expression](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)
-or also `regex`) to find the pattern, and `recurse` to look in all
-subfolders. We'll cover regular expressions more in the next session. In
-our case, the pattern is `user_info.csv`, so the code should look like
-this:
+So, let's add `library(fs)` to the `setup` code chunk. Then, go to the
+bottom of the `docs/learning.qmd` document, create a new header called
+`## Using map`, and create a code chunk below that with
+{{< var keybind.chunk >}}
 
-```{r list-user-info-files}
+The `dir_ls()` function takes the path that we want to search, in this
+case `data-raw/dime/cgm` and has an argument called `glob` to tell it
+what type of files to search for. In our case, we want to search for all
+CSV files in the `data-raw/dime/cgm/` folder. So we will pipe the output
+of the path to the CGM folder with `here()` into `dir_ls()`:
+
+```{r list-cgm-files}
 #| filename: "docs/learning.qmd"
-user_info_files <- dir_ls(here("data-raw/mmash/"),
-  regexp = "user_info.csv",
-  recurse = TRUE
-)
+cgm_files <- here("data-raw/dime/cgm/") |>
+  dir_ls(glob = "*.csv")
 ```
 
-Then let's see what the output looks like. For the website, we are only
-showing the first 3 files. Your output will look slightly different from
-this.
+Then we can see what the output is. The paths you see on your computer
+will be different from what are shown here (it is a different computer).
+Plus to keep it simpler, on the website we will only show the first 6
+files.
 
-``` {.r filename="docs/learning.qmd"}
-user_info_files
+```{r list-cgm-files-show}
+#| filename: "docs/learning.qmd"
+#| eval: false
+cgm_files
 ```
 
 ```{r admin-list-files-for-book}
 #| echo: false
-head(gsub(".*\\/data-raw", "data-raw", user_info_files), 3)
+head(gsub(".*\\/data-raw", "data-raw", cgm_files), 3)
 ```
 
-Alright, we now have all the files ready to give to `map()`. But before
-using it, we'll need to add `{purrr}`, where `map()` comes from as a
-package dependency by going to the **Console** and running:
+Alright, we now have all the files ready to give to `map()`.
 
-``` {.r filename="Console"}
-usethis::use_package("purrr")
-```
-
-Since `{purrr}` is part of the `{tidyverse}`, we don't need to load it
-with `library()`. So let's try it!
-
-```{r}
+```{r map-import-cgm}
 #| filename: "docs/learning.qmd"
-user_info_list <- map(user_info_files, import_user_info)
+cgm_data <- map(cgm_files, import_dime)
 ```
 
 Remember, that `map()` always outputs a list, so when we look into this
-object, it will give us 22 tibbles (data.frames). Here we'll only show
-the first one:
+object, it will give us `r length(cgm_data)` tibbles (data frames). For
+the website we'll only show the first two tibbles:
 
-```{r}
+```{r map-import-cgm-show}
 #| filename: "docs/learning.qmd"
-user_info_list[[1]]
+cgm_data[1:2]
 ```
 
 This is great because with one line of code we imported all these
-datasets! But we're missing an important bit of information: The user
-ID. A powerful feature of the `{purrr}` package is that it has other
-functions to make it easier to work with functionals. We know `map()`
-always outputs a list. But what we want is a single data frame at the
-end that also contains the user ID.
+datasets and made them into one data frame! But we're missing an
+important bit of information: The participant ID. The `{purrr}` package
+has many other powerful functions to make it easier to work with
+functionals. We know `map()` always outputs a list. But what we want is
+a single tibble at the end that also contains the participant ID.
 
-The function that will take a list and convert it into a data frame is
-called `list_rbind()` to bind ("stack") by rows or `list_cbind()` to
-bind ("stack") by columns. We want to bind by rows, so will use
-`list_rbind()` and if we look at the help for it, we see that it has an
-argument `names_to`. This argument lets us create a new column that sets
-the user ID, or in this case, the file path to the dataset, which has
-the user ID information in it. So, let's use it and create a new column
-called `file_path_id`.
+There are two functions that take a list of data frames and convert them
+into a single data frame. They are called `list_rbind()` to bind
+("stack") the data frames by rows or `list_cbind()` to bind ("stack")
+the data frames by columns. In our case, we want to bind (stack) by
+rows, so we will use `list_rbind()` by piping the output of the `map()`
+code we wrote into `list_rbind()`.
 
-```{r}
+```{r use-list-rbind}
 #| filename: "docs/learning.qmd"
-user_info_df <- map(user_info_files, import_user_info) |>
+cgm_data <- map(cgm_files, import_dime) |>
+  list_rbind()
+cgm_data
+```
+
+But, hmm, we don't have the participant ID in the data frame. This is
+because `list_rbind()` doesn't know how to get that information, since
+it isn't included in the data frames. If we look at the help for
+`list_rbind()`, we will see that it has an argument called `names_to`.
+This argument lets us create a new column that is based on the name of
+the list item, which in our case is the file path. This file path also
+has the participant ID information in it, but it also has the full file
+path in it too, which isn't exactly what we want. So we'll have to fix
+it later. But first, let's start with adding this information to the
+data frame as a new column called `file_path_id`. So we will add the
+`names_to` argument to the code we've already written.
+
+```{r use-list-rbind-with-paths}
+#| filename: "docs/learning.qmd"
+cgm_data <- map(cgm_files, import_dime) |>
   list_rbind(names_to = "file_path_id")
 ```
 
-Your `file_path_id` variable will look different. Don't worry, we're
-going to tidy up the `file_path_id` variable later.
+And then look at it by running `cgm_data` below the code:
 
-``` {.r filename="docs/learning.qmd"}
-user_info_df
+```{r use-list-rbind-with-paths-show}
+#| filename: "docs/learning.qmd"
+#| eval: false
+cgm_data
 ```
 
-```{r admin-show-data-for-book}
+```{r admin-show-rbind-with-path-for-book}
 #| echo: false
-user_info_df |>
+cgm_data |>
   trim_filepath_for_book()
 ```
 
-::: {.callout-note appearance="default"}
-We're using the base R `|>` pipe rather than the `{magrittr}` pipe `%>%`
-as more documentation and packages are using or relying on it. In terms
-of functionality, they are nearly the same, with some small differences.
-It ultimately doesn't matter which one you use, but we're using the base
-R `|>` pipe to be consistent with other documentation and with the
-general trend to recommend it over the `{magrittr}` pipe.
+The `file_path_id` variable will look different on everyone's computer.
+Don't worry, we're going to tidy up the `file_path_id` variable later in
+another session.
+
+Before moving on to the exercise, let's style with
+{{< var keybind.styler >}} the document, render with
+{{< var keybind.render >}}, and finally **add and commit** the changes
+to the Git history using {{< var keybind.git >}}.
+
+## :technologist: Exercise: Convert into a function to use it on the sleep data
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Because later sessions depend on this code, after they've finished the
+exercise, walk through with them the solution. So that we are all on the
+same page.
 :::
 
-Now that we have this working, let's **add and commit** the changes to
-the Git history, by using {{< var keybind.git >}}
+**Time: \~20 minutes.**
 
-## Exercise: Make a function for importing other datasets with functionals {#sec-ex-function-import-all-data}
-
-> Time: \~30 minutes.
-
-We *eventually* (but not yet) want to do the exact same thing for
-importing the `saliva.csv`, `RR.csv`, and `Actigraph.csv` datasets,
-mimicking the code:
+We've made some code that does what we want, now the next step is to
+convert it into a function so we can use it on both the `cgm` and
+`sleep` datasets. The code we've written to import only the `cgm` data
+looks like this:
 
 ```{r}
 #| eval: false
-user_info_files <- dir_ls(here("data-raw/mmash/"),
-  regexp = "user_info.csv",
-  recurse = TRUE
-)
-user_info_df <- map(user_info_files, import_user_info) |>
+cgm_files <- here("data-raw/dime/cgm/") |>
+  dir_ls(glob = "*.csv")
+cgm_data <- map(cgm_files, import_dime) |>
   list_rbind(names_to = "file_path_id")
+cgm_data
 ```
 
-Notice that if we wanted to import one of the other datasets, we could
-copy the code above and make changes at two locations to import the data
-files: at the `regexp =` argument in `dir_ls()` and at the
-`import_user_info` location within `map()`.
-
-Since we **do not** want to repeat ourselves, this is a perfect chance
-to convert this code above into a function, so we can use this new
-function to import the other datasets without repeating ourselves.
-
-So inside `docs/learning.qmd`, convert this bit of code into a function
-that works to import the other three datasets.
-
-Complete the tasks below and use this below code as a guide to help
-complete this exercise:
-
-``` {.r filename="docs/learning.qmd"}
-___ <- ___(___, ___) {
-  ___ <- ___dir_ls(___here("data-raw/mmash/"),
-    regexp = ___,
-    recurse = TRUE
-  )
-
-  ___ <- ___map(___, ____) |> 
-    ___list_rbind(names_to = "file_path_id")
-  ___(___)
-}
-```
-
-1.  Create a new header `## Exercise: Map on the other datasets` at the
-    bottom of the document.
-2.  Create a new code chunk below it, using {{< var keybind.chunk >}}.
-3.  Use the template code above and the `user_info` code at the start of
-    this exercise section, re-write the code to be able to repeat the
-    steps you've taken previously to be able to import the other three
-    datasets *using a newly created function*.
-    -   Name the function `import_multiple_files`
-    -   Use the `function() { ... }` code to create a new function
-    -   Within `function()`, set two new arguments called `file_pattern`
-        and `import_function`.
-    -   Within the code, use the `user_info` code above as a guide,
-        re-write `"user_info.csv"` with `file_pattern` (this is
-        *without* quotes around it, otherwise R will interpret it as the
-        pattern to look for in the `regexp` argument, with the value
-        `"file_pattern"` and not as the value from `file_pattern`
-        argument we created for our function) and `import_user_info`
-        with `import_function` (also *without* quotes).
-    -   Create generic intermediate objects. So, change the code
-        `user_info_files` with `data_files` and the code `user_info_df`
-        with `combined_data`.
-    -   Use `return(combined_data)` at the end of the function to output
-        the imported data frame.
-    -   Create and write Roxygen documentation to describe the new
-        function by using {{< var keybind.roxygen >}}.
-    -   Append `package_name::` to the individual functions (there are
-        three packages used: `{fs}`, `{here}`, and `{purrr}`)
-    -   Run it and check that it works on `saliva.csv` by using
-        `import_multiple_files("saliva.csv", import_saliva)`.
-4.  After it works, cut and paste the function into the `R/functions.R`
-    file. Then restart the R session with {{< var keybind.restart-r >}},
-    run the line with `source(here("R/functions.R"))` or with
-    {{< var keybind.source >}}, and test the code out in the
-    **Console**.
-5.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.styler >}}.
-6.  Once done, **add** the changes you've made and **commit** them to
-    the Git history, using {{< var keybind.git >}}.
+We want to be able to do the same thing for the `sleep` data, but we
+don't want to repeat ourselves. What we want is a new function that
+looks like the below code chunk and that outputs a similar data frame,
+though the `file_path_id` values will be different:
 
 ```{r solution-import-multiple-files}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Import multiple MMASH data files and merge into one data frame.
+#| echo: false
+#| warning: false
+#| message: false
+#' Import all DIME CSV files in a folder into one data frame.
 #'
-#' @param file_pattern Pattern for which data file to import.
-#' @param import_function Function to import the data file.
+#' @param folder_path The path to the folder that has the CSV files.
 #'
 #' @return A single data frame/tibble.
 #'
-import_multiple_files <- function(file_pattern, import_function) {
-  data_files <- fs::dir_ls(here::here("data-raw/mmash/"),
-    regexp = file_pattern,
-    recurse = TRUE
-  )
+import_csv_files <- function(folder_path) {
+  files <- folder_path |>
+    fs::dir_ls(glob = "*.csv")
 
-  combined_data <- purrr::map(data_files, import_function) |>
+  data <- purrr::map(files, import_dime) |>
     purrr::list_rbind(names_to = "file_path_id")
-  return(combined_data)
+  return(data)
 }
-
-# Test on saliva in the Console
-import_multiple_files("saliva.csv", import_saliva)
 ```
 
-## :speech_balloon: Discussion activity: Incorporating functionals in your own work
+```{r}
+#| eval: false
+import_csv_files(here("data-raw/dime/cgm/"))
+import_csv_files(here("data-raw/dime/sleep/"))
+```
 
-**Time: ~10 minutes.**
+```{r}
+#| echo: false
+import_csv_files(here("data-raw/dime/cgm/")) |>
+  trim_filepath_for_book()
+import_csv_files(here("data-raw/dime/sleep/")) |>
+  trim_filepath_for_book()
+```
 
-As we prepare for the next session, discuss with your neighbour or group
-the following question:
+Complete the tasks below to convert this code into a stable, robust
+function that you can re-use.
 
--   Think about the functions and functionals sessions. Discuss with
-    your group some ideas on how you can implement making functions and
-    using functionals in your work. What are some things you do
-    repetitively (in code or general work) that you think would be great
-    to have simplified or automated.
+1.  We've used two packages here, `{fs}` and `{purrr}`. You will first
+    need to add these packages to the `DESCRIPTION` file by using
+    `usethis::use_package()` in the **Console**.
+2.  In the bottom of `docs/learning.qmd`, create a new header
+    `## Exercise: Convert map to function and use on sleep`.
+3.  Below the header, create a new code chunk using
+    {{< var keybind.chunk >}}.
+4.  As you've already done in the previous sessions, convert this code
+    into a function. You can always refer to the @sec-functions and
+    @sec-robustness sessions.
+    -   Name the function `import_csv_files`.
+    -   Use the `function() { ... }` code to create a new function
+    -   Inside `function()`, add an argument called `folder_path`.
+    -   Paste the code into the function body.
+    -   Replace `here("data-raw/dime/cgm")` with `folder_path`.
+    -   Rename `cgm_files` to `files`.
+    -   Rename `cgm_data` to `data`.
+    -   Include a `return()` at the end.
+    -   Add `package_name::` to the individual functions used. To find
+        which package a function comes from, use `?functionname` to see
+        the help documentation.
+    -   Create and write Roxygen documentation to describe the new
+        function by using {{< var keybind.roxygen >}}.
+    -   Run it and check that it works using the code shown above.
+5.  Render the document with {{< var keybind.render >}} to check that
+    the function works.
+6.  **Cut** and paste the function into the `R/functions.R` file. Then
+    go back to the `docs/learning.qmd` file and (making sure the old
+    function is deleted), render again with {{< var keybind.render >}}
+    to check that the function works after moving it.
+7.  Run `{styler}` while in the `R/functions.R` file with
+    {{< var keybind.styler >}}.
+8.  Once done, **add** the changes you've made and **commit** them to
+    the Git history, using {{< var keybind.git >}}.
 
-## Summary
+{{< text_snippet sticky_up >}}
+
+## Key takeaways
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Quickly cover this before moving on to the discussion activity.
+:::
 
 -   R is a functional programming language:
-    -   It uses functions that take an input, do an action, and give an
+    -   It has functions that take an input, do an action, and give an
         output.
     -   It uses vectorisation that apply a function to multiple items
         (in a vector) all at once rather than using loops.
     -   It uses functionals that allow functions to use other functions
         as input.
+-   Thinking in terms of declaratively telling a computer to do actions,
+    rather than telling a computer how to do things step-by-step, is a
+    powerful way to think about programming, especially in R.
+-   in terms taking an object like a data frame or list, doing an
+    action, outputting a data frame or list, and doing more actions on
+    that output is
 -   Use the `{purrr}` package and its function `map()` when you want to
     repeat a function on multiple items at once.
+-   Use `list_rbind()` to combine multiple data frames into one data
+    frame by stacking them on top of each other.
+
+## :speech_balloon: Discussion activity: Incorporating functionals in your own work
+
+**Time: \~10 minutes.**
+
+As we prepare for the next session, discuss with your neighbour or group
+the following question:
+
+-   What are some things you do repetitively that you think might
+    benefit from using functionals on?
+-   Consider your code you've written for other projects or tasks you
+    have in other projects. How might you use functional programming to
+    help your work? How might you change existing code to use them?
+    Might it be a lot of work?
 
 ```{r store-session-code}
 #| include: false
-rm(actigraph_df, rr_df)
 save.image(here::here("_temp/functionals.RData"))
 ```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
