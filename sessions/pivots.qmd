@@ -180,9 +180,9 @@ Using the `group_by()` and `summarise()` functions we learned in
 code.
 
 ``` {.r filename="docs/learning.qmd"}
-mmash |> 
-  select(-samples) |> 
-  pivot_longer(c(-user_id, -day, -gender)) |> 
+mmash |>
+  select(-samples) |>
+  pivot_longer(c(-user_id, -day, -gender)) |>
   ___
 ```
 
@@ -433,11 +433,11 @@ output be a bit tidier. For instance, it would be nice to be able to do
 something like this (we'd still have to use `na.rm` though):
 
 ``` r
-mmash |> 
+mmash |>
     tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
-mmash |> 
+mmash |>
     tidy_summarise_by_day(\(x) max(x, na.rm = TRUE))
-mmash |> 
+mmash |>
     tidy_summarise_by_day(
       list(
         median = \(x) median(x, na.rm = TRUE),
@@ -625,4 +625,3 @@ Nice!! :grin: :tada:
     format.
     -   Use `pivot_longer()` to convert from wide to long.
     -   Use `pivot_wider()` to convert from long to wide.
-

@@ -57,7 +57,7 @@ other datasets. Complete these tasks in the `docs/learning.qmd` file:
 1.  Create a new header called `## Exercise: Importing activity data`
 2.  Create a new code chunk below this new header
     {{< var keybind.chunk >}}.
-3.  Starting the workflow from the beginning, write code that imports 
+3.  Starting the workflow from the beginning, write code that imports
     the `Activity.csv` data into R.
 4.  Convert this code into a new function using the workflow you've used
     from this workshop:

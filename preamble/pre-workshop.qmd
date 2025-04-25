@@ -1,7 +1,7 @@
 ---
 # This is used by some includes files
 workshop_level: "intermediate"
-execute: 
+execute:
   eval: true
 ---
 
@@ -166,7 +166,7 @@ r3::check_setup()
 
 The output you'll get for success should look something like this:
 
-```         
+```
 Checking R version:
 ✔ Your R is at the latest version of 4.4.0!
 Checking RStudio version:
@@ -736,7 +736,7 @@ this function in the Console:
 r3::check_project_setup_intermediate()
 ```
 
-```         
+```
 ~/Desktop/LearnR3
 ├── DESCRIPTION
 ├── LearnR3.Rproj
@@ -807,4 +807,3 @@ withr::with_dir(
 ```
 
 {{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
-

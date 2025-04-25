@@ -357,7 +357,7 @@ ___ <- ___(___, ___) {
     recurse = TRUE
   )
 
-  ___ <- ___map(___, ____) |> 
+  ___ <- ___map(___, ____) |>
     ___list_rbind(names_to = "file_path_id")
   ___(___)
 }

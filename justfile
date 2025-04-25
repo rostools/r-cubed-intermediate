@@ -2,7 +2,7 @@
     just --list --unsorted
 
 # Run all recipes
-run-all: install-dependencies check-spelling style build-website 
+run-all: install-dependencies check-spelling style build-website
 
 # Install package dependencies
 install-dependencies:
