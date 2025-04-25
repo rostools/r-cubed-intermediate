@@ -380,7 +380,7 @@ did, import in participant 101's sleep data.
 ``` {.r filename="docs/learning.qmd"}
 sleep_101 <- here(___) |>
   ___(
-    ___, 
+    ___,
     ___,
     ___
   )

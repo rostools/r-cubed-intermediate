@@ -76,7 +76,9 @@ pwalk(
 # Processing the participant data ----------------------------------------
 
 readxl::read_excel(
-  here::here("data-raw/dime-cleaning/2023-08-21_Corrected_Participant_metadata.xlsx"),
+  here::here(
+    "data-raw/dime-cleaning/2023-08-21_Corrected_Participant_metadata.xlsx"
+  ),
   sheet = 1
 ) |>
   select(-starts_with("Biosamples")) |>
@@ -93,7 +95,8 @@ readxl::read_excel(
       intervention == "base" ~ "baseline",
       intervention == "Arm1" & FirstAllocation == "LOW" ~ "low bioactive diet",
       intervention == "Arm2" & FirstAllocation == "LOW" ~ "high bioactive diet",
-      intervention == "Arm1" & FirstAllocation == "HIGH" ~ "high bioactive diet",
+      intervention == "Arm1" & FirstAllocation == "HIGH" ~
+        "high bioactive diet",
       intervention == "Arm2" & FirstAllocation == "HIGH" ~ "low bioactive diet"
     ),
     day_order = case_when(
@@ -133,7 +136,8 @@ read_sleep_fitbit <- function(path) {
   # Read until next empty line, minus the ones to skip, the header, and the
   # empty line itself.
   read_until <- empty_lines[3] - skip_until - 2
-  read_csv(path,
+  read_csv(
+    path,
     n_max = read_until,
     skip = skip_until,
     show_col_types = FALSE,
@@ -152,7 +156,10 @@ split(sleep, sleep$ID) |>
     \(data, id) {
       data |>
         select(-ID) |>
-        write_csv(here("data-raw/dime-cleaning/cleaned/sleep", str_c(id, ".csv")))
+        write_csv(here(
+          "data-raw/dime-cleaning/cleaned/sleep",
+          str_c(id, ".csv")
+        ))
     }
   )
 

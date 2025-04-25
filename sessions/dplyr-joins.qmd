@@ -402,7 +402,7 @@ programming concept from the `{purrr}` package called `reduce()`. Like
 `map()`, which "maps" a function onto a set of items, `reduce()` applies
 a function to each item of a vector or list, each time reducing the set
 of items down until only one remains: the output. Let's use an example
-with our simple function `add_numbers()` we had created earlier on 
+with our simple function `add_numbers()` we had created earlier on
 and add up 1 to 5. Since `add_numbers()` only takes two
 numbers, we have to give it two numbers at a time and repeat until we
 reach 5.
@@ -603,7 +603,7 @@ we can create a final working dataset.
 We do this by saving our last, final dataset we created as `dime` into the `data/` folder.
 We'll use the function `readr::write_csv()` to do this, but first we need to create the folder.
 So at the bottom of the `docs/learning.qmd` file, create a header
-called `## Saving the final data` and then make a new code chunk with {{< var keybind.r >}}. 
+called `## Saving the final data` and then make a new code chunk with {{< var keybind.r >}}.
 In this code chunk, we'll use `fs::dir_create()` to make the folder:
 
 ```{r save-data}
@@ -626,7 +626,7 @@ we're finished creating this dataset! Let's generate it by:
     {{< var keybind.render >}}.
 
 We now have a final dataset to start working on! The main way to load
-data is with `read_csv(here("data/mmash.csv"))`. Lastly, **add and commit** 
+data is with `read_csv(here("data/mmash.csv"))`. Lastly, **add and commit**
 all the changes, including adding
 the final `mmash.csv` data file, to the Git history by using
 {{< var keybind.git >}}.

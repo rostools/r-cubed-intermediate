@@ -6,4 +6,3 @@
 
 3.  Apply the `pivot_longer()` and `pivot_wider()` functions from the
     `{tidyr}` package to pivot data.
-

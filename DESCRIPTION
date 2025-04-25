@@ -3,7 +3,7 @@ Package: r-cubed-intermediate
 Title: "Reproducible Research in R: An Intermediate Workshop on Modern
     Approaches and Workflows to Processing Data"
 Version: 2024.05.06
-Authors@R: 
+Authors@R:
     person("Luke", "Johnston", , "lwjohnst@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-4169-2616", affiliation = "Steno Diabetes Center Aarhus"))
 Description: Reproducibility and open scientific practices are
@@ -16,9 +16,9 @@ Description: Reproducibility and open scientific practices are
     more details on the workshop, check out the <a
     href='https://r-cubed-intermediate.rostools.org'>website</a>.
 URL: https://r-cubed-intermediate.rostools.org
-Depends: 
+Depends:
     R (>= 4.0.0)
-Imports: 
+Imports:
     snakecase,
     styler,
     desc,
@@ -39,10 +39,10 @@ Imports:
     withr,
     r3admin (>= 0.0.1),
     readr
-Suggests: 
+Suggests:
     prodigenr,
     tidyverse
-Remotes: 
+Remotes:
     github::rostools/r3,
     rostools/r3admin
 Encoding: UTF-8

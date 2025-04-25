@@ -41,4 +41,3 @@ If you want to stay updated on when registration opens for upcoming
 workshops, along with keeping informed on other activities related to R,
 you can join our [r-cubed Discord
 server](https://discord.gg/xHPyj7dxJx).
-

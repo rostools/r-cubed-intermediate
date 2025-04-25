@@ -50,7 +50,7 @@ or arguments, and it has the internal sequence of steps called the
 function body that are wrapped in `{}`:
 
 ``` {.r filename="Console"}
-function_name <- function(argument1, argument2) { 
+function_name <- function(argument1, argument2) {
   # body of function with R code
 }
 ```

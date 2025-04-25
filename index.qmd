@@ -103,4 +103,3 @@ fig-alt="Danish Diabetes and Endocrinology Academy logo"}
 ![](/images/SDCA_logo.png){width="110px" fig-align="center"
 fig-alt="Steno Diabetes Center Aarhus logo"}
 :::
-

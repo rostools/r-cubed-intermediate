@@ -1,5 +1,7 @@
 options(
-  repos = c(RSPM = "https://packagemanager.rstudio.com/all/__linux__/jammy/latest"),
+  repos = c(
+    RSPM = "https://packagemanager.rstudio.com/all/__linux__/jammy/latest"
+  ),
   browserNLdisabled = TRUE,
   deparse.max.lines = 2,
   Ncpus = 3,
