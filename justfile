@@ -21,3 +21,7 @@ style:
 # Build Quarto website
 build-website:
   quarto render
+
+# Installs the pre-commit hooks, if not done already
+install-pre-commit:
+  uvx pre-commit install
