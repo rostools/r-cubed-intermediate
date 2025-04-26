@@ -20,7 +20,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-pivots.qmd >}}
+{{< include /includes/objectives/_pivots.qmd >}}
 
 ## Setup for the analysis in Quarto
 

@@ -13,7 +13,7 @@ library(here)
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-importing.qmd >}}
+{{< include /includes/objectives/_importing.qmd >}}
 
 ## :book: Reading task: Packages for importing specific data file formats
 

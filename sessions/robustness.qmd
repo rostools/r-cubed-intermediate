@@ -24,7 +24,7 @@ untar(
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-robustness.qmd >}}
+{{< include /includes/objectives/_robustness.qmd >}}
 
 ## :speech_balloon: Discussion activity: How might you make your functions more general-purpose?
 

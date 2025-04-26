@@ -15,7 +15,7 @@ library(here)
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-functions.qmd >}}
+{{< include /includes/objectives/_functions.qmd >}}
 
 ## :book: Reading task: The basics of a function
 

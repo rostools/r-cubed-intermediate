@@ -19,7 +19,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 
 ## Learning objectives
 
-{{< include /includes/_learning-objectives-split-apply-combine.qmd >}}
+{{< include /includes/objectives/_split-apply-combine.qmd >}}
 
 ## Split-apply-combine technique and functionals
 
