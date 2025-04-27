@@ -1,0 +1,3 @@
+1.  Use the powerful (but also very difficult) regular expressions to process
+    and clean character data.
+2.  Handle dates and times in R using the `{lubridate}` package.

@@ -1,0 +1,333 @@
+# Cleaning dates and characters {#sec-dates-characters}
+
+```{r setup}
+#| include: false
+library(here)
+library(fs)
+library(tidyverse)
+load(here("_temp/functionals.RData"))
+source(here("R/functions.R"))
+```
+
+## Learning objectives
+
+{{< include /includes/objectives/_regex.qmd >}}
+
+## :book: Reading task: Clean with regular expressions
+
+**Time: \~5 minutes.**
+
+Before we go into joining datasets together, we have to do a bit of
+processing first. Specifically, we want to get the user ID from the
+`file_path_id` character data. Whenever you are processing and cleaning
+data, you will very likely encounter and deal with character data. A
+wonderful package to use for working with character data is called
+`{stringr}`, which we'll use to extract the user ID from the
+`file_path_id` column.
+
+The main driver behind the functions in `{stringr}` are [regular
+expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex
+for short). These expressions are powerful, very concise ways of finding
+patterns in text. Because they are so concise, though, they are also
+*very very difficult* to learn, write, and read, even for experienced
+users. That's because certain characters like `[` or `?` have special
+meanings. For instance, `[aeiou]` is regex for "find one character in a
+string that is either a, e, i, o, or u". The `[]` in this case mean
+"find the character in between the two brackets". We won't cover regex
+too much in this workshop, some great resources for learning them are
+the [R for Data Science regex
+section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
+the [stringr regex
+page](https://stringr.tidyverse.org/articles/regular-expressions.html),
+as well as in the help doc `?regex`.
+
+We've already used them a bit in the `dir_ls()` function with the
+`regexp` argument to find our data files. In the case of the regex in
+our use of `dir_ls()`, we had wanted to find, for instance, the pattern
+`"user_info.csv"` in all the folders and files. But in this case, we
+want to extract the user ID pattern, from `user_1` to `user_22`. So how
+would we go about extracting this pattern?
+
+{{< text_snippet sticky_up >}}
+
+## :speech_balloon: Discussion activity: Brainstorm a regex that will match for the user ID
+
+**Time: ~10 minutes.**
+
+https://github.com/rstudio/cheatsheets/blob/main/strings.pdf
+
+Do these tasks. Try not to look ahead, nor in the
+solution section :wink:! When the time is up, we'll share some ideas and
+go over what the regex will be.
+
+1.  Looking at the `file_path_id` column, list what is similar in the
+    user ID between rows and what is different.
+2.  Discuss and verbally describe (in English, not regex) what text
+    pattern you might use to extract the user ID.
+3.  Use the list below to think about how you might convert the English
+    description of the text pattern to a regex. This will probably be
+    very hard, but try anyway.
+    -   When characters are written as is, regex will find those
+        characters, e.g. `user` will find only `user`.
+    -   Use `[]` to find one possible character of the several between
+        the brackets. E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or
+        "b". To find a range of numbers or letters, use `-` in between
+        the start and end ranges, e.g. `[1-3]` means 1 to 3 or `[a-c]`
+        means "a" to "c".
+    -   Use `?` if the character might be there or not. E.g. `ab?` means
+        "a" and maybe "b" follows it or `1[1-2]?` means 1 and maybe 1 or
+        2 will follow it.
+
+Once you've done these tasks, we'll discuss all together and go over
+what the regex would be to extract the user ID.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Potential regex solutions
+
+- `[0-9][0-9][0-9]\\.csv$`
+- `[0-9]+\\.csv$`
+- `[0-9]{3}\\.csv$`
+- `\\d+\\.csv$`
+- `\\d{3}\\.csv$`
+- `[:digit:]+\\.csv$`
+- `[:digit:]{3}\\.csv$`
+:::
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Make sure to reinforce that while regex is incredibly complicated, there
+are some basic things you can do with it that are quite powerful.
+
+More or less, this section and exercise are to introduce the idea and
+concept of regex, but not to really teach it since that is well beyond
+the scope of this workshop and this time frame.
+
+Go over the solution. The explanation is that the pattern will find
+anything that has `user_` followed by a number from 1 to 9 and maybe
+followed by another number from 0 to 9.
+:::
+
+## Using regular expressions to extract text
+
+Now that we've identified a possible regex to use to extract the user
+ID, let's test it out on the `user_info_df` data. Once it works, we will
+convert it into a function and move (**cut and paste**) it into the
+`R/functions.R` file.
+
+Since we will create a new column for the user ID, we will use the
+`mutate()` function from the `{dplyr}` package. We'll use the
+`str_extract()` function from the `{stringr}` package to "extract a
+string" by using the regex `user_[1-9][0-9]?` that we discussed from the
+exercise. Since we're going to use `{stringr}`, so let's add it as a
+package dependency by typing this in the **Console**:
+
+``` {.r filename="Console"}
+usethis::use_package("stringr")
+```
+
+We're also using an argument to `mutate()` you might not have seen
+previously, called `.before`. This will insert the new `user_id` column
+before the column we use and we do this entirely for visual reasons,
+since it is easier to see the newly created column when we run the code.
+In your `docs/learning.qmd` file, create a new header called
+`## Using regex for user ID` at the bottom of the document, and create a
+new code chunk below that.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Walk through writing this code, briefly explain/remind how to use
+mutate, and about the `{stringr}` function.
+:::
+
+```{r}
+clean_cgm <- function(data) {
+
+}
+```
+
+```{r get-user-id}
+#| filename: "docs/learning.qmd"
+#| eval: false
+cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
+# Note: your file paths and data may look slightly different.
+cgm_data |>
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "[0-9]+\\.csv$"
+    ) |>
+      str_remove("\\.csv$") |>
+      as.integer(),
+    .before = file_path_id
+  )
+```
+
+```{r get-user-id}
+#| filename: "docs/learning.qmd"
+#| eval: false
+cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
+# Note: your file paths and data may look slightly different.
+cgm_data |>
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "[0-9]+\\.csv$"
+    ),
+    .before = file_path_id
+  )
+```
+
+```{r extract-user-id-eval}
+#| echo: false
+user_info_df |>
+  trim_filepath_for_book() |>
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "user_[1-9][0-9]?"
+    ),
+    .before = file_path_id
+  )
+```
+
+Since we don't need the `file_path_id` column anymore, let's drop it
+using `select()` and `-`.
+
+```{r drop-file-path-id}
+#| filename: "docs/learning.qmd"
+user_info_df |>
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "user_[1-9][0-9]?"
+    ),
+    .before = file_path_id
+  ) |>
+  select(-file_path_id)
+```
+
+## Exercise: Convert ID extractor code into a function
+
+> Time: 15 minutes.
+
+We now have code that takes the data that has the `file_path_id` column
+and extracts the user ID from it. **First step**: While in the
+`docs/learning.qmd` file, convert this code into a function, using the
+same process you've done previously.
+
+Use this code as a guide to help complete the exercise tasks below:
+
+``` {.r filename="docs/learning.qmd"}
+extract_user_id <- ___(___) {
+    ___ <- ___ |>
+        ___mutate(
+            user_id = ___str_extract(file_path_id,
+                                     "user_[0-9][0-9]?"),
+            .before = file_path_id
+        ) |>
+        ___select(-file_path_id)
+    return(___)
+}
+
+# This tests that it works:
+# extract_user_id(user_info_df)
+```
+
+1.  Call the new function `extract_user_id` and add one argument called
+    `imported_data`.
+    -   Remember to output the code into an object and `return()` it at
+        the end of the function.
+    -   Include Roxygen documentation.
+2.  After writing it and testing that the function works, move (**cut**
+    and paste) the function into `R/functions.R`.
+3.  Run `{styler}` while in the `R/functions.R` file with
+    {{< var keybind.styler >}}.
+4.  Replace the code in the `docs/learning.qmd` file with the function
+    name so it looks like `extract_user_id(user_info_df)`, restart the R
+    session, source everything with `source()` with
+    {{< var keybind.source >}}, and run the new function in the code
+    chunk inside the `docs/learning.qmd` to test that it works. This
+    should automatically run the `setup` code chunk, otherwise, run that
+    chunk if it doesn't.
+5.  Knit / render the `docs/learning.qmd` file to make sure things
+    remain reproducible with {{< var keybind.render >}}.
+6.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
+
+```{r solution-user-id-extract}
+#| output: false
+#| code-fold: true
+#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
+#' Extract user ID from data with file path column.
+#'
+#' @param imported_data Data with `file_path_id` column.
+#'
+#' @return A data.frame/tibble.
+#'
+extract_user_id <- function(imported_data) {
+  extracted_id <- imported_data |>
+    dplyr::mutate(
+      user_id = stringr::str_extract(
+        file_path_id,
+        "user_[0-9][0-9]?"
+      ),
+      .before = file_path_id
+    ) |>
+    dplyr::select(-file_path_id)
+  return(extracted_id)
+}
+
+# This tests that it works:
+cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+  get_user_id()
+```
+
+## :speech_balloon: Discussion activity: How to join by dates?
+
+**Time: ~10 minutes.**
+
+Now that we have the user ID, we can join the CGM data with the sleep
+data. But before we do that, we need to make sure that the date
+columns are in the same format. The CGM data has a date column called
+`device_timestamp`, which is a date-time column, while the sleep data
+has a date column called `date`, which is a date column.
+
+But they both have different times for when the data was recorded by the devices.
+So how do we go about joining these two datasets together?
+
+Ideas:
+
+- Create a date column and an hour column, later group by ID, date, and hour, summarise the values, and then join the two datasets together.
+- Create a date column, group by ID and date, summarise the values, and then join the two datasets together.
+- Create a
+
+## Finding the right date
+
+```{r}
+library(lubridate)
+cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
+cgm_data |>
+  mutate(
+    date = as_date(device_timestamp),
+    hour = hour(device_timestamp),
+  )
+```
+
+## Key takeaways
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Quickly cover this before finishing the session and when starting the
+next session.
+:::
+
+-   While very difficult to learn and use, regular expressions (regex or
+    regexp) are incredibly powerfully at processing character data.
+
+```{r store-session-code}
+#| include: false
+save.image(here::here("_temp/regex.RData"))
+```

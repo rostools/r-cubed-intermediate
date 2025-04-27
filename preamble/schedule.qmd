@@ -38,23 +38,23 @@ and overview.
 | 8:45 | {{< fa laptop-code >}} [Doing many things at once with functionals](/sessions/functionals.qmd) |
 | 10:25 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks |
-| 10:45 | {{< fa laptop-code >}} [Using split-apply-combine to help in processing](/sessions/split-apply-combine.qmd) |
+| 8:45 | {{< fa laptop-code >}} [Cleaning dates and characters](/sessions/dates-characters.qmd) |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 12:00 | {{< fa utensils >}} Lunch |
 | 12:45 | {{< fa laptop-code >}} [Using nested conditionals to help clean columns](/sessions/case-when.qmd) |
 | 13:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 14:00 | {{< fa mug-hot >}} Break with coffee and snacks |
-| 14:15 | {{< fa laptop-code >}} [Joining data together, all at once](/sessions/joins.qmd) |
+| 10:45 | {{< fa laptop-code >}} [Using split-apply-combine to help in processing](/sessions/split-apply-combine.qmd) |
 | 16:15 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 
 ## Day 3 {.unnumbered}
 
 | Time | Session topic |
 |:-----------------------------------|:-----------------------------------|
-| 8:45 | {{< fa laptop-code >}} [Clean character data with regular expressions](/sessions/regex.qmd) |
+| 10:45 | {{< fa laptop-code >}} [Pivoting your data from and to long or wide](/sessions/pivot.qmd) |
 | 10:25 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks |
-| 10:45 | {{< fa laptop-code >}} [Pivoting your data from and to long or wide](/sessions/pivot.qmd) |
+| 14:15 | {{< fa laptop-code >}} [Joining data together, all at once](/sessions/joins.qmd) |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 12:00 | {{< fa utensils >}} Lunch |
 | 12:45 | {{< fa briefcase >}} [Hands-on group project work](/sessions/project-work.qmd) |
