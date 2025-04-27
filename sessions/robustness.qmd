@@ -335,7 +335,7 @@ import_cgm <- function(file_path) {
 
 There is still more to do, but now it's your turn to try.
 
-{{< include /includes/exercises/_set-dependencies.qmd >}}
+{{< include /includes/exercises/_robustness-set-dependencies.qmd >}}
 
 ## :book: Reading task: Principles to make general-purpose and reusable functions
 

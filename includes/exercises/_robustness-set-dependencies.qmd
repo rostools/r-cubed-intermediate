@@ -2,6 +2,7 @@
 NOTE: This is separate here in order to have a solutions section.
 Include `solutions: true` in header to show solutions.
 -->
+
 ## :technologist: Exercise: Finish setting the dependencies
 
 **Time: \~10 minutes.**
@@ -51,7 +52,8 @@ Run these in the **Console** to add the packages to the `DESCRIPTION` file.
 usethis::use_package("readr")
 usethis::use_package("snakecase")
 usethis::use_package("fs")
-```
+`
+``
 :::
 
 ```{r admin-includes-print-desc-add-others}
