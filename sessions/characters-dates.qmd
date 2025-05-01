@@ -93,7 +93,7 @@ as well as in the help doc `?regex`. But we will cover some of the more
 commonly used regex patterns, like:
 
 | regex | Meaning |
-|------------------------------------|------------------------------------|
+|----|----|
 | `\\d` | find one digit (0-9) |
 | `\\D` | find one non-digit |
 | `[0-9]` | find one digit between 0 and 9 (the `-` is a range) |
@@ -637,8 +637,8 @@ prepare_dates <- function(data, column) {
 }
 ```
 
-By wrapping `column` with `{{ }}`, we are telling R that we are giving it
-an unquoted variable and to give that variable to the `as_date()`
+By wrapping `column` with `{{ }}`, we are telling R that we are giving
+it an unquoted variable and to give that variable to the `as_date()`
 function as the name of the column. It gets very technical very quickly,
 but the main thing to remember is that when you make functions that use
 `{tidyverse}` functions and you get this type of error, it is likely
@@ -760,7 +760,7 @@ Quickly cover this before finishing the session.
 
 ```{r store-session-code}
 #| include: false
-save.image(here::here("_temp/regex.RData"))
+save.image(here::here("_temp/characters-dates.RData"))
 ```
 
 {{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
