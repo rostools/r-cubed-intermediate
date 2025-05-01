@@ -15,10 +15,13 @@ load(here("_temp/robustness.RData"))
 ```
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Briefly go over the bigger picture (found in the introduction section)
 and remind everyone the 'what' and 'why' of what we are doing.
+
+Also briefly review what we did the previous day, by using the takeaway
+points from the end of each session.
 :::
 
 ## Learning objectives
@@ -28,7 +31,7 @@ and remind everyone the 'what' and 'why' of what we are doing.
 ## :book: Reading task: Functional programming
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Go over this section briefly by reinforcing what they read, especially
 reinforcing the concepts shown in the image. Make sure they understand
@@ -119,7 +122,7 @@ total_sum
 ```
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Emphasize this next paragraph.
 :::
@@ -495,7 +498,7 @@ function that you can re-use.
 ## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Quickly cover this before moving on to the discussion activity.
 :::

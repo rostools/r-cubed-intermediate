@@ -12,7 +12,7 @@ mmash <- read_csv(here("data/mmash.csv"))
 ```
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Briefly go over the bigger picture (found in the introduction section)
 and remind everyone the 'what' and 'why' of what we are doing.
@@ -49,7 +49,7 @@ reproducible.
 ## Re-arranging data for easier summarizing
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Let them read through this section and then walk through it again and
 explain it a bit more, making use of the tables and graphs. Doing both
@@ -223,7 +223,7 @@ mmash |>
 ## Pivot data to wider form
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Like with the pivoting to long section, let them read through this
 section first and then go over it again to verbally explain it more,
@@ -500,7 +500,7 @@ This is a surprisingly easy thing so before we do that, let's take a few
 minutes to brainstorm how we can achieve this.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Get the groups to chat together for about 5 minutes to think about how
 they'd do that. Ask that they don't look ahead in the text. After that,

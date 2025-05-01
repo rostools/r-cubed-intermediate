@@ -525,7 +525,7 @@ works, let's add and commit the changes to the Git history using
 ## Easily reuse stable, robust functions by storing them in the `R/` folder
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Really emphasize to **cut** and paste, so that the function in the
 `docs/learning.qmd` file is **deleted** and no longer kept in the Quarto

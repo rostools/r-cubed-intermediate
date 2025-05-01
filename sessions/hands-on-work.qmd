@@ -15,7 +15,7 @@ what to code (we are also here for help).
 ## Quick recap of workflow {#sec-general-workflow}
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 You can go over this point verbally, reiterating what they've learned so
 far.

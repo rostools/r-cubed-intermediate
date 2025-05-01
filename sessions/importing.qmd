@@ -91,7 +91,7 @@ If your data is in CSV format, `{readr}` is perfect.
 ## Importing in the raw data
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Take this time to briefly explain the Git interface, what add and commit
 mean, as well as where the history is located.

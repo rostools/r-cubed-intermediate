@@ -11,7 +11,7 @@
 </div>
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.

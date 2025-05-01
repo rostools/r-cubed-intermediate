@@ -1,6 +1,6 @@
 local review_note = [[
 ::: {.callout-note appearance="minimal" collapse="true"}
-## :teacher: Instructor note
+## :teacher: Teacher note
 
 Before beginning, get them to recall what they remember of the previous
 session, either with something like Mentimeter, verbally, or using hands

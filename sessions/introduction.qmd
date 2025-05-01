@@ -21,7 +21,7 @@ library(downlit)
 </div>
 
 ::: {.callout-note collapse="true"}
-## Instructor note
+## Teacher note
 
 The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
@@ -30,7 +30,7 @@ the keyboard.
 ## :book: Reading task: The big picture
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Go over the text again, to reinforce the workflows shown in the diagrams
 and, briefly, the reasons why we do certain things. Especially reinforce

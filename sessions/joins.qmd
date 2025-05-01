@@ -16,7 +16,7 @@ source(here("R/functions.R"))
 ## Join datasets together
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Walk through and describe these images and the different type of joins
 after they've read it.
@@ -165,7 +165,7 @@ conditionals.
 ## Summary
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Quickly cover this before finishing the session and when starting the
 next session.

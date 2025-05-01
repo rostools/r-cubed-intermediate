@@ -135,7 +135,7 @@ Making a function always follows a basic structure:
     isn't necessary.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Emphasize that we will be using this workflow for creating functions all
 the time throughout workshop and that this workflow is also what you'd
@@ -271,7 +271,7 @@ Now that we have a basic understanding of what a function looks like,
 let's apply that what we're doing right now: Importing our data.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Emphasize that we will be using this workflow for creating functions all
 the time throughout workshop and is also a common workflow when making
