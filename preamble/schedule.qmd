@@ -38,7 +38,7 @@ and overview.
 | 8:45 | {{< fa laptop-code >}} [Doing many things at once with functionals](/sessions/functionals.qmd) |
 | 10:25 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks |
-| 10:45 | {{< fa laptop-code >}} [Cleaning characters and dates](/sessions/dates-characters.qmd) |
+| 10:45 | {{< fa laptop-code >}} [Cleaning characters and dates](/sessions/characters-dates.qmd) |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 12:00 | {{< fa utensils >}} Lunch |
 | 12:45 | {{< fa laptop-code >}} [Using nested conditionals to help clean columns](/sessions/case-when.qmd) |
