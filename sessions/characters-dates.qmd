@@ -1,6 +1,6 @@
 ---
 execute:
-  eval: false
+  eval: true
 ---
 
 # Cleaning characters and dates {#sec-characters-dates}
@@ -375,8 +375,9 @@ and gets the participant ID from it. You want to be able to easily use
 that on the sleep data too. So, as you've done, convert this code in the
 `docs/learning.qmd` file into a function.
 
-```{r solution-participant-id-function}
-#| include: false
+```{r}
+#| label: solution-participant-id-function
+#| echo: false
 #' Get the participant ID from the file path column.
 #'
 #' @param data Data with `file_path_id` column.
@@ -555,6 +556,7 @@ Roxygen documentation, and then test it out as shown in the code below.
 
 ```{r convert-function-prepare-dates}
 #| filename: "docs/learning.qmd"
+#| error: true
 #' Prepare the date columns in DIME CGM and sleep data for joining.
 #'
 #' @param data The data that has the datetime column.
@@ -586,7 +588,7 @@ functions. Read the next section to learn about what is happening.
 
 After they've read it, briefly review it again and try to explain what
 NSE is in a slightly different way. Try to emphasise that NSE is
-built-in to so many functions in R and that using `{{}}` with
+built-in to so many functions in R and that using `{{ }}` with
 `{tidyverse}` functions can help with using it in their own functions.
 :::
 
@@ -614,7 +616,7 @@ website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
 which will give a few options to deal with NSE while programming with
 `{tidyverse}` packages. The simplest way to use NSE in your own
 functions when using `{tidyverse}` packages is to wrap the variable with
-`{{}}` (called "curly-curly"). For example, using a simplified version
+`{{ }}` (called "curly-curly"). For example, using a simplified version
 of the code we wrote above, instead of this:
 
 ```{r}
@@ -635,12 +637,12 @@ prepare_dates <- function(data, column) {
 }
 ```
 
-By wrapping `column` with `{{}}`, we are telling R that we are giving it
+By wrapping `column` with `{{ }}`, we are telling R that we are giving it
 an unquoted variable and to give that variable to the `as_date()`
 function as the name of the column. It gets very technical very quickly,
 but the main thing to remember is that when you make functions that use
 `{tidyverse}` functions and you get this type of error, it is likely
-because of NSE. So you can use `{{}}` to wrap the variable name in your
+because of NSE. So you can use `{{ }}` to wrap the variable name in your
 function.
 
 {{< text_snippet sticky_up >}}
@@ -671,8 +673,9 @@ sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
 At the end of this exercise, the `setup` code chunk should look like
 this:
 
-```{r solution-prepare-dates-nse}
+```{r}
 #| filename: "docs/learning.qmd"
+#| label: solution-prepare-dates-nse
 #| echo: false
 #' Prepare the date columns in DIME CGM and sleep data for joining.
 #'
