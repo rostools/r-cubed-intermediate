@@ -1,4 +1,9 @@
-# Cleaning dates and characters {#sec-dates-characters}
+---
+execute:
+  eval: false
+---
+
+# Cleaning characters and dates {#sec-characters-dates}
 
 ```{r setup}
 #| include: false
@@ -11,54 +16,140 @@ source(here("R/functions.R"))
 
 ## Learning objectives
 
-{{< include /includes/objectives/_regex.qmd >}}
+{{< include /includes/objectives/_characters-dates.qmd >}}
 
-## :book: Reading task: Clean with regular expressions
+## :speech_balloon: Discussion activity: Why can't we join CGM and sleep yet?
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+The issues are related to the:
+
+-   IDs, where the CGM and sleep data have `file_path_id` while
+    `participant_details.csv` has `id`.
+-   Dates, where the CGM data has `device_timestamp`, the sleep data has
+    `date`, and the `participant_details.csv` has `start_date` and
+    `end_date`.
+-   Both the CGM and sleep data is measured at different times, but the
+    same date, so a direct join wouldn't work.
+-   The participant details dates are in two columns rather than one.
+:::
+
+**Time: \~8 minutes.**
+
+We now have a function that imports all our CGM and sleep data, as well
+as one to import the `participant_details.csv` file. The next direction
+we want to go to is to join them in some way so that we can be able to
+analyse them together. But right now, we can't really do that. There are
+two main reasons. Look at the data below and try to identify
+them---don't peek ahead! :grin: Then discuss with a neighbour to see if
+you can come to a consensus.
+
+```{r admin-display-all-data}
+#| echo: false
+import_csv_files(here("data-raw/dime/cgm")) |>
+  trim_filepath_for_book() |>
+  print(n = 6)
+import_csv_files(here("data-raw/dime/sleep")) |>
+  trim_filepath_for_book() |>
+  print(n = 6)
+import_dime(here("data-raw/dime/participant_details.csv")) |>
+  print(n = 6)
+```
+
+1.  For 1 minute, look at the above data and try to identify the reasons
+    why we can't (easily) join the datasets together right now.
+2.  For \~4 minutes, discuss what you've thought about with your
+    neighbour
+3.  Then for about 3 minutes we will all share and discuss together.
+
+## :book: Reading task: Cleaning character data with regular expressions
 
 **Time: \~5 minutes.**
 
 Before we go into joining datasets together, we have to do a bit of
-processing first. Specifically, we want to get the user ID from the
-`file_path_id` character data. Whenever you are processing and cleaning
-data, you will very likely encounter and deal with character data. A
-wonderful package to use for working with character data is called
-`{stringr}`, which we'll use to extract the user ID from the
-`file_path_id` column.
+processing first. Specifically, we want to get the participant ID from
+the `file_path_id` character data since all the datasets have an ID (in
+some form). Whenever you are processing and cleaning data, you will very
+likely encounter and deal with character data. A wonderful package to
+use for working with character data is called `{stringr}`, which we'll
+use to get the participant ID from the `file_path_id` column.
 
-The main driver behind the functions in `{stringr}` are [regular
+The main "engine" behind the functions in `{stringr}` is called [regular
 expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex
 for short). These expressions are powerful, very concise ways of finding
-patterns in text. Because they are so concise, though, they are also
-*very very difficult* to learn, write, and read, even for experienced
-users. That's because certain characters like `[` or `?` have special
-meanings. For instance, `[aeiou]` is regex for "find one character in a
-string that is either a, e, i, o, or u". The `[]` in this case mean
-"find the character in between the two brackets". We won't cover regex
-too much in this workshop, some great resources for learning them are
-the [R for Data Science regex
+patterns in text. But they are also *very very difficult* to learn,
+write, and read, even for experienced users. That's because certain
+characters like `[` or `?` have special meanings. For instance,
+`[aeiou]` is regex for "find one character in a string that is either a,
+e, i, o, or u". The `[]` in this case means "find the character in
+between the two brackets". We won't cover regex too much in this
+workshop, but some great resources for learning them are the [R for Data
+Science regex
 section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
 the [stringr regex
 page](https://stringr.tidyverse.org/articles/regular-expressions.html),
-as well as in the help doc `?regex`.
+as well as in the help doc `?regex`. But we will cover some of the more
+commonly used regex patterns, like:
 
-We've already used them a bit in the `dir_ls()` function with the
-`regexp` argument to find our data files. In the case of the regex in
-our use of `dir_ls()`, we had wanted to find, for instance, the pattern
-`"user_info.csv"` in all the folders and files. But in this case, we
-want to extract the user ID pattern, from `user_1` to `user_22`. So how
-would we go about extracting this pattern?
+| regex | Meaning |
+|------------------------------------|------------------------------------|
+| `\\d` | find one digit (0-9) |
+| `\\D` | find one non-digit |
+| `[0-9]` | find one digit between 0 and 9 (the `-` is a range) |
+| `[a-z]` | find one letter character between a and z |
+| `[A-Z]` | find one letter character between A and Z |
+| `[a-zA-Z]` | find one letter character between a and z or A and Z |
+| `\\.` | find one dot character |
+| `$` | find the end of the character object, e.g. `\\.$` means find a dot that is at the end of the character object |
+| `^` | find the start of the character object, e.g. `^\\d` means find a digit at the start of the character object |
+| `?` | maybe find the character before the `?`, e.g. `\\d?` means maybe find one digit |
+| `*` | find the character before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
+| `+` | find the character one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other |
+| `{n}` | find the same character `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other |
+| `[:alpha:]` | find one letter character (a-z or A-Z) |
+| `[:digit:]` | find one digit character (0-9) |
+| `[:alnum:]` | find one alphanumeric character (a-z, A-Z, 0-9) |
+
+::: callout-note
+The `\` character is a special character in regex, but in R it means
+"escape or use this as the character". For instance, `\"` in R means
+"use the `"` character", like if you wanted to write a message like:
+
+```{r}
+print("Analysis has \"nearly\" finished.")
+```
+
+Without the `\`, R would see this instead:
+
+``` r
+print("Analysis has "nearly" finished.")
+```
+
+And think `"Analysis has "` is the first character object, that `nearly`
+is an object, and the `" finished"` is the second character object.
+
+But in regex, the `\` character is a special character that can mean
+different things. For instance, `\d` means "find a digit" (0-9) and `\D`
+means "find a non-digit". So when using it in R, it would be `\\d` and
+`\\D` so that regex "sees", e.g., `\d`
+:::
 
 {{< text_snippet sticky_up >}}
 
-## :speech_balloon: Discussion activity: Brainstorm a regex that will match for the user ID
+## :speech_balloon: Discussion activity: Brainstorm a regex that will get the participant ID
 
-**Time: ~10 minutes.**
+**Time: \~8 minutes.**
 
 https://github.com/rstudio/cheatsheets/blob/main/strings.pdf
 
-Do these tasks. Try not to look ahead, nor in the
-solution section :wink:! When the time is up, we'll share some ideas and
-go over what the regex will be.
+Using what you just read from above, try to think of a regex that would
+get the participant ID from the file path. Try not to look ahead nor at
+the potential solutions! :grin: :wink:
+
+When the time is up, we'll share some ideas and go over what the regex
+*could* be (there is actually many different ways to do this). With your
+neighbour, do the following tasks:
 
 1.  Looking at the `file_path_id` column, list what is similar in the
     user ID between rows and what is different.
@@ -84,17 +175,22 @@ what the regex would be to extract the user ID.
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Potential regex solutions
 
-- `[0-9][0-9][0-9]\\.csv$`
-- `[0-9]+\\.csv$`
-- `[0-9]{3}\\.csv$`
-- `\\d+\\.csv$`
-- `\\d{3}\\.csv$`
-- `[:digit:]+\\.csv$`
-- `[:digit:]{3}\\.csv$`
+-   `[0-9][0-9][0-9]\\.csv$`
+-   `[0-9]+\\.csv$`
+-   `[0-9]{3}\\.csv$`
+-   `\\d+\\.csv$`
+-   `\\d{3}\\.csv$`
+-   `[:digit:]+\\.csv$`
+-   `[:digit:]{3}\\.csv$`
+
+For the rest of the workshop, we will use the regex `[:digit:]+\\.csv$`
+to get the participant ID from the file path. We use this one because it
+is more readable than the others and it allows us to get participant IDs
+that are one to many digits long.
 :::
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Make sure to reinforce that while regex is incredibly complicated, there
 are some basic things you can do with it that are quite powerful.
@@ -104,59 +200,126 @@ concept of regex, but not to really teach it since that is well beyond
 the scope of this workshop and this time frame.
 
 Go over the solution. The explanation is that the pattern will find
-anything that has `user_` followed by a number from 1 to 9 and maybe
-followed by another number from 0 to 9.
+anything that has `\\.csv$` at the end that is preceded by some numbers.
 :::
 
 ## Using regular expressions to extract text
 
-Now that we've identified a possible regex to use to extract the user
-ID, let's test it out on the `user_info_df` data. Once it works, we will
-convert it into a function and move (**cut and paste**) it into the
-`R/functions.R` file.
+Now that we've identified a possible regex to use to extract the
+participant ID, let's try it out on the `cgm_data`. Before we do though,
+let's make it easier on us to use the `cgm_data` in our Quarto document
+by importing it in the `setup` chunk. So, in the `docs/learning.qmd`
+file, go to the top of the file, find the `setup` chunk, and in the
+bottom of it below the `library()` functions, add the following code:
 
-Since we will create a new column for the user ID, we will use the
-`mutate()` function from the `{dplyr}` package. We'll use the
-`str_extract()` function from the `{stringr}` package to "extract a
-string" by using the regex `user_[1-9][0-9]?` that we discussed from the
-exercise. Since we're going to use `{stringr}`, so let's add it as a
-package dependency by typing this in the **Console**:
-
-``` {.r filename="Console"}
-usethis::use_package("stringr")
+```{r add-cgm-data-to-setup}
+#| filename: "docs/learning.qmd"
+cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
 ```
 
+Then we can run this code chunk by using {{< var keybind.run-code >}} so
+that we have the `cgm_data` object available to us to work with. Then we
+can continue!
+
+We want to create a new column called `id` for the participant ID rather
+than modify the current `file_path_id` column, so we will use the
+`mutate()` function from the `{dplyr}` package to create this new
+column. We'll use the `str_extract()` function from the `{stringr}`
+package to "extract a string" (a character object) by using the regex
+`[:digit:]+\\.csv$` that we discussed from the activity above.
+
 We're also using an argument to `mutate()` you might not have seen
-previously, called `.before`. This will insert the new `user_id` column
+previously, called `.before`. This will insert the new `id` column
 before the column we use and we do this entirely for visual reasons,
 since it is easier to see the newly created column when we run the code.
 In your `docs/learning.qmd` file, create a new header called
-`## Using regex for user ID` at the bottom of the document, and create a
-new code chunk below that.
+`## Using regex for ID` at the bottom of the document, and create a new
+code chunk below that with {{< var keybind.chunk >}}.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Walk through writing this code, briefly explain/remind how to use
 mutate, and about the `{stringr}` function.
 :::
 
-```{r}
-clean_cgm <- function(data) {
+First we'll pipe `cgm_data` into `mutate()` to create a new column
+called `id` that will contain the participant ID. We'll use the
+`str_extract()` function to extract the participant ID from the
+`file_path_id` column using the regex `[:digit:]+\\.csv$`.
 
-}
-```
-
-```{r get-user-id}
+```{r get-id}
 #| filename: "docs/learning.qmd"
 #| eval: false
-cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
 # Note: your file paths and data may look slightly different.
 cgm_data |>
   mutate(
-    user_id = str_extract(
+    id = str_extract(
       file_path_id,
-      "[0-9]+\\.csv$"
+      "[:digit:]+\\.csv$"
+    ),
+    .before = file_path_id
+  )
+```
+
+```{r admin-get-id}
+#| echo: false
+cgm_data |>
+  trim_filepath_for_book() |>
+  mutate(
+    id = str_extract(
+      file_path_id,
+      "[:digit:]+\\.csv$"
+    ),
+    .before = file_path_id
+  )
+```
+
+Cool! But we have `.csv` at the end that we don't want. We can use the
+`str_remove()` function to remove the `.csv` from the character object.
+So we can pipe our output into that function:
+
+```{r get-id-remove-csv}
+#| filename: "docs/learning.qmd"
+#| eval: false
+cgm_data |>
+  mutate(
+    id = str_extract(
+      file_path_id,
+      "[:digit:]+\\.csv$"
+    ) |>
+      str_remove("\\.csv$"),
+    .before = file_path_id
+  )
+```
+
+```{r admin-get-id-remove-csv}
+#| echo: false
+cgm_data |>
+  trim_filepath_for_book() |>
+  mutate(
+    id = str_extract(
+      file_path_id,
+      "[:digit:]+\\.csv$"
+    ) |>
+      str_remove("\\.csv$"),
+    .before = file_path_id
+  )
+```
+
+Nice! Almost there though. The `id` column is actually set as a
+character type, but we will need it as an integer to join with
+`participant_details.csv`. So we can use the `as.integer()` function to
+convert it to an integer:
+
+```{r get-id-as-integer}
+#| filename: "docs/learning.qmd"
+#| eval: false
+cgm_data |>
+  mutate(
+    id = str_extract(
+      file_path_id,
+      "[:digit:]+\\.csv$"
     ) |>
       str_remove("\\.csv$") |>
       as.integer(),
@@ -164,170 +327,437 @@ cgm_data |>
   )
 ```
 
-```{r get-user-id}
-#| filename: "docs/learning.qmd"
-#| eval: false
-cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
-# Note: your file paths and data may look slightly different.
-cgm_data |>
-  mutate(
-    user_id = str_extract(
-      file_path_id,
-      "[0-9]+\\.csv$"
-    ),
-    .before = file_path_id
-  )
-```
-
-```{r extract-user-id-eval}
+```{r admin-get-id-as-integer}
 #| echo: false
-user_info_df |>
+cgm_data |>
   trim_filepath_for_book() |>
   mutate(
-    user_id = str_extract(
+    id = str_extract(
       file_path_id,
-      "user_[1-9][0-9]?"
-    ),
+      "[:digit:]+\\.csv$"
+    ) |>
+      str_remove("\\.csv$") |>
+      as.integer(),
     .before = file_path_id
   )
 ```
 
-Since we don't need the `file_path_id` column anymore, let's drop it
-using `select()` and `-`.
+Finally, we don't actually want to keep the `file_path_id` column, so we
+can use the `select()` function to drop it. We can do this by using the
+`-` operator to drop the column. So we can pipe our output into that
+function:
 
 ```{r drop-file-path-id}
 #| filename: "docs/learning.qmd"
-user_info_df |>
+cgm_data |>
   mutate(
-    user_id = str_extract(
+    id = str_extract(
       file_path_id,
-      "user_[1-9][0-9]?"
-    ),
+      "[:digit:]+\\.csv$"
+    ) |>
+      str_remove("\\.csv$") |>
+      as.integer(),
     .before = file_path_id
   ) |>
   select(-file_path_id)
 ```
 
-## Exercise: Convert ID extractor code into a function
+We've done it! We now have a new column called `id` that contains the
+participant ID from the `file_path_id` column. Now, time to make it into
+a function!
 
-> Time: 15 minutes.
+## :technologist: Exercise: Convert 'get ID' code into a function
 
-We now have code that takes the data that has the `file_path_id` column
-and extracts the user ID from it. **First step**: While in the
-`docs/learning.qmd` file, convert this code into a function, using the
-same process you've done previously.
+**Time: \~15 minutes.**
 
-Use this code as a guide to help complete the exercise tasks below:
+You now have code that takes the data that has the `file_path_id` column
+and gets the participant ID from it. You want to be able to easily use
+that on the sleep data too. So, as you've done, convert this code in the
+`docs/learning.qmd` file into a function.
 
-``` {.r filename="docs/learning.qmd"}
-extract_user_id <- ___(___) {
-    ___ <- ___ |>
-        ___mutate(
-            user_id = ___str_extract(file_path_id,
-                                     "user_[0-9][0-9]?"),
-            .before = file_path_id
-        ) |>
-        ___select(-file_path_id)
-    return(___)
-}
-
-# This tests that it works:
-# extract_user_id(user_info_df)
-```
-
-1.  Call the new function `extract_user_id` and add one argument called
-    `imported_data`.
-    -   Remember to output the code into an object and `return()` it at
-        the end of the function.
-    -   Include Roxygen documentation.
-2.  After writing it and testing that the function works, move (**cut**
-    and paste) the function into `R/functions.R`.
-3.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.styler >}}.
-4.  Replace the code in the `docs/learning.qmd` file with the function
-    name so it looks like `extract_user_id(user_info_df)`, restart the R
-    session, source everything with `source()` with
-    {{< var keybind.source >}}, and run the new function in the code
-    chunk inside the `docs/learning.qmd` to test that it works. This
-    should automatically run the `setup` code chunk, otherwise, run that
-    chunk if it doesn't.
-5.  Knit / render the `docs/learning.qmd` file to make sure things
-    remain reproducible with {{< var keybind.render >}}.
-6.  Add and commit the changes to the Git history with
-    {{< var keybind.git >}}.
-
-```{r solution-user-id-extract}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Extract user ID from data with file path column.
+```{r solution-participant-id-function}
+#| include: false
+#' Get the participant ID from the file path column.
 #'
-#' @param imported_data Data with `file_path_id` column.
+#' @param data Data with `file_path_id` column.
 #'
 #' @return A data.frame/tibble.
 #'
-extract_user_id <- function(imported_data) {
-  extracted_id <- imported_data |>
+get_participant_id <- function(data) {
+  data_with_id <- data |>
     dplyr::mutate(
-      user_id = stringr::str_extract(
+      id = stringr::str_extract(
         file_path_id,
-        "user_[0-9][0-9]?"
-      ),
+        "[:digit:]+\\.csv$"
+      ) |>
+        stringr::str_remove("\\.csv$") |>
+        as.integer(),
       .before = file_path_id
     ) |>
     dplyr::select(-file_path_id)
-  return(extracted_id)
+  return(data_with_id)
 }
-
-# This tests that it works:
-cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
-  get_user_id()
 ```
+
+By the end of this exercise, the code to import both the CGM and sleep
+data should look like this in the `setup` chunk of the
+`docs/learning.qmd` file:
+
+```{r get-participant-id-interface}
+# CGM data
+cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+  get_participant_id()
+# Sleep data
+sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+  get_participant_id()
+```
+
+And when you run the `cgm_data` and `sleep_data` in the **Console**, it
+should look something like:
+
+```{r show-cgm-sleep-with-id}
+#| filename: "Console"
+cgm_data
+sleep_data
+```
+
+So, convert the code we just wrote into a function by following these
+steps:
+
+1.  Assign `function()` to a new named function called
+    `get_participant_id` and include one argument in `function()` with
+    the name `data`.
+2.  Put the code we just wrote into the body of the function. Make sure
+    to `return()` the output at the end of the function and to create
+    Roxygen documentation.
+3.  Add `stringr` and `dplyr` as a package dependency by using
+    `usethis::use_package()` in the **Console**.
+4.  Explicitly link the functions you are using in this new function to
+    their package by using `::` (e.g. `dplyr::` and `stringr::`).
+    Remember that you can find which package a function belongs by using
+    the `?` help documentation and looking at the very top to see the
+    package name.
+5.  Test that the function works by using `get_participant_id(cgm_data)`
+    or `get_participant_id(sleep_data)`.
+6.  After creating the function and testing that it works, move (**cut**
+    and paste) the function into `R/functions.R`.
+7.  Run `{styler}` in both the `R/functions.R` file and
+    `docs/learning.qmd` with {{< var keybind.styler >}}.
+8.  In the `setup` chunk in the `docs/learning.qmd` file, pipe `|>` the
+    output of `import_csv_files()` into the `get_participant_id()`
+    function for both the CGM and sleep data (as shown above).
+9.  Render the `docs/learning.qmd` file to make sure things remain
+    reproducible with {{< var keybind.render >}}.
+10. Restart your R session with {{< var keybind.restart-r >}} to make
+    sure later work is in a clean state.
+11. Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
+
+{{< text_snippet sticky_up >}}
 
 ## :speech_balloon: Discussion activity: How to join by dates?
 
-**Time: ~10 minutes.**
+**Time: \~10 minutes.**
 
-Now that we have the user ID, we can join the CGM data with the sleep
-data. But before we do that, we need to make sure that the date
-columns are in the same format. The CGM data has a date column called
-`device_timestamp`, which is a date-time column, while the sleep data
-has a date column called `date`, which is a date column.
+Now that we have the participant ID, we are nearly able to join the CGM
+data with the sleep data. But before we do that, we need to make sure
+that the date columns are in the same format. The CGM data has a date
+column called `device_timestamp`, which is a date-time column, while the
+sleep data has a date column called `date`, which is a date column.
 
-But they both have different times for when the data was recorded by the devices.
-So how do we go about joining these two datasets together?
+But they also both have different times for when the data was recorded
+by the devices. We can't join by exact time, since the CGM data is not
+recorded at exactly the same time as the sleep data is. So how do we go
+about joining these two datasets together? There is no right or correct
+answer as it heavily depends on how you might want to analyse the data
+later on.
 
-Ideas:
+1.  For 1 minute, consider theoretically how you would change the date
+    columns so that they can be joined together.
+2.  For 3 minutes, discuss and brainstorm with your neighbour how you
+    might do this and try to come to a consensus.
+3.  For 2 minutes, we will all share our ideas all together as a group.
 
-- Create a date column and an hour column, later group by ID, date, and hour, summarise the values, and then join the two datasets together.
-- Create a date column, group by ID and date, summarise the values, and then join the two datasets together.
-- Create a
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+There is no right answer here, but you can discuss some ideas like:
+
+-   Create a date column and an hour column, later group by ID, date,
+    and hour, summarise the values from each dataset first, and then
+    join the two datasets together.
+-   Create a date column, group by ID and date, summarise the values,
+    and then join the two datasets together.
+
+We would like to have more data points to work with, so we will go with
+the first option.
+:::
 
 ## Finding the right date
 
+Working with dates can be surprisingly incredibly difficult and tricky.
+There's timezones, daylight savings time, leap years, and different date
+formats that all can cause a dozen different problems. In R, there is a
+wonderful package called `{lubridate}` that helps with working with
+dates and times. It can't solve all date and time problems, but it can
+help with a many of them.
+
+Thankfully, `{lubridate}` is part of the `{tidyverse}` ecosystem, so we
+don't need to explicitly load it.
+
+In the `docs/learning.qmd` file, at the bottom of the document create a
+new code chunk called `## Working with dates` and below that create a
+new code chunk with {{< var keybind.chunk >}}. We'll use `mutate()`
+again to create some new columns, as well as `.before` to put it before
+the `device_timestamp`.
+
+As we discussed in the activity above, we will create a new `date` and
+`hour` column. `{lubridate}` has the function `as_date()` to convert a
+column into just a date (dropping time if it has it). It also has
+`as_time()`, but since we want to get *just* the hour, it also has a
+function to do that too: `hour()`. There are many other helper functions
+like `minute()`, `year()`, `month()`, and so on. For now, we will keep
+the `device_timestamp` column, so we have it as reference, but we will
+drop it later on.
+
 ```{r}
-library(lubridate)
-cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
 cgm_data |>
   mutate(
     date = as_date(device_timestamp),
     hour = hour(device_timestamp),
+    .before = device_timestamp
   )
 ```
+
+Like we normally do, we can convert this into a function because we need
+the same things from the sleep data too. So, let's use our workflow
+we've done several times before and try it out.
+
+Since we are using `{lubridate}`, let's add it as a package dependency
+first:
+
+```{r}
+#| filename: Console
+#| eval: false
+usethis::use_package("lubridate")
+```
+
+Now, let's make the function!
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Use the workflow we've done rather than directly writing the function
+below as is. Meaning, start with making the function structure, cut and
+paste the code into it, add the `package::` to the functions, add the
+Roxygen documentation, and then test it out as shown in the code below.
+:::
+
+```{r convert-function-prepare-dates}
+#| filename: "docs/learning.qmd"
+#' Prepare the date columns in DIME CGM and sleep data for joining.
+#'
+#' @param data The data that has the datetime column.
+#' @param column The datetime column to convert to date and hour.
+#'
+#' @returns A tibble/data.frame
+#'
+prepare_dates <- function(data, column) {
+  prepared_dates <- data |>
+    dplyr::mutate(
+      date = lubridate::as_date(column),
+      hour = lubridate::hour(column),
+      .before = column
+    )
+  return(prepared_dates)
+}
+cgm_data |>
+  prepare_dates(device_timestamp)
+```
+
+Hmmm, we encountered an error! This error is something that you would
+very quickly encounter as you make functions using `{tidyverse}`
+functions. Read the next section to learn about what is happening.
+
+## :book: Reading task: Non-standard evaluation (NSE)
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+After they've read it, briefly review it again and try to explain what
+NSE is in a slightly different way. Try to emphasise that NSE is
+built-in to so many functions in R and that using `{{}}` with
+`{tidyverse}` functions can help with using it in their own functions.
+:::
+
+**Time: \~5 minutes.**
+
+As you have noticed, we encountered an error when trying to write, what
+we think, is correct code in our function. This error,
+`"object not found"` is not easy to figure out. The error occurs because
+of something called "[non-standard
+evaluation](https://adv-r.had.co.nz/Computing-on-the-language.html)" (or
+NSE). NSE is a feature of R and is used quite a lot throughout R (e.g.
+`library()`). The `{tidyverse}` packages in particular use it quite a
+lot. It is a concept that isn't commonly found in other programming
+language.
+
+In R, NSE is what allows you to use formulas (e.g. `y ~ x + x2`) in
+statistical models or allows you to type out `select(Gender, BMI)` or
+`library(purrr)`. In "standard evaluation", these would instead be
+`select("Gender", "BMI")` or `library("purrr")`. So NSE gives
+flexibility and ease of use for the user (we don't have to type quotes
+every time) when doing data analysis, but can be quite a headache when
+trying to program in R, like when making functions. There's more detail
+about this on the [dplyr
+website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
+which will give a few options to deal with NSE while programming with
+`{tidyverse}` packages. The simplest way to use NSE in your own
+functions when using `{tidyverse}` packages is to wrap the variable with
+`{{}}` (called "curly-curly"). For example, using a simplified version
+of the code we wrote above, instead of this:
+
+```{r}
+#| eval: false
+prepare_dates <- function(data, column) {
+  data |>
+    mutate(date = as_date(column))
+}
+```
+
+You would use this:
+
+```{r}
+#| eval: false
+prepare_dates <- function(data, column) {
+  data |>
+    mutate(date = as_date({{ column }}))
+}
+```
+
+By wrapping `column` with `{{}}`, we are telling R that we are giving it
+an unquoted variable and to give that variable to the `as_date()`
+function as the name of the column. It gets very technical very quickly,
+but the main thing to remember is that when you make functions that use
+`{tidyverse}` functions and you get this type of error, it is likely
+because of NSE. So you can use `{{}}` to wrap the variable name in your
+function.
+
+{{< text_snippet sticky_up >}}
+
+## :technologist: Exercise: Using NSE in your function
+
+**Time: \~10 minutes.**
+
+Using what you just read about NSE, fix the `prepare_dates()` to
+correctly use the `column` argument.
+
+Before fixing the function though, you'll need to fix the `sleep_data`
+date column. We made `prepare_dates()` to create a new column called
+`date` and `hour`, but the sleep data already has a column called
+`date`. But, this name is incorrect, since it actually contains datetime
+data. So you need to rename it to `datetime`. To do this, you can use
+the `rename()` function from the `{dplyr}` package. So, in the `setup`
+code chunk in `docs/learning.qmd`, add a pipe after
+`get_participant_id()` into `rename(datetime = date)`, like:
+
+```{r rename-sleep-date-setup}
+#| filename: "docs/learning.qmd"
+sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+  get_participant_id() |>
+  rename(datetime = date)
+```
+
+At the end of this exercise, the `setup` code chunk should look like
+this:
+
+```{r solution-prepare-dates-nse}
+#| filename: "docs/learning.qmd"
+#| echo: false
+#' Prepare the date columns in DIME CGM and sleep data for joining.
+#'
+#' @param data The data that has the datetime column.
+#' @param column The datetime column to convert to date and hour.
+#'
+#' @returns A tibble/data.frame
+#'
+prepare_dates <- function(data, column) {
+  prepared_dates <- data |>
+    dplyr::mutate(
+      date = lubridate::as_date({{ column }}),
+      hour = lubridate::hour({{ column }}),
+      .before = {{ column }}
+    )
+  return(prepared_dates)
+}
+```
+
+```{r setup-cgm-sleep-with-nse}
+#| filename: "docs/learning.qmd"
+cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+  get_participant_id() |>
+  prepare_dates(device_timestamp)
+
+sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+  get_participant_id() |>
+  rename(datetime = date) |>
+  prepare_dates(datetime)
+```
+
+And if you were to run the `cgm_data` and `sleep_data` in the
+**Console**, it should look something like:
+
+```{r show-cgm-sleep-with-dates}
+#| filename: "Console"
+cgm_data
+sleep_data
+```
+
+To get to that point, complete these tasks:
+
+1.  Wrap `column` with `{{ }}` the three times it is used *inside* the
+    function *body*.
+2.  Test that the function works by using
+    `prepare_dates(cgm_data, device_timestamp)` and
+    `prepare_dates(sleep_data, datetime)`.
+3.  Cut and paste the function into `R/functions.R`.
+4.  Run `{styler}` on both `R/functions.R` and `docs/learning.qmd` with
+    {{< var keybind.styler >}}.
+5.  Render the `docs/learning.qmd` file to make sure things remain
+    reproducible with {{< var keybind.render >}}.
+6.  Restart your R session with {{< var keybind.restart-r >}} so that
+    your environment is cleaned up and empty.
+7.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
+
+{{< text_snippet sticky_up >}}
 
 ## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
-Quickly cover this before finishing the session and when starting the
-next session.
+Quickly cover this before finishing the session.
 :::
 
 -   While very difficult to learn and use, regular expressions (regex or
-    regexp) are incredibly powerfully at processing character data.
+    regexp) are incredibly powerful at processing character data. Some
+    characters have special meanings like `[]`, `?`, `*`, and `+` that
+    can be used to find patterns in character data.
+-   Use the `{stringr}` package to work with character data as it has
+    many functions to help use regex to process character data, like
+    `str_extract()` or `str_remove()`.
+-   Use the `{lubridate}` package when working with dates and times, as
+    there are many functions in it to help simplify date processing,
+    like `as_date()` or `hour()`.
+-   Non-standard evaluation (NSE) is a great feature of R but also can
+    be frustrating. When using `{tidyverse}` functions in your own
+    function, use `{{}}` to wrap the variable that gives the error to
+    fix the problem and use NSE correctly.
 
 ```{r store-session-code}
 #| include: false
 save.image(here::here("_temp/regex.RData"))
 ```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}

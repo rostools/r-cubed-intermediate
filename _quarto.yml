@@ -34,8 +34,8 @@ book:
       - sessions/functions.qmd
       - sessions/robustness.qmd
       - sessions/functionals.qmd
+      - sessions/characters-dates.qmd
       - sessions/split-apply-combine.qmd
-      - sessions/dplyr-joins.qmd
       - sessions/pivots.qmd
       - sessions/hands-on-work.qmd
       - sessions/what-next.qmd
