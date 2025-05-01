@@ -102,7 +102,16 @@ do one thing first. While you downloaded the data during the
 pre-workshop tasks, you hadn't yet committed your changes to the Git
 history. So we will start with that first.
 
-Open the Git interface with either the Git icon at the top near the menu
+Before we do that though, let's tell Git to ignore some other files, like
+the `.html` files as well as the `_files/` folder that Quarto automatically creates when making an HTML document.
+In the **Console**, type out the following code:
+
+```{r ignore-html-files}
+#| filename: "Console"
+usethis::use_git_ignore(c("*.html", "*_files"))
+```
+
+Then, open the Git interface with either the Git icon at the top near the menu
 bar or with {{< var keybind.git >}}. In the interface, select all the
 current changes by clicking the checkbox beside the files and stage
 them. Then write a commit message in the text box on the right,
@@ -407,7 +416,7 @@ sleep_101
 ## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Quickly cover this before moving on to the discussion activity.
 :::
