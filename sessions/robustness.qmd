@@ -335,7 +335,71 @@ import_cgm <- function(file_path) {
 
 There is still more to do, but now it's your turn to try.
 
-{{< include /includes/exercises/_robustness-set-dependencies.qmd >}}
+## :technologist: Exercise: Finish setting the dependencies
+
+**Time: \~10 minutes.**
+
+In this exercise, you will finish setting the dependencies for the
+`import_cgm()` function as well as the `DESCRIPTION` file.
+
+1.  While we added `{readr}` to the function, we haven't added it to the
+    `DESCRIPTION` file yet. In the **Console**, use
+    `usethis::use_package()` to add the `{readr}` package to the
+    `DESCRIPTION` file.
+2.  There is one other function we use in the `import_cgm()` function.
+    Find it, figure out what package it comes from, use `::` to
+    explicitly state the package, and add it to `DESCRIPTION` file using
+    `usethis::use_package()` in the **Console**.
+3.  There is one other package we've used that we haven't added to the
+    `DESCRIPTION` file. We used the package in the `data-raw/dime.R`
+    file. Open that file, which you can do with
+    {{< var keybind.open-file >}} and typing "dime.R" and selecting the
+    file from the menu. In that file, find the package we used and add
+    it to the `DESCRIPTION` file using `usethis::use_package()` in the
+    **Console**.
+4.  Finally, style the code using {{< var keybind.styler >}}, render the
+    `docs/learning.qmd` file with {{< var keybind.render >}} to test
+    that everything still works, and then add and commit the changes to
+    Git with {{< var keybind.git >}}.
+
+```{r}
+#| label: solution-add-project-dependencies
+#| filename: Console
+#| eval: false
+usethis::use_package("readr")
+usethis::use_package("snakecase")
+usethis::use_package("fs")
+```
+
+```{r}
+#| label: solution-set-function-dependencies
+#| filename: docs/learning.qmd
+#| echo: false
+import_cgm <- function(file_path) {
+  cgm <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(cgm)
+}
+```
+
+```{r admin-print-desc-add-others}
+#| echo: false
+usethis::with_project(
+  path = project_path,
+  {
+    usethis::use_package("readr")
+    usethis::use_package("snakecase")
+    usethis::use_package("fs")
+  },
+  quiet = TRUE
+)
+```
+
+{{< text_snippet sticky_up >}}
 
 ## :book: Reading task: Principles to make general-purpose and reusable functions
 
