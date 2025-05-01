@@ -1,0 +1,7 @@
+1.  Use the powerful (but also very difficult) regular expressions to
+    process and clean character data by making use of the `{stringr}`
+    package.
+2.  Handle dates and times in R using the `{lubridate}` package.
+3.  Recognise when you trigger a "non-standard evaluation" error when
+    you make functions using `{tidyverse}` functions and fix it by using
+    `{{ }}`.

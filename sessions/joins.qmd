@@ -1,0 +1,183 @@
+# Processing and joining datasets for cleaning {#sec-dplyr-joins}
+
+```{r setup}
+#| include: false
+library(here)
+library(fs)
+library(tidyverse)
+load(here("_temp/functionals.RData"))
+source(here("R/functions.R"))
+```
+
+## Learning objectives
+
+{{< include /includes/objectives/_joins.qmd >}}
+
+## Join datasets together
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Walk through and describe these images and the different type of joins
+after they've read it.
+:::
+
+::: callout-note
+## Reading task: \~10 minutes
+
+The ability to join datasets together is a fundamental component of data
+processing and transformation. In our case, we want to add the datasets
+together so we eventually have preferably one main dataset to work with.
+
+There are many ways to join datasets in `{dplyr}` that are described in
+`?dplyr::join`. The more common ones that are implemented in the
+`{dplyr}` package are:
+
+-   `left_join(x, y)`: Join all rows and columns in `y` that match rows
+    and columns in `x`. *Columns* that exist in `y` but not `x` are
+    joined to `x`.
+
+![Left joining in `{dplyr}`. Notice how the last row in the blue data
+(the row with `d` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}`
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
+width="90%"}
+
+-   `right_join(x, y)`: The opposite of `left_join()`. Join all rows and
+    columns in `x` that match rows and columns in `y`. *Columns* that
+    exist in `x` but not `y` are joined to `y`.
+
+![Right joining in `{dplyr}`. Notice how the last row in the green data
+(the row with `c` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}`
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
+width="90%"}
+
+-   `full_join(x, y)`: Join all rows and columns in `y` that match rows
+    and columns in `x`. Columns *and* **rows** that exist in `y` but not
+    `x` are joined to `x`. A full join keeps all the data from both `x`
+    and `y`.
+
+![Full joining in `{dplyr}`. Notice how all rows and columns are
+included in the outputted data on the right, and that some missingness
+is introduced because those values don't exist when the data are
+combined in this way. Modified from the Posit `{dplyr}`
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
+width="90%"}
+
+Now, we want to start joining our datasets. Let's start with the
+`user_info_df` and `saliva_df`. In this case, we want to use
+`full_join()`, since we want all the data from both datasets. This
+function takes two datasets and lets you indicate which column to join
+by using the `by` argument. Here, both datasets have the column
+`user_id` so we will join by that column.
+
+```{r}
+full_join(user_info_df, saliva_df, by = "user_id")
+```
+
+`full_join()` is useful if we want to include all values from both
+datasets, as long as each participant ("user") had data collected from
+either dataset. When the two datasets have rows that don't match, we
+will get missingness in that row, but that's ok in this case.
+
+We also eventually have other datasets to join together later on. Since
+`full_join()` can only take two datasets at a time, do we then just keep
+using `full_join()` until all the other datasets are combined? What if
+we get more data later on? Well, that's where more functional
+programming comes in. Again, we have a simple goal: For a set of data
+frames, join them all together. Here we use another functional
+programming concept from the `{purrr}` package called `reduce()`. Like
+`map()`, which "maps" a function onto a set of items, `reduce()` applies
+a function to each item of a vector or list, each time reducing the set
+of items down until only one remains: the output. In fact, this is how
+functions like `mean()` or `sum()` work, as they take a vector and give you a single number.
+
+Let's use an example
+with our simple function `add_numbers()` we had created earlier on
+and add up 1 to 5. Since `add_numbers()` only takes two
+numbers, we have to give it two numbers at a time and repeat until we
+reach 5.
+
+```{r}
+# Add from 1 to 5
+first <- add_numbers(1, 2)
+second <- add_numbers(first, 3)
+third <- add_numbers(second, 4)
+add_numbers(third, 5)
+```
+
+Instead, we can use reduce to do the same thing:
+
+```{r}
+reduce(1:5, add_numbers)
+```
+
+@fig-reduce visually shows what is happening within `reduce()`.
+
+![A functional that iteratively uses a function on a set of items until
+only one output remains. Notice how the output of the first iteration of
+`func()` is placed in the first position of `func()` in the next
+iteration, and so on. Modified from the Posit purrr
+[cheat sheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
+width="90%"}
+
+If we look at the documentation for `reduce()` by writing `?reduce` in
+the Console, we see that`reduce()`, like`map()`, takes either a vector
+or a list as an input. Since data frames can only be put together as a
+list and not as a vector (a data frame has vectors for columns and so it
+can't be a vector itself), we need to combine the datasets together in a
+`list()` to be able to reduce them with `full_join()`.
+:::
+
+Let's code this together, using `reduce()`, `full_join()`, and `list()`
+while in the `docs/learning.qmd` file.
+
+```{r}
+#| filename: "docs/learning.qmd"
+list(
+  user_info_df,
+  saliva_df
+) |>
+  reduce(full_join)
+```
+
+We now have the data in a form that would make sense to join it with the
+other datasets. So lets try it:
+
+```{r}
+#| filename: "docs/learning.qmd"
+list(
+  user_info_df,
+  saliva_df,
+  summarised_rr_df
+) |>
+  reduce(full_join)
+```
+
+Hmm, but wait, we now have four rows of each user, when we should have
+only two, one for each day. By looking at each dataset we joined, we can
+find that the `saliva_df` doesn't have a `day` column and instead has a
+`samples` column. We'll need to add a day column in order to join
+properly with the RR dataset. For this, we'll learn about using nested
+conditionals.
+
+## Summary
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Quickly cover this before finishing the session and when starting the
+next session.
+:::
+
+-   Use `left_join()`, `right_join()`, and `full_join()` to join two
+    datasets together.
+-   Use the functional `reduce()` to iteratively apply a function to a
+    set of items in order to end up with one item (e.g. join more than
+    two datasets into one final dataset).
+
+```{r store-session-code}
+#| include: false
+save.image(here::here("_temp/dplyr-joins.RData"))
+```

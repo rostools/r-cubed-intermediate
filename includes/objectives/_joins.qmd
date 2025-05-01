@@ -5,6 +5,3 @@
 
 2.  Demonstrate how to use functionals to repeatedly join more than two
     datasets together.
-
-3.  Apply the function `case_when()` in situations that require nested
-    conditionals (if-else).
