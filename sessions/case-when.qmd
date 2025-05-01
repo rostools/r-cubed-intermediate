@@ -1,0 +1,152 @@
+# Using nested conditionals to help clean columns {#sec-case-when}
+
+```{r setup}
+#| include: false
+library(here)
+library(fs)
+library(tidyverse)
+load(here("_temp/functionals.RData"))
+source(here("R/functions.R"))
+```
+
+## Learning objectives
+
+{{< include /includes/objectives/_case-when.qmd >}}
+
+## Cleaning with nested conditionals
+
+::: callout-note
+## Reading task: \~6 minutes
+
+There are many ways to clean up this particular problem, but probably
+the easiest, most explicit, and programmatically accurate way of doing
+it would be with the function `case_when()`. This function works by
+providing it with a series of logical conditions and an associated
+output if the condition is true. Each condition is processed
+*sequentially*, meaning that if a condition is TRUE, the output won't be
+overridden for later conditions. The general form of `case_when()` looks
+like:
+
+```{r}
+#| eval: false
+case_when(
+  variable1 == condition1 ~ output,
+  variable2 == condition2 ~ output,
+  # (Optional) Otherwise
+  TRUE ~ final_output
+)
+```
+
+The optional ending is only necessary if you want a certain output if
+none of your conditions are met. Because conditions are processed
+*sequentially* and because it is the *last* condition, by setting it as
+`TRUE` the final output will used. If this last `TRUE` condition is not
+used then by default, the final output would be a missing value. A
+(silly) example using age might be:
+
+```{r}
+#| eval: false
+case_when(
+  age > 20 ~ "old",
+  age <= 20 ~ "young",
+  # For final condition
+  TRUE ~ "unborn!"
+)
+```
+
+If instead you want one of the conditions to be `NA`, you need to set
+the appropriate `NA` value:
+
+```{r}
+#| eval: false
+case_when(
+  age > 20 ~ "old",
+  age <= 20 ~ NA_character_,
+  # For final condition
+  TRUE ~ "unborn!"
+)
+```
+
+Alternatively, if we want missing age values to output `NA` values at
+the end (instead of `"unborn!"`), we would exclude the final condition:
+
+```{r}
+#| eval: false
+case_when(
+  age > 20 ~ "old",
+  age <= 20 ~ "young"
+)
+```
+
+With `{dplyr}` functions like `case_when()`, it requires you be explicit
+about the type of output each condition has since all the outputs must
+match (e.g. all character or all numeric). This prevents you from
+accidentally mixing e.g. numeric output with character output. Missing
+values also have data types:
+
+-   `NA_character_` (character)
+-   `NA_real_` (numeric)
+-   `NA_integer_` (integer)
+
+Assuming the final output is `NA`, in a pipeline this would look like
+how you normally would use `mutate()`:
+
+```{r}
+user_info_df |>
+  mutate(age_category = case_when(
+    age > 20 ~ "old",
+    age <= 20 ~ "young"
+  ))
+```
+:::
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Briefly review the content again, to reinforce what they read.
+:::
+
+While still in the `docs/learning.qmd` file, we can use the `case_when()`
+function to set `"before sleep"` as day 1 and `"wake up"` as day 2 by
+creating a new column called `day`. (We will use `NA_real_` because the
+other `day` columns are numeric, not integer.)
+
+```{r}
+#| filename: "docs/learning.qmd"
+saliva_with_day_df <- saliva_df |>
+  mutate(day = case_when(
+    samples == "before sleep" ~ 1,
+    samples == "wake up" ~ 2
+  ))
+saliva_with_day_df
+```
+
+...Now, let's use the `reduce()` with `full_join()` again:
+
+```{r}
+#| filename: "docs/learning.qmd"
+list(
+  user_info_df,
+  saliva_with_day_df,
+  summarised_rr_df,
+  summarised_actigraph_df
+) |>
+  reduce(full_join)
+```
+
+We now have two rows per participant! Let's add and commit the changes
+to the Git history with {{< var keybind.git >}}.
+
+## Summary
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
+
+Quickly cover this before finishing the session and when starting the
+next session.
+:::
+
+```{r store-session-code}
+#| include: false
+save.image(here::here("_temp/dplyr-joins.RData"))
+```

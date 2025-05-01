@@ -34,19 +34,19 @@ book:
       - sessions/functions.qmd
       - sessions/robustness.qmd
       - sessions/functionals.qmd
+      - sessions/characters-dates.qmd
       - sessions/split-apply-combine.qmd
-      - sessions/dplyr-joins.qmd
       - sessions/pivots.qmd
       - sessions/hands-on-work.qmd
       - sessions/what-next.qmd
   appendices:
     - appendix/extras.qmd
-    - appendix/solutions.qmd
+    # - appendix/solutions.qmd
     - LICENSE.md
     - appendix/references.qmd
   page-footer:
     center:
-      - text: "License: CC BY 4.0 {{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}}"
+      - text: "License: CC BY 4.0"
         href: LICENSE.html
       - text: "Code of Conduct"
         href: "https://guides.rostools.org/conduct.html"

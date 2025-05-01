@@ -1,0 +1,2 @@
+3.  Apply the function `case_when()` in situations that require nested
+    conditionals (if-else).

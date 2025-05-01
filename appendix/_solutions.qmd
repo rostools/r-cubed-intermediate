@@ -1,0 +1,32 @@
+---
+execute:
+  eval: true
+---
+
+# Solutions {#sec-solutions}
+
+## Robustness
+
+### :technologist: Exercise: Finish setting the dependencies
+
+Solutions are to adding to the `DESCRIPTION` file:
+
+{{< embed /sessions/robustness.qmd#solution-add-project-dependencies echo=true >}}
+
+And the solution for the function is:
+
+{{< embed /sessions/robustness.qmd#solution-set-function-dependencies echo=true >}}
+
+## Cleaning characters and dates
+
+### :technologist: Exercise: Convert get ID code into a function
+
+This is the potential solution to this exercise.
+
+{{< embed /sessions/characters-dates.qmd#solution-participant-id-function echo=true >}}
+
+### :technologist: Exercise: Using NSE in your function
+
+This is the potential solution to this exercise.
+
+{{< embed /sessions/characters-dates.qmd#solution-prepare-dates-nse echo=true >}}
