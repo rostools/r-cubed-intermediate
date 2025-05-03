@@ -311,7 +311,8 @@ Alright, we now have all the files ready to give to `map()`.
 
 ```{r map-import-cgm}
 #| filename: "docs/learning.qmd"
-cgm_data <- map(cgm_files, import_dime)
+cgm_data <- cgm_files |>
+  map(import_dime)
 ```
 
 Remember, that `map()` always outputs a list, so when we look into this
