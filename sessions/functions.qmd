@@ -1,8 +1,3 @@
----
-execute:
-  eval: true
----
-
 # Bundling code into functions {#sec-functions}
 
 ```{r setup}

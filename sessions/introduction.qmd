@@ -1,8 +1,3 @@
----
-execute:
-  eval: true
----
-
 # Introduction to workshop {#sec-introduction}
 
 ```{r, include=FALSE}

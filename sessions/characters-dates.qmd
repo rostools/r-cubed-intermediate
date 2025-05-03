@@ -1,8 +1,3 @@
----
-execute:
-  eval: true
----
-
 # Cleaning characters and dates {#sec-characters-dates}
 
 ```{r setup}

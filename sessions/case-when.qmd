@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 # Using nested conditionals to help clean columns {#sec-case-when}
 
 ```{r setup}

@@ -70,6 +70,5 @@ editor:
     canonical: true
 
 execute:
-  eval: false
   # Need to show warnings for many bits of code as part of learning.
   warning: true
