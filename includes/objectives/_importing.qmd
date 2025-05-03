@@ -1,9 +1,7 @@
 1.  Identify the appropriate R package to use to import data based on
     what format the file is.
-
 2.  Use the `{readr}` package to import data from a CSV file into R,
     while also applying some initial data cleaning steps during the
     import.
-
 3.  Continue practicing basic reproducible and open workflows, such as
     using Git version control and using `{styler}` to format your code.
