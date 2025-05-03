@@ -73,19 +73,21 @@ the `file_path_id` character data since all the datasets have an ID (in
 some form). Whenever you are processing and cleaning data, you will very
 likely encounter and deal with character data. A wonderful package to
 use for working with character data is called `{stringr}`, which we'll
-use to get the participant ID from the `file_path_id` column.
+use to get the participant ID from the `file_path_id` column. The
+package is called `{stringr}` because in programming, a "string" is
+defined as any collection of character objects. So we will be using
+"string" from now on.
 
 The main "engine" behind the functions in `{stringr}` is called [regular
 expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex
 for short). These expressions are powerful, very concise ways of finding
 patterns in text. But they are also *very very difficult* to learn,
 write, and read, even for experienced users. That's because certain
-characters like `[` or `?` have special meanings. For instance,
-`[aeiou]` is regex for "find one character in a string that is either a,
-e, i, o, or u". The `[]` in this case means "find the character in
-between the two brackets". We won't cover regex too much in this
-workshop, but some great resources for learning them are the [R for Data
-Science regex
+strings like `[` or `?` have special meanings. For instance, `[aeiou]`
+is regex for "find one string in the object that is either a, e, i, o,
+or u". The `[]` in this case means "find the string in between the two
+brackets". We won't cover regex too much in this workshop, but some
+great resources for learning them are the [R for Data Science regex
 section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
 the [stringr regex
 page](https://stringr.tidyverse.org/articles/regular-expressions.html),
@@ -93,28 +95,28 @@ as well as in the help doc `?regex`. But we will cover some of the more
 commonly used regex patterns, like:
 
 | regex | Meaning |
-|----|----|
+|------------------------------------|------------------------------------|
 | `\\d` | find one digit (0-9) |
 | `\\D` | find one non-digit |
 | `[0-9]` | find one digit between 0 and 9 (the `-` is a range) |
-| `[a-z]` | find one letter character between a and z |
-| `[A-Z]` | find one letter character between A and Z |
-| `[a-zA-Z]` | find one letter character between a and z or A and Z |
-| `\\.` | find one dot character |
-| `$` | find the end of the character object, e.g. `\\.$` means find a dot that is at the end of the character object |
-| `^` | find the start of the character object, e.g. `^\\d` means find a digit at the start of the character object |
-| `?` | maybe find the character before the `?`, e.g. `\\d?` means maybe find one digit |
-| `*` | find the character before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
-| `+` | find the character one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other |
-| `{n}` | find the same character `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other |
-| `[:alpha:]` | find one letter character (a-z or A-Z) |
-| `[:digit:]` | find one digit character (0-9) |
-| `[:alnum:]` | find one alphanumeric character (a-z, A-Z, 0-9) |
+| `[a-z]` | find one letter between a and z |
+| `[A-Z]` | find one letter between A and Z |
+| `[a-zA-Z]` | find one letter between a and z or A and Z |
+| `\\.` | find one dot string |
+| `$` | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string |
+| `^` | find the start of the string, e.g. `^\\d` means find a digit at the start of the string |
+| `?` | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit |
+| `*` | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
+| `+` | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other |
+| `{n}` | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other |
+| `[:alpha:]` | find one letter (a-z or A-Z) |
+| `[:digit:]` | find one digit (0-9) |
+| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9) |
 
 ::: callout-note
-The `\` character is a special character in regex, but in R it means
-"escape or use this as the character". For instance, `\"` in R means
-"use the `"` character", like if you wanted to write a message like:
+The `\` string is a special string in regex, but in R it means "escape
+or use this as the string". For instance, `\"` in R means "use the `"`
+string", like if you wanted to write a message like:
 
 ```{r}
 print("Analysis has \"nearly\" finished.")
@@ -126,10 +128,10 @@ Without the `\`, R would see this instead:
 print("Analysis has "nearly" finished.")
 ```
 
-And think `"Analysis has "` is the first character object, that `nearly`
-is an object, and the `" finished"` is the second character object.
+And think `"Analysis has "` is the first string, that `nearly` is an
+object, and the `" finished"` is the second string object.
 
-But in regex, the `\` character is a special character that can mean
+But in regex, the `\` string is a special command that can mean
 different things. For instance, `\d` means "find a digit" (0-9) and `\D`
 means "find a non-digit". So when using it in R, it would be `\\d` and
 `\\D` so that regex "sees", e.g., `\d`
@@ -158,14 +160,14 @@ neighbour, do the following tasks:
 3.  Use the list below to think about how you might convert the English
     description of the text pattern to a regex. This will probably be
     very hard, but try anyway.
-    -   When characters are written as is, regex will find those
-        characters, e.g. `user` will find only `user`.
-    -   Use `[]` to find one possible character of the several between
-        the brackets. E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or
-        "b". To find a range of numbers or letters, use `-` in between
-        the start and end ranges, e.g. `[1-3]` means 1 to 3 or `[a-c]`
-        means "a" to "c".
-    -   Use `?` if the character might be there or not. E.g. `ab?` means
+    -   When strings are written as is, regex will find those strings,
+        e.g. `user` will find only `user`.
+    -   Use `[]` to find one possible string of the several between the
+        brackets. E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or "b".
+        To find a range of numbers or letters, use `-` in between the
+        start and end ranges, e.g. `[1-3]` means 1 to 3 or `[a-c]` means
+        "a" to "c".
+    -   Use `?` if the string might be there or not. E.g. `ab?` means
         "a" and maybe "b" follows it or `1[1-2]?` means 1 and maybe 1 or
         2 will follow it.
 
@@ -225,8 +227,8 @@ We want to create a new column called `id` for the participant ID rather
 than modify the current `file_path_id` column, so we will use the
 `mutate()` function from the `{dplyr}` package to create this new
 column. We'll use the `str_extract()` function from the `{stringr}`
-package to "extract a string" (a character object) by using the regex
-`[:digit:]+\\.csv$` that we discussed from the activity above.
+package to "extract a string" by using the regex `[:digit:]+\\.csv$`
+that we discussed from the activity above.
 
 We're also using an argument to `mutate()` you might not have seen
 previously, called `.before`. This will insert the new `id` column
@@ -276,8 +278,8 @@ cgm_data |>
 ```
 
 Cool! But we have `.csv` at the end that we don't want. We can use the
-`str_remove()` function to remove the `.csv` from the character object.
-So we can pipe our output into that function:
+`str_remove()` function to remove the `.csv` from the string. So we can
+pipe our output into that function:
 
 ```{r get-id-remove-csv}
 #| filename: "docs/learning.qmd"
@@ -430,7 +432,8 @@ steps:
     the name `data`.
 2.  Put the code we just wrote into the body of the function. Make sure
     to `return()` the output at the end of the function and to create
-    Roxygen documentation.
+    Roxygen documentation. Replace all the relevant variables with the
+    `data` argument.
 3.  Add `stringr` and `dplyr` as a package dependency by using
     `usethis::use_package()` in the **Console**.
 4.  Explicitly link the functions you are using in this new function to
@@ -744,11 +747,11 @@ Quickly cover this before finishing the session.
 :::
 
 -   While very difficult to learn and use, regular expressions (regex or
-    regexp) are incredibly powerful at processing character data. Some
-    characters have special meanings like `[]`, `?`, `*`, and `+` that
-    can be used to find patterns in character data.
--   Use the `{stringr}` package to work with character data as it has
-    many functions to help use regex to process character data, like
+    regexp) are incredibly powerful at processing character (also called
+    strings) data. Some strings have special meanings like `[]`, `?`,
+    `*`, and `+` that can be used to find patterns in string data.
+-   Use the `{stringr}` package to work with string data as it has many
+    functions to help use regex to process string data, like
     `str_extract()` or `str_remove()`.
 -   Use the `{lubridate}` package when working with dates and times, as
     there are many functions in it to help simplify date processing,
