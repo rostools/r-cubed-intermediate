@@ -448,7 +448,7 @@ steps:
 6.  After creating the function and testing that it works, move (**cut**
     and paste) the function into `R/functions.R`.
 7.  Run `{styler}` in both the `R/functions.R` file and
-    `docs/learning.qmd` with {{< var keybind.styler >}}.
+    `docs/learning.qmd` with {{< var keybind.style >}}.
 8.  In the `setup` chunk in the `docs/learning.qmd` file, pipe `|>` the
     output of `import_csv_files()` into the `get_participant_id()`
     function for both the CGM and sleep data (as shown above).
@@ -457,7 +457,7 @@ steps:
 10. Restart your R session with {{< var keybind.restart-r >}} to make
     sure later work is in a clean state.
 11. Add and commit the changes to the Git history with
-    {{< var keybind.git >}}.
+    {{< var keybind.commit >}}.
 
 {{< text_snippet sticky_up >}}
 
@@ -733,13 +733,13 @@ To get to that point, complete these tasks:
     `prepare_dates(sleep_data, datetime)`.
 3.  Cut and paste the function into `R/functions.R`.
 4.  Run `{styler}` on both `R/functions.R` and `docs/learning.qmd` with
-    {{< var keybind.styler >}}.
+    {{< var keybind.style >}}.
 5.  Render the `docs/learning.qmd` file to make sure things remain
     reproducible with {{< var keybind.render >}}.
 6.  Restart your R session with {{< var keybind.restart-r >}} so that
     your environment is cleaned up and empty.
 7.  Add and commit the changes to the Git history with
-    {{< var keybind.git >}}.
+    {{< var keybind.commit >}}.
 
 {{< text_snippet sticky_up >}}
 

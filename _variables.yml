@@ -1,14 +1,14 @@
 keybind:
   palette: "{{< kbd Ctrl-Shift-P >}}"
   open-file: "{{< kbd Ctrl-. >}}"
-  git: '{{< kbd Ctrl-Alt-M >}} or with the Palette ({{< var keybind.palette >}}, then type "commit")'
+  commit: '{{< kbd Ctrl-Alt-M >}} or with the Palette ({{< var keybind.palette >}}, then type "commit")'
   chunk: '{{< kbd Ctrl-Alt-I >}} or with the Palette ({{< var keybind.palette >}}, then type "new chunk")'
   restart-r: '{{< kbd Ctrl-Shift-F10 >}} or with the Palette ({{< var keybind.palette >}}, then type "restart")'
   source: '{{< kbd Ctrl-Shift-S >}} or with the Palette ({{< var keybind.palette >}}, then type "source")'
   render: '{{< kbd Ctrl-Shift-K >}} or with the Palette ({{< var keybind.palette >}}, then type "render")'
   roxygen: '{{< kbd Ctrl-Shift-Alt-R >}} or with the Palette ({{< var keybind.palette >}}, then type "roxygen comment")'
   outline: '{{< kbd Ctrl-Shift-O >}} or with the Palette ({{< var keybind.palette >}}, then type "outline")'
-  styler: 'the Palette ({{< var keybind.palette >}}, then type "style file")'
+  style: 'the Palette ({{< var keybind.palette >}}, then type "style file")'
   targets-make: 'the Palette ({{< var keybind.palette >}}, then type "targets run")'
   targets-vis: 'the Palette ({{< var keybind.palette >}}, then type "targets visual")'
   targets-outdated: 'the Palette ({{< var keybind.palette >}}, then type "targets outdated")'

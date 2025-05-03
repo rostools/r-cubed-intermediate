@@ -362,10 +362,10 @@ In this exercise, you will finish setting the dependencies for the
     file from the menu. In that file, find the package we used and add
     it to the `DESCRIPTION` file using `usethis::use_package()` in the
     **Console**.
-4.  Finally, style the code using {{< var keybind.styler >}}, render the
+4.  Finally, style the code using {{< var keybind.style >}}, render the
     `docs/learning.qmd` file with {{< var keybind.render >}} to test
     that everything still works, and then add and commit the changes to
-    Git with {{< var keybind.git >}}.
+    Git with {{< var keybind.commit >}}.
 
 ```{r}
 #| label: solution-add-project-dependencies
@@ -515,10 +515,10 @@ here("data-raw/dime/sleep/101.csv") |>
 ```
 
 This should work without any problems :tada: Let's style the code with
-{{< var keybind.styler >}} and then render the document with
+{{< var keybind.style >}} and then render the document with
 {{< var keybind.render >}} to test that everything works. If everything
 works, let's add and commit the changes to the Git history using
-{{< var keybind.git >}}.
+{{< var keybind.commit >}}.
 
 ## Easily reuse stable, robust functions by storing them in the `R/` folder
 

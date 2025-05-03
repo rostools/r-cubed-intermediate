@@ -140,7 +140,7 @@ list(
 ```
 
 We now have two rows per participant! Let's add and commit the changes
-to the Git history with {{< var keybind.git >}}.
+to the Git history with {{< var keybind.commit >}}.
 
 ## Summary
 

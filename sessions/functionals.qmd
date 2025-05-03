@@ -392,9 +392,9 @@ Don't worry, we're going to tidy up the `file_path_id` variable later in
 another session.
 
 Before moving on to the exercise, let's style with
-{{< var keybind.styler >}} the document, render with
+{{< var keybind.style >}} the document, render with
 {{< var keybind.render >}}, and finally **add and commit** the changes
-to the Git history using {{< var keybind.git >}}.
+to the Git history using {{< var keybind.commit >}}.
 
 ## :technologist: Exercise: Convert into a function to use it on the sleep data
 
@@ -502,9 +502,9 @@ function that you can re-use.
     function is deleted), render again with {{< var keybind.render >}}
     to check that the function works after moving it.
 7.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.styler >}}.
+    {{< var keybind.style >}}.
 8.  Once done, **add** the changes you've made and **commit** them to
-    the Git history, using {{< var keybind.git >}}.
+    the Git history, using {{< var keybind.commit >}}.
 
 {{< text_snippet sticky_up >}}
 

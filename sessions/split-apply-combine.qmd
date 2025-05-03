@@ -383,11 +383,11 @@ cgm_data <- here("data-raw/dime/cgm") |>
 ```
 
 Amazing! Before continuing to the exercise, let's run `{styler}` with
-{{< var keybind.styler >}} on both `docs/learning.qmd` and on
+{{< var keybind.style >}} on both `docs/learning.qmd` and on
 `R/functions.R`. Then we will render the Quarto document with
 {{< var keybind.render >}} to confirm that everything runs as it should.
 If the rendering works, switch to the Git interface and **add and
-commit** the changes so far with {{< var keybind.git >}}.
+commit** the changes so far with {{< var keybind.commit >}}.
 
 ## :technologist: Exercise: Convert the summarising code into a function
 
@@ -457,9 +457,9 @@ steps:
 8.  After creating the function and testing that it works, move (**cut**
     and paste) the function into `R/functions.R`.
 9.  Run `{styler}` in both the `R/functions.R` file and
-    `docs/learning.qmd` with {{< var keybind.styler >}}.
+    `docs/learning.qmd` with {{< var keybind.style >}}.
 10. Add and commit the changes to the Git history with
-    {{< var keybind.git >}}.
+    {{< var keybind.commit >}}.
 
 In the next exercise, you will use this function in the recently created
 `clean_cgm()` and the `clean_sleep()` function you will create.
@@ -577,11 +577,11 @@ To get to this point, do the following tasks:
     pipe the output of `import_csv_files(here("data-raw/dime/sleep/"))`
     into the new `clean_sleep()` function.
 11. Run `{styler}` in both the `R/functions.R` file and
-    `docs/learning.qmd` with {{< var keybind.styler >}}.
+    `docs/learning.qmd` with {{< var keybind.style >}}.
 12. Render the Quarto document with {{< var keybind.render >}} to
     confirm that everything runs as it should.
 13. Add and commit the changes to the Git history with
-    {{< var keybind.git >}}.
+    {{< var keybind.commit >}}.
 
 {{< text_snippet sticky_up >}}
 

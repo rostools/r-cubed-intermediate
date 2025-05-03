@@ -255,9 +255,9 @@ add_numbers <- function(num1, num2) {
 ```
 
 Once we've created that and before moving on, let's style our code with
-{{< var keybind.styler >}}, render the Quarto document with
+{{< var keybind.style >}}, render the Quarto document with
 {{< var keybind.render >}}, and then open up the Git Interface with
-{{< var keybind.git >}} to **add and commit** these changes to the Git
+{{< var keybind.commit >}} to **add and commit** these changes to the Git
 history.
 
 ## Making a function for importing our data
@@ -401,9 +401,9 @@ easily do it by modifying the function and it will change all your other
 code too.
 
 Now that we have a working function, run `{styler}` with
-{{< var keybind.styler >}}, render with {{< var keybind.render >}}, and
+{{< var keybind.style >}}, render with {{< var keybind.render >}}, and
 then add and commit the changes to the Git history with
-{{< var keybind.git >}}.
+{{< var keybind.commit >}}.
 
 ## :technologist: Exercise: Convert the sleep code into a function
 
@@ -468,10 +468,10 @@ here("data-raw/dime/sleep/102.csv") |>
     -   Add the Roxygen documentation with {{< var keybind.roxygen >}}
         and then fill in the details, like we did above.
 4.  Run `{styler}` while in the `docs/learning.qmd` file with
-    {{< var keybind.styler >}}.
+    {{< var keybind.style >}}.
 5.  Render the Quarto document with {{< var keybind.render >}}.
 6.  Finally, **add and commit** the changes to the Git history, using
-    {{< var keybind.git >}}.
+    {{< var keybind.commit >}}.
 
 
 <!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->

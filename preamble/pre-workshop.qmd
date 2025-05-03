@@ -667,7 +667,7 @@ language, code should follow a [style
 guide](https://style.tidyverse.org). An easy way of following a specific
 style in R is by using the `{styler}` package. We will be using this
 package regularly during the workshop. You can run it by using
-{{< var keybind.styler >}} while in RStudio. Try it right now while you
+{{< var keybind.style >}} while in RStudio. Try it right now while you
 are working in the `data-raw/dime.R` script.
 
 There probably won't be anything that changes since you haven't written

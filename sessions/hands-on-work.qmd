@@ -87,9 +87,9 @@ other datasets. Complete these tasks in the `docs/learning.qmd` file:
         character data.
 8.  Render the Quarto document with {{< var keybind.render >}} to see if
     it is reproducible.
-9.  Run styler with {{< var keybind.styler >}}.
+9.  Run styler with {{< var keybind.style >}}.
 10. **Add and commit** your changes to the Git history with
-    {{< var keybind.git >}}.
+    {{< var keybind.commit >}}.
 
 ```{r solution-import-activity}
 #| eval: false

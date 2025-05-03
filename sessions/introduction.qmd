@@ -246,7 +246,7 @@ At the level of the code, the way you prototype code is to:
 5.  Restart the R console with {{< var keybind.restart-r >}} or render
     with {{< var keybind.render >}} to test that the function works.
 6.  Whenever the function works, *add and commit* the changes to the Git
-    history with {{< var keybind.git >}}.
+    history with {{< var keybind.commit >}}.
 
 ```{mermaid}
 %%| echo: false
