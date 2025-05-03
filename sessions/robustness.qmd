@@ -277,9 +277,9 @@ see code that looks like this:
 
 ``` r
 add_numbers <- function(num1, num2) {
-    library(package_name)
-    ...code...
-    return(added)
+  library(package_name)
+  ...code...
+  return(added)
 }
 ```
 
@@ -287,9 +287,9 @@ Or:
 
 ``` r
 add_numbers <- function(num1, num2) {
-    require(package_name)
-    ...code...
-    return(added)
+  require(package_name)
+  ...code...
+  return(added)
 }
 ```
 
@@ -394,19 +394,6 @@ import_cgm <- function(file_path) {
     )
   return(cgm)
 }
-```
-
-```{r admin-print-desc-add-others}
-#| echo: false
-usethis::with_project(
-  path = project_path,
-  {
-    usethis::use_package("readr")
-    usethis::use_package("snakecase")
-    usethis::use_package("fs")
-  },
-  quiet = TRUE
-)
 ```
 
 {{< text_snippet sticky_up >}}
@@ -685,18 +672,9 @@ others' code, and try to improve it.
     thought about. Try to find out if you have similar thoughts or ideas
     on how to improve things.
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
-
-```{r admin-save-project-and-session-code}
+```{r admin-save-session-code}
 #| include: false
 save.image(here::here("_temp/robustness.RData"))
-withr::with_dir(
-  project_path,
-  {
-    tar(
-      tarfile = here::here("_temp", "project.tar.gz"),
-      files = fs::dir_ls(".", all = TRUE, recurse = TRUE)
-    )
-  }
-)
 ```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
