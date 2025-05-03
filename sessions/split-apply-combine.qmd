@@ -488,11 +488,12 @@ next exercise.
 #' @returns A cleaner data frame.
 #'
 clean_sleep <- function(data) {
-  data |>
+  cleaned <- data |>
     get_participant_id() |>
     dplyr::rename(datetime = date) |>
     prepare_dates(datetime) |>
     summarise_column(seconds, list(sum = sum))
+  return(cleaned)
 }
 ```
 
