@@ -497,7 +497,7 @@ clean_sleep <- function(data) {
 ```
 
 ```{r}
-#| label: solution-clean-sleep-function
+#| label: solution-clean-cgm-function
 #| echo: false
 #' Clean and prepare the CGM data for joining.
 #'
