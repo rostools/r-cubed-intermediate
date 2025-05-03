@@ -328,6 +328,15 @@ the website we'll only show the first two tibbles:
 cgm_data[1:2]
 ```
 
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Remind everyone that we still only import the first 100 rows of each
+data file. So if some of the data itself seems looks odd or so little
+data, that is the reason why. Remind them that we do this to more
+quickly prototype and test code out.
+:::
+
 This is great because with one line of code we imported all these
 datasets and made them into one data frame! But we're missing an
 important bit of information: The participant ID. The `{purrr}` package
