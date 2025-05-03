@@ -446,21 +446,24 @@ steps:
     to `return()` the output at the end of the function. Replace the
     relevant variables with the arguments you just created (e.g.
     `cgm_data` to `data`).
-3.  To create the Roxygen documentation with {{< var keybind.roxygen >}}
+3.  Remember to use `{{ }}` when you use the `column` argument within
+    the function to work with `{tidyverse}`'s and R's non-standard
+    evaluation.
+4.  To create the Roxygen documentation with {{< var keybind.roxygen >}}
     and fill it out. You can write whatever you like.
-4.  Add `tidyselect` as a package dependency by using
+5.  Add `tidyselect` as a package dependency by using
     `usethis::use_package()` in the **Console**.
-5.  Explicitly link the functions you are using in this new function to
+6.  Explicitly link the functions you are using in this new function to
     their package by using `::` (e.g. `dplyr::` and `tidyselect::`).
     Remember that you can find which package a function belongs by using
     the `?` help documentation and looking at the very top to see the
     package name.
-6.  Test that the function works by using the code shown above.
-7.  After creating the function and testing that it works, move (**cut**
+7.  Test that the function works by using the code shown above.
+8.  After creating the function and testing that it works, move (**cut**
     and paste) the function into `R/functions.R`.
-8.  Run `{styler}` in both the `R/functions.R` file and
+9.  Run `{styler}` in both the `R/functions.R` file and
     `docs/learning.qmd` with {{< var keybind.styler >}}.
-9.  Add and commit the changes to the Git history with
+10. Add and commit the changes to the Git history with
     {{< var keybind.git >}}.
 
 In the next exercise, you will use this function in the recently created
