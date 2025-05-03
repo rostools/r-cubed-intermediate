@@ -1,21 +1,18 @@
-# Using split-apply-combine to help in processing {#sec-functionals}
+---
+execute:
+  eval: true
+---
+
+# Using split-apply-combine to help in processing {#sec-split-apply-combine}
 
 ```{r setup}
 #| include: false
 library(here)
-library(dplyr)
-library(purrr)
+library(tidyverse)
 library(fs)
-load(here("_temp/functions.RData"))
+load(here("_temp/characters-dates.RData"))
 source(here("R/functions.R"))
 ```
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Briefly go over the bigger picture (found in the introduction section)
-and remind everyone the 'what' and 'why' of what we are doing.
-:::
 
 ## Learning objectives
 
@@ -24,16 +21,18 @@ and remind everyone the 'what' and 'why' of what we are doing.
 ## Split-apply-combine technique and functionals
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
-Verbally cover this section before moving on to the summarizing. Let
-them know they can read more about this in this section.
+Verbally cover this section before moving on to using `across()` while
+summarizing. Specifically, review the split-apply-combine technique via
+the image below as well as in the context of using `summarise()` on
+multiple columns and multiple functions.
 :::
 
 We're taking a quick detour to briefly talk about a concept that
 perfectly illustrates how vectorization and functionals fit into doing
 data analysis. The concept is called the
-[split-apply-combine](https://r-cubed-intro.rostools.org/sessions/data-management.html#split-apply-combine-summarizing-data)
+[split-apply-combine](https://r-cubed-intro.rostools.org/sessions/split-apply-combine.html)
 technique, which we covered in the beginner R workshop. The method is:
 
 1.  Split the data into groups (e.g. diabetes status).
@@ -43,13 +42,18 @@ technique, which we covered in the beginner R workshop. The method is:
     that you can use to make a plot or table).
 
 So when you split data into multiple groups, you create a list (or a
-*vector*) that you can then use (with the *map* functional) to apply a
-statistical technique to each group through *vectorization*. This
-technique works really well for a range of tasks, including for our task
-of summarizing some of the MMASH data so we can merge it all into one
-dataset.
+*vector*) that you can then apply (e.g. with the *map* functional) a
+statistical technique to each group through *vectorization*, and where
+you finally combine (e.g. with join that we will cover later or with
+`list_rbind()`). This technique works really well for a range of tasks,
+including for our task of summarizing some of the DIME data so we can
+merge it all into one dataset.
 
-## Summarising data through functionals {#sec-summarise-with-functionals}
+![A diagram showing how a data frame is split up, an action is applied
+to the splits that outputs a new result, and the results are combined
+back together. Taken from [Software Carpentries R for Reproducible
+Scientific
+Analysis](https://unlhcc.github.io/r-novice-gapminder/16-plyr/).](/images/split-apply-combine.png)
 
 Functionals and vectorization are integral components of how R works and
 they appear throughout many of R's functions and packages. They are
@@ -57,154 +61,120 @@ particularly used throughout the `{tidyverse}` packages like `{dplyr}`.
 Let's get into some more advanced features of `{dplyr}` functions that
 work as functionals.
 
-Before we continue, re-run the code for getting `user_info_df` since you
-had restarted the R session previously.
-
-Since we're going to use `{dplyr}`, we need to add it as a dependency by
-typing this in the **Console**:
-
-``` {.r filename="Console"}
-usethis::use_package("dplyr")
-```
-
 There are many "verbs" in `{dplyr}`, like `select()`, `rename()`,
 `mutate()`, `summarise()`, and `group_by()` (covered in more detail in
-the [Data Management and
-Wrangling](https://r-cubed-intro.rostools.org/sessions/data-management.html#managing-and-working-with-data-in-r)
-session of the beginner workshop). The common usage of these verbs is
-through acting on and directly using the column names (e.g. without `"`
-quotes around the column name like with
-`saliva_df |> select(cortisol_norm)`). But many `{dplyr}` verbs can also
-take functions as input, especially when using the column selection
-helpers from the `{tidyselect}` package.
-
-Likewise, with functions like `summarise()`, if you want to for example
-calculate the mean of cortisol in the saliva dataset, you would usually
-type out:
+the
+[introductory](https://r-cubed-intro.rostools.org/sessions/wrangling)
+workshop). The common usage of these verbs is through acting on and
+directly using the column names (e.g. without `"` quotes around the
+column name). Like most `{tidyverse}` functions, `{dplyr}` verbs are
+designed with a strong functional programming approach. But many
+`{dplyr}` verbs can also be used as functionals like we covered in
+previous sessions with `map()`, where they take functions as input. For
+instance, `summarise()` uses several functional programming concepts:
+Create a new column using an action that may or may not be based on
+other columns and output a single value from that action. Using an
+example with our DIME data, to calculate the mean of a column and create
+a new column from that mean for the glucose values, you would do:
 
 ```{r}
-#| filename: "docs/learning.qmd"
-saliva_df |>
-  summarise(cortisol_mean = mean(cortisol_norm))
+cgm_data |>
+  summarise(mean_glucose = mean(historic_glucose_mmol_l))
 ```
 
-::: aside
-Don't know what the `|>` pipe is? Check out [the section on
-it](https://r-cubed-intro.rostools.org/sessions/data-management.html#chaining-functions-with-the-pipe)
-from the beginner workshop.
-:::
-
-If you want to calculate the mean of multiple columns, you might think
-you'd have to do something like:
+This is functional in the `mean()` works on the vector of glucose
+values, so it is vectorised. This output gets added as a new column to
+the data frame, without you having to be explicit about how it does it.
+The fun parts of learning about functionals is if you wanted to
+calculate the mean and maybe another statistic, like the standard
+deviation. The "simplest" would be to do something like:
 
 ```{r}
-#| filename: "docs/learning.qmd"
-saliva_df |>
+cgm_data |>
   summarise(
-    cortisol_mean = mean(cortisol_norm),
-    melatonin_mean = mean(melatonin_norm)
+    mean_glucose = mean(historic_glucose_mmol_l),
+    sd_glucose = sd(historic_glucose_mmol_l)
   )
 ```
 
-But instead, there is the `across()` function that works like `map()`
-and allows you to calculate the mean across which ever columns you want.
-In many ways, `across()` is similar to `map()`, particularly in the
-arguments you give it and in the sense that it is a functional. But they
-are used in different settings: `across()` works well with columns
-within a dataframe and within a `mutate()` or `summarise()`, while
-`map()` is more generic.
+What if you wanted to calculate the mean, standard deviation, maybe the
+median, and finally the maximum and minimum values? And what if you
+wanted to this for several different columns? That's where the function
+`across()` comes in, which works a bit like `map()` does. You give it a
+vector of columns to work on and a list of functions to apply to those
+columns.
 
-::: callout-note
-## Reading task: \~2 minutes
+Unlike `map()`, which is a more general function, `across()` is
+specifically designed to work within `{dplyr}` verbs like `mutate()` or
+`summarise()` and within the context of a data frame.
 
-When you look in `?across`, there are two main arguments and one
-optional one (plus one deprecated one):
+{{< text_snippet sticky_up >}}
 
-1.  `.cols` argument: Columns you want to use.
-    -   Write column names directly and wrapped in `c()`:
-        `c(age, weight)`.
-    -   Write `{tidyselect}` column selection helpers: `everything()`,
-        `starts_with()`, `contains()`, `ends_with()`
-    -   Use a function wrapped in `where()` to select columns by a
-        condition: `where(is.numeric)` or `where(is.character)`
-2.  `.fns`: The function to use on the `.cols`.
-    -   A bare function (`mean`) applies it to each column and returns
-        the output, with the column name unchanged.
+## Summarising with `across()`
 
-    -   A list with bare functions (`list(mean, sd)`) applies each
-        function to each column and returns the output with the column
-        name appended with a number (e.g. `cortisol_norm_1`).
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
 
-    -   An anonymous function passed with either `~` (using `.x` to
-        refer to the variable) or `\()` or `function()` like in `map()`.
-        For instance, these three lines of code below mean all the same
-        and are used to say "put age and weight, one after the other, in
-        place of where `.x` is located" to calculate the mean for age
-        and the mean for weight.
+Open up `?across` in the Console and go over the arguments with the
+learners. Go over the first two arguments again, reinforcing what they
+read.
 
-        ``` r
-        across(c(age, weight), ~ mean(.x, na.rm = TRUE))
-        across(c(age, weight), function(x) mean(x, na.rm = TRUE))
-        across(c(age, weight), \(x) mean(x, na.rm = TRUE))
-        ```
-
-        We will use the `\()` syntax to be consistent with how we use
-        `{purrr}` functions.
-
-    -   A named list with bare or anonymous functions
-        (`list(average = mean, stddev = sd)`) does the same as above but
-        instead returns an output with the column names appended with
-        the name given to the function in the list (e.g.
-        `cortisol_norm_average`). You can also use anonymous functions
-        within the list:
-
-        ``` r
-        list(
-          average = \(x) mean(x, na.rm = TRUE),
-          stddev = \(x) sd(x, na.rm = TRUE),
-        )
-        ```
-3.  `...` argument (**deprecated**): Arguments to give to the functions
-    in `.fns`. No longer used.
-4.  `.names` argument: Customize the output of the column names. We
-    won't cover this argument.
+Also, before coding again, remind everyone that we still only import the
+first 100 rows of each data file. So if some of the data itself seems
+weird, that is the reason why. Remind them that we do this to more
+quickly prototype and test code out.
 :::
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+Before we start using `across()`, let's look at the help page for it. In
+the **Console**, type `?across` and hit enter. This will open the help
+page for `across()`. For this workshop, we will only go over the first
+two arguments. The first argument is the columns you want to work on.
+You can use `c()` to combine multiple columns together. The second
+argument is the function you want to apply to those columns. You can use
+`list()` to combine multiple functions together.
 
-Go over the first two arguments again, reinforcing what they read.
-:::
+Let's try out using `across()` on the `cgm_data`. But before we do that,
+go to the `setup` code chunk at the top of `docs/learning.qmd` and let's
+fix the glucose column. It's a bit long to use, it would be nicer if it
+was shorter. We will use `rename()` like we've done before.
 
-Let's try out some examples. To calculate the mean of `cortisol_norm`
-like we did above, we'd do:
-
-```{r}
+```{r rename-glucose-setup-chunk}
 #| filename: "docs/learning.qmd"
-saliva_df |>
-  summarise(across(cortisol_norm, mean))
+cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+  get_participant_id() |>
+  prepare_dates(device_timestamp) |>
+  rename(glucose = historic_glucose_mmol_l)
 ```
 
-To calculate the mean of another column:
+Run all the code in the `setup` code chunk by using
+{{< var keybind.run-code >}} on all the lines. Then, go to the end of
+`docs/learning.qmd`, make a new header called
+`## Summarising with across()` and create a code chunk below that with
+{{< var keybind.chunk >}}. For now, we will do a very simple example of
+using `across()` to calculate the mean of all the glucose values.
 
-```{r}
+```{r simple-summarise-mean}
 #| filename: "docs/learning.qmd"
-saliva_df |>
-  summarise(across(c(cortisol_norm, melatonin_norm), mean))
+cgm_data |>
+  summarise(across(glucose, mean))
 ```
 
-This is nice, but changing the column names so that the function name is
-added would make reading what the column contents are clearer. That's
-when we would use "named lists", which are lists that look like:
+This is nice, but let's try also calculating the median. The help
+documentation of `across()` says that you have to wrap multiple
+functions into a `list()`. Let's try that:
 
-``` r
-list(item_one_name = ..., item_two_name = ...)
+```{r summarise-mean-median}
+#| filename: "docs/learning.qmd"
+cgm_data |>
+  summarise(across(glucose, list(mean, median)))
 ```
 
-So, for having a named list with mean inside `across()`, it would look
-like (in the **Console**):
+It works, but, the column names are a bit vague. The column names are
+`glucose_1` and `glucose_2`, which doesn't tell us which is which. We
+can add the names of the functions by using a named list. In our case, a
+named list would look like:
 
-```{r}
+```{r named-list-console}
 #| filename: "Console"
 list(mean = mean)
 # or
@@ -213,247 +183,446 @@ list(average = mean)
 list(ave = mean)
 ```
 
-Let's stick with `list(mean = mean)`:
+See how the left hand side of the `=` is the name and the right hand
+side is the function? This named list is what `across()` can use to add
+the name to the end of the column name. Just like with `map()` we can
+also give it anonymous functions if our function is a bit more complex.
+For instance, if we needed to remove `NA` values from the calculations,
+we would do:
 
-```{r}
+```{r named-list-console-anonymous}
+#| filename: "Console"
+list(mean = \(x) mean(x, na.rm = TRUE))
+```
+
+For now, we don't need to use anonymous functions. Let's test it with
+just one function, like `list(mean = mean)` it would look like:
+
+```{r example-summarise-mean-named-list}
 #| filename: "docs/learning.qmd"
-saliva_df |>
-  summarise(across(cortisol_norm, list(mean = mean)))
+cgm_data |>
+  summarise(across(glucose, list(mean = mean)))
 ```
 
-Now, let's collect some of the concepts from above to calculate the mean
-and standard deviation for all numeric columns in the `saliva_df`:
+Then, we can add more functions to the named list. Let's add the median
+and standard deviation:
 
-```{r}
+```{r example-summarise-multiple-functions}
 #| filename: "docs/learning.qmd"
-saliva_df |>
-  summarise(across(where(is.numeric), list(mean = mean, sd = sd)))
+cgm_data |>
+  summarise(across(glucose, list(mean = mean, sd = sd, median = median)))
 ```
 
-We can use these concepts and code to process the other longer datasets,
-like `RR.csv`, in a way that makes it more meaningful to eventually
-merge (also called "join") them with the smaller datasets like
-`user_info.csv` or `saliva.csv`. Let's work with the `RR.csv` dataset to
-eventually join it with the others.
+The great thing about using `across()` is that you can also use it with
+all the `{tidyselect}` functions in the first argument. For instance, if
+you wanted to only calculate things for columns that are numbers, you
+can use `where(is.numeric)` to select all the numeric columns. Or if you
+had a pattern in your column names, you can use things like
+`starts_with()` or `ends_with()` to select columns that start or end
+with a certain string.
 
-## Summarizing long data like the RR dataset
+Summarising works best with grouping though! Which is what we'd like to
+do in order to effectively join the data.
 
-With the RR dataset, each participant had almost 100,000 data points
-recorded over two days of collection. So if we want to join with the
-other datasets, we need to calculate summary measures by at least
-`file_path_id` and also preferably by `day` as well. In this case, we
-need to `group_by()` these two variables before summarising. In this
-way, we use the split-apply-combine technique. Let's first summarise by
-taking the mean of `ibi_s` (which is the inter-beat interval in
-seconds).
+## Summarising by groups
 
-```{r}
+Our two datasets, the `cgm_data` and `sleep_data`, have a few columns
+that we'd like to join by, but the data itself can't be joined
+effectively yet. We need to first summarise the data by the columns we
+want to join by. In the case of the `cgm_data`, we want to join by the
+`id`, `date`, and `hour`.
+
+In this case, we need to use the split-apply-combined technique by first
+using `group_by()` on these variables before summarising. Let's start
+with using `group_by()` on the `cgm_data`. At the bottom of the
+`docs/learning.qmd` file, create a new header called
+`## Summarising by groups` and create a code chunk below that with
+{{< var keybind.chunk >}}. Then we'll use `group_by()` on it's own. But
+first, since we won't be using the `device_timestamp` column, let's
+remove it.
+
+```{r remove-device-timestamp}
 #| filename: "docs/learning.qmd"
-#| eval: false
-rr_df <- import_multiple_files("RR.csv", import_rr)
-rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean)))
+cgm_data |>
+  select(-device_timestamp)
 ```
 
-```{r admin-rr-summarised-for-book}
-#| echo: false
-rr_df <- import_multiple_files("RR.csv", import_rr)
-rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = mean))) |>
-  trim_filepath_for_book()
-```
+Then, let's continue and pipe `|>` to `group_by()` for the `id`, `date`,
+and `hour` columns.
 
-While there are no missing values here, let's add the argument
-`na.rm = TRUE` just in case. In order add this argument to the mean, we
-
-```{r}
+```{r group-by}
 #| filename: "docs/learning.qmd"
-#| eval: false
-rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE))))
+cgm_data |>
+  select(-device_timestamp) |>
+  group_by(id, date, hour)
 ```
 
-```{r admin-rr-summarise-na-rm-for-book}
-#| echo: false
-rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(across(ibi_s, list(mean = \(x) mean(x, na.rm = TRUE)))) |>
-  trim_filepath_for_book()
-```
+Notice how it doesn't do anything different? That's because `group_by()`
+only modifies the behaviour of later functions but on it's own doesn't
+do anything. Let's now pipe into `summarise()` and use `across()` to
+calculate the mean and standard deviation of the glucose values.
 
-Let's also add standard deviation as another measure from the RR
-datasets:
-
-```{r}
+```{r summarise-multiple-functions}
 #| filename: "docs/learning.qmd"
-#| eval: false
-summarised_rr_df <- rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(
-    across(ibi_s, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    ))
-  )
-
-summarised_rr_df
+cgm_data |>
+  select(-device_timestamp) |>
+  group_by(id, date, hour) |>
+  summarise(across(glucose, list(mean = mean, sd = sd)))
 ```
 
-```{r admin-rr-summarise-as-object-for-book}
-#| echo: false
-summarised_rr_df <- rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(
-    across(ibi_s, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    ))
-  )
+Very neat! By default, when we use `group_by()` it continues to tell R
+to use `{dplyr}` functions on the groups, for instance with `mutate()`
+and `summarise()`. Often we want to only do a single action on groups,
+so we would need to stop grouping by using `ungroup()`. This is
+especially a common practice when you use `group_by()` with
+`summarise()`. That's why `summarise()` has an argument to drop the
+grouping with `.groups = "drop"` rather than have to pipe to
+`ungroup()`. We don't need to group any more, so we will add this:
 
-summarised_rr_df |>
-  trim_filepath_for_book()
-```
-
-Whenever you are finished with a grouping effect, it's good practice to
-end the `group_by()` with `.groups = "drop"`. Let's add it to the end:
-
-```{r}
+```{r drop-groups}
 #| filename: "docs/learning.qmd"
-#| eval: false
-summarised_rr_df <- rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(
-    across(ibi_s, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )),
+cgm_data |>
+  select(-device_timestamp) |>
+  group_by(id, date, hour) |>
+  summarise(across(glucose, list(mean = mean, sd = sd)),
     .groups = "drop"
   )
-summarised_rr_df
-```
-
-```{r rr-summarise-ungroup-for-book}
-#| echo: false
-summarised_rr_df <- rr_df |>
-  group_by(file_path_id, day) |>
-  summarise(
-    across(ibi_s, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )),
-    .groups = "drop"
-  )
-summarised_rr_df |>
-  trim_filepath_for_book()
 ```
 
 Ungrouping the data with the `.groups = "drop"` in the `summarise()`
-function does not provide any visual indication of what is happening.
-However, in the background, it removes certain metadata that the
-`group_by()` function added.
+function does not do anything except to tell R not to do any more
+grouping when you use later functions.
 
-::: {.callout-note appearance="default"}
-By default, using `group_by()` continues the grouping effect of later
-code, like `mutate()` and `summarise()`. Normally we would end a
-`group_by()` by using `ungroup()`, especially if we want to do multiple
-wrangling functions on the same grouping. Because sometimes, especially
-after using `summarise()`, we don't need to keep the grouping. So we can
-use the `.groups = "drop"` argument in `summarise()` to end the
-grouping.
-:::
+This workflow is very similar to how we want to do it with the
+`sleep_data`. And as you can guess, we'll need to make a function.
+However! There's a few things things we could do now to simplify making
+the function.
 
-Before continuing, let's run `{styler}` with {{< var keybind.styler >}}
-and knit the Quarto document with {{< var keybind.render >}} to confirm
-that everything runs as it should. If the knitting works, then switch to
-the Git interface and **add and commit** the changes so far with
-{{< var keybind.git >}}.
+1.  The sleep data has an extra `sleep_type` column that we have to
+    group by. We'd rather not have to include an argument in our new
+    function just for indicating the grouping. It would be nice if we
+    could group by all columns except for the column we want to
+    summarise.
+2.  We don't really want to group by `device_timestamp` or `datetime`
+    columns. It would be nice if we could exclude those columns from the
+    grouping in a way that can be used for both datasets without having
+    an error.
 
-## Exercise: Summarise the Actigraph data
+For the second, we can use some `{tidyselect}` functions like
+`contains()` with a `-` to exclude the columns. For the first, there's a
+handy function in the `{dplyr}` package called `pick()`. This function
+lets us use `{tidyselect}` functions to include or exclude columns.
+Let's start with the `contains()` function. Let's write it so it will
+drop any column that has the name of either `device_timestamp` or
+`datetime` from the dataset. Revise the `select()` function we've
+already written and use `contains()`:
 
-> Time: 15 minutes.
-
-Like with the `RR.csv` dataset, let's process the `Actigraph.csv`
-dataset so that it makes it easier to join with the other datasets
-later. Make sure to read the warning block below.
-
-::: {.callout-warning appearance="default"}
-Since the `actigraph_df` dataset is quite large, we **strongly**
-recommend not using `View()` or selecting the dataframe in the
-Environments pane to view it. For many computers, your R session will
-**crash**! Instead type out `glimpse(actigraph_df)` or simply
-`actigraph_df` in the Console.
-:::
-
-1.  Like usual, create a new Markdown header called e.g.
-    `## Exercise: Summarise  Actigraph` and insert a new code chunk
-    below that with {{< var keybind.chunk >}}.
-2.  Import all the Actigraph data files using the
-    `import_multiple_files()` function you created previously. Name the
-    new data frame `actigraph_df`.
-3.  Look into the [Data
-    Description](https://physionet.org/content/mmash/1.0.0/) to find out
-    what each column is for.
-4.  Based on the documentation, which variables would you be most
-    interested in analyzing more?
-5.  Decide which summary measure(s) you think may be most interesting
-    for you (e.g. `median()`, `sd()`, `mean()`, `max()`, `min()`,
-    `var()`).
-6.  Use `group_by()` with the `file_path_id` and `day` variables
-    **only**, then use `summarise()` with `across()` to summarise the
-    variables you are interested in (from item 4 above) with the summary
-    functions you chose. Assign the newly summarised data frame to a new
-    data frame and call it `summarised_actigraph_df`.
-7.  End the grouping effect with `.groups = "drop"` in `summarise()`.
-8.  Run `{styler}` while in the `docs/learning.qmd` file with
-    {{< var keybind.styler >}}.
-9.  Knit the `docs/learning.qmd` document with {{< var keybind.render >}}
-    to make sure everything works.
-10. **Add and commit** the changes you've made into the Git history with
-    {{< var keybind.git >}}.
-
-```{r solution-summarise-actigraph}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
-summarised_actigraph_df <- actigraph_df |>
-  group_by(file_path_id, day) |>
-  # These statistics will probably be different for you
-  summarise(
-    across(hr, list(
-      mean = \(x) mean(x, na.rm = TRUE),
-      sd = \(x) sd(x, na.rm = TRUE)
-    )),
+```{r use-contains}
+#| filename: "docs/learning.qmd"
+cgm_data |>
+  select(-contains("timestamp"), -contains("datetime")) |>
+  group_by(id, date, hour) |>
+  summarise(across(glucose, list(mean = mean, sd = sd)),
     .groups = "drop"
   )
 ```
 
-## :speech_balloon: Discussion activity: Incorporating functionals in your own work
+When we run this with {{< var keybind.run-code >}} it works, even though
+`datetime` doesn't exist. That's because `contains()` only gets the
+column if is there and if it isn't there, it doesn't do anything. Now,
+let's try using `pick()`. In this case, we can use `-glucose` to exclude
+the glucose column:
 
-**Time: ~10 minutes.**
+```{r use-pick}
+#| filename: "docs/learning.qmd"
+cgm_data |>
+  select(-contains("timestamp"), -contains("datetime")) |>
+  group_by(pick(-glucose)) |>
+  summarise(across(glucose, list(mean = mean, sd = sd)),
+    .groups = "drop"
+  )
+```
 
-As we prepare for the next session, discuss with your neighbour or group
-the following question:
+Let's run it with {{< var keybind.run-code >}} and see that it works.
+Woohoo! :tada: Now it's time to make it a function :grin: Well, almost.
+We've so far been creating functions that prepare the datasets and then
+piping those functions together after importing the data into the
+`setup` code chunk. That's fine, but maybe a bit tedious. It would be
+nice if we had two functions called `clean_cgm()` and `clean_sleep()`
+that we could use to pipe from `import_csv_files()`. And that any new
+cleaning function we create we can just put into those cleaning
+functions.
 
--   Think about the functions and functionals sessions. Discuss with
-    your group some ideas on how you can implement making functions and
-    using functionals in your work. What are some things you do
-    repetitively (in code or general work) that you think would be great
-    to have simplified or automated.
+So, let's do that. First, go to the `setup` code chunk and **cut** the
+cleaning code for CGM data. Then open up the `R/functions.R` file,
+either manually or with {{< var keybind.open-file >}}. Scroll to the
+bottom of the file and create a new `clean_cgm()` function. During the
+exercise you will create the `clean_sleep()` function. Paste the code
+into this new function:
 
-## Summary
+```{r clean-cgm-function}
+#' Clean and prepare the CGM data for joining.
+#'
+#' @param data The CGM dataset.
+#'
+#' @returns A cleaner data frame.
+#'
+clean_cgm <- function(data) {
+  cleaned <- data |>
+    get_participant_id() |>
+    prepare_dates(device_timestamp) |>
+    dplyr::rename(glucose = historic_glucose_mmol_l)
+  return(cleaned)
+}
+```
 
+Then, in the `setup` code chunk of `docs/learning.qmd`, replace the cut
+code with:
+
+```{r clean-cgm-setup-chunk}
+#| filename: "docs/learning.qmd"
+cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+  clean_cgm()
+```
+
+Amazing! Before continuing to the exercise, let's run `{styler}` with
+{{< var keybind.styler >}} on both `docs/learning.qmd` and on
+`R/functions.R`. Then we will render the Quarto document with
+{{< var keybind.render >}} to confirm that everything runs as it should.
+If the rendering works, switch to the Git interface and **add and
+commit** the changes so far with {{< var keybind.git >}}.
+
+## :technologist: Exercise: Convert the summarising code into a function
+
+**Time: \~15 minutes.**
+
+```{r}
+#| label: solution-summarise-column-function
+#| echo: false
+#' Summarise a single column based on one or more functions.
+#'
+#' @param data Either the CGM or sleep data in DIME.
+#' @param column The name of the column you want to summarise.
+#' @param functions One or more functions to apply to the column. If more than one,
+#'    use `list()`.
+#'
+#' @returns A summarised data frame.
+#'
+summarise_column <- function(data, column, functions) {
+  data |>
+    dplyr::select(-tidyselect::contains("timestamp"), -tidyselect::contains("datetime")) |>
+    dplyr::group_by(dplyr::pick(-{{ column }})) |>
+    dplyr::summarise(
+      dplyr::across(
+        {{ column }},
+        functions
+      ),
+      .groups = "drop"
+    )
+}
+```
+
+Let's start with converting the summarising code into a function. The
+way it is used should be something like the below, and should give
+similar output:
+
+```{r}
+cgm_data |>
+  summarise_column(glucose, list(mean = mean, sd = sd))
+
+sleep_data |>
+  summarise_column(seconds, sum)
+```
+
+So, convert the code we just wrote into a function by following these
+steps:
+
+1.  Assign `function()` to a new named function called
+    `summarise_column` and include three arguments in `function()` with
+    the names `data`, `column`, and `functions`.
+2.  Put the code we just wrote into the body of the function. Make sure
+    to `return()` the output at the end of the function. Replace the
+    relevant variables with the arguments you just created (e.g.
+    `cgm_data` to `data`).
+3.  To create the Roxygen documentation with {{< var keybind.roxygen >}}
+    and fill it out. You can write whatever you like.
+4.  Add `tidyselect` as a package dependency by using
+    `usethis::use_package()` in the **Console**.
+5.  Explicitly link the functions you are using in this new function to
+    their package by using `::` (e.g. `dplyr::` and `tidyselect::`).
+    Remember that you can find which package a function belongs by using
+    the `?` help documentation and looking at the very top to see the
+    package name.
+6.  Test that the function works by using the code shown above.
+7.  After creating the function and testing that it works, move (**cut**
+    and paste) the function into `R/functions.R`.
+8.  Run `{styler}` in both the `R/functions.R` file and
+    `docs/learning.qmd` with {{< var keybind.styler >}}.
+9.  Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
+
+In the next exercise, you will use this function in the recently created
+`clean_cgm()` and the `clean_sleep()` function you will create.
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Go over the solution to make sure everyone is on the same page, as this
+is one of the few exercises that later work depends on. Then move to the
+next exercise.
+:::
+
+{{< text_snippet sticky_up >}}
+
+## :technologist: Exercise: Create a `clean_sleep()` function
+
+**Time: \~10 minutes.**
+
+```{r}
+#| label: solution-clean-sleep-function
+#| echo: false
+#' Clean and prepare the sleep data for joining.
+#'
+#' @param data The sleep dataset.
+#'
+#' @returns A cleaner data frame.
+#'
+clean_sleep <- function(data) {
+  data |>
+    get_participant_id() |>
+    dplyr::rename(datetime = date) |>
+    prepare_dates(datetime) |>
+    summarise_column(seconds, list(sum = sum))
+}
+```
+
+```{r}
+#| label: solution-clean-cgm-function
+#| echo: false
+#' Clean and prepare the CGM data for joining.
+#'
+#' @param data The CGM dataset.
+#'
+#' @returns A cleaner data frame.
+#'
+clean_cgm <- function(data) {
+  cleaned <- data |>
+    get_participant_id() |>
+    prepare_dates(device_timestamp) |>
+    dplyr::rename(glucose = historic_glucose_mmol_l) |>
+    # You can decide what functions to summarise by.
+    summarise_column(glucose, list(mean = mean, sd = sd))
+  return(cleaned)
+}
+```
+
+Just like we did with the `clean_cgm()` function, you will create a a
+`clean_sleep()` function here that will contain the functions you've
+made to clean it up. You also now have the `summarise_column()`
+function, that you can include in both the `clean_cgm()` and
+`clean_sleep()` functions. In the end, the code should look like this in
+the `setup` code chunk:
+
+```{r}
+#| filename: "docs/learning.qmd"
+cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+  clean_cgm()
+sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+  clean_sleep()
+```
+
+And if you were to run these in the **Console**, it might look like:
+
+```{r}
+#| filename: "Console"
+cgm_data
+sleep_data
+```
+
+To get to this point, do the following tasks:
+
+1.  Go to the `setup` code chunk in your `docs/learning.qmd` file and
+    **cut** the code that cleans the sleep data. Cut the code that is
+    piped *after* using `import_csv_files()` but don't cut the
+    `import_csv_files()` line.
+2.  Then, open up the `R/functions.R` file and create a new function
+    called `clean_sleep`, that has the same argument as `clean_cgm()`
+    (`data`).
+3.  Paste the cleaning code you just cut into this new function.
+4.  Put `data` at the top of the code and pipe it into the cleaning
+    code.
+5.  At the end of the cleaning pipe, continue with a pipe into
+    `summarise_column()`. Use the `seconds` column and the `sum()`
+    function (you can use either `list(sum = sum)` or just simply `sum`
+    in `summarise_column()`). Why sum? Because the average seconds
+    doesn't make sense here, we want the total time slept in each stage.
+    This will calculate the time slept each hour in each stage for each
+    night, by each participant.
+6.  Assign the output of the cleaning code to a new variable called
+    `cleaned`, like we did with `clean_cgm()`.
+7.  Include a `return()` statement at the end of the function to return
+    the cleaned data.
+8.  Create some Roxygen documentation of the function with
+    {{< var keybind.roxygen >}}.
+9.  Before using the new `clean_sleep()` function, go to the
+    `clean_cgm()` function and add the `summarise_column()` function to
+    the end of the pipe inside the `clean_cgm()` function. Use the
+    `glucose` column and decide on which functions you want to summarise
+    by, e.g. `list(mean = mean, sd = sd)` or maybe instead of mean, use
+    the median.
+10. Go to your `docs/learning.qmd` file and in the `setup` code chunk,
+    pipe the output of `import_csv_files(here("data-raw/dime/sleep/"))`
+    into the new `clean_sleep()` function.
+11. Run `{styler}` in both the `R/functions.R` file and
+    `docs/learning.qmd` with {{< var keybind.styler >}}.
+12. Render the Quarto document with {{< var keybind.render >}} to
+    confirm that everything runs as it should.
+13. Add and commit the changes to the Git history with
+    {{< var keybind.git >}}.
+
+{{< text_snippet sticky_up >}}
+
+## Key takeaways
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
+:::
+
+-   The split-apply-combine technique is a powerful way to summarise and
+    analyse data in R. It allows you to split your data into groups,
+    apply a function to each group, and then combine the results back
+    together. Re-framing how you think about your data using this
+    technique can substantially help you in your data analysis.
 -   Use `group_by()`, `summarise()`, and `across()` with
     `.groups = "drop"` in the `summarise()` function to use the
     split-apply-combine technique when needing to do an action on groups
     within the data (e.g. calculate the mean age between education
     groups).
+-   Build functions to be able to chain together and then convert those
+    chained functions into general functions. That way you can create
+    more "higher-level" functions to help keep your code organised,
+    readable, and maintainable.
+
+## :speech_balloon: Discussion activity: How might you split-apply-combine in your work?
+
+**Time: \~10 minutes.**
+
+As we prepare for the next session and take a break, get up and discuss
+with your neighbour (or others) the questions:
+
+-   From what you have learned so far from this session, how might you
+    use this in your work?
+-   Can you consider how these functions and approaches can simplify or
+    shorten code you use to do your analyses?
+-   Are there other ways you can use this other than with your research
+    data? For instance, organising courses?
 
 ```{r store-session-code}
 #| include: false
-rm(actigraph_df, rr_df)
-save.image(here::here("_temp/functionals.RData"))
+save.image(here::here("_temp/split-apply-combine.RData"))
 ```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
