@@ -1,80 +1,54 @@
-# Quickly re-arranging data with pivots {#sec-pivots}
+# Pivoting your data from and to long or wide {#sec-pivots}
 
 ```{r setup}
 #| include: false
 # Used this only during writing to run code dependent on previous chapters.
 library(here)
-library(fs)
 library(tidyverse)
 source(here("R/functions.R"))
-load(here("_temp/dplyr-joins.RData"))
-mmash <- read_csv(here("data/mmash.csv"))
+load(here("_temp/split-apply-combine.RData"))
 ```
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Teacher note
-
-Briefly go over the bigger picture (found in the introduction section)
-and remind everyone the 'what' and 'why' of what we are doing.
-:::
 
 ## Learning objectives
 
 {{< include /includes/objectives/_pivots.qmd >}}
 
-## Setup for the analysis in Quarto
-
-We now have a working dataset to start doing some simple analyses on in
-the Quarto document. A recommended workflow with Quarto is to often
-render / "knit" it and make sure your analysis is reproducible (while on
-your computer). We already cleaned it up from the previous session.
-
-We will now add the `load()` code right below the `source()` function in
-the `setup` code chunk:
-
-```{r}
-#| filename: "docs/learning.qmd"
-#| eval: false
-source(here("R/functions.R"))
-mmash <- read_csv(here("data/mmash.csv"))
-```
-
-As we write more R code and do some simple analyses of the data, we are
-going to be knitting fairly often (depending on how long the analysis
-takes of workshop). The main reason for this is to ensure that whatever
-you are writing and coding will at least be reproducible on your
-computer, since Quarto is designed to ensure the document is
-reproducible.
-
-## Re-arranging data for easier summarizing
+## :book: Reading task: Pivoting data for easier wrangling
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Let them read through this section and then walk through it again and
-explain it a bit more, making use of the tables and graphs. Doing both
-reading and listening again will help reinforce the concept of pivoting,
-which is usually quite difficult to grasp for those new to it.
+Briefly walk through it again after they've read it and explain it a bit
+more, making use of the tables and graphs. Pivoting is often a difficult
+concept to grasp, to it's good to go over it a few times. Emphasise the
+difficulty of it, to remind them it is ok to not get it.
 :::
 
-::: callout-note
-## Reading task: \~6 minutes
+**Time: \~6 minutes.**
 
-Now that we have the final dataset to work with, we want to explore it a
-bit with some simple descriptive statistics. One extremely useful and
-powerful tool to summarizing as well as processing/wrangling data is by
-"pivoting" your data. Pivoting is when you convert data between longer
-forms (more rows) and wider forms (more columns). The `{tidyr}` package
-within `{tidyverse}` contains two wonderful functions for pivoting:
-`pivot_longer()` and `pivot_wider()`. There is a well written
-documentation on pivoting in the [tidyr
+Rarely is our data in the exact format we need or want it to be in to
+effectively process, analyse, or visualize it. Often we'll need to do
+some heavy reshaping. One very powerful way to reshape data is with
+"pivoting". Pivoting is when you take a dataset's rows and convert them
+to columns or convert columns to rows, and in many different
+combinations of this.
+
+The `{tidyr}` package within the `{tidyverse}` contains two wonderful
+functions for pivoting: `pivot_longer()` and `pivot_wider()`. There is a
+well written documentation on pivoting in the [tidyr
 website](https://tidyr.tidyverse.org/articles/pivot.html) that can
-explain more about it. The first thing we'll use, and probably the more
-commonly used in general, is `pivot_longer()`. This function is commonly
-used because entering data in the wide form is easier and more time
-efficient than entering data in long form. For instance, if you were
-measuring glucose values over time in participants, you might enter data
-in like this:
+explain more about it that you can read at another time.
+
+Most use cases of pivoting are to convert to the longer form, which you
+can do with `pivot_longer()` and is what we will cover first in this
+session. There are many reasons pivoting longer is the most common pivot
+direction.
+
+An example is if you ever need to enter data. Entering data, especially
+in a spreadsheet tool, in the wide form is much easier and more time
+efficient than entering data in long form. Consider the scenario where
+you are entering data from a participant for glucose values that were
+measured every 30 minutes. So you might enter data like this:
 
 | person_id | glucose_0 | glucose_30 | glucose_60 |
 |:----------|:----------|:-----------|:-----------|
@@ -84,31 +58,36 @@ in like this:
 
 : This is a **wide** dataset that is useful for data entry.
 
-However, when it comes time to analyze the data, this wide form is very
-inefficient and difficult to computationally and statistically work
-with. So, we do data entry in wide and use functions like
-`pivot_longer()` to get the data ready for analysis. @fig-pivot-longer
-visually shows what happens when you pivot from wide to long.
+If working with a spreadsheet, is this is to use tab to move to the next
+cell and continue entering the data. However, when it comes time to
+analyze the data, this wide form is very inefficient and difficult to
+computationally and statistically work with. So, we do data entry in
+wide and use functions like `pivot_longer()` to get the data ready for
+analysis. See @fig-pivot-longer below that visually shows what happens
+when you pivot from wide to long.
 
-![Pivot longer in tidyr. New columns are called 'name' and 'value'.
+![Pivot longer in `{tidyr}`. New columns are called `name` and `value`.
 Notice how the values in `A` and `B` columns are stacked on top of each
 other in the newly created `V`
-column.](/images/pivot-longer.png){#fig-pivot-longer width="90%"}
+column.](/images/pivot-longer.png){#fig-pivot-longer width="90%"
+fig-alt="A diagram showing the use of the pivot longer function, where a table with two columns, A and B, is converted to a table with two columns, name and value. The original columns values are stacked in the value column and the original columns names are stacked in the name column."}
 
 If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
-![Pivot longer in tidyr, excluding an 'id' column. New columns are
-called 'name' and 'value', as well as the old 'id' column. Notice how,
+![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are
+called `name` and `value`, as well as the old `id` column. Notice how,
 unlike the previous image, the `id` column is excluded when pivoting
 into the data on the
 right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
-width="90%"}
+width="90%"
+fig-alt="A diagram showing the use of the pivot longer function, where a table with three columns, id, A and B, is converted to a table with three columns, id, name and value. The original columns values are stacked in the value column and the original columns names are stacked in the name column, but the original id column remains, but with the ids stacked on top of each other."}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
-disheartened if you can't understand how it works yet. As you practice
-using it, you will understand it. With `pivot_longer()`, the first
-argument is the data itself. The other arguments are:
+discouraged if you can't understand how it works yet or of the ways you
+could use. As you practice using it, you will slowly begin to understand
+it. With `pivot_longer()`, the first argument is the data itself. The
+other arguments are:
 
 1.  `cols`: The columns to use to convert to long form. The input is a
     vector made using `c()` that contains the column names, like you
@@ -125,124 +104,214 @@ cover later in the session, are incredibly powerful functions. We can't
 show close to everything it can do in this workshop, but if you want to
 learn more, read up on the
 [documentation](https://tidyr.tidyverse.org/articles/pivot.html) for it.
+
+{{< text_snippet sticky_up >}}
+
+## Pivot to long form
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Emphasise that there are a lot of really powerful ways you can use
+`pivot_longer()` and to point out looking to the documentation to see
+some examples of that.
 :::
 
-Since we'll be using `{tidyr}`, we will need to add it as a dependency
-by running this in the Console:
+Our CGM data is already in a long format, but we eventually want to join
+it with the participant details data. The participant details data is in
+a wide format. Let's start with importing it in the `setup` code chunk
+of our `docs/learning.qmd` file:
 
-```{r}
-#| filename: "Console"
-#| eval: false
-usethis::use_package("tidyr")
+```{r import-participant-details}
+#| filename: "docs/learning.qmd"
+participant_details <- here("data-raw/dime/participant_details.csv") |>
+  import_dime()
 ```
 
-Let's try this out with `mmash`. In your `docs/learning.qmd` file, create
-a new header called `## Pivot longer` and create a new code chunk below
-that with {{< var keybind.chunk >}}. Now we can start typing in our
-code:
+Run the code in the `setup` code chunk by running each line with
+{{< var keybind.run-code >}}. Then, let's move to the end of our
+`docs/learning.qmd` file and create a new header called
+`## Pivot longer`. Below that, create a new code chunk with
+{{< var keybind.chunk >}}. We'll start with seeing what the data looks
+like:
 
-```{r pivot-everything-error}
+```{r show-participant-details}
+#| filename: "docs/learning.qmd"
+participant_details
+```
+
+You can see that the data, while the data has the `intervention` column
+in the long format, the dates are in the wide format, with `start_date`
+and `end_date`. Our CGM and sleep only has a single `date` column, so we
+can't yet join these datasets with `participant_details`. We first need
+to pivot the data to the long format. Let's add a pipe to
+`participant_details` to output into `pivot_longer()`:
+
+```{r try-pivot-longer}
 #| filename: "docs/learning.qmd"
 #| error: true
-mmash |>
-  # pivot every column
-  pivot_longer(everything())
+participant_details |>
+  pivot_longer()
 ```
 
-Why the error? We get an error because we are trying to mix data types.
-We can't have character data and number data in the same column. Let's
-pivot only numbers.
+This give an error because we haven't told it which columns to use yet.
+We want to pivot only the date columns. We can do this using
+`{tidyselect}` helpers, for instance the helper function `ends_with()`
+is perfect for this case, since both date columns end with `date`.
 
-```{r pivot-numeric}
+```{r pivot-only-date-columns}
 #| filename: "docs/learning.qmd"
-mmash |>
-  pivot_longer(where(is.numeric))
+participant_details |>
+  pivot_longer(ends_with("date"))
 ```
 
-Nice! But not super useful. We can exclude specific columns from
-pivoting with `-` before the column name, for instance with `user_id`
-and `day`. Let's drop the `samples` column before pivoting since `day`
-gives us the same information:
+Awesome! We now have a long format with dates in a single column. But we
+also have new column names that are a bit ambiguous, like `name` and
+`value`. We can tell `pivot_longer()` to give them more descriptive
+names with `names_to` and `values_to`. But, we also don't need the
+`name` column, since implicitly we know that the last date is the end
+date and the first date is the start date. So, we can set
+`names_to = NULL` to drop the new `name` column from being created.
 
-```{r pivot-longer-example}
+```{r pivot-only-date-columns-renamed}
 #| filename: "docs/learning.qmd"
-mmash |>
-  select(-samples) |>
-  pivot_longer(c(-user_id, -day, -gender))
+participant_details |>
+  pivot_longer(ends_with("date"), names_to = NULL, values_to = "date")
 ```
 
-## Exercise: Summarise your data after pivoting
+Great! But, maybe you may have noticed something else here. If we want
+to join this data with the CGM data, we need to have a single row for
+each day of the study that the participant has data for. Right now, the
+`participant_details` data has only the date for the first day and for
+the last day. So if we join the CGM or sleep data, we would only get the
+data for those two dates. What we want is to have all the days included
+between the start and end date for each participant. The `{tidyr}`
+package has many wonderful functions that help tidy up data, including a
+function for this particular situation! The function is called
+`complete()` because it will fill in data where you want a sequence with
+the missing dates in that sequence. For our situation, that is filling
+in all the missing dates between the start and end date for each
+participant.
 
-> Time: 15 minutes.
+Since we want to complete the data for each participant for each
+intervention, we will need to group the data. We could select each
+column to group by, but we could also use the `pick()` function we used
+before to select all the columns except for the `date` column.
 
-Using the `group_by()` and `summarise()` functions we learned in
-@sec-summarise-with-functionals, complete these tasks starting from this
-code.
-
-``` {.r filename="docs/learning.qmd"}
-mmash |>
-  select(-samples) |>
-  pivot_longer(c(-user_id, -day, -gender)) |>
-  ___
+```{r group-pivoted-data}
+#| filename: "docs/learning.qmd"
+participant_details |>
+  pivot_longer(ends_with("date"), names_to = NULL, values_to = "date") |>
+  group_by(pick(-date))
 ```
 
-1.  Continuing the `|>` from `pivot_longer()`, use `group_by()` to group
-    the data by `gender`, `day`, and `name` (the long form column
-    produced from `pivot_longer()`).
-2.  After grouping with `group_by()`, use `summarise()` and `across()`
-    on the `value` column and find the mean and standard deviation (put
-    them into a named list like we did previously). Don't forget to use
-    `na.rm = TRUE` to exclude missing values.
-3.  Stop the grouping effect with `.groups = "drop"` in `summarise()`.
-4.  Run `{styler}` while in the `docs/learning.qmd` file with
-    {{< var keybind.styler >}}.
-5.  Render the Quarto file into HTML with {{< var keybind.render >}}.
-6.  Open up the Git interface and **add and commit** the changes to
-    `docs/learning.qmd` with {{< var keybind.git >}}
+We can now use `complete()` to fill in the dates. The `complete()`
+function is used like `mutate()` or `summarise()`. Unlike these other
+functions, you need to provide it with a column that exists, and you
+can't create new columns. And you also need to provide it with the
+values that you want completed. In our case, we want each date from the
+start date to the end date, one for each day. We can use the `seq()`
+function to create a sequence of dates, from the `min()` to the `max()`.
+So we'd write it like:
 
-```{r solution-pivot-summarize}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-mmash |>
-  select(-samples) |>
-  pivot_longer(c(-user_id, -day, -gender)) |>
-  group_by(gender, day, name) |>
-  summarise(
-    across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    ),
-    .groups = "drop"
+```{r complete-dates}
+#| filename: "docs/learning.qmd"
+participant_details |>
+  pivot_longer(ends_with("date"), names_to = NULL, values_to = "date") |>
+  group_by(pick(-date)) |>
+  complete(
+    date = seq(min(date), max(date), by = "1 day")
   )
 ```
 
-## Pivot data to wider form
+We now have a dataset that we can join with the other datasets! Time to
+make it into a function :grin:
+
+## :technologist: Exercise: Convert the date completion code into a function
+
+**Time: \~10 minutes.**
+
+{{< include /includes/solutions/_pivots-date-completion.qmd >}}
+
+Time to convert it into a function :grin: You've practiced this several
+times before, and the more you practice, the easier it will be to do! At
+the end of the exercise, you should create the function so that it can
+be used like this in the `setup` code chunk:
+
+```{r}
+#| filename: "docs/learning.qmd"
+participant_details <- here("data-raw/dime/participant_details.csv") |>
+  import_dime() |>
+  clean_participant_details()
+```
+
+And if you were to run this code in the **Console**, it would look like
+this:
+
+```{r}
+#| filename: "Console"
+participant_details
+```
+
+1.  Since we are using `{tidyr}`, use `usethis::use_package()` to add it
+    as a dependency to the `DESCRIPTION` file.
+2.  Create a new function named `clean_participant_details` by assigning
+    `function()` to it.
+3.  Include only `data` as an argument in `function()`.
+4.  Move the code into the function body and replace the
+    `participant_details` variable with the `data` argument.
+5.  Assign it to a new variable called `cleaned` and `return()` it at
+    the end of the function.
+6.  Find out which packages all the functions come from by using `?` and
+    explicitly assign the package to the function with `::`. There
+    should be four packages used in this code.
+7.  Create Roxygen documentation for the function with
+    {{< var keybind.roxygen >}}. Remember, the documentation doesn't
+    have to be perfect or complete. Just to practice using it.
+8.  Test that the code works by running the function and using it like
+    shown above.
+9.  Once it works as intended, cut and paste it over into
+    `R/functions.R`.
+10. Pipe the `import_dime()` output into this new function in the
+    `setup` code chunk of `docs/learning.qmd`.
+11. Style both `R/functions.R` and `docs/learning.qmd` with
+    {{< var keybind.style >}}.
+12. Render the document with {{< var keybind.render >}} to make sure it
+    all works.
+13. Once everything works fine, commit your changes to the Git history
+    with {{< var keybind.commit >}}.
+
+{{< text_snippet sticky_up >}}
+
+## :book: Reading task: Pivoting data to a wider form
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
 Like with the pivoting to long section, let them read through this
 section first and then go over it again to verbally explain it more,
-making use of the graphs to help illustrate what is happening. Doing
-both reading and listening will help reinforce the concepts.
+making use of the graphs to help illustrate what is happening.
 :::
 
-::: callout-note
-## Reading task: \~6 minutes
+**Time: \~10 minutes.**
 
-After using `pivot_longer()` on the summarised data, it looks nice, but
-it could be better. Right now it is in a pretty long form, but for
-showing as a table, having columns for either `gender` or `day` would
-make it easier to compare the mean and SD values we obtain. This is
-where we can use `pivot_wider()` to get the data wider rather than long.
+Working in long form can be really useful when doing certain types of
+wrangling, like you've seen and read about above. The majority of the
+time, you probably will only ever use `pivot_longer()`. But, sometimes
+you need to pivot to a form that is a bit wider to do, for example, when
+doing certain types of joins or processing.
+
+For us, the sleep data is in a very long form, where each hour of sleep
+has several rows for the different types of sleep. Joining the data in
+this form to the other datasets, while possible, won't produce usable
+output. We want to convert it so there is only one row per hour of a
+participant's day, rather than multiple rows per hour. For that, we need
+to convert to the longer form.
+
 The arguments for `pivot_wider()` are very similar to those in
 `pivot_longer()`, except instead of `names_to` and `values_to`, they are
-called `names_from` and `values_from`. Like with many R functions, the
-first argument is the data and the other arguments are:
+called `names_from` and `values_from`. Like with many `{tidyverse}`
+functions, the first argument is the data and the other arguments are:
 
 1.  `id_cols`: This is optional as it will default to all column names.
     This argument tells `pivot_wider()` to use the given columns as the
@@ -255,8 +324,9 @@ first argument is the data and the other arguments are:
     the column that has the values that will make up the new columns.
     Unlike with the `names_to` argument in `pivot_longer()` which takes
     a character string as input, the column name for `names_from` must
-    be *unquoted* because you are selecting a column that already exists
-    in the dataset.
+    be *unquoted*, because you are selecting a column that already
+    exists in the dataset (unlike `names_to` which is the name of a
+    column that you *want to create* but that doesn't exist yet).
 3.  `values_from`: Same as `names_from`, this is the column name (that
     exists and must be given *unquoted*) for the values that will be in
     the new columns.
@@ -264,364 +334,135 @@ first argument is the data and the other arguments are:
 @fig-pivot-wider visually shows what's happening when using
 `pivot_wider()`.
 
-![Pivot wider in tidyr, where a set of stacked "groups" in the data on
-the left are placed side-by-side as new columns in the output data on
+![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data
+on the left are placed side-by-side as new columns in the output data on
 the right. Notice how the values in the column `N`, which is used in the
 `names_from` argument, are used as the names for the new columns `A` and
 `B` in the new data.](/images/pivot-wider.png){#fig-pivot-wider
-width="90%"}
-:::
+width="90%"
+fig-alt="A diagram showing the use of the pivot wider function, where a table with three columns, id, name, and value, is converted to a table with three columns, id, A and B. The values in the column name are now the names of the columns in the new table: A and B. The original id column still exists."}
 
-In our case, we want either `gender` or `day` as columns with the mean
-and SD values. Let's use `pivot_wider()` on `day` to see differences
-between days.
+{{< text_snippet sticky_up >}}
 
-```{r pivot-wider-from-summarised}
+## :technologist: Exercise: Create a new function to pivot sleep to wider
+
+**Time: \~25 minutes.**
+
+{{< include /includes/solutions/_pivots-sleep-types-to-wider.qmd >}}
+
+This will a bit more of a challenging exercise since we haven't used the
+`pivot_wider()` function before. But the way you use it is very similar
+to `pivot_longer()`. We've had you practice the process many times and
+this will be an exercise to really challenge what you've learned so far!
+Which is part of the learning journey :grin:
+
+For this exercise, you will create a new function that converts the
+sleep data into a wider form. To test it out, it should look like this
+and should output something similar:
+
+```{r}
 #| filename: "docs/learning.qmd"
-#| error: true
-mmash |>
-  select(-samples) |>
-  pivot_longer(c(-user_id, -day, -gender)) |>
-  group_by(gender, day, name) |>
-  summarise(
-    across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    ),
-    .groups = "drop"
-  ) |>
-  pivot_wider(names_from = day)
+sleep_data |>
+  sleep_types_to_wider()
 ```
 
-Hmm, didn't work. Nothing has been pivoted to wider. That's because we
-are missing the `value_from` argument. Since we actually have the two
-`value_mean` and `value_sd` columns that have "values" in them, we need
-to tell `pivot_wider()` to use those two columns. Since `values_from`
-works similar to `select()`, we can use `starts_with()` to select the
-columns starting with `"values"`.
+Once you've made this new function, move it into the `clean_sleep()` so
+it looks like:
 
-```{r pivot-wider-from-summarised-starts-with}
-#| filename: "docs/learning.qmd"
-mmash |>
-  select(-samples) |>
-  pivot_longer(c(-user_id, -day, -gender)) |>
-  group_by(gender, day, name) |>
-  summarise(
-    across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    ),
-    .groups = "drop"
-  ) |>
-  pivot_wider(names_from = day, values_from = starts_with("value"))
-```
-
-Now we have a different problem. There are missing values in both the
-`day` and `gender` columns that, at least in this case, we don't want
-pivoted. Shouldn't they be removed when we include `na.rm = TRUE` in our
-code? The function of `na.rm = TRUE` is not to remove `NA` values, but
-to instead tell R to not include variables in `mmash` that are `NA` when
-calculating the mean and standard deviation. In this particular case,
-the columns `value_mean_NA` or `value_mean_-29` have `NA` or `NaN`
-values because there are no other values in the data *other than* `NA`.
-Since we don't actually care about missing days (or the random `-29`
-day), we can remove missing values with the function called `drop_na()`.
-We also don't care about missing `gender` values, so we'll drop them as
-well. Add it in the pipe right before `group_by()`.
-
-```{r pivot-wider-from-summarised-drop-na}
-#| filename: "docs/learning.qmd"
-mmash |>
-  select(-samples) |>
-  pivot_longer(c(-user_id, -day, -gender)) |>
-  drop_na(day, gender) |>
-  group_by(gender, day, name) |>
-  summarise(
-    across(
-      value,
-      list(
-        mean = \(x) mean(x, na.rm = TRUE),
-        sd = \(x) sd(x, na.rm = TRUE)
-      )
-    ),
-    .groups = "drop"
-  ) |>
-  pivot_wider(names_from = day, values_from = starts_with("value"))
-```
-
-Now that that works, let's render the document to HTML with
-{{< var keybind.render >}}.
-
-## Exercise: Convert this code into a function
-
-> Time: 15 minutes.
-
-Using the same workflow we've been doing throughout this workshop, convert
-the code we just wrote above into a function.
-
-1.  Name the function `tidy_summarise_by_day`.
-2.  Create one argument called `data`. Create a new variable inside the
-    function called `daily_summary` and put it in `return()` so the
-    function outputs it.
-3.  Test that the function works.
-4.  Add Roxygen documentation with {{< var keybind.roxygen >}} and use
-    explicit function calls with `package_name::`.
-    -   Don't forget, you can use `?function_name` to find out which
-        package the function comes from.
-5.  Move (**cut** and paste) the newly created function over into the
-    `R/functions.R` file.
-6.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.styler >}}.
-7.  Restart R with {{< var keybind.restart-r >}}, go into the
-    `docs/learning.qmd` file and run the `setup` code chunk in the Quarto
-    document with the `source()` and `load()` commands. Then test that
-    the new function works in a code chunk at the bottom of the
-    document.
-8.  Render the Quarto document to HTML with {{< var keybind.render >}}.
-9.  Add and commit the changes to the Git history with
-    {{< var keybind.git >}}.
-
-```{r solution-summarise-function}
-#| output: false
-#| code-fold: true
-#| code-summary: "**Click for the solution**. Only click if you are struggling or are out of time."
-#' Calculate tidy summary statistics by day.
-#'
-#' @param data The MMASH dataset.
-#'
-#' @return A data.frame/tibble.
-#'
-tidy_summarise_by_day <- function(data) {
-  daily_summary <- data |>
-    dplyr::select(-samples) |>
-    tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
-    tidyr::drop_na(day, gender) |>
-    dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(
-      dplyr::across(
-        value,
-        list(
-          mean = \(x) mean(x, na.rm = TRUE),
-          sd = \(x) sd(x, na.rm = TRUE)
-        )
-      ),
-      .groups = "drop"
-    ) |>
-    tidyr::pivot_wider(
-      names_from = day,
-      values_from = dplyr::starts_with("value")
-    )
-  return(daily_summary)
-}
-
-# Testing that the function works.
-mmash |>
-  tidy_summarise_by_day()
-```
-
-## Extending the function to use other statistics and to be tidier
-
-Now that we've made the tidy summary code into a function, let's make it
-more generic so we can use other summary statistics and to have the
-output be a bit tidier. For instance, it would be nice to be able to do
-something like this (we'd still have to use `na.rm` though):
-
-``` r
-mmash |>
-    tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
-mmash |>
-    tidy_summarise_by_day(\(x) max(x, na.rm = TRUE))
-mmash |>
-    tidy_summarise_by_day(
-      list(
-        median = \(x) median(x, na.rm = TRUE),
-        max = \(x) max(x, na.rm = TRUE)
-      )
-    )
-```
-
-Before we get to adding this functionality, let's first make it so the
-function has a tidier output. Specifically, we want to round the values
-so they are easier to read. Go into the `R/functions.R` script to the
-`tidy_summarize_by_day()` function. We'll create a new line right after
-the `dplyr::summarise()` function, after the `|>` pipe. Since we want to
-round values of existing columns, we need to use `mutate()`. And like we
-used `across()` in `summarise()`, we can also use `across()` within
-`mutate()` on specific columns. In our case, we want to round columns
-that `start_with()` the word `"value"` to 2 digits.
-
-```{r rounding-summary-function-output}
+```{r solution-explanation-clean-sleep}
 #| filename: "R/functions.R"
-tidy_summarise_by_day <- function(data) {
-  daily_summary <- data |>
-    dplyr::select(-samples) |>
-    tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
-    tidyr::drop_na(day, gender) |>
-    dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(
-      dplyr::across(
-        value,
-        list(
-          mean = \(x) mean(x, na.rm = TRUE),
-          sd = \(x) sd(x, na.rm = TRUE)
-        )
-      ),
-      .groups = "drop"
-    ) |>
-    dplyr::mutate(dplyr::across(
-      dplyr::starts_with("value"),
-      \(x) round(x, digits = 2)
-    )) |>
-    tidyr::pivot_wider(
-      names_from = day,
-      values_from = dplyr::starts_with("value")
-    )
-  return(daily_summary)
+clean_sleep <- function(data) {
+  cleaned <- data |>
+    get_participant_id() |>
+    dplyr::rename(datetime = date) |>
+    prepare_dates(datetime) |>
+    # The function used to sum summarise may be different for you.
+    summarise_column(seconds, list(sum = sum)) |>
+    # This is the new function you will add below.
+    sleep_types_to_wider()
+  return(cleaned)
 }
 ```
 
-Source the `R/functions.R` file with {{< var keybind.source >}}, then
-test out the function in the Console:
+Then, you go to your `setup` code chunk in `docs/learning.qmd` and run
+all the code in it, especially:
+
+```{r}
+#| filename: "docs/learning.qmd"
+sleep_data <- here("data-raw/dime/sleep/") |>
+  import_csv_files() |>
+  clean_sleep()
+```
+
+It should like this if you run it in the **Console**:
 
 ```{r}
 #| filename: "Console"
-tidy_summarise_by_day(mmash)
+sleep_data
 ```
 
-That's much easier to read with the values rounded. Now let's add the
-ability to change the summary statistics function to something else.
-This is a surprisingly easy thing so before we do that, let's take a few
-minutes to brainstorm how we can achieve this.
+1.  Look into the documentation for `pivot_wider()` to get a better idea
+    for how it works.
+2.  Create a new header called `## Pivot wider` in the
+    `docs/learning.qmd` file, then create a new code chunk below it with
+    {{< var keybind.chunk >}}.
+3.  Before making the function, prototype and test out code by piping
+    the `sleep_data` into `pivot_wider()`. Try using `names_from` and
+    `values_from` to get the right output. You can use the argument
+    `names_prefix` to add text to the start of the new `names` columns.
+
+After you've written some code that works, use the same process you've
+used before to make a function:
+
+1.  Create a new function called `sleep_types_to_wider` and assign
+    `function()` to it.
+2.  Include `data` as an argument in `function()`.
+3.  Replace the `sleep_data` variable with the `data` argument.
+4.  Assign it to a new variable called `wider` and `return()` it at the
+    end of the function.
+5.  Explicitly indicate the package the function uses by using
+    `tidyr::`.
+6.  Create Roxygen documentation for the function with
+    {{< var keybind.roxygen >}}.
+7.  Test that the code works by running the function, using it like
+    `sleep_types_to_wider(sleep_data)`.
+8.  When it works, cut and paste it over into `R/functions.R`.
+9.  Include the new function in the `clean_sleep()` function in
+    `R/functions.R` so that it looks like the above.
+10. Style both `R/functions.R` and `docs/learning.qmd` with
+    {{< var keybind.style >}}.
+11. Render the document with {{< var keybind.render >}} to make sure it
+    all works.
+12. And lastly, commit your changes to the Git history with
+    {{< var keybind.commit >}}.
+
+{{< text_snippet sticky_up >}}
+
+## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Get the groups to chat together for about 5 minutes to think about how
-they'd do that. Ask that they don't look ahead in the text. After that,
-discuss some ways to add the functionality.
+Quickly cover this and get them to do the survey. The previous exercise
+will likely be challenging for them, so we will not do a discussion
+activity this time.
 :::
 
-Now that we've discussed this and come to a conclusion, let's update the
-function.
-
-```{r generalize-summary-function}
-#| filename: "R/functions.R"
-tidy_summarise_by_day <- function(data, summary_fn) {
-  daily_summary <- data |>
-    dplyr::select(-samples) |>
-    tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
-    tidyr::drop_na(day, gender) |>
-    dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(
-      dplyr::across(
-        value,
-        summary_fn
-      ),
-      .groups = "drop"
-    ) |>
-    dplyr::mutate(dplyr::across(
-      dplyr::starts_with("value"),
-      \(x) round(x, digits = 2)
-    )) |>
-    tidyr::pivot_wider(
-      names_from = day,
-      values_from = dplyr::starts_with("value")
-    )
-  return(daily_summary)
-}
-```
-
-Source the `R/functions.R` file with {{< var keybind.source >}}, then
-test out the function in the Console:
-
-```{r}
-#| filename: "Console"
-tidy_summarise_by_day(mmash, \(x) max(x, na.rm = TRUE))
-```
-
-Now that it works, let's add some summary statistics to the
-`docs/learning.qmd` file.
-
-```{r test-tidier-summary}
-#| filename: "docs/learning.qmd"
-mmash |>
-  tidy_summarise_by_day(\(x) median(x, na.rm = TRUE))
-mmash |>
-  tidy_summarise_by_day(list(
-    median = \(x) median(x, na.rm = TRUE),
-    max = \(x) max(x, na.rm = TRUE)
-  ))
-```
-
-While everything now works, the column names are not very clear. For
-example, what does `value_median_1` or `1` mean? It would be nice if it
-said something like `median_day_1` or `day_1`. And with `pivot_wider()`,
-we can do that with the `name_glue` argument! With this argument, we can
-write a custom variable naming scheme that involves combining the use of
-`{}` and a special `{.value}` keyword within a string in the argument to
-create these custom column names in the wider dataset. So this would
-look like `{.value}_day_{day}`, where `{.value}` refers to the values of
-the column(s) used in `values_from` and the `{day}` refers to the column
-used in `names_from`.
-
-We can then pipe the output to `rename_with()` from the `{dplyr}`
-package, which acts like `map()` (but for renaming columns) and can take
-an anonymous function. We can use this to then remove the `value_` from
-the start of the column name.
-
-```{r finalize-summary-function}
-#| filename: "R/functions.R"
-tidy_summarise_by_day <- function(data, summary_fn) {
-  daily_summary <- data |>
-    dplyr::select(-samples) |>
-    tidyr::pivot_longer(c(-user_id, -day, -gender)) |>
-    tidyr::drop_na(day, gender) |>
-    dplyr::group_by(gender, day, name) |>
-    dplyr::summarise(
-      dplyr::across(
-        value,
-        summary_fn
-      ),
-      .groups = "drop"
-    ) |>
-    dplyr::mutate(dplyr::across(
-      dplyr::starts_with("value"),
-      \(x) round(x, digits = 2)
-    )) |>
-    tidyr::pivot_wider(
-      names_from = day,
-      values_from = dplyr::starts_with("value"),
-      names_glue = "{.value}_day_{day}"
-    ) |>
-    dplyr::rename_with(\(x) stringr::str_remove(x, "value_"))
-  return(daily_summary)
-}
-```
-
-Let's see how it looks by rendering the `docs/learning.qmd` file again
-with {{< var keybind.render >}}. One of the output tables show now look
-something like:
-
-```{r test-even-tidier-summary}
-#| echo: false
-mmash |>
-  tidy_summarise_by_day(list(
-    median = \(x) median(x, na.rm = TRUE),
-    max = \(x) max(x, na.rm = TRUE)
-  ))
-```
-
-Nice!! :grin: :tada:
-
-## Summary
-
 -   Data is usually structured to varying degrees as wide or long
-    format.
-    -   Use `pivot_longer()` to convert from wide to long.
-    -   Use `pivot_wider()` to convert from long to wide.
+    format. Thinking of your data in terms of shifting it around in
+    structure is a powerful and useful skill to have when doing data
+    wrangling and analysis.
+-   When needing to convert to the longer form, use `pivot_longer()`
+    from the `{tidyr}` package.
+-   If you need to convert to the wider form, use the `{tidyr}` function
+    `pivot_wider()`.
+-   Seek out and test different functions within the `{tidyr}` package,
+    it has many very helpful functions for tidying up data such as the
+    `complete()` function.
+
+```{r admin-save-session-code}
+#| include: false
+save.image(here::here("_temp/robustness.RData"))
+```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}

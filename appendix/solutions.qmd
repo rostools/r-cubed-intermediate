@@ -1,0 +1,33 @@
+# Solutions {#sec-solutions}
+
+```{r setup}
+#| include: false
+show_solutions <- TRUE
+```
+
+This document contains the solutions, or in many ways potentials
+solutions, to the exercises throughout the workshop. They are hidden by
+default so you don't accidentally see solutions for the other exercises.
+
+## Pivoting your data from and to long or wide {.unnumbered}
+
+### :technologist: Exercise: Convert the date completion code into a function {.unnumbered}
+
+```{r}
+show_solutions
+```
+
+```{r}
+#| echo: !expr 'show_solutions'
+"test"
+```
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_pivots-date-completion.qmd >}}
+:::
+
+### :technologist: Exercise: Create a new function to pivot sleep to wider {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_pivots-sleep-types-to-wider.qmd >}}
+:::

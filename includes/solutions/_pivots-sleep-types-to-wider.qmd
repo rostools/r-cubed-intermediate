@@ -1,0 +1,19 @@
+```{r}
+#| label: solution-sleep-types-to-wider
+#| echo: !expr 'show_solutions'
+#' Convert the sleep types to wide format.
+#'
+#' @param data The cleaned DIME sleep data.
+#'
+#' @returns A data frame.
+#'
+sleep_types_to_wider <- function(data) {
+  wider <- data |>
+    tidyr::pivot_wider(
+      names_from = sleep_type,
+      names_prefix = "seconds_",
+      values_from = seconds_sum
+    )
+  return(wider)
+}
+```
