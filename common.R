@@ -31,3 +31,7 @@ if (requireNamespace("desc", quietly = TRUE)) {
     downlit.attached = desc::desc_get_deps()$package[-1]
   )
 }
+
+# This is to prevent solutions from being shown in the sessions,
+# but is overridden by setting it in the solutions document.
+show_solutions <- FALSE

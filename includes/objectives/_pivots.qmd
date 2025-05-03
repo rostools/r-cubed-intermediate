@@ -4,3 +4,8 @@
     long or wide format.
 3.  Apply the `pivot_longer()` and `pivot_wider()` functions from the
     `{tidyr}` package to pivot data.
+4.  Recognise and appreciate the impact that seeking out and using
+    existing functions to solve problems has on how you get things done,
+    instead of writing custom code to do the things you want. For
+    example, looking through the functions found in packages like
+    `{tidyr}`.
