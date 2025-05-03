@@ -140,7 +140,8 @@ was shorter. We will use `rename()` like we've done before.
 
 ```{r rename-glucose-setup-chunk}
 #| filename: "docs/learning.qmd"
-cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+cgm_data <- here("data-raw/dime/cgm") |>
+  import_csv_files() |>
   get_participant_id() |>
   prepare_dates(device_timestamp) |>
   rename(glucose = historic_glucose_mmol_l)
@@ -381,7 +382,8 @@ code with:
 
 ```{r clean-cgm-setup-chunk}
 #| filename: "docs/learning.qmd"
-cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+cgm_data <- here("data-raw/dime/cgm") |>
+  import_csv_files() |>
   clean_cgm()
 ```
 
