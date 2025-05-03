@@ -353,7 +353,8 @@ code we wrote into `list_rbind()`.
 
 ```{r use-list-rbind}
 #| filename: "docs/learning.qmd"
-cgm_data <- map(cgm_files, import_dime) |>
+cgm_data <- cgm_files |>
+  map(import_dime) |>
   list_rbind()
 cgm_data
 ```
@@ -372,7 +373,8 @@ data frame as a new column called `file_path_id`. So we will add the
 
 ```{r use-list-rbind-with-paths}
 #| filename: "docs/learning.qmd"
-cgm_data <- map(cgm_files, import_dime) |>
+cgm_data <- cgm_files |>
+  map(import_dime) |>
   list_rbind(names_to = "file_path_id")
 ```
 
@@ -420,7 +422,8 @@ looks like this:
 #| eval: false
 cgm_files <- here("data-raw/dime/cgm/") |>
   dir_ls(glob = "*.csv")
-cgm_data <- map(cgm_files, import_dime) |>
+cgm_data <- cgm_files |>
+  map(import_dime) |>
   list_rbind(names_to = "file_path_id")
 cgm_data
 ```
@@ -444,7 +447,8 @@ import_csv_files <- function(folder_path) {
   files <- folder_path |>
     fs::dir_ls(glob = "*.csv")
 
-  data <- purrr::map(files, import_dime) |>
+  data <- files |>
+    purrr::map(import_dime) |>
     purrr::list_rbind(names_to = "file_path_id")
   return(data)
 }
@@ -452,15 +456,20 @@ import_csv_files <- function(folder_path) {
 
 ```{r}
 #| eval: false
-import_csv_files(here("data-raw/dime/cgm/"))
-import_csv_files(here("data-raw/dime/sleep/"))
+here("data-raw/dime/cgm/") |>
+  import_csv_files()
+here("data-raw/dime/sleep/") |>
+  import_csv_files()
 ```
 
 ```{r}
 #| echo: false
-import_csv_files(here("data-raw/dime/cgm/")) |>
+
+here("data-raw/dime/cgm/") |>
+  import_csv_files() |>
   trim_filepath_for_book()
-import_csv_files(here("data-raw/dime/sleep/")) |>
+here("data-raw/dime/sleep/") |>
+  import_csv_files() |>
   trim_filepath_for_book()
 ```
 

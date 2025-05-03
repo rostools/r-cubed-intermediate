@@ -460,9 +460,13 @@ these things. We could call the function a lot of different names
 `import_dime()`. We want this function to be able to import different
 CSV files, for example:
 
-``` {.r filename="docs/learning.qmd"}
-import_dime(here("data-raw/dime/cgm/101.csv"))
-import_dime(here("data-raw/dime/sleep/101.csv"))
+```{r import-dime-generic}
+#| filename: "docs/learning.qmd"
+#| eval: false
+here("data-raw/dime/cgm/101.csv") |>
+  import_dime()
+here("data-raw/dime/sleep/101.csv") |>
+  import_dime()
 ```
 
 Let's generalise the function! Rather than internally say `cgm` or
@@ -512,8 +516,10 @@ works:
 
 ```{r test-import-dime}
 #| filename: "docs/learning.qmd"
-import_dime(here("data-raw/dime/cgm/101.csv"))
-import_dime(here("data-raw/dime/sleep/101.csv"))
+here("data-raw/dime/cgm/101.csv") |>
+  import_dime()
+here("data-raw/dime/sleep/101.csv") |>
+  import_dime()
 ```
 
 This should work without any problems :tada: Let's style the code with
@@ -602,8 +608,11 @@ And the bottom of the Quarto document should still have the code:
 
 ```{r}
 #| filename: "docs/learning.qmd"
-import_dime(here("data-raw/dime/cgm/101.csv"))
-import_dime(here("data-raw/dime/sleep/101.csv"))
+#| output: false
+here("data-raw/dime/cgm/101.csv") |>
+  import_dime()
+here("data-raw/dime/sleep/101.csv") |>
+  import_dime()
 ```
 
 But **not** have the code to make the `import_dime()` in the Quarto

@@ -372,8 +372,10 @@ Great! Now we need to test it out. Let's try on two `cgm` datasets for
 
 ```{r function-creation-step-5}
 #| filename: "docs/learning.qmd"
-import_cgm(here("data-raw/dime/cgm/101.csv"))
-import_cgm(here("data-raw/dime/cgm/102.csv"))
+here("data-raw/dime/cgm/101.csv") |>
+  import_cgm()
+here("data-raw/dime/cgm/102.csv") |>
+  import_cgm()
 ```
 
 Awesome! It works :tada: The final stage is to add the Roxygen
@@ -423,6 +425,35 @@ the "Document Outline" on the side by clicking the button in the top
 right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 :::
 
+The code that you write to test that the function works should look like the below
+and it should output something similar:
+
+```{r solution-repeat-saliva}
+#| echo: false
+#' Import a participant's sleep data from DIME.
+#'
+#' @param file_path Path to the participant's sleep file.
+#'
+#' @return Outputs a data frame/tibble.
+#'
+import_sleep <- function(file_path) {
+  sleep <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
+  return(sleep)
+}
+```
+
+```{r solution-sleep-function-output}
+here("data-raw/dime/sleep/101.csv") |>
+  import_sleep()
+here("data-raw/dime/sleep/102.csv") |>
+  import_sleep()
+```
+
 1.  Create a new Markdown header at the bottom of `docs/learning.qmd`
     called `## Exercise to make function to import sleep data`.
 2.  Below the Markdown header, create a new code chunk with
@@ -447,32 +478,6 @@ right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 6.  Finally, **add and commit** the changes to the Git history, using
     {{< var keybind.git >}}.
 
-The code that you write to test that the function works should look and
-what it should output should be similar to the below code chunk:
-
-```{r solution-repeat-saliva}
-#| echo: false
-#' Import a participant's sleep data from DIME.
-#'
-#' @param file_path Path to the participant's sleep file.
-#'
-#' @return Outputs a data frame/tibble.
-#'
-import_sleep <- function(file_path) {
-  sleep <- file_path |>
-    read_csv(
-      show_col_types = FALSE,
-      name_repair = to_snake_case,
-      n_max = 100,
-    )
-  return(sleep)
-}
-```
-
-```{r solution-sleep-function-output}
-import_sleep(here("data-raw/dime/sleep/101.csv"))
-import_sleep(here("data-raw/dime/sleep/102.csv"))
-```
 
 <!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->
 

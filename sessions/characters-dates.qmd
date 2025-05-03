@@ -47,13 +47,17 @@ you can come to a consensus.
 
 ```{r admin-display-all-data}
 #| echo: false
-import_csv_files(here("data-raw/dime/cgm")) |>
+here("data-raw/dime/cgm") |>
+  import_csv_files() |>
   trim_filepath_for_book() |>
   print(n = 6)
-import_csv_files(here("data-raw/dime/sleep")) |>
+here("data-raw/dime/sleep") |>
+  import_csv_files() |>
   trim_filepath_for_book() |>
   print(n = 6)
-import_dime(here("data-raw/dime/participant_details.csv")) |>
+
+here("data-raw/dime/participant_details.csv") |>
+  import_dime() |>
   print(n = 6)
 ```
 
@@ -216,7 +220,8 @@ bottom of it below the `library()` functions, add the following code:
 
 ```{r add-cgm-data-to-setup}
 #| filename: "docs/learning.qmd"
-cgm_data <- import_csv_files(here("data-raw/dime/cgm"))
+cgm_data <- here("data-raw/dime/cgm") |>
+  import_csv_files()
 ```
 
 Then we can run this code chunk by using {{< var keybind.run-code >}} so
@@ -408,10 +413,12 @@ data should look like this in the `setup` chunk of the
 
 ```{r get-participant-id-interface}
 # CGM data
-cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+cgm_data <- here("data-raw/dime/cgm") |>
+  import_csv_files() |>
   get_participant_id()
 # Sleep data
-sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+sleep_data <- here("data-raw/dime/sleep") |>
+  import_csv_files() |>
   get_participant_id()
 ```
 
@@ -668,7 +675,8 @@ code chunk in `docs/learning.qmd`, add a pipe after
 
 ```{r rename-sleep-date-setup}
 #| filename: "docs/learning.qmd"
-sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+sleep_data <- here("data-raw/dime/sleep") |>
+  import_csv_files() |>
   get_participant_id() |>
   rename(datetime = date)
 ```
@@ -700,11 +708,13 @@ prepare_dates <- function(data, column) {
 
 ```{r setup-cgm-sleep-with-nse}
 #| filename: "docs/learning.qmd"
-cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+cgm_data <- here("data-raw/dime/cgm") |>
+  import_csv_files() |>
   get_participant_id() |>
   prepare_dates(device_timestamp)
 
-sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+sleep_data <- here("data-raw/dime/sleep") |>
+  import_csv_files() |>
   get_participant_id() |>
   rename(datetime = date) |>
   prepare_dates(datetime)

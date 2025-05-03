@@ -525,9 +525,11 @@ the `setup` code chunk:
 
 ```{r}
 #| filename: "docs/learning.qmd"
-cgm_data <- import_csv_files(here("data-raw/dime/cgm")) |>
+cgm_data <- here("data-raw/dime/cgm") |>
+  import_csv_files() |>
   clean_cgm()
-sleep_data <- import_csv_files(here("data-raw/dime/sleep")) |>
+sleep_data <- here("data-raw/dime/sleep") |>
+  import_csv_files() |>
   clean_sleep()
 ```
 
