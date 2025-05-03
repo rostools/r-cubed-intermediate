@@ -108,7 +108,7 @@ Unlike `map()`, which is a more general function, `across()` is
 specifically designed to work within `{dplyr}` verbs like `mutate()` or
 `summarise()` and within the context of a data frame.
 
-{{< text_snippet sticky_notes >}}
+{{< text_snippet sticky_up >}}
 
 ## Summarising with `across()`
 
