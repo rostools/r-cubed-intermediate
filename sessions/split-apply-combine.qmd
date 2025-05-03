@@ -608,9 +608,9 @@ discussion activity.
 
 ## :speech_balloon: Discussion activity: How might you split-apply-combine in your work?
 
-**Time: \~10 minutes.**
+**Time: \~6 minutes.**
 
-As we prepare for the next session and take a break, get up and discuss
+As we prepare for the next session and taking a break, get up and discuss
 with your neighbour (or others) the questions:
 
 -   From what you have learned so far from this session, how might you
@@ -620,7 +620,7 @@ with your neighbour (or others) the questions:
 -   Are there other ways you can use this other than with your research
     data? For instance, organising courses?
 
-```{r store-session-code}
+```{r admin-store-session-code}
 #| include: false
 save.image(here::here("_temp/split-apply-combine.RData"))
 ```

@@ -509,7 +509,8 @@ function that you can re-use.
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Quickly cover this before moving on to the discussion activity.
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
 :::
 
 -   R is a functional programming language:
@@ -532,10 +533,10 @@ Quickly cover this before moving on to the discussion activity.
 
 ## :speech_balloon: Discussion activity: Incorporating functionals in your own work
 
-**Time: \~10 minutes.**
+**Time: \~6 minutes.**
 
-As we prepare for the next session, discuss with your neighbour or group
-the following question:
+As we prepare for the next session and taking the break, get up and
+discuss with your neighbour or group the following questions:
 
 -   What are some things you do repetitively that you think might
     benefit from using functionals on?
@@ -544,7 +545,7 @@ the following question:
     help your work? How might you change existing code to use them?
     Might it be a lot of work?
 
-```{r store-session-code}
+```{r admin-store-session-code}
 #| include: false
 save.image(here::here("_temp/functionals.RData"))
 ```

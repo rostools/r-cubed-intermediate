@@ -616,6 +616,13 @@ can add and commit the changes to both the `docs/learning.qmd` and
 
 ## Key takeaways
 
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
+:::
+
 -   Make it easier to collaborate with yourself in the future and with
     others by explicitly setting which packages your project depends on.
     Use `usethis::use_package()` to set the dependency for you in the
@@ -636,9 +643,8 @@ can add and commit the changes to both the `docs/learning.qmd` and
 
 **Time: \~6 minutes.**
 
-As we prepare for the next session and to help reinforce what you've
-learned in this session, get up and walk around with your neighbour and
-talk about some of these questions.
+Before we end for the day, help reinforce what you've learned in this
+session by discussing with your neighbour some of these questions.
 
 ::: callout-tip
 Part of improving your coding skills is to think about how you can

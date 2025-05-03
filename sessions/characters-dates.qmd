@@ -743,7 +743,8 @@ To get to that point, complete these tasks:
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Quickly cover this before finishing the session.
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
 :::
 
 -   While very difficult to learn and use, regular expressions (regex or
@@ -761,7 +762,18 @@ Quickly cover this before finishing the session.
     function, use `{{}}` to wrap the variable that gives the error to
     fix the problem and use NSE correctly.
 
-```{r store-session-code}
+## :speech_balloon: Discussion activity: How have you worked with dates and characters?
+
+**Time: \~6 minutes.**
+
+As we prepare for the next session and taking the break, get up and
+discuss with your neighbour or group the following questions:
+
+1.  Have you worked with characters and/or dates before in your work?
+    How was that experience? Easy, hard?
+2.  Can you see some useful ways you could use regex in your work?
+
+```{r admin-store-session-code}
 #| include: false
 save.image(here::here("_temp/characters-dates.RData"))
 ```

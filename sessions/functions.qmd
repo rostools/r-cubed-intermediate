@@ -488,6 +488,13 @@ making more general functions.
 
 ## Key takeaways
 
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
+:::
+
 -   Everything in R is an object.
 -   Every action in R is a function and every function is an object.
 -   Functions contain a sequence of steps that do actions to an object.
@@ -502,19 +509,21 @@ making more general functions.
     them.
 -   Use few arguments in functions to reduce cognitive load.
 
-```{r store-session-code}
-#| include: false
-save.image(here::here("_temp/functions.RData"))
-```
-
 ## :speech_balloon: Discussion activity: What are some tasks that could be functions?
 
 **Time: \~6 minutes.**
 
-As we prepare for the next session, get up, walk around, and discuss
-with your neighbour some of the following questions:
+As we prepare for the next session and the break, get up, walk around, and
+discuss with your neighbour some of the following questions:
 
 -   What are some tasks you do that are repetitive or that you do
     multiple times with very small changes each time you do the task?
 -   How might you use functions in your work? Can you think of specific
     tasks or situations where you could use one?
+
+```{r admin-store-session-code}
+#| include: false
+save.image(here::here("_temp/functions.RData"))
+```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}

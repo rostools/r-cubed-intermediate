@@ -418,7 +418,8 @@ sleep_101
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Quickly cover this before moving on to the discussion activity.
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
 :::
 
 -   Use the appropriate package when importing a specific data file
@@ -435,10 +436,10 @@ Quickly cover this before moving on to the discussion activity.
 
 ## :speech_balloon: Discussion activity: Experiences with cleaning data
 
-**Time: \~8 minutes.**
+**Time: \~6 minutes.**
 
-As we prepare for the next session, get up, walk around, and discuss
-with your neighbour some of the following questions:
+As we prepare for lunch, get up, walk around, and discuss with your neighbour
+some of the following questions:
 
 -   How tidy and clean is your data in your research? Do you have to do
     a lot of processing before you can analyse it?
