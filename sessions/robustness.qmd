@@ -101,7 +101,9 @@ So, if you or someone else wants to install all the packages your
 project depends on, all you or they have to do is go to the **Console**
 and type out (you don't need to do this right now):
 
-``` {.r filename="Console"}
+```{r pak-pak}
+#| filename: "Console"
+#| eval: false
 pak::pak()
 ```
 
@@ -147,7 +149,9 @@ dependency. Go to the **Console** and let's type out how to add it.
 Don't write this code in your Quarto document, since you don't want to
 run it every time you render the document.
 
-``` {.r filename="Console"}
+``` {r use-package-here}
+#| filename: "Console"
+#| eval: false
 usethis::use_package("here")
 ```
 
@@ -180,7 +184,9 @@ usethis::with_project(
 Since we will also make use of the `{tidyverse}` set of packages later
 in the workshop, we'll also add `{tidyverse}` as a dependency.
 
-``` {.r filename="Console"}
+``` {r use-package-tidyverse}
+#| filename: "Console"
+#| eval: false
 usethis::use_package("tidyverse")
 ```
 
@@ -200,7 +206,9 @@ This gives an error though. That's because the `{tidyverse}` is a large
 collection of packages, so as stated by the message, the recommended way
 to add this particular dependency is with:
 
-``` {.r filename="Console"}
+``` {r use-package-tidyverse-depends}
+#| filename: "Console"
+#| eval: false
 usethis::use_package("tidyverse", type = "Depends")
 ```
 
@@ -311,7 +319,9 @@ package a function comes from, but we can easily find that out. Let's
 start with the first action in our function: `read_csv()`. In the
 **Console**:
 
-``` {.r filename="Console"}
+```{r help-read-csv}
+#| filename: "Console"
+#| eval: false
 ?read_csv
 ```
 
@@ -321,7 +331,7 @@ at the top left corner, you'll see the package name in curly brackets
 case, it is `{readr}`. So, we can update our function to use
 `readr::read_csv()` instead of just `read_csv()`:
 
-```{r}
+```{r import-cgm-function}
 import_cgm <- function(file_path) {
   cgm <- file_path |>
     readr::read_csv(
