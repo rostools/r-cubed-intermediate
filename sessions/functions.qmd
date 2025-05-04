@@ -257,8 +257,8 @@ add_numbers <- function(num1, num2) {
 Once we've created that and before moving on, let's style our code with
 {{< var keybind.style >}}, render the Quarto document with
 {{< var keybind.render >}}, and then open up the Git Interface with
-{{< var keybind.commit >}} to **add and commit** these changes to the Git
-history.
+{{< var keybind.commit >}} to **add and commit** these changes to the
+Git history.
 
 ## Making a function for importing our data
 
@@ -420,8 +420,8 @@ the "Document Outline" on the side by clicking the button in the top
 right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 :::
 
-The code that you write to test that the function works should look like the below
-and it should output something similar:
+The code that you write to test that the function works should look like
+the below and it should output something similar:
 
 ```{r solution-repeat-saliva}
 #| echo: false
@@ -473,7 +473,6 @@ here("data-raw/dime/sleep/102.csv") |>
 6.  Finally, **add and commit** the changes to the Git history, using
     {{< var keybind.commit >}}.
 
-
 <!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->
 
 {{< text_snippet sticky_up >}}
@@ -513,8 +512,8 @@ discussion activity.
 
 **Time: \~6 minutes.**
 
-As we prepare for the next session and the break, get up, walk around, and
-discuss with your neighbour some of the following questions:
+As we prepare for the next session and the break, get up, walk around,
+and discuss with your neighbour some of the following questions:
 
 -   What are some tasks you do that are repetitive or that you do
     multiple times with very small changes each time you do the task?
