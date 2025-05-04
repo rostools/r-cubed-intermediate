@@ -13,15 +13,6 @@ default so you don't accidentally see solutions for the other exercises.
 
 ### :technologist: Exercise: Convert the date completion code into a function {.unnumbered}
 
-```{r}
-show_solutions
-```
-
-```{r}
-#| echo: !expr 'show_solutions'
-"test"
-```
-
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_pivots-date-completion.qmd >}}
 :::
