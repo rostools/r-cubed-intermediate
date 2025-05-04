@@ -4,10 +4,6 @@
 # Run all recipes
 run-all: install-dependencies check-spelling style build-website
 
-# Installs the pre-commit hooks, if not done already
-install-pre-commit:
-  uvx pre-commit install
-
 # Install package dependencies
 install-dependencies:
   #!/usr/bin/Rscript
