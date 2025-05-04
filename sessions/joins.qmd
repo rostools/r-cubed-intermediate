@@ -143,7 +143,7 @@ Let's use some of `{dplyr}`'s join functions! We'll join the
 want to use `full_join()`, but let's test out the other two joins first.
 In your `docs/learning.qmd` file, go to the bottom of the file and make
 a new header called `## Joining datasets`. Below that make a new code
-chunk with {{< keybind.chunk >}}. We'll start with using `left_join()`
+chunk with {{< var keybind.chunk >}}. We'll start with using `left_join()`
 to join the two datasets together.
 
 First, let's look at the two datasets before joining them.
@@ -347,7 +347,7 @@ Complete these tasks to get to this point and to check the data:
 
 1.  In the bottom of `docs/learning.qmd`, add a new header called
     `## Joining sleep data` and add a new code chunk below with
-    {{< keybind.chunk >}}.
+    {{< var keybind.chunk >}}.
 2.  Start with checking the `sleep_data` by running it in the Console or
     in the code chunk. How many rows and columns does it have right now?
     Any missingness? (There is, lots of it, but where and how are things
@@ -361,7 +361,7 @@ Complete these tasks to get to this point and to check the data:
 4.  In the code chunk, copy and paste (or manually type out) the code we
     used above to join the datasets with `reduce()`. Then, include the
     `sleep_data` at the end of the `list()`. Run the code with
-    {{< keybind.run-code >}}.
+    {{< var keybind.run-code >}}.
 5.  Look through the newly joined data. Do some basic checks. Use
     `View(dime_data)` to get an overview and use the filtering/sorting
     buttons to explore the data a bit. What are some things you notice?

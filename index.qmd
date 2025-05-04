@@ -57,7 +57,7 @@ issue](https://github.com/rostools/r-cubed-intermediate/issues/new) to
 make comments and give feedback for the material.
 
 ::: {.callout-tip appearance="minimal"}
-:star: Do you find this course material useful? Then please consider
+:star: Do you find this workshop material useful? Then please consider
 "starring" our [GitHub
 repository](https://github.com/rostools/r-cubed-intermediate/) to show your
 support! Starring will save it to a list of repositories you like that

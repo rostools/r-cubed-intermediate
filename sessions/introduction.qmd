@@ -259,5 +259,3 @@ for another 4 minutes. This time, talk about these questions:
 
 1.  How do you perceive your skill in R?
 2.  How much time do you spend *processing data* in R?
-
-{{< text_snippet sticky_up >}}

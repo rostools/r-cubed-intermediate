@@ -368,7 +368,7 @@ sleep_data |>
 Once you've made this new function, move it into the `clean_sleep()` so
 it looks like:
 
-```{r solution-explanation-clean-sleep}
+```{r admin-explanation-clean-sleep}
 #| filename: "R/functions.R"
 clean_sleep <- function(data) {
   cleaned <- data |>

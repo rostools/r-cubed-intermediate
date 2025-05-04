@@ -29,13 +29,37 @@ is to enable you to:
 This aim is broken down into specific learning objectives that are
 spread across the workshop's sessions. The workshop will enable you to:
 
+[Pre-process data as you import it](/sessions/importing.qmd)
+
 {{< include /includes/objectives/_importing.qmd >}}
+
+[Bundle code into functions](/sessions/functions.qmd)
+
 {{< include /includes/objectives/_functions.qmd >}}
+
+[Making robust and general-purpose functions](/sessions/robustness.qmd)
+
 {{< include /includes/objectives/_robustness.qmd >}}
+
+[Doing many things at once with functionals](/sessions/functionals.qmd)
+
 {{< include /includes/objectives/_functionals.qmd >}}
+
+[Cleaning characters and dates](/sessions/characters-dates.qmd)
+
 {{< include /includes/objectives/_characters-dates.qmd >}}
+
+[Using split-apply-combine to help in
+processing](/sessions/split-apply-combine.qmd)
+
 {{< include /includes/objectives/_split-apply-combine.qmd >}}
+
+[Pivoting your data from and to long or wide](/sessions/pivots.qmd)
+
 {{< include /includes/objectives/_pivots.qmd >}}
+
+[Joining data together, all at once](/sessions/joins.qmd)
+
 {{< include /includes/objectives/_joins.qmd >}}
 
 To simplify this into tangible tools and methods, during the workshop we
@@ -49,11 +73,14 @@ will:
     manage code and version control.
 5.  Use the functional programming tools with `{purrr}`'s `map()` and
     `reduce()` functions.
-6.  Use the split-apply-combine technique to summarize data with
+6.  Use the `{lubridate}` package to clean and process dates and times.
+7.  Use the `{stringr}` package and regular expressions to clean and
+    process character strings.
+8.  Use the split-apply-combine technique to summarize data with
     `{dplyr}`'s `group_by()`, `summarise()`, and `across()` functions.
-7.  Use the `{dplyr}` package to `full_join()` datasets together.
-8.  Use the `{tidyr}` package to pivot data from long with
+9.  Use the `{tidyr}` package to pivot data from long with
     `pivot_longer()` to wide with `pivot_wider()`.
+10. Use the `{dplyr}` package to `full_join()` datasets together.
 
 Learning and coding are not just solo activities, they are also very
 much social activities. So throughout the workshop, we provide plenty of

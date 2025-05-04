@@ -276,7 +276,7 @@ prodigenr::setup_project(project_path)
 After opening the new RStudio Project, run this next function in the R
 Console to create a new R script file called `functions.R` in the `R/`
 folder. This is where you will be moving all the functions that you will
-create during the course.
+create during the workshop.
 
 ```{r use-r-functions}
 #| eval: false
@@ -337,7 +337,7 @@ Throughout the workshop, you will use this document to build up and run
 your code, as well as to prototype the functions you'll create before
 you move them into the `functions.R` file.
 
-## Download or copy data to `data-raw/`, only change with R
+## Download or copy data to `data-raw/`, only change with R {#sec-download-data}
 
 In general, you want to store your original raw data that you'd use for
 your project within a folder in your R Project and *never change it*.

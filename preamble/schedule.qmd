@@ -21,7 +21,7 @@ and overview.
 | Time | Session topic |
 |:-----------------------------------|:-----------------------------------|
 | 9:00 | {{< fa mug-hot >}} Arrival; Coffee and light breakfast |
-| 9:30 | {{< fa person-chalkboard >}} [Introduction to the course](/sessions/introduction.qmd) |
+| 9:30 | {{< fa person-chalkboard >}} [Introduction to the workshop](/sessions/introduction.qmd) |
 | 10:15 | {{< fa laptop-code >}} [Pre-process data as you import it](/sessions/importing.qmd) |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 12:00 | {{< fa utensils >}} Lunch |
@@ -61,5 +61,5 @@ and overview.
 | 14:00 | {{< fa mug-hot >}} Break with coffee and snacks |
 | 14:15 | {{< fa briefcase >}} [Continue group project work](/sessions/hands-on-work.qmd) |
 | 15:50 | {{< fa person-chalkboard >}} [Closing remarks](/sessions/what-next.qmd) |
-| 16:15 | {{< fa comment-dots >}} [End of course short survey and farewell](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
+| 16:15 | {{< fa comment-dots >}} [End of workshop short survey and farewell](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 :::
