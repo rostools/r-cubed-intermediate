@@ -36,8 +36,8 @@ why we have the separation between `learning.qmd` and `functions.R`.
 
 This section provides a bigger picture view of what we will be doing,
 why we want to do it, how we will be going about doing it, and what it
-will look like in the end. So the overall practical aim of this workshop
-is:
+will look like in the end. So, the overall practical aim of this
+workshop is:
 
 *To apply a reproducible and programmatic approach to efficiently
 downloading a dataset that has multiple data files, then processing and
