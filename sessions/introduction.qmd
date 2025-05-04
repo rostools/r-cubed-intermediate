@@ -34,7 +34,7 @@ why we have the separation between `learning.qmd` and `functions.R`.
 
 **Time: \~15 minutes.**
 
-This section provides an bigger picture view of what we will be doing,
+This section provides a bigger picture view of what we will be doing,
 why we want to do it, how we will be going about doing it, and what it
 will look like in the end. So the overall practical aim of this workshop
 is:
@@ -76,7 +76,7 @@ we will be creating.
 ::: {layout-ncol="2"}
 ### Currently looks like: {.unnumbered}
 
-```
+```         
 LearnR3
 ├── data/
 │   └── README.md
@@ -103,7 +103,7 @@ LearnR3
 
 ### End of workshop: {.unnumbered}
 
-```
+```         
 LearnR3
 ├── data/
 │   ├── README.md
