@@ -55,6 +55,15 @@ contribute is by using [GitHub](https://github.com/) and creating a [new
 issue](https://github.com/rostools/r-cubed-intermediate/issues/new) to
 make comments and give feedback for the material.
 
+::: {.callout-tip appearance="minimal"}
+:star: Do you find this course material useful? Then please consider
+"starring" our [GitHub
+repository](https://github.com/rostools/r-cubed-intermediate/) to show your
+support! Starring will save it to a list of repositories you like that
+you can easily find again, plus it helps give our project more
+visibility!
+:::
+
 ## Target audiences
 
 This website and its content are targeted to three groups:
