@@ -205,10 +205,10 @@ reproducibility, in a learning and supportive environment.
 ### Use `R/functions.R` to keep stable, tested code {.unnumbered}
 
 While you use Quarto to test out and prototype code, you'll use R
-scripts like `R/functions.R` to keep the code you have tested out
-already and are fairly confident that it works as you want it to. This
-workflow, of creating code and converting it into a function, is called
-a "function-based workflow". This is an incredibly common workflow in R
+scripts, like `R/functions.R`, to keep the code you have already tested
+and are fairly confident that it works as intended. This workflow, of
+creating code and converting it into a function, is called a
+"function-based workflow". This is an incredibly common workflow in R
 projects and forms the basis for many other workflows and tools, such as
 ones that are covered in the [advanced
 workshop](https://r-cubed-advanced.rostools.org).
