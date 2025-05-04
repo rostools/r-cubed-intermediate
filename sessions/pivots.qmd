@@ -5,7 +5,6 @@
 # Used this only during writing to run code dependent on previous chapters.
 library(here)
 library(tidyverse)
-source(here("R/functions.R"))
 load(here("_temp/split-apply-combine.RData"))
 ```
 

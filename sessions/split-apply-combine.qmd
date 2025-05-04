@@ -4,9 +4,7 @@
 #| include: false
 library(here)
 library(tidyverse)
-library(fs)
 load(here("_temp/characters-dates.RData"))
-source(here("R/functions.R"))
 ```
 
 ## Learning objectives
