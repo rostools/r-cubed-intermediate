@@ -14,7 +14,7 @@ library(here)
 
 **Time: \~5 minutes.**
 
-Before you can effectively analyse your project's data, you will very
+Before you can effectively analyze your project's data, you will very
 likely need to first clean and process it into a format and structure
 that fits your project's specific needs. So this first phase of an
 analysis project is to import the data into R, check it out, and clean
@@ -97,21 +97,22 @@ do one thing first. While you downloaded the data during the
 pre-workshop tasks, you hadn't yet committed your changes to the Git
 history. So we will start with that first.
 
-Before we do that though, let's tell Git to ignore some other files, like
-the `.html` files as well as the `_files/` folder that Quarto automatically creates when making an HTML document.
-In the **Console**, type out the following code:
+Before we do that though, let's tell Git to ignore some other files,
+like the `.html` files as well as the `_files/` folder that Quarto
+automatically creates when making an HTML document. In the **Console**,
+type out the following code:
 
 ```{r ignore-html-files}
 #| filename: "Console"
 usethis::use_git_ignore(c("*.html", "*_files"))
 ```
 
-Then, open the Git interface with either the Git icon at the top near the menu
-bar or with {{< var keybind.commit >}}. In the interface, select all the
-current changes by clicking the checkbox beside the files and stage
-them. Then write a commit message in the text box on the right,
-something like `Setting up the project`. Click the "Commit" button, and
-finally close the Git interface.
+Then, open the Git interface with either the Git icon at the top near
+the menu bar or with {{< var keybind.commit >}}. In the interface,
+select all the current changes by clicking the checkbox beside the files
+and stage them. Then write a commit message in the text box on the
+right, something like `Setting up the project`. Click the "Commit"
+button, and finally close the Git interface.
 
 Now, let's get to importing some data! Open up the `docs/learning.qmd`.
 A quick way of opening a file in RStudio is to type
@@ -433,8 +434,8 @@ discussion activity.
 
 **Time: \~6 minutes.**
 
-As we prepare for lunch, get up, walk around, and discuss with your neighbour
-some of the following questions:
+As we prepare for lunch, get up, walk around, and discuss with your
+neighbour some of the following questions:
 
 -   How tidy and clean is your data in your research? Do you have to do
     a lot of processing before you can analyse it?
