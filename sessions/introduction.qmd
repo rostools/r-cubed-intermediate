@@ -196,7 +196,7 @@ flowchart TD
 ```
 
 For this workshop, we also use Quarto because it's easier from a
-teaching perspective. You as the learner can easily mix together text
+teaching perspective. You, as the learner, can easily mix together text
 and notes to yourself as you learn, alongside the code you write out
 during the code-alongs and the exercises. We also use it to force you to
 practice working within Quarto documents, which is a key component to
