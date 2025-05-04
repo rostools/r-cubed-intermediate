@@ -7,37 +7,9 @@ csl: "../includes/vancouver.csl"
 
 # Welcome to the Intermediate R^3^ workshop!
 
-::::: columns
-::: {.column width="70%"}
 -   :heavy_check_mark: Pick a group from the basket and go to that table
--   :heavy_check_mark: Introduce yourself
+-   :heavy_check_mark: Introduce yourself to your table mates
 -   :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project
--   :heavy_check_mark: Check that your `data-raw/` looks like that on
-    the right
-:::
-
-::: {.column width="30%"}
-```{r, echo=FALSE, eval=FALSE}
-withr::with_dir("../", {
-  fs::dir_tree("data-raw/", recurse = 1)
-})
-```
-
-``` text
-data-raw/
-├── README.md
-├── mmash
-│   ├── user_1
-│   ├── user_10
-│   ├── user_11
-│   ├── ...
-│   ├── user_7
-│   ├── user_8
-│   └── user_9
-└── mmash-data.zip
-```
-:::
-:::::
 
 ::: notes
 Introduce teachers and helpers.
@@ -101,120 +73,99 @@ American Statistical Association
 :::
 :::::
 
-## These issues can be fixed by creating and nurturing a culture of openness {.center}
+## How can we check reproducibility if no code is given? {.center}
 
-## Goal of this workshop? Start changing the culture by providing the training {.center}
+This is a little bit of a rhetorical question
+:stuck_out_tongue_closed_eyes:
 
-# Workshop details
+## Very low reproducibility in most of science [@Samuel2024] {.smaller}
 
-## Setup and layout {.smaller}
+::: {layout-ncol="2"}
+```{r}
+#| echo: false
+#| fig-height: 6
+library(tidyverse)
+theme_set(
+  theme_minimal() +
+    theme(
+      plot.background = element_rect(fill = "#E9E9E9"),
+      axis.title = element_blank(),
+      axis.text.y = element_text(size = 18),
+      axis.text.x = element_blank(),
+      axis.ticks = element_blank(),
+      axis.line = element_blank()
+    )
+)
 
-::::: columns
-::: {.column width="50%"}
--   Workshop is mix of:
-    -   "Code-alongs" (we type and explain, you type along)
-    -   Hands-on coding, discussing, and reading exercises
-    -   Dedicated practice time (potentially on your own data)
--   All material is online (and [openly
-    licensed](https://r-cubed-intro.rostools.org/LICENSE.html))
--   [Resources Appendix](https://guides.rostools.org/learning.html)
-    -   Material for further learning
-:::
+search <- tribble(
+  ~item, ~description, ~value, ~order,
+  "Articles", "Found among all articles", 3467, 1,
+  "GitHub\nrepos", "Those with a GitHub link and at least one notebook", 2660, 2
+) |>
+  mutate(
+    item = fct_rev(fct_reorder(item, order))
+  )
 
-::: {.column width="50%"}
--   Reading tasks are "callout" blocks marked by the blue line on the
-    left side of the text
--   Schedule listed is a *guide* only, some sessions are longer, others
-    shorter
--   Less about coding, more about connecting with others
-    -   During lunch, try to sit beside someone you don't know
-    -   Several networking activities (usually after lunch)
--   Feedback collected at end of every day, it is so helpful and
-    important for improving the workshop :grin:
-:::
-:::::
-
-::: notes
-Explain a bit more about the reading, why doing it, and that this
-workshop in particular has a lot more of it than more advanced
-workshops.
-
-About feedback, will improve this workshop, we're collaborating together
-to make it better. You're learning, but also helping to improve the
-material and in how we teach you. What makes sense, what is confusing,
-and so on.
-:::
-
-## Getting or asking for help :raising_hand_woman::raising_hand_man: {.center}
-
-::::: columns
-::: column
--   Put the origami hat on your laptop to get help
-    -   There are lots of helpers
-    -   Table mates, you can help out too
-:::
-
-::: column
--   We're all learning here!
-    -   This is a supportive and safe environment
-    -   Remember our [Code of Conduct](conduct.html)
-:::
-:::::
-
-## Practice using origami hats: Does your `data-raw/` look as this? {.center}
-
-``` text
-data-raw/
-├── README.md
-├── mmash
-│   ├── user_1
-│   ├── user_10
-│   ├── user_11
-│   ├── ...
-│   ├── user_7
-│   ├── user_8
-│   └── user_9
-└── mmash-data.zip
+ggplot(search, aes(y = item, x = value, label = value)) +
+  geom_col(fill = "#203C6E") +
+  geom_text(nudge_x = 200, size = 5.5)
 ```
 
-# Activities
+```{r}
+#| echo: false
+#| fig-height: 6
+repro_results <- tribble(
+  ~item, ~description, ~value, ~order,
+  "Total notebooks", "Total notebook files found in all the repositories", 27271, 1,
+  "Notebook repo\nwas valid", "File names were correct, dependency information was available, no local modules were needed.", 15817, 2,
+  "Could install\ndependencies", "Could install dependencies without errors.", 10388, 3,
+  "Finished executing\nwithout errors", "Could run without any errors.", 1203, 4,
+  "Same results\nas paper", "When the results of the paper matched what the execution results output.", 879, 5
+) |>
+  mutate(
+    percent = str_c(value, "\n(", round(value / max(value) * 100), "%)"),
+    item = fct_rev(fct_reorder(item, order))
+  )
 
-## :walking::walking_woman: How do you perceive your skill in R? {.center}
-
-::: notes
-Along the wall, arrange to one side is "novice/basic" and other side is
-"advanced".
+ggplot(repro_results, aes(y = item, x = value, label = percent)) +
+  geom_col(fill = "#203C6E") +
+  geom_text(nudge_x = 1700, size = 5.5)
+```
 :::
 
-## :walking::walking_woman: Who has had formal training in specifically *coding* in R or in general? {.center}
+## Even in institutional code and data archive, *executability* is low! [@Trisovic2022] {.center}
+
+-   Code taken from [Harvard Dataverse Project](https://dataverse.org/)
+    data repositories
+-   Only 25% could be *executed* without some "cleaning up"
+-   After some automatic cleaning, \~50% could *execute*
 
 ::: notes
-One side of the room is yes, the other side is no. Can also be in the
-middle if you aren't completely sure. If the workshop was part of a
-statistics workshop, it doesn't really count.
+Recent large study on general reproducibility of projects that shared
+code.
+
+Initially only 25% of the R scripts could be *executed* (doesn't mean
+results were reproduced though). After doing automatic and some manual
+code cleaning, than about half could be executed. That's not bad.
+
+Since scripts were taken from Dataverse.org, researchers who upload
+their code and projects to it probably are a bit more aware and
+knowledgeable about general reproducibility and coding then the average
+researcher, so the results are a bit biased.
 :::
 
-## :walking_woman::walking: Who has struggled with using R? {.center}
+## Scientific culture is not well-prepared for analytic and computation era {.center}
+
+## These issues can be fixed by creating and nurturing a culture of openness {.center}
 
 ::: notes
-One side of the room if yes, other side if no, middle if you've sort
-have struggled.
+All of this is because of a problem with our culture in research. We
+aren't open, we don't really share, and don't often follow basic
+principles of science. To fix this, we need to start creating and
+nurturing a better and healthier culture. We all can be involved in
+that, we all have that power to do something, even if its small thing.
 :::
 
-## :raising_hand: Who has seen or worked with "true" data analysis pipelines (e.g. run a single command and *everything* gets re-done)? {.center}
-
-::: notes
-More for my personal interest. The word pipeline gets thrown around a
-lot, but how many have encountered, made, or used true pipelines?
-Automated from beginning to end.
-:::
-
-## 💬 For those that have done or are doing data processing, does it take up a lot of time? How much? {.center}
-
-::: notes
-Question, mostly for my own information...
-:::
-
-## Return to your seats! :chair: {.center}
+## Goal of this course: Start changing the culture by providing the training {.center}
 
 # References

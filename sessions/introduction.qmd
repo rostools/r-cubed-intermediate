@@ -205,21 +205,27 @@ on the sleep data.
 
 {{< text_snippet sticky_up >}}
 
-## :technologist: Exercise: What types of workflows do you use?
+## :speech_balloon: Discussion activity: Warm-up questions!
 
-**Time: \~6 minutes.**
+**Time: \~8 minutes.**
 
-The process of learning is about taking the content you just learned and
-trying to integrate it into your own context and situation, as well as
-talking about it to enforce it into your brain. So:
+A big part of learning is social. We are in a classroom and you are
+listening to and interacting with the teacher (at least in some way).
+But it also with your peers.
 
--   Take 1 minutes to think about the workflows you use in your own
-    work. Since we'll be covering different workflows in this workshop,
-    we would like you to try to think of your own and how it will
-    compare to the ones taught. Try to think very explicitly what you do
-    and how you do it.
--   Then, with your neighbour, take 5 minutes where each of you share
-    what you've thought about and discuss it. How do both of your ways
-    of working compare to each other and to what was described above?
+So, to help you feel more comfortable in this new physical and social
+space, for the next 4 minutes, get up and chat with your neighbour about
+the questions below:
+
+1.  Who are you?
+2.  Why are you here?
+3.  What do you want to learn?
+
+Make sure to share the time equally between each other. Then, after 4
+minutes, chat with another neighbour at your table (or a table nearby)
+for another 4 minutes. This time, talk about these questions:
+
+1.  How do you perceive your skill in R?
+2.  How much time do you spend *processing data* in R?
 
 {{< text_snippet sticky_up >}}
