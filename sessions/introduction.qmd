@@ -176,7 +176,7 @@ is reproducible. For this workshop, the Quarto document we use is at
 With Quarto, it's easy to quickly test code out and make sure it works.
 Think of using the Quarto file as a sandbox to test out and play with
 code, without fear of messing things up. And with Quarto, when you
-render the document to, for example, HTML and it runs all the code from
+render the document to, for example, HTML it runs all the code from
 beginning to end in a new environment (so completely clean). Which means
 you can test a part of the reproducibility of your code. Because of this
 feature, it allows you to detect errors and issues with the code, making
