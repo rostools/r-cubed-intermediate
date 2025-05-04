@@ -57,6 +57,12 @@ during the code-alongs and the exercises. We also use it to force you to
 practice working within Quarto documents, which is a key component to
 reproducibility, in a learning and supportive environment.
 
+::: callout-tip
+Since you can mix text and code together, you can also write your notes
+for the workshop in the Quarto document! :grin: So if you want to come back
+and look at your notes later, this would be the place to put them.
+:::
+
 {{< text_snippet sticky_up >}}
 
 ## :book: Reading task: Packages for importing specific data file formats
