@@ -34,9 +34,9 @@ spread across the workshop's sessions. The workshop will enable you to:
 {{< include /includes/objectives/_robustness.qmd >}}
 {{< include /includes/objectives/_functionals.qmd >}}
 {{< include /includes/objectives/_characters-dates.qmd >}}
-{{< include /includes/objectives/_joins.qmd >}}
-{{< include /includes/objectives/_pivots.qmd >}}
 {{< include /includes/objectives/_split-apply-combine.qmd >}}
+{{< include /includes/objectives/_pivots.qmd >}}
+{{< include /includes/objectives/_joins.qmd >}}
 
 To simplify this into tangible tools and methods, during the workshop we
 will:
