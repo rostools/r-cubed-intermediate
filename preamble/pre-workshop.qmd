@@ -337,7 +337,31 @@ Throughout the workshop, you will use this document to build up and run
 your code, as well as to prototype the functions you'll create before
 you move them into the `functions.R` file.
 
-## Download the workshop data {#sec-download-data}
+## Download or copy data to `data-raw/`, only change with R
+
+In general, you want to store your original raw data that you'd use for
+your project within a folder in your R Project and *never change it*.
+This is because you want to keep the original data intact, so you can
+always go back to it if you need to. Since the raw data is rarely
+directly used for analyses, you'd use R to process the data and save the
+processed data to a new file that you'd then use for your analysis. This
+workflow is visually represented below in @fig-download-to-data-raw
+
+In R Projects, the common convention is to keep the raw data in the
+`data-raw/` folder, which is what you've already done during the
+pre-workshop tasks. This is where you would download or copy the data
+files you need for your project.
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-download-to-data-raw"
+%%| fig-cap: "Workflow for downloading or copying data to the `data-raw/` folder and processing it into the `data/` folder."
+%%| fig-alt: "A diagram representing the workflow for downloading or copying data to the data-raw folder, then processed with R, and finally saved in the data folder."
+flowchart TD
+  data_file("Original<br>data file(s)") -- "Download<br>or copy" --> data_raw[/"data-raw/<br>folder"/]
+  data_raw -- "Read only" --> process("Process data with R,<br>raw data not changed")
+  process -- "Save"--> data[/"data/<br>folder"/]
+```
 
 To best demonstrate the concepts in the workshop, it's best to use a
 real dataset to apply what you're going to learn. So for this workshop,
@@ -345,8 +369,6 @@ you're going to use an openly licensed dataset from a study looking at
 how bioactive components in food impact our gut microbiota, which is
 called the [DIME](https://zenodo.org/records/8268744) study
 [@Traka2023].
-
-<!-- TODO: Add link to script after merging -->
 
 Unfortunately, like most research data, it isn't the most tidy. So it's
 been cleaned up a bit for you to use in this workshop.

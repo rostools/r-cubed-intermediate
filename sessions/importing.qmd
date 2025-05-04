@@ -10,7 +10,66 @@ library(here)
 
 {{< include /includes/objectives/_importing.qmd >}}
 
+## :book: Reading task: Use Quarto as a sandbox to prototype code
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+After they've read this, reinforce this workflow and highlight of of
+it's strengths. Draw upon your own personal experience. And emphasize it
+also simplifies the teaching-learning role as there is only two files we
+all have to keep track of: the R functions file that we will cover later
+and the Quarto file.
+:::
+
+**Time: \~5 minutes.**
+
+Quarto is an incredibly powerful tool when working to ensure your code
+is reproducible. For this workshop, the Quarto document we use is at
+`docs/learning.qmd`.
+
+With Quarto, it's easy to quickly test code out and make sure it works.
+Think of using the Quarto file as a sandbox to test out and play with
+code, without fear of messing things up. And with Quarto, when you
+render the document to, for example, HTML and it runs all the code from
+beginning to end in a new environment (so completely clean). Which means
+you can test a part of the reproducibility of your code. Because of this
+feature, it allows you to detect errors and issues with the code, making
+Quarto an excellent prototyping tool. The workflow is represented below
+in @fig-quarto-prototyping.
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-quarto-prototyping"
+%%| fig-cap: "Workflow for using Quarto to prototype code, assess reproducibility, and fix issues."
+%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype code, with nodes for the Quarto file, rendering, and HTML output."
+flowchart TD
+  quarto[/"Quarto:<br>docs/learning.qmd"/] --> prototype(Prototyping<br>R code)
+  prototype -- "Check<br>reproducibility" --> render("Render")
+  render --> html[/"HTML file:<br>docs/learning.html"/]
+  render -- "Continue<br>or fix issues" --> quarto
+```
+
+For this workshop, we also use Quarto because it's easier from a
+teaching perspective. You as the learner can easily mix together text
+and notes to yourself as you learn, alongside the code you write out
+during the code-alongs and the exercises. We also use it to force you to
+practice working within Quarto documents, which is a key component to
+reproducibility, in a learning and supportive environment.
+
+{{< text_snippet sticky_up >}}
+
 ## :book: Reading task: Packages for importing specific data file formats
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Mainly emphasize here that there are so many different file formats and
+also different packages to import them into R. It's hard to teach all
+the different ways to import data as it will be likely different for
+different fields of research, research groups, or institutions. But we
+will be focusing on CSV since it is one of the most common file formats.
+:::
 
 **Time: \~5 minutes.**
 
@@ -433,8 +492,8 @@ discussion activity.
 
 **Time: \~6 minutes.**
 
-As we prepare for lunch, get up, walk around, and discuss with your neighbour
-some of the following questions:
+As we prepare for lunch, get up, walk around, and discuss with your
+neighbour some of the following questions:
 
 -   How tidy and clean is your data in your research? Do you have to do
     a lot of processing before you can analyse it?

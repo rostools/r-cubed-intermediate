@@ -260,6 +260,63 @@ Once we've created that and before moving on, let's style our code with
 {{< var keybind.commit >}} to **add and commit** these changes to the
 Git history.
 
+## :book: Reading task: Workflow for prototyping and creating functions
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Highlight the workflow and diagram. Reinforce this workflow and that we
+will be using it all throughout this workshop.
+:::
+
+**Time: \~6 minutes.**
+
+At the level of the code, the way you prototype code is to:
+
+1.  Write it out in Quarto so that does what you want.
+2.  Convert that code into a function.
+3.  Test that the function works either in the Quarto document or in the
+    R Console.
+4.  Fix the function if it doesn't work.
+5.  Restart the R console with {{< var keybind.restart-r >}} or render
+    with {{< var keybind.render >}} to test that the function works.
+6.  Whenever the function works, *add and commit* the changes to the Git
+    history with {{< var keybind.commit >}} (or commit after you move
+    the function to the `R/functions.R` script, which we will talk about
+    in the next session).
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-workflow-prototyping"
+%%| fig-cap: "Workflow for prototyping code in Quarto, converting to a function, testing it, rendering or restarting, and committing to Git."
+%%| fig-alt: "A diagram representing the workflow for prototyping code in Quarto, converting it to a function, testing it, rendering or restarting, and committing to Git."
+flowchart TD
+    code("Write code<br>in Quarto") --> as_function("Convert to<br>function")
+    as_function --> test("Test function in<br>Quarto or Console")
+    test --> fix_function("Fix function")
+    test -- "Commit" --> git("Git history")
+    fix_function --> test
+    fix_function --> either([Either:])
+    either -. As needed .-> restart("Restart R<br>session")
+    either -. As needed .-> render("Render<br>Quarto")
+    restart -.-> test
+    render -.-> test
+```
+
+Either restarting R or rendering the Quarto document is the only way
+there is to be certain the R workspace is in a clean state. When code
+runs after a clean state, it improves the chances your code and project
+will be reproducible.
+
+We use Git because it is the best way of keeping track of what was done
+to your files, when, and why. It helps to keep your work transparent and
+makes it easier for you to share your code by uploading to GitHub. Using
+version control should be a standard practice to doing better science
+since it fits with the philosophy of doing science (e.g., transparency,
+reproducibility, and documentation).
+
+{{< text_snippet sticky_up >}}
+
 ## Making a function for importing our data
 
 Now that we have a basic understanding of what a function looks like,
@@ -273,7 +330,8 @@ the time throughout workshop and is also a common workflow when making
 functions in R.
 :::
 
-Making a function is a series of steps:
+While you read about the general workflow above, the more detailed steps
+for making a function is to:
 
 1.  Write code that works and does what you want.
 2.  Enclose it as a function with `name <- function() { ... }`, with an

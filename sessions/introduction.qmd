@@ -141,164 +141,19 @@ want to keep things structured to make it easier for others and
 ourselves to reproduce the work. Below are sections for the different
 workflows we will be using in the workshop.
 
-### Download or copy data to `data-raw/`, only change with R {.unnumbered}
-
-In general, you want to store your original raw data that you'd use for
-your project within a folder in your R Project and *never change it*.
-This is because you want to keep the original data intact, so you can
-always go back to it if you need to. Since the raw data is rarely
-directly used for analyses, you'd use R to process the data and save the
-processed data to a new file that you'd then use for your analysis. This
-workflow is visually represented below in @fig-download-to-data-raw
-
-In R Projects, the common convention is to keep the raw data in the
-`data-raw/` folder, which is what you've already done during the
-pre-workshop tasks. This is where you would download or copy the data
-files you need for your project.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-download-to-data-raw"
-%%| fig-cap: "Workflow for downloading or copying data to the `data-raw/` folder and processing it into the `data/` folder."
-%%| fig-alt: "A diagram representing the workflow for downloading or copying data to the data-raw folder, then processed with R, and finally saved in the data folder."
-flowchart TD
-  data_file("Original<br>data file(s)") -- "Download<br>or copy" --> data_raw[/"data-raw/<br>folder"/]
-  data_raw -- "Read only" --> process("Process data with R,<br>raw data not changed")
-  process -- "Save"--> data[/"data/<br>folder"/]
-```
-
-### Use Quarto as a sandbox to prototype code {.unnumbered}
-
-Quarto is an incredibly powerful tool when working to ensure your code
-is reproducible. For this workshop, the Quarto document we use is at
-`docs/learning.qmd`.
-
-With Quarto, it's easy to quickly test code out and make sure it works.
-Think of using the Quarto file as a sandbox to test out and play with
-code, without fear of messing things up. And with Quarto, when you
-render the document to, for example, HTML and it runs all the code from
-beginning to end in a new environment (so completely clean). Which means
-you can test a part of the reproducibility of your code. Because of this
-feature, it allows you to detect errors and issues with the code, making
-Quarto an excellent prototyping tool. The workflow is represented below
-in @fig-quarto-prototyping.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-quarto-prototyping"
-%%| fig-cap: "Workflow for using Quarto to prototype code, assess reproducibility, and fix issues."
-%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype code, with nodes for the Quarto file, rendering, and HTML output."
-flowchart TD
-  quarto[/"Quarto:<br>docs/learning.qmd"/] --> prototype(Prototyping<br>R code)
-  prototype -- "Check<br>reproducibility" --> render("Render")
-  render --> html[/"HTML file:<br>docs/learning.html"/]
-  render -- "Continue<br>or fix issues" --> quarto
-```
-
-For this workshop, we also use Quarto because it's easier from a
-teaching perspective. You as the learner can easily mix together text
-and notes to yourself as you learn, alongside the code you write out
-during the code-alongs and the exercises. We also use it to force you to
-practice working within Quarto documents, which is a key component to
-reproducibility, in a learning and supportive environment.
-
-### Use `R/functions.R` to keep stable, tested code {.unnumbered}
-
-While you use Quarto to test out and prototype code, you'll use R
-scripts like `R/functions.R` to keep the code you have tested out
-already and are fairly confident that it works as you want it to. This
-workflow, of creating code and converting it into a function, is called
-a "function-based workflow". This is an incredibly common workflow in R
-projects and forms the basis for many other workflows and tools, such as
-ones that are covered in the [advanced
-workshop](https://r-cubed-advanced.rostools.org).
-
-So you'll use Quarto (`docs/learning.qmd`) to write and test out code,
-convert it into a function (that we will cover in this workshop), and
-then move it into `R/functions.R` script. We have this split to
-cognitively and physically have a separation between prototyping code
-and keeping finalized, tested code. Then, within the Quarto document we
-can `source()` the `R/functions.R` script so we have access to the
-stable and tested code. This workflow is represented below in
-@fig-quarto-to-functions.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-quarto-to-functions"
-%%| fig-cap: "Workflow for prototyping code in Quarto, moving it to an R script, then sourcing the script from Quarto."
-%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype and test code, moving that tested code to the R functions script, and sourcing back into the Quarto document."
-flowchart TD
-  quarto[/"Quarto:<br>docs/learning.qmd"/] --> code(Prototyping<br>R code)
-  code --> test("Testing that<br>code works")
-  test -- "Cut & paste<br>Commit to Git"--> functions[/"R/functions.R"/]
-  functions -- "source()" --> quarto
-```
-
-### Workflow for prototyping code {.unnumbered}
-
-At the level of the code, the way you prototype code is to:
-
-1.  Write it out in Quarto so that does what you want.
-2.  Convert that code into a function.
-3.  Test that the function works either in the Quarto document or in the
-    R Console.
-4.  Fix the function if it doesn't work.
-5.  Restart the R console with {{< var keybind.restart-r >}} or render
-    with {{< var keybind.render >}} to test that the function works.
-6.  Whenever the function works, *add and commit* the changes to the Git
-    history with {{< var keybind.commit >}}.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-workflow-prototyping"
-%%| fig-cap: "Workflow for prototyping code in Quarto, converting to a function, testing it, rendering or restarting, and committing to Git."
-%%| fig-alt: "A diagram representing the workflow for prototyping code in Quarto, converting it to a function, testing it, rendering or restarting, and committing to Git."
-flowchart TD
-    code("Write code<br>in Quarto") --> as_function("Convert to<br>function")
-    as_function --> test("Test function in<br>Quarto or Console")
-    test --> fix_function("Fix function")
-    test -- "Commit" --> git("Git history")
-    fix_function --> test
-    fix_function --> either([Either:])
-    either -. As needed .-> restart("Restart R<br>session")
-    either -. As needed .-> render("Render<br>Quarto")
-    restart -.-> test
-    render -.-> test
-```
-
-Either restarting R or rendering the Quarto document is the only way
-there is to be certain the R workspace is in a clean state. When code
-runs after a clean state, it improves the chances your code and project
-will be reproducible.
-
-We use Git because it is the best way of keeping track of what was done
-to your files, when, and why. It helps to keep your work transparent and
-makes it easier for you to share your code by uploading to GitHub. Using
-version control should be a standard practice to doing better science
-since it fits with the philosophy of doing science (e.g., transparency,
-reproducibility, and documentation).
-
-::: callout-note
-While we covered GitHub in the introductory workshop, we can't assume
-everyone will have taken that workshop. Because of that, we won't be
-using GitHub in this workshop.
-:::
-
-{{< text_snippet sticky_up >}}
-
 ## :technologist: Exercise: What types of workflows do you use?
 
-**Time: \~8 minutes.**
+**Time: \~6 minutes.**
 
 The process of learning is about taking the content you just learned and
 trying to integrate it into your own context and situation, as well as
 talking about it to enforce it into your brain. So:
 
--   Take 2 minutes to think about the workflows you use in your own work
-    and how they compare to the ones you've read about above and that we
-    all went over briefly. Try to be exact and specific in what you do
-    and how you do it.
--   Then, with your neighbour, take 6 minutes where each of you share
+-   Take 1 minutes to think about the workflows you use in your own work.
+    Since we'll be covering different workflows in this workshop, we would
+    like you to try to think of your own and how it will compare to the ones
+    taught. Try to think very explicitly what you do and how you do it.
+-   Then, with your neighbour, take 5 minutes where each of you share
     what you've thought about and discuss it. How do both of your ways
     of working compare to each other and to what was described above?
 
