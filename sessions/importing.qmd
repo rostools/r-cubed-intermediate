@@ -354,9 +354,9 @@ Before moving on to the exercise, let's:
 
 **Time: \~15 minutes.**
 
-An important part of learning is to try what we've just covered on your
-own and in a practical way. So, using the same steps as what we just
-did, import in participant 101's sleep data.
+An important part of learning is trying what we've just covered on your
+own and in a practical way. So, using the same steps we just followed,
+import participant 101's sleep data.
 
 1.  Create a new header at the bottom of the `docs/learning.qmd` file
     and call it `## Exercise: Import 101's sleep data`.
