@@ -64,7 +64,7 @@ We also want to make sure that whatever processing we do to the data is
 reproducible, so we'll be writing the code in a way that enables and
 enforces reproducibility of the code.
 
-So how specifically will we do this? At the highest level, everything
+So, how will we do this, specifically? At the highest level, everything
 revolves around files and folders. Below is what the project currently
 looks like and what it will look like at the end of the workshop.
 Notice, the only differences here are the addition of a new file in the
