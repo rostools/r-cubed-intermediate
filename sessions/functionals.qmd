@@ -14,14 +14,27 @@ load(here("_temp/robustness.RData"))
 
 Briefly go over the bigger picture (found in the introduction section)
 and remind everyone the 'what' and 'why' of what we are doing.
-
-Also briefly review what we did the previous day, by using the takeaway
-points from the end of each session.
 :::
 
 ## Learning objectives
 
 {{< include /includes/objectives/_functionals.qmd >}}
+
+## :speech_balloon: Discussion activity: Recall and share what you've learned so far
+
+**Time: \~6 minutes.**
+
+A very effective way to learn is to recall and describe to someone else
+what you've learned. So before we continue this session, take some time
+to think about what you've learned from yesterday.
+
+1.  Take 1-2 minute and try to recall as much as you can about what
+    you'd done over the last two days. Without looking at your notes or
+    the other sections of the website, try to remember things about
+    importing and robust functions.
+2.  Then, for 4-5 minutes, share with your neighbour what you remember
+    and try to describe it to each other. Maybe you will each remember
+    different things.
 
 ## :book: Reading task: Functional programming
 
