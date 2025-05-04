@@ -268,8 +268,8 @@ flowchart TD
 
 Either restarting R or rendering the Quarto document is the only way
 there is to be certain the R workspace is in a clean state. When code
-runs after a clean state, it improves the chances your code and project
-will be reproducible.
+runs after a clean state, it improves the chances of your code and
+project will be reproducible.
 
 We use Git because it is the best way of keeping track of what was done
 to your files, when, and why. It helps to keep your work transparent and
