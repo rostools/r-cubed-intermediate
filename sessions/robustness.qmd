@@ -367,29 +367,7 @@ In this exercise, you will finish setting the dependencies for the
     that everything still works, and then add and commit the changes to
     Git with {{< var keybind.commit >}}.
 
-```{r}
-#| label: solution-add-project-dependencies
-#| filename: Console
-#| eval: false
-usethis::use_package("readr")
-usethis::use_package("snakecase")
-usethis::use_package("fs")
-```
-
-```{r}
-#| label: solution-set-function-dependencies
-#| filename: docs/learning.qmd
-#| echo: false
-import_cgm <- function(file_path) {
-  cgm <- file_path |>
-    readr::read_csv(
-      show_col_types = FALSE,
-      name_repair = snakecase::to_snake_case,
-      n_max = 100
-    )
-  return(cgm)
-}
-```
+{{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
 
 {{< text_snippet sticky_up >}}
 

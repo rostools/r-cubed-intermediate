@@ -391,35 +391,11 @@ commit** the changes so far with {{< var keybind.commit >}}.
 
 **Time: \~15 minutes.**
 
-```{r}
-#| label: solution-summarise-column-function
-#| echo: false
-#' Summarise a single column based on one or more functions.
-#'
-#' @param data Either the CGM or sleep data in DIME.
-#' @param column The name of the column you want to summarise.
-#' @param functions One or more functions to apply to the column. If more than one,
-#'    use `list()`.
-#'
-#' @returns A summarised data frame.
-#'
-summarise_column <- function(data, column, functions) {
-  data |>
-    dplyr::select(-tidyselect::contains("timestamp"), -tidyselect::contains("datetime")) |>
-    dplyr::group_by(dplyr::pick(-{{ column }})) |>
-    dplyr::summarise(
-      dplyr::across(
-        {{ column }},
-        functions
-      ),
-      .groups = "drop"
-    )
-}
-```
-
 Let's start with converting the summarising code into a function. The
 way it is used should be something like the below, and should give
 similar output:
+
+{{< include /includes/solutions/_split-apply-combine-summarise-column-function.qmd >}}
 
 ```{r}
 cgm_data |>
@@ -476,44 +452,7 @@ next exercise.
 
 **Time: \~10 minutes.**
 
-```{r}
-#| label: solution-clean-sleep-function
-#| echo: false
-#' Clean and prepare the sleep data for joining.
-#'
-#' @param data The sleep dataset.
-#'
-#' @returns A cleaner data frame.
-#'
-clean_sleep <- function(data) {
-  cleaned <- data |>
-    get_participant_id() |>
-    dplyr::rename(datetime = date) |>
-    prepare_dates(datetime) |>
-    summarise_column(seconds, list(sum = sum))
-  return(cleaned)
-}
-```
-
-```{r}
-#| label: solution-clean-cgm-function
-#| echo: false
-#' Clean and prepare the CGM data for joining.
-#'
-#' @param data The CGM dataset.
-#'
-#' @returns A cleaner data frame.
-#'
-clean_cgm <- function(data) {
-  cleaned <- data |>
-    get_participant_id() |>
-    prepare_dates(device_timestamp) |>
-    dplyr::rename(glucose = historic_glucose_mmol_l) |>
-    # You can decide what functions to summarise by.
-    summarise_column(glucose, list(mean = mean, sd = sd))
-  return(cleaned)
-}
-```
+{{< include /includes/solutions/_split-apply-combine-clean-functions.qmd >}}
 
 Just like we did with the `clean_cgm()` function, you will create a a
 `clean_sleep()` function here that will contain the functions you've

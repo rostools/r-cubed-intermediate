@@ -422,11 +422,31 @@ An important part of learning is to try what we've just covered on your
 own and in a practical way. So, using the same steps as what we just
 did, import in participant 101's sleep data.
 
+``` {.r filename="docs/learning.qmd"}
+sleep_101 <- here(___) |>
+  ___(
+    ___,
+    ___,
+    ___
+  )
+sleep_101
+```
+
+The output of the code might look a bit like:
+
+{{< include /includes/solutions/_importing-sleep-on-101.qmd >}}
+
+```{r}
+#| echo: false
+sleep_101
+```
+
+
 1.  Create a new header at the bottom of the `docs/learning.qmd` file
     and call it `## Exercise: Import 101's sleep data`.
 2.  Below the header, create a new code chunk with
     {{< var keybind.chunk >}}.
-3.  Copy and paste the code template below into the new code chunk.
+3.  Copy and paste the code template above into the new code chunk.
     Begin replacing the `___` with the correct R functions or other
     information.
     -   Give the correct file path in `here()` to 101's sleep data in
@@ -445,31 +465,6 @@ did, import in participant 101's sleep data.
     check reproducibility using {{< var keybind.render >}}, and then use
     the RStudio Git interface to **add and commit** the changes to the
     Git history using {{< var keybind.commit >}}.
-
-``` {.r filename="docs/learning.qmd"}
-sleep_101 <- here(___) |>
-  ___(
-    ___,
-    ___,
-    ___
-  )
-sleep_101
-```
-
-The output of the code might look a bit like:
-
-```{r solution-import-sleep-on-101}
-#| echo: false
-#| warning: false
-#| message: false
-sleep_101 <- here("data-raw/dime/sleep/101.csv") |>
-  read_csv(
-    show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case,
-    n_max = 100
-  )
-sleep_101
-```
 
 {{< text_snippet sticky_up >}}
 

@@ -481,26 +481,9 @@ right corner of the Quarto pane or by using {{< var keybind.outline >}}.
 The code that you write to test that the function works should look like
 the below and it should output something similar:
 
-```{r solution-repeat-saliva}
-#| echo: false
-#' Import a participant's sleep data from DIME.
-#'
-#' @param file_path Path to the participant's sleep file.
-#'
-#' @return Outputs a data frame/tibble.
-#'
-import_sleep <- function(file_path) {
-  sleep <- file_path |>
-    read_csv(
-      show_col_types = FALSE,
-      name_repair = to_snake_case,
-      n_max = 100,
-    )
-  return(sleep)
-}
-```
+{{< include /includes/solutions/_functions-import-sleep.qmd >}}
 
-```{r solution-sleep-function-output}
+```{r admin-sleep-function-output}
 here("data-raw/dime/sleep/101.csv") |>
   import_sleep()
 here("data-raw/dime/sleep/102.csv") |>
