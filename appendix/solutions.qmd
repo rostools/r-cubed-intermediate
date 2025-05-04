@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 # Solutions {#sec-solutions}
 
 ```{r setup}
@@ -21,4 +26,12 @@ default so you don't accidentally see solutions for the other exercises.
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_pivots-sleep-types-to-wider.qmd >}}
+:::
+
+## Joining data together, all at one {.unnumbered}
+
+### :technologist: Exercise: Join the sleep data and check the output {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_joins-sleep-data.qmd >}}
 :::
