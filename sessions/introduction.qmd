@@ -22,6 +22,38 @@ The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
 :::
 
+## :book: Reading task: Learning design
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+This is the first time adding this, so mention that there is strong
+evidence that when learners are aware of and involved in why learning
+material is structured the way it is, they learn better. But we'd love
+feedback on this.
+
+Briefly walk through some of these things, as they form the basis for
+the workshop.
+:::
+
+**Time: \~6 minutes.**
+
+{{< include /_extensions/rostools/r3-theme/includes/learning-design.qmd >}}
+
+{{< text_snippet sticky_up >}}
+
+## Other details
+
+We collect feedback at the end of each session through the survey. It is
+extremely helpful and has greatly improved the workshop material over
+the years. So please, give us feedback!! We're all in this together,
+learning and improving :grin:
+
+Since this is also a space to socialise and network, we strongly
+encourage you to sit besides someone you don't know during lunch. This
+is also why we have you pick a piece of paper that has a table name on
+it every day, so that you can sit with different people each day.
+
 ## :book: Reading task: Our roadmap
 
 ::: {.callout-note appearance="minimal" collapse="true"}
