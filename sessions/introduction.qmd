@@ -22,22 +22,20 @@ The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
 :::
 
-## :book: Reading task: The big picture
+## :book: Reading task: Our roadmap
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Go over the text again, to reinforce the workflows shown in the diagrams
-and, briefly, the reasons why we do certain things. Especially reinforce
-why we have the separation between `learning.qmd` and `functions.R`.
+Go over the text again and use the diagrams to reinforce what our
+roadmap is.
 :::
 
 **Time: \~15 minutes.**
 
-This section provides an bigger picture view of what we will be doing,
-why we want to do it, how we will be going about doing it, and what it
-will look like in the end. So the overall practical aim of this workshop
-is:
+This section provides an bigger picture view and roadmap of what we will
+be doing, a bit on why we want to do it, and what it will look like in
+the end. The overall practical aim or "destination" of this workshop is:
 
 *To apply a reproducible and programmatic approach to efficiently
 downloading a dataset that has multiple data files, then processing and
@@ -46,18 +44,77 @@ later analysis.*
 
 In our case, during the workshop we want to process the DIME data so
 that we have a single dataset to work with for later (hypothetical)
-analyses. Which can be visually summarised as:
+analyses. We have one CGM file and one sleep file for each participant,
+as well as a single participant details file.
+
+To get to a single dataset, let's work backwards:
+
+1.  To get one final dataset, we need to join the CGM, sleep, and
+    participant data together and in a way that makes sense.
+2.  To join all the datasets together, they all need to be in a format
+    that can be joinable. So they need to be cleaned.
+3.  We need to clean the participant details data.
+4.  We need to clean the CGM and sleep data.
+5.  To clean the CGM data, we need to have one single CGM data frame to
+    be able to clean on, but we currently have many. So we need to join
+    ('bind') all the CGM data into one. This also applies to the sleep
+    data.
+6.  To get one CGM or sleep data frame, we need to first import it from
+    each raw file.
+
+Breaking these steps down visually, let's start with the final joining:
 
 ```{mermaid}
-%%| label: "fig-big-picture-aim"
-%%| fig-cap: "Big picture aim of the workshop."
-%%| fig-alt: "A diagram representing the overall flow from start to end of the workshop, with nodes for files pointing into code and outputting a final dataframe."
+%%| label: "fig-roadmap-joined-data"
+%%| fig-cap: "Roadmap for the workshop: Joining all the data into one."
+%%| fig-alt: "A diagram representing the flow of nodes with arrows. Nodes on the left are the three data frames, with arrows into a join action node, and finally an arrow to the final data frame."
 flowchart LR
-  file_a[/"data-raw/cgm/101.csv"/]
-  file_etc[/"data-raw/cgm/*.csv"/]
-  file_z[/"data-raw/cgm/127.csv"/]
-  file_a & file_etc & file_z --> code(R code to<br>process data)
-  code --> final_data[(Dataframe<br>for analysis)]
+  cgm[/"CGM<br>data frame"/]
+  sleep[/"Sleep<br>data frame"/]
+  participants[/"Participant details<br>data frame"/]
+  join(Join together)
+  final_data[/"One data frame<br>ready for analysis"/]
+
+  cgm & sleep & participants --> join
+  join --> final_data
+```
+
+Going backwards, to get to the single CGM data frame, we will need to
+import all the files, 'bind' them together, and then clean them. The
+same applies to the sleep. Visualised below for both CGM and sleep data:
+
+```{mermaid}
+%%| label: "fig-roadmap-cgm"
+%%| fig-cap: "Roadmap for the workshop: Importing and cleaning all the CGM (or sleep) data files."
+%%| fig-alt: "A diagram representing the flow of nodes with arrows. Nodes on the left are the individual files for CGM, that point into an import and binding action, that then move into cleaning, and finally to a single CGM data frame."
+flowchart LR
+  cgm_a[/"data-raw/dime/cgm/101.csv"/]
+  cgm_etc[/"data-raw/dime/cgm/*.csv"/]
+  cgm_z[/"data-raw/dime/cgm/127.csv"/]
+  cgm[/"CGM<br>data frame"/]
+  import(Import then<br>'bind' together)
+  clean(Clean data)
+
+  cgm_a & cgm_etc & cgm_z --> import
+  import --> clean
+  clean --> cgm
+```
+
+And for the participant details flow, it would be:
+
+```{mermaid}
+%%| label: "fig-roadmap-participant-details"
+%%| fig-cap: "Roadmap for the workshop: Importing and cleaning the participant details data file."
+%%| fig-alt: "A diagram representing the overall flow from start to end of the workshop, with nodes for files pointing into code and outputting a final dataframe."
+flowchart TB
+  participant_details[/"data-raw/dime/participant_details.csv"/]
+  import(Import data)
+  clean(Clean data)
+  output[/"Participant details<br>data frame"/]
+
+  participant_details --> import
+  import --> clean
+  clean --> output
 ```
 
 We also want to make sure that whatever processing we do to the data is
@@ -138,8 +195,15 @@ workflow because we want to follow some standard conventions in R, like
 having a `DESCRIPTION` metadata file, keeping raw data in the
 `data-raw/` folder, and keeping (most) R scripts in the `R/`. We also
 want to keep things structured to make it easier for others and
-ourselves to reproduce the work. Below are sections for the different
-workflows we will be using in the workshop.
+ourselves to reproduce the work.
+
+::: callout-note
+During the code-alongs, we will be working with the CGM and participant
+details data. For the exercises, you will practice what you've learned
+on the sleep data.
+:::
+
+{{< text_snippet sticky_up >}}
 
 ## :technologist: Exercise: What types of workflows do you use?
 
@@ -149,10 +213,11 @@ The process of learning is about taking the content you just learned and
 trying to integrate it into your own context and situation, as well as
 talking about it to enforce it into your brain. So:
 
--   Take 1 minutes to think about the workflows you use in your own work.
-    Since we'll be covering different workflows in this workshop, we would
-    like you to try to think of your own and how it will compare to the ones
-    taught. Try to think very explicitly what you do and how you do it.
+-   Take 1 minutes to think about the workflows you use in your own
+    work. Since we'll be covering different workflows in this workshop,
+    we would like you to try to think of your own and how it will
+    compare to the ones taught. Try to think very explicitly what you do
+    and how you do it.
 -   Then, with your neighbour, take 5 minutes where each of you share
     what you've thought about and discuss it. How do both of your ways
     of working compare to each other and to what was described above?
