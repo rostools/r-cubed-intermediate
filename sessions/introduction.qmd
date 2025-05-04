@@ -215,9 +215,9 @@ workshop](https://r-cubed-advanced.rostools.org).
 
 So you'll use Quarto (`docs/learning.qmd`) to write and test out code,
 convert it into a function (that we will cover in this workshop), and
-then move it into `R/functions.R` script. We have this split to
-cognitively and physically have a separation between prototyping code
-and keeping finalized, tested code. Then, within the Quarto document we
+then move it into `R/functions.R` script. We have this split to create a
+separation, both cognitively and physically, between the prototyping
+code and the finalized, tested code. Then, within the Quarto document we
 can `source()` the `R/functions.R` script so we have access to the
 stable and tested code. This workflow is represented below in
 @fig-quarto-to-functions.
