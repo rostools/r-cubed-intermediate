@@ -1,4 +1,4 @@
-## Code used in this session
+## Code used in session
 
 This lists *some*, but not all, of the code used in the section. Some
 code is incorporated into Markdown content, so is harder to
