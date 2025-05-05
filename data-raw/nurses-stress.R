@@ -52,7 +52,11 @@ add_datetime_column <- function(file, n) {
     as.character()
 }
 
-dir_ls(here(raw_path, "stress"), recurse = TRUE, regexp = ".*(BVP|TEMP|HR)\\.csv$") |>
+dir_ls(
+  here(raw_path, "stress"),
+  recurse = TRUE,
+  regexp = ".*(BVP|TEMP|HR)\\.csv$"
+) |>
   future_walk(\(file) {
     variable <- file |>
       path_file() |>
@@ -68,7 +72,10 @@ dir_ls(here(raw_path, "stress"), recurse = TRUE, regexp = ".*(BVP|TEMP|HR)\\.csv
       ) |>
       as_duckdb_tibble() |>
       group_by(collection_datetime) |>
-      summarise(across(everything(), \(x) mean(x, na.rm = TRUE)), .groups = "drop") |>
+      summarise(
+        across(everything(), \(x) mean(x, na.rm = TRUE)),
+        .groups = "drop"
+      ) |>
       mutate(collection_datetime = as_datetime(collection_datetime)) |>
       write_parquet(path_ext_set(file, "parquet"))
   })
