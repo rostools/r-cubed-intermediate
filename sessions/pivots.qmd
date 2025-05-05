@@ -278,7 +278,7 @@ participant_details
 12. Render the document with {{< var keybind.render >}} to make sure it
     all works.
 13. Once everything works fine, commit your changes to the Git history
-    with {{< var keybind.commit >}}.
+    with {{< var keybind.commit >}} and push it to your GitHub.
 
 {{< text_snippet sticky_up >}}
 
@@ -433,7 +433,7 @@ used before to make a function:
 11. Render the document with {{< var keybind.render >}} to make sure it
     all works.
 12. And lastly, commit your changes to the Git history with
-    {{< var keybind.commit >}}.
+    {{< var keybind.commit >}} and push it to your GitHub.
 
 {{< text_snippet sticky_up >}}
 

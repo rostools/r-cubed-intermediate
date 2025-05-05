@@ -408,7 +408,8 @@ another session.
 Before moving on to the exercise, let's style with
 {{< var keybind.style >}} the document, render with
 {{< var keybind.render >}}, and finally **add and commit** the changes
-to the Git history using {{< var keybind.commit >}}.
+to the Git history using {{< var keybind.commit >}} before pushing to
+GitHub.
 
 ## :technologist: Exercise: Convert into a function to use it on the sleep data
 
@@ -499,7 +500,8 @@ function that you can re-use.
 7.  Run `{styler}` while in the `R/functions.R` file with
     {{< var keybind.style >}}.
 8.  Once done, **add** the changes you've made and **commit** them to
-    the Git history, using {{< var keybind.commit >}}.
+    the Git history, using {{< var keybind.commit >}} and then push to
+    GitHub.
 
 {{< text_snippet sticky_up >}}
 

@@ -365,7 +365,8 @@ In this exercise, you will finish setting the dependencies for the
 4.  Finally, style the code using {{< var keybind.style >}}, render the
     `docs/learning.qmd` file with {{< var keybind.render >}} to test
     that everything still works, and then add and commit the changes to
-    Git with {{< var keybind.commit >}}.
+    Git with {{< var keybind.commit >}}. While in the interface, push to
+    GitHub.
 
 {{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
 
@@ -496,7 +497,7 @@ This should work without any problems :tada: Let's style the code with
 {{< var keybind.style >}} and then render the document with
 {{< var keybind.render >}} to test that everything works. If everything
 works, let's add and commit the changes to the Git history using
-{{< var keybind.commit >}}.
+{{< var keybind.commit >}}. Then, push to GitHub.
 
 ## :book: Reading task: Easily reuse stable, robust functions by storing them in the `R/` folder
 
@@ -632,7 +633,8 @@ document.
 Let's test it that it works. Render the document with
 {{< var keybind.render >}} and check that it works. If it does, then we
 can add and commit the changes to both the `docs/learning.qmd` and
-`R/functions.R` file.
+`R/functions.R` file before then pushing to GitHub.
+
 
 ## Key takeaways
 

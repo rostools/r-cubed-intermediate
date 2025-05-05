@@ -434,7 +434,7 @@ steps:
 10. Restart your R session with {{< var keybind.restart-r >}} to make
     sure later work is in a clean state.
 11. Add and commit the changes to the Git history with
-    {{< var keybind.commit >}}.
+    {{< var keybind.commit >}}. Then push to GitHub.
 
 {{< text_snippet sticky_up >}}
 
@@ -696,7 +696,7 @@ To get to that point, complete these tasks:
 6.  Restart your R session with {{< var keybind.restart-r >}} so that
     your environment is cleaned up and empty.
 7.  Add and commit the changes to the Git history with
-    {{< var keybind.commit >}}.
+    {{< var keybind.commit >}} and then push to GitHub.
 
 {{< text_snippet sticky_up >}}
 
