@@ -482,7 +482,7 @@ cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   read_csv(
     show_col_types = FALSE,
     name_repair = to_snake_case,
-    n_max = 100,
+    n_max = 100
   )
 ```
 
@@ -547,8 +547,7 @@ sleep_101
     -   Use `read_csv()` (not `read.csv()`).
     -   Use `show_col_types = FALSE` to hide the importing message.
     -   Convert the columns `to_snake_case` using the `name_repair`
-        argument in `read_csv()`. Don't forgot to attach the
-        `{snakecase}` to the function with `::` and don't use the `()`
+        argument in `read_csv()`. Remember to not use the `()`
         at the end of the function.
     -   Import only first many rows with `n_max`. Instead of 100 like we
         did above, use another number of your choosing. Maybe fewer
