@@ -565,8 +565,8 @@ import_dime <- function(file_path) {
 
 We move the function over into this file for a few reasons:
 
-1.  To the Quarto document from becoming too long and having too many
-    different functions and code throughout it.
+1.  To avoid the Quarto document from becoming too long and having too
+    many different functions and code throughout it.
 2.  To make it easier to maintain and find things in your project since
     you know that all stable, tested functions are in the `R/` folder.
 3.  To make use of the `source()` function to load the functions into
