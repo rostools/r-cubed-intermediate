@@ -149,7 +149,7 @@ If your data is in CSV format, `{readr}` is perfect.
 
 {{< text_snippet sticky_up >}}
 
-## Importing in the raw data
+## Using Git and GitHub to track changes to your files
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
@@ -158,10 +158,10 @@ Take this time to briefly explain the Git interface, what add and commit
 mean, as well as where the history is located.
 :::
 
-Now it's time to import in the data! Before we do that though, we should
-do one thing first. While you downloaded the data during the
-pre-workshop tasks, you hadn't yet committed your changes to the Git
-history. So we will start with that first.
+Before we start importing the data into R, we should do one thing first.
+While you downloaded the data during the pre-workshop tasks, you hadn't
+yet committed your changes to the Git history. So we will start with
+that first.
 
 Before we do that though, let's tell Git to ignore some other files,
 like the `.html` files as well as the `_files/` folder that Quarto
@@ -170,6 +170,7 @@ type out the following code:
 
 ```{r ignore-html-files}
 #| filename: "Console"
+#| eval: false
 usethis::use_git_ignore(c("*.html", "*_files"))
 ```
 
@@ -180,8 +181,86 @@ and stage them. Then write a commit message in the text box on the
 right, something like `Setting up the project`. Click the "Commit"
 button, and finally close the Git interface.
 
-Now, let's get to importing some data! Open up the `docs/learning.qmd`.
-A quick way of opening a file in RStudio is to type
+This should be the first commit for everyone, if you didn't do it
+already. We'd now also like to connect our project to GitHub. We covered
+GitHub in the
+[introductory](https://r-cubed-intro.rostools.org/sessions/github)
+workshop, so we won't go into detail here about it. But we will setup
+things up so that we can push (or pull) our changes to GitHub.
+
+In order to connect to GitHub, you have to tell GitHub who you are. Or
+rather, you have to tell GitHub who your computer is. For that, we need
+to create a token that is stored on your computer that tells GitHub that
+you are who you say you are.
+
+You very likely haven't set up a PAT, but if you are uncertain, you can
+always check with:
+
+```{r check-token}
+#| filename: "Console"
+#| eval: false
+usethis::gh_token_help()
+```
+
+```
+• GitHub host: 'https://github.com'
+• Personal access token for 'https://github.com': <unset>
+• To create a personal access token, call `create_github_token()`
+• To store a token for current and future use, call `gitcreds::gitcreds_set()`
+ℹ Read more in the 'Managing Git(Hub) Credentials' article:
+  https://usethis.r-lib.org/articles/articles/git-credentials.html
+```
+
+If the output says that the token is `<unset>` like the above text does,
+that means we need to make Git and `{usethis}` aware of the token. We do
+that by typing the next function in the Console to create the token on
+GitHub. If yours is "set", you don't need to do the following.
+
+```{r create-token}
+#| filename: "Console"
+#| eval: false
+usethis::create_github_token()
+```
+
+This function sends us to the GitHub "Generate new token" webpage with
+all the necessary settings checked. Set the "Expiry date" to 90 days
+(this is a good security feature). Then, click the green button at the
+bottom called "Generate token" and you'll have a very long string
+generated for you that starts with `ghp_`. **Save this token in your
+password manager**. This is the token you will use every time you open
+up RStudio and interact with GitHub through R. You do **not** need to
+create a new token for each R project or package you make, you only need
+to create one after your current token expires (typically every couple
+of months), if you've forgotten the token or lost it, or if you've
+changed to a new computer.
+
+Now, in the Console, run:
+
+```{r set-token}
+#| filename: "Console"
+#| eval: false
+gitcreds::gitcreds_set()
+```
+
+It will ask for you to paste in your token. Paste it in and hit enter.
+The computer now will tell GitHub that you are you. Let's connect our
+project to GitHub now. In the **Console**, run:
+
+```{r use-github}
+#| filename: "Console"
+#| eval: false
+usethis::use_github()
+```
+
+A bunch of text should pop up and it should open a browser with your
+project on GitHub. Now, we can push our changes whenever we want! Since
+we've already made our repository, it should have already pushed for us,
+but just in case, let's click "push" button on the Git pane to confirm.
+
+## Importing in the raw data
+
+Alright, now is the time to importing some data! Open up the
+`docs/learning.qmd`. A quick way of opening a file in RStudio is to type
 {{< var keybind.open-file >}} (dot or period) and then typing `learning`
 which should bring up the file we want to open. Hitting enter should now
 open the file.
@@ -425,7 +504,9 @@ Before moving on to the exercise, let's:
     {{< var keybind.render >}}. If it generates an HTML document without
     problems, we know our code is at least starting to be reproducible.
 -   **Add and commit** the changes to the Git history through the
-    RStudio Git interface with {{< var keybind.commit >}}.
+    RStudio Git interface with {{< var keybind.commit >}}. Then click
+    the push button while in the interface to push the changes to
+    GitHub.
 
 ## :technologist: Exercise: Import participant 101's sleep data {#sec-exercise-import-sleep}
 
@@ -476,7 +557,7 @@ sleep_101
     {{< var keybind.style >}}, render the Quarto document to HTML to
     check reproducibility using {{< var keybind.render >}}, and then use
     the RStudio Git interface to **add and commit** the changes to the
-    Git history using {{< var keybind.commit >}}.
+    Git history using {{< var keybind.commit >}}. Then, push to GitHub.
 
 {{< text_snippet sticky_up >}}
 

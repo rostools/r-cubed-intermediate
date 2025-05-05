@@ -258,7 +258,7 @@ Once we've created that and before moving on, let's style our code with
 {{< var keybind.style >}}, render the Quarto document with
 {{< var keybind.render >}}, and then open up the Git Interface with
 {{< var keybind.commit >}} to **add and commit** these changes to the
-Git history.
+Git history before then pushing to GitHub.
 
 ## :book: Reading task: Workflow for prototyping and creating functions
 
@@ -461,7 +461,7 @@ code too.
 Now that we have a working function, run `{styler}` with
 {{< var keybind.style >}}, render with {{< var keybind.render >}}, and
 then add and commit the changes to the Git history with
-{{< var keybind.commit >}}.
+{{< var keybind.commit >}} before then pushing to GitHub.
 
 ## :technologist: Exercise: Convert the sleep code into a function
 
@@ -512,7 +512,7 @@ here("data-raw/dime/sleep/102.csv") |>
     {{< var keybind.style >}}.
 5.  Render the Quarto document with {{< var keybind.render >}}.
 6.  Finally, **add and commit** the changes to the Git history, using
-    {{< var keybind.commit >}}.
+    {{< var keybind.commit >}}. Then push to GitHub.
 
 <!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->
 
