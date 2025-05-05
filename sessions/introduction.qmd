@@ -165,7 +165,7 @@ we will be creating.
 ::: {layout-ncol="2"}
 ### Currently looks like: {.unnumbered}
 
-```         
+```
 LearnR3
 ├── data/
 │   └── README.md
@@ -192,7 +192,7 @@ LearnR3
 
 ### End of workshop: {.unnumbered}
 
-```         
+```
 LearnR3
 ├── data/
 │   ├── README.md
