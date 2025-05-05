@@ -426,7 +426,7 @@ cgm_data
 
 We want to be able to do the same thing for the `sleep` data, but we
 don't want to repeat ourselves. What we want is a new function that
-looks like the below code chunk and that outputs a similar data frame,
+looks like the code chunk below and that outputs a similar data frame,
 though the `file_path_id` values will be different:
 
 ```{r solution-import-multiple-files}
