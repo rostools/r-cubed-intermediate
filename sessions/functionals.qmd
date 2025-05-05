@@ -191,7 +191,7 @@ for (num in 1:5) {
 Using `map()` we can give it something called "anonymous" functions.
 "Anonymous" because it isn't named with `name <- function()` like we've
 done before. Anonymous functions are functions that you use once and
-don't remember in the your environment (like named functions do). As you
+don't remember in your environment (like named functions do). As you
 might guess, you can make an anonymous function by simply *not* naming
 it! For instance:
 
