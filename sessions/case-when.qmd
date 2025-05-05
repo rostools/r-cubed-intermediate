@@ -5,6 +5,10 @@ execute:
 
 # Using nested conditionals to help clean columns {#sec-case-when}
 
+::: {.callout-warning appearance="default"}
+🚧 We are doing **major** changes to this workshop, so much of the content will be changed. 🚧
+:::
+
 ```{r setup}
 #| include: false
 library(here)

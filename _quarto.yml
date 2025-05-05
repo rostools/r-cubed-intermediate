@@ -16,10 +16,6 @@ book:
   date: last-modified
   repo-url: "https://github.com/rostools/r-cubed-intermediate"
   site-url: "https://r-cubed-intermediate.rostools.org"
-  body-header: |
-    ::: {.callout-warning appearance="default"}
-    🚧 We are doing **major** changes to this workshop, so much of the content will be changed. 🚧
-    :::
   chapters:
     - index.qmd
     - part: "Preamble"
@@ -37,7 +33,8 @@ book:
       - sessions/characters-dates.qmd
       - sessions/split-apply-combine.qmd
       - sessions/pivots.qmd
-      - sessions/hands-on-work.qmd
+      - sessions/joins.qmd
+      - sessions/project-work.qmd
       - sessions/what-next.qmd
   appendices:
     - appendix/extras.qmd

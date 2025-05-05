@@ -5,7 +5,6 @@
 # Used this only during writing to run code dependent on previous chapters.
 library(here)
 library(tidyverse)
-source(here("R/functions.R"))
 load(here("_temp/split-apply-combine.RData"))
 ```
 
@@ -369,7 +368,7 @@ sleep_data |>
 Once you've made this new function, move it into the `clean_sleep()` so
 it looks like:
 
-```{r solution-explanation-clean-sleep}
+```{r admin-explanation-clean-sleep}
 #| filename: "R/functions.R"
 clean_sleep <- function(data) {
   cleaned <- data |>
@@ -462,7 +461,7 @@ activity this time.
 
 ```{r admin-save-session-code}
 #| include: false
-save.image(here::here("_temp/robustness.RData"))
+save.image(here::here("_temp/pivots.RData"))
 ```
 
 {{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}

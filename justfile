@@ -1,5 +1,5 @@
 @_default:
-    just --list --unsorted
+  just --list --unsorted
 
 # Run all recipes
 run-all: install-dependencies check-spelling style build-website

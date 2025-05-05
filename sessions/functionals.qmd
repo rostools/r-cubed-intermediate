@@ -14,14 +14,27 @@ load(here("_temp/robustness.RData"))
 
 Briefly go over the bigger picture (found in the introduction section)
 and remind everyone the 'what' and 'why' of what we are doing.
-
-Also briefly review what we did the previous day, by using the takeaway
-points from the end of each session.
 :::
 
 ## Learning objectives
 
 {{< include /includes/objectives/_functionals.qmd >}}
+
+## :speech_balloon: Discussion activity: Recall and share what you've learned so far
+
+**Time: \~6 minutes.**
+
+A very effective way to learn is to recall and describe to someone else
+what you've learned. So before we continue this session, take some time
+to think about what you've learned from yesterday.
+
+1.  Take 1-2 minute and try to recall as much as you can about what
+    you'd done over the last two days. Without looking at your notes or
+    the other sections of the website, try to remember things about
+    importing and robust functions.
+2.  Then, for 4-5 minutes, share with your neighbour what you remember
+    and try to describe it to each other. Maybe you will each remember
+    different things.
 
 ## :book: Reading task: Functional programming
 
@@ -429,26 +442,7 @@ don't want to repeat ourselves. What we want is a new function that
 looks like the code chunk below and that outputs a similar data frame,
 though the `file_path_id` values will be different:
 
-```{r solution-import-multiple-files}
-#| echo: false
-#| warning: false
-#| message: false
-#' Import all DIME CSV files in a folder into one data frame.
-#'
-#' @param folder_path The path to the folder that has the CSV files.
-#'
-#' @return A single data frame/tibble.
-#'
-import_csv_files <- function(folder_path) {
-  files <- folder_path |>
-    fs::dir_ls(glob = "*.csv")
-
-  data <- files |>
-    purrr::map(import_dime) |>
-    purrr::list_rbind(names_to = "file_path_id")
-  return(data)
-}
-```
+{{< include /includes/solutions/_functionals-import-multiple-files.qmd >}}
 
 ```{r}
 #| eval: false

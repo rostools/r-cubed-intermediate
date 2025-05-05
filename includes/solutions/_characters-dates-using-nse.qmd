@@ -1,0 +1,20 @@
+```{r}
+#| label: solution-prepare-dates-nse
+#| echo: !expr 'show_solutions'
+#' Prepare the date columns in DIME CGM and sleep data for joining.
+#'
+#' @param data The data that has the datetime column.
+#' @param column The datetime column to convert to date and hour.
+#'
+#' @returns A tibble/data.frame
+#'
+prepare_dates <- function(data, column) {
+  prepared_dates <- data |>
+    dplyr::mutate(
+      date = lubridate::as_date({{ column }}),
+      hour = lubridate::hour({{ column }}),
+      .before = {{ column }}
+    )
+  return(prepared_dates)
+}
+```

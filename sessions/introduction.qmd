@@ -22,22 +22,52 @@ The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
 :::
 
-## :book: Reading task: The big picture
+## :book: Reading task: Learning design
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+This is the first time adding this, so mention that there is strong
+evidence that when learners are aware of and involved in why learning
+material is structured the way it is, they learn better. But we'd love
+feedback on this.
+
+Briefly walk through some of these things, as they form the basis for
+the workshop.
+:::
+
+**Time: \~6 minutes.**
+
+{{< include /_extensions/rostools/r3-theme/includes/learning-design.qmd >}}
+
+{{< text_snippet sticky_up >}}
+
+## Other details
+
+We collect feedback at the end of each session through the survey. It is
+extremely helpful and has greatly improved the workshop material over
+the years. So please, give us feedback!! We're all in this together,
+learning and improving :grin:
+
+Since this is also a space to socialise and network, we strongly
+encourage you to sit besides someone you don't know during lunch. This
+is also why we have you pick a piece of paper that has a table name on
+it every day, so that you can sit with different people each day.
+
+## :book: Reading task: Our roadmap
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Go over the text again, to reinforce the workflows shown in the diagrams
-and, briefly, the reasons why we do certain things. Especially reinforce
-why we have the separation between `learning.qmd` and `functions.R`.
+Go over the text again and use the diagrams to reinforce what our
+roadmap is.
 :::
 
 **Time: \~15 minutes.**
 
-This section provides a bigger picture view of what we will be doing,
-why we want to do it, how we will be going about doing it, and what it
-will look like in the end. So, the overall practical aim of this
-workshop is:
+This section provides a bigger picture view and roadmap of what we will
+be doing, a bit on why we want to do it, and what it will look like in
+the end. The overall practical aim or "destination" of this workshop is:
 
 *To apply a reproducible and programmatic approach to efficiently
 downloading a dataset that has multiple data files, then processing and
@@ -46,18 +76,77 @@ later analysis.*
 
 In our case, during the workshop we want to process the DIME data so
 that we have a single dataset to work with for later (hypothetical)
-analyses. Which can be visually summarised as:
+analyses. We have one CGM file and one sleep file for each participant,
+as well as a single participant details file.
+
+To get to a single dataset, let's work backwards:
+
+1.  To get one final dataset, we need to join the CGM, sleep, and
+    participant data together and in a way that makes sense.
+2.  To join all the datasets together, they all need to be in a format
+    that can be joinable. So they need to be cleaned.
+3.  We need to clean the participant details data.
+4.  We need to clean the CGM and sleep data.
+5.  To clean the CGM data, we need to have one single CGM data frame to
+    be able to clean on, but we currently have many. So we need to join
+    ('bind') all the CGM data into one. This also applies to the sleep
+    data.
+6.  To get one CGM or sleep data frame, we need to first import it from
+    each raw file.
+
+Breaking these steps down visually, let's start with the final joining:
 
 ```{mermaid}
-%%| label: "fig-big-picture-aim"
-%%| fig-cap: "Big picture aim of the workshop."
-%%| fig-alt: "A diagram representing the overall flow from start to end of the workshop, with nodes for files pointing into code and outputting a final dataframe."
+%%| label: "fig-roadmap-joined-data"
+%%| fig-cap: "Roadmap for the workshop: Joining all the data into one."
+%%| fig-alt: "A diagram representing the flow of nodes with arrows. Nodes on the left are the three data frames, with arrows into a join action node, and finally an arrow to the final data frame."
 flowchart LR
-  file_a[/"data-raw/cgm/101.csv"/]
-  file_etc[/"data-raw/cgm/*.csv"/]
-  file_z[/"data-raw/cgm/127.csv"/]
-  file_a & file_etc & file_z --> code(R code to<br>process data)
-  code --> final_data[(Dataframe<br>for analysis)]
+  cgm[/"CGM<br>data frame"/]
+  sleep[/"Sleep<br>data frame"/]
+  participants[/"Participant details<br>data frame"/]
+  join(Join together)
+  final_data[/"One data frame<br>ready for analysis"/]
+
+  cgm & sleep & participants --> join
+  join --> final_data
+```
+
+Going backwards, to get to the single CGM data frame, we will need to
+import all the files, 'bind' them together, and then clean them. The
+same applies to the sleep. Visualised below for both CGM and sleep data:
+
+```{mermaid}
+%%| label: "fig-roadmap-cgm"
+%%| fig-cap: "Roadmap for the workshop: Importing and cleaning all the CGM (or sleep) data files."
+%%| fig-alt: "A diagram representing the flow of nodes with arrows. Nodes on the left are the individual files for CGM, that point into an import and binding action, that then move into cleaning, and finally to a single CGM data frame."
+flowchart LR
+  cgm_a[/"data-raw/dime/cgm/101.csv"/]
+  cgm_etc[/"data-raw/dime/cgm/*.csv"/]
+  cgm_z[/"data-raw/dime/cgm/127.csv"/]
+  cgm[/"CGM<br>data frame"/]
+  import(Import then<br>'bind' together)
+  clean(Clean data)
+
+  cgm_a & cgm_etc & cgm_z --> import
+  import --> clean
+  clean --> cgm
+```
+
+And for the participant details flow, it would be:
+
+```{mermaid}
+%%| label: "fig-roadmap-participant-details"
+%%| fig-cap: "Roadmap for the workshop: Importing and cleaning the participant details data file."
+%%| fig-alt: "A diagram representing the overall flow from start to end of the workshop, with nodes for files pointing into code and outputting a final dataframe."
+flowchart TB
+  participant_details[/"data-raw/dime/participant_details.csv"/]
+  import(Import data)
+  clean(Clean data)
+  output[/"Participant details<br>data frame"/]
+
+  participant_details --> import
+  import --> clean
+  clean --> output
 ```
 
 We also want to make sure that whatever processing we do to the data is
@@ -138,168 +227,35 @@ workflow because we want to follow some standard conventions in R, like
 having a `DESCRIPTION` metadata file, keeping raw data in the
 `data-raw/` folder, and keeping (most) R scripts in the `R/`. We also
 want to keep things structured to make it easier for others and
-ourselves to reproduce the work. Below are sections for the different
-workflows we will be using in the workshop.
-
-### Download or copy data to `data-raw/`, only change with R {.unnumbered}
-
-In general, you want to store your original raw data that you'd use for
-your project within a folder in your R Project and *never change it*.
-This is because you want to keep the original data intact, so you can
-always go back to it if you need to. Since the raw data is rarely
-directly used for analyses, you'd use R to process the data and save the
-processed data to a new file that you'd then use for your analysis. This
-workflow is visually represented below in @fig-download-to-data-raw
-
-In R Projects, the common convention is to keep the raw data in the
-`data-raw/` folder, which is what you've already done during the
-pre-workshop tasks. This is where you would download or copy the data
-files you need for your project.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-download-to-data-raw"
-%%| fig-cap: "Workflow for downloading or copying data to the `data-raw/` folder and processing it into the `data/` folder."
-%%| fig-alt: "A diagram representing the workflow for downloading or copying data to the data-raw folder, then processed with R, and finally saved in the data folder."
-flowchart TD
-  data_file("Original<br>data file(s)") -- "Download<br>or copy" --> data_raw[/"data-raw/<br>folder"/]
-  data_raw -- "Read only" --> process("Process data with R,<br>raw data not changed")
-  process -- "Save"--> data[/"data/<br>folder"/]
-```
-
-### Use Quarto as a sandbox to prototype code {.unnumbered}
-
-Quarto is an incredibly powerful tool when working to ensure your code
-is reproducible. For this workshop, the Quarto document we use is at
-`docs/learning.qmd`.
-
-With Quarto, it's easy to quickly test code out and make sure it works.
-Think of using the Quarto file as a sandbox to test out and play with
-code, without fear of messing things up. And with Quarto, when you
-render the document to, for example, HTML it runs all the code from
-beginning to end in a new environment (so completely clean). Which means
-you can test a part of the reproducibility of your code. Because of this
-feature, it allows you to detect errors and issues with the code, making
-Quarto an excellent prototyping tool. The workflow is represented below
-in @fig-quarto-prototyping.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-quarto-prototyping"
-%%| fig-cap: "Workflow for using Quarto to prototype code, assess reproducibility, and fix issues."
-%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype code, with nodes for the Quarto file, rendering, and HTML output."
-flowchart TD
-  quarto[/"Quarto:<br>docs/learning.qmd"/] --> prototype(Prototyping<br>R code)
-  prototype -- "Check<br>reproducibility" --> render("Render")
-  render --> html[/"HTML file:<br>docs/learning.html"/]
-  render -- "Continue<br>or fix issues" --> quarto
-```
-
-For this workshop, we also use Quarto because it's easier from a
-teaching perspective. You, as the learner, can easily mix together text
-and notes to yourself as you learn, alongside the code you write out
-during the code-alongs and the exercises. We also use it to force you to
-practice working within Quarto documents, which is a key component to
-reproducibility, in a learning and supportive environment.
-
-### Use `R/functions.R` to keep stable, tested code {.unnumbered}
-
-While you use Quarto to test out and prototype code, you'll use R
-scripts, like `R/functions.R`, to keep the code you have already tested
-and are fairly confident that it works as intended. This workflow, of
-creating code and converting it into a function, is called a
-"function-based workflow". This is an incredibly common workflow in R
-projects and forms the basis for many other workflows and tools, such as
-ones that are covered in the [advanced
-workshop](https://r-cubed-advanced.rostools.org).
-
-So you'll use Quarto (`docs/learning.qmd`) to write and test out code,
-convert it into a function (that we will cover in this workshop), and
-then move it into `R/functions.R` script. We have this split to create a
-separation, both cognitively and physically, between the prototyping
-code and the finalized, tested code. Then, within the Quarto document we
-can `source()` the `R/functions.R` script so we have access to the
-stable and tested code. This workflow is represented below in
-@fig-quarto-to-functions.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-quarto-to-functions"
-%%| fig-cap: "Workflow for prototyping code in Quarto, moving it to an R script, then sourcing the script from Quarto."
-%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype and test code, moving that tested code to the R functions script, and sourcing back into the Quarto document."
-flowchart TD
-  quarto[/"Quarto:<br>docs/learning.qmd"/] --> code(Prototyping<br>R code)
-  code --> test("Testing that<br>code works")
-  test -- "Cut & paste<br>Commit to Git"--> functions[/"R/functions.R"/]
-  functions -- "source()" --> quarto
-```
-
-### Workflow for prototyping code {.unnumbered}
-
-At the level of the code, the way you prototype code is to:
-
-1.  Write it out in Quarto so that does what you want.
-2.  Convert that code into a function.
-3.  Test that the function works either in the Quarto document or in the
-    R Console.
-4.  Fix the function if it doesn't work.
-5.  Restart the R console with {{< var keybind.restart-r >}} or render
-    with {{< var keybind.render >}} to test that the function works.
-6.  Whenever the function works, *add and commit* the changes to the Git
-    history with {{< var keybind.commit >}}.
-
-```{mermaid}
-%%| echo: false
-%%| label: "fig-workflow-prototyping"
-%%| fig-cap: "Workflow for prototyping code in Quarto, converting to a function, testing it, rendering or restarting, and committing to Git."
-%%| fig-alt: "A diagram representing the workflow for prototyping code in Quarto, converting it to a function, testing it, rendering or restarting, and committing to Git."
-flowchart TD
-    code("Write code<br>in Quarto") --> as_function("Convert to<br>function")
-    as_function --> test("Test function in<br>Quarto or Console")
-    test --> fix_function("Fix function")
-    test -- "Commit" --> git("Git history")
-    fix_function --> test
-    fix_function --> either([Either:])
-    either -. As needed .-> restart("Restart R<br>session")
-    either -. As needed .-> render("Render<br>Quarto")
-    restart -.-> test
-    render -.-> test
-```
-
-Either restarting R or rendering the Quarto document is the only way
-there is to be certain the R workspace is in a clean state. When code
-runs after a clean state, it improves the chances of your code and
-project will be reproducible.
-
-We use Git because it is the best way of keeping track of what was done
-to your files, when, and why. It helps to keep your work transparent and
-makes it easier for you to share your code by uploading to GitHub. Using
-version control should be a standard practice to doing better science
-since it fits with the philosophy of doing science (e.g., transparency,
-reproducibility, and documentation).
+ourselves to reproduce the work.
 
 ::: callout-note
-While we covered GitHub in the introductory workshop, we can't assume
-everyone will have taken that workshop. Because of that, we won't be
-using GitHub in this workshop.
+During the code-alongs, we will be working with the CGM and participant
+details data. For the exercises, you will practice what you've learned
+on the sleep data.
 :::
 
 {{< text_snippet sticky_up >}}
 
-## :technologist: Exercise: What types of workflows do you use?
+## :speech_balloon: Discussion activity: Warm-up questions!
 
 **Time: \~8 minutes.**
 
-The process of learning is about taking the content you just learned and
-trying to integrate it into your own context and situation, as well as
-talking about it to enforce it into your brain. So:
+A big part of learning is social. We are in a classroom and you are
+listening to and interacting with the teacher (at least in some way).
+But it also with your peers.
 
--   Take 2 minutes to think about the workflows you use in your own work
-    and how they compare to the ones you've read about above and that we
-    all went over briefly. Try to be exact and specific in what you do
-    and how you do it.
--   Then, with your neighbour, take 6 minutes where each of you share
-    what you've thought about and discuss it. How do both of your ways
-    of working compare to each other and to what was described above?
+So, to help you feel more comfortable in this new physical and social
+space, for the next 4 minutes, get up and chat with your neighbour about
+the questions below:
 
-{{< text_snippet sticky_up >}}
+1.  Who are you?
+2.  Why are you here?
+3.  What do you want to learn?
+
+Make sure to share the time equally between each other. Then, after 4
+minutes, chat with another neighbour at your table (or a table nearby)
+for another 4 minutes. This time, talk about these questions:
+
+1.  How do you perceive your skill in R?
+2.  How much time do you spend *processing data* in R?

@@ -1,5 +1,9 @@
 # What next? {#sec-final-remarks}
 
+::: {.callout-warning appearance="default"}
+🚧 We are doing **major** changes to this workshop, so much of the content will be changed. 🚧
+:::
+
 [**What Next slides**](../slides/what-next.html)
 
 <div>
@@ -41,3 +45,12 @@ If you want to stay updated on when registration opens for upcoming
 workshops, along with keeping informed on other activities related to R,
 you can join our [r-cubed Discord
 server](https://discord.gg/xHPyj7dxJx).
+
+::: {.callout-tip appearance="minimal"}
+:star: Do you find this course material useful? Then please consider
+"starring" our [GitHub
+repository](https://github.com/rostools/r-cubed-intermediate/) to show your
+support! Starring will save it to a list of repositories you like that
+you can easily find again, plus it helps give our project more
+visibility!
+:::
