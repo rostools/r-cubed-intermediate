@@ -245,8 +245,8 @@ work with. So, we will need to fix the column names up to follow a
 common style and that is easier to code with. That style is `snake_case`
 that uses `_` for spaces and is all lower case. Snake case is even
 recommended in the [tidyverse style guide](https://style.tidyverse.org/)
-and there's even a package called `{snakecase}` that can help us with
-this!
+and there's even a package called `{snakecase}`, which we have already
+added to our `setup` code chunk, that can help us with this!
 
 But how do we fix this as we import the data? Let's look at the help
 docs of `{readr}`: `?read_csv`. Scroll down in the help document and we
