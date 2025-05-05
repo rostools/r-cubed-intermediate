@@ -55,7 +55,7 @@ A useful analogy is that functional programming is like how you talk to
 an adult about what you want done and letting the adult do it, e.g.
 "move these chairs to this room". "Imperative" is how you'd talk to a
 very young child to make sure it is done exactly as you say, without
-deviations from those instructions. Using the chair example, it would
+deviations from those instructions. Using the chair example, it would be
 like saying "take this chair, walk over to that room, drop of the chair
 in the corner, come back, take that next chair, walk back to the room
 and put it beside the other chair, ..." and so on. There's a lot of room
