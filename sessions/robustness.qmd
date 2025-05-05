@@ -509,7 +509,7 @@ Briefly explain the workflow a bit more, highlighting the diagram.
 **Time: ~5 minutes.**
 
 While you use Quarto to test out and prototype code, you'll use R
-scripts like `R/functions.R` to keep the code you have already tested out
+scripts, like `R/functions.R`, to keep the code you have already tested out
 already and are fairly confident that it works as intended. This
 workflow, of creating code and converting it into a function, is called
 a "function-based workflow". This is an incredibly common workflow in R
