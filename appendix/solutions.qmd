@@ -1,7 +1,13 @@
+---
+execute:
+  eval: false
+---
+
 # Solutions {#sec-solutions}
 
 ```{r setup}
 #| include: false
+#| eval: true
 show_solutions <- TRUE
 ```
 
@@ -9,18 +15,69 @@ This document contains the solutions, or in many ways potentials
 solutions, to the exercises throughout the workshop. They are hidden by
 default so you don't accidentally see solutions for the other exercises.
 
+# Pre-process data as you import it {.unnumbered}
+
+### :technologist: Exercise: Import participant 101's sleep data {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_importing-sleep-on-101.qmd >}}
+:::
+
+## Bundling code into functions {.unnumbered}
+
+### :technologist: Exercise: Convert the sleep code into a function {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_functions-import-sleep.qmd >}}
+:::
+
+## Making robust and general-purpose functions {.unnumbered}
+
+### :technologist: Exercise: Finish setting the dependencies {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
+:::
+
+## Doing many things at once with functionals {.unnumbered}
+
+### :technologist: Exercise: Convert into a function to use it on the sleep data {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_functionals-import-multiple-files.qmd >}}
+:::
+
+## Cleaning characters and dates {.unnumbered}
+
+### :technologist: Exercise: Using NSE in your function {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_characters-dates-using-nse.qmd >}}
+:::
+
+### :technologist: Exercise: Convert 'get ID' code into a function {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_characters-dates-get-id-function.qmd >}}
+:::
+
+## Using split-apply-combine to help in processing {.unnumbered}
+
+### :technologist: Exercise: Convert the summarising code into a function {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_split-apply-combine-summarise-column-function.qmd >}}
+:::
+
+### :technologist: Exercise: Create a `clean_sleep()` function {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_split-apply-combine-clean-functions.qmd >}}
+:::
+
 ## Pivoting your data from and to long or wide {.unnumbered}
 
 ### :technologist: Exercise: Convert the date completion code into a function {.unnumbered}
-
-```{r}
-show_solutions
-```
-
-```{r}
-#| echo: !expr 'show_solutions'
-"test"
-```
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_pivots-date-completion.qmd >}}
@@ -30,4 +87,12 @@ show_solutions
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_pivots-sleep-types-to-wider.qmd >}}
+:::
+
+## Joining data together, all at one {.unnumbered}
+
+### :technologist: Exercise: Join the sleep data and check the output {.unnumbered}
+
+::: {.callout-tip collapse="true"}
+{{< include /includes/solutions/_joins-sleep-data.qmd >}}
 :::

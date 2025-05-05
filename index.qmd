@@ -3,6 +3,7 @@
 [![License: CC BY
 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4061900.svg)](https://doi.org/10.5281/zenodo.4061900)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/rostools/r-cubed-intermediate/main.svg)](https://results.pre-commit.ci/latest/github/rostools/r-cubed-intermediate/main)
 
 ```{r write-packages-to-bib, include=FALSE}
 # automatically create a bib database for R packages
@@ -54,6 +55,15 @@ file on the GitHub repository for more details. The main way to
 contribute is by using [GitHub](https://github.com/) and creating a [new
 issue](https://github.com/rostools/r-cubed-intermediate/issues/new) to
 make comments and give feedback for the material.
+
+::: {.callout-tip appearance="minimal"}
+:star: Do you find this workshop material useful? Then please consider
+"starring" our [GitHub
+repository](https://github.com/rostools/r-cubed-intermediate/) to show your
+support! Starring will save it to a list of repositories you like that
+you can easily find again, plus it helps give our project more
+visibility!
+:::
 
 ## Target audiences
 

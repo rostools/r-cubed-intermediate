@@ -367,29 +367,7 @@ In this exercise, you will finish setting the dependencies for the
     that everything still works, and then add and commit the changes to
     Git with {{< var keybind.commit >}}.
 
-```{r}
-#| label: solution-add-project-dependencies
-#| filename: Console
-#| eval: false
-usethis::use_package("readr")
-usethis::use_package("snakecase")
-usethis::use_package("fs")
-```
-
-```{r}
-#| label: solution-set-function-dependencies
-#| filename: docs/learning.qmd
-#| echo: false
-import_cgm <- function(file_path) {
-  cgm <- file_path |>
-    readr::read_csv(
-      show_col_types = FALSE,
-      name_repair = snakecase::to_snake_case,
-      n_max = 100
-    )
-  return(cgm)
-}
-```
+{{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
 
 {{< text_snippet sticky_up >}}
 
@@ -520,7 +498,52 @@ This should work without any problems :tada: Let's style the code with
 works, let's add and commit the changes to the Git history using
 {{< var keybind.commit >}}.
 
-## Easily reuse stable, robust functions by storing them in the `R/` folder
+## :book: Reading task: Easily reuse stable, robust functions by storing them in the `R/` folder
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Briefly explain the workflow a bit more, highlighting the diagram.
+:::
+
+**Time: ~5 minutes.**
+
+While you use Quarto to test out and prototype code, you'll use R
+scripts like `R/functions.R` to keep the code you have already tested out
+already and are fairly confident that it works as intended. This
+workflow, of creating code and converting it into a function, is called
+a "function-based workflow". This is an incredibly common workflow in R
+projects and forms the basis for many other workflows and tools, such as
+ones that are covered in the [advanced
+workshop](https://r-cubed-advanced.rostools.org).
+
+So you'll use Quarto (`docs/learning.qmd`) to write and test out code,
+convert it into a function (that we will cover in this workshop), and
+then move it into `R/functions.R` script. We have this split to
+create a separation, cognitively and physically, between the prototyping code
+and the finalized, tested code. Then, within the Quarto document we
+can `source()` the `R/functions.R` script so we have access to the
+stable and tested code. We use `source()` to tell R to look in the file we
+give it, run all the code in the file, and include the contents into our
+working environment. That way, you can keep more code in other locations
+to make your code more organised. This workflow is represented below in
+@fig-quarto-to-functions.
+
+```{mermaid}
+%%| echo: false
+%%| label: "fig-quarto-to-functions"
+%%| fig-cap: "Workflow for prototyping code in Quarto, moving it to an R script, then sourcing the script from Quarto."
+%%| fig-alt: "A diagram representing the workflow for using Quarto to prototype and test code, moving that tested code to the R functions script, and sourcing back into the Quarto document."
+flowchart TD
+  quarto[/"Quarto:<br>docs/learning.qmd"/] --> code(Prototyping<br>R code)
+  code --> test("Testing that<br>code works")
+  test -- "Cut & paste<br>Commit to Git"--> functions[/"R/functions.R"/]
+  functions -- "source()" --> quarto
+```
+
+{{< text_snippet sticky_up >}}
+
+## Cutting and pasting functions in `R/functions.R`
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note

@@ -1,0 +1,23 @@
+```{r}
+#| label: solution-add-project-dependencies
+#| filename: Console
+#| eval: !expr 'show_solutions'
+usethis::use_package("readr")
+usethis::use_package("snakecase")
+usethis::use_package("fs")
+```
+
+```{r}
+#| label: solution-set-function-dependencies
+#| filename: docs/learning.qmd
+#| echo: !expr 'show_solutions'
+import_cgm <- function(file_path) {
+  cgm <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(cgm)
+}
+```

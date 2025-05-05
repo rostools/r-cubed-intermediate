@@ -1,0 +1,28 @@
+```{r}
+#| label: solution-summarise-column-function
+#| echo: !expr 'show_solutions'
+#' Summarise a single column based on one or more functions.
+#'
+#' @param data Either the CGM or sleep data in DIME.
+#' @param column The name of the column you want to summarise.
+#' @param functions One or more functions to apply to the column. If more than
+#'    one, use `list()`.
+#'
+#' @returns A summarised data frame.
+#'
+summarise_column <- function(data, column, functions) {
+  data |>
+    dplyr::select(
+      -tidyselect::contains("timestamp"),
+      -tidyselect::contains("datetime")
+    ) |>
+    dplyr::group_by(dplyr::pick(-{{ column }})) |>
+    dplyr::summarise(
+      dplyr::across(
+        {{ column }},
+        functions
+      ),
+      .groups = "drop"
+    )
+}
+```

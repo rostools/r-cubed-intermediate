@@ -1,0 +1,19 @@
+```{r}
+#| label: solution-import-sleep
+#| echo: !expr 'show_solutions'
+#' Import a participant's sleep data from DIME.
+#'
+#' @param file_path Path to the participant's sleep file.
+#'
+#' @return Outputs a data frame/tibble.
+#'
+import_sleep <- function(file_path) {
+  sleep <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100,
+    )
+  return(sleep)
+}
+```

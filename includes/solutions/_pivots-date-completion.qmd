@@ -1,7 +1,7 @@
 ```{r}
 #| label: solution-add-tidyr-dependency
 #| eval: false
-#| echo: !expr 'isTRUE(show_solutions)'
+#| echo: !expr 'show_solutions'
 usethis::use_package("tidyr")
 ```
 

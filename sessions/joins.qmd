@@ -1,24 +1,44 @@
----
-execute:
-  eval: false
----
-
-# Processing and joining datasets for cleaning {#sec-dplyr-joins}
+# Joining data together, all at one {#sec-joins}
 
 ```{r setup}
 #| include: false
 library(here)
-library(fs)
 library(tidyverse)
-load(here("_temp/functionals.RData"))
-source(here("R/functions.R"))
+load(here("_temp/pivots.RData"))
 ```
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Briefly go over the bigger picture (found in the introduction section)
+and remind everyone the 'what' and 'why' of what we are doing, and where
+we are at.
+:::
 
 ## Learning objectives
 
 {{< include /includes/objectives/_joins.qmd >}}
 
-## Join datasets together
+## :speech_balloon: Discussion activity: Recall and share what you've learned so far
+
+**Time: \~6 minutes.**
+
+A very effective way to learn is to recall and describe to someone else
+what you've learned. So before we continue this session, take some time
+to think about what you've learned in the last two days.
+
+1.  Take 1-2 minute and try to recall as much as you can about what
+    you'd done over the last two days. Without looking at your notes or
+    the other sections of the website, try to remember things about
+    importing, robust functions, functionals, regex,
+    split-apply-combine, and pivots.
+2.  Then, for 4-5 minutes, share with your neighbour what you remember
+    and try to describe it to each other. Maybe you will each remember
+    different things.
+
+## :book: Reading task: The many ways to join data
+
+**Time: \~10 minutes.**
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
@@ -27,82 +47,217 @@ Walk through and describe these images and the different type of joins
 after they've read it.
 :::
 
-::: callout-note
-## Reading task: \~10 minutes
-
 The ability to join datasets together is a fundamental component of data
-processing and transformation. In our case, we want to add the datasets
-together so we eventually have preferably one main dataset to work with.
+processing and transformation. In many cases, it is required to do
+before you can meaningfully do any work. Like in our case, we have
+essentially three datasets that aren't particularly useful on their own
+and only really benefit by being joined together. We join them to be
+able to make comparisons, analyse the variables together, and to work on
+one dataset rather than three.
 
-There are many ways to join datasets in `{dplyr}` that are described in
-`?dplyr::join`. The more common ones that are implemented in the
-`{dplyr}` package are:
+But joining datasets can be tricky. There are many ways to join datasets
+and you often have to do several checks of the data and prepare it in
+the right way for your needs, like we've done, to get a useful and
+correct output in the end. It can be really easy to not realise that
+some data was dropped or not included or that extra data was added. It
+can be extremely frustrating to check and confirm things, but ultimately
+necessary to continue with doing your analyses and work correctly.
 
--   `left_join(x, y)`: Join all rows and columns in `y` that match rows
-    and columns in `x`. *Columns* that exist in `y` but not `x` are
-    joined to `x`.
+There are many ways to join datasets in `{dplyr}`, all of which are
+described in the `?dplyr::join` and `?dplyr::semi_join` help
+documentation. While there are several, only a few are most commonly
+used. These are `left_join()`, `right_join()`, and `full_join()`.
+
+`left_join(x, y)`
+
+:   Join all rows and columns in `y` that match rows and columns in `x`.
+    *Columns* that exist in `y` but not `x` are joined to `x`. The
+    number of rows in the joined data is equal to the number of rows in
+    `x`. If there are some rows in `y` that don't match with `x`, those
+    rows are not included, and so are assigned `NA` values in the output
+    data.
 
 ![Left joining in `{dplyr}`. Notice how the last row in the blue data
 (the row with `d` in column `A`) is not included in the outputted data
-on the right. Modified from the Posit `{dplyr}`
-[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/left-join.png){#fig-left-join
-width="90%"}
+on the right. Modified from the Posit `{dplyr}` [cheat
+sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).
+Image license is CC-BY-SA.](/images/left-join.png){#fig-left-join
+width="90%"
+fig-alt="A diagram showing two data frames, one green and one blue, with three columns each. Each data frame has one different column and one different row. The output data frame shows that all columns are output, but only the rows that match with the left data frame (the green one) are included in the output."}
 
--   `right_join(x, y)`: The opposite of `left_join()`. Join all rows and
-    columns in `x` that match rows and columns in `y`. *Columns* that
-    exist in `x` but not `y` are joined to `y`.
+`right_join(x, y)`
+
+:   The opposite of `left_join()`. Join all rows and columns in `x` that
+    match rows and columns in `y`. *Columns* that exist in `x` but not
+    `y` are joined to `y`. Like `left_join()`, but the opposite, the
+    number of rows in the joined data is equal to the number of rows in
+    `y`. If there are some rows in `x` that don't match with `y`, those
+    rows are not included and are given an `NA` value. This function can
+    be useful when used while piping with `|>` when you are processing
+    data in a sequence of steps and want to continue piping but join a
+    different way then `left_join()`.
 
 ![Right joining in `{dplyr}`. Notice how the last row in the green data
 (the row with `c` in column `A`) is not included in the outputted data
-on the right. Modified from the Posit `{dplyr}`
-[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/right-join.png){#fig-right-join
-width="90%"}
+on the right. Modified from the Posit `{dplyr}` [cheat
+sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).
+Image license is
+CC-BY-SA.](/images/right-join.png){#fig-right-join width="90%"
+fig-alt="A diagram showing two data frames, one green and one blue, with three columns each. Each data frame has one different column and one different row. The output data frame shows that all columns are output, but only the rows that match with the right data frame (the blue one) are included in the output."}
 
--   `full_join(x, y)`: Join all rows and columns in `y` that match rows
-    and columns in `x`. Columns *and* **rows** that exist in `y` but not
-    `x` are joined to `x`. A full join keeps all the data from both `x`
-    and `y`.
+`full_join(x, y)`
+
+:   Join all rows and columns in `y` that match rows and columns in `x`.
+    Columns *and* **rows** that exist in `y` but not `x` are joined to
+    `x`. A full join keeps all the data from both `x` and `y`. This can
+    be useful if you want to make sure you have all the data from both
+    datasets, even if it results in more missing values in the output
+    data.
 
 ![Full joining in `{dplyr}`. Notice how all rows and columns are
 included in the outputted data on the right, and that some missingness
 is introduced because those values don't exist when the data are
-combined in this way. Modified from the Posit `{dplyr}`
-[cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).](/images/full-join.png){#fig-full-join
-width="90%"}
+combined in this way. Modified from the Posit `{dplyr}` [cheat
+sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf).
+Image license is CC-BY-SA.](/images/full-join.png){#fig-full-join
+width="90%"
+fig-alt="A diagram showing two data frames, one green and one blue, with three columns each. Each data frame has one different column and one different row. The output data frame shows that all columns are output, and all rows are included in the output, even if they don't match with the other data frame."}
 
-Now, we want to start joining our datasets. Let's start with the
-`user_info_df` and `saliva_df`. In this case, we want to use
-`full_join()`, since we want all the data from both datasets. This
-function takes two datasets and lets you indicate which column to join
-by using the `by` argument. Here, both datasets have the column
-`user_id` so we will join by that column.
+{{< text_snippet sticky_up >}}
+
+## Joining with dplyr functions
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Remind everyone that there will be some things that look odd when
+joining, but it's likely due to us only importing the first 100 rows
+from all the data files.
+
+Walk through the code, the output, and highlight what remains after the
+join.
+:::
+
+Let's use some of `{dplyr}`'s join functions! We'll join the
+`participant_details` and `cgm_data` datasets together. We'll probably
+want to use `full_join()`, but let's test out the other two joins first.
+In your `docs/learning.qmd` file, go to the bottom of the file and make
+a new header called `## Joining datasets`. Below that make a new code
+chunk with {{< var keybind.chunk >}}. We'll start with using
+`left_join()` to join the two datasets together.
+
+First, let's look at the two datasets before joining them.
 
 ```{r}
-full_join(user_info_df, saliva_df, by = "user_id")
+#| filename: "docs/learning.qmd"
+participant_details
+cgm_data
 ```
 
-`full_join()` is useful if we want to include all values from both
-datasets, as long as each participant ("user") had data collected from
-either dataset. When the two datasets have rows that don't match, we
-will get missingness in that row, but that's ok in this case.
+Notice the number of rows in each dataset. The `participant_details`
+dataset has `r nrow(participant_details)` rows and the `cgm_data`
+dataset has `r nrow(cgm_data)` rows. When we `left_join()` them, there
+should no more than `r nrow(participant_details) + nrow(cgm_data)` rows
+(`cgm_data` plus `participant_details`) in the output. There will likely
+be less because, remember, we have only imported the first 100 rows of
+each dataset. Let's join them with `left_join()`.
 
-We also eventually have other datasets to join together later on. Since
-`full_join()` can only take two datasets at a time, do we then just keep
-using `full_join()` until all the other datasets are combined? What if
-we get more data later on? Well, that's where more functional
-programming comes in. Again, we have a simple goal: For a set of data
-frames, join them all together. Here we use another functional
-programming concept from the `{purrr}` package called `reduce()`. Like
-`map()`, which "maps" a function onto a set of items, `reduce()` applies
-a function to each item of a vector or list, each time reducing the set
-of items down until only one remains: the output. In fact, this is how
-functions like `mean()` or `sum()` work, as they take a vector and give you a single number.
+```{r left-join}
+#| filename: "docs/learning.qmd"
+participant_details |>
+  left_join(cgm_data)
+```
 
-Let's use an example
-with our simple function `add_numbers()` we had created earlier on
-and add up 1 to 5. Since `add_numbers()` only takes two
-numbers, we have to give it two numbers at a time and repeat until we
-reach 5.
+Here, because `cgm_data` has the `hour` column, that means it expands
+all the data from `participant_details` for the dates that it joins by.
+The number of rows now is
+`r nrow(left_join(participant_details, cgm_data))`, which is slightly
+less than we expected but it also isn't surprising. Some rows in
+`cgm_data` got dropped because we haven't yet imported all the data.
+
+Because theoretically, the same `id` and `date` values should be present
+in both `cgm_data` and `participant_details`, using either `left_join()`
+or `full_join()` should be similar results. It should *not* give more
+than `r nrow(participant_details) + nrow(cgm_data)` rows though.
+
+But let's try `right_join()` first to see what happens. This is simpler,
+since it will only join what is in the right side, e.g. `cgm_data`. That
+means there should be exactly `r nrow(cgm_data)` rows in the output.
+
+```{r right-join}
+#| filename: "docs/learning.qmd"
+participant_details |>
+  right_join(cgm_data)
+```
+
+We see that, yes, it does have the same number of rows. We also see that
+there are no missing values in the glucose columns. That's because the
+`participant_details` dataset doesn't have glucose data and we know
+there is no missing values in `cgm_data` for it. So there will be no
+missing values in the output.
+
+Lastly, we'll fully join. Like `left_join()`, the number of rows can not
+be more than the sum of the number of rows in both datasets. But it can
+be less, since, by joining there will be overlap between the two
+datasets. At a minimum, there can not be less rows than the largest of
+the two datasets, which is in this case `participant_details` at
+`r nrow(participant_details)` rows. Let's try `full_join()` to see what
+happens.
+
+```{r full-join}
+#| filename: "docs/learning.qmd"
+participant_details |>
+  full_join(cgm_data)
+```
+
+We can see that the number of rows is
+`r nrow(full_join(participant_details, cgm_data))`, which is still less
+than the sum of the two datasets. But again, it isn't surprising to us
+here, since we know there is some overlap between the two datasets.
+
+The `full_join()` function is most often used because we often want to
+see all the data we have, even if there are some missing values.
+Especially considering that some statistical models can use missing
+values as extra information.
+
+We also eventually want to join by the sleep data. Since `full_join()`
+can only take two datasets at a time, we could write multiple
+`full_join()` statements in a row. But what if we get other data later
+on? Well, that's where more functional programming comes in. Again, we
+have a simple goal: For a set of data frames, join them all together.
+
+## :book: Reading task: Using the reduce functional
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Once they've read it, walk through the diagram again and try to explain
+it slightly differently/in your own words.
+:::
+
+**Time: \~5 minutes.**
+
+Here we use another functional programming concept from the `{purrr}`
+package called `reduce()`. Like `map()`, which "maps" a function onto a
+set of items, `reduce()` applies a function to each item of a vector or
+list, each time reducing the set of items down until only one remains:
+the output. In fact, this is how functions like `mean()` or `sum()`
+work, as they take a vector and give you a single number. Likewise,
+`summarise()` does the same thing, it takes a long vector (within groups
+if you are using `group_by()` and gives you back a single number.
+
+Let's use an example with our simple function `add_numbers()` we had
+created earlier on, which we include below as a reminder. Let's say we
+want to add up all the numbers from 1 to 5. Since `add_numbers()` only
+takes two numbers, we have to give it two numbers at a time and repeat
+until we reach 5.
+
+```{r}
+add_numbers <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
+```
 
 ```{r}
 # Add from 1 to 5
@@ -112,70 +267,135 @@ third <- add_numbers(second, 4)
 add_numbers(third, 5)
 ```
 
-Instead, we can use reduce to do the same thing:
+We could also use the pipe `|>` operator to do the same thing:
+
+```{r}
+# Add from 1 to 5
+add_numbers(1, 2) |>
+  add_numbers(3) |>
+  add_numbers(4) |>
+  add_numbers(5)
+```
+
+This is quite a bit of code to read and write. Instead, we can use the
+`reduce()` functional to do the same thing:
 
 ```{r}
 reduce(1:5, add_numbers)
 ```
 
-@fig-reduce visually shows what is happening within `reduce()`.
+@fig-reduce below visually shows what is happening within `reduce()`.
 
 ![A functional that iteratively uses a function on a set of items until
 only one output remains. Notice how the output of the first iteration of
 `func()` is placed in the first position of `func()` in the next
-iteration, and so on. Modified from the Posit purrr
-[cheat sheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf).](/images/reduce.png){#fig-reduce
-width="90%"}
+iteration, and so on. Modified from the Posit purrr [cheat
+sheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf). Image
+license is CC-BY-SA](/images/reduce.png){#fig-reduce width="90%"
+fig-alt="A diagram showing a block of green sub-blocks with the use of the reduce functional. Each sub-block is used in the first two positions of the function, then repeats with the output going into the first position of the next function. The final output is a single block of blue to represent everything being combined into one thing at the end."}
 
 If we look at the documentation for `reduce()` by writing `?reduce` in
-the Console, we see that`reduce()`, like`map()`, takes either a vector
+the Console, we see that`reduce()`, like `map()`, takes either a vector
 or a list as an input. Since data frames can only be put together as a
 list and not as a vector (a data frame has vectors for columns and so it
 can't be a vector itself), we need to combine the datasets together in a
 `list()` to be able to reduce them with `full_join()`.
-:::
+
+{{< text_snippet sticky_up >}}
+
+## Using `full_join()` with `reduce()`
 
 Let's code this together, using `reduce()`, `full_join()`, and `list()`
-while in the `docs/learning.qmd` file.
+while in the `docs/learning.qmd` file. In the same code chunk, we will
+join the datasets together using `reduce()` and `full_join()`. This
+time, we will assign the output to a new object called `dime_data`.
 
-```{r}
+```{r reduce-full-join}
 #| filename: "docs/learning.qmd"
-list(
-  user_info_df,
-  saliva_df
-) |>
+dime_data <- list(participant_details, cgm_data) |>
   reduce(full_join)
+dime_data
 ```
 
 We now have the data in a form that would make sense to join it with the
-other datasets. So lets try it:
+other datasets. In the exercise, you will add the sleep data to join
+everything together.
+
+What's the advantage of using `reduce()` here? For us right now, not too
+much. The amount of code is nearly identical if we just used several
+`full_join()` in a row. But the advantage is that it is much easier to
+include more datasets in the future, since it is only one extra data
+frame object to include in the `list()`.
+
+## :technologist: Exercise: Join the sleep data and check the output
+
+**Time: \~12 minutes.**
+
+Now that you've joined two datasets together, time to add the sleep data
+too! It will be very easy to do, because we've already set it up to add
+extra data to the `list()`. But, there still needs to be some checks.
+After joining, the final `dime_data` should look something like:
+
+{{< include /includes/solutions/_joins-sleep-data.qmd >}}
 
 ```{r}
-#| filename: "docs/learning.qmd"
-list(
-  user_info_df,
-  saliva_df,
-  summarised_rr_df
-) |>
-  reduce(full_join)
+#| filename: "Console"
+dime_data
 ```
 
-Hmm, but wait, we now have four rows of each user, when we should have
-only two, one for each day. By looking at each dataset we joined, we can
-find that the `saliva_df` doesn't have a `day` column and instead has a
-`samples` column. We'll need to add a day column in order to join
-properly with the RR dataset. For this, we'll learn about using nested
-conditionals.
+Complete these tasks to get to this point and to check the data:
 
-## Summary
+1.  In the bottom of `docs/learning.qmd`, add a new header called
+    `## Joining sleep data` and add a new code chunk below with
+    {{< var keybind.chunk >}}.
+2.  Start with checking the `sleep_data` by running it in the Console or
+    in the code chunk. How many rows and columns does it have right now?
+    Any missingness? (There is, lots of it, but where and how are things
+    missing?)
+3.  Calculate (in your head, on a piece of paper, with R using `nrow()`
+    and `+`) what the maximum number of rows the fully joined datasets
+    should have. You will need to add up all three datasets. That number
+    is how many rows the fully joined datasets should, *at most*, have.
+    Then, find what the smallest dataset. That number is the minimum
+    number of rows the fully joined should have.
+4.  In the code chunk, copy and paste (or manually type out) the code we
+    used above to join the datasets with `reduce()`. Then, include the
+    `sleep_data` at the end of the `list()`. Run the code with
+    {{< var keybind.run-code >}}.
+5.  Look through the newly joined data. Do some basic checks. Use
+    `View(dime_data)` to get an overview and use the filtering/sorting
+    buttons to explore the data a bit. What are some things you notice?
+    Is there a pattern to the missingness? What about all the columns,
+    anything to notice there? Do the glucose values and sleep values
+    overlap at all?
+    -   Keep in mind, since we only imported the first 100 rows, there
+        will be some things that don't match up. But even with this,
+        there are odd things that we will need to address.
+    -   If you'd like, discuss with your neighbour about some things
+        that could be fixed or improved.
+
+{{< text_snippet sticky_up >}}
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+After they finish the exercise, highlight some of the issues with the
+data, that we will then cover in the next session.
+:::
+
+## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
-Quickly cover this before finishing the session and when starting the
-next session.
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
 :::
 
+-   Knowing how to join datasets together is a fundamental part of data
+    processing and transformation. But it can be also tricky and a
+    source of unexpected issues later on if not done well or not
+    checked.
 -   Use `left_join()`, `right_join()`, and `full_join()` to join two
     datasets together.
 -   Use the functional `reduce()` to iteratively apply a function to a
@@ -186,3 +406,5 @@ next session.
 #| include: false
 save.image(here::here("_temp/dplyr-joins.RData"))
 ```
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}

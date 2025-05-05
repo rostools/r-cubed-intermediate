@@ -1,0 +1,38 @@
+```{r}
+#| label: solution-clean-sleep-function
+#| echo: !expr 'show_solutions'
+#' Clean and prepare the sleep data for joining.
+#'
+#' @param data The sleep dataset.
+#'
+#' @returns A cleaner data frame.
+#'
+clean_sleep <- function(data) {
+  cleaned <- data |>
+    get_participant_id() |>
+    dplyr::rename(datetime = date) |>
+    prepare_dates(datetime) |>
+    summarise_column(seconds, list(sum = sum))
+  return(cleaned)
+}
+```
+
+```{r}
+#| label: solution-clean-cgm-function
+#| echo: !expr 'show_solutions'
+#' Clean and prepare the CGM data for joining.
+#'
+#' @param data The CGM dataset.
+#'
+#' @returns A cleaner data frame.
+#'
+clean_cgm <- function(data) {
+  cleaned <- data |>
+    get_participant_id() |>
+    prepare_dates(device_timestamp) |>
+    dplyr::rename(glucose = historic_glucose_mmol_l) |>
+    # You can decide what functions to summarise by.
+    summarise_column(glucose, list(mean = mean, sd = sd))
+  return(cleaned)
+}
+```
