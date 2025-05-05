@@ -237,7 +237,7 @@ changed to a new computer.
 Now, in the Console, run:
 
 ```{r set-token}
-#| filename="Console"
+#| filename: "Console"
 #| eval: false
 gitcreds::gitcreds_set()
 ```
