@@ -165,8 +165,8 @@ brackets. Without the brackets, the function can be used by the `map()`
 functional and treated like any other object in R. Remember how we said
 that a function is an action when it has `()` at the end. In this case,
 we do *not* want R to do the action *yet*, we want R to use the action
-on each item in the `map()`. In order `map()` to do that, you need to
-give the function as an object so it can do the action later.
+on each item in the `map()`. In order for `map()` to do that, you need
+to give the function as an object so it can do the action later.
 
 Let's say we wanted to paste together the number with the sentence
 "seconds have passed". Normally it would look like:
