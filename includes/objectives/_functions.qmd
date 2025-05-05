@@ -1,7 +1,7 @@
 1.  Describe and identify the individual components of a function as
-    well as the workflow to creating them, and then use this workflow to
-    make one to import some data.
-3.  Describe and apply a workflow of prototyping code into a working
+    well as the workflow for creating one, and then use that workflow to
+    create a function that imports data.
+2.  Describe and apply a workflow of prototyping code into a working
     function in a Quarto document, moving the function into a script
     (called, e.g., `functions.R`) once prototyped and tested, and then
     using `source()` to load the functions into the R session. End this

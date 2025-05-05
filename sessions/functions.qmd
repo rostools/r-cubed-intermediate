@@ -305,7 +305,7 @@ flowchart TD
 
 Either restarting R or rendering the Quarto document is the only way
 there is to be certain the R workspace is in a clean state. When code
-runs after a clean state, it improves the chances your code and project
+runs after a clean state, it improves the chances that your code and project
 will be reproducible.
 
 We use Git because it is the best way of keeping track of what was done
@@ -320,7 +320,7 @@ reproducibility, and documentation).
 ## Making a function for importing our data
 
 Now that we have a basic understanding of what a function looks like,
-let's apply that what we're doing right now: Importing our data.
+let's apply that to what we're doing right now: Importing our data.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
