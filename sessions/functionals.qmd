@@ -158,7 +158,7 @@ map(1:5, paste)
 You'll notice that `map()` outputs a list, with all the `[[1]]` printed.
 A list is a specific type of object that can contain different types of
 objects. For example, a data frame is actually a special type of list
-where which column is a list item that contains the values of that
+where each column is a list item that contains the values of that
 column. `map()` will always output a list, so it is very predictable.
 Notice also that the `paste()` function is given *without* the `()`
 brackets. Without the brackets, the function can be used by the `map()`
