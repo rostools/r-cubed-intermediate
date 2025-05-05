@@ -259,19 +259,16 @@ help with converting to snake case, we will use this option to give the
 
 <!-- TODO: Don't do snakecase:: here? -->
 
-To find out the name of the function to use, go to the **Console** and
-start to type out `snakecase::`. As we type we will see a list of
-possible functions to use. We want to use the snakecase one, so scroll
-down and find the `to_snake_case()` function. That's the one we want to
-use in `name_repair`. To convert the variable names to snake case, we
-would add `name_repair = snakecase::to_snake_case` to the code, like so:
+The function from `{snakecase}` that we want to use in `name_repair`is
+the `to_snake_case()` function. To convert the variable names to snake
+case, we would add `name_repair = to_snake_case` to the code, like so:
 
 ```{r use-name-repair}
 #| filename: "docs/learning.qmd"
 cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   read_csv(
     show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case
+    name_repair = to_snake_case
   )
 ```
 
@@ -326,7 +323,7 @@ we've already written, add:
 cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   read_csv(
     show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case,
+    name_repair = to_snake_case,
     n_max = 100,
   )
 ```
@@ -402,7 +399,7 @@ The output of the code might look a bit like:
 sleep_101 <- here("data-raw/dime/sleep/101.csv") |>
   read_csv(
     show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case,
+    name_repair = to_snake_case,
     n_max = 100
   )
 sleep_101
