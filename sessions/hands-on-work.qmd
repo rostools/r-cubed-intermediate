@@ -1,51 +1,105 @@
 # Group project work {#sec-project-work}
 
 ::: callout-caution
-This is a new section, so it might not be very smooth yet. Any issues that come up we will share with the group and update this page immediately.
+This is a new section, so it might not be very smooth yet. Any issues
+that come up we will share with the group and update this page
+immediately. So we will be co-creating this section together!! :tada:
+:grin:
 :::
 
-It's time to try what you've learned from this workshop on a new dataset!
-We've taken the dataset from this [Zenodo record](https://zenodo.org/records/5514277)
-and tidied it up a bit for you, as it was bit difficult to work with in its original form.
-And it was a bit big. So, work through these tasks in teams of 2-3:
+It's time to try what you've learned from this workshop on a new
+dataset! We've taken the dataset from this [Zenodo
+record](https://zenodo.org/records/5514277) and tidied it up a bit for
+you, as it was bit difficult to work with in its original form. And it
+was a bit big. So, work through these tasks in teams of 2-3:
 
-1. Using the same repository has you have been using for this workshop, we're going
-to make a small change. Instead of there being only one person on the project,
-we will get you to add a collaborator so you can work together. Follow the instructions
-from the teacher for this step.
+1.  Using the same repository has you have been using for this workshop,
+    we're going to make a small change. Instead of there being only one
+    person on the project, we will get you to add a collaborator so you
+    can work together. Follow the instructions from the teacher for this
+    step.
 
-2. Every team member should then clone this new repository to their own computer.
-Again, follow the instructions from the teacher for this step.
+2.  Every team member should then clone this new repository to their own
+    computer. Again, follow the instructions from the teacher for this
+    step.
 
-3. Every team member should open up this project in RStudio. Then download this [link](https://drive.google.com/file/d/1lBq6tTSb55b2OIGPqmYF07ZEhaEdSjUP/view?usp=drive_link)
-from Google Drive to your computer. Yes, it's less then ideal to use Google Drive, but it's an easy way to get the data to you.
+3.  Every team member should open up this project in RStudio. Then
+    download this
+    [link](https://drive.google.com/file/d/1lBq6tTSb55b2OIGPqmYF07ZEhaEdSjUP/view?usp=drive_link)
+    from Google Drive to your computer. Yes, it's less then ideal to use
+    Google Drive, but it's an easy way to get the data to you.
 
-4. Once you have downloaded it, save the file in the `data-raw/` folder of your project.
-**This next step is important!**
-*One* team member should run
-`usethis::use_git_ignore("data-raw/nurses-stress*")` so that you don't accidentally save the zip file to your Git repository. The team member should then commit the changes to Git and push the changes up to GitHub. Then each team member should pull the changes from GitHub to their own computer. If you opened the `.gitignore` file, you should see that the `data-raw/nurses-stress*` file is now ignored by Git. This means that it won't be included in your Git repository, which is good because it's a big file and we don't want to include it in our project.
+4.  Once you have downloaded it, save the file in the `data-raw/` folder
+    of your project. **This next step is important!** *One* team member
+    should run `usethis::use_git_ignore("data-raw/nurses-stress*")` so
+    that you don't accidentally save the zip file to your Git
+    repository. The team member should then commit the changes to Git
+    and push the changes up to GitHub. Then each team member should pull
+    the changes from GitHub to their own computer. If you opened the
+    `.gitignore` file, you should see that the `data-raw/nurses-stress*`
+    file is now ignored by Git. This means that it won't be included in
+    your Git repository, which is good because it's a big file and we
+    don't want to include it in our project.
 
-5. Then, each team member should create a new Quarto document for themselves, with their name, in the `docs/` folder. For example, if Luke was in your group, he would create a file called `docs/luke.qmd`.
-Use the menu buttons: File > New File > Quarto Document.
-Commit the new file to Git. From now on, you will each work separately in this document, while pushing and pulling the changes to GitHub for the others to see.
+5.  Then, each team member should create a new Quarto document for
+    themselves, with their name, in the `docs/` folder. For example, if
+    Luke was in your group, he would create a file called
+    `docs/luke.qmd`. Use the menu buttons: File \> New File \> Quarto
+    Document. Commit the new file to Git. From now on, you will each
+    work separately in this document, while pushing and pulling the
+    changes to GitHub for the others to see.
 
-6. Look over the documentation of the
-[dataset](https://zenodo.org/records/5514277). I have only done some minimal tidying of the data, mainly adding a timestamp column and converted the files into more compressed file formats. I've also only
-included the HR, TEMP, and EDA data files, as well as the main participant data file (`survey_results.csv`).
+6.  Look over the documentation of the
+    [dataset](https://zenodo.org/records/5514277). I have only done some
+    minimal tidying of the data, mainly adding a timestamp column and
+    converted the files into more compressed file formats. I've also
+    only included the HR, TEMP, and EDA data files, as well as the main
+    participant data file (`survey_results.csv`).
 
-7. Unzip the file you downloaded. You can do this manually. Unzip it to the `data-raw/` folder, with the same name as the zip file.
-Look through the files. The first folders you find are labeled by the participant ID and sub-folders in them follow the pattern `ID_TIME-IN-SECONDS`. For instance
-`15_1594140175` means participant 15, and the time in seconds is 1594140175, which is the time that has passed since 1970-01-01 (the "origin").
-Inside those folders are the data files for that participant, stored as `.parquet` files. [Parquet](https://parquet.apache.org/) is a data format that is very efficient for storing large amounts of data.
-You can load them into R using the `arrow` package, with `arrow::read_parquet()`. You will need to install the `arrow` package and set the dependency with `usethis::use_package("arrow")`.
+7.  Unzip the file you downloaded. You can do this manually. Unzip it to
+    the `data-raw/` folder, with the same name as the zip file. Look
+    through the files. The first folders you find are labeled by the
+    participant ID and sub-folders in them follow the pattern
+    `ID_TIME-IN-SECONDS`. For instance `15_1594140175` means participant
+    15, and the time in seconds is 1594140175, which is the time that
+    has passed since 1970-01-01 (the "origin"). Inside those folders are
+    the data files for that participant, stored as `.parquet` files.
+    [Parquet](https://parquet.apache.org/) is a data format that is very
+    efficient for storing large amounts of data. You can load them into
+    R using the `arrow` package, with `arrow::read_parquet()`. You will
+    need to install the `arrow` package and set the dependency with
+    `usethis::use_package("arrow")`.
 
-8. Using the same things we covered in the workshop, what you want to end up with is a single dataset that has all the HR, TEMP, and EDA data for each participant so that you can (eventually) analyse it.
+8.  Using the same functions and workflows we covered in the workshop,
+    what you want to end up with is a single dataset that has all the
+    HR, TEMP, and EDA data for each participant so that you can
+    (eventually) analyse it.
 
-9. As a group, discuss
+9.  As a group, discuss some ways to do this. One idea is to do this in
+    stages. First, discuss how you will go about exploring the data and
+    identifying what the issues are. Then afterwards, get into the
+    details of fixing those issues.
 
-10. Here's some things to get you started with:
-    1. Getting a list of all the files that end in `.parquet` in the `data-raw/` folder. Tip: In `dir_ls()` there is the `regexp` argument that allows you to use regular expressions. For example, if you wanted to find only the `HR.parquet` files, you could use `regexp = "HR\\.parquet"`.
-    2. Read in one of those files using `arrow::read_parquet()`.
-    3. After reading in, keep only the first 1000 rows of the data using `slice_head(n = 1000)` from the `{dplyr}` package.
-    4. Then, identify how you want to join all the data together. This will probably require that you import each of the HR, TEMP, and EDA files to see what they have inside them.
-    5. You will also need to import the `survey_results.csv` file, which will probably need some cleaning up too.
+10. Here's some things to get you started with the exploration tasks:
+
+    1.  Getting a list of all the files that end in `.parquet` in the
+        `data-raw/` folder. Tip: In `dir_ls()` there is the `regexp`
+        argument that allows you to use regular expressions. For
+        example, if you wanted to find only the `HR.parquet` files, you
+        could use `regexp = "HR\\.parquet"`.
+    2.  Read in one of those files using `arrow::read_parquet()`.
+    3.  After reading in, keep only the first 1000 rows of the data
+        using `slice_head(n = 1000)` from the `{dplyr}` package.
+    4.  Then, identify how you want to join all the data together. This
+        will probably require that you import each of the HR, TEMP, and
+        EDA files to see what they have inside them.
+    5.  You will also need to import the `survey_results.csv` file,
+        which will probably need some cleaning up too.
+
+::: callout-tip
+If you'd like to see how this data was tidied up, check out this
+[script](https://github.com/rostools/r-cubed-intermediate/blob/main/data-raw/nurses-stress.R).
+It uses almost all the same functions and processes we've covered in
+this workshop, plus some extra ones to help speed things up (since
+processing all these large data can take some time if done "normally").
+:::
