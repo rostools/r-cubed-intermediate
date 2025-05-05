@@ -3,6 +3,7 @@ library(here)
 library(fs)
 library(furrr)
 library(duckplyr)
+library(arrow)
 
 # Download
 # nurses_stress_zip <- "https://zenodo.org/api/records/5514277/files-archive"
@@ -69,7 +70,7 @@ dir_ls(here(raw_path, "stress"), recurse = TRUE, regexp = ".*(BVP|TEMP|HR)\\.csv
       group_by(collection_datetime) |>
       summarise(across(everything(), \(x) mean(x, na.rm = TRUE)), .groups = "drop") |>
       mutate(collection_datetime = as_datetime(collection_datetime)) |>
-      arrow::write_parquet(path_ext_set(file, "parquet"))
+      write_parquet(path_ext_set(file, "parquet"))
   })
 
 survey_path <- here(raw_path, "survey-results.csv")
