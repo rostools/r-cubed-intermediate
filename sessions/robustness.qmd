@@ -144,7 +144,7 @@ dependency. Go to the **Console** and let's type out how to add it.
 Don't write this code in your Quarto document, since you don't want to
 run it every time you render the document.
 
-``` {r use-package-here}
+```{r use-package-here}
 #| filename: "Console"
 #| eval: false
 usethis::use_package("here")
@@ -179,7 +179,7 @@ usethis::with_project(
 Since we will also make use of the `{tidyverse}` set of packages later
 in the workshop, we'll also add `{tidyverse}` as a dependency.
 
-``` {r use-package-tidyverse}
+```{r use-package-tidyverse}
 #| filename: "Console"
 #| eval: false
 usethis::use_package("tidyverse")
@@ -201,7 +201,7 @@ This gives an error though. That's because the `{tidyverse}` is a large
 collection of packages, so as stated by the message, the recommended way
 to add this particular dependency is with:
 
-``` {r use-package-tidyverse-depends}
+```{r use-package-tidyverse-depends}
 #| filename: "Console"
 #| eval: false
 usethis::use_package("tidyverse", type = "Depends")
@@ -532,8 +532,8 @@ document.
 
 We've now created one general-purpose function that we can use later to
 import many different types of data files. We've made it more robust and
-have tested it so we can be certain it is fairly stable now. So, let's
-move the function into a location that we could be able to re-use it in
+have tested it so we can be certain it is fairly stable now. Let's move
+the function into a location so that we would be able to re-use it in
 other Quarto documents (if we had more). Since we already have a file
 called `R/functions.R`, we will keep all our stable and tested functions
 in there.
