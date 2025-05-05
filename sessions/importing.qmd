@@ -31,7 +31,7 @@ is reproducible. For this workshop, the Quarto document we use is at
 With Quarto, it's easy to quickly test code out and make sure it works.
 Think of using the Quarto file as a sandbox to test out and play with
 code, without fear of messing things up. And with Quarto, when you
-render the document to, for example, HTML and it runs all the code from
+render the document to, for example, HTML it runs all the code from
 beginning to end in a new environment (so completely clean). Which means
 you can test a part of the reproducibility of your code. Because of this
 feature, it allows you to detect errors and issues with the code, making
@@ -51,7 +51,7 @@ flowchart TD
 ```
 
 For this workshop, we also use Quarto because it's easier from a
-teaching perspective. You as the learner can easily mix together text
+teaching perspective. You, as the learner, can easily mix together text
 and notes to yourself as you learn, alongside the code you write out
 during the code-alongs and the exercises. We also use it to force you to
 practice working within Quarto documents, which is a key component to
@@ -79,7 +79,7 @@ will be focusing on CSV since it is one of the most common file formats.
 
 **Time: \~5 minutes.**
 
-Before you can effectively analyse your project's data, you will very
+Before you can effectively analyze your project's data, you will very
 likely need to first clean and process it into a format and structure
 that fits your project's specific needs. So this first phase of an
 analysis project is to import the data into R, check it out, and clean
@@ -256,12 +256,13 @@ open the file.
 Now with `docs/learning.qmd` open, we should see a `setup` code chunk
 already in the file. This code chunk is where we will put the
 `library()` code for loading the `{tidyverse}` package, which has
-`{readr}` bundled with it, as well as `library(here)`. It should look
-like this:
+`{readr}` bundled with it, as well as `library(here)`, and
+`library(snakecase)`. It should look like this:
 
 ```{{r setup}}
 library(tidyverse)
 library(here)
+library(snakecase)
 ```
 
 This `setup` code chunk is a special, named code chunk. Whenever you
@@ -377,8 +378,8 @@ work with. So, we will need to fix the column names up to follow a
 common style and that is easier to code with. That style is `snake_case`
 that uses `_` for spaces and is all lower case. Snake case is even
 recommended in the [tidyverse style guide](https://style.tidyverse.org/)
-and there's even a package called `{snakecase}` that can help us with
-this!
+and there's even a package called `{snakecase}`, which we have already
+added to our `setup` code chunk, that can help us with this!
 
 But how do we fix this as we import the data? Let's look at the help
 docs of `{readr}`: `?read_csv`. Scroll down in the help document and we
@@ -391,19 +392,16 @@ help with converting to snake case, we will use this option to give the
 
 <!-- TODO: Don't do snakecase:: here? -->
 
-To find out the name of the function to use, go to the **Console** and
-start to type out `snakecase::`. As we type we will see a list of
-possible functions to use. We want to use the snakecase one, so scroll
-down and find the `to_snake_case()` function. That's the one we want to
-use in `name_repair`. To convert the variable names to snake case, we
-would add `name_repair = snakecase::to_snake_case` to the code, like so:
+The function from `{snakecase}` that we want to use in `name_repair` is
+the `to_snake_case()` function. To convert the variable names to snake
+case, we would add `name_repair = to_snake_case` to the code, like so:
 
 ```{r use-name-repair}
 #| filename: "docs/learning.qmd"
 cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   read_csv(
     show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case
+    name_repair = to_snake_case
   )
 ```
 
@@ -458,7 +456,7 @@ we've already written, add:
 cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   read_csv(
     show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case,
+    name_repair = to_snake_case,
     n_max = 100,
   )
 ```
@@ -487,9 +485,9 @@ Before moving on to the exercise, let's:
 
 **Time: \~15 minutes.**
 
-An important part of learning is to try what we've just covered on your
-own and in a practical way. So, using the same steps as what we just
-did, import in participant 101's sleep data.
+An important part of learning is trying what we've just covered on your
+own and in a practical way. So, using the same steps we just followed,
+import participant 101's sleep data.
 
 ``` {.r filename="docs/learning.qmd"}
 sleep_101 <- here(___) |>

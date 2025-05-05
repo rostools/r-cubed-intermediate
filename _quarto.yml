@@ -34,7 +34,7 @@ book:
       - sessions/split-apply-combine.qmd
       - sessions/pivots.qmd
       - sessions/joins.qmd
-      - sessions/hands-on-work.qmd
+      - sessions/project-work.qmd
       - sessions/what-next.qmd
   appendices:
     - appendix/extras.qmd

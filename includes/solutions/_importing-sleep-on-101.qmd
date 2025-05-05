@@ -4,7 +4,7 @@
 sleep_101 <- here("data-raw/dime/sleep/101.csv") |>
   read_csv(
     show_col_types = FALSE,
-    name_repair = snakecase::to_snake_case,
+    name_repair = to_snake_case,
     n_max = 100
   )
 ```

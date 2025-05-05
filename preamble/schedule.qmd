@@ -57,9 +57,9 @@ and overview.
 | 10:45 | {{< fa laptop-code >}} [Using nested conditionals to help clean columns](/sessions/case-when.qmd) |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 | 12:00 | {{< fa utensils >}} Lunch |
-| 12:45 | {{< fa briefcase >}} [Hands-on group project work](/sessions/hands-on-work.qmd) |
+| 12:45 | {{< fa briefcase >}} [Hands-on group project work](/sessions/project-work.qmd) |
 | 14:00 | {{< fa mug-hot >}} Break with coffee and snacks |
-| 14:15 | {{< fa briefcase >}} [Continue group project work](/sessions/hands-on-work.qmd) |
+| 14:15 | {{< fa briefcase >}} [Continue group project work](/sessions/project-work.qmd) |
 | 15:50 | {{< fa person-chalkboard >}} [Closing remarks](/sessions/what-next.qmd) |
 | 16:15 | {{< fa comment-dots >}} [End of workshop short survey and farewell](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
 :::

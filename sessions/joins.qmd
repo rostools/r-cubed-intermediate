@@ -143,8 +143,8 @@ Let's use some of `{dplyr}`'s join functions! We'll join the
 want to use `full_join()`, but let's test out the other two joins first.
 In your `docs/learning.qmd` file, go to the bottom of the file and make
 a new header called `## Joining datasets`. Below that make a new code
-chunk with {{< var keybind.chunk >}}. We'll start with using `left_join()`
-to join the two datasets together.
+chunk with {{< var keybind.chunk >}}. We'll start with using
+`left_join()` to join the two datasets together.
 
 First, let's look at the two datasets before joining them.
 

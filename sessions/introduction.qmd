@@ -65,7 +65,7 @@ roadmap is.
 
 **Time: \~15 minutes.**
 
-This section provides an bigger picture view and roadmap of what we will
+This section provides a bigger picture view and roadmap of what we will
 be doing, a bit on why we want to do it, and what it will look like in
 the end. The overall practical aim or "destination" of this workshop is:
 
@@ -153,7 +153,7 @@ We also want to make sure that whatever processing we do to the data is
 reproducible, so we'll be writing the code in a way that enables and
 enforces reproducibility of the code.
 
-So how specifically will we do this? At the highest level, everything
+So, how will we do this, specifically? At the highest level, everything
 revolves around files and folders. Below is what the project currently
 looks like and what it will look like at the end of the workshop.
 Notice, the only differences here are the addition of a new file in the
