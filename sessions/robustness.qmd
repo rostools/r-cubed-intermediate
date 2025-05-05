@@ -581,17 +581,13 @@ rendered. This means that we can use the functions in the
 `R/functions.R` file without having the actual code be in the Quarto
 document.
 
-Since we've also explicitly used the `snakecase::to_snake_case()`
-function in the `import_dime()` function, we don't need the
-`library(snakecase)` line from the `setup` code chunk. So let's also
-remove that.
-
 The `setup` code chunk should look like this now:
 
 ```` markdown
 ```{{r setup}}
 library(tidyverse)
 library(here)
+library(snakecase)
 source(here("R/functions.R"))
 ```
 ````
