@@ -573,8 +573,6 @@ discussion activity.
     (e.g. for `.xlsx` use `{readxl}`).
 -   Use `read_csv()` for fast importing of plain text type files (e.g.
     csv).
--   Use `col_select =` arguments in `read_csv()` to import only the data
-    you need.
 -   Fix column names to match a style using `name_repair =` argument in
     `read_csv()`.
 -   For very large datasets, importing in the first 100-1000 rows using
