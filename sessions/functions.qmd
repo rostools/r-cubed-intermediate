@@ -177,7 +177,7 @@ Roxygen documentation template.
 :::
 
 Let's create a really basic function to show the process. First, create
-a new Markdown header called `## Making a function to add` and create a
+a new Markdown header called `## Making a function to add numbers` and create a
 code chunk below that with {{< var keybind.chunk >}} . Then, inside the
 code chunk, we'll write this code:
 
@@ -361,7 +361,7 @@ cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   read_csv(
     show_col_types = FALSE,
     name_repair = to_snake_case,
-    n_max = 100,
+    n_max = 100
   )
 ```
 
@@ -376,7 +376,7 @@ import_cgm <- function() {
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
-      n_max = 100,
+      n_max = 100
     )
 }
 ```
@@ -397,7 +397,7 @@ import_cgm <- function(file_path) {
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
-      n_max = 100,
+      n_max = 100
     )
 }
 ```
@@ -414,7 +414,7 @@ import_cgm <- function(file_path) {
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
-      n_max = 100,
+      n_max = 100
     )
   return(cgm)
 }
@@ -447,7 +447,7 @@ import_cgm <- function(file_path) {
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
-      n_max = 100,
+      n_max = 100
     )
   return(cgm)
 }
