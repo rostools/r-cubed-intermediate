@@ -124,8 +124,8 @@ usethis::with_project(
 )
 ```
 
-Notice the `Imports:` key. This is where information about package
-dependencies is added. In the next section, we will go over how to add
+While we cannot see how package dependencies are defined yet, we will 
+in the next session create an `Imports:` key and go over how to add
 packages to this field.
 
 {{< text_snippet sticky_up >}}
