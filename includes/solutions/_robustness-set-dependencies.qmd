@@ -1,7 +1,8 @@
 ```{r}
 #| label: solution-add-project-dependencies
 #| filename: Console
-#| eval: !expr 'show_solutions'
+#| echo: !expr 'show_solutions'
+#| eval: false
 usethis::use_package("readr")
 usethis::use_package("snakecase")
 usethis::use_package("fs")
