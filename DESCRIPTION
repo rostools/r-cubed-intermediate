@@ -38,7 +38,8 @@ Imports:
     vroom,
     withr,
     r3admin (>= 0.0.1),
-    readr
+    readr,
+    roxygen2
 Suggests:
     prodigenr,
     tidyverse
