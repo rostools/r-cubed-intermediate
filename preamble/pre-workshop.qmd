@@ -639,17 +639,6 @@ library(here)
 library(fs)
 ```
 
-Next, go to the bottom of the script and use the `dir_delete()` to tell
-`{fs}` to always delete the `data-raw/dime/` output folder that you will
-create shortly.
-
-```{r}
-#| filename: "data-raw/dime.R"
-#| eval: false
-# Remove leftover folder so unzipping is always clean
-dir_delete(here("data-raw/dime"))
-```
-
 Now you can unzip the zip files by using the `unzip()` function by
 writing it in `data-raw/dime.R`. The first argument of `unzip()` is the
 zip file you want to unzip and the other important argument is called
