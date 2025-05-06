@@ -124,7 +124,7 @@ usethis::with_project(
 )
 ```
 
-While we cannot see how package dependencies are defined yet, we will 
+While we cannot see how package dependencies are defined yet, we will
 in the next session create an `Imports:` key and go over how to add
 packages to this field.
 
