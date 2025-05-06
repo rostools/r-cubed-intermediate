@@ -11,7 +11,7 @@ load(here("_temp/characters-dates.RData"))
 
 {{< include /includes/objectives/_split-apply-combine.qmd >}}
 
-## Split-apply-combine technique and functionals
+## :book: Reading task: Split-apply-combine technique and functionals
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
@@ -21,6 +21,8 @@ summarizing. Specifically, review the split-apply-combine technique via
 the image below as well as in the context of using `summarise()` on
 multiple columns and multiple functions.
 :::
+
+**Time: ~10 minutes.**
 
 We're taking a quick detour to briefly talk about a concept that
 perfectly illustrates how vectorization and functionals fit into doing
