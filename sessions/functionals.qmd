@@ -109,7 +109,7 @@ width="45%"}
 For example, in R, there is a vectorized function called `sum()` that
 takes the entire vector of `values` and outputs the total sum.
 
-```{r example-vec-sum}
+```{r}
 values <- 1:10
 # Vectorized
 sum(values)
@@ -119,7 +119,7 @@ In many other programming languages, you would need to use a loop to
 calculate the sum because the language doesn't support vectorization. In
 R, a loop to calculate the sum would look like this:
 
-```{r using-for-loop}
+```{r}
 total_sum <- 0
 # a vector
 values <- 1:10
@@ -184,7 +184,7 @@ to give the function as an object so it can do the action later.
 Let's say we wanted to paste together the number with the sentence
 "seconds have passed". Normally it would look like:
 
-```{r paste-multiple}
+```{r}
 paste(1, "seconds have passed")
 paste(2, "seconds have passed")
 paste(3, "seconds have passed")
@@ -194,7 +194,7 @@ paste(5, "seconds have passed")
 
 Or as a loop:
 
-```{r paste-loop}
+```{r}
 for (num in 1:5) {
   sec_passed <- paste(num, "seconds have passed")
   print(sec_passed)
@@ -208,7 +208,7 @@ don't remember in your environment (like named functions do). As you
 might guess, you can make an anonymous function by simply *not* naming
 it! For instance:
 
-```{r anonymous-func}
+```{r}
 #| output: false
 function(number) {
   paste(number, "seconds have passed")
@@ -217,7 +217,7 @@ function(number) {
 
 There is a shortened version of this using `\(x)`:
 
-```{r anonymous-func-short}
+```{r}
 #| output: false
 \(number) paste(number, "seconds have passed")
 ```
