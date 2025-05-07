@@ -92,11 +92,13 @@ great resources for learning them are the [R for Data Science regex
 section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
 the [stringr regex
 page](https://stringr.tidyverse.org/articles/regular-expressions.html),
-as well as in the help doc `?regex`. But we will cover some of the more
-commonly used regex patterns, like:
+as well as in the help doc `?regex`. There's also a nice [cheat
+sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) on
+it. But we will cover some of the more commonly used regex patterns,
+like:
 
 | regex | Meaning |
-|----|----|
+|------------------------------------|------------------------------------|
 | `\\d` | find one digit (0-9) |
 | `\\D` | find one non-digit |
 | `[0-9]` | find one digit between 0 and 9 (the `-` is a range) |
@@ -143,8 +145,6 @@ means "find a non-digit". So when using it in R, it would be `\\d` and
 ## :speech_balloon: Discussion activity: Brainstorm a regex that will get the participant ID
 
 **Time: \~8 minutes.**
-
-https://github.com/rstudio/cheatsheets/blob/main/strings.pdf
 
 Using what you just read from above, try to think of a regex that would
 get the participant ID from the file path. Try not to look ahead nor at
@@ -600,8 +600,8 @@ website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
 which will give a few options to deal with NSE while programming with
 `{tidyverse}` packages. The simplest way to use NSE in your own
 functions when using `{tidyverse}` packages is to wrap the variable with
-`{{{ }}}` (called "curly-curly"). For example, using a simplified version
-of the code we wrote above, instead of this:
+`{{{ }}}` (called "curly-curly"). For example, using a simplified
+version of the code we wrote above, instead of this:
 
 ```{r}
 #| eval: false
@@ -626,8 +626,8 @@ it an unquoted variable and to give that variable to the `as_date()`
 function as the name of the column. It gets very technical very quickly,
 but the main thing to remember is that when you make functions that use
 `{tidyverse}` functions and you get this type of error, it is likely
-because of NSE. So you can use `{{{ }}}` to wrap the variable name in your
-function.
+because of NSE. So you can use `{{{ }}}` to wrap the variable name in
+your function.
 
 {{< text_snippet sticky_up >}}
 
