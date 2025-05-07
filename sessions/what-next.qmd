@@ -1,9 +1,5 @@
 # What next? {#sec-final-remarks}
 
-::: {.callout-warning appearance="default"}
-🚧 We are doing **major** changes to this workshop, so much of the content will be changed. 🚧
-:::
-
 [**What Next slides**](../slides/what-next.html)
 
 <div>

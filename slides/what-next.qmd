@@ -32,65 +32,7 @@ understand the logic of what you are doing, even if they can't directly
 reproduce the results.
 :::
 
-## Few share code within health sciences [@Considine2017a, @Rauh2019, @Evans2019, @Rauh2019a, @Hughes2019, @Peng2006a, @Seibold2021]
-
-::: aside
-Few studies on extent of code and data availability, and whether study
-could be reproduced. Figure shows results of some "meta" studies: 1)
-[10.1177/2515245920918872](https://doi.org/10.1177/2515245920918872), 2)
-[10.1007/s11306-017-1299-3](https://link.springer.com/article/10.1007/s11306-017-1299-3),
-3)
-[10.1371/journal.pone.0251194](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0251194).
-:::
-
-```{r sharing}
-#| fig-width: 10
-#| fig-height: 4
-library(tidyverse)
-tribble(
-  ~study, ~text, ~value, ~total,
-  1, "Data available", 41, 62,
-  1, "Code available", 37, 62,
-  1, "Could reproduce", 21, 62,
-  2, "Data available", 2, 27,
-  2, "Code available", 1, 27,
-  2, "Could reproduce", 0, 27,
-  3, "Data available", 14, 57,
-  3, "Code available", 1, 57,
-  3, "Could reproduce", 7, 57,
-) %>%
-  mutate(
-    study = fct_recode(
-      as_factor(study),
-      "Registered Reports\nin Psychology (n=62) [1]" = "1",
-      "Systematic review of\nmetabolomics studies\n(n=27) [2]" = "2",
-      "Reproducing longitudinal\nanalyses in PLOS ONE\n(n=57) [3]" = "3"
-    ),
-    text = fct_rev(fct_inorder(text)),
-    value = round((value / total) * 100, 0)
-  ) %>%
-  ggplot(aes(x = text, y = value, label = paste0(value, "%"))) +
-  geom_col(fill = "gray20", width = 0.7) +
-  geom_text(nudge_y = 10) +
-  theme_minimal() +
-  coord_flip(ylim = c(0, 100)) +
-  facet_grid(cols = vars(study), scales = "free") +
-  labs(
-    y = "Percent of articles",
-    title = ""
-  ) +
-  theme(
-    text = element_text(size = 16),
-    axis.title.y = element_blank(),
-    panel.grid = element_blank(),
-    axis.text.x = element_blank(),
-    axis.title.x = element_text(colour = "grey20", size = 10),
-    axis.line = element_blank(),
-    panel.border = element_blank(),
-    panel.background = element_rect(fill = "transparent", colour = NA),
-    plot.background = element_rect(fill = "transparent", colour = NA)
-  )
-```
+## Few share code within health sciences [@Considine2017a, @Rauh2019, @Evans2019, @Rauh2019a, @Hughes2019, @Peng2006a, @Seibold2021] {.center}
 
 ::: notes
 -   Estimating the reproducibility of scientific studies is currently
@@ -135,6 +77,8 @@ hole in our modern scientific process. A huge hole.
 ## So few are doing open science, this is a great niche! {.center}
 
 ## Easier and quicker collaboration (aside from the learning part) {.center}
+
+## More productive as you can more easily work on your own project {.center}
 
 ## Finding better opportunities outside of academia {.center}
 
@@ -213,6 +157,8 @@ methods being *gasp* wrong. Which is actually just part of science.
 
 ## Overwhelmed with everything that we *should* do better {.center}
 
+Strongly rewarded to get things done, not get things right.
+
 ::: notes
 It is also really overwhelming, having so many things to think about to
 make sure you're doing solid science. No researcher in the past had to
@@ -240,17 +186,11 @@ You also have to constantly stay updated, and that can be tiring.
 
 -   Upload and share publicly as many things as possible
 
--   Archive to get a DOI/version for major milestones
-
-## Use social actions to be more open
+## Use social actions to be more open {.center}
 
 -   Do code/paper reviews through *through GitHub*
 
-. . .
-
 -   Require writing *everything* in Markdown
-
-. . .
 
 -   Agree on a standard folder and file structure for projects
 
