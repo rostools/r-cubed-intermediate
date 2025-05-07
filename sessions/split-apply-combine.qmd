@@ -22,7 +22,7 @@ the image below as well as in the context of using `summarise()` on
 multiple columns and multiple functions.
 :::
 
-**Time: ~10 minutes.**
+**Time: \~10 minutes.**
 
 We're taking a quick detour to briefly talk about a concept that
 perfectly illustrates how vectorization and functionals fit into doing
@@ -387,18 +387,67 @@ Amazing! Before continuing to the exercise, let's run `{styler}` with
 `R/functions.R`. Then we will render the Quarto document with
 {{< var keybind.render >}} to confirm that everything runs as it should.
 If the rendering works, switch to the Git interface and **add and
-commit** the changes so far with {{< var keybind.commit >}} and push
-to GitHub.
+commit** the changes so far with {{< var keybind.commit >}} and push to
+GitHub.
 
-## :technologist: Exercise: Convert the summarising code into a function
+## Converting the summarising code into a function
 
-**Time: \~15 minutes.**
+Let's start with converting the summarising code into a function. First,
+we'll assign `function()` to a new named function called
+`summarise_column` and include three arguments in `function()` with the
+names `data`, `column`, and `functions`.
 
-Let's start with converting the summarising code into a function. The
-way it is used should be something like the below, and should give
-similar output:
+Then we'll put the code we just wrote into the body of the function.
+Make sure to `return()` the output at the end of the function. Replace
+the relevant variables with the arguments you just created (e.g.
+`cgm_data` to `data`). As we learned about the `{{{ }}}`, we'll wrap it
+around the `column` argument within the function. That way the function
+will work with `{tidyverse}`'s and R's non-standard evaluation.
 
-{{< include /includes/solutions/_split-apply-combine-summarise-column-function.qmd >}}
+We'll then add the Roxygen documentation with
+{{< var keybind.roxygen >}} and fill it out.
+
+Then we'll explicitly link the functions you are using in this new
+function to their package by using `::` (e.g. `dplyr::` and
+`tidyselect::`).
+
+```{r summarise-cgm-function}
+#' Summarise a single column based on one or more functions.
+#'
+#' @param data Either the CGM or sleep data in DIME.
+#' @param column The name of the column you want to summarise.
+#' @param functions One or more functions to apply to the column. If more than
+#'    one, use `list()`.
+#'
+#' @returns A summarised data frame.
+#'
+summarise_column <- function(data, column, functions) {
+  data |>
+    dplyr::select(
+      -tidyselect::contains("timestamp"),
+      -tidyselect::contains("datetime")
+    ) |>
+    dplyr::group_by(dplyr::pick(-{{ column }})) |>
+    dplyr::summarise(
+      dplyr::across(
+        {{ column }},
+        functions
+      ),
+      .groups = "drop"
+    )
+}
+```
+
+Since we're using `{tidyselect}`, we'll need to add that as a
+dependency:
+
+```{r add-tidyselect-dependency}
+#| filename: "Console"
+#| eval: false
+usethis::use_package("tidyselect")
+```
+
+Test that the function works by using the code shown above.
 
 ```{r}
 cgm_data |>
@@ -408,52 +457,14 @@ sleep_data |>
   summarise_column(seconds, sum)
 ```
 
-So, convert the code we just wrote into a function by following these
-steps:
-
-1.  Assign `function()` to a new named function called
-    `summarise_column` and include three arguments in `function()` with
-    the names `data`, `column`, and `functions`.
-2.  Put the code we just wrote into the body of the function. Make sure
-    to `return()` the output at the end of the function. Replace the
-    relevant variables with the arguments you just created (e.g.
-    `cgm_data` to `data`).
-3.  Remember to use `{{ }}` when you use the `column` argument within
-    the function to work with `{tidyverse}`'s and R's non-standard
-    evaluation.
-4.  To create the Roxygen documentation with {{< var keybind.roxygen >}}
-    and fill it out. You can write whatever you like.
-5.  Add `tidyselect` as a package dependency by using
-    `usethis::use_package()` in the **Console**.
-6.  Explicitly link the functions you are using in this new function to
-    their package by using `::` (e.g. `dplyr::` and `tidyselect::`).
-    Remember that you can find which package a function belongs by using
-    the `?` help documentation and looking at the very top to see the
-    package name.
-7.  Test that the function works by using the code shown above.
-8.  After creating the function and testing that it works, move (**cut**
-    and paste) the function into `R/functions.R`.
-9.  Run `{styler}` in both the `R/functions.R` file and
-    `docs/learning.qmd` with {{< var keybind.style >}}.
-10. Add and commit the changes to the Git history with
-    {{< var keybind.commit >}}. Afterwards, push to GitHub.
-
-In the next exercise, you will use this function in the recently created
-`clean_cgm()` and the `clean_sleep()` function you will create.
-
-::: {.callout-note collapse="true"}
-## :teacher: Teacher note
-
-Go over the solution to make sure everyone is on the same page, as this
-is one of the few exercises that later work depends on. Then move to the
-next exercise.
-:::
-
-{{< text_snippet sticky_up >}}
+After we've created the function and tested it, move (**cut** and paste)
+the function into `R/functions.R`. In the next exercise, you will use
+this function in the recently created `clean_cgm()` and the
+`clean_sleep()` function you will create.
 
 ## :technologist: Exercise: Create a `clean_sleep()` function
 
-**Time: \~10 minutes.**
+**Time: \~15 minutes.**
 
 {{< include /includes/solutions/_split-apply-combine-clean-functions.qmd >}}
 

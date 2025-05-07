@@ -63,12 +63,6 @@ default so you don't accidentally see solutions for the other exercises.
 
 ## Using split-apply-combine to help in processing {.unnumbered}
 
-### :technologist: Exercise: Convert the summarising code into a function {.unnumbered}
-
-::: {.callout-tip collapse="true"}
-{{< include /includes/solutions/_split-apply-combine-summarise-column-function.qmd >}}
-:::
-
 ### :technologist: Exercise: Create a `clean_sleep()` function {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
