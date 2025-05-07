@@ -1,40 +1,44 @@
----
-execute:
-  eval: false
----
-
 # Using nested conditionals to help clean columns {#sec-case-when}
-
-::: {.callout-warning appearance="default"}
-🚧 We are doing **major** changes to this workshop, so much of the content will be changed. 🚧
-:::
 
 ```{r setup}
 #| include: false
 library(here)
-library(fs)
 library(tidyverse)
-load(here("_temp/functionals.RData"))
-source(here("R/functions.R"))
+load(here("_temp/joins.RData"))
 ```
 
 ## Learning objectives
 
 {{< include /includes/objectives/_case-when.qmd >}}
 
-## Cleaning with nested conditionals
+## :book: Reading task: Nested conditionals
 
-::: callout-note
-## Reading task: \~6 minutes
+::: {.callout-note appearance="minimal" collapse="true"}
+## Instructor note
 
-There are many ways to clean up this particular problem, but probably
-the easiest, most explicit, and programmatically accurate way of doing
-it would be with the function `case_when()`. This function works by
-providing it with a series of logical conditions and an associated
-output if the condition is true. Each condition is processed
-*sequentially*, meaning that if a condition is TRUE, the output won't be
-overridden for later conditions. The general form of `case_when()` looks
-like:
+Briefly review the content again, to reinforce what they read.
+:::
+
+**Time: \~6 minutes.**
+
+As we discussed in the previous session, there are some (many?) issues
+with the dataset. But in particular, we noticed that the sleep "types"
+may have been recorded differently by different people or devices. For
+example, we see that there is no overlap between some of the types,
+meaning that there is never an hour that contains both `"wake"` and
+`"awake"`, or with `"light"` and `"restless"`, or with `"rem"` and
+`"asleep"`. The documentation doesn't say anything about this, so we can
+only assume things. But it makes it difficult for us to do meaningful
+work when the categories are not consistent. But there is an easy way to
+fix this! And no, it is not using nested `if_else()` statements :grin:
+
+While there are many ways to fix this particular problem, but probably
+the easiest way of doing this is with the function `case_when()`. This
+function works by providing it with a series of logical conditions and
+an associated output if the condition is true. Each condition is
+processed *sequentially*, meaning that if a condition is TRUE, the
+output won't be overridden by later conditions. The general form of
+`case_when()` looks like:
 
 ```{r}
 #| eval: false
@@ -64,7 +68,8 @@ case_when(
 ```
 
 If instead you want one of the conditions to be `NA`, you need to set
-the appropriate `NA` value:
+the appropriate `NA` value (in this example, `NA_character_` is for
+character data):
 
 ```{r}
 #| eval: false
@@ -98,64 +103,223 @@ values also have data types:
 -   `NA_integer_` (integer)
 
 Assuming the final output is `NA`, in a pipeline this would look like
-how you normally would use `mutate()`:
+how you normally would use `mutate()`, when using the
+`participant_details` data:
 
 ```{r}
-user_info_df |>
-  mutate(age_category = case_when(
-    age > 20 ~ "old",
-    age <= 20 ~ "young"
-  ))
-```
-:::
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
-
-Briefly review the content again, to reinforce what they read.
-:::
-
-While still in the `docs/learning.qmd` file, we can use the `case_when()`
-function to set `"before sleep"` as day 1 and `"wake up"` as day 2 by
-creating a new column called `day`. (We will use `NA_real_` because the
-other `day` columns are numeric, not integer.)
-
-```{r}
-#| filename: "docs/learning.qmd"
-saliva_with_day_df <- saliva_df |>
-  mutate(day = case_when(
-    samples == "before sleep" ~ 1,
-    samples == "wake up" ~ 2
-  ))
-saliva_with_day_df
+participant_details |>
+  mutate(
+    age_category = case_when(
+      age_years > 20 ~ "old",
+      age_years <= 20 ~ "young"
+    ),
+    .before = age_years
+  )
 ```
 
-...Now, let's use the `reduce()` with `full_join()` again:
+Now, let's try using it for our issue.
 
-```{r}
+{{< text_snippet sticky_up >}}
+
+## Using `case_when()` to fix the sleep types
+
+In the `docs/learning.qmd` file, go to the bottom of the file and create
+a new header called `## Using case when`. Below that create a new code
+chunk with {{< var keybind.chunk >}}. Since our data is already in the
+tidier state, we can't fix it at this point. We have to go back to the
+original data. Since we've been making functions and putting them into
+the `clean_sleep()` function, it will be easy for us to test out the
+`case_when()` function on the original data, make a function of it, and
+put it into the `clean_sleep()` function. So, let's import the original
+data and do some cleaning on that.
+
+Before we do that, let's check what values are in the `sleep_type`
+column. We can do this by using the `count()` function. This will give
+us a count of each unique value in the column.
+
+```{r count-sleep-type}
 #| filename: "docs/learning.qmd"
-list(
-  user_info_df,
-  saliva_with_day_df,
-  summarised_rr_df,
-  summarised_actigraph_df
-) |>
+here("data-raw/dime/sleep/") |>
+  import_csv_files() |>
+  count(sleep_type)
+```
+
+Let's simplify this a bit by merging some values together. We're
+guessing a lot here on which values to merge together, since it isn't
+described in the documentation. But we could say that asleep is the same
+as deep and REM, that awake is the same as wake, and that restless is
+the same as light. So let's try using `case_when()` to do this. Let's
+create a new line above `count()` and do a `mutate()` there. First we'll
+make "wake" to be "awake".
+
+```{r case-when-awake}
+#| filename: "docs/learning.qmd"
+here("data-raw/dime/sleep/") |>
+  import_csv_files() |>
+  mutate(
+    sleep_type = case_when(
+      sleep_type == "wake" ~ "awake"
+    )
+  ) |>
+  count(sleep_type)
+```
+
+This removed all the other values! Let's put the final `TRUE` in next so
+we don't have everything removed.
+
+```{r case-when-ending-true}
+#| filename: "docs/learning.qmd"
+here("data-raw/dime/sleep/") |>
+  import_csv_files() |>
+  mutate(
+    sleep_type = case_when(
+      sleep_type == "wake" ~ "awake",
+      TRUE ~ sleep_type
+    )
+  ) |>
+  count(sleep_type)
+```
+
+Nice. Ok, let's merge the other ones now:
+
+```{r case-when-sleep-types}
+#| filename: "docs/learning.qmd"
+here("data-raw/dime/sleep/") |>
+  import_csv_files() |>
+  mutate(
+    sleep_type = case_when(
+      sleep_type == "wake" ~ "awake",
+      sleep_type == "light" ~ "restless",
+      sleep_type == "rem" ~ "asleep",
+      sleep_type == "deep" ~ "asleep",
+      TRUE ~ sleep_type
+    )
+  ) |>
+  count(sleep_type)
+```
+
+Amazing, we have tidied it up! Now, you're turn to make it into a
+function and include it into the `clean_sleep()` function.
+
+## :technologist: Exercise: Convert nested conditional code to function
+
+**Time: \~20 minutes.**
+
+{{< include /includes/solutions/_case-when-fix-sleep-types.qmd >}}
+
+Now that we've made the code to fix the sleep data, it's time to make it
+into a function and add it to the `clean_sleep()` function. The new
+function should be called `fix_sleep_types()` and be put into the
+`clean_sleep()` (found in the `R/functions.R` file) like shown below:
+
+```{r admin-explanation-clean-sleep}
+#| filename: "R/functions.R"
+clean_sleep <- function(data) {
+  cleaned <- data |>
+    get_participant_id() |>
+    dplyr::rename(datetime = date) |>
+    prepare_dates(datetime) |>
+    summarise_column(seconds, list(sum = sum)) |>
+    # Fix sleep types here:
+    fix_sleep_types() |>
+    sleep_types_to_wider()
+  return(cleaned)
+}
+```
+
+Follow these steps to get to that point.
+
+1.  Right above the code we just wrote, create a new function called
+    `fix_sleep_types` by assigning `function()` to it. Add `data` as the
+    argument to the `function()`.
+2.  Cut **only** the `mutate()` code that has the `case_when()` in it,
+    *not* the `count()` or `import_csv_files()` code.
+3.  Paste the `mutate()` code into the new function body. Before the
+    `mutate()` code, pipe `data` into the `mutate()`.
+4.  Assign the output of the sleep fix code into something called
+    `fixed_sleep` and then `return()` this object.
+5.  Test that this code works by replacing the cut code with
+    `fix_sleep_types()`, piping it into `count()`, and then running the
+    code.
+6.  Once it works, create the Roxygen documentation with
+    {{< var keybind.roxygen >}}.
+7.  **Cut** and paste the new function into the `R/functions.R` file.
+8.  In the `R/functions.R` file, add the new function to the
+    `clean_sleep()` function by adding it to the pipe before
+    `sleep_types_to_wider()` (see the code above).
+9.  Style both the `R/functions.R` and `docs/learning.qmd` files with
+    {{< var keybind.style >}}.
+10. In the `docs/learning.qmd` file, render the document with
+    {{< var keybind.render >}}.
+11. If it renders to HTML correctly, commit the changes to the Git
+    history with {{< var keybind.commit >}} and then push to GitHub.
+
+{{< text_snippet sticky_up >}}
+
+## Putting it all together: Making one dataset
+
+We are finally at the point where we can put it all together and make a
+single dataset! Go into your `docs/learning.qmd` file and go to the
+`setup` code chunk at the top. In the `setup` code chunk, we will add
+the `full_join()` code we used in the previous session.
+
+```{r join-all-datasets}
+#| filename: "docs/learning.qmd"
+dime_data <- list(participant_details, cgm_data, sleep_data) |>
   reduce(full_join)
 ```
 
-We now have two rows per participant! Let's add and commit the changes
-to the Git history with {{< var keybind.commit >}}.
+Run this code and look at it, either by running it in the Console or
+through the environment:
 
-## Summary
+```{r}
+#| filename: "Console"
+dime_data
+```
+
+It looks great!! :tada: Except that we haven't yet loaded in all the
+data. Open up the `R/functions.R` file and look at the `import_dime()`
+function. Find the line that says `n_max = 100` and delete it.
+
+The last step... saving the dataset to the `data/` folder! Why save it
+there? That way you communicate to yourself (and others) that this is
+the dataset to use, not the data in the `data-raw/` folder. So,
+open up `docs/learning.qmd` so we can
+save it as a CSV file with `write_csv()`. In the last line of the
+`setup` code chunk, do:
+
+```{r save-data}
+#| filename: "docs/learning.qmd"
+write_csv(dime_data, here("data/dime.csv"))
+```
+
+Since we don't want to track this file in Git, let's end this with
+ignoring it by running in the Console:
+
+```{r ignore-data}
+#| filename: "Console"
+#| eval: false
+usethis::use_git_ignore("data/dime.csv")
+```
+
+Now, in the `docs/learning.qmd` file, render the document with
+{{< var keybind.render >}}. This will reproducibly create the dataset
+and save it to the `data/` folder. Once that is done, we will finish
+with committing the changes with {{< var keybind.commit >}} and then
+pushing to GitHub.
+
+## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
-Quickly cover this before finishing the session and when starting the
-next session.
+Quickly cover this before finishing the session and getting them
+to do the survey.
 :::
 
-```{r store-session-code}
-#| include: false
-save.image(here::here("_temp/dplyr-joins.RData"))
-```
+-   Instead of using multiple `if_else()` statements, you can use
+    `case_when()` to make your code cleaner and easier to read.
+-   Save final datasets into the `data/` to communicate to yourself
+    and others that this is data to work with, not the data in `data-raw/`.
+
+{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}

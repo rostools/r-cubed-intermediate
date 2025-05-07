@@ -1,0 +1,17 @@
+```{r}
+#| label: solution-case-when-sleep-types
+#| echo: !expr 'show_solutions'
+fix_sleep_types <- function(data) {
+  fix_sleep <- data |>
+    dplyr::mutate(
+      sleep_type = dplyr::case_when(
+        sleep_type == "wake" ~ "awake",
+        sleep_type == "light" ~ "restless",
+        sleep_type == "rem" ~ "asleep",
+        sleep_type == "deep" ~ "asleep",
+        TRUE ~ sleep_type
+      )
+    )
+  return(fix_sleep)
+}
+```
