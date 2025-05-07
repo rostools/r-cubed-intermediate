@@ -243,61 +243,76 @@ participant_details |>
 We now have a dataset that we can join with the other datasets! Time to
 make it into a function :grin:
 
-## :technologist: Exercise: Convert the date completion code into a function
+## Converting the date completion code into a function
 
-**Time: \~10 minutes.**
+Since we've used the `{tidyr}` package, let's add it as a package
+dependency. Open the **Console** and run:
 
-{{< include /includes/solutions/_pivots-date-completion.qmd >}}
+```{r add-tidyr-dependency}
+#| filename: "Console"
+#| eval: false
+usethis::use_package("tidyr")
+```
 
-Time to convert it into a function :grin: You've practiced this several
-times before, and the more you practice, the easier it will be to do! At
-the end of the exercise, you should create the function so that it can
-be used like this in the `setup` code chunk:
+Now, we can make the function. In the `docs/learning.qmd` file, go to
+the bottom of the file where we wrote the code to clean the participant
+details. At the bottom of the chunk, we'll create a new function named
+`clean_participant_details` by assigning `function()` to it. We'll only
+have one argument called `data`. Then we'll cut and paste the cleaning
+code into the function. After that we will replace the
+`participant_details` variable with the `data` argument. Finally, we
+will assign the cleaned data to a new variable called `cleaned` and
+`return()` it at the end of the function.
 
-```{r}
+Next we'll go through and add the `::` to the functions used, which are
+`tidyr::`, `tidyselect::`, and `dplyr::`. After that, we will make an
+Roxygen documentation with {{< var keybind.roxygen >}}.
+
+```{r clean-participant-details}
+#| filename: "docs/learning.qmd"
+#' Convert the participant details data to long and clean it up.
+#'
+#' @param data The DIME participant details data.
+#'
+#' @returns A data frame.
+#'
+clean_participant_details <- function(data) {
+  cleaned <- data |>
+    tidyr::pivot_longer(
+      tidyselect::ends_with("date"),
+      names_to = NULL, values_to = "date"
+    ) |>
+    dplyr::group_by(dplyr::pick(-date)) |>
+    tidyr::complete(
+      date = seq(min(date), max(date), by = "1 day")
+    )
+  return(cleaned)
+}
+```
+
+Run the function in the code chunk with {{< var keybind.run-code >}} and
+then test it out by going to the **Console** and running:
+
+```{r test-clean-participant-details}
+#| filename: "Console"
+clean_participant_details(participant_details)
+```
+
+Nice! It works! Once it works as intended, cut and paste it over into
+`R/functions.R`. Then, go to the `docs/learning.qmd` file and in the
+`setup` code chunk, add a pipe to the end of `import_dime()` for the
+`participant_details` object into `clean_participant_details()`. It
+should look like this:
+
+```{r clean-participant-details-setup}
 #| filename: "docs/learning.qmd"
 participant_details <- here("data-raw/dime/participant_details.csv") |>
   import_dime() |>
   clean_participant_details()
 ```
 
-And if you were to run this code in the **Console**, it would look like
-this:
-
-```{r}
-#| filename: "Console"
-participant_details
-```
-
-1.  Since we are using `{tidyr}`, use `usethis::use_package()` to add it
-    as a dependency to the `DESCRIPTION` file.
-2.  Create a new function named `clean_participant_details` by assigning
-    `function()` to it.
-3.  Include only `data` as an argument in `function()`.
-4.  Move the code into the function body and replace the
-    `participant_details` variable with the `data` argument.
-5.  Assign it to a new variable called `cleaned` and `return()` it at
-    the end of the function.
-6.  Find out which packages all the functions come from by using `?` and
-    explicitly assign the package to the function with `::`. There
-    should be four packages used in this code.
-7.  Create Roxygen documentation for the function with
-    {{< var keybind.roxygen >}}. Remember, the documentation doesn't
-    have to be perfect or complete. Just to practice using it.
-8.  Test that the code works by running the function and using it like
-    shown above.
-9.  Once it works as intended, cut and paste it over into
-    `R/functions.R`.
-10. Pipe the `import_dime()` output into this new function in the
-    `setup` code chunk of `docs/learning.qmd`.
-11. Style both `R/functions.R` and `docs/learning.qmd` with
-    {{< var keybind.style >}}.
-12. Render the document with {{< var keybind.render >}} to make sure it
-    all works.
-13. Once everything works fine, commit your changes to the Git history
-    with {{< var keybind.commit >}} and push it to your GitHub.
-
-{{< text_snippet sticky_up >}}
+Then to check the reproducibility, render the document with
+{{< var keybind.render >}} to make sure it all works. Woohoo :tada:
 
 ## :book: Reading task: Pivoting data to a wider form
 
