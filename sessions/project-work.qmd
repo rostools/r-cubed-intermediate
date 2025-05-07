@@ -1,5 +1,24 @@
 # Group project work {#sec-project-work}
 
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Walk-through with them for tasks 1 to 5.
+
+Get them to decide on who will be the "owner" and who will be the "collaborator".
+Then, use the "add collaborator" section of GitHub to get them all to add their
+team member who is the collaborator to the repository of the owner.
+
+Then walk through with the collaborator how to clone the owner's repository
+to their computer. Walk through with them how to open the project in RStudio.
+
+After that, walk through having them create a new Quarto document for each
+team member, named after their own name. Commit and push those changes so
+that they can all get started sooner.
+
+Maybe walk through the code used to initially process and clean the data.
+:::
+
 ::: callout-caution
 This is a new section, so it might not be very smooth yet. Any issues
 that come up we will share with the group and update this page
