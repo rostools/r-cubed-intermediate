@@ -256,58 +256,6 @@ Follow these steps to get to that point.
 
 {{< text_snippet sticky_up >}}
 
-## Putting it all together: Making one dataset
-
-We are finally at the point where we can put it all together and make a
-single dataset! Go into your `docs/learning.qmd` file and go to the
-`setup` code chunk at the top. In the `setup` code chunk, we will add
-the `full_join()` code we used in the previous session.
-
-```{r join-all-datasets}
-#| filename: "docs/learning.qmd"
-dime_data <- list(participant_details, cgm_data, sleep_data) |>
-  reduce(full_join)
-```
-
-Run this code and look at it, either by running it in the Console or
-through the environment:
-
-```{r}
-#| filename: "Console"
-dime_data
-```
-
-It looks great!! :tada: Except that we haven't yet loaded in all the
-data. Open up the `R/functions.R` file and look at the `import_dime()`
-function. Find the line that says `n_max = 100` and delete it.
-
-The last step... saving the dataset to the `data/` folder! Why save it
-there? That way you communicate to yourself (and others) that this is
-the dataset to use, not the data in the `data-raw/` folder. So,
-open up `docs/learning.qmd` so we can
-save it as a CSV file with `write_csv()`. In the last line of the
-`setup` code chunk, do:
-
-```{r save-data}
-#| filename: "docs/learning.qmd"
-write_csv(dime_data, here("data/dime.csv"))
-```
-
-Since we don't want to track this file in Git, let's end this with
-ignoring it by running in the Console:
-
-```{r ignore-data}
-#| filename: "Console"
-#| eval: false
-usethis::use_git_ignore("data/dime.csv")
-```
-
-Now, in the `docs/learning.qmd` file, render the document with
-{{< var keybind.render >}}. This will reproducibly create the dataset
-and save it to the `data/` folder. Once that is done, we will finish
-with committing the changes with {{< var keybind.commit >}} and then
-pushing to GitHub.
-
 ## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}

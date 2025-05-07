@@ -1,6 +1,0 @@
-```{r}
-#| label: solution-joining-all-data
-#| echo: !expr 'show_solutions'
-dime_data <- list(participant_details, cgm_data, sleep_data) |>
-  reduce(full_join)
-```

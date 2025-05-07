@@ -327,61 +327,85 @@ much. The amount of code is nearly identical if we just used several
 include more datasets in the future, since it is only one extra data
 frame object to include in the `list()`.
 
-## :technologist: Exercise: Join the sleep data and check the output
-
-**Time: \~12 minutes.**
-
-Now that you've joined two datasets together, time to add the sleep data
+Now that we've joined two datasets together, time to add the sleep data
 too! It will be very easy to do, because we've already set it up to add
 extra data to the `list()`. But, there still needs to be some checks.
 After joining, the final `dime_data` should look something like:
 
-{{< include /includes/solutions/_joins-sleep-data.qmd >}}
+```{r join-sleep}
+#| filename: "docs/learning.qmd"
+dime_data <- list(participant_details, cgm_data, sleep_data) |>
+  reduce(full_join)
+```
+
+Then, using the Console to look at the data:
+
+```{r}
+#| filename: "Console"
+#| eval: false
+View(dime_data)
+```
+
+Let's do some basic checks. Notice the column names, they seem to be
+repeats but with different names, like `awake` and `wake`. Also, the
+seconds sleeping per hour is more seconds than exist in an hour. We
+don't know why there are these issues as it isn't explained in the
+documentation.
+
+Keep in mind, since we only imported the first 100 rows, there will be
+some things that don't match up. But even with this, there are odd
+things that we will need to address.
+
+## Putting it all together: Making one dataset
+
+We are finally at the point where we can put it all together and make a
+single dataset! Go into your `docs/learning.qmd` file and go to the
+`setup` code chunk at the top. In the `setup` code chunk, we will add
+the `full_join()` code we used in the previous session.
+
+```{r join-all-datasets}
+#| filename: "docs/learning.qmd"
+dime_data <- list(participant_details, cgm_data, sleep_data) |>
+  reduce(full_join)
+```
+
+Run this code and look at it, either by running it in the Console or
+through the environment:
 
 ```{r}
 #| filename: "Console"
 dime_data
 ```
 
-Complete these tasks to get to this point and to check the data:
+It looks great!! :tada: Except that we haven't yet loaded in all the
+data. Open up the `R/functions.R` file and look at the `import_dime()`
+function. Find the line that says `n_max = 100` and delete it.
 
-1.  In the bottom of `docs/learning.qmd`, add a new header called
-    `## Joining sleep data` and add a new code chunk below with
-    {{< var keybind.chunk >}}.
-2.  Start with checking the `sleep_data` by running it in the Console or
-    in the code chunk. How many rows and columns does it have right now?
-    Any missingness? (There is, lots of it, but where and how are things
-    missing?)
-3.  Calculate (in your head, on a piece of paper, with R using `nrow()`
-    and `+`) what the maximum number of rows the fully joined datasets
-    should have. You will need to add up all three datasets. That number
-    is how many rows the fully joined datasets should, *at most*, have.
-    Then, find what the smallest dataset. That number is the minimum
-    number of rows the fully joined should have.
-4.  In the code chunk, copy and paste (or manually type out) the code we
-    used above to join the datasets with `reduce()`. Then, include the
-    `sleep_data` at the end of the `list()`. Run the code with
-    {{< var keybind.run-code >}}.
-5.  Look through the newly joined data. Do some basic checks. Use
-    `View(dime_data)` to get an overview and use the filtering/sorting
-    buttons to explore the data a bit. What are some things you notice?
-    Is there a pattern to the missingness? What about all the columns,
-    anything to notice there? Do the glucose values and sleep values
-    overlap at all?
-    -   Keep in mind, since we only imported the first 100 rows, there
-        will be some things that don't match up. But even with this,
-        there are odd things that we will need to address.
-    -   If you'd like, discuss with your neighbour about some things
-        that could be fixed or improved.
+The last step... saving the dataset to the `data/` folder! Why save it
+there? That way you communicate to yourself (and others) that this is
+the dataset to use, not the data in the `data-raw/` folder. So, open up
+`docs/learning.qmd` so we can save it as a CSV file with `write_csv()`.
+In the last line of the `setup` code chunk, do:
 
-{{< text_snippet sticky_up >}}
+```{r save-data}
+#| filename: "docs/learning.qmd"
+write_csv(dime_data, here("data/dime.csv"))
+```
 
-::: {.callout-note collapse="true"}
-## :teacher: Teacher note
+Since we don't want to track this file in Git, let's end this with
+ignoring it by running in the Console:
 
-After they finish the exercise, highlight some of the issues with the
-data, that we will then cover in the next session.
-:::
+```{r ignore-data}
+#| filename: "Console"
+#| eval: false
+usethis::use_git_ignore("data/dime.csv")
+```
+
+Now, in the `docs/learning.qmd` file, render the document with
+{{< var keybind.render >}}. This will reproducibly create the dataset
+and save it to the `data/` folder. Once that is done, we will finish
+with committing the changes with {{< var keybind.commit >}} and then
+pushing to GitHub.
 
 ## Key takeaways
 
