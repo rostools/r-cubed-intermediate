@@ -4,4 +4,4 @@
 2.  Handle dates and times in R using the `{lubridate}` package.
 3.  Recognise when you trigger a "non-standard evaluation" error when
     you make functions using `{tidyverse}` functions and fix it by using
-    `{{ }}`.
+    `{{{ }}}`.
