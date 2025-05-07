@@ -13,7 +13,7 @@ source(here("R/functions.R"))
 
 {{< include /includes/objectives/_characters-dates.qmd >}}
 
-## :speech_balloon: Discussion activity: Why can't we join CGM and sleep yet?
+## :speech_balloon: Discussion activity: Why can't we join datasets together yet?
 
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
@@ -33,24 +33,26 @@ The issues are related to the:
 **Time: \~8 minutes.**
 
 We now have a function that imports all our CGM and sleep data, as well
-as one to import the `participant_details.csv` file. The next direction
-we want to go to is to join them in some way so that we can be able to
-analyse them together. But right now, we can't really do that. There are
-two main reasons. Look at the data below and try to identify
-them---don't peek ahead! :grin: Then discuss with a neighbour to see if
-you can come to a consensus.
+as `import_dime()` that could import the `participant_details.csv` file.
+The next direction we want to go to is to join them in some way so that
+we can be able to analyse them together. But right now, we can't really
+do that. There are two main reasons. Look at the data below and try to
+identify them---don't peek ahead! :grin: Then discuss with a neighbour
+to see if you can come to a consensus.
 
 ```{r admin-display-all-data}
 #| echo: false
+cat("CGM data")
 here("data-raw/dime/cgm") |>
   import_csv_files() |>
   trim_filepath_for_book() |>
   print(n = 6)
+cat("Sleep data")
 here("data-raw/dime/sleep") |>
   import_csv_files() |>
   trim_filepath_for_book() |>
   print(n = 6)
-
+cat("Participant details")
 here("data-raw/dime/participant_details.csv") |>
   import_dime() |>
   print(n = 6)
@@ -94,7 +96,7 @@ as well as in the help doc `?regex`. But we will cover some of the more
 commonly used regex patterns, like:
 
 | regex | Meaning |
-|------------------------------------|------------------------------------|
+|----|----|
 | `\\d` | find one digit (0-9) |
 | `\\D` | find one non-digit |
 | `[0-9]` | find one digit between 0 and 9 (the `-` is a range) |
@@ -728,9 +730,9 @@ discussion activity.
 
 **Time: \~10 minutes.**
 
-As we prepare for the next thing (either lunch or the next session), get up (and
-if it's nice, go outside), and discuss with your neighbour or group the
-following questions:
+As we prepare for the next thing (either lunch or the next session), get
+up (and if it's nice, go outside), and discuss with your neighbour or
+group the following questions:
 
 1.  Have you worked with characters and/or dates before in your work?
     How was that experience? Easy, hard?
