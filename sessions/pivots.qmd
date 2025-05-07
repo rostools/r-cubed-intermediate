@@ -12,6 +12,23 @@ load(here("_temp/split-apply-combine.RData"))
 
 {{< include /includes/objectives/_pivots.qmd >}}
 
+## :speech_balloon: Discussion activity: Recall and share what you've learned so far
+
+**Time: \~6 minutes.**
+
+A very effective way to learn is to recall and describe to someone else
+what you've learned. So before we continue this session, take some time
+to think about what you've learned in the last two days.
+
+1.  Take 1-2 minute and try to recall as much as you can about what
+    you'd done over the last two days. Without looking at your notes or
+    the other sections of the website, try to remember things about
+    importing, robust functions, functionals, regex, and
+    split-apply-combine.
+2.  Then, for 4-5 minutes, share with your neighbour what you remember
+    and try to describe it to each other. Maybe you will each remember
+    different things.
+
 ## :book: Reading task: Pivoting data for easier wrangling
 
 ::: {.callout-note appearance="minimal" collapse="true"}
