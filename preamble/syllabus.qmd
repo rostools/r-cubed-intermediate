@@ -58,7 +58,7 @@ processing](/sessions/split-apply-combine.qmd)
 
 {{< include /includes/objectives/_pivots.qmd >}}
 
-[Joining data together, all at once](/sessions/joins.qmd)
+[Joining data together](/sessions/joins.qmd)
 
 {{< include /includes/objectives/_joins.qmd >}}
 

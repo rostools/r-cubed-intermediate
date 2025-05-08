@@ -1,4 +1,4 @@
-# Joining data together, all at one {#sec-joins}
+# Joining data together {#sec-joins}
 
 ```{r setup}
 #| include: false
@@ -203,125 +203,27 @@ see all the data we have, even if there are some missing values.
 Especially considering that some statistical models can use missing
 values as extra information.
 
-We also eventually want to join by the sleep data. Since `full_join()`
-can only take two datasets at a time, we could write multiple
-`full_join()` statements in a row. But what if we get other data later
-on? Well, that's where more functional programming comes in. Again, we
-have a simple goal: For a set of data frames, join them all together.
+Let's code assign this output to a new object called `dime_data`.
 
-## :book: Reading task: Using the reduce functional
-
-::: {.callout-note collapse="true"}
-## :teacher: Teacher note
-
-Once they've read it, walk through the diagram again and try to explain
-it slightly differently/in your own words.
-:::
-
-**Time: \~5 minutes.**
-
-Here we use another functional programming concept from the `{purrr}`
-package called `reduce()`. Like `map()`, which "maps" a function onto a
-set of items, `reduce()` applies a function to each item of a vector or
-list, each time reducing the set of items down until only one remains:
-the output. In fact, this is how functions like `mean()` or `sum()`
-work, as they take a vector and give you a single number. Likewise,
-`summarise()` does the same thing, it takes a long vector (within groups
-if you are using `group_by()` and gives you back a single number.
-
-Let's use an example with our simple function `add_numbers()` we had
-created earlier on, which we include below as a reminder. Let's say we
-want to add up all the numbers from 1 to 5. Since `add_numbers()` only
-takes two numbers, we have to give it two numbers at a time and repeat
-until we reach 5.
-
-```{r}
-add_numbers <- function(num1, num2) {
-  added <- num1 + num2
-  return(added)
-}
-```
-
-```{r}
-# Add from 1 to 5
-first <- add_numbers(1, 2)
-second <- add_numbers(first, 3)
-third <- add_numbers(second, 4)
-add_numbers(third, 5)
-```
-
-We could also use the pipe `|>` operator to do the same thing:
-
-```{r}
-# Add from 1 to 5
-add_numbers(1, 2) |>
-  add_numbers(3) |>
-  add_numbers(4) |>
-  add_numbers(5)
-```
-
-This is quite a bit of code to read and write. Instead, we can use the
-`reduce()` functional to do the same thing:
-
-```{r}
-reduce(1:5, add_numbers)
-```
-
-@fig-reduce below visually shows what is happening within `reduce()`.
-
-![A functional that iteratively uses a function on a set of items until
-only one output remains. Notice how the output of the first iteration of
-`func()` is placed in the first position of `func()` in the next
-iteration, and so on. Modified from the Posit purrr [cheat
-sheet](https://posit.co/wp-content/uploads/2022/10/purrr.pdf). Image
-license is CC-BY-SA](/images/reduce.png){#fig-reduce width="90%"
-fig-alt="A diagram showing a block of green sub-blocks with the use of the reduce functional. Each sub-block is used in the first two positions of the function, then repeats with the output going into the first position of the next function. The final output is a single block of blue to represent everything being combined into one thing at the end."}
-
-If we look at the documentation for `reduce()` by writing `?reduce` in
-the Console, we see that`reduce()`, like `map()`, takes either a vector
-or a list as an input. Since data frames can only be put together as a
-list and not as a vector (a data frame has vectors for columns and so it
-can't be a vector itself), we need to combine the datasets together in a
-`list()` to be able to reduce them with `full_join()`.
-
-{{< text_snippet sticky_up >}}
-
-## Using `full_join()` with `reduce()`
-
-Let's code this together, using `reduce()`, `full_join()`, and `list()`
-while in the `docs/learning.qmd` file. In the same code chunk, we will
-join the datasets together using `reduce()` and `full_join()`. This
-time, we will assign the output to a new object called `dime_data`.
-
-```{r reduce-full-join}
+```{r assign-full-join}
 #| filename: "docs/learning.qmd"
-dime_data <- list(participant_details, cgm_data) |>
-  reduce(full_join)
+dime_data <- participant_details |>
+  full_join(cgm_data)
 dime_data
 ```
 
-We now have the data in a form that would make sense to join it with the
-other datasets. In the exercise, you will add the sleep data to join
-everything together.
+And then we can continue with adding the sleep data to it.
 
-What's the advantage of using `reduce()` here? For us right now, not too
-much. The amount of code is nearly identical if we just used several
-`full_join()` in a row. But the advantage is that it is much easier to
-include more datasets in the future, since it is only one extra data
-frame object to include in the `list()`.
-
-Now that we've joined two datasets together, time to add the sleep data
-too! It will be very easy to do, because we've already set it up to add
-extra data to the `list()`. But, there still needs to be some checks.
-After joining, the final `dime_data` should look something like:
-
-```{r join-sleep}
+```{r sleep-full-join}
 #| filename: "docs/learning.qmd"
-dime_data <- list(participant_details, cgm_data, sleep_data) |>
-  reduce(full_join)
+dime_data <- participant_details |>
+  full_join(cgm_data) |>
+  full_join(sleep_data)
+dime_data
 ```
 
-Then, using the Console to look at the data:
+Woooo! :tada: We now are at the point of having only one data frame!
+Let's check the data out a bit more. Using the Console do:
 
 ```{r}
 #| filename: "Console"
@@ -339,29 +241,20 @@ Keep in mind, since we only imported the first 100 rows, there will be
 some things that don't match up. But even with this, there are odd
 things that we will need to address.
 
-## Putting it all together: Making one dataset
+## Putting it all together: Save a final dataset
 
 We are finally at the point where we can put it all together and make a
-single dataset! Go into your `docs/learning.qmd` file and go to the
-`setup` code chunk at the top. In the `setup` code chunk, we will add
-the `full_join()` code we used in the previous session.
+single dataset! Let's cut the join code we wrote in the previous section
+and paste it into the `setup` code chunk of `docs/learning.qmd`.
 
-```{r join-all-datasets}
+```{r join-all-datasets-setup}
 #| filename: "docs/learning.qmd"
-dime_data <- list(participant_details, cgm_data, sleep_data) |>
-  reduce(full_join)
+dime_data <- participant_details |>
+  full_join(cgm_data) |>
+  full_join(sleep_data)
 ```
 
-Run this code and look at it, either by running it in the Console or
-through the environment:
-
-```{r}
-#| filename: "Console"
-dime_data
-```
-
-It looks great!! :tada: Except that we haven't yet loaded in all the
-data. Open up the `R/functions.R` file and look at the `import_dime()`
+Then, open up the `R/functions.R` file and look at the `import_dime()`
 function. Find the line that says `n_max = 100` and delete it.
 
 The last step... saving the dataset to the `data/` folder! Why save it
