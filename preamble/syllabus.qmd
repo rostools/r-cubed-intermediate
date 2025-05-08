@@ -71,8 +71,7 @@ will:
 3.  Use [Quarto](https://quarto.org) to write reproducible documents.
 4.  Use [Git](https://git-scm.com) and [GitHub](https://github.com) to
     manage code and version control.
-5.  Use the functional programming tools with `{purrr}`'s `map()` and
-    `reduce()` functions.
+5.  Use the functional programming tools like `{purrr}`'s `map()` function.
 6.  Use the `{lubridate}` package to clean and process dates and times.
 7.  Use the `{stringr}` package and regular expressions to clean and
     process character strings.

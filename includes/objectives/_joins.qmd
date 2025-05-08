@@ -2,5 +2,3 @@
     appropriate for a given situation. Then apply `{dplyr}`'s
     `full_join()` function to join two datasets together into one single
     dataset.
-2.  Demonstrate how to use functionals to repeatedly join more than two
-    datasets together.
