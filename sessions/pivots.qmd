@@ -337,7 +337,7 @@ has several rows for the different types of sleep. Joining the data in
 this form to the other datasets, while possible, won't produce usable
 output. We want to convert it so there is only one row per hour of a
 participant's day, rather than multiple rows per hour. For that, we need
-to convert to the longer form.
+to convert to the wider form.
 
 The arguments for `pivot_wider()` are very similar to those in
 `pivot_longer()`, except instead of `names_to` and `values_to`, they are
