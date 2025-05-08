@@ -206,7 +206,12 @@ and standard deviation:
 ```{r example-summarise-multiple-functions}
 #| filename: "docs/learning.qmd"
 cgm_data |>
-  summarise(across(glucose, list(mean = mean, sd = sd, median = median)))
+  summarise(
+    across(
+      glucose,
+      list(mean = mean, sd = sd, median = median)
+    )
+  )
 ```
 
 The great thing about using `across()` is that you can also use it with
@@ -280,7 +285,11 @@ grouping with `.groups = "drop"` rather than have to pipe to
 cgm_data |>
   select(-device_timestamp) |>
   group_by(id, date, hour) |>
-  summarise(across(glucose, list(mean = mean, sd = sd)),
+  summarise(
+    across(
+      glucose,
+      list(mean = mean, sd = sd)
+    ),
     .groups = "drop"
   )
 ```
@@ -318,7 +327,11 @@ already written and use `contains()`:
 cgm_data |>
   select(-contains("timestamp"), -contains("datetime")) |>
   group_by(id, date, hour) |>
-  summarise(across(glucose, list(mean = mean, sd = sd)),
+  summarise(
+    across(
+      glucose,
+      list(mean = mean, sd = sd)
+    ),
     .groups = "drop"
   )
 ```
@@ -334,7 +347,11 @@ the glucose column:
 cgm_data |>
   select(-contains("timestamp"), -contains("datetime")) |>
   group_by(pick(-glucose)) |>
-  summarise(across(glucose, list(mean = mean, sd = sd)),
+  summarise(
+    across(
+      glucose,
+      list(mean = mean, sd = sd)
+    ),
     .groups = "drop"
   )
 ```
@@ -422,7 +439,7 @@ function to their package by using `::` (e.g. `dplyr::` and
 #' @returns A summarised data frame.
 #'
 summarise_column <- function(data, column, functions) {
-  data |>
+  summarised <- data |>
     dplyr::select(
       -tidyselect::contains("timestamp"),
       -tidyselect::contains("datetime")
@@ -435,6 +452,7 @@ summarise_column <- function(data, column, functions) {
       ),
       .groups = "drop"
     )
+  return(summarised)
 }
 ```
 
