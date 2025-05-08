@@ -51,7 +51,7 @@ and overview.
 
 | Time | Session topic |
 |:-----------------------------------|:-----------------------------------|
-| 8:45 | {{< fa laptop-code >}} [Joining data together, all at once](/sessions/joins.qmd) |
+| 8:45 | {{< fa laptop-code >}} [Joining data together](/sessions/joins.qmd) |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks |
 | 10:45 | {{< fa laptop-code >}} Continuing the last session |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
