@@ -228,7 +228,8 @@ can't create new columns. And you also need to provide it with the
 values that you want completed. In our case, we want each date from the
 start date to the end date, one for each day. We can use the `seq()`
 function to create a sequence of dates, from the `min()` to the `max()`.
-So we'd write it like:
+Since we don't want the grouping to be included afterwards, we'll also
+end with `ungroup()`. So we'd write it like:
 
 ```{r complete-dates}
 #| filename: "docs/learning.qmd"
@@ -237,7 +238,8 @@ participant_details |>
   group_by(pick(-date)) |>
   complete(
     date = seq(min(date), max(date), by = "1 day")
-  )
+  ) |>
+  ungroup()
 ```
 
 We now have a dataset that we can join with the other datasets! Time to
@@ -285,7 +287,8 @@ clean_participant_details <- function(data) {
     dplyr::group_by(dplyr::pick(-date)) |>
     tidyr::complete(
       date = seq(min(date), max(date), by = "1 day")
-    )
+    ) |>
+    dplyr::ungroup()
   return(cleaned)
 }
 ```
