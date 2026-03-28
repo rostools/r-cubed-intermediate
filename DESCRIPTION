@@ -2,19 +2,10 @@ Type: Book
 Package: r-cubed-intermediate
 Title: "Reproducible Research in R: An Intermediate Workshop on Modern
     Approaches and Workflows to Processing Data"
-Version: 2024.05.06
+Version: 8.0.0
 Authors@R:
     person("Luke", "Johnston", , "lwjohnst@gmail.com", role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0003-4169-2616", affiliation = "Steno Diabetes Center Aarhus"))
-Description: Reproducibility and open scientific practices are
-    increasingly being requested or required of scientists and
-    researchers, but training on these practices has not kept pace. This
-    workshop intends to help bridge that gap and covers the fundamentals and
-    workflow of data analysis in R. This repository contains the lesson,
-    lecture, and assignment material for the workshop, including the website
-    source files and other associated workshop administration files. For
-    more details on the workshop, check out the <a
-    href='https://r-cubed-intermediate.rostools.org'>website</a>.
+           comment = c(ORCID = "0000-0003-4169-2616"))
 URL: https://r-cubed-intermediate.rostools.org
 Depends:
     R (>= 4.0.0)
