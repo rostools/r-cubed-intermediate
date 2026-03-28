@@ -592,4 +592,4 @@ neighbour some of the following questions:
     generally working with data?
 -   What file format is your data is stored in? Is it easy to work with?
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+{{< include /includes/_code-appendix.qmd >}}

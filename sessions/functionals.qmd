@@ -551,4 +551,4 @@ discuss with your neighbour or group the following questions:
 save.image(here::here("_temp/functionals.RData"))
 ```
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+{{< include /includes/_code-appendix.qmd >}}

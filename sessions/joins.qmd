@@ -304,4 +304,4 @@ discussion activity.
 save.image(here::here("_temp/joins.RData"))
 ```
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+{{< include /includes/_code-appendix.qmd >}}

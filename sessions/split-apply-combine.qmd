@@ -597,4 +597,4 @@ discuss with your neighbour (or others) the questions:
 save.image(here::here("_temp/split-apply-combine.RData"))
 ```
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+{{< include /includes/_code-appendix.qmd >}}

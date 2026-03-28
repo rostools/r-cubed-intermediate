@@ -566,4 +566,4 @@ and discuss with your neighbour some of the following questions:
 save.image(here::here("_temp/functions.RData"))
 ```
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+{{< include /includes/_code-appendix.qmd >}}

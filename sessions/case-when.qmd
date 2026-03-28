@@ -270,4 +270,4 @@ to do the survey.
 -   Save final datasets into the `data/` to communicate to yourself
     and others that this is data to work with, not the data in `data-raw/`.
 
-{{< include /_extensions/rostools/r3-theme/includes/code-appendix-r.qmd >}}
+{{< include /includes/_code-appendix.qmd >}}
