@@ -1,17 +1,15 @@
-# Welcome! {.unnumbered}
+# Welcome {.unnumbered}
 
-[![License: CC BY
-4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4061900.svg)](https://doi.org/10.5281/zenodo.4061900)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/rostools/r-cubed-intermediate/main.svg)](https://results.pre-commit.ci/latest/github/rostools/r-cubed-intermediate/main)
-
-```{r write-packages-to-bib, include=FALSE}
+{{< include /includes/_badges.qmd >}}
+```{r write-packages-to-bib}
+#| include: false
 # automatically create a bib database for R packages
 knitr::write_bib(
   unique(desc::desc_get_deps()$package[-1]),
   here::here("includes/packages.bib")
 )
 ```
+
 
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
@@ -24,67 +22,77 @@ consequence of this lack of awareness for the need of these skills, how
 *exactly* data is processed is poorly, if at all, described in
 scientific studies. This hidden aspect of research could have major
 impacts on the reproducibility of studies. This workshop is therefore
-aimed to specifically to start addressing these types of problems.
+aimed to specifically start addressing these types of problems.
 
-The workshop is designed as a series of participatory live-coding
-lessons, where the teacher and learners code together, and is
-interspersed with hands-on exercises, discussion time, reading tasks,
-and group project work, all while using a real-world (open) dataset.
-This website contains *all* of the material for the workshop, including
-for both the learner and the teacher. It is structured as a book,
-with "chapters" as sessions, given in order of appearance. We make heavy
-use of the website throughout the workshop where code-along sessions
-follow the material on the website nearly exactly (with slight
-modifications for time or more detailed explanations).
 
-The workshop material was created using [Quarto](https://quarto.org) to
-write the material and create the book format,
-[GitHub](https://github.com/) to host the [Git](https://git-scm.com/)
-repository of the material, and [GitHub
-Actions](https://github.com/features/actions) with
-[Netlify](https://www.netlify.com/) to build and host the website. The
-original source material for this workshop is found on the
-[`r-cubed-intermediate`](https://github.com/rostools/r-cubed-intermediate)
-GitHub repository.
+This 3-day long workshop is designed to do participatory live-typing, where the teacher
+demonstrates the tasks on their computer connected to a projector while learners
+type along on their own computer. The workshop also includes reading tasks,
+discussion activities, hands-on exercises, and a team project at the end.
+In all of these activities, we work with real-world (open) datasets.
 
-Want to contribute to this workshop? Check out the
-[README](https://github.com/rostools/r-cubed-intermediate/blob/main/README.md)
-file as well as the
-[CONTRIBUTING](https://github.com/rostools/r-cubed-intermediate/blob/main/CONTRIBUTING.md)
-file on the GitHub repository for more details. The main way to
-contribute is by using [GitHub](https://github.com/) and creating a [new
-issue](https://github.com/rostools/r-cubed-intermediate/issues/new) to
-make comments and give feedback for the material.
+This website contains all of the material for the workshop, including
+readings, exercises, presentations, live-typing material, and images. It
+is structured as a book, with "chapters" as sessions, in order of
+appearance. We make heavy use of the website throughout the workshop
+where "type-along" sessions almost identically follow the material on
+the website (with slight modifications for time or more detailed
+explanations).
 
-::: {.callout-tip appearance="minimal"}
-:star: Do you find this workshop material useful? Then please consider
-"starring" our [GitHub
-repository](https://github.com/rostools/r-cubed-intermediate/) to show your
-support! Starring will save it to a list of repositories you like that
-you can easily find again, plus it helps give our project more
-visibility!
-:::
+Check out the overview section of the workshop, starting with the
+[Syllabus](/overview/syllabus.qmd) (@sec-syllabus).
+
+If you plan on attending the workshop, please make sure to complete the
+[Pre-workshop tasks](/pre-workshop/overview.qmd) (@sec-pre-workshop) to get set up and ready
+for the workshop. The pre-workshop tasks include a survey that you need
+to fill out before the workshop starts.
+
+{{< include /includes/_star-us.qmd >}}
 
 ## Target audiences
 
 This website and its content are targeted to three groups:
 
 1.  For the **learners** to use during the workshop, both to follow
-    along in case they get lost and also to use as a reference after the
-    workshop ends. See @sec-is-it-for-you for a more detailed description
-    of who the learner is.
+    along and also to use as a reference after the workshop ends. A more
+    detailed description of who the learner is can be found in the [Is this
+    for you?](/overview/is-this-for-you.qmd) section (@sec-is-this-for-you).
 2.  For the **teachers** to use as a guide for when they do the
-    code-along sessions and presentations.
+    type-along sessions.
 3.  For those who are **interested in teaching**, who may not have much
     experience or may not know where to start, to use this website as a
     guide to running and teaching their own workshops.
 
-## Re-use and licensing {#licensing}
+## Re-use and licensing
 
-The workshop is licensed under the [Creative Commons Attribution 4.0
-International License](https://creativecommons.org/licenses/by/4.0/) so
-the material can be used, re-used, and modified, as long as there is
-attribution to this source.
+The workshop material is licensed under the [Creative Commons Attribution 4.0
+License](LICENSE.md), so the material can be used, re-used, and modified, as
+long as there is attribution to this source. Check out the [For
+teachers](/appendix/for-teachers.qmd) section (@sec-for-teachers) for more details and tips on using
+this material for teaching.
+
+## Contributing
+
+Want to contribute to this workshop? Look through our
+[CONTRIBUTING](CONTRIBUTING.md) page for contribution guidelines on how to
+get started.
+
+### Contributors
+
+{{< include /includes/_contributors.qmd >}}
+
+## How the website is made
+
+The workshop material is created using [Quarto](https://quarto.org) to
+write the material and create the book format,
+[GitHub](https://github.com/) to host the [Git](https://git-scm.com/)
+repository of the material, and [GitHub
+Actions](https://github.com/features/actions) with
+[Netlify](https://www.netlify.com/) to build and host the website. The
+original source material for this workshop is found on the
+[`{{< meta gh.repo >}}`]({{< meta links.github >}})
+GitHub repository.
+
 
 ## Acknowledgements
 
@@ -106,10 +114,13 @@ Aarhus](https://www.stenoaarhus.dk/) and [Aarhus
 University](https://international.au.dk/) employs Luke, who is the lead
 teacher and educational resource developer.
 
-::: {layout-ncol="2"}
-![](/images/ddea-logo.png){width="220px" fig-align="center"
+::: {layout-ncol="3"}
+![](/images/logo-ddea.png){width="220px" fig-align="center"
 fig-alt="Danish Diabetes and Endocrinology Academy logo"}
 
-![](/images/SDCA_logo.png){width="110px" fig-align="center"
+![](/images/logo-sdca.png){width="110px" fig-align="center"
 fig-alt="Steno Diabetes Center Aarhus logo"}
+
+![](/images/logo-au.png){width="110px" fig-align="center"
+fig-alt="Aarhus University logo"}
 :::
