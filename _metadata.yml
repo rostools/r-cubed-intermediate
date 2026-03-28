@@ -1,0 +1,21 @@
+gh:
+  org: "rostools"
+  repo: "r-cubed-intermediate"
+
+titles:
+  full: "An intermediate workshop on modern approaches and workflows to processing data"
+
+urls:
+  home: "https://r-cubed-intermediate.rostools.org"
+
+workshop_level: "intermediate"
+
+surveys:
+  pre-workshop: "https://docs.google.com/forms/d/e/1FAIpQLSeqpnW4ZuZWlDkAa-gRSB2W7-GbwPtLMruXbMzEQF4hUXZACg/viewform?usp=header"
+  feedback: "https://docs.google.com/forms/d/e/1FAIpQLScTbsxHSLrQxn38KS7kCklurFrccN8g3kVdm6WTSxEiIBypWg/viewform?usp=header"
+
+# Use `samwise::get_allowed_r_versions()` and `samwise::get_allowed_rstudio_versions()`
+# to get a list of the allowed R and RStudio versions.
+versions:
+  r: "4.5.0"
+  rstudio: "v2025.05.1+513"
