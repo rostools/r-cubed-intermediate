@@ -1,4 +1,4 @@
-# Workshop syllabus {#sec-syllabus}
+# Syllabus {#sec-syllabus}
 
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
@@ -14,11 +14,16 @@ code sharing among researchers. All together, this aspect of research is
 often completely hidden and may likely to be the source of many
 irreproducible results.
 
-With this workshop, we aim to begin addressing this gap. We use a highly
+In this workshop we aim to begin addressing this gap. We use a highly
 practical, mixed-methods, hands-on approach to learning that revolves
 around code-along sessions (teacher and you, the learner, coding
 together), hands-on exercises, discussion activities, reading tasks, and
-group project work. The learning outcome and overall aim of the workshop
+group project work. This workshop is designed for to be done over 3 full days
+in person, following the [schedule](/overview/schedule.qmd) listed in @sec-schedule.
+
+## Learning outcome and objectives
+
+The learning outcome and overall aim of the workshop
 is to enable you to:
 
 1.  Demonstrate an open and reproducible workflow in R that makes use of
@@ -85,53 +90,3 @@ Learning and coding are not just solo activities, they are also very
 much social activities. So throughout the workshop, we provide plenty of
 opportunity to meet new people, share experiences, have discussion
 activities, and work in groups.
-
-## Is this workshop for you? {#sec-is-it-for-you}
-
-This workshop is designed in a specific way and is ideal for you if:
-
--   You are a researcher, preferably working in the biomedical field
-    (ranging from experimental to clinical to epidemiological).
--   You currently are or will soon do quantitative data analysis.
--   You either:
-    -   have taken the [introduction to Reproducible Research in R
-        workshop](https://r-cubed-intro.rostools.org/), as this
-        intermediate workshop is a natural extension to that the
-        introduction one;
-    -   know a *little* to a *moderate* amount of R (or computing in
-        general);
-    -   know how to use R and have *some* familiarity with the
-        [tidyverse](https://www.tidyverse.org/) and
-        [RStudio](https://rstudio.com/).
-
-Considering that this is a natural extension of the [introductory
-r-cubed workshop](https://r-cubed-intro.rostools.org/), this workshop
-incorporates tools learned during that workshop, including basic Git
-usage as well as the use of RStudio R Projects. If you *do not* have
-familiarity with these tools, you will need to go over the material from
-the introduction workshop beforehand (more details about pre-workshop
-tasks will be sent out a couple of weeks before the workshop).
-
-We make these assumptions about you as the learner to help focus the
-content of the workshop, however, if you have an interest in learning R
-but don't fit any of the above assumptions, **you are still welcome to
-attend the workshop**! We welcome everyone, that is until the workshop
-capacity is reached.
-
-During the workshop, we **will**:
-
--   Learn how to use R, specifically in the mid-beginner to
-    early-intermediate level.
--   Focus only on the data processing and cleaning stage of a data
-    analysis project.
--   Teach from a reproducible research and open scientific perspective
-    (e.g. by making use of Git).
--   Be using practical, applied, and hands-on lessons and exercises.
--   Apply evidence-based teaching practices.
--   Use a real-world dataset to work with.
-
-And we **will not**:
-
--   Go over the basics of using R and RStudio.
--   Cover any statistics, as these are already covered by most
-    university curriculum.
