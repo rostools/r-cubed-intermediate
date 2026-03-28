@@ -1,0 +1,93 @@
+<!-- NOTE: This file is auto-generated from the `template-workshop` template. -->
+
+# Code of conduct {#sec-code-of-conduct}
+
+Learning happens when we feel safe and supported. Since we want you to
+learn during this workshop, we want you to feel safe and supported. We
+also want all learners to have an enjoyable and fulfilling experience
+while participating in this workshop. So we expect all learners to show
+respect, kindness, and courtesy to other learners throughout the whole
+workshop and to help create a positive and safe learning environment.
+
+While most people and (sub-)cultures have an implicit, assumed set of
+practices and expectations for behaviour, we believe strongly in
+effective and clear communication. This includes making what is normally
+implicit expectations to instead be explicit expectations.
+
+Teachers and helpers will uphold and embody this code in all spaces and
+activities of the workshop, and we expect you as the learner to do the
+same. In fact, by participating in this workshop, you indicate that you
+agree to follow these explicit expectations. We have this code of
+conduct to communicate to you that we really value and want to nurture a
+space that encourages and enhances learning. Otherwise, why would we
+have a workshop if you can't or aren't able to effectively learn
+anything from it! :zany_face:
+
+## Expected behavior
+
+We want a welcoming, supportive, safe, and fun environment not only for
+ourselves as teachers and helpers, but also for all learners, regardless
+of background and identity. This means that we do not tolerate behaviour
+that is disrespectful to any of our teachers, helpers, or learners (see
+below for unacceptable behaviour).
+
+We encourage the following kinds of behaviours in all interactions
+during this workshop that will foster a positive and professional
+learning environment:
+
+-   Show kindness, courtesy, and respect towards other workshop members.
+-   All interactions should be professional regardless of platform:
+    either online or in-person.
+-   Be aware of your words by using welcoming and inclusive language.
+    Words matter, a lot!
+-   Be respectful to different viewpoints and experiences.
+-   Gracefully accept constructive criticism.
+-   Focus on what is best for everyone in the workshop.
+
+## Unacceptable behavior
+
+While we assume you will not do these behaviours, we want to clearly
+communicate what unacceptable behaviour is. It is any behaviour, as
+actions or words, that excludes, intimidates, or causes discomfort to
+others. We do not tolerate discrimination or harassment based on
+characteristics that include, though are not limited to, gender identity
+and expression, sexual orientation, disability, physical appearance,
+body size, citizenship, nationality, ethnic or social origin, pregnancy,
+familial status, veteran status, genetic information, religion or belief
+(or lack thereof), membership of a national minority, property, age,
+education, socio-economic status, technical choices, and experience
+level. We of course also don't tolerate verbally or physically violent
+behaviour towards others.
+
+Examples of unacceptable behavior includes:
+
+-   Written or verbal comments that exclude people on the basis of
+    membership of any specific group.
+-   The display of sexual or violent images.
+-   Unwelcome sexual attention, advances, and/or physical contact.
+-   Sustained disruption of workshop sessions or communications.
+-   Insults or put downs.
+-   Sexist, racist, homophobic, transphobic, ableist, or exclusionary
+    jokes.
+
+## Consequences of unacceptable behavior
+
+Learners who are asked, either in person or online, to stop any
+inappropriate behavior are expected to comply immediately. If a learners
+engages in behaviour that violates this code of conduct, the organizers,
+teachers, or helpers may take any action they deem appropriate,
+including warning the offender or removing them from the workshop.
+
+If you feel in any way unsafe or mistreated, you may contact us
+privately---all communication is confidential.
+
+Thank you for helping make this a welcoming, friendly workshop for all
+:smile:
+
+::: {.callout-note appearance="default"}
+*Acknowledgements*: Large portions of this code of conduct were taken
+and modified from other codes of conduct, specifically [Software
+Carpentry](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html)
+and
+[UofTCoders](https://github.com/UofTCoders/studyGroup/blob/gh-pages/codeOfConduct.md).
+:::
