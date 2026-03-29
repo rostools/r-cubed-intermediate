@@ -1,0 +1,83 @@
+# Git basics and setup {#sec-git-basics}
+
+Since Git has already been covered in the [introduction
+workshop](https://r-cubed-intro.rostools.org), we won't cover *learning
+it* during this workshop. However, since version control is a
+fundamental component of any modern and reproducible data analysis
+workflow and *should be used*, we **will be using it throughout the
+workshop**.
+
+::: callout-important
+If you have used or currently use Git, you can skip this section and
+move on to @sec-confirm-git-setup.
+:::
+
+Git itself isn't too difficult to use. But the *concepts* that Git uses
+are very difficult to learn and use. That's because Git requires you to
+view your files and folders and computer *very differently* to how you
+may normally be used to working with them. And because we will be using
+Git throughout the workshop, to ensure you have the smoothest
+experience, we want you to at least be aware of and have read a bit
+about Git. So, from the introduction workshop, please read these
+sections:
+
+1.  [What is version
+    control?](https://r-cubed-intro.rostools.org/sessions/version-control#sec-what-is-version-control)
+2.  [What is
+    Git?](https://r-cubed-intro.rostools.org/sessions/version-control#sec-what-is-git)
+3.  [Basics of
+    Git](https://r-cubed-intro.rostools.org/sessions/version-control#sec-basics-of-git)
+
+After reading them, in your RStudio in the R Console, run this function
+that should open up a pop-up window to type in your name and email:
+
+```{r setup-git-config}
+#| eval: false
+#| filename: Console
+r3::setup_git_config()
+```
+
+For most of the workshop, we will be using Git as shown in the [Using
+Git in
+RStudio](https://r-cubed-intro.rostools.org/sessions/version-control#using-git-in-rstudio)
+section. Later on during the workshop, we might connect our projects to
+GitHub, which is described in the [Synchronizing with
+GitHub](https://r-cubed-intro.rostools.org/sessions/github#synchronizing-with-github)
+section.
+
+## Confirming your Git setup {#sec-confirm-git-setup}
+
+Since you will be using Git regularly throughout the workshop, please
+run this check to ensure everything is setup correctly. Type and run
+this function in the R Console of RStudio:
+
+```{r check-git-setup}
+#| filename: Console
+#| eval: false
+r3::check_setup()
+```
+
+The output you'll get for success should look something like this:
+
+```
+Checking R version:
+✔ Your R is at the latest version of 4.4.0!
+Checking RStudio version:
+✔ Your RStudio is at the latest version of 2024.12.1.563!
+Checking Git config settings:
+✔ Your Git configuration is all setup!
+  Git now knows that:
+  - Your name is 'Luke W. Johnston'
+  - Your email is 'lwjohnst@gmail.com'
+```
+
+**Eventually you will need to copy and paste the output into one of the
+survey questions**.
+
+::: callout-note
+While GitHub is a natural extension to using Git, given the limited time
+available in the workshop, we will not be going over how to use GitHub.
+If you want to learn about using GitHub, check out this
+[session](https://r-cubed-intro.rostools.org/sessions/github) about it
+in the introduction workshop.
+:::

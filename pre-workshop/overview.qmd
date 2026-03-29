@@ -1,0 +1,99 @@
+# Overview {#sec-pre-workshop}
+
+```{r setup}
+#| include: false
+# To trigger linking.
+
+```
+
+In order to participate in this workshop, you must complete everything
+in this section and finish with **completing the
+[survey](/pre-workshop/survey.qmd)** (@sec-survey) at the end. These tasks are
+meant to provide everyone with the necessary setup and a shared
+foundation for the workshop so that we have a smooth(er) start to the workshop. For some of the tasks, you
+may not understand why you need to do them, but we hope by the start of
+the workshop (and by the end) that you understand them better.
+
+The pre-workshop tasks are designed not just to ensure everyone has everything
+set up for the workshop, but also as a learning activity on its own.
+These tasks are designed to help enable you to:
+
+1.  Recall (or describe) what reproducible documents are and what Quarto
+    is.
+2.  Describe in more detail what a filesystem is, what relative and
+    absolute paths are, and how to make use of them with the `{fs}` and
+    `{here}` R packages to navigate files in your project.
+3.  Use functions to download and begin to organise raw data for your
+    project.
+4.  Recall (or describe) the basics of Git and how to configure it on
+    your computer.
+
+<!-- TODO: Convert this into an include/snippet? -->
+
+These tasks could take between **2-6 hrs to finish** depending on:
+
+-   Your current skill and knowledge level when it comes to computers,
+    installing programs, and experience from taking our other workshops
+    or ones that are similar to them.
+-   If you will be using a work laptop and if your institution has more
+    restrictive policies on what you can install on your computer. You
+    may need to contact your work IT sooner than later for help or to
+    get permissions. From our experience, this can be the hardest part
+    of these pre-workshop tasks since it can be out of your control.
+
+So, we suggest you plan at least a full day to complete these
+pre-workshop tasks and that you start them sooner than later.
+
+## How to read this website
+
+{{< include /includes/_reading-website.qmd >}}
+
+## Summary of tasks
+
+If you haven't already, go through the workshop overview section,
+including the [Syllabus](/overview/syllabus.qmd) (@sec-syllabus), [Is this for
+you?](/overview/is-this-for-you.qmd) (@sec-is-this-for-you), and [Learning
+design](/overview/learning-design.qmd) (@sec-learning-design) to get an overview of what this
+workshop contains and the learning design behind the workshop material.
+
+After that, please go through the the pre-workshop tasks designed to
+establish a shared foundation for the start of the workshop. This
+includes to:
+
+1.  If you haven't, read the [syllabus](/overview/syllabus.qmd) (@sec-syllabus)
+    and the [Is this for you?](/overview/is-this-for-you.qmd) (@sec-is-this-for-you)
+    sections to get an overview of the workshop and to see if it's a good fit for
+    you. It might also help to re-read it again if you already read it before.
+2.  Read the [Code of Conduct](code-of-conduct.qmd) (@sec-code-of-conduct). We
+    aim for explicit rather than implicit, which is why we have this Code of
+    Conduct. This way, we can explicitly state how we'd like the environment of the
+    workshop to be, which is important not just because feeling safe and supported
+    is important for mental well-being, but also because it is vital for effective
+    learning.
+3.  Follow the installation instructions in @sec-installing-programs.
+    Install a version of R, RStudio, and Git that is as updated as
+    possible. For some people, depending on their institution, this
+    task can take the **longest amount of time** because you have to
+    contact your IT to install these packages.
+4.  Install the necessary R packages in @sec-installing-r-packages.
+5.  [Read about Git](git-basics.qmd) (@sec-git-basics) and configure Git on
+    your computer if you haven't already. If you haven't used Git before,
+    this task could take a while because of the reading.
+6.  Confirm your Git setup within the [Git Basics](git-basics.qmd) (@sec-git-basics) section with `r3::check_setup()`. This is a check to
+    see if everything is working correctly. You'll later need to paste
+    this output into the survey.
+7.  [Create an R Project](create-project.qmd) (@sec-create-project), including the folder,
+    files, and Quarto file.
+8.  [Download the data](download-data.qmd) (@sec-download-data) and save it to your
+    computer. Run the check `r3::check_project_setup_intermediate()` in this section to see that everything is
+    as expected. You'll later need to paste this output into the survey.
+9.  Complete the pre-workshop [survey](survey.qmd) (@sec-survey): This survey is pretty quick,
+    maybe \~10 minutes. There will be some bits from the tasks that you
+    will need to paste into this survey.
+
+Check each section for exact details on completing these tasks.
+
+::: callout-tip
+You will be taken through the pre-workshop tasks in order by clicking
+the arrow at the bottom of each page :arrow_right:
+:::
