@@ -1,5 +1,5 @@
 project:
-  type: r3-theme
+  type: rostools-theme
   pre-render:
     - mkdir -p _temp
     - cp common.R .Rprofile
@@ -12,17 +12,32 @@ project:
 book:
   title: "Intermediate Reproducible Research in R"
   subtitle: "An intermediate workshop on modern approaches and workflows to processing data"
-  author: "Luke W. Johnston"
+  author:
+    - name: "Luke W. Johnston"
+      orcid: "0000-0003-4169-2616"
+    - name: "Anders Askeland"
+      orcid: "0000-0002-2996-129X"
   date: last-modified
   repo-url: "https://github.com/rostools/r-cubed-intermediate"
   site-url: "https://r-cubed-intermediate.rostools.org"
   chapters:
     - index.qmd
-    - part: "Preamble"
+    - part: "Overview"
       chapters:
-      - preamble/syllabus.qmd
-      - preamble/schedule.qmd
-      - preamble/pre-workshop.qmd
+        - overview/syllabus.qmd
+        - overview/is-this-for-you.qmd
+        - overview/schedule.qmd
+        - overview/learning-design.qmd
+    - part: "Pre-workshop"
+      chapters:
+        - pre-workshop/overview.qmd
+        - pre-workshop/code-of-conduct.qmd
+        - pre-workshop/installing-programs-r.qmd
+        - pre-workshop/installing-r-packages.qmd
+        - pre-workshop/git-basics.qmd
+        - pre-workshop/create-project.qmd
+        - pre-workshop/download-data.qmd
+        - pre-workshop/survey.qmd
     - part: "Sessions"
       chapters:
       - sessions/introduction.qmd
@@ -39,33 +54,27 @@ book:
   appendices:
     - appendix/extras.qmd
     - appendix/solutions.qmd
-    - LICENSE.md
+    - appendix/for-teachers.qmd
     - appendix/references.qmd
+    - CHANGELOG.md
+    - CONTRIBUTING.md
+    - LICENSE.md
   page-footer:
     center:
-      - text: "License: CC BY 4.0"
-        href: LICENSE.html
+      - text: "License: CC BY 4.0 {{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}}"
+        href: LICENSE.md
       - text: "Code of Conduct"
-        href: "https://guides.rostools.org/conduct.html"
-      - text: "Teacher guide"
-        href: "https://guides.rostools.org/"
+        href: "pre-workshop/code-of-conduct.qmd"
 
 format:
-  r3-theme-html:
+  rostools-theme-html:
     doi: "10.5281/zenodo.4061900"
     include-before-body:
       - "includes/site-counter.html"
 
-csl: includes/vancouver.csl
 bibliography:
   - includes/packages.bib
   - includes/references.bib
 
-editor:
-  markdown:
-    wrap: 72
-    canonical: true
-
-execute:
-  # Need to show warnings for many bits of code as part of learning.
-  warning: true
+metadata-files:
+  - _metadata.yml
