@@ -6,7 +6,7 @@
 @_updates: update-from-template update-quarto-theme
 
 # Run all recipes
-run-all: install-dependencies _checks style _builds
+run-all: install-dependencies _checks format-r _builds
 
 # List all TODOs in the repository.
 list-todos:
@@ -59,6 +59,11 @@ check-urls:
     --extensions md,qmd \
     --exclude-path "_badges.qmd"
 
+# Style all R code
+format-r:
+  # Need to install air first
+  air format .
+
 # Build Quarto website
 build-website:
   quarto render
@@ -70,11 +75,6 @@ build-readme:
 # Generate a Quarto include file with the contributors
 build-contributors:
   sh ./tools/get-contributors.sh rostools/r-cubed-intermediate > includes/_contributors.qmd
-
-# Style all R code
-style:
-  # Need to install air first
-  air format .
 
 # Check for and apply updates from the template
 update-from-template:
