@@ -24,6 +24,11 @@ below. If not, you will need to update them.
     version that says "R-release". Rtools is needed in order to build some
     R packages. For some computers, installing Rtools can take some time.
 
+::: callout-important
+The version of RTools must match the version of R that you have installed. For example,
+if you have R version 4.3, you need to install RTools 4.3.
+:::
+
 ### MacOS
 
 1.  [R](https://cloud.r-project.org/bin/macosx/): Any version above

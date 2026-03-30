@@ -18,8 +18,7 @@ r3::check_project_setup_intermediate()
 You're almost done! Please fill out the pre-workshop survey to finish
 this section:
 
-[Pre-workshop survey
-:tada:]({{< meta surveys.pre-workshop >}}){.btn
+[Pre-workshop survey :tada:]({{< meta surveys.pre-workshop >}}){.btn
 .btn-primary role="button"}
 
 See you at the workshop! :wave:

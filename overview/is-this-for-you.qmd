@@ -20,7 +20,6 @@ We assume you can relate to one or more of the following:
         [tidyverse](https://www.tidyverse.org/) and
         [RStudio](https://rstudio.com/).
 
-
 Considering that this is a natural extension of the [introductory
 r-cubed workshop](https://r-cubed-intro.rostools.org/), this workshop
 incorporates tools learned during that workshop, including basic Git

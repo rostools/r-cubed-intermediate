@@ -35,14 +35,14 @@ We encourage the following kinds of behaviours in all interactions
 during this workshop that will foster a positive and professional
 learning environment:
 
--   Show kindness, courtesy, and respect towards other workshop members.
--   All interactions should be professional regardless of platform:
-    either online or in-person.
--   Be aware of your words by using welcoming and inclusive language.
-    Words matter, a lot!
--   Be respectful to different viewpoints and experiences.
--   Gracefully accept constructive criticism.
--   Focus on what is best for everyone in the workshop.
+- Show kindness, courtesy, and respect towards other workshop members.
+- All interactions should be professional regardless of platform: either
+  online or in-person.
+- Be aware of your words by using welcoming and inclusive language.
+  Words matter, a lot!
+- Be respectful to different viewpoints and experiences.
+- Gracefully accept constructive criticism.
+- Focus on what is best for everyone in the workshop.
 
 ## Unacceptable behavior
 
@@ -61,14 +61,14 @@ behaviour towards others.
 
 Examples of unacceptable behavior includes:
 
--   Written or verbal comments that exclude people on the basis of
-    membership of any specific group.
--   The display of sexual or violent images.
--   Unwelcome sexual attention, advances, and/or physical contact.
--   Sustained disruption of workshop sessions or communications.
--   Insults or put downs.
--   Sexist, racist, homophobic, transphobic, ableist, or exclusionary
-    jokes.
+- Written or verbal comments that exclude people on the basis of
+  membership of any specific group.
+- The display of sexual or violent images.
+- Unwelcome sexual attention, advances, and/or physical contact.
+- Sustained disruption of workshop sessions or communications.
+- Insults or put downs.
+- Sexist, racist, homophobic, transphobic, ableist, or exclusionary
+  jokes.
 
 ## Consequences of unacceptable behavior
 
@@ -86,8 +86,7 @@ Thank you for helping make this a welcoming, friendly workshop for all
 
 ::: {.callout-note appearance="default"}
 *Acknowledgements*: Large portions of this code of conduct were taken
-and modified from other codes of conduct, specifically [Software
-Carpentry](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html)
-and
+and modified from other codes of conduct, specifically
+[Software Carpentry](https://docs.carpentries.org/policies/coc/) and
 [UofTCoders](https://github.com/UofTCoders/studyGroup/blob/gh-pages/codeOfConduct.md).
 :::

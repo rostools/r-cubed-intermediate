@@ -8,7 +8,7 @@
 
 In order to participate in this workshop, you must complete everything
 in this section and finish with **completing the
-[survey](/pre-workshop/survey.qmd)** (@sec-survey) at the end. These tasks are
+[survey](survey.qmd) (@sec-survey)** at the end. These tasks are
 meant to provide everyone with the necessary setup and a shared
 foundation for the workshop so that we have a smooth(er) start to the workshop. For some of the tasks, you
 may not understand why you need to do them, but we hope by the start of

@@ -7,6 +7,7 @@ csl: "../includes/vancouver.csl"
 
 # Welcome to the Intermediate R^3^ workshop!
 
+- :heavy_check_mark: Accept the GitHub Organization invite
 -   :heavy_check_mark: Pick a group from the basket and go to that table
 -   :heavy_check_mark: Introduce yourself to your table mates
 -   :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project

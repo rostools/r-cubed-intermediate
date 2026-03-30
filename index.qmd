@@ -1,6 +1,7 @@
 # Welcome {.unnumbered}
 
 {{< include /includes/_badges.qmd >}}
+
 ```{r write-packages-to-bib}
 #| include: false
 # automatically create a bib database for R packages
