@@ -83,3 +83,7 @@ update-from-template:
 # Reset repo changes to match the template
 reset-from-template:
   uvx copier recopy --trust --defaults
+
+# Clean up some auto-generated files
+cleanup:
+  find . -type f -name "*.vdoc.*.r" -delete
