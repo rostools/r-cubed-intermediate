@@ -4,8 +4,6 @@
   "editor.wordWrap": "off",
   "editor.formatOnSave": true,
   "git.autofetch": false,
-  "quarto.visualEditor.markdownWrap": "column",
-  "quarto.visualEditor.markdownWrapColumn": 72,
   "editor.tabCompletion": "on",
   "editor.snippetSuggestions": "inline",
   "conventional-branch.type": [

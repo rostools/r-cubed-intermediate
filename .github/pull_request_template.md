@@ -1,10 +1,9 @@
 # Description
 
-This PR DESCRIBE CHANGES.
+EXPLANATION
 
 Closes #
 
 ## Checklist
 
-- [ ] Formatted Markdown
 - [ ] Ran `just run-all`

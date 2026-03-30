@@ -11,7 +11,8 @@
     "quarto.quarto",
     "github.vscode-github-actions",
     "redhat.vscode-yaml",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "rvben.rumdl"
   ],
   "unwantedRecommendations": []
 }

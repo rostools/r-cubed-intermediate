@@ -15,4 +15,3 @@ max_line_length = 88
 # Have a bit shorter line length for text docs
 [*.{txt,md,qmd}]
 max_line_length = 72
-indent_size = 4
