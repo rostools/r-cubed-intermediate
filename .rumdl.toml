@@ -1,0 +1,31 @@
+[global]
+# 72 to match what we have currently been using
+line_length = 72
+flavor = "quarto"
+exclude = [
+  # Common directories to exclude
+  ".git",
+  ".github",
+  # This is auto-generated from the qmd version
+  "README.md",
+  # This has it's own structure
+  "LICENSE.md",
+]
+
+# List style: `-`
+[MD004]
+style = "dash"
+
+# Wrap list items
+[MD032]
+allow-lazy-continuation = false
+
+# Reflow text
+[MD013]
+reflow = true
+reflow-mode = "normalize"
+
+# Fix tables and their separator row
+[MD060]
+enabled = true
+style = "aligned-no-space"

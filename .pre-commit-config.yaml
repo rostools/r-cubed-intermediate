@@ -6,7 +6,7 @@ ci:
 
 repos:
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.28.0
+    rev: v8.30.0
     hooks:
       - id: gitleaks
 
@@ -25,6 +25,11 @@ repos:
   # sub-packages, which confuses pre-commit when it tries to find the latest
   # version
   - repo: https://github.com/adhtruong/mirrors-typos
-    rev: v1.35.8
+    rev: v1.44.0
     hooks:
       - id: typos
+
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: v0.1.62
+    hooks:
+      - id: rumdl-fmt # Auto-format

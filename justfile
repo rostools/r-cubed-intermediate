@@ -1,12 +1,13 @@
 @_default:
   just --list --unsorted
 
-@_checks: check-spelling check-commits
+@_formats: format-md format-r
+@_checks: check-spelling check-urls check-commits
 @_builds: build-contributors build-readme build-website
 @_updates: update-from-template update-quarto-theme
 
 # Run all recipes
-run-all: install-dependencies _checks format-r _builds
+run-all: install-dependencies _formats _checks _builds
 
 # List all TODOs in the repository.
 list-todos:
@@ -56,13 +57,18 @@ check-commits:
 # Check that URLs work
 check-urls:
   lychee . \
+    --verbose \
     --extensions md,qmd \
     --exclude-path "_badges.qmd"
 
-# Style all R code
+# Format all R code
 format-r:
   # Need to install air first
   air format .
+
+# Format Markdown files
+format-md:
+  uvx rumdl fmt --silent
 
 # Build Quarto website
 build-website:
