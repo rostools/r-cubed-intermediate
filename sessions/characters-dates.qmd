@@ -28,7 +28,8 @@ The issues are related to the:
 - Both the CGM and sleep data is measured at different times, but the
   same date, so a direct join wouldn't work.
 - The participant details dates are in two columns rather than one.
-  :::
+
+:::
 
 **Time: \~8 minutes.**
 
