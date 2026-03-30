@@ -18,48 +18,48 @@ and overview.
 ::: panel-tabset
 ## Day 1 {.unnumbered}
 
-| Time  | Session topic                                                                                                                                                          |
-|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 9:00  | {{< fa mug-hot >}} Arrival; Coffee and light breakfast                                                                                                                 |
-| 9:30  | {{< fa person-chalkboard >}} [Introduction to the workshop](/sessions/introduction.qmd)                                                                                |
-| 10:15 | {{< fa laptop-code >}} [Pre-process data as you import it](/sessions/importing.qmd)                                                                                    |
-| 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
-| 12:00 | {{< fa utensils >}} Lunch                                                                                                                                              |
-| 12:45 | {{< fa laptop-code >}} [Bundling code into functions](/sessions/functions.qmd)                                                                                         |
-| 13:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
-| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                                                                                        |
-| 14:15 | {{< fa laptop-code >}} [Making robust and general-purpose functions](/sessions/robustness.qmd)                                                                         |
-| 16:15 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
+| Time  | Session topic                                                                                  |
+|:------|:-----------------------------------------------------------------------------------------------|
+| 9:00  | {{< fa mug-hot >}} Arrival; Coffee and light breakfast                                         |
+| 9:30  | {{< fa person-chalkboard >}} [Introduction to the workshop](/sessions/introduction.qmd)        |
+| 10:15 | {{< fa laptop-code >}} [Pre-process data as you import it](/sessions/importing.qmd)            |
+| 11:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})           |
+| 12:00 | {{< fa utensils >}} Lunch                                                                      |
+| 12:45 | {{< fa laptop-code >}} [Bundling code into functions](/sessions/functions.qmd)                 |
+| 13:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})           |
+| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                |
+| 14:15 | {{< fa laptop-code >}} [Making robust and general-purpose functions](/sessions/robustness.qmd) |
+| 16:15 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})           |
 
 ## Day 2 {.unnumbered}
 
-| Time  | Session topic                                                                                                                                                          |
-|:------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 9:00  | {{< fa laptop-code >}} [Doing many things at once with functionals](/sessions/functionals.qmd)                                                                         |
-| 10:25 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
-| 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                                                                                        |
-| 10:45 | {{< fa laptop-code >}} [Cleaning characters and dates](/sessions/characters-dates.qmd)                                                                                 |
-| 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
-| 12:00 | {{< fa utensils >}} Lunch                                                                                                                                              |
-| 12:45 | {{< fa laptop-code >}} [Using split-apply-combine to help in processing](/sessions/split-apply-combine.qmd)                                                            |
-| 13:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
-| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                                                                                        |
-| 14:15 | {{< fa laptop-code >}} [Pivoting your data from and to long or wide](/sessions/pivots.qmd)                                                                             |
-| 16:15 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
+| Time  | Session topic                                                                                               |
+|:------|:------------------------------------------------------------------------------------------------------------|
+| 9:00  | {{< fa laptop-code >}} [Doing many things at once with functionals](/sessions/functionals.qmd)              |
+| 10:25 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
+| 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                             |
+| 10:45 | {{< fa laptop-code >}} [Cleaning characters and dates](/sessions/characters-dates.qmd)                      |
+| 11:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
+| 12:00 | {{< fa utensils >}} Lunch                                                                                   |
+| 12:45 | {{< fa laptop-code >}} [Using split-apply-combine to help in processing](/sessions/split-apply-combine.qmd) |
+| 13:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
+| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                             |
+| 14:15 | {{< fa laptop-code >}} [Pivoting your data from and to long or wide](/sessions/pivots.qmd)                  |
+| 16:15 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
 
 ## Day 3 {.unnumbered}
 
-| Time  | Session topic                                                                                                                                                                        |
-|:------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 9:00  | {{< fa laptop-code >}} [Joining data together](/sessions/joins.qmd)                                                                                                                  |
-| 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                                                                                                      |
-| 10:45 | {{< fa laptop-code >}} Continuing the last session                                                                                                                                   |
-| 11:55 | {{< fa comment-dots >}} [End of session short survey](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link)               |
-| 12:00 | {{< fa utensils >}} Lunch                                                                                                                                                            |
-| 12:45 | {{< fa briefcase >}} [Hands-on group project work](/sessions/project-work.qmd)                                                                                                       |
-| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                                                                                                      |
-| 14:15 | {{< fa briefcase >}} [Continue group project work](/sessions/project-work.qmd)                                                                                                       |
-| 15:50 | {{< fa person-chalkboard >}} [Closing remarks](/sessions/what-next.qmd)                                                                                                              |
-| 16:15 | {{< fa comment-dots >}} [End of workshop short survey and farewell](https://docs.google.com/forms/d/e/1FAIpQLSe2gpbN9ExCXyeTfJLgu_poemF0iUtkcihnCunXl3YA4e1hHQ/viewform?usp=sf_link) |
+| Time  | Session topic                                                                                      |
+|:------|:---------------------------------------------------------------------------------------------------|
+| 9:00  | {{< fa laptop-code >}} [Joining data together](/sessions/joins.qmd)                                |
+| 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                    |
+| 10:45 | {{< fa laptop-code >}} Continuing the last session                                                 |
+| 11:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})               |
+| 12:00 | {{< fa utensils >}} Lunch                                                                          |
+| 12:45 | {{< fa briefcase >}} [Hands-on group project work](/sessions/project-work.qmd)                     |
+| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                    |
+| 14:15 | {{< fa briefcase >}} [Continue group project work](/sessions/project-work.qmd)                     |
+| 15:50 | {{< fa person-chalkboard >}} [Closing remarks](/sessions/what-next.qmd)                            |
+| 16:15 | {{< fa comment-dots >}} [End of workshop short survey and farewell]({{< meta surveys.feedback >}}) |
 
 :::
