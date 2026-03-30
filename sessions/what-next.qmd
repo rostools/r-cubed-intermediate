@@ -36,12 +36,3 @@ involved with this workshop next year. Or now! Several participants from
 these workshops are or will soon be helping to improve the material for
 next year. There are also so many other things you can get involved in,
 aside from this workshop. Let us know if you're interested!
-
-::: {.callout-tip appearance="minimal"}
-:star: Do you find this course material useful? Then please consider
-"starring" our
-[GitHub repository](https://github.com/rostools/r-cubed-intermediate/)
-to show your support! Starring will save it to a list of repositories
-you like that you can easily find again, plus it helps give our project
-more visibility!
-:::
