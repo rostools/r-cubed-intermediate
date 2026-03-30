@@ -9,7 +9,7 @@ of Conduct is quite important.
 If you haven't read the sections under
 ["Overview"](/overview/syllabus.qmd) (starting at @sec-syllabus) and
 done the ["Pre-workshop tasks"](/pre-workshop/overview.qmd) (starting at
-@sec-pre-workshop-tasks), **please do that before doing the survey**.
+@sec-pre-workshop), **please do that before doing the survey**.
 There are some questions in the survey that ask about these sections,
 such as in ["Is this workshop for you?"](/overview/is-this-for-you.qmd)
 (@sec-is-this-for-you), as well as to copy and paste output from some R
