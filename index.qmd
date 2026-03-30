@@ -105,8 +105,7 @@ The workshop material draws inspiration from these excellent resources:
 - [Software and Data Carpentry](https://carpentries.org/) workshop
   material
 
-The
-[Danish Diabetes and Endocrinology Academy](https://www.ddeacademy.dk/)
+The [Danish Diabetes and Endocrinology Academy](https://ddeacademy.dk/)
 hosted, organized, and sponsored this workshop many times. A huge thanks
 to them for their involvement, support, and sponsorship!
 [Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/) and

@@ -17,8 +17,8 @@ We assume you can relate to one or more of the following:
   - know a *little* to a *moderate* amount of R (or computing in
     general);
   - know how to use R and have *some* familiarity with the
-    [tidyverse](https://www.tidyverse.org/) and
-    [RStudio](https://rstudio.com/).
+    [tidyverse](https://tidyverse.org/) and
+    [RStudio](https://posit.co/products/open-source/rstudio/?sid=1).
 
 Considering that this is a natural extension of the
 [introductory r-cubed workshop](https://r-cubed-intro.rostools.org/),

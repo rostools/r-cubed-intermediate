@@ -43,11 +43,6 @@ reproduce the results.
 
 ## How can we check reproducibility if no code is given? {.center}
 
-Possible role models as research groups: [Jeff
-Leek](http://jtleek.com/codedata.html) and [Ben
-Marwick](https://faculty.washington.edu/bmarwick/#publications). Or
-[Steno Aarhus' GitHub account](https://github.com/steno-aarhus/)!
-
 ::: notes
 But that doesn't even matter, because we can't have reproducibility if
 no one shares their code!
