@@ -26,5 +26,5 @@ be reported by opening an issue or contacting one or more of the project
 maintainers.
 
 This Code of Conduct is adapted from the Contributor Covenant
-(https://contributor-covenant.org), version 1.0.0, available at
-https://contributor-covenant.org/version/1/0/0/
+(<https://www.contributor-covenant.org>), version 1.0.0, available at
+<https://www.contributor-covenant.org/version/1/0/0/>

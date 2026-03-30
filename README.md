@@ -55,7 +55,7 @@ The teaching material is found mainly in these locations:
 
 - `index.Rmd`: Contains the overview of the workshop.
 - `overview/` folder: Contains the files that give an overview to the
-  course, such as the syllabus and schedule.
+  workshop, such as the syllabus and schedule.
 - `pre-workshop/`: Contains the files needed before the workshop, like
   the pre-workshop tasks.
 - `sessions/`: Contains the files used during the workshop (e.g.
@@ -93,21 +93,37 @@ follows the file and folder structure conventions from that package.
 - `CONTRIBUTING.md`: Guidelines for contributing to the project.
 - `.github/`: Contains GitHub-specific files, such as issue and pull
   request templates, workflows,
-  [dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)
+  [dependabot](https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/dependabot-quickstart-guide)
   configuration, pull request templates, and a
   [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
   file.
+- `.rumdl.toml`: [rumdl](https://rumdl.dev/) configuration file for
+  formatting Markdown files.
 
 ## Contributing
 
 If you are interested in contributing to the workshop material, please
 refer to the [contributing guidelines](CONTRIBUTING.md). For guidelines
 on how to be a helper or teacher, check out the [For
-teachers](https://r-cubed.rostools.org/for-teachers.html) page.
+teachers](https://guides.rostools.org/instructors) page.
 
 Please note that the project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md). By contributing to or being involved in
 this project, you agree to abide by its terms.
+
+### Contributors
+
+These are the people who have contributed by submitting changes through
+pull requests :tada:
+
+[@lwjohnst86](https://github.com/lwjohnst86),
+[@signekb](https://github.com/signekb),
+[@AndersAskeland](https://github.com/AndersAskeland),
+[@MaleneRevsbech](https://github.com/MaleneRevsbech),
+[@hchats](https://github.com/hchats),
+[@LouiseEB](https://github.com/LouiseEB),
+[@StineScheuer](https://github.com/StineScheuer),
+[@krauthn](https://github.com/krauthn)
 
 ### Contributors
 

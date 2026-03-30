@@ -1,5 +1,5 @@
-These are the people who have contributed by submitting changes through pull
-requests :tada:
+These are the people who have contributed by submitting changes through
+pull requests :tada:
 
 [\@lwjohnst86](https://github.com/lwjohnst86),
 [\@signekb](https://github.com/signekb),

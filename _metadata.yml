@@ -5,8 +5,9 @@ gh:
 titles:
   full: "An intermediate workshop on modern approaches and workflows to processing data"
 
-urls:
+links:
   home: "https://r-cubed-intermediate.rostools.org"
+  github: "https://github.com/rostools/r-cubed-intermediate"
 
 workshop_level: "intermediate"
 

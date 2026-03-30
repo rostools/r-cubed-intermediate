@@ -357,7 +357,7 @@ d.  Nothing in this Public License constitutes or may be interpreted as
 > indicating that material is shared under a Creative Commons public
 > license or as otherwise permitted by the Creative Commons policies
 > published at
-> [creativecommons.org/policies](http://creativecommons.org/policies),
+> [creativecommons.org/policies](https://creativecommons.org/policies/),
 > Creative Commons does not authorize the use of the trademark “Creative
 > Commons” or any other trademark or logo of Creative Commons without
 > its prior written consent including, without limitation, in connection
