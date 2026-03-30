@@ -30,11 +30,11 @@ data analysis. The concept is called the
 [split-apply-combine](https://r-cubed-intro.rostools.org/sessions/split-apply-combine.html)
 technique, which we covered in the beginner R workshop. The method is:
 
-1.  Split the data into groups (e.g. diabetes status).
-2.  Apply some analysis or statistics to each group (e.g. finding the
-    mean of age).
-3.  Combine the results to present them together (e.g. into a data frame
-    that you can use to make a plot or table).
+1. Split the data into groups (e.g. diabetes status).
+2. Apply some analysis or statistics to each group (e.g. finding the
+   mean of age).
+3. Combine the results to present them together (e.g. into a data frame
+   that you can use to make a plot or table).
 
 So when you split data into multiple groups, you create a list (or a
 *vector*) that you can then apply (e.g. with the *map* functional) a
@@ -44,11 +44,7 @@ you finally combine (e.g. with join that we will cover later or with
 including for our task of summarizing some of the DIME data so we can
 merge it all into one dataset.
 
-![A diagram showing how a data frame is split up, an action is applied
-to the splits that outputs a new result, and the results are combined
-back together. Taken from [Software Carpentries R for Reproducible
-Scientific
-Analysis](https://unlhcc.github.io/r-novice-gapminder/16-plyr/).](/images/split-apply-combine.png)
+![A diagram showing how a data frame is split up, an action is applied to the splits that outputs a new result, and the results are combined back together. Taken from [Software Carpentries R for Reproducible Scientific Analysis](https://unlhcc.github.io/r-novice-gapminder/16-plyr/).](/images/split-apply-combine.png)
 
 Functionals and vectorization are integral components of how R works and
 they appear throughout many of R's functions and packages. They are
@@ -303,15 +299,14 @@ This workflow is very similar to how we want to do it with the
 However! There's a few things things we could do now to simplify making
 the function.
 
-1.  The sleep data has an extra `sleep_type` column that we have to
-    group by. We'd rather not have to include an argument in our new
-    function just for indicating the grouping. It would be nice if we
-    could group by all columns except for the column we want to
-    summarise.
-2.  We don't really want to group by `device_timestamp` or `datetime`
-    columns. It would be nice if we could exclude those columns from the
-    grouping in a way that can be used for both datasets without having
-    an error.
+1. The sleep data has an extra `sleep_type` column that we have to group
+   by. We'd rather not have to include an argument in our new function
+   just for indicating the grouping. It would be nice if we could group
+   by all columns except for the column we want to summarise.
+2. We don't really want to group by `device_timestamp` or `datetime`
+   columns. It would be nice if we could exclude those columns from the
+   grouping in a way that can be used for both datasets without having
+   an error.
 
 For the second, we can use some `{tidyselect}` functions like
 `contains()` with a `-` to exclude the columns. For the first, there's a
@@ -403,9 +398,9 @@ Amazing! Before continuing to the exercise, let's run `{styler}` with
 {{< var keybind.style >}} on both `docs/learning.qmd` and on
 `R/functions.R`. Then we will render the Quarto document with
 {{< var keybind.render >}} to confirm that everything runs as it should.
-If the rendering works, switch to the Git interface and **add and
-commit** the changes so far with {{< var keybind.commit >}} and push to
-GitHub.
+If the rendering works, switch to the Git interface and
+**add and commit** the changes so far with {{< var keybind.commit >}}
+and push to GitHub.
 
 ## Converting the summarising code into a function
 
@@ -513,35 +508,34 @@ sleep_data
 
 To get to this point, do the following tasks:
 
-1.  Go to the `setup` code chunk in your `docs/learning.qmd` file and
-    **cut** the code that cleans the sleep data. Cut the code that is
-    piped *after* using `import_csv_files()` but don't cut the
-    `import_csv_files()` line.
-2.  Then, open up the `R/functions.R` file and create a new function
-    called `clean_sleep`, that has the same argument as `clean_cgm()`
-    (`data`).
-3.  Paste the cleaning code you just cut into this new function.
-4.  Put `data` at the top of the code and pipe it into the cleaning
-    code.
-5.  At the end of the cleaning pipe, continue with a pipe into
-    `summarise_column()`. Use the `seconds` column and the `sum()`
-    function (you can use either `list(sum = sum)` or just simply `sum`
-    in `summarise_column()`). Why sum? Because the average seconds
-    doesn't make sense here, we want the total time slept in each stage.
-    This will calculate the time slept each hour in each stage for each
-    night, by each participant.
-6.  Assign the output of the cleaning code to a new variable called
-    `cleaned`, like we did with `clean_cgm()`.
-7.  Include a `return()` statement at the end of the function to return
-    the cleaned data.
-8.  Create some Roxygen documentation of the function with
-    {{< var keybind.roxygen >}}.
-9.  Before using the new `clean_sleep()` function, go to the
-    `clean_cgm()` function and add the `summarise_column()` function to
-    the end of the pipe inside the `clean_cgm()` function. Use the
-    `glucose` column and decide on which functions you want to summarise
-    by, e.g. `list(mean = mean, sd = sd)` or maybe instead of mean, use
-    the median.
+1. Go to the `setup` code chunk in your `docs/learning.qmd` file and
+   **cut** the code that cleans the sleep data. Cut the code that is
+   piped *after* using `import_csv_files()` but don't cut the
+   `import_csv_files()` line.
+2. Then, open up the `R/functions.R` file and create a new function
+   called `clean_sleep`, that has the same argument as `clean_cgm()`
+   (`data`).
+3. Paste the cleaning code you just cut into this new function.
+4. Put `data` at the top of the code and pipe it into the cleaning code.
+5. At the end of the cleaning pipe, continue with a pipe into
+   `summarise_column()`. Use the `seconds` column and the `sum()`
+   function (you can use either `list(sum = sum)` or just simply `sum`
+   in `summarise_column()`). Why sum? Because the average seconds
+   doesn't make sense here, we want the total time slept in each stage.
+   This will calculate the time slept each hour in each stage for each
+   night, by each participant.
+6. Assign the output of the cleaning code to a new variable called
+   `cleaned`, like we did with `clean_cgm()`.
+7. Include a `return()` statement at the end of the function to return
+   the cleaned data.
+8. Create some Roxygen documentation of the function with
+   {{< var keybind.roxygen >}}.
+9. Before using the new `clean_sleep()` function, go to the
+   `clean_cgm()` function and add the `summarise_column()` function to
+   the end of the pipe inside the `clean_cgm()` function. Use the
+   `glucose` column and decide on which functions you want to summarise
+   by, e.g. `list(mean = mean, sd = sd)` or maybe instead of mean, use
+   the median.
 10. Go to your `docs/learning.qmd` file and in the `setup` code chunk,
     pipe the output of `import_csv_files(here("data-raw/dime/sleep/"))`
     into the new `clean_sleep()` function.
@@ -563,20 +557,20 @@ Quickly cover this and get them to do the survey before moving on to the
 discussion activity.
 :::
 
--   The split-apply-combine technique is a powerful way to summarise and
-    analyse data in R. It allows you to split your data into groups,
-    apply a function to each group, and then combine the results back
-    together. Re-framing how you think about your data using this
-    technique can substantially help you in your data analysis.
--   Use `group_by()`, `summarise()`, and `across()` with
-    `.groups = "drop"` in the `summarise()` function to use the
-    split-apply-combine technique when needing to do an action on groups
-    within the data (e.g. calculate the mean age between education
-    groups).
--   Build functions to be able to chain together and then convert those
-    chained functions into general functions. That way you can create
-    more "higher-level" functions to help keep your code organised,
-    readable, and maintainable.
+- The split-apply-combine technique is a powerful way to summarise and
+  analyse data in R. It allows you to split your data into groups, apply
+  a function to each group, and then combine the results back together.
+  Re-framing how you think about your data using this technique can
+  substantially help you in your data analysis.
+- Use `group_by()`, `summarise()`, and `across()` with
+  `.groups = "drop"` in the `summarise()` function to use the
+  split-apply-combine technique when needing to do an action on groups
+  within the data (e.g. calculate the mean age between education
+  groups).
+- Build functions to be able to chain together and then convert those
+  chained functions into general functions. That way you can create more
+  "higher-level" functions to help keep your code organised, readable,
+  and maintainable.
 
 ## :speech_balloon: Discussion activity: How might you split-apply-combine in your work?
 
@@ -585,12 +579,12 @@ discussion activity.
 As we prepare for the next session and taking a break, get up and
 discuss with your neighbour (or others) the questions:
 
--   From what you have learned so far from this session, how might you
-    use this in your work?
--   Can you consider how these functions and approaches can simplify or
-    shorten code you use to do your analyses?
--   Are there other ways you can use this other than with your research
-    data? For instance, organising courses?
+- From what you have learned so far from this session, how might you use
+  this in your work?
+- Can you consider how these functions and approaches can simplify or
+  shorten code you use to do your analyses?
+- Are there other ways you can use this other than with your research
+  data? For instance, organising courses?
 
 ```{r admin-store-session-code}
 #| include: false

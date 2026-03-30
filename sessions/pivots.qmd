@@ -20,14 +20,14 @@ A very effective way to learn is to recall and describe to someone else
 what you've learned. So before we continue this session, take some time
 to think about what you've learned in the last two days.
 
-1.  Take 1-2 minute and try to recall as much as you can about what
-    you'd done over the last two days. Without looking at your notes or
-    the other sections of the website, try to remember things about
-    importing, robust functions, functionals, regex, and
-    split-apply-combine.
-2.  Then, for 4-5 minutes, share with your neighbour what you remember
-    and try to describe it to each other. Maybe you will each remember
-    different things.
+1. Take 1-2 minute and try to recall as much as you can about what you'd
+   done over the last two days. Without looking at your notes or the
+   other sections of the website, try to remember things about
+   importing, robust functions, functionals, regex, and
+   split-apply-combine.
+2. Then, for 4-5 minutes, share with your neighbour what you remember
+   and try to describe it to each other. Maybe you will each remember
+   different things.
 
 ## :book: Reading task: Pivoting data for easier wrangling
 
@@ -51,9 +51,9 @@ combinations of this.
 
 The `{tidyr}` package within the `{tidyverse}` contains two wonderful
 functions for pivoting: `pivot_longer()` and `pivot_wider()`. There is a
-well written documentation on pivoting in the [tidyr
-website](https://tidyr.tidyverse.org/articles/pivot.html) that can
-explain more about it that you can read at another time.
+well written documentation on pivoting in the
+[tidyr website](https://tidyr.tidyverse.org/articles/pivot.html) that
+can explain more about it that you can read at another time.
 
 Most use cases of pivoting are to convert to the longer form, which you
 can do with `pivot_longer()` and is what we will cover first in this
@@ -82,22 +82,23 @@ wide and use functions like `pivot_longer()` to get the data ready for
 analysis. See @fig-pivot-longer below that visually shows what happens
 when you pivot from wide to long.
 
-![Pivot longer in `{tidyr}`. New columns are called `name` and `value`.
-Notice how the values in `A` and `B` columns are stacked on top of each
-other in the newly created `V`
-column.](/images/pivot-longer.png){#fig-pivot-longer width="90%"
-fig-alt="A diagram showing the use of the pivot longer function, where a table with two columns, A and B, is converted to a table with two columns, name and value. The original columns values are stacked in the value column and the original columns names are stacked in the name column."}
+![Pivot longer in `{tidyr}`. New columns are called `name` and `value`. Notice how the values in `A` and `B` columns are stacked on top of each other in the newly created `V` column.](/images/pivot-longer.png){#fig-pivot-longer
+width="90%" fig-alt="A diagram showing the use of the pivot longer
+function, where a table with two columns, A and B, is converted to a
+table with two columns, name and value. The original columns values are
+stacked in the value column and the original columns names are stacked
+in the name column."}
 
 If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
-![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are
-called `name` and `value`, as well as the old `id` column. Notice how,
-unlike the previous image, the `id` column is excluded when pivoting
-into the data on the
-right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
-width="90%"
-fig-alt="A diagram showing the use of the pivot longer function, where a table with three columns, id, A and B, is converted to a table with three columns, id, name and value. The original columns values are stacked in the value column and the original columns names are stacked in the name column, but the original id column remains, but with the ids stacked on top of each other."}
+![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are called `name` and `value`, as well as the old `id` column. Notice how, unlike the previous image, the `id` column is excluded when pivoting into the data on the right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
+width="90%" fig-alt="A diagram showing the use of the pivot longer
+function, where a table with three columns, id, A and B, is converted to
+a table with three columns, id, name and value. The original columns
+values are stacked in the value column and the original columns names
+are stacked in the name column, but the original id column remains, but
+with the ids stacked on top of each other."}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
 discouraged if you can't understand how it works yet or of the ways you
@@ -105,15 +106,15 @@ could use. As you practice using it, you will slowly begin to understand
 it. With `pivot_longer()`, the first argument is the data itself. The
 other arguments are:
 
-1.  `cols`: The columns to use to convert to long form. The input is a
-    vector made using `c()` that contains the column names, like you
-    would use in `select()` (e.g. you can use the `select_helpers` like
-    `starts_with()`, or `-` minus to exclude).
-2.  `names_to`: Optional, the default is `name`. If provided, it will be
-    the name of the newly created column (as a quoted character) that
-    contains the original column names.
-3.  `values_to`: Optional, the default is `value`. Like `names_to`, sets
-    the name of the new columns.
+1. `cols`: The columns to use to convert to long form. The input is a
+   vector made using `c()` that contains the column names, like you
+   would use in `select()` (e.g. you can use the `select_helpers` like
+   `starts_with()`, or `-` minus to exclude).
+2. `names_to`: Optional, the default is `name`. If provided, it will be
+   the name of the newly created column (as a quoted character) that
+   contains the original column names.
+3. `values_to`: Optional, the default is `value`. Like `names_to`, sets
+   the name of the new columns.
 
 Both `pivot_longer()` and its opposite `pivot_wider()`, which we will
 cover later in the session, are incredibly powerful functions. We can't
@@ -347,34 +348,33 @@ The arguments for `pivot_wider()` are very similar to those in
 called `names_from` and `values_from`. Like with many `{tidyverse}`
 functions, the first argument is the data and the other arguments are:
 
-1.  `id_cols`: This is optional as it will default to all column names.
-    This argument tells `pivot_wider()` to use the given columns as the
-    identifiers for when converting. Unlike `pivot_longer()` which
-    doesn't require some type of "key" or "id" column to convert to long
-    form, the conversion to wide form requires some type of "key" or
-    "id" column because `pivot_wider()` needs to know which rows belong
-    with each other.
-2.  `names_from`: Similar to the `pivot_longer()`, this is the name of
-    the column that has the values that will make up the new columns.
-    Unlike with the `names_to` argument in `pivot_longer()` which takes
-    a character string as input, the column name for `names_from` must
-    be *unquoted*, because you are selecting a column that already
-    exists in the dataset (unlike `names_to` which is the name of a
-    column that you *want to create* but that doesn't exist yet).
-3.  `values_from`: Same as `names_from`, this is the column name (that
-    exists and must be given *unquoted*) for the values that will be in
-    the new columns.
+1. `id_cols`: This is optional as it will default to all column names.
+   This argument tells `pivot_wider()` to use the given columns as the
+   identifiers for when converting. Unlike `pivot_longer()` which
+   doesn't require some type of "key" or "id" column to convert to long
+   form, the conversion to wide form requires some type of "key" or "id"
+   column because `pivot_wider()` needs to know which rows belong with
+   each other.
+2. `names_from`: Similar to the `pivot_longer()`, this is the name of
+   the column that has the values that will make up the new columns.
+   Unlike with the `names_to` argument in `pivot_longer()` which takes a
+   character string as input, the column name for `names_from` must be
+   *unquoted*, because you are selecting a column that already exists in
+   the dataset (unlike `names_to` which is the name of a column that you
+   *want to create* but that doesn't exist yet).
+3. `values_from`: Same as `names_from`, this is the column name (that
+   exists and must be given *unquoted*) for the values that will be in
+   the new columns.
 
 @fig-pivot-wider visually shows what's happening when using
 `pivot_wider()`.
 
-![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data
-on the left are placed side-by-side as new columns in the output data on
-the right. Notice how the values in the column `N`, which is used in the
-`names_from` argument, are used as the names for the new columns `A` and
-`B` in the new data.](/images/pivot-wider.png){#fig-pivot-wider
-width="90%"
-fig-alt="A diagram showing the use of the pivot wider function, where a table with three columns, id, name, and value, is converted to a table with three columns, id, A and B. The values in the column name are now the names of the columns in the new table: A and B. The original id column still exists."}
+![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data on the left are placed side-by-side as new columns in the output data on the right. Notice how the values in the column `N`, which is used in the `names_from` argument, are used as the names for the new columns `A` and `B` in the new data.](/images/pivot-wider.png){#fig-pivot-wider
+width="90%" fig-alt="A diagram showing the use of the pivot wider
+function, where a table with three columns, id, name, and value, is
+converted to a table with three columns, id, A and B. The values in the
+column name are now the names of the columns in the new table: A and B.
+The original id column still exists."}
 
 {{< text_snippet sticky_up >}}
 
@@ -435,34 +435,33 @@ It should like this if you run it in the **Console**:
 sleep_data
 ```
 
-1.  Look into the documentation for `pivot_wider()` to get a better idea
-    for how it works.
-2.  Create a new header called `## Pivot wider` in the
-    `docs/learning.qmd` file, then create a new code chunk below it with
-    {{< var keybind.chunk >}}.
-3.  Before making the function, prototype and test out code by piping
-    the `sleep_data` into `pivot_wider()`. Try using `names_from` and
-    `values_from` to get the right output. You can use the argument
-    `names_prefix` to add text to the start of the new `names` columns.
+1. Look into the documentation for `pivot_wider()` to get a better idea
+   for how it works.
+2. Create a new header called `## Pivot wider` in the
+   `docs/learning.qmd` file, then create a new code chunk below it with
+   {{< var keybind.chunk >}}.
+3. Before making the function, prototype and test out code by piping the
+   `sleep_data` into `pivot_wider()`. Try using `names_from` and
+   `values_from` to get the right output. You can use the argument
+   `names_prefix` to add text to the start of the new `names` columns.
 
 After you've written some code that works, use the same process you've
 used before to make a function:
 
-1.  Create a new function called `sleep_types_to_wider` and assign
-    `function()` to it.
-2.  Include `data` as an argument in `function()`.
-3.  Replace the `sleep_data` variable with the `data` argument.
-4.  Assign it to a new variable called `wider` and `return()` it at the
-    end of the function.
-5.  Explicitly indicate the package the function uses by using
-    `tidyr::`.
-6.  Create Roxygen documentation for the function with
-    {{< var keybind.roxygen >}}.
-7.  Test that the code works by running the function, using it like
-    `sleep_types_to_wider(sleep_data)`.
-8.  When it works, cut and paste it over into `R/functions.R`.
-9.  Include the new function in the `clean_sleep()` function in
-    `R/functions.R` so that it looks like the above.
+1. Create a new function called `sleep_types_to_wider` and assign
+   `function()` to it.
+2. Include `data` as an argument in `function()`.
+3. Replace the `sleep_data` variable with the `data` argument.
+4. Assign it to a new variable called `wider` and `return()` it at the
+   end of the function.
+5. Explicitly indicate the package the function uses by using `tidyr::`.
+6. Create Roxygen documentation for the function with
+   {{< var keybind.roxygen >}}.
+7. Test that the code works by running the function, using it like
+   `sleep_types_to_wider(sleep_data)`.
+8. When it works, cut and paste it over into `R/functions.R`.
+9. Include the new function in the `clean_sleep()` function in
+   `R/functions.R` so that it looks like the above.
 10. Style both `R/functions.R` and `docs/learning.qmd` with
     {{< var keybind.style >}}.
 11. Render the document with {{< var keybind.render >}} to make sure it
@@ -482,17 +481,17 @@ will likely be challenging for them, so we will not do a discussion
 activity this time.
 :::
 
--   Data is usually structured to varying degrees as wide or long
-    format. Thinking of your data in terms of shifting it around in
-    structure is a powerful and useful skill to have when doing data
-    wrangling and analysis.
--   When needing to convert to the longer form, use `pivot_longer()`
-    from the `{tidyr}` package.
--   If you need to convert to the wider form, use the `{tidyr}` function
-    `pivot_wider()`.
--   Seek out and test different functions within the `{tidyr}` package,
-    it has many very helpful functions for tidying up data such as the
-    `complete()` function.
+- Data is usually structured to varying degrees as wide or long format.
+  Thinking of your data in terms of shifting it around in structure is a
+  powerful and useful skill to have when doing data wrangling and
+  analysis.
+- When needing to convert to the longer form, use `pivot_longer()` from
+  the `{tidyr}` package.
+- If you need to convert to the wider form, use the `{tidyr}` function
+  `pivot_wider()`.
+- Seek out and test different functions within the `{tidyr}` package, it
+  has many very helpful functions for tidying up data such as the
+  `complete()` function.
 
 ```{r admin-save-session-code}
 #| include: false

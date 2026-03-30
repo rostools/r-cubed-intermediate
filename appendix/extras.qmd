@@ -38,13 +38,13 @@ panel in RStudio. Sadly, we can't show this on the website since it only
 works in RStudio. When you are in RStudio, the debugger will open up and
 it will show a few things:
 
--   A yellow line will highlight the code in the function, along with a
-    green arrow on the left of the line number.
--   The Console will now start with `Browse[1]>` and will have text like
-    `debug at ...`.
--   There will be new buttons on the top of the Console like "Next",
-    "Continue", and "Stop".
--   The Environment pane will be empty and will say "Traceback".
+- A yellow line will highlight the code in the function, along with a
+  green arrow on the left of the line number.
+- The Console will now start with `Browse[1]>` and will have text like
+  `debug at ...`.
+- There will be new buttons on the top of the Console like "Next",
+  "Continue", and "Stop".
+- The Environment pane will be empty and will say "Traceback".
 
 In this mode you can really investigate what is happening with your code
 and how to fix it. The way to figure out what's wrong is by running the

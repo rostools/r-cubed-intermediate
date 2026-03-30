@@ -20,15 +20,15 @@ source(here("R/functions.R"))
 
 The issues are related to the:
 
--   IDs, where the CGM and sleep data have `file_path_id` while
-    `participant_details.csv` has `id`.
--   Dates, where the CGM data has `device_timestamp`, the sleep data has
-    `date`, and the `participant_details.csv` has `start_date` and
-    `end_date`.
--   Both the CGM and sleep data is measured at different times, but the
-    same date, so a direct join wouldn't work.
--   The participant details dates are in two columns rather than one.
-:::
+- IDs, where the CGM and sleep data have `file_path_id` while
+  `participant_details.csv` has `id`.
+- Dates, where the CGM data has `device_timestamp`, the sleep data has
+  `date`, and the `participant_details.csv` has `start_date` and
+  `end_date`.
+- Both the CGM and sleep data is measured at different times, but the
+  same date, so a direct join wouldn't work.
+- The participant details dates are in two columns rather than one.
+  :::
 
 **Time: \~8 minutes.**
 
@@ -58,11 +58,11 @@ here("data-raw/dime/participant_details.csv") |>
   print(n = 6)
 ```
 
-1.  For 1 minute, look at the above data and try to identify the reasons
-    why we can't (easily) join the datasets together right now.
-2.  For \~4 minutes, discuss what you've thought about with your
-    neighbour
-3.  Then for about 3 minutes we will all share and discuss together.
+1. For 1 minute, look at the above data and try to identify the reasons
+   why we can't (easily) join the datasets together right now.
+2. For \~4 minutes, discuss what you've thought about with your
+   neighbour
+3. Then for about 3 minutes we will all share and discuss together.
 
 ## :book: Reading task: Cleaning character data with regular expressions
 
@@ -79,42 +79,42 @@ package is called `{stringr}` because in programming, a "string" is
 defined as any collection of character objects. So we will be using
 "string" from now on.
 
-The main "engine" behind the functions in `{stringr}` is called [regular
-expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex
-for short). These expressions are powerful, very concise ways of finding
-patterns in text. But they are also *very very difficult* to learn,
-write, and read, even for experienced users. That's because certain
-strings like `[` or `?` have special meanings. For instance, `[aeiou]`
-is regex for "find one string in the object that is either a, e, i, o,
-or u". The `[]` in this case means "find the string in between the two
-brackets". We won't cover regex too much in this workshop, but some
-great resources for learning them are the [R for Data Science regex
-section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
-the [stringr regex
-page](https://stringr.tidyverse.org/articles/regular-expressions.html),
-as well as in the help doc `?regex`. There's also a nice [cheat
-sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) on
-it. But we will cover some of the more commonly used regex patterns,
+The main "engine" behind the functions in `{stringr}` is called
+[regular expressions](https://en.wikipedia.org/wiki/Regular_expression)
+(or regex for short). These expressions are powerful, very concise ways
+of finding patterns in text. But they are also *very very difficult* to
+learn, write, and read, even for experienced users. That's because
+certain strings like `[` or `?` have special meanings. For instance,
+`[aeiou]` is regex for "find one string in the object that is either a,
+e, i, o, or u". The `[]` in this case means "find the string in between
+the two brackets". We won't cover regex too much in this workshop, but
+some great resources for learning them are the
+[R for Data Science regex section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
+the
+[stringr regex page](https://stringr.tidyverse.org/articles/regular-expressions.html),
+as well as in the help doc `?regex`. There's also a nice
+[cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)
+on it. But we will cover some of the more commonly used regex patterns,
 like:
 
-| regex | Meaning |
-|------------------------------------|------------------------------------|
-| `\\d` | find one digit (0-9) |
-| `\\D` | find one non-digit |
-| `[0-9]` | find one digit between 0 and 9 (the `-` is a range) |
-| `[a-z]` | find one letter between a and z |
-| `[A-Z]` | find one letter between A and Z |
-| `[a-zA-Z]` | find one letter between a and z or A and Z |
-| `\\.` | find one dot string |
-| `$` | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string |
-| `^` | find the start of the string, e.g. `^\\d` means find a digit at the start of the string |
-| `?` | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit |
-| `*` | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
-| `+` | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other |
-| `{n}` | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other |
-| `[:alpha:]` | find one letter (a-z or A-Z) |
-| `[:digit:]` | find one digit (0-9) |
-| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9) |
+| regex       | Meaning                                                                                                         |
+|-------------|-----------------------------------------------------------------------------------------------------------------|
+| `\\d`       | find one digit (0-9)                                                                                            |
+| `\\D`       | find one non-digit                                                                                              |
+| `[0-9]`     | find one digit between 0 and 9 (the `-` is a range)                                                             |
+| `[a-z]`     | find one letter between a and z                                                                                 |
+| `[A-Z]`     | find one letter between A and Z                                                                                 |
+| `[a-zA-Z]`  | find one letter between a and z or A and Z                                                                      |
+| `\\.`       | find one dot string                                                                                             |
+| `$`         | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                       |
+| `^`         | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                         |
+| `?`         | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                    |
+| `*`         | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
+| `+`         | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other    |
+| `{n}`       | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other             |
+| `[:alpha:]` | find one letter (a-z or A-Z)                                                                                    |
+| `[:digit:]` | find one digit (0-9)                                                                                            |
+| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9)                                                                           |
 
 ::: callout-note
 The `\` string is a special string in regex, but in R it means "escape
@@ -154,23 +154,23 @@ When the time is up, we'll share some ideas and go over what the regex
 *could* be (there is actually many different ways to do this). With your
 neighbour, do the following tasks:
 
-1.  Looking at the `file_path_id` column, list what is similar in the
-    user ID between rows and what is different.
-2.  Discuss and verbally describe (in English, not regex) what text
-    pattern you might use to extract the user ID.
-3.  Use the list below to think about how you might convert the English
-    description of the text pattern to a regex. This will probably be
-    very hard, but try anyway.
-    -   When strings are written as is, regex will find those strings,
-        e.g. `user` will find only `user`.
-    -   Use `[]` to find one possible string of the several between the
-        brackets. E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or "b".
-        To find a range of numbers or letters, use `-` in between the
-        start and end ranges, e.g. `[1-3]` means 1 to 3 or `[a-c]` means
-        "a" to "c".
-    -   Use `?` if the string might be there or not. E.g. `ab?` means
-        "a" and maybe "b" follows it or `1[1-2]?` means 1 and maybe 1 or
-        2 will follow it.
+1. Looking at the `file_path_id` column, list what is similar in the
+   user ID between rows and what is different.
+2. Discuss and verbally describe (in English, not regex) what text
+   pattern you might use to extract the user ID.
+3. Use the list below to think about how you might convert the English
+   description of the text pattern to a regex. This will probably be
+   very hard, but try anyway.
+   - When strings are written as is, regex will find those strings, e.g.
+     `user` will find only `user`.
+   - Use `[]` to find one possible string of the several between the
+     brackets. E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or "b". To
+     find a range of numbers or letters, use `-` in between the start
+     and end ranges, e.g. `[1-3]` means 1 to 3 or `[a-c]` means "a" to
+     "c".
+   - Use `?` if the string might be there or not. E.g. `ab?` means "a"
+     and maybe "b" follows it or `1[1-2]?` means 1 and maybe 1 or 2 will
+     follow it.
 
 Once you've done these tasks, we'll discuss all together and go over
 what the regex would be to extract the user ID.
@@ -178,13 +178,13 @@ what the regex would be to extract the user ID.
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Potential regex solutions
 
--   `[0-9][0-9][0-9]\\.csv$`
--   `[0-9]+\\.csv$`
--   `[0-9]{3}\\.csv$`
--   `\\d+\\.csv$`
--   `\\d{3}\\.csv$`
--   `[:digit:]+\\.csv$`
--   `[:digit:]{3}\\.csv$`
+- `[0-9][0-9][0-9]\\.csv$`
+- `[0-9]+\\.csv$`
+- `[0-9]{3}\\.csv$`
+- `\\d+\\.csv$`
+- `\\d{3}\\.csv$`
+- `[:digit:]+\\.csv$`
+- `[:digit:]{3}\\.csv$`
 
 For the rest of the workshop, we will use the regex `[:digit:]+\\.csv$`
 to get the participant ID from the file path. We use this one because it
@@ -408,31 +408,31 @@ sleep_data
 So, convert the code we just wrote into a function by following these
 steps:
 
-1.  Assign `function()` to a new named function called
-    `get_participant_id` and include one argument in `function()` with
-    the name `data`.
-2.  Put the code we just wrote into the body of the function. Make sure
-    to `return()` the output at the end of the function and to create
-    Roxygen documentation. Replace all the relevant variables with the
-    `data` argument.
-3.  Add `stringr` and `dplyr` as a package dependency by using
-    `usethis::use_package()` in the **Console**.
-4.  Explicitly link the functions you are using in this new function to
-    their package by using `::` (e.g. `dplyr::` and `stringr::`).
-    Remember that you can find which package a function belongs by using
-    the `?` help documentation and looking at the very top to see the
-    package name.
-5.  Test that the function works by using `get_participant_id(cgm_data)`
-    or `get_participant_id(sleep_data)`.
-6.  After creating the function and testing that it works, move (**cut**
-    and paste) the function into `R/functions.R`.
-7.  Run `{styler}` in both the `R/functions.R` file and
-    `docs/learning.qmd` with {{< var keybind.style >}}.
-8.  In the `setup` chunk in the `docs/learning.qmd` file, pipe `|>` the
-    output of `import_csv_files()` into the `get_participant_id()`
-    function for both the CGM and sleep data (as shown above).
-9.  Render the `docs/learning.qmd` file to make sure things remain
-    reproducible with {{< var keybind.render >}}.
+1. Assign `function()` to a new named function called
+   `get_participant_id` and include one argument in `function()` with
+   the name `data`.
+2. Put the code we just wrote into the body of the function. Make sure
+   to `return()` the output at the end of the function and to create
+   Roxygen documentation. Replace all the relevant variables with the
+   `data` argument.
+3. Add `stringr` and `dplyr` as a package dependency by using
+   `usethis::use_package()` in the **Console**.
+4. Explicitly link the functions you are using in this new function to
+   their package by using `::` (e.g. `dplyr::` and `stringr::`).
+   Remember that you can find which package a function belongs by using
+   the `?` help documentation and looking at the very top to see the
+   package name.
+5. Test that the function works by using `get_participant_id(cgm_data)`
+   or `get_participant_id(sleep_data)`.
+6. After creating the function and testing that it works, move (**cut**
+   and paste) the function into `R/functions.R`.
+7. Run `{styler}` in both the `R/functions.R` file and
+   `docs/learning.qmd` with {{< var keybind.style >}}.
+8. In the `setup` chunk in the `docs/learning.qmd` file, pipe `|>` the
+   output of `import_csv_files()` into the `get_participant_id()`
+   function for both the CGM and sleep data (as shown above).
+9. Render the `docs/learning.qmd` file to make sure things remain
+   reproducible with {{< var keybind.render >}}.
 10. Restart your R session with {{< var keybind.restart-r >}} to make
     sure later work is in a clean state.
 11. Add and commit the changes to the Git history with
@@ -457,22 +457,22 @@ about joining these two datasets together? There is no right or correct
 answer as it heavily depends on how you might want to analyse the data
 later on.
 
-1.  For 1 minute, consider theoretically how you would change the date
-    columns so that they can be joined together.
-2.  For 3 minutes, discuss and brainstorm with your neighbour how you
-    might do this and try to come to a consensus.
-3.  For 2 minutes, we will all share our ideas all together as a group.
+1. For 1 minute, consider theoretically how you would change the date
+   columns so that they can be joined together.
+2. For 3 minutes, discuss and brainstorm with your neighbour how you
+   might do this and try to come to a consensus.
+3. For 2 minutes, we will all share our ideas all together as a group.
 
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
 There is no right answer here, but you can discuss some ideas like:
 
--   Create a date column and an hour column, later group by ID, date,
-    and hour, summarise the values from each dataset first, and then
-    join the two datasets together.
--   Create a date column, group by ID and date, summarise the values,
-    and then join the two datasets together.
+- Create a date column and an hour column, later group by ID, date, and
+  hour, summarise the values from each dataset first, and then join the
+  two datasets together.
+- Create a date column, group by ID and date, summarise the values, and
+  then join the two datasets together.
 
 We would like to have more data points to work with, so we will go with
 the first option.
@@ -581,12 +581,12 @@ built-in to so many functions in R and that using `{{{ }}}` with
 As you have noticed, we encountered an error when trying to write, what
 we think, is correct code in our function. This error,
 `"object not found"` is not easy to figure out. The error occurs because
-of something called "[non-standard
-evaluation](https://adv-r.had.co.nz/Computing-on-the-language.html)" (or
-NSE). NSE is a feature of R and is used quite a lot throughout R (e.g.
-`library()`). The `{tidyverse}` packages in particular use it quite a
-lot. It is a concept that isn't commonly found in other programming
-language.
+of something called
+"[non-standard evaluation](https://adv-r.had.co.nz/Computing-on-the-language.html)"
+(or NSE). NSE is a feature of R and is used quite a lot throughout R
+(e.g. `library()`). The `{tidyverse}` packages in particular use it
+quite a lot. It is a concept that isn't commonly found in other
+programming language.
 
 In R, NSE is what allows you to use formulas (e.g. `y ~ x + x2`) in
 statistical models or allows you to type out `select(Gender, BMI)` or
@@ -595,8 +595,8 @@ statistical models or allows you to type out `select(Gender, BMI)` or
 flexibility and ease of use for the user (we don't have to type quotes
 every time) when doing data analysis, but can be quite a headache when
 trying to program in R, like when making functions. There's more detail
-about this on the [dplyr
-website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
+about this on the
+[dplyr website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
 which will give a few options to deal with NSE while programming with
 `{tidyverse}` packages. The simplest way to use NSE in your own
 functions when using `{tidyverse}` packages is to wrap the variable with
@@ -685,20 +685,20 @@ sleep_data
 
 To get to that point, complete these tasks:
 
-1.  Wrap `column` with `{{{ }}}` the three times it is used *inside* the
-    function *body*.
-2.  Test that the function works by using
-    `prepare_dates(cgm_data, device_timestamp)` and
-    `prepare_dates(sleep_data, datetime)`.
-3.  Cut and paste the function into `R/functions.R`.
-4.  Run `{styler}` on both `R/functions.R` and `docs/learning.qmd` with
-    {{< var keybind.style >}}.
-5.  Render the `docs/learning.qmd` file to make sure things remain
-    reproducible with {{< var keybind.render >}}.
-6.  Restart your R session with {{< var keybind.restart-r >}} so that
-    your environment is cleaned up and empty.
-7.  Add and commit the changes to the Git history with
-    {{< var keybind.commit >}} and then push to GitHub.
+1. Wrap `column` with `{{{ }}}` the three times it is used *inside* the
+   function *body*.
+2. Test that the function works by using
+   `prepare_dates(cgm_data, device_timestamp)` and
+   `prepare_dates(sleep_data, datetime)`.
+3. Cut and paste the function into `R/functions.R`.
+4. Run `{styler}` on both `R/functions.R` and `docs/learning.qmd` with
+   {{< var keybind.style >}}.
+5. Render the `docs/learning.qmd` file to make sure things remain
+   reproducible with {{< var keybind.render >}}.
+6. Restart your R session with {{< var keybind.restart-r >}} so that
+   your environment is cleaned up and empty.
+7. Add and commit the changes to the Git history with
+   {{< var keybind.commit >}} and then push to GitHub.
 
 {{< text_snippet sticky_up >}}
 
@@ -711,20 +711,20 @@ Quickly cover this and get them to do the survey before moving on to the
 discussion activity.
 :::
 
--   While very difficult to learn and use, regular expressions (regex or
-    regexp) are incredibly powerful at processing character (also called
-    strings) data. Some strings have special meanings like `[]`, `?`,
-    `*`, and `+` that can be used to find patterns in string data.
--   Use the `{stringr}` package to work with string data as it has many
-    functions to help use regex to process string data, like
-    `str_extract()` or `str_remove()`.
--   Use the `{lubridate}` package when working with dates and times, as
-    there are many functions in it to help simplify date processing,
-    like `as_date()` or `hour()`.
--   Non-standard evaluation (NSE) is a great feature of R but also can
-    be frustrating. When using `{tidyverse}` functions in your own
-    function, use `{{}}` to wrap the variable that gives the error to
-    fix the problem and use NSE correctly.
+- While very difficult to learn and use, regular expressions (regex or
+  regexp) are incredibly powerful at processing character (also called
+  strings) data. Some strings have special meanings like `[]`, `?`, `*`,
+  and `+` that can be used to find patterns in string data.
+- Use the `{stringr}` package to work with string data as it has many
+  functions to help use regex to process string data, like
+  `str_extract()` or `str_remove()`.
+- Use the `{lubridate}` package when working with dates and times, as
+  there are many functions in it to help simplify date processing, like
+  `as_date()` or `hour()`.
+- Non-standard evaluation (NSE) is a great feature of R but also can be
+  frustrating. When using `{tidyverse}` functions in your own function,
+  use `{{}}` to wrap the variable that gives the error to fix the
+  problem and use NSE correctly.
 
 ## :speech_balloon: Discussion activity: How have you worked with dates and characters?
 
@@ -734,9 +734,9 @@ As we prepare for the next thing (either lunch or the next session), get
 up (and if it's nice, go outside), and discuss with your neighbour or
 group the following questions:
 
-1.  Have you worked with characters and/or dates before in your work?
-    How was that experience? Easy, hard?
-2.  Can you see some useful ways you could use regex in your work?
+1. Have you worked with characters and/or dates before in your work? How
+   was that experience? Easy, hard?
+2. Can you see some useful ways you could use regex in your work?
 
 ```{r admin-store-session-code}
 #| include: false

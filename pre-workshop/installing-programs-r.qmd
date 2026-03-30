@@ -6,52 +6,54 @@ please make sure that they are at least the minimum versions listed
 below. If not, you will need to update them.
 
 ::: panel-tabset
-### Windows
+## Windows
 
-1.  [R](https://cloud.r-project.org/bin/windows/base/): Any version
-    above {{< meta versions.r >}}. If you have used R before, you can confirm
-    the version by running `R.version.string` in the Console.
-2.  [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
-    Any version above {{< meta versions.rstudio >}}. If
-    you have installed it before, check the current version by going to
-    the menu "Help -> About RStudio".
-3.  [Git](https://git-scm.com/download/win): Select the "Click here to
-    download" link. Git is used throughout many sessions in the
-    workshop. When installing, it will ask for a selecting a "Text
-    Editor" and while we won't be using this in the workshop, Git needs
-    to know this information so choose Notepad.
-4.  [Rtools](https://cran.r-project.org/bin/windows/Rtools/): Choose the
-    version that says "R-release". Rtools is needed in order to build some
-    R packages. For some computers, installing Rtools can take some time.
+1. [R](https://cloud.r-project.org/bin/windows/base/): Any version above
+   {{< meta versions.r >}}. If you have used R before, you can confirm
+   the version by running `R.version.string` in the Console.
+2. [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
+   Any version above {{< meta versions.rstudio >}}. If you have
+   installed it before, check the current version by going to the menu
+   "Help -> About RStudio".
+3. [Git](https://git-scm.com/download/win): Select the "Click here to
+   download" link. Git is used throughout many sessions in the workshop.
+   When installing, it will ask for a selecting a "Text Editor" and
+   while we won't be using this in the workshop, Git needs to know this
+   information so choose Notepad.
+4. [Rtools](https://cran.r-project.org/bin/windows/Rtools/): Choose the
+   version that says "R-release". Rtools is needed in order to build
+   some R packages. For some computers, installing Rtools can take some
+   time.
 
 ::: callout-important
-The version of RTools must match the version of R that you have installed. For example,
-if you have R version 4.3, you need to install RTools 4.3.
+The version of RTools must match the version of R that you have
+installed. For example, if you have R version 4.3, you need to install
+RTools 4.3.
 :::
 
 ### MacOS
 
-1.  [R](https://cloud.r-project.org/bin/macosx/): Any version above
-    {{< meta versions.r >}}. If you have used R before, you can confirm the
-    version by running `R.version.string` in the Console. If you use
-    [Homebrew](https://brew.sh/), installing R is as easy as opening a
-    Terminal and running:
+1. [R](https://cloud.r-project.org/bin/macosx/): Any version above
+   {{< meta versions.r >}}. If you have used R before, you can confirm
+   the version by running `R.version.string` in the Console. If you use
+   [Homebrew](https://brew.sh/), installing R is as easy as opening a
+   Terminal and running:
 
     ``` bash
     brew install --cask r
     ```
 
-2.  [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
-    Any version above {{< meta versions.rstudio >}}. If you have installed it
-    before, check the current version by going to the menu "Help -> About
-    RStudio". With Homebrew:
+2. [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
+   Any version above {{< meta versions.rstudio >}}. If you have
+   installed it before, check the current version by going to the menu
+   "Help -> About RStudio". With Homebrew:
 
     ``` bash
     brew install --cask rstudio
     ```
 
-3.  [Git](https://git-scm.com/download/mac): Git is used throughout many
-    sessions in the workshop. With Homebrew:
+3. [Git](https://git-scm.com/download/mac): Git is used throughout many
+   sessions in the workshop. With Homebrew:
 
     ``` bash
     brew install git
@@ -59,20 +61,21 @@ if you have R version 4.3, you need to install RTools 4.3.
 
 ### Linux (Ubuntu)
 
-1.  [R](https://cloud.r-project.org/bin/linux/ubuntu/): Any version
-    above {{< meta versions.r >}}. If you have used R before, you can confirm
-    the version by running `R.version.string` in the Console.
+1. [R](https://cloud.r-project.org/bin/linux/ubuntu/): Any version above
+   {{< meta versions.r >}}. If you have used R before, you can confirm
+   the version by running `R.version.string` in the Console.
 
     ``` bash
     sudo apt -y install r-base
     ```
 
-2.  [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
-    Any version above {{< meta versions.rstudio >}}. If you have installed it
-    before, check the current version by going to the menu "Help -> About RStudio".
+2. [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
+   Any version above {{< meta versions.rstudio >}}. If you have
+   installed it before, check the current version by going to the menu
+   "Help -> About RStudio".
 
-3.  [Git](https://git-scm.com/download/mac): Git is used throughout many
-    sessions in the workshop.
+3. [Git](https://git-scm.com/download/mac): Git is used throughout many
+   sessions in the workshop.
 
     ``` bash
     sudo apt install git
@@ -82,12 +85,12 @@ if you have R version 4.3, you need to install RTools 4.3.
 All these programs are required for the workshop, even Git. Git, which
 is a software program to formally manage versions of files, is used
 because of it's popularity and the amount of documentation available for
-it. Check out the online book [Happy Git with
-R](https://happygitwithr.com/), especially the "Why Git" section, for an
-understanding on why we are teaching Git. Windows users tend to have
-more trouble with installing Git than macOS or Linux users. See the
-section on [Installing Git for
-Windows](https://happygitwithr.com/install-git.html#install-git-windows)
+it. Check out the online book
+[Happy Git with R](https://happygitwithr.com/), especially the "Why Git"
+section, for an understanding on why we are teaching Git. Windows users
+tend to have more trouble with installing Git than macOS or Linux users.
+See the section on
+[Installing Git for Windows](https://happygitwithr.com/install-git.html#install-git-windows)
 for help.
 
 ::: {.callout-note appearance="default"}
@@ -113,16 +116,16 @@ for the workshop, so please make sure to give IT enough time to be able
 to install it for you prior to the workshop.
 :::
 
-Once R, RStudio, and Git have been installed, open RStudio. *If you
-encounter any troubles during these pre-workshop tasks*, try as best as
-you can to complete the task and then let us know about the issues in
-the pre-workshop survey. If you continue having problems, indicate on
-the survey that you need help and we can try to book a quick video call
-to fix the problem. Otherwise, you can come to the workshop 15-20
-minutes earlier to get help.
+Once R, RStudio, and Git have been installed, open RStudio.
+*If you encounter any troubles during these pre-workshop tasks*, try as
+best as you can to complete the task and then let us know about the
+issues in the pre-workshop survey. If you continue having problems,
+indicate on the survey that you need help and we can try to book a quick
+video call to fix the problem. Otherwise, you can come to the workshop
+15-20 minutes earlier to get help.
 
 If you're unable to complete the setup procedure due to unfixable
 technical issues, you can use Posit Cloud (to use RStudio on the cloud)
 as a final solution in order to participate in the workshop. For help
-setting up Posit Cloud for this workshop, refer to the [Posit Cloud
-setup guide](https://guides.rostools.org/posit-cloud).
+setting up Posit Cloud for this workshop, refer to the
+[Posit Cloud setup guide](https://guides.rostools.org/posit-cloud).

@@ -1,4 +1,4 @@
-1.  Explain what functional programming, vectorization, and functionals
-    are within R and identify when code is a functional or uses
-    functional programming. Then apply this knowledge using the
-    `{purrr}` package's `map()` function.
+1. Explain what functional programming, vectorization, and functionals
+   are within R and identify when code is a functional or uses
+   functional programming. Then apply this knowledge using the `{purrr}`
+   package's `map()` function.

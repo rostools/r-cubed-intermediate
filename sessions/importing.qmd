@@ -92,35 +92,35 @@ on what file format the data is stored in. For most file formats, there
 is usually a specific R package designed to import it. For instance, the
 below is a list of packages to load common file formats:
 
--   `{haven}`: For reading (also known as importing or loading) in SAS,
-    SPSS, and Stata files.
--   `{readxl}`: For reading in Excel spreadsheets with `.xls` or `.xlsx`
-    file endings.
--   `{googlesheets4}`: For reading in Google Sheets from their cloud
-    service.
--   `utils::read.delim()`: This function comes from the core R package
-    `{utils}` and includes other functions like `utils::read.csv()`.
--   `data.table::fread()`: From the `{data.table}` package, this
-    function is used to load in CSV files.
--   `arrow::read_parquet()`: This function is used to read in Parquet
-    files, which are an increasingly common file format for storing
-    large datasets. This is also becoming more common in data analysis
-    work because it can easily connect the imported Parquet data into
-    the powerful [duckdb](https://duckdb.org/) engine through
-    [duckplyr](https://duckplyr.tidyverse.org/index.html). We won't
-    cover this during the workshop, but like Parquet, it is also
-    becoming increasingly common to use when working with large
-    datasets. The advantage of using
-    [duckplyr](https://duckplyr.tidyverse.org/index.html) is that it
-    uses the same syntax as `{dplyr}` so it is very easy to switch
-    between using it and using `{dplyr}`.
--   `{readr}`: A package that is part of the `{tidyverse}` that is
-    designed to load in data stored in text-based files such as CSV with
-    `readr::read_csv()` and is incredibly fast at importing data. Notice
-    the `_` in the function name, compared to the `.` in the
-    `utils::read.csv()` function name above. This small difference can
-    confuse people, and it is often the cause of the first errors we
-    have when teaching this workshop.
+- `{haven}`: For reading (also known as importing or loading) in SAS,
+  SPSS, and Stata files.
+- `{readxl}`: For reading in Excel spreadsheets with `.xls` or `.xlsx`
+  file endings.
+- `{googlesheets4}`: For reading in Google Sheets from their cloud
+  service.
+- `utils::read.delim()`: This function comes from the core R package
+  `{utils}` and includes other functions like `utils::read.csv()`.
+- `data.table::fread()`: From the `{data.table}` package, this function
+  is used to load in CSV files.
+- `arrow::read_parquet()`: This function is used to read in Parquet
+  files, which are an increasingly common file format for storing large
+  datasets. This is also becoming more common in data analysis work
+  because it can easily connect the imported Parquet data into the
+  powerful [duckdb](https://duckdb.org/) engine through
+  [duckplyr](https://duckplyr.tidyverse.org/index.html). We won't cover
+  this during the workshop, but like Parquet, it is also becoming
+  increasingly common to use when working with large datasets. The
+  advantage of using
+  [duckplyr](https://duckplyr.tidyverse.org/index.html) is that it uses
+  the same syntax as `{dplyr}` so it is very easy to switch between
+  using it and using `{dplyr}`.
+- `{readr}`: A package that is part of the `{tidyverse}` that is
+  designed to load in data stored in text-based files such as CSV with
+  `readr::read_csv()` and is incredibly fast at importing data. Notice
+  the `_` in the function name, compared to the `.` in the
+  `utils::read.csv()` function name above. This small difference can
+  confuse people, and it is often the cause of the first errors we have
+  when teaching this workshop.
 
 The most common type of file format for data that you will likely
 encounter is a CSV file (or Excel), as spreadsheet structured data is
@@ -202,7 +202,7 @@ always check with:
 usethis::gh_token_help()
 ```
 
-```
+```text
 • GitHub host: 'https://github.com'
 • Personal access token for 'https://github.com': <unset>
 • To create a personal access token, call `create_github_token()`
@@ -226,13 +226,13 @@ This function sends us to the GitHub "Generate new token" webpage with
 all the necessary settings checked. Set the "Expiry date" to 90 days
 (this is a good security feature). Then, click the green button at the
 bottom called "Generate token" and you'll have a very long string
-generated for you that starts with `ghp_`. **Save this token in your
-password manager**. This is the token you will use every time you open
-up RStudio and interact with GitHub through R. You do **not** need to
-create a new token for each R project or package you make, you only need
-to create one after your current token expires (typically every couple
-of months), if you've forgotten the token or lost it, or if you've
-changed to a new computer.
+generated for you that starts with `ghp_`.
+**Save this token in your password manager**. This is the token you will
+use every time you open up RStudio and interact with GitHub through R.
+You do **not** need to create a new token for each R project or package
+you make, you only need to create one after your current token expires
+(typically every couple of months), if you've forgotten the token or
+lost it, or if you've changed to a new computer.
 
 Now, in the Console, run:
 
@@ -357,13 +357,13 @@ this message
 
 To remove this message, there are two things we can do:
 
-1.  Explicitly tell `read_csv()` what the column names and data types
-    are using the argument `col_types`. This is a very tedious, but
-    often very powerful and useful step depending on the issues your
-    data may have.
-2.  Tell `read_csv()` to just guess and to hide the message using
-    `show_col_types = FALSE`. Usually, `read_csv()` does a good job of
-    guessing, so for this workshop we will use this option.
+1. Explicitly tell `read_csv()` what the column names and data types are
+   using the argument `col_types`. This is a very tedious, but often
+   very powerful and useful step depending on the issues your data may
+   have.
+2. Tell `read_csv()` to just guess and to hide the message using
+   `show_col_types = FALSE`. Usually, `read_csv()` does a good job of
+   guessing, so for this workshop we will use this option.
 
 So in the code, we will add `show_col_types = FALSE` to `read_csv()` and
 then run the code:
@@ -452,10 +452,10 @@ and get things right. There will be that cognitive overhead.
 A big reason for slower code is when the dataset you are working with is
 larger. This is especially true when:
 
--   you first read the data into R, as larger data will be slower to
-    load into R than smaller data.
--   your work computer is not the most powerful or has other programs
-    (installed or setup by your IT) that can slow your computer down.
+- you first read the data into R, as larger data will be slower to load
+  into R than smaller data.
+- your work computer is not the most powerful or has other programs
+  (installed or setup by your IT) that can slow your computer down.
 
 In both those cases, less data to work with will mean faster code that
 runs and less stress and frustration you will have because you get
@@ -497,16 +497,15 @@ cgm_101
 We see that the amount of data we've imported is much smaller now.
 Before moving on to the exercise, let's:
 
--   Tidy up the code using `{styler}` with {{< var keybind.style >}}
--   Make sure everything is reproducible in the `docs/learning.qmd` file
-    by rendering the Quarto document to an an HTML file. Click the
-    "Render" button at the top of the Source pane or by typing
-    {{< var keybind.render >}}. If it generates an HTML document without
-    problems, we know our code is at least starting to be reproducible.
--   **Add and commit** the changes to the Git history through the
-    RStudio Git interface with {{< var keybind.commit >}}. Then click
-    the push button while in the interface to push the changes to
-    GitHub.
+- Tidy up the code using `{styler}` with {{< var keybind.style >}}
+- Make sure everything is reproducible in the `docs/learning.qmd` file
+  by rendering the Quarto document to an an HTML file. Click the
+  "Render" button at the top of the Source pane or by typing
+  {{< var keybind.render >}}. If it generates an HTML document without
+  problems, we know our code is at least starting to be reproducible.
+- **Add and commit** the changes to the Git history through the RStudio
+  Git interface with {{< var keybind.commit >}}. Then click the push
+  button while in the interface to push the changes to GitHub.
 
 ## :technologist: Exercise: Import participant 101's sleep data {#sec-exercise-import-sleep}
 
@@ -535,28 +534,28 @@ The output of the code might look a bit like:
 sleep_101
 ```
 
-1.  Create a new header at the bottom of the `docs/learning.qmd` file
-    and call it `## Exercise: Import 101's sleep data`.
-2.  Below the header, create a new code chunk with
-    {{< var keybind.chunk >}}.
-3.  Copy and paste the code template above into the new code chunk.
-    Begin replacing the `___` with the correct R functions or other
-    information.
-    -   Give the correct file path in `here()` to 101's sleep data in
-        the `sleep/` folder.
-    -   Use `read_csv()` (not `read.csv()`).
-    -   Use `show_col_types = FALSE` to hide the importing message.
-    -   Convert the columns `to_snake_case` using the `name_repair`
-        argument in `read_csv()`. Remember to not use the `()`
-        at the end of the function.
-    -   Import only first many rows with `n_max`. Instead of 100 like we
-        did above, use another number of your choosing. Maybe fewer
-        rows? Maybe a bit more?
-4.  Once you have the code working, run `{styler}` with
-    {{< var keybind.style >}}, render the Quarto document to HTML to
-    check reproducibility using {{< var keybind.render >}}, and then use
-    the RStudio Git interface to **add and commit** the changes to the
-    Git history using {{< var keybind.commit >}}. Then, push to GitHub.
+1. Create a new header at the bottom of the `docs/learning.qmd` file and
+   call it `## Exercise: Import 101's sleep data`.
+2. Below the header, create a new code chunk with
+   {{< var keybind.chunk >}}.
+3. Copy and paste the code template above into the new code chunk. Begin
+   replacing the `___` with the correct R functions or other
+   information.
+   - Give the correct file path in `here()` to 101's sleep data in the
+     `sleep/` folder.
+   - Use `read_csv()` (not `read.csv()`).
+   - Use `show_col_types = FALSE` to hide the importing message.
+   - Convert the columns `to_snake_case` using the `name_repair`
+     argument in `read_csv()`. Remember to not use the `()` at the end
+     of the function.
+   - Import only first many rows with `n_max`. Instead of 100 like we
+     did above, use another number of your choosing. Maybe fewer rows?
+     Maybe a bit more?
+4. Once you have the code working, run `{styler}` with
+   {{< var keybind.style >}}, render the Quarto document to HTML to
+   check reproducibility using {{< var keybind.render >}}, and then use
+   the RStudio Git interface to **add and commit** the changes to the
+   Git history using {{< var keybind.commit >}}. Then, push to GitHub.
 
 {{< text_snippet sticky_up >}}
 
@@ -569,15 +568,15 @@ Quickly cover this and get them to do the survey before moving on to the
 discussion activity.
 :::
 
--   Use the appropriate package when importing a specific data file
-    (e.g. for `.xlsx` use `{readxl}`).
--   Use `read_csv()` for fast importing of plain text type files (e.g.
-    csv).
--   Fix column names to match a style using `name_repair =` argument in
-    `read_csv()`.
--   For very large datasets, importing in the first 100-1000 rows using
-    `n_max =` to test that importing works fine before importing the
-    full dataset.
+- Use the appropriate package when importing a specific data file (e.g.
+  for `.xlsx` use `{readxl}`).
+- Use `read_csv()` for fast importing of plain text type files (e.g.
+  csv).
+- Fix column names to match a style using `name_repair =` argument in
+  `read_csv()`.
+- For very large datasets, importing in the first 100-1000 rows using
+  `n_max =` to test that importing works fine before importing the full
+  dataset.
 
 ## :speech_balloon: Discussion activity: Experiences with cleaning data
 
@@ -586,10 +585,10 @@ discussion activity.
 As we prepare for lunch, get up, walk around, and discuss with your
 neighbour some of the following questions:
 
--   How tidy and clean is your data in your research? Do you have to do
-    a lot of processing before you can analyse it?
--   What are some struggles you have with processing, importing, and
-    generally working with data?
--   What file format is your data is stored in? Is it easy to work with?
+- How tidy and clean is your data in your research? Do you have to do a
+  lot of processing before you can analyse it?
+- What are some struggles you have with processing, importing, and
+  generally working with data?
+- What file format is your data is stored in? Is it easy to work with?
 
 {{< include /includes/_code-appendix.qmd >}}

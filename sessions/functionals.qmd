@@ -28,13 +28,13 @@ A very effective way to learn is to recall and describe to someone else
 what you've learned. So before we continue this session, take some time
 to think about what you've learned from yesterday.
 
-1.  Take 1-2 minute and try to recall as much as you can about what
-    you'd done over the last two days. Without looking at your notes or
-    the other sections of the website, try to remember things about
-    importing and robust functions.
-2.  Then, for 4-5 minutes, share with your neighbour what you remember
-    and try to describe it to each other. Maybe you will each remember
-    different things.
+1. Take 1-2 minute and try to recall as much as you can about what you'd
+   done over the last two days. Without looking at your notes or the
+   other sections of the website, try to remember things about importing
+   and robust functions.
+2. Then, for 4-5 minutes, share with your neighbour what you remember
+   and try to describe it to each other. Maybe you will each remember
+   different things.
 
 ## :book: Reading task: Functional programming
 
@@ -77,17 +77,16 @@ different things.
 
 Functional programming, in R, is programming that:
 
--   Uses functions (like `function()`).
--   Applies actions as a function to vectors all at once (called
-    [vectorisation](https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html)),
-    rather than one at a time.
-    -   Vectors are multiple items, like a sequence of numbers from 1 to
-        5, that are bundled together, for instance a column for body
-        weight in a dataset is a vector of numbers.
--   Can use functions as input to other functions to then output a
-    vector (called a
-    [functional](https://adv-r.hadley.nz/functionals.html) or
-    "higher-order function").
+- Uses functions (like `function()`).
+- Applies actions as a function to vectors all at once (called
+  [vectorisation](https://bookdown.org/rdpeng/rprogdatascience/vectorized-operations.html)),
+  rather than one at a time.
+  - Vectors are multiple items, like a sequence of numbers from 1 to 5,
+    that are bundled together, for instance a column for body weight in
+    a dataset is a vector of numbers.
+- Can use functions as input to other functions to then output a vector
+  (called a [functional](https://adv-r.hadley.nz/functionals.html) or
+  "higher-order function").
 
 We've already covered functions. You've definitely already used
 vectorization since it is one of R's big strengths. For instance,
@@ -98,13 +97,9 @@ an entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with
 it. @fig-vectorization shows how a function conceptually uses
 vectorization.
 
-![A function using vectorization. Notice how a set of items is included
-*all at once* in the `func()` function and outputs a single item on the
-right. Modified from the [Posit purrr cheat
-sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
+![A function using vectorization. Notice how a set of items is included *all at once* in the `func()` function and outputs a single item on the right. Modified from the [Posit purrr cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
 Image license is CC-BY-SA
-4.0.](/images/vectorization.png){#fig-vectorization
-width="45%"}
+4.0.](/images/vectorization.png){#fig-vectorization width="45%"}
 
 For example, in R, there is a vectorized function called `sum()` that
 takes the entire vector of `values` and outputs the total sum.
@@ -149,11 +144,7 @@ of those items, and outputting the results from each function. The name
 `map()` doesn't mean a geographic map, it is the mathematical meaning of
 map: To use a function on each item in a set of items.
 
-![A functional, in this case `map()`, applies a function to each item in
-a vector. Notice how each of the green coloured boxes are placed into
-the `func()` function and outputs the same number of blue boxes as there
-are green boxes. Modified from the [Posit purrr cheat
-sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
+![A functional, in this case `map()`, applies a function to each item in a vector. Notice how each of the green coloured boxes are placed into the `func()` function and outputs the same number of blue boxes as there are green boxes. Modified from the [Posit purrr cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
 Image license is CC-BY-SA
 4.0.](/images/functionals.png){#fig-functionals width="90%"}
 
@@ -260,18 +251,18 @@ rather than be forced to use `.x`.
 a different data type. If we look into the help documentation with
 `?map`, it shows several other types of map that all start with `map_`:
 
--   `map_chr()` outputs a character vector.
--   `map_int()` outputs an integer vector.
--   `map_dbl()` outputs a numeric value, called a "double" in
-    programming.
+- `map_chr()` outputs a character vector.
+- `map_int()` outputs an integer vector.
+- `map_dbl()` outputs a numeric value, called a "double" in programming.
 
 This is the basics of functionals like `map()`. Functions,
 vectorization, and functionals provide expressive and powerful
-approaches to a simple task: *Doing an action on each item in a set of
-items*. And while technically using a for loop lets you "not repeat
-yourself", they tend to be more error prone and harder to write and read
-compared to these other tools. For some alternative explanations of
-this, see @sec-alternative-loop-explanation.
+approaches to a simple task:
+*Doing an action on each item in a set of items*. And while technically
+using a for loop lets you "not repeat yourself", they tend to be more
+error prone and harder to write and read compared to these other tools.
+For some alternative explanations of this, see
+@sec-alternative-loop-explanation.
 
 {{< text_snippet sticky_up >}}
 
@@ -467,41 +458,41 @@ here("data-raw/dime/sleep/") |>
 Complete the tasks below to convert this code into a stable, robust
 function that you can re-use.
 
-1.  We've used two packages here, `{fs}` and `{purrr}`. You will first
-    need to add these packages to the `DESCRIPTION` file by using
-    `usethis::use_package()` in the **Console**.
-2.  In the bottom of `docs/learning.qmd`, create a new header
-    `## Exercise: Convert map to function and use on sleep`.
-3.  Below the header, create a new code chunk using
-    {{< var keybind.chunk >}}.
-4.  As you've already done in the previous sessions, convert this code
-    into a function. You can always refer to the @sec-functions and
-    @sec-robustness sessions.
-    -   Name the function `import_csv_files`.
-    -   Use the `function() { ... }` code to create a new function
-    -   Inside `function()`, add an argument called `folder_path`.
-    -   Paste the code into the function body.
-    -   Replace `here("data-raw/dime/cgm")` with `folder_path`.
-    -   Rename `cgm_files` to `files`.
-    -   Rename `cgm_data` to `data`.
-    -   Include a `return()` at the end.
-    -   Add `package_name::` to the individual functions used. To find
-        which package a function comes from, use `?functionname` to see
-        the help documentation.
-    -   Create and write Roxygen documentation to describe the new
-        function by using {{< var keybind.roxygen >}}.
-    -   Run it and check that it works using the code shown above.
-5.  Render the document with {{< var keybind.render >}} to check that
-    the function works.
-6.  **Cut** and paste the function into the `R/functions.R` file. Then
-    go back to the `docs/learning.qmd` file and (making sure the old
-    function is deleted), render again with {{< var keybind.render >}}
-    to check that the function works after moving it.
-7.  Run `{styler}` while in the `R/functions.R` file with
-    {{< var keybind.style >}}.
-8.  Once done, **add** the changes you've made and **commit** them to
-    the Git history, using {{< var keybind.commit >}} and then push to
-    GitHub.
+1. We've used two packages here, `{fs}` and `{purrr}`. You will first
+   need to add these packages to the `DESCRIPTION` file by using
+   `usethis::use_package()` in the **Console**.
+2. In the bottom of `docs/learning.qmd`, create a new header
+   `## Exercise: Convert map to function and use on sleep`.
+3. Below the header, create a new code chunk using
+   {{< var keybind.chunk >}}.
+4. As you've already done in the previous sessions, convert this code
+   into a function. You can always refer to the @sec-functions and
+   @sec-robustness sessions.
+   - Name the function `import_csv_files`.
+   - Use the `function() { ... }` code to create a new function
+   - Inside `function()`, add an argument called `folder_path`.
+   - Paste the code into the function body.
+   - Replace `here("data-raw/dime/cgm")` with `folder_path`.
+   - Rename `cgm_files` to `files`.
+   - Rename `cgm_data` to `data`.
+   - Include a `return()` at the end.
+   - Add `package_name::` to the individual functions used. To find
+     which package a function comes from, use `?functionname` to see the
+     help documentation.
+   - Create and write Roxygen documentation to describe the new function
+     by using {{< var keybind.roxygen >}}.
+   - Run it and check that it works using the code shown above.
+5. Render the document with {{< var keybind.render >}} to check that the
+   function works.
+6. **Cut** and paste the function into the `R/functions.R` file. Then go
+   back to the `docs/learning.qmd` file and (making sure the old
+   function is deleted), render again with {{< var keybind.render >}} to
+   check that the function works after moving it.
+7. Run `{styler}` while in the `R/functions.R` file with
+   {{< var keybind.style >}}.
+8. Once done, **add** the changes you've made and **commit** them to the
+   Git history, using {{< var keybind.commit >}} and then push to
+   GitHub.
 
 {{< text_snippet sticky_up >}}
 
@@ -514,23 +505,23 @@ Quickly cover this and get them to do the survey before moving on to the
 discussion activity.
 :::
 
--   R is a functional programming language:
-    -   It has functions that take an input, do an action, and give an
-        output.
-    -   It uses vectorisation that apply a function to multiple items
-        (in a vector) all at once rather than using loops.
-    -   It uses functionals that allow functions to use other functions
-        as input.
--   Thinking in terms of declaratively telling a computer to do actions,
-    rather than telling a computer how to do things step-by-step, is a
-    powerful way to think about programming, especially in R.
--   in terms taking an object like a data frame or list, doing an
-    action, outputting a data frame or list, and doing more actions on
-    that output is
--   Use the `{purrr}` package and its function `map()` when you want to
-    repeat a function on multiple items at once.
--   Use `list_rbind()` to combine multiple data frames into one data
-    frame by stacking them on top of each other.
+- R is a functional programming language:
+  - It has functions that take an input, do an action, and give an
+    output.
+  - It uses vectorisation that apply a function to multiple items (in a
+    vector) all at once rather than using loops.
+  - It uses functionals that allow functions to use other functions as
+    input.
+- Thinking in terms of declaratively telling a computer to do actions,
+  rather than telling a computer how to do things step-by-step, is a
+  powerful way to think about programming, especially in R.
+- in terms taking an object like a data frame or list, doing an action,
+  outputting a data frame or list, and doing more actions on that output
+  is
+- Use the `{purrr}` package and its function `map()` when you want to
+  repeat a function on multiple items at once.
+- Use `list_rbind()` to combine multiple data frames into one data frame
+  by stacking them on top of each other.
 
 ## :speech_balloon: Discussion activity: Incorporating functionals in your own work
 
@@ -539,12 +530,12 @@ discussion activity.
 As we prepare for the next session and taking the break, get up and
 discuss with your neighbour or group the following questions:
 
--   What are some things you do repetitively that you think might
-    benefit from using functionals on?
--   Consider your code you've written for other projects or tasks you
-    have in other projects. How might you use functional programming to
-    help your work? How might you change existing code to use them?
-    Might it be a lot of work?
+- What are some things you do repetitively that you think might benefit
+  from using functionals on?
+- Consider your code you've written for other projects or tasks you have
+  in other projects. How might you use functional programming to help
+  your work? How might you change existing code to use them? Might it be
+  a lot of work?
 
 ```{r admin-store-session-code}
 #| include: false

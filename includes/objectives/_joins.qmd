@@ -1,4 +1,4 @@
-1.  Describe some ways to join or "bind" data and identify which join is
-    appropriate for a given situation. Then apply `{dplyr}`'s
-    `full_join()` function to join two datasets together into one single
-    dataset.
+1. Describe some ways to join or "bind" data and identify which join is
+   appropriate for a given situation. Then apply `{dplyr}`'s
+   `full_join()` function to join two datasets together into one single
+   dataset.

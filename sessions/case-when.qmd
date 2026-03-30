@@ -98,9 +98,9 @@ match (e.g. all character or all numeric). This prevents you from
 accidentally mixing e.g. numeric output with character output. Missing
 values also have data types:
 
--   `NA_character_` (character)
--   `NA_real_` (numeric)
--   `NA_integer_` (integer)
+- `NA_character_` (character)
+- `NA_real_` (numeric)
+- `NA_integer_` (integer)
 
 Assuming the final output is `NA`, in a pipeline this would look like
 how you normally would use `mutate()`, when using the
@@ -229,26 +229,26 @@ clean_sleep <- function(data) {
 
 Follow these steps to get to that point.
 
-1.  Right above the code we just wrote, create a new function called
-    `fix_sleep_types` by assigning `function()` to it. Add `data` as the
-    argument to the `function()`.
-2.  Cut **only** the `mutate()` code that has the `case_when()` in it,
-    *not* the `count()` or `import_csv_files()` code.
-3.  Paste the `mutate()` code into the new function body. Before the
-    `mutate()` code, pipe `data` into the `mutate()`.
-4.  Assign the output of the sleep fix code into something called
-    `fixed_sleep` and then `return()` this object.
-5.  Test that this code works by replacing the cut code with
-    `fix_sleep_types()`, piping it into `count()`, and then running the
-    code.
-6.  Once it works, create the Roxygen documentation with
-    {{< var keybind.roxygen >}}.
-7.  **Cut** and paste the new function into the `R/functions.R` file.
-8.  In the `R/functions.R` file, add the new function to the
-    `clean_sleep()` function by adding it to the pipe before
-    `sleep_types_to_wider()` (see the code above).
-9.  Style both the `R/functions.R` and `docs/learning.qmd` files with
-    {{< var keybind.style >}}.
+1. Right above the code we just wrote, create a new function called
+   `fix_sleep_types` by assigning `function()` to it. Add `data` as the
+   argument to the `function()`.
+2. Cut **only** the `mutate()` code that has the `case_when()` in it,
+   *not* the `count()` or `import_csv_files()` code.
+3. Paste the `mutate()` code into the new function body. Before the
+   `mutate()` code, pipe `data` into the `mutate()`.
+4. Assign the output of the sleep fix code into something called
+   `fixed_sleep` and then `return()` this object.
+5. Test that this code works by replacing the cut code with
+   `fix_sleep_types()`, piping it into `count()`, and then running the
+   code.
+6. Once it works, create the Roxygen documentation with
+   {{< var keybind.roxygen >}}.
+7. **Cut** and paste the new function into the `R/functions.R` file.
+8. In the `R/functions.R` file, add the new function to the
+   `clean_sleep()` function by adding it to the pipe before
+   `sleep_types_to_wider()` (see the code above).
+9. Style both the `R/functions.R` and `docs/learning.qmd` files with
+   {{< var keybind.style >}}.
 10. In the `docs/learning.qmd` file, render the document with
     {{< var keybind.render >}}.
 11. If it renders to HTML correctly, commit the changes to the Git
@@ -261,13 +261,13 @@ Follow these steps to get to that point.
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Instructor note
 
-Quickly cover this before finishing the session and getting them
-to do the survey.
+Quickly cover this before finishing the session and getting them to do
+the survey.
 :::
 
--   Instead of using multiple `if_else()` statements, you can use
-    `case_when()` to make your code cleaner and easier to read.
--   Save final datasets into the `data/` to communicate to yourself
-    and others that this is data to work with, not the data in `data-raw/`.
+- Instead of using multiple `if_else()` statements, you can use
+  `case_when()` to make your code cleaner and easier to read.
+- Save final datasets into the `data/` to communicate to yourself and
+  others that this is data to work with, not the data in `data-raw/`.
 
 {{< include /includes/_code-appendix.qmd >}}

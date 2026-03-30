@@ -4,22 +4,23 @@
 
 We will be using specific R packages for the workshop, so you will need
 to install them. To make it easier, we've created a custom R package
-called `r3` that will install all the necessary packages for you for this
-workshop. Run these functions in the Console to install the packages.
+called `r3` that will install all the necessary packages for you for
+this workshop. Run these functions in the Console to install the
+packages.
 
-1.  Install the `{pak}` package:
+1. Install the `{pak}` package:
 
     ``` {.r filename="Console"}
     install.packages("pak")
     ```
 
-2.  Install our custom r3 helper package for this workshop:
+2. Install our custom r3 helper package for this workshop:
 
     ``` {.r filename="Console"}
     pak::pak("rostools/r3")
     ```
 
-3.  Install the necessary packages for the workshop:
+3. Install the necessary packages for the workshop:
 
     ``` {.r filename="Console"}
     r3::install_packages_{{< meta workshop_level >}}()

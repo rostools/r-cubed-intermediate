@@ -53,11 +53,11 @@ function_name <- function(argument1, argument2) {
 Notice that this uses two functions to create this `function_name`
 function object:
 
--   `<-` is the action (function) that will create the new object
-    `function_name`.
--   `function()` is the action (function) to tell R that this object is
-    an action (function) whenever it is used with a `()` at the end,
-    e.g. `function_name()`.
+- `<-` is the action (function) that will create the new object
+  `function_name`.
+- `function()` is the action (function) to tell R that this object is an
+  action (function) whenever it is used with a `()` at the end, e.g.
+  `function_name()`.
 
 Because R is open source, anyone can see how things work underneath. So,
 if you want to see what a function does underneath, you would type out
@@ -81,8 +81,8 @@ end of the name. But there are special functions, like `+`, `[]`, or
 even `<-`, that do an action but that don't have `()` at the end. These
 are called *operator* functions. Which is why the `<-` is called the
 assignment operator, because it assigns something to a new object. To
-see how they work internally, you would wrap \` around the operator. So
-for `+` or `<-` it would be:
+see how they work internally, you would wrap
+\` around the operator. So for `+` or `<-` it would be:
 
 ```{r show-operators-internals}
 #| filename: "Console"
@@ -117,17 +117,17 @@ sequence of actions that you can then reuse again and again. And
 luckily, you will be making many functions throughout this workshop.
 Making a function always follows a basic structure:
 
-1.  Give a name to the function (e.g. `mean`).
-2.  Use `function()` to tell R the new object will be a function and
-    assigning it to the name with `<-`.
-3.  Optionally provide arguments to the function object, for example
-    `function(argument1, argument2, argument3)`.
-4.  Fill out the body of the function, with the arguments (if any)
-    contained inside, that does some sequence of actions.
-5.  Optionally, use `return()` to indicate what final output you want
-    the function to have. For learning purposes, we'll always use
-    `return()` to help show us what is the final function output but it
-    isn't necessary.
+1. Give a name to the function (e.g. `mean`).
+2. Use `function()` to tell R the new object will be a function and
+   assigning it to the name with `<-`.
+3. Optionally provide arguments to the function object, for example
+   `function(argument1, argument2, argument3)`.
+4. Fill out the body of the function, with the arguments (if any)
+   contained inside, that does some sequence of actions.
+5. Optionally, use `return()` to indicate what final output you want the
+   function to have. For learning purposes, we'll always use `return()`
+   to help show us what is the final function output but it isn't
+   necessary.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
@@ -177,9 +177,9 @@ Roxygen documentation template.
 :::
 
 Let's create a really basic function to show the process. First, create
-a new Markdown header called `## Making a function to add numbers` and create a
-code chunk below that with {{< var keybind.chunk >}} . Then, inside the
-code chunk, we'll write this code:
+a new Markdown header called `## Making a function to add numbers` and
+create a code chunk below that with {{< var keybind.chunk >}}. Then,
+inside the code chunk, we'll write this code:
 
 ```{r create-add-function}
 #| filename: "docs/learning.qmd"
@@ -228,16 +228,16 @@ several words that describe the function. Creating a new paragraph below
 this line allows you to add a more detailed description. The other items
 are:
 
--   `@param num`: These lines describe what each argument (also called
-    parameter) is for and what to give it.
--   `@return`: This describes what output the function gives. Is it a
-    data.frame? A plot? What else does the output give?
--   `@export`: Tells R that this function should be accessible to the
-    user of your package. Since we aren't making packages, delete it.
--   `@examples`: Any lines below this are used to show examples of how
-    to use the function. This is very useful when making packages, but
-    not really in this case. So we'll delete it. Let's write out some
-    documentation for this function:
+- `@param num`: These lines describe what each argument (also called
+  parameter) is for and what to give it.
+- `@return`: This describes what output the function gives. Is it a
+  data.frame? A plot? What else does the output give?
+- `@export`: Tells R that this function should be accessible to the user
+  of your package. Since we aren't making packages, delete it.
+- `@examples`: Any lines below this are used to show examples of how to
+  use the function. This is very useful when making packages, but not
+  really in this case. So we'll delete it. Let's write out some
+  documentation for this function:
 
 ```{r roxygen-docs-2}
 #| filename: "docs/learning.qmd"
@@ -273,17 +273,17 @@ will be using it all throughout this workshop.
 
 At the level of the code, the way you prototype code is to:
 
-1.  Write it out in Quarto so that does what you want.
-2.  Convert that code into a function.
-3.  Test that the function works either in the Quarto document or in the
-    R Console.
-4.  Fix the function if it doesn't work.
-5.  Restart the R console with {{< var keybind.restart-r >}} or render
-    with {{< var keybind.render >}} to test that the function works.
-6.  Whenever the function works, *add and commit* the changes to the Git
-    history with {{< var keybind.commit >}} (or commit after you move
-    the function to the `R/functions.R` script, which we will talk about
-    in the next session).
+1. Write it out in Quarto so that does what you want.
+2. Convert that code into a function.
+3. Test that the function works either in the Quarto document or in the
+   R Console.
+4. Fix the function if it doesn't work.
+5. Restart the R console with {{< var keybind.restart-r >}} or render
+   with {{< var keybind.render >}} to test that the function works.
+6. Whenever the function works, *add and commit* the changes to the Git
+   history with {{< var keybind.commit >}} (or commit after you move the
+   function to the `R/functions.R` script, which we will talk about in
+   the next session).
 
 ```{mermaid}
 %%| echo: false
@@ -305,8 +305,8 @@ flowchart TD
 
 Either restarting R or rendering the Quarto document is the only way
 there is to be certain the R workspace is in a clean state. When code
-runs after a clean state, it improves the chances that your code and project
-will be reproducible.
+runs after a clean state, it improves the chances that your code and
+project will be reproducible.
 
 We use Git because it is the best way of keeping track of what was done
 to your files, when, and why. It helps to keep your work transparent and
@@ -333,23 +333,23 @@ functions in R.
 While you read about the general workflow above, the more detailed steps
 for making a function is to:
 
-1.  Write code that works and does what you want.
-2.  Enclose it as a function with `name <- function() { ... }`, with an
-    appropriate and descriptive name.
-3.  Create arguments in the function call
-    (`function(argument1, argument2)`) with appropriate and descriptive
-    names, then replace the code in the function body with the argument
-    names where appropriate.
-4.  Rename any objects created to be more generic and include the
-    `return()` function at the end to indicate what the function will
-    output.
-5.  Run the function and check that it works.
-6.  Add the Roxygen documentation tags with {{< var keybind.roxygen >}}
-    while the cursor is in the function.
+1. Write code that works and does what you want.
+2. Enclose it as a function with `name <- function() { ... }`, with an
+   appropriate and descriptive name.
+3. Create arguments in the function call
+   (`function(argument1, argument2)`) with appropriate and descriptive
+   names, then replace the code in the function body with the argument
+   names where appropriate.
+4. Rename any objects created to be more generic and include the
+   `return()` function at the end to indicate what the function will
+   output.
+5. Run the function and check that it works.
+6. Add the Roxygen documentation tags with {{< var keybind.roxygen >}}
+   while the cursor is in the function.
 
 In `docs/learning.qmd`, create a new Markdown header called
 `## Import 101's cgm data with a function` and create a code chunk below
-that with {{< var keybind.chunk >}} .
+that with {{< var keybind.chunk >}}.
 
 So, step one. Let's copy and paste the code we previously for importing
 the `cgm_101` data and convert that as a function:
@@ -490,29 +490,29 @@ here("data-raw/dime/sleep/102.csv") |>
   import_sleep()
 ```
 
-1.  Create a new Markdown header at the bottom of `docs/learning.qmd`
-    called `## Exercise to make function to import sleep data`.
-2.  Below the Markdown header, create a new code chunk with
-    {{< var keybind.chunk >}}.
-3.  Paste the code you used from the exercise in
-    @sec-exercise-import-sleep into the code chunk and begin converting
-    it into a function, like we did above.
-    -   Wrap it with the `function() {...}`.
-    -   Make a meaningful name (use `import_sleep`).
-    -   Make an argument for the file path (`file_path`) and replace the
-        `here("")` code with `file_path`.
-    -   Rename the output object from `sleep_101` to simply `sleep`.
-    -   End the function with using `return()` to output the `sleep`
-        object.
-    -   Use the function and run it in the code chunk to test that it
-        works on both `101` and `102`'s sleep data.
-    -   Add the Roxygen documentation with {{< var keybind.roxygen >}}
-        and then fill in the details, like we did above.
-4.  Run `{styler}` while in the `docs/learning.qmd` file with
-    {{< var keybind.style >}}.
-5.  Render the Quarto document with {{< var keybind.render >}}.
-6.  Finally, **add and commit** the changes to the Git history, using
-    {{< var keybind.commit >}}. Then push to GitHub.
+1. Create a new Markdown header at the bottom of `docs/learning.qmd`
+   called `## Exercise to make function to import sleep data`.
+2. Below the Markdown header, create a new code chunk with
+   {{< var keybind.chunk >}}.
+3. Paste the code you used from the exercise in
+   @sec-exercise-import-sleep into the code chunk and begin converting
+   it into a function, like we did above.
+   - Wrap it with the `function() {...}`.
+   - Make a meaningful name (use `import_sleep`).
+   - Make an argument for the file path (`file_path`) and replace the
+     `here("")` code with `file_path`.
+   - Rename the output object from `sleep_101` to simply `sleep`.
+   - End the function with using `return()` to output the `sleep`
+     object.
+   - Use the function and run it in the code chunk to test that it works
+     on both `101` and `102`'s sleep data.
+   - Add the Roxygen documentation with {{< var keybind.roxygen >}} and
+     then fill in the details, like we did above.
+4. Run `{styler}` while in the `docs/learning.qmd` file with
+   {{< var keybind.style >}}.
+5. Render the Quarto document with {{< var keybind.render >}}.
+6. Finally, **add and commit** the changes to the Git history, using
+   {{< var keybind.commit >}}. Then push to GitHub.
 
 <!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->
 
@@ -535,19 +535,18 @@ Quickly cover this and get them to do the survey before moving on to the
 discussion activity.
 :::
 
--   Everything in R is an object.
--   Every action in R is a function and every function is an object.
--   Functions contain a sequence of steps that do actions to an object.
--   Functions have five components:
-    -   The three required ones are using `function() { }`, the code in
-        the function body between the `{ }`, and an output (usually set
-        with `return()`).
-    -   The two optional ones are assigning the function as a new object
-        with `<-` and the function arguments put within `function()`.
--   Document functions by using Roxygen.
--   Keep functions small and simple, so it is easier to test and fix
-    them.
--   Use few arguments in functions to reduce cognitive load.
+- Everything in R is an object.
+- Every action in R is a function and every function is an object.
+- Functions contain a sequence of steps that do actions to an object.
+- Functions have five components:
+  - The three required ones are using `function() { }`, the code in the
+    function body between the `{ }`, and an output (usually set with
+    `return()`).
+  - The two optional ones are assigning the function as a new object
+    with `<-` and the function arguments put within `function()`.
+- Document functions by using Roxygen.
+- Keep functions small and simple, so it is easier to test and fix them.
+- Use few arguments in functions to reduce cognitive load.
 
 ## :speech_balloon: Discussion activity: What are some tasks that could be functions?
 
@@ -556,10 +555,10 @@ discussion activity.
 As we prepare for the next session and the break, get up, walk around,
 and discuss with your neighbour some of the following questions:
 
--   What are some tasks you do that are repetitive or that you do
-    multiple times with very small changes each time you do the task?
--   How might you use functions in your work? Can you think of specific
-    tasks or situations where you could use one?
+- What are some tasks you do that are repetitive or that you do multiple
+  times with very small changes each time you do the task?
+- How might you use functions in your work? Can you think of specific
+  tasks or situations where you could use one?
 
 ```{r admin-store-session-code}
 #| include: false

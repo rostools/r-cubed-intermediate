@@ -18,11 +18,10 @@ project_path <- fs::path(temp_path, "LearnR3")
 One of the first, basic steps to ensuring a reproducible and modern data
 analysis workflow is to keep everything self-contained in a single
 location. In RStudio, this is done by using R Projects. Read all of this
-[reading
-task](https://r-cubed-intro.rostools.org/sessions/setup-project#reading-task-what-is-a-project-and-why-use-it)
+[reading task](https://r-cubed-intro.rostools.org/sessions/setup-project#reading-task-what-is-a-project-and-why-use-it)
 from the introduction workshop to learn about R Projects and how they
-help keeping things self-contained. *You don't need to do any of the
-exercises or activities*.
+help keeping things self-contained.
+*You don't need to do any of the exercises or activities*.
 
 <!-- TODO: Convert this into a snippet? -->
 
@@ -77,19 +76,19 @@ There are several ways to organise a project folder. You'll be using the
 structure from the package `{prodigenr}`. The project setup can be done
 by either:
 
-1.  Using RStudio's New Project menu item: "File -\> New Project -\> New
-    Directory", scroll down to "Scientific Analysis Project using
-    prodigenr" and name the project "LearnR3" in the Directory Name,
-    saving it to the "Desktop" as described above with Browse. When you
-    use this method, the new RStudio Project will automatically open up
-    for you.
-2.  Or, running the function
-    `prodigenr::setup_project("~/Desktop/LearnR3")` in the R Console.
-    The `~` is a shortcut for your home directory, so this function will
-    create a new folder called `LearnR3` on your Desktop. When you use
-    this method, you will need to use your file manager to navigate to
-    the Desktop folder and open the `LearnR3.Rproj` file inside of the
-    newly created `LearnR3/` folder.
+1. Using RStudio's New Project menu item: "File -\> New Project -\> New
+   Directory", scroll down to "Scientific Analysis Project using
+   prodigenr" and name the project "LearnR3" in the Directory Name,
+   saving it to the "Desktop" as described above with Browse. When you
+   use this method, the new RStudio Project will automatically open up
+   for you.
+2. Or, running the function
+   `prodigenr::setup_project("~/Desktop/LearnR3")` in the R Console. The
+   `~` is a shortcut for your home directory, so this function will
+   create a new folder called `LearnR3` on your Desktop. When you use
+   this method, you will need to use your file manager to navigate to
+   the Desktop folder and open the `LearnR3.Rproj` file inside of the
+   newly created `LearnR3/` folder.
 
 ```{r admin-create-project}
 #| filename: Console
@@ -130,16 +129,16 @@ next generation version of R Markdown) because it is one of the very
 first steps to being reproducible and because it is a very powerful tool
 for doing data analysis. Please do these two tasks:
 
-1.  Read over the Quarto
-    [section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-quarto)
-    of the introduction workshop. If you use Quarto already and are
-    familiar with it, you can skip this step.
+1. Read over the Quarto
+   [section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-quarto)
+   of the introduction workshop. If you use Quarto already and are
+   familiar with it, you can skip this step.
 
-2.  If you are not already in the `LearnR3` project, open it up by
-    either clicking the `LearnR3.Rproj` file in the `LearnR3/` folder or
-    by using the "File -\> Open Project" menu. Run the function below in
-    the Console when RStudio is in the `LearnR3` project, which will
-    create a new file called `learning.qmd` in the `docs/` folder.
+2. If you are not already in the `LearnR3` project, open it up by either
+   clicking the `LearnR3.Rproj` file in the `LearnR3/` folder or by
+   using the "File -\> Open Project" menu. Run the function below in the
+   Console when RStudio is in the `LearnR3` project, which will create a
+   new file called `learning.qmd` in the `docs/` folder.
 
 ```{r create-qmd-doc}
 #| filename: "Console"

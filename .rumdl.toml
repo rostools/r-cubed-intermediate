@@ -10,6 +10,8 @@ exclude = [
   "README.md",
   # This has it's own structure
   "LICENSE.md",
+  # revealjs slides have their own structure
+  "slides/*.qmd",
 ]
 
 # List style: `-`

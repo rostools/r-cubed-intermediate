@@ -11,7 +11,6 @@ knitr::write_bib(
 )
 ```
 
-
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
 environments. As our tools for generating data become more sophisticated
@@ -25,12 +24,12 @@ scientific studies. This hidden aspect of research could have major
 impacts on the reproducibility of studies. This workshop is therefore
 aimed to specifically start addressing these types of problems.
 
-
-This 3-day long workshop is designed to do participatory live-typing, where the teacher
-demonstrates the tasks on their computer connected to a projector while learners
-type along on their own computer. The workshop also includes reading tasks,
-discussion activities, hands-on exercises, and a team project at the end.
-In all of these activities, we work with real-world (open) datasets.
+This 3-day long workshop is designed to do participatory live-typing,
+where the teacher demonstrates the tasks on their computer connected to
+a projector while learners type along on their own computer. The
+workshop also includes reading tasks, discussion activities, hands-on
+exercises, and a team project at the end. In all of these activities, we
+work with real-world (open) datasets.
 
 This website contains all of the material for the workshop, including
 readings, exercises, presentations, live-typing material, and images. It
@@ -44,9 +43,9 @@ Check out the overview section of the workshop, starting with the
 [Syllabus](/overview/syllabus.qmd) (@sec-syllabus).
 
 If you plan on attending the workshop, please make sure to complete the
-[Pre-workshop tasks](/pre-workshop/overview.qmd) (@sec-pre-workshop) to get set up and ready
-for the workshop. The pre-workshop tasks include a survey that you need
-to fill out before the workshop starts.
+[Pre-workshop tasks](/pre-workshop/overview.qmd) (@sec-pre-workshop) to
+get set up and ready for the workshop. The pre-workshop tasks include a
+survey that you need to fill out before the workshop starts.
 
 {{< include /includes/_star-us.qmd >}}
 
@@ -54,29 +53,31 @@ to fill out before the workshop starts.
 
 This website and its content are targeted to three groups:
 
-1.  For the **learners** to use during the workshop, both to follow
-    along and also to use as a reference after the workshop ends. A more
-    detailed description of who the learner is can be found in the [Is this
-    for you?](/overview/is-this-for-you.qmd) section (@sec-is-this-for-you).
-2.  For the **teachers** to use as a guide for when they do the
-    type-along sessions.
-3.  For those who are **interested in teaching**, who may not have much
-    experience or may not know where to start, to use this website as a
-    guide to running and teaching their own workshops.
+1. For the **learners** to use during the workshop, both to follow along
+   and also to use as a reference after the workshop ends. A more
+   detailed description of who the learner is can be found in the
+   [Is this for you?](/overview/is-this-for-you.qmd) section
+   (@sec-is-this-for-you).
+2. For the **teachers** to use as a guide for when they do the
+   type-along sessions.
+3. For those who are **interested in teaching**, who may not have much
+   experience or may not know where to start, to use this website as a
+   guide to running and teaching their own workshops.
 
 ## Re-use and licensing
 
-The workshop material is licensed under the [Creative Commons Attribution 4.0
-License](LICENSE.md), so the material can be used, re-used, and modified, as
-long as there is attribution to this source. Check out the [For
-teachers](/appendix/for-teachers.qmd) section (@sec-for-teachers) for more details and tips on using
-this material for teaching.
+The workshop material is licensed under the
+[Creative Commons Attribution 4.0 License](LICENSE.md), so the material
+can be used, re-used, and modified, as long as there is attribution to
+this source. Check out the [For teachers](/appendix/for-teachers.qmd)
+section (@sec-for-teachers) for more details and tips on using this
+material for teaching.
 
 ## Contributing
 
 Want to contribute to this workshop? Look through our
-[CONTRIBUTING](CONTRIBUTING.md) page for contribution guidelines on how to
-get started.
+[CONTRIBUTING](CONTRIBUTING.md) page for contribution guidelines on how
+to get started.
 
 ### Contributors
 
@@ -87,33 +88,30 @@ get started.
 The workshop material is created using [Quarto](https://quarto.org) to
 write the material and create the book format,
 [GitHub](https://github.com/) to host the [Git](https://git-scm.com/)
-repository of the material, and [GitHub
-Actions](https://github.com/features/actions) with
+repository of the material, and
+[GitHub Actions](https://github.com/features/actions) with
 [Netlify](https://www.netlify.com/) to build and host the website. The
 original source material for this workshop is found on the
-[`{{< meta gh.repo >}}`]({{< meta links.github >}})
-GitHub repository.
-
+[`{{< meta gh.repo >}}`]({{< meta links.github >}}) GitHub repository.
 
 ## Acknowledgements
 
 The workshop material draws inspiration from these excellent resources:
 
--   [R for Data Science](https://r4ds.had.co.nz/)
--   [Advanced R](https://adv-r.hadley.nz/)
--   [R Packages](https://r-pkgs.org/)
--   [UofTCoders Reproducible Quantitative Methods for
-    EEB](https://uoftcoders.github.io/rcourse/)
--   [Software and Data Carpentry](https://carpentries.org/) workshop
-    material
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [Advanced R](https://adv-r.hadley.nz/)
+- [R Packages](https://r-pkgs.org/)
+- [UofTCoders Reproducible Quantitative Methods for EEB](https://uoftcoders.github.io/rcourse/)
+- [Software and Data Carpentry](https://carpentries.org/) workshop
+  material
 
-The [Danish Diabetes and Endocrinology
-Academy](https://www.ddeacademy.dk/) hosted, organized, and sponsored
-this workshop many times. A huge thanks to them for their involvement,
-support, and sponsorship! [Steno Diabetes Center
-Aarhus](https://www.stenoaarhus.dk/) and [Aarhus
-University](https://international.au.dk/) employs Luke, who is the lead
-teacher and educational resource developer.
+The
+[Danish Diabetes and Endocrinology Academy](https://www.ddeacademy.dk/)
+hosted, organized, and sponsored this workshop many times. A huge thanks
+to them for their involvement, support, and sponsorship!
+[Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/) and
+[Aarhus University](https://international.au.dk/) employs Luke, who is
+the lead teacher and educational resource developer.
 
 ::: {layout-ncol="3"}
 ![](/images/logo-ddea.png){width="220px" fig-align="center"

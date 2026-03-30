@@ -79,18 +79,18 @@ as well as a single participant details file.
 
 To get to a single dataset, let's work backwards:
 
-1.  To get one final dataset, we need to join the CGM, sleep, and
-    participant data together and in a way that makes sense.
-2.  To join all the datasets together, they all need to be in a format
-    that can be joinable. So they need to be cleaned.
-3.  We need to clean the participant details data.
-4.  We need to clean the CGM and sleep data.
-5.  To clean the CGM data, we need to have one single CGM data frame to
-    be able to clean on, but we currently have many. So we need to join
-    ('bind') all the CGM data into one. This also applies to the sleep
-    data.
-6.  To get one CGM or sleep data frame, we need to first import it from
-    each raw file.
+1. To get one final dataset, we need to join the CGM, sleep, and
+   participant data together and in a way that makes sense.
+2. To join all the datasets together, they all need to be in a format
+   that can be joinable. So they need to be cleaned.
+3. We need to clean the participant details data.
+4. We need to clean the CGM and sleep data.
+5. To clean the CGM data, we need to have one single CGM data frame to
+   be able to clean on, but we currently have many. So we need to join
+   ('bind') all the CGM data into one. This also applies to the sleep
+   data.
+6. To get one CGM or sleep data frame, we need to first import it from
+   each raw file.
 
 Breaking these steps down visually, let's start with the final joining:
 
@@ -163,7 +163,7 @@ we will be creating.
 ::: {layout-ncol="2"}
 ### Currently looks like: {.unnumbered}
 
-```
+```text
 LearnR3
 ├── data/
 │   └── README.md
@@ -190,7 +190,7 @@ LearnR3
 
 ### End of workshop: {.unnumbered}
 
-```
+```text
 LearnR3
 ├── data/
 │   ├── README.md
@@ -235,7 +235,7 @@ on the sleep data.
 
 {{< text_snippet sticky_up >}}
 
-## :speech_balloon: Discussion activity: Warm-up questions!
+## :speech_balloon: Discussion activity: Warm-up questions
 
 **Time: \~8 minutes.**
 
@@ -247,13 +247,13 @@ So, to help you feel more comfortable in this new physical and social
 space, for the next 4 minutes, get up and chat with your neighbour about
 the questions below:
 
-1.  Who are you?
-2.  Why are you here?
-3.  What do you want to learn?
+1. Who are you?
+2. Why are you here?
+3. What do you want to learn?
 
 Make sure to share the time equally between each other. Then, after 4
 minutes, chat with another neighbour at your table (or a table nearby)
 for another 4 minutes. This time, talk about these questions:
 
-1.  How do you perceive your skill in R?
-2.  How much time do you spend *processing data* in R?
+1. How do you perceive your skill in R?
+2. How much time do you spend *processing data* in R?

@@ -103,9 +103,9 @@ being useful to specific situations.
 
 So, while GDPR does make it more strict on what can and cannot be shared
 and requires more detailed information on how the participant's data
-will be used when getting prior informed consent, it *does not prohibit
-sharing it or making it public*! GDPR and open data are not strictly in
-conflict with one another.
+will be used when getting prior informed consent, it
+*does not prohibit sharing it or making it public*! GDPR and open data
+are not strictly in conflict with one another.
 :::
 
 The standard and conventional way of saving raw data in R is to save it
@@ -147,11 +147,11 @@ library(here)
 ```
 
 ::: callout-tip
-The `{here}` package was described in the [Import data
-session](https://r-cubed-intro.rostools.org/sessions/import-data) of the
-introductory workshop and makes it easier to refer to other files in an
-R project. Read through the [section about the here
-package](https://r-cubed-intro.rostools.org/sessions/import-data#reading-task-relative-paths-in-the-r-project)
+The `{here}` package was described in the
+[Import data session](https://r-cubed-intro.rostools.org/sessions/import-data)
+of the introductory workshop and makes it easier to refer to other files
+in an R project. Read through the
+[section about the here package](https://r-cubed-intro.rostools.org/sessions/import-data#reading-task-relative-paths-in-the-r-project)
 in the introductory R workshop to learn more.
 :::
 
@@ -159,9 +159,9 @@ R runs code while working in the current *working directory*, which you
 can see on the top of the RStudio Console pane and is shown in the red
 box inside the image below.
 
-![The folder location that R does it's "work", called the "working
-directory", highlighted by the red
-box.](/images/rstudio-console-working-directory.png){fig-alt="An image of the RStudio IDE with the Console pane open and a red outline highlighting the working directory location."}
+![The folder location that R does it's "work", called the "working directory", highlighted by the red box.](/images/rstudio-console-working-directory.png){fig-alt="An
+image of the RStudio IDE with the Console pane open and a red outline
+highlighting the working directory location."}
 
 When in an RStudio R Project, the working directory is the folder where
 the `.Rproj` file is located. When you run scripts in R with `source()`
@@ -343,10 +343,10 @@ usethis::with_project(
 ```
 
 Notice the indentation and spacing of the code. Like writing any
-language, code should follow a [style
-guide](https://style.tidyverse.org). An easy way of following a specific
-style in R is by using the `{styler}` package. We will be using this
-package regularly during the workshop. You can run it by using
+language, code should follow a
+[style guide](https://style.tidyverse.org). An easy way of following a
+specific style in R is by using the `{styler}` package. We will be using
+this package regularly during the workshop. You can run it by using
 {{< var keybind.style >}} while in RStudio. Try it right now while you
 are working in the `data-raw/dime.R` script.
 
@@ -415,7 +415,7 @@ this function in the Console:
 r3::check_project_setup_intermediate()
 ```
 
-```
+```text
 ~/Desktop/LearnR3
 ├── DESCRIPTION
 ├── LearnR3.Rproj
