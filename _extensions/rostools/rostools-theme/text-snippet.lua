@@ -36,11 +36,6 @@ local wip = [[
 :::
 ]]
 
-local discord_text = [[
-If you want to get help virtually or after the workshop, you can join the
-[Discord channel](https://discord.gg/WKyTF5yXBJ) where you can ask questions
-in the `questions-or-advice` text channel.
-]]
 
 function text_snippet(args)
   local snippet_type = pandoc.utils.stringify(args[1])
@@ -53,7 +48,5 @@ function text_snippet(args)
     return quarto.utils.string_to_blocks(wip)
   elseif snippet_type == "faq_text" then
     return quarto.utils.string_to_blocks(faq_text)
-  elseif snippet_type == "discord_text" then
-    return quarto.utils.string_to_blocks(discord_text)
   end
 end
