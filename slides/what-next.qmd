@@ -1,6 +1,6 @@
 ---
 search: false
-format: r3-theme-revealjs
+format: rostools-theme-revealjs
 bibliography: "../includes/references.bib"
 csl: "../includes/vancouver.csl"
 knitr:
