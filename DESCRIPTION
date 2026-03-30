@@ -28,14 +28,12 @@ Imports:
     usethis,
     vroom,
     withr,
-    r3admin (>= 0.0.1),
     readr,
     roxygen2
 Suggests:
     prodigenr,
     tidyverse
 Remotes:
-    github::rostools/r3,
-    rostools/r3admin
+    github::rostools/r3
 Encoding: UTF-8
 LazyData: true
