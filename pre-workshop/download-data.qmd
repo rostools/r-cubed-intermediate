@@ -6,6 +6,19 @@ library(here)
 library(fs)
 temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
+prodigenr::setup_project(project_path)
+usethis::with_project(
+  path = project_path,
+  {
+    r3::create_qmd_doc()
+  }
+)
+usethis::with_project(
+  path = project_path,
+  {
+    usethis::use_r("functions", open = FALSE)
+  }
+)
 ```
 
 In general, you want to store your original raw data that you'd use for
