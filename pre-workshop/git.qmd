@@ -1,4 +1,4 @@
-# Git basics and setup {#sec-git-basics}
+# Git basics and setup {#sec-git}
 
 Since Git has already been covered in the
 [introduction workshop](https://r-cubed-intro.rostools.org), we won't

@@ -82,11 +82,11 @@ includes to:
    can take the **longest amount of time** because you have to contact
    your IT to install these packages.
 4. Install the necessary R packages in @sec-installing-r-packages.
-5. [Read about Git](git-basics.qmd) (@sec-git-basics) and configure Git
+5. [Read about Git](git-basics.qmd) (@sec-git) and configure Git
    on your computer if you haven't already. If you haven't used Git
    before, this task could take a while because of the reading.
 6. Confirm your Git setup within the [Git Basics](git-basics.qmd)
-   (@sec-git-basics) section with `r3::check_setup()`. This is a check
+   (@sec-git) section with `r3::check_setup()`. This is a check
    to see if everything is working correctly. You'll later need to paste
    this output into the survey.
 7. [Create an R Project](create-project.qmd) (@sec-create-project),
