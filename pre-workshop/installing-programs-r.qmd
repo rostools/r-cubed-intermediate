@@ -20,16 +20,6 @@ below. If not, you will need to update them.
    When installing, it will ask for a selecting a "Text Editor" and
    while we won't be using this in the workshop, Git needs to know this
    information so choose Notepad.
-4. [Rtools](https://cran.r-project.org/bin/windows/Rtools/): Choose the
-   version that says "R-release". Rtools is needed in order to build
-   some R packages. For some computers, installing Rtools can take some
-   time.
-
-::: callout-important
-The version of RTools must match the version of R that you have
-installed. For example, if you have R version 4.3, you need to install
-RTools 4.3.
-:::
 
 ### MacOS
 
