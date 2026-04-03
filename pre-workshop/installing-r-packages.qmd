@@ -15,7 +15,7 @@ this workshop. Run these two functions in the Console to install our
 custom `r3` package as well as the `{tidyverse}` package.
 
 ``` {.r filename="Console"}
-install.packages("r3", repos = c("https://rostools.r-universe.dev"))
+install.packages("r3", repos = c("https://rostools.r-universe.dev", "https://cloud.r-project.org"))
 install.packages("tidyverse")
 ```
 
