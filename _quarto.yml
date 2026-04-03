@@ -34,8 +34,9 @@ book:
         - pre-workshop/code-of-conduct.qmd
         - pre-workshop/installing-programs-r.qmd
         - pre-workshop/installing-r-packages.qmd
-        - pre-workshop/git-basics.qmd
+        - pre-workshop/git.qmd
         - pre-workshop/create-project.qmd
+        - pre-workshop/github.qmd
         - pre-workshop/download-data.qmd
         - pre-workshop/survey.qmd
     - part: "Sessions"

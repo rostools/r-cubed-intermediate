@@ -82,23 +82,26 @@ includes to:
    can take the **longest amount of time** because you have to contact
    your IT to install these packages.
 4. Install the necessary R packages in @sec-installing-r-packages.
-5. [Read about Git](git-basics.qmd) (@sec-git) and configure Git
-   on your computer if you haven't already. If you haven't used Git
-   before, this task could take a while because of the reading.
+5. [Read about Git](git-basics.qmd) (@sec-git) and configure Git on your
+   computer if you haven't already. If you haven't used Git before, this
+   task could take a while because of the reading.
 6. Confirm your Git setup within the [Git Basics](git-basics.qmd)
-   (@sec-git) section with `r3::check_setup()`. This is a check
-   to see if everything is working correctly. You'll later need to paste
-   this output into the survey.
+   (@sec-git) section with `r3::check_setup()`. This is a check to see
+   if everything is working correctly. You'll later need to paste this
+   output into the survey.
 7. [Create an R Project](create-project.qmd) (@sec-create-project),
    including the folder, files, and Quarto file.
-8. [Download the data](download-data.qmd) (@sec-download-data) and save
+8. [Read about and set up GitHub](github.qmd) (@sec-github) with
+   RStudio. You'll also connect the project you made in the previous
+   step to GitHub.
+9. [Download the data](download-data.qmd) (@sec-download-data) and save
    it to your computer. Run the check
    `r3::check_project_setup_intermediate()` in this section to see that
    everything is as expected. You'll later need to paste this output
    into the survey.
-9. Complete the pre-workshop [survey](survey.qmd) (@sec-survey): This
-   survey is pretty quick, maybe \~10 minutes. There will be some bits
-   from the tasks that you will need to paste into this survey.
+10. Complete the pre-workshop [survey](survey.qmd) (@sec-survey): This
+    survey is pretty quick, maybe \~10 minutes. There will be some bits
+    from the tasks that you will need to paste into this survey.
 
 Check each section for exact details on completing these tasks.
 

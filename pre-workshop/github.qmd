@@ -1,0 +1,347 @@
+# GitHub basics and setup {#sec-github}
+
+```{r}
+#| include: false
+# To trigger auto-linking
+library(downlit)
+```
+
+## The basics of GitHub
+
+Since we will be using Git to track changes to our files during the
+workshop and using GitHub to store our projects as well as to
+collaborate during the project work, you'll need to get set up with
+GitHub.
+
+While GitHub is a natural extension to using Git, given the limited time
+available, we will only be going over aspects of GitHub that relate to
+storing your project Git repository and working together. If you want to
+learn more about using GitHub, check out the
+[session](https://r-cubed-intro.rostools.org/sessions/version-control.html)
+on it in the introduction workshop. However, you'll briefly read about
+it in this section.
+
+GitHub is a popular online service for hosting Git repositories. It also
+makes collaborating on projects much easier. Keep in mind, that GitHub
+is a company that provides a service for storing Git repositories, while
+Git is software you install on your computer. They are two different
+things that can sometimes be confused with each other.
+
+A version control system like Git that didn't include a type of external
+backup wouldn't be a very good system, because if something happened to
+your computer, you'd lose your Git repository. In Git, this "external"
+backup is called a "remote", meaning it is something that is separate
+and in a different location, usually online, than the main repository.
+The remote repository is essentially a duplicate copy of the *history*,
+found in the `.git/` folder, of your *local* repository on your
+computer. So when you synchronize with the remote, as illustrated in
+@fig-git-remotes, it only copies over the changes made as commits in the
+history.
+
+One of the biggest reasons why we teach Git is because of the popularity
+of several Git repository hosting sites. The most popular one is
+[GitHub](https://github.com/), which is what we will use during this
+workshop and is also where we host the Git repository of this website
+for the workshop.
+
+```{mermaid}
+%%| label: fig-git-remotes
+%%| fig-cap: The 'remote' vs 'local' repository, or online vs on your computer.
+%%| echo: false
+%%| eval: true
+graph TB
+    linkStyle default interpolate basis
+    A('Remote':<br>GitHub) --- B('Local':<br>Your computer)
+
+    style A fill:White,stroke:DarkBlue,stroke-width:1.5px;
+    style B fill:White,stroke:DarkBlue,stroke-width:1.5px;
+```
+
+::: {.callout-warning appearance="default"}
+When using GitHub, especially in relation to health research, you need
+to be mindful of what you save into the Git history and what you put up
+online. Some things to think about are:
+
+- **Do not** save any personal or sensitive data or files in your Git
+  repository.
+- Generally don't save very large files, like big image files or large
+  (non-personal) datasets.
+
+In both cases, it's better to use another tool to store files like that,
+rather than through Git and GitHub.
+:::
+
+::: callout-note
+Some research projects require working on restricted server environments
+(such as [Denmark Statistics](https://www.dst.dk/en) when doing research
+on the Danish register data), where access to the internet is not
+available. This means that you can't use GitHub or any other online Git
+repository hosting service. However, you can still use Git on those
+servers without using a remote.
+:::
+
+The way you interact with GitHub is through Git, which you can use
+through RStudio. You do that by uploading ("pushing") a local Git
+repository (on your computer) to GitHub (the remote) and then
+downloading ("pulling") it back to your computer whenever you want to
+synchronise the changes between GitHub and your local Git repository,
+which is shown in @fig-git-remotes-synch. Unlike OneDrive or Dropbox
+where synchronisation is done automatically, in Git you need to manually
+synchronise with the remote because Git is designed to leave you in
+control. "Pushing" is when changes to the history are uploaded to GitHub
+while "pulling" is when the history is downloaded from GitHub.
+
+```{mermaid}
+%%| label: fig-git-remotes-synch
+%%| fig-cap: "Synchronizing with GitHub: 'Pushing' and 'pulling'."
+%%| echo: false
+%%| eval: true
+graph TB
+    linkStyle default interpolate basis
+    A('Remote':<br>GitHub) -- Pull --> B('Local':<br>Your computer)
+    B -- Push --> A
+
+    style A fill:White,stroke:DarkBlue,stroke-width:1.5px;
+    style B fill:White,stroke:DarkBlue,stroke-width:1.5px;
+```
+
+## Setting up GitHub and connecting to RStudio
+
+Interacting with GitHub through RStudio requires you to use something
+called a "personal access token" (also called PAT or simply "token").
+But first, you need to have a GitHub account in order to make a token.
+If you don't have an account, go to
+[github.com/join](https://github.com/join) to create an account. After
+that, you can connect (or rather, authenticate) your computer with
+GitHub.
+
+Any time you do anything on the Internet, there is some risk to having
+your information maliciously hacked. This is no different when using
+GitHub. So if you can, you should try to be more secure with what you
+send across the internet. In fact, most functions that relate to Git or
+using GitHub *require* using more secure features in order to work.
+`{usethis}` simplifies this with some helper functions. The `{usethis}`
+website has a really
+[well written guide](https://usethis.r-lib.org/articles/articles/git-credentials.html)
+on being more secure when working with GitHub. Here is a very simplified
+version of what they recommend that is relevant for what we are doing in
+this course.
+
+- Use tokens (PATs) when interacting with your GitHub remote
+  repositories while outside of the GitHub website (e.g. when using R or
+  `{usethis}`). Tokens are like temporary passwords that provide limited
+  access to your GitHub account, like being able to read or write to
+  your GitHub repositories, but not being able to delete them. They are
+  useful because you can easily delete the token if you feel someone got
+  access to it and prevent it from being used, unlike your own password
+  which you would have to manually change if it was stolen.
+
+- Use a password manager to save the token for later use. Using password
+  managers is basically a requirement for having secure online accounts,
+  because they can generate random and long passwords that you don't
+  have to remember.
+
+- Use packages like `{gitcreds}` to give `{usethis}` access to the token
+  and to interact with your GitHub repositories. You normally would use
+  `{gitcreds}` every time you restart your computer or after a certain
+  amount of time passes since you last used it.
+
+::: {.callout-note appearance="default"}
+## What is a password manager?
+
+A password manager is an app or web service that let's you save or
+create passwords for all your accounts, like banking or social media.
+Instead of having to remember multiple passwords used across multiple
+accounts, or the very insecure approach of one or two passwords for all
+your accounts, you instead need to remember only one very secure
+password that contains all your other very secure passwords. You can
+google for "password manager" and your operating system (Windows, MacOS)
+to find possible ones to install or use.
+
+Want a recommendation? [Bitwarden](https://bitwarden.com/) is a very
+good password manager that is easy to use and the free version has
+everything you need to manage, store, and create passwords.
+:::
+
+You might have created a token if you took the introductory workshop.
+You can check if you have a token already set by using the `{usethis}`
+package. Open up RStudio and in the Console type:
+
+``` {.r filename="Console"}
+usethis::gh_token_help()
+```
+
+You should see something like the below:
+
+```text
+• GitHub host: 'https://github.com'
+• Personal access token for 'https://github.com': <unset>
+• To create a personal access token, call `create_github_token()`
+• To store a token for current and future use, call `gitcreds::gitcreds_set()`
+ℹ Read more in the 'Managing Git(Hub) Credentials' article:
+  https://usethis.r-lib.org/articles/articles/git-credentials.html
+```
+
+If the output says that the token is `<unset>` like the above text does,
+that means you need to make Git and `{usethis}` aware of the token on
+your computer. You do that by typing the next function in the Console to
+create the token on GitHub (if you haven't created one already).
+
+``` {.r filename="Console"}
+usethis::create_github_token()
+```
+
+This function sends you to the GitHub "Generate new token" webpage with
+all the necessary settings checked. Set the "Expiry date" to 90 days
+(this is a good security feature). Then, click the green button at the
+bottom called "Generate token" and you'll have a very long string
+generated for you that starts with `ghp_`.
+**Save this token in your password manager** (see note above).
+
+This is the token you will use every time you open up RStudio and
+interact with GitHub through R. You do **not** need to create a new
+token for each R project or package you make, you only need to create
+one after your current token expires (typically every couple of months),
+if you've forgotten the token or lost it, or if you've changed to a new
+computer.
+
+In the Console, run:
+
+``` {.r filename="Console"}
+gitcreds::gitcreds_set()
+```
+
+And then copy and paste your token into the prompt in the Console. This
+token usually gets saved for the day (it gets cached), but after
+restarting your computer, you will need to run the action again. If it
+asks to replace an existing one, select the "yes" option. Doing this is
+a bit like using the two-factor authentication (2FA) you often have to
+do when, for instance, accessing your online bank account or other
+government website. In this case, you are telling GitHub (when
+interacting to it through RStudio, like uploading and downloading your
+changes) that you are who you claim to digitally be.
+
+::: {.callout-tip appearance="default"}
+There is another great helper function that runs a lot of checks and
+gives some advice when it finds potential problems.
+
+``` {.r filename="Console"}
+usethis::git_sitrep()
+```
+
+Just to be aware, using this function outputs a *lot* of stuff, most of
+which you probably don't even need to know or don't even know what it
+means. That's ok, since it is meant as a diagnostic tool.
+:::
+
+## Linking your project to GitHub
+
+You've authenticated your computer with GitHub, now is the time to
+upload your project to GitHub. Before we do that though, you need to do
+a few things. First, let's tell Git to ignore some other files, like the
+`.html` files as well as the `_files/` folder that Quarto automatically
+creates when making an HTML document. And then, you'll need to commit
+your changes to Git, so that you can eventually push them to GitHub.
+
+While in the `LearnR3` repository in RStudio, go to the Console and run
+this function to ignore the auto-generated Quarto files.
+
+```{r ignore-html-files}
+#| filename: "Console"
+#| eval: false
+usethis::use_git_ignore(c("*.html", "*_files"))
+```
+
+As mentioned in the [Git](git.qmd) (@sec-git) section, we covered Git in
+the introductory workshop and won't go into much detail here. During the
+workshop, we'll take our time with using the Git interface, as we will
+use it regularly. For this pre-workshop tasks though, you can either use
+the Git interface or use R functions in the Console.
+
+**If you are familiar enough with using the Git interface**, then open
+the Git interface with either the Git icon at the top near the menu bar
+or with {{< var keybind.commit >}}. While in the interface, select all
+the current changes by clicking the checkbox beside the files and stage
+them. Then write a commit message in the text box on the right,
+something like `Setting up the project`. Click the "Commit" button, and
+finally close the Git interface.
+
+**If you have never used the Git interface before**, you can instead use
+R functions to do the same thing. In the Console, run:
+
+```{.r filename="Console"}
+gert::git_add(".")
+gert::git_commit("Setting up the project")
+```
+
+This will do the same thing as the Git interface, which is to save all
+the changes to the Git history.
+
+After adding the changes to the Git history, this should be the first
+commit for everyone. You're now ready to connect your project to GitHub.
+In the Console, run:
+
+``` {.r filename="Console"}
+usethis::use_github()
+```
+
+::: callout-note
+You may have to manually enter your username and password, even though
+you used `gitcreds::gitcreds_set()`.
+
+If you have troubles logging in, you may need to update Git.
+:::
+
+::: callout-tip
+You might notice the word `origin` when referring to remotes. The word
+*origin* is the default short name used to refer to the location of the
+remote (the GitHub URL). You will probably see this word in many other
+places to refer to a remote.
+:::
+
+The `use_github()` function will take your project and upload it to
+GitHub. A bunch of text should pop up and it should open a browser with
+your project on GitHub. As you work on this project during the workshop,
+you'll be synchronising changes regularly.
+
+As you use Git for your project and save your changes to the Git
+history, you can use the "Push" command to send your history of changes
+to GitHub. The diagram in @fig-local-vs-remote shows how it conceptually
+looks like.
+
+```{mermaid fig-local-vs-remote}
+%%| label: fig-local-vs-remote
+%%| fig-cap: Schematic showing a local repository connected to GitHub's remote repository.
+%%| fig-alt: Flow diagram with two boxes, one for the local repository and one for the remote repository on GitHub. An arrow labeled "Push" goes from the local to GitHub, and an arrow labeled "Pull" goes from GitHub to the local.
+graph TB;
+    yours(Your local<br>repository) -->|Push| github(GitHub remote<br>repository)
+    github -->|Pull| yours
+```
+
+The "Your local" is your own computer. Whenever you "push" to GitHub, it
+means it will upload your file changes (like synchronizing in Dropbox).
+Whenever you "pull" from GitHub, it takes any changes made on GitHub and
+downloads them to your "Local" computer.
+
+Using GitHub (because of Git) is one of the most effective ways to
+collaborate on a project. Hundreds of companies and hundreds of
+thousands of workers use Git and services like GitHub to work together
+on massive projects. The way collaboration works would conceptually look
+like:
+
+```{mermaid fig-local-collab-and-remote}
+%%| label: fig-local-collab-and-remote
+%%| fig-cap: Schematic showing a local repository, GitHub's remote repository, and a collaborator's repository.
+graph TB;
+    yours(Your local<br>repository) -->|Push| github(GitHub remote<br>repository)
+    github -->|Pull| yours
+    others(Collaborator's<br>local repository) -->|Push| github
+    github -->|Pull| others
+```
+
+This approach to collaborating makes it much easier to contribute
+*directly* (not through emails) to projects and to more easily help
+others out with issues.
+
+You'll get more practice using GitHub during the workshop, and you'll
+have lots of chances to ask questions about it.
