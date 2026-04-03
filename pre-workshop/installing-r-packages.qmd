@@ -20,9 +20,15 @@ install.packages("tidyverse")
 ```
 
 ::: {.callout-warning appearance="default"}
-Installing packages is tricky and doesn't always work as expected. Here
-are some other methods to try if you have trouble installing the
-packages with the code above.
+Installing packages is tricky, especially on some work laptops, and
+doesn't always work as expected. Here are some other methods to try if
+you have trouble installing the packages with the code above.
+
+For Windows users, you may have to install
+[RTools](https://cran.r-project.org/bin/windows/Rtools/) to use either
+the `pak` or `remotes` method. The version of RTools you install must
+match the version of R that you have installed. For example, if you have
+R version 4.4, you need to install RTools 4.4.
 
 First, try installing the `r3` package directly from GitHub with
 `{pak}`:
@@ -45,12 +51,6 @@ that also doesn't work, try to complete the other tasks as best you can,
 complete the survey, and let us know you have a problem in the survey.
 We'll email you at least a week before the workshop starts to try to
 help you get it working.
-
-For Windows users, you may have to install
-[RTools](https://cran.r-project.org/bin/windows/Rtools/) if you use the
-`pak` or `remotes` method. The version of RTools you install must match
-the version of R that you have installed. For example, if you have R
-version 4.4, you need to install RTools 4.4.
 :::
 
 ::: {.callout-tip appearance="default"}
