@@ -28,18 +28,14 @@ sections:
 After reading them, in your RStudio in the R Console, run this function
 that should open up a pop-up window to type in your name and email:
 
-```{r setup-git-config}
-#| eval: false
-#| filename: Console
+```{.r filename="Console"}
 r3::setup_git_config()
 ```
 
 For most of the workshop, we will be using Git as shown in the
 [Using Git in RStudio](https://r-cubed-intro.rostools.org/sessions/version-control#using-git-in-rstudio)
-section. Later on during the workshop, we might connect our projects to
-GitHub, which is described in the
-[Synchronizing with GitHub](https://r-cubed-intro.rostools.org/sessions/github#synchronizing-with-github)
-section.
+section. Later in the [pre-workshop tasks](github.com) (@sec-github),
+you'll read about GitHub and connect your project to it.
 
 ## Confirming your Git setup {#sec-confirm-git-setup}
 
@@ -47,9 +43,7 @@ Since you will be using Git regularly throughout the workshop, please
 run this check to ensure everything is setup correctly. Type and run
 this function in the R Console of RStudio:
 
-```{r check-git-setup}
-#| filename: Console
-#| eval: false
+```{.r filename="Console"}
 r3::check_setup()
 ```
 
@@ -57,9 +51,9 @@ The output you'll get for success should look something like this:
 
 ```text
 Checking R version:
-✔ Your R is at the latest version of 4.4.0!
+✔ Your R is at the latest version of {{< meta versions.r >}}!
 Checking RStudio version:
-✔ Your RStudio is at the latest version of 2024.12.1.563!
+✔ Your RStudio is at the latest version of {{< meta versions.rstudio >}}!
 Checking Git config settings:
 ✔ Your Git configuration is all setup!
   Git now knows that:
@@ -69,11 +63,3 @@ Checking Git config settings:
 
 **Eventually you will need to copy and paste the output into one of the
 survey questions**.
-
-::: callout-note
-While GitHub is a natural extension to using Git, given the limited time
-available in the workshop, we will not be going over how to use GitHub.
-If you want to learn about using GitHub, check out this
-[session](https://r-cubed-intro.rostools.org/sessions/github) about it
-in the introduction workshop.
-:::
