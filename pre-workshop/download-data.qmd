@@ -30,9 +30,9 @@ processed data to a new file that you'd then use for your analysis. This
 workflow is visually represented below in @fig-download-to-data-raw
 
 In R Projects, the common convention is to keep the raw data in the
-`data-raw/` folder, which is what you've already done during the
-pre-workshop tasks. This is where you would download or copy the data
-files you need for your project.
+`data-raw/` folder, which is what you'll do during this section of the
+pre-workshop tasks. This `data-raw/` folder is where you would download
+or copy the data files you need for your project.
 
 ```{mermaid}
 %%| echo: false
@@ -45,60 +45,63 @@ flowchart TD
   process -- "Save"--> data[/"data/<br>folder"/]
 ```
 
-To best demonstrate the concepts in the workshop, it's best to use a
-real dataset to apply what you're going to learn. So for this workshop,
-you're going to use an openly licensed dataset from a study looking at
-how bioactive components in food impact our gut microbiota, which is
-called the [DIME](https://zenodo.org/records/8268744) study
-[@Traka2023].
+To most effectively demonstrate the concepts in the workshop, it's best
+to use a real dataset to apply what you're going to learn. So for this
+workshop, you're going to use an openly licensed dataset from a study
+assessing physiological stress in nurses during the COVID-19 pandemic,
+which is called the [Nurses' Stress](https://zenodo.org/records/5514277)
+dataset [@Hosseini2021].
 
-Unfortunately, like most research data, it isn't the most tidy. So it's
-been cleaned up a bit for you to use in this workshop.
+Unfortunately, like most research data, it isn't very tidy. So we've
+cleaned it up a bit for you to use in this workshop. It's also a very
+big dataset, so we've made it smaller for you to use but it still is
+quite large.
 
 ::: callout-tip
 Much of the concepts and skills we will cover in this workshop were used
 to process and prepare this dataset for you to use in this workshop. If
 you want to see the code "in action", check out the
-[`data-raw/dime.R`](https://github.com/rostools/r-cubed-intermediate/blob/main/data-raw/dime.R)
+[`clean.R`](https://github.com/rostools/r-cubed-intermediate/blob/main/data-raw/nurses-stress-cleaning/clean.R)
 script in this workshop's GitHub repository.
 :::
 
 Since this workshop is about being reproducible and applying modern
 approaches to data analysis, you're going to start by writing and saving
-R code to download the dataset your R project and save it to a folder
+R code to download the dataset to your R project and save it to a folder
 called `data-raw/`. During the workshop we'll be continuing to process
 and prepare this dataset for analysis, though we won't do any
 statistical analysis during this workshop.
 
 The end goal for this workshop is that you will have a sequence of R
-code written within the Quarto document that will take this raw data and
-process it into a cleaned and prepared dataset. Processing data for
-cleaning is something that you will do a lot of in your own work, since
-most research data is not directly ready to be analysed. In the process
-of processing the data, you'll also learn concepts and skills that can
-be applied to many different tasks and situations.
+code written within the `docs/cleaning.qmd` Quarto document that will
+take this raw data and process it into a cleaned and prepared dataset.
+Processing data for cleaning is something that you will do a lot of in
+your own work, since most research data is not directly ready to be
+analysed. As you process the data, you'll also learn concepts and skills
+that can be applied to many different tasks and situations.
 
-For now, read the description of the DIME dataset that was taken from
-the [DIME](https://zenodo.org/records/8268744) dataset page:
+For now, read the description of the nurses' stress dataset that was
+taken from the
+[nurses' stress study](https://zenodo.org/records/5514277) dataset page:
 
-> "The DIME study consists of a randomised 2x2 cross-over human
-> intervention where healthy participants (n = 20) are subjected to a
-> diet high in bioactive-rich food for two weeks and a diet low in
-> bioactive-rich food. There is a four-week washout between the two
-> interventions.
->
-> The continuous glucose monitoring was achieved using the Abbott
-> \[freestyle\] libre flash glucose device. The baseline of the
-> participants were determined 7 days before the start of the
-> intervention, followed by the first arm and second arm. The period
-> between the two arms (washout) was not recorded.
->
-> We also included sleep data which consists of the amount of time spent
-> in bed and during that time the amount of time spent in light, deep
-> and rem in all 20 participants during the course of the dietary
-> intervention, both the high and low bioactive diet. that was captured
-> using \[FitBit\] wearables during both stages of the dietary
-> intervention"
+> "Advances in wearable technologies provide the opportunity to monitor
+many physiological variables continuously. Stress detection has gained
+increased attention in recent years, especially because early stress
+detection can help individuals better manage health to minimize the
+negative impacts of long-term stress exposure. This paper provides a
+unique stress detection dataset created in a natural working
+environment in a hospital. This dataset is a collection of biometric
+data of nurses during the COVID-19 outbreak. Studying stress in a work
+environment is complex due to the influence of many social, cultural,
+and individuals experience in dealing with stressful conditions. In
+order to address these concerns, we captured both the physiological
+data and associated context pertaining to the stress events. We
+monitored specific physiological variables, including electrodermal
+activity, heart rate, skin temperature, and accelerometer data of the
+nurse subjects. A periodic smartphone-administered survey also
+captured the contributing factors for the detected stress events. A
+database containing the signals, stress events, and survey responses
+is available upon request."
 
 ::: callout-note
 You may be wondering, how can we be using this dataset that has human
@@ -126,10 +129,10 @@ to the `data-raw/` folder. There is a helper function for that from
 `{usethis}`. While in your `LearnR3` R Project, go to the R Console pane
 in RStudio and type out:
 
-```{r use-data-raw-dime}
+```{r use-data-raw-nurses-stress}
 #| filename: "Console"
 #| eval: false
-usethis::use_data_raw("dime")
+usethis::use_data_raw("nurses-stress")
 ```
 
 ```{r admin-create-data-raw}
@@ -137,24 +140,25 @@ usethis::use_data_raw("dime")
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_data_raw("dime", open = FALSE)
+    usethis::use_data_raw("nurses-stress", open = FALSE)
   }
 )
 ```
 
 What this function does is create a new folder called `data-raw/` and
-creates an R script called `dime.R` in that folder. This is where we
-will store the mostly raw (though partly cleaned up) DIME data that
-you'll get from the workshop's GitHub repository. After running this
-function, the R script should open up for you, otherwise, go into the
-`data-raw/` folder and open up the new `dime.R` script.
+creates an R script called `nurses-stress.R` in that folder. This is
+where we will store the mostly raw (though partly cleaned up) nurses'
+stress data that you'll get from the workshop's GitHub repository. After
+running this function, the R script should open up for you, otherwise,
+go into the `data-raw/` folder and open up the new `nurses-stress.R`
+script.
 
 The first thing you want do is **delete all the code in the script**
 that is added there by default. Then write this `library()` function at
 the top of the file:
 
 ```{r data-raw-script-add-here}
-#| filename: "data-raw/dime.R"
+#| filename: "data-raw/nurses-stress.R"
 #| output: false
 library(here)
 ```
@@ -198,7 +202,9 @@ withr::with_dir(
 )
 ```
 
-::: callout-note
+::: {.callout-note collapsed="true"}
+## Code to print file tree
+
 You don't need to run the below code. But if you want to see the
 structure and content of a directory, you can use the `dir_tree()`
 function from the `{fs}` package, which means "filesystem", by running
@@ -213,143 +219,134 @@ fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 :::
 
 If we open up RStudio with the `LearnR3.Rproj` file and run code in the
-`data-raw/dime.R`, R runs the commands assuming everything starts in the
-`LearnR3/` folder. But! If we run the code that is in the `dime.R`
-script by, e.g. not while in RStudio, not in the R Project, or using
-`source()`, R runs the code in that file by assuming the working
-directory is the folder that the file is in, which is in the `data-raw/`
-folder. So if you try to load in data in another folder like `data/`, R
-will *think* you mean the `data/` folder in the `data-raw/` folder,
-which doesn't exist! So this can make things tricky. What `here()` does
-is to tell R to first look for the `.Rproj` file and then start looking
-for the file we actually want. This might not make sense yet, but as we
-go through the workshop, you will see why this is important to consider.
+`data-raw/nurses-stress.R`, R runs the commands assuming everything
+starts in the `LearnR3/` folder. But! If we run the code that is in the
+`nurses-stress.R` script by, e.g. not while in RStudio, not in the R
+Project, or using `source()`, R runs the code in that file by assuming
+the working directory is the folder that the file is in, which is in the
+`data-raw/` folder. So if you try to load in data in another folder like
+`data/`, R will *think* you mean the `data/` folder in the `data-raw/`
+folder, which doesn't exist! So this can make things tricky. What
+`here()` does is to tell R to first look for the `.Rproj` file and then
+start looking for the file we actually want. This might not make sense
+yet, but as we go through the workshop, you will see why this is
+important to consider.
 
 Alright, the next step is to download the dataset. Paste this code into
-the `data-raw/dime.R` script:
+the `data-raw/nurses-stress.R` script that has the URL to the dataset
+(stored on
+[Proton Drive, a secure EU cloud storage service](https://proton.me/)):
 
-```{r dime-data-link}
-#| filename: "data-raw/dime.R"
+```{r nurses-stress-data-link}
+#| filename: "data-raw/nurses-stress.R"
 #| eval: false
-dime_link <- "https://github.com/rostools/r-cubed-intermediate/raw/refs/heads/main/data/dime.zip"
+nurses_stress_link <- "https://drive.proton.me/urls/ZHZ6TCAN2W#e5D5U4IajdYp"
 ```
 
-Then we're going to write out the function `download.file()` to download
-and save the DIME dataset zip file. We're going to save the zip file to
-`data-raw/dime.zip` with the `destfile` argument. This code should be
-written in the `data-raw/dime.R` file. Run all the lines of code in this
-script to download the dataset.
+Right below this line, write out the function `download.file()` to
+download and save the nurses' stress dataset
+[tar](https://en.wikipedia.org/wiki/Tar_(computing)) file. We're going
+to save the tar file to `data-raw/nurses-stress.tar` with the `destfile`
+argument. This code should be written in the `data-raw/nurses-stress.R`
+file. Run all the lines of code in this script to download the dataset.
 
-```{r download-dime}
-#| filename: "data-raw/dime.R"
+```{r download-data}
+#| filename: "data-raw/nurses-stress.R"
 #| eval: false
-download.file(dime_link, destfile = here("data-raw/dime.zip"))
+download.file(nurses_stress_link, destfile = here("data-raw/nurses-stress.tar"))
 ```
 
-```{r admin-copy-zip-data}
+```{r admin-copy-tar-data}
 #| include: false
 # To the temporary project, to test how this works there.
 fs::file_copy(
-  here::here("data/dime.zip"),
-  fs::path(project_path, "data-raw", "dime.zip"),
+  here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
+  fs::path(project_path, "data-raw", "nurses-stress.tar"),
   overwrite = TRUE
 )
 
-# To make the next code works as we've kept it in `data`,
+# To make the next code works as we've kept it in `data-raw/nurses-stress/`,
 # but below we do it in `data-raw/`.
 fs::file_copy(
-  here::here("data/dime.zip"),
-  here::here("data-raw", "dime.zip"),
+  here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
+  here::here("data-raw", "nurses-stress.tar"),
   overwrite = TRUE
 )
 ```
 
-*After* the zip file is downloaded (it should be called `dime.zip` in
-the `data-raw/` folder), comment out this line, so that inside the
-`data-raw/dime.R` script it looks like:
-
-```{r comment-out-download-dime}
-#| filename: "data-raw/dime.R"
-#| eval: false
-# Comment out so it doesn't download again.
-# download.file(dime_link, destfile = here("data-raw/dime.zip"))
-```
-
-We want you to do this because we don't want you to accidentally run
-this code again, since you've already downloaded it.
-
 Because the original dataset is stored elsewhere online, you don't need
-to save it to your Git history. Add the zip file to the Git ignore list
+to save it to your Git history. Add the tar file to the Git ignore list
 by typing out and running this code in the Console. You only need to do
 this once.
 
-```{r use-git-ignore-dime-zip}
+```{r use-git-ignore-nurses-stress-tar}
 #| filename: "Console"
 #| eval: false
-usethis::use_git_ignore("data-raw/dime.zip")
+usethis::use_git_ignore("data-raw/nurses-stress.tar")
 ```
 
-```{r admin-ignore-dime-zip}
+```{r admin-ignore-nurses-stress-tar}
 #| include: false
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_git_ignore("data-raw/dime.zip")
+    usethis::use_git_ignore("data-raw/nurses-stress.tar")
   }
 )
 ```
 
 Part of reproducibility is ensuring you have a written record of what
 you did to your data to get to what you are claiming from your analysis.
-And part of that principle is to *"keep your raw data raw"*, meaning not
-to directly edit your raw data. Instead, let code do it for you so you
-have a record of what happened. When you have raw data for a specific
-project, store it in the `data-raw/` folder.
+And part of that principle is to *"keep your raw data raw"*, meaning
+that you should *not* directly edit your raw data. Instead, let code do
+it for you so you have a record of what happened. When you have raw data
+for a specific project, store it in the `data-raw/` folder.
 
-Eventually, you will use R code to unzip the file, but the way that R
-works is if you unzip to an already existing folder, there can be some
+Eventually, you will use R code to "untar" the file, but the way that R
+works is if you untar to an already existing folder, there can be some
 issues or errors. And if you `source()` or re-run your code multiple
-times, it will always unzip the file. So before we begin, you'll write
-code to always first delete that unzipped output folder. In order to
+times, it will always untar the file. So before we begin, you'll write
+code to always first delete that untarred output folder. In order to
 delete the folder, you'll use the `{fs}` package to handle filesystem
 actions. Load the `{fs}` package with `library()` right below the other
 `library()` function at the top of the script:
 
 ```{r}
-#| filename: "data-raw/dime.R"
+#| filename: "data-raw/nurses-stress.R"
 library(here)
 library(fs)
 ```
 
-Now you can unzip the zip files by using the `unzip()` function by
-writing it in `data-raw/dime.R`. The first argument of `unzip()` is the
-zip file you want to unzip and the other important argument is called
-`exdir` that tells `unzip()` which folder you want to extract the files
-to. You'll want to save the output of the zip file to `data-raw/dime/`,
-so write this code at the bottom of the `data-raw/dime.R` script:
+Now you can untar the tar files by using the `untar()` function by
+writing it in `data-raw/nurses-stress.R`. The first argument of
+`untar()` is the tar file you want to untar and the other important
+argument is called `exdir` that tells `untar()` which folder you want to
+extract the files to. You'll want to save the output of the tar file to
+`data-raw/nurses-stress/`, so write this code at the bottom of the
+`data-raw/nurses-stress.R` script:
 
-```{r admin-dime-dir-exists}
+```{r admin-nurses-stress-dir-exists}
 #| include: false
-skip <- !fs::dir_exists(here::here("data-raw/dime/"))
+skip <- !fs::dir_exists(here::here("data-raw/nurses-stress/"))
 ```
 
-```{r unzip-dime-file}
-#| filename: "data-raw/dime.R"
+```{r untar-nurses-stress-file}
+#| filename: "data-raw/nurses-stress.R"
 #| eval: !expr skip
-unzip(
-  here("data-raw/dime.zip"),
-  exdir = here("data-raw/dime/")
+untar(
+  here("data-raw/nurses-stress.tar"),
+  exdir = here("data-raw/nurses-stress/")
 )
 ```
 
-```{r admin-unzip-dime-file}
+```{r admin-untar-nurses-stress-file}
 #| include: false
 usethis::with_project(
   path = project_path,
   {
-    unzip(
-      "data-raw/dime.zip",
-      exdir = "data-raw/"
+    untar(
+      "data-raw/nurses-stress.tar",
+      exdir = "data-raw/nurses-stress/"
     )
   }
 )
@@ -361,7 +358,7 @@ language, code should follow a
 specific style in R is by using the `{styler}` package. We will be using
 this package regularly during the workshop. You can run it by using
 {{< var keybind.style >}} while in RStudio. Try it right now while you
-are working in the `data-raw/dime.R` script.
+are working in the `data-raw/nurses-stress.R` script.
 
 There probably won't be anything that changes since you haven't written
 much code yet and maybe have copy and pasted it from this website. But
@@ -371,19 +368,17 @@ a good chance to become more familiar with it.
 To make sure you're aligned with what is described in this pre-workshop
 tasks, let's check to make sure your files and folders in `data-raw/`
 align with the files and folders that should be there. You can do this
-by running the `dir_tree()` function from the `{fs}` package, but you
-can also manually check the files by using the RStudio file pane or by
+by either running the `dir_tree()` function from the `{fs}` package or you
+can manually check the files by using the RStudio file pane or by
 using your file browser.
 
 ```{r print-tree-data-raw}
 #| filename: "Console"
 #| eval: false
-# NOTE: You don't need to run this code,
-# its here to show how we got the file list.
 fs::dir_tree("data-raw/")
 ```
 
-```{r admin-print-data-raw-after-unzip}
+```{r admin-print-data-raw-after-untar}
 #| echo: false
 #| message: false
 #| warning: false
@@ -396,25 +391,26 @@ usethis::with_project(
 ```
 
 If your files and folders in the `data-raw/` folder do not look like
-this, start over by deleting all the files *except for* the `dime.R` and
-`dime.zip` files. Then re-run the code from beginning to end.
+this, start over by deleting all the files *except for* the
+`nurses-stress.R` and `nurses-stress.tar` files. Then re-run the code
+from beginning to end.
 
 Since you have an R script that downloads the data and processes it for
 you, you don't need to have Git track it. So, in the Console, type out
 and run this command:
 
-```{r use-git-ignore-data-raw-dime}
+```{r use-git-ignore-data-raw-nurses-stress}
 #| filename: "Console"
 #| eval: false
-usethis::use_git_ignore("data-raw/dime/")
+usethis::use_git_ignore("data-raw/nurses-stress/")
 ```
 
-```{r admin-git-ignore-dime}
+```{r admin-git-ignore-nurses-stress}
 #| include: false
 usethis::with_project(
   path = project_path,
   {
-    usethis::use_git_ignore("data-raw/dime/")
+    usethis::use_git_ignore("data-raw/nurses-stress/")
   }
 )
 ```
@@ -441,22 +437,22 @@ r3::check_project_setup_intermediate()
 │   └── README.md
 ├── data-raw
 │   ├── README.md
-│   ├── dime
-│   │   ├── cgm
-│   │   ├── sleep
-│   │   └── participant_details.csv
-│   ├── dime.zip
-│   └── dime.R
+│   ├── nurses-stress
+│   │   ├── stress
+│   │   └── survey-results.csv.gz
+│   ├── nurses-stress.tar
+│   └── nurses-stress.R
 └── docs
     ├── README.md
+    ├── cleaning.qmd
     └── learning.qmd
 ```
 
 The output should look something a bit like the above text. If it
-doesn't, start over by deleting all *but* the `dime.R` and `dime.zip`
-files and running the code from the beginning again. If your output
-looks a bit like this, then copy and paste the output from the check
-into the survey question at the end.
+doesn't, start over by deleting all *but* the `nurses-stress.R` and
+`nurses-stress.tar` files and running the code from the beginning again.
+If your output looks a bit like this, then copy and paste the output
+from the check into the survey question at the end.
 
 ```{r admin-save-project}
 #| include: false
