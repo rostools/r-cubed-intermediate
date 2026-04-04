@@ -120,23 +120,27 @@ own work.
 We teach and use [Quarto](https://quarto.org) (which is a more powerful,
 next generation version of R Markdown) because it is one of the very
 first steps to being reproducible and because it is a very powerful tool
-for doing data analysis. Please do these two tasks:
+for doing data analysis. If you haven't used Quarto before or would like
+a refresher, please read over the Quarto
+[section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-quarto)
+of the introduction workshop.
 
-1. Read over the Quarto
-   [section](https://r-cubed-intro.rostools.org/sessions/reproducible-documents.html#what-is-quarto)
-   of the introduction workshop. If you use Quarto already and are
-   familiar with it, you can skip this step.
-
-2. If you are not already in the `LearnR3` project, open it up by either
-   clicking the `LearnR3.Rproj` file in the `LearnR3/` folder or by
-   using the "File -\> Open Project" menu. Run the function below in the
-   Console when RStudio is in the `LearnR3` project, which will create a
-   new file called `learning.qmd` in the `docs/` folder.
+If you are not already in the `LearnR3` project, open it up by either
+clicking the `LearnR3.Rproj` file in the `LearnR3/` folder or by using
+the "File -\> Open Project" menu. Then, run the two functions below in
+the Console when RStudio is in the `LearnR3` project, which will create
+two new files called `learning.qmd` and `cleaning.qmd` in the `docs/`
+folder. The `learning.qmd` file is where you will be building up your
+code, prototyping functions, writing notes to yourself, and playing
+around. The `cleaning.qmd` file is where you will be moving code that
+works and using the functions you'll make during the workshop, to
+ultimately make a final working dataset.
 
 ```{r create-qmd-doc}
 #| filename: "Console"
 #| eval: false
-r3::create_qmd_doc()
+r3::create_learning_qmd()
+r3::create_cleaning_qmd()
 ```
 
 ```{r admin-create-qmd}
@@ -144,11 +148,14 @@ r3::create_qmd_doc()
 usethis::with_project(
   path = project_path,
   {
-    r3::create_qmd_doc()
+    r3::create_learning_qmd()
+    r3::create_cleaning_qmd()
   }
 )
 ```
 
-Throughout the workshop, you will use this document to build up and run
-your code, as well as to prototype the functions you'll create before
-you move them into the `functions.R` file.
+Throughout the workshop, you will use the `docs/learning.qmd` document
+to build up and run your code, as well as to prototype the functions
+you'll create before you move them into the `R/functions.R` file and
+ultimately create the main file for processing and cleaning the dataset
+in the `docs/cleaning.qmd` document.
