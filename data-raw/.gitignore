@@ -1,3 +1,11 @@
 dime/
 dime-cleaning/
 dime.zip
+
+# This is copied from `./nurses-stress-cleaning/` during rendering of the
+# website, to mimic how learners see it.
+nurses-stress.tar
+
+# This is created after untarring the `nurses-stress.tar` file during rendering
+# of the website.
+nurses-stress/
