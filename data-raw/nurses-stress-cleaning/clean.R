@@ -202,10 +202,10 @@ write_ibi_by_second <- function(path) {
 
 # Processing, cleaning, and writing --------------------------------------
 
-raw_path <- here("data-raw/nurses-stress/raw/")
+raw_path <- here("data-raw/nurses-stress-cleaning/raw/")
 survey_path <- here(raw_path, "survey-results.csv")
-cleaned_path <- here("data-raw/nurses-stress/cleaned/")
-tar_path <- here("data-raw/nurses-stress/cleaned-nurses-stress.tar")
+cleaned_path <- here("data-raw/nurses-stress-cleaning/cleaned/")
+tar_path <- here("data-raw/nurses-stress-cleaning/nurses-stress.tar")
 
 # Start from scratch by deleting all files in the cleaned path.
 if (dir_exists(cleaned_path)) {
