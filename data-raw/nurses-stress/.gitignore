@@ -1,0 +1,7 @@
+*.tar
+*.zip
+*.csv
+*.csv.gz
+*.xlsx
+*.parquet
+info.txt
