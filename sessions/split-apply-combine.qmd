@@ -229,14 +229,29 @@ effectively yet. We need to first summarise the data by the columns we
 want to join by. In the case of the `cgm_data`, we want to join by the
 `id`, `date`, and `hour`.
 
-In this case, we need to use the split-apply-combined technique by first
-using `group_by()` on these variables before summarising. Let's start
-with using `group_by()` on the `cgm_data`. At the bottom of the
-`docs/learning.qmd` file, create a new header called
-`## Summarising by groups` and create a code chunk below that with
-{{< var keybind.chunk >}}. Then we'll use `group_by()` on it's own. But
-first, since we won't be using the `device_timestamp` column, let's
-remove it.
+In R, one way to use the split-apply-combine technique is by just using
+`summarise()` function along with the `.by` argument.
+
+::: callout-tip
+You can also pipe `group_by()` into `summarise()`, but you have to
+remember to use `ungroup()` afterwards. Using `group_by()` can be useful
+if you want to do multiple actions on the grouped dataset, since
+`{dplyr}` functions `mutate()` and `summarise()` also work on grouped
+data. At the end, you'd always have to `ungroup()` and if you forget, it
+can give wrong output that you might not realise.
+
+If you only want to do a single action on groups, you can instead use
+the `.by` argument in `summarise()` or in `mutate()`. This is a more
+concise way of doing the `group_by()` and `ungroup()` workflow, since
+the grouping only happens in the `summarise()` or `mutate()` function.
+You can learn more about `.by` in the help page by running `?dplyr_by`
+in the Console.
+:::
+
+At the bottom of the `docs/learning.qmd` file, create a new header
+called `## Summarising by groups` and create a code chunk below that
+with {{< var keybind.chunk >}}. First, since we won't be using the
+`device_timestamp` column, let's remove it.
 
 ```{r remove-device-timestamp}
 #| filename: "docs/learning.qmd"
@@ -244,55 +259,38 @@ cgm_data |>
   select(-device_timestamp)
 ```
 
-Then, let's continue and pipe `|>` to `group_by()` for the `id`, `date`,
-and `hour` columns.
+Then, let's continue and pipe `|>` to `summarise()`. We'll start with
+summarising the mean and standard deviation of the glucose values by
+using `across()`. use `across()` to calculate the mean and standard
+deviation of the glucose values.
 
 ```{r group-by}
 #| filename: "docs/learning.qmd"
 cgm_data |>
   select(-device_timestamp) |>
-  group_by(id, date, hour)
+  summarise(across(glucose, list(mean = mean, sd = sd)))
 ```
 
-Notice how it doesn't do anything different? That's because `group_by()`
-only modifies the behaviour of later functions but on it's own doesn't
-do anything. Let's now pipe into `summarise()` and use `across()` to
-calculate the mean and standard deviation of the glucose values.
+Notice how it summarised all the values in the dataset, so we end up
+with only one row in total. But let's now group by the `id`, `date`, and
+`hour` columns so that we get the mean and standard deviation for each
+participant, for each date, and for each hour. We will use the `.by`
+argument in `summarise()` to do this. In order to use the `.by` argument
+with multiple columns, we need to use `c()` to combine the columns
+together. So, we will add `.by = c(id, date, hour)` to the end of the
+`summarise()` function.
 
 ```{r summarise-multiple-functions}
 #| filename: "docs/learning.qmd"
 cgm_data |>
   select(-device_timestamp) |>
-  group_by(id, date, hour) |>
-  summarise(across(glucose, list(mean = mean, sd = sd)))
-```
-
-Very neat! By default, when we use `group_by()` it continues to tell R
-to use `{dplyr}` functions on the groups, for instance with `mutate()`
-and `summarise()`. Often we want to only do a single action on groups,
-so we would need to stop grouping by using `ungroup()`. This is
-especially a common practice when you use `group_by()` with
-`summarise()`. That's why `summarise()` has an argument to drop the
-grouping with `.groups = "drop"` rather than have to pipe to
-`ungroup()`. We don't need to group any more, so we will add this:
-
-```{r drop-groups}
-#| filename: "docs/learning.qmd"
-cgm_data |>
-  select(-device_timestamp) |>
-  group_by(id, date, hour) |>
   summarise(
-    across(
-      glucose,
-      list(mean = mean, sd = sd)
-    ),
-    .groups = "drop"
+    across(glucose, list(mean = mean, sd = sd)),
+    .by = c(id, date, hour)
   )
 ```
 
-Ungrouping the data with the `.groups = "drop"` in the `summarise()`
-function does not do anything except to tell R not to do any more
-grouping when you use later functions.
+Very neat!
 
 This workflow is very similar to how we want to do it with the
 `sleep_data`. And as you can guess, we'll need to make a function.
@@ -321,13 +319,12 @@ already written and use `contains()`:
 #| filename: "docs/learning.qmd"
 cgm_data |>
   select(-contains("timestamp"), -contains("datetime")) |>
-  group_by(id, date, hour) |>
   summarise(
     across(
       glucose,
       list(mean = mean, sd = sd)
     ),
-    .groups = "drop"
+    .by = c(id, date, hour)
   )
 ```
 
@@ -341,13 +338,12 @@ the glucose column:
 #| filename: "docs/learning.qmd"
 cgm_data |>
   select(-contains("timestamp"), -contains("datetime")) |>
-  group_by(pick(-glucose)) |>
   summarise(
     across(
       glucose,
       list(mean = mean, sd = sd)
     ),
-    .groups = "drop"
+    .by = pick(-glucose)
   )
 ```
 
@@ -439,13 +435,12 @@ summarise_column <- function(data, column, functions) {
       -tidyselect::contains("timestamp"),
       -tidyselect::contains("datetime")
     ) |>
-    dplyr::group_by(dplyr::pick(-{{ column }})) |>
     dplyr::summarise(
       dplyr::across(
         {{ column }},
         functions
       ),
-      .groups = "drop"
+      .by = dplyr::pick(-{{ column }})
     )
   return(summarised)
 }
@@ -562,8 +557,7 @@ discussion activity.
   a function to each group, and then combine the results back together.
   Re-framing how you think about your data using this technique can
   substantially help you in your data analysis.
-- Use `group_by()`, `summarise()`, and `across()` with
-  `.groups = "drop"` in the `summarise()` function to use the
+- Use `summarise()`, its `.by` argument, and `across()` to use the
   split-apply-combine technique when needing to do an action on groups
   within the data (e.g. calculate the mean age between education
   groups).
