@@ -28,9 +28,11 @@
     "appendix"
   ],
   "[r]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Posit.air-vscode"
   },
   "[quarto]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "quarto.quarto"
   },
 }
