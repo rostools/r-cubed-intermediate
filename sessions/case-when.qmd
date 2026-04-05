@@ -14,7 +14,7 @@ load(here("_temp/joins.RData"))
 ## :book: Reading task: Nested conditionals
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Briefly review the content again, to reinforce what they read.
 :::
@@ -259,7 +259,7 @@ Follow these steps to get to that point.
 ## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
-## Instructor note
+## Teacher note
 
 Quickly cover this before finishing the session and getting them to do
 the survey.
