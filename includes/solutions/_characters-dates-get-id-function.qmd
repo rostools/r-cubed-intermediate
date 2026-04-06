@@ -5,7 +5,7 @@
 #'
 #' @param data Data with `file_path_id` column.
 #'
-#' @return A data.frame/tibble.
+#' @returns A data.frame/tibble.
 #'
 get_participant_id <- function(data) {
   data_with_id <- data |>

@@ -213,7 +213,7 @@ your function. It looks like:
 #' @param num1
 #' @param num2
 #'
-#' @return
+#' @returns
 #' @export
 #'
 #' @examples
@@ -246,7 +246,7 @@ are:
 #' @param num1 A number here.
 #' @param num2 A number here.
 #'
-#' @return Returns the sum of the two numbers.
+#' @returns Returns the sum of the two numbers.
 #'
 add_numbers <- function(num1, num2) {
   added <- num1 + num2
@@ -440,7 +440,7 @@ documentation.
 #'
 #' @param file_path Path to the CGM data file.
 #'
-#' @return Outputs a data frame/tibble.
+#' @returns Outputs a data frame/tibble.
 #'
 import_cgm <- function(file_path) {
   cgm <- file_path |>
