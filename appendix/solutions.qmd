@@ -15,57 +15,47 @@ This document contains the solutions, or in many ways potentials
 solutions, to the exercises throughout the workshop. They are hidden by
 default so you don't accidentally see solutions for the other exercises.
 
-## Pre-process data as you import it {.unnumbered}
+## Making robust and general-purpose functions {.unnumbered}
 
-### Bundling code into functions {.unnumbered}
-
-#### :technologist: Exercise: Convert the sleep code into a function {.unnumbered}
-
-::: {.callout-tip collapse="true"}
-{{< include /includes/solutions/_functions-import-sleep.qmd >}}
-:::
-
-### Making robust and general-purpose functions {.unnumbered}
-
-#### :technologist: Exercise: Finish setting the dependencies {.unnumbered}
+### :technologist: Exercise: Finish setting the dependencies {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
 :::
 
-### Doing many things at once with functionals {.unnumbered}
+## Doing many things at once with functionals {.unnumbered}
 
-#### :technologist: Exercise: Convert into a function to use it on the sleep data {.unnumbered}
+### :technologist: Exercise: Convert into a function to use it on the sleep data {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_functionals-import-multiple-files.qmd >}}
 :::
 
-### Cleaning characters and dates {.unnumbered}
+## Cleaning characters and dates {.unnumbered}
 
-#### :technologist: Exercise: Using NSE in your function {.unnumbered}
+### :technologist: Exercise: Using NSE in your function {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_characters-dates-using-nse.qmd >}}
 :::
 
-#### :technologist: Exercise: Convert 'get ID' code into a function {.unnumbered}
+### :technologist: Exercise: Convert 'get ID' code into a function {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_characters-dates-get-id-function.qmd >}}
 :::
 
-### Using split-apply-combine to help in processing {.unnumbered}
+## Using split-apply-combine to help in processing {.unnumbered}
 
-#### :technologist: Exercise: Create a `clean_sleep()` function {.unnumbered}
+### :technologist: Exercise: Create a `clean_sleep()` function {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_split-apply-combine-clean-functions.qmd >}}
 :::
 
-### Pivoting your data from and to long or wide {.unnumbered}
+## Pivoting your data from and to long or wide {.unnumbered}
 
-#### :technologist: Exercise: Create a new function to pivot sleep to wider {.unnumbered}
+### :technologist: Exercise: Create a new function to pivot sleep to wider {.unnumbered}
 
 ::: {.callout-tip collapse="true"}
 {{< include /includes/solutions/_pivots-sleep-types-to-wider.qmd >}}

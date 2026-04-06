@@ -159,11 +159,12 @@ to deal with this is by making functions that are small and simple, and
 testing them as you use them. The smaller they are, the less chance you
 will have that there will be an error or issue that you can't figure
 out. There's also some formal debugging steps you can do but due to time
-and to the challenge of making meaningful debugging exercises since
-solutions to problems are very dependent on the project and context,
-there is some extra material in @sec-extra-material that you can look
-over in your own time. It contains some instructions on debugging and
-dealing with some common problems you might encounter with R.
+and to the challenge of making meaningful debugging exercises, as
+solutions to problems are very dependent on the project and context, we
+won't be going over debugging. There is some extra material in
+@sec-extra-material that you can look over in your own time that has
+some instructions on debugging and dealing with some common problems you
+might encounter with R.
 
 {{< text_snippet sticky_up >}}
 
@@ -273,13 +274,14 @@ will be using it all throughout this workshop.
 
 At the level of the code, the way you prototype code is to:
 
-1. Write it out in Quarto so that does what you want.
+1. Write the code out in Quarto so that it does what you want.
 2. Convert that code into a function.
 3. Test that the function works either in the Quarto document or in the
    R Console.
 4. Fix the function if it doesn't work.
 5. Restart the R console with {{< var keybind.restart-r >}} or render
-   with {{< var keybind.render >}} to test that the function works.
+   with {{< var keybind.render >}} to test that the function works in a
+   clean environment.
 6. Whenever the function works, *add and commit* the changes to the Git
    history with {{< var keybind.commit >}} (or commit after you move the
    function to the `R/functions.R` script, which we will talk about in
@@ -348,16 +350,17 @@ for making a function is to:
    while the cursor is in the function.
 
 In `docs/learning.qmd`, create a new Markdown header called
-`## Import 101's cgm data with a function` and create a code chunk below
+`## Import 5C's HR data with a function` and create a code chunk below
 that with {{< var keybind.chunk >}}.
 
 So, step one. Let's copy and paste the code we previously for importing
-the `cgm_101` data and convert that as a function:
+the `HR.csv.gz` data from participant `5C` and convert that as a
+function:
 
 ```{r function-creation-step-1}
 #| filename: "docs/learning.qmd"
 #| output: false
-cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(
     show_col_types = FALSE,
     name_repair = to_snake_case,
@@ -365,14 +368,24 @@ cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
   )
 ```
 
-Next we wrap it in the function call and give it an appropriate name. In
-this case, `import_cgm` is descriptive and meaningful.
+Next we wrap it in the function call and give it an appropriate name.
+Since we've used this code to read in different types of data, the name
+should reflect that it is fairly generic, at least for our data. So we
+could simply call it `read`.
+
+::: callout-caution
+We want to be careful using very generic names for functions, as these
+are often already used by R or in other packages. We can always check if
+a name is used by R by typing `?function_name` in the Console. If it
+shows you documentation, then it is used and it's best to use another
+name for our function.
+:::
 
 ```{r function-creation-step-2}
 #| filename: "docs/learning.qmd"
 #| eval: false
-import_cgm <- function() {
-  cgm_101 <- here("data-raw/dime/cgm/101.csv") |>
+read <- function() {
+  here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
@@ -381,19 +394,24 @@ import_cgm <- function() {
 }
 ```
 
-Then, we add arguments in the function and replace within the code.
-Here, we have only one thing that we would change: The file path to the
-dataset. So, a good name might be `file_path`. It's also good practice
-to not hard code the use of `here()` within a function. Instead, it's
-good design to give functions a full file path that it can use
-internally. Then when we use the function, we would use `here()` with
-the correct path in the function argument. So it would be:
+Then, we add arguments in the function and replace within the code. We
+want to use the `read()` function to read a file path that has data in
+it. So we can add an argument to our function for the file path to read
+from. So, a good name might be `file_path`.
+
+It's rarely good to hard code things into functions, like the use of
+`here()`, otherwise the function will always only read from that file.
+Instead, it's good design to give functions a full file path that it can
+use internally. Then when we use the function, we would use `here()`
+with the correct path in the function argument.
+
+So we would replace `here("...")` with `file_path`:
 
 ```{r function-creation-step-3}
 #| filename: "docs/learning.qmd"
 #| eval: false
-import_cgm <- function(file_path) {
-  cgm_101 <- file_path |>
+read <- function(file_path) {
+  file_path |>
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
@@ -402,33 +420,35 @@ import_cgm <- function(file_path) {
 }
 ```
 
-Then we simplify things internally by renaming `cgm_101` to simply
-`cgm`, since we would like to be able to import other participant CGM
-data later. Finally, we will add the `return()` function at the end with
-the object we want the function to output.
+While it isn't required, for learning purposes we will use the
+`return()` function to explicitly indicate what the function outputs at
+the end. In our case, we want it to output the data frame that we just
+read in. Since we haven't assigned the output of the `read_csv()` to an
+object, let's do that first and than use `return()` to output that
+object at the end. Let's keep it generic again and call it `data`:
 
 ```{r function-creation-step-4}
 #| filename: "docs/learning.qmd"
-import_cgm <- function(file_path) {
-  cgm <- file_path |>
+read <- function(file_path) {
+  data <- file_path |>
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
       n_max = 100
     )
-  return(cgm)
+  return(data)
 }
 ```
 
-Great! Now we need to test it out. Let's try on two `cgm` datasets for
-101's and 102's files:
+Great! Now we need to test it out. Let's try it on two `HR.csv.gz`
+datasets from `5C`:
 
 ```{r function-creation-step-5}
 #| filename: "docs/learning.qmd"
-here("data-raw/dime/cgm/101.csv") |>
-  import_cgm()
-here("data-raw/dime/cgm/102.csv") |>
-  import_cgm()
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
+  read()
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read()
 ```
 
 Awesome! It works :tada: The final stage is to add the Roxygen
@@ -436,20 +456,20 @@ documentation.
 
 ```{r function-creation-step-6}
 #| filename: "docs/learning.qmd"
-#' Import one participants CGM data from the DIME dataset.
+#' Read in one nurses' stress data file.
 #'
-#' @param file_path Path to the CGM data file.
+#' @param file_path Path to the data file.
 #'
 #' @returns Outputs a data frame/tibble.
 #'
-import_cgm <- function(file_path) {
-  cgm <- file_path |>
+read <- function(file_path) {
+  data <- file_path |>
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
       n_max = 100
     )
-  return(cgm)
+  return(data)
 }
 ```
 
@@ -463,68 +483,98 @@ Now that we have a working function, run `{styler}` with
 then add and commit the changes to the Git history with
 {{< var keybind.commit >}} before then pushing to GitHub.
 
-## :technologist: Exercise: Convert the sleep code into a function
+## :technologist: Exercise: Add another function argument to read different number of rows
 
 **Time: \~10 minutes.**
 
-We've converted the code to import the CGM data into a function. Now,
-let's do the same for the sleep data. Use the code you made from the
-exercise in @sec-exercise-import-sleep and convert that into a function
-using the same steps we did from above.
+We've converted the code to read in different data files from the
+nurses' stress dataset into a function. Now, let's modify it so that we
+can also test out reading in different number of rows so we don't have
+to keep changing the `n_max` value inside of the function.
 
-::: {.callout-tip appearance="default"}
-A helpful tip: To move around a Quarto or R script more easily, open up
-the "Document Outline" on the side by clicking the button in the top
-right corner of the Quarto pane or by using {{< var keybind.outline >}}.
-:::
+Use the `read()` function code we wrote above and revise it so it can be
+used like the below:
 
-The code that you write to test that the function works should look like
-the below and it should output something similar:
+```{r exercise-read-max-rows}
+#| eval: false
+# Outputs only 100 rows
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read()
 
-{{< include /includes/solutions/_functions-import-sleep.qmd >}}
+# Outputs only 1000 rows
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read(max_rows = 1000)
 
-```{r admin-sleep-function-output}
-here("data-raw/dime/sleep/101.csv") |>
-  import_sleep()
-here("data-raw/dime/sleep/102.csv") |>
-  import_sleep()
+# Outputs all rows (`Inf` means infinity)
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read(max_rows = Inf)
 ```
 
-1. Create a new Markdown header at the bottom of `docs/learning.qmd`
-   called `## Exercise to make function to import sleep data`.
-2. Below the Markdown header, create a new code chunk with
-   {{< var keybind.chunk >}}.
-3. Paste the code you used from the exercise in
-   @sec-exercise-import-sleep into the code chunk and begin converting
-   it into a function, like we did above.
-   - Wrap it with the `function() {...}`.
-   - Make a meaningful name (use `import_sleep`).
-   - Make an argument for the file path (`file_path`) and replace the
-     `here("")` code with `file_path`.
-   - Rename the output object from `sleep_101` to simply `sleep`.
-   - End the function with using `return()` to output the `sleep`
-     object.
-   - Use the function and run it in the code chunk to test that it works
-     on both `101` and `102`'s sleep data.
-   - Add the Roxygen documentation with {{< var keybind.roxygen >}} and
-     then fill in the details, like we did above.
-4. Run `{styler}` while in the `docs/learning.qmd` file with
+1. In the `read()` function, add a new argument called `max_rows` after
+   the `file_path` argument inside `function()`. We'll called it
+   `max_rows` because that's a more descriptive name for it that
+   `n_max`.
+2. Inside the function body, replace the `n_max = 100` with
+   `n_max = max_rows` so that the function will use the value given in
+   the `max_rows` argument when it is used.
+3. Since we'd like this argument to be optional, meaning that we don't
+   have to use it (like the first code example above), we have to give
+   the argument a *default value* in `function()`. Since we are using
+   `100` already, let's use that value by putting `max_rows = 100` in
+   `function()`.
+4. Copy and paste the example code above to below the function code,
+   then run the function code again along with the pasted example code.
+   You should see that the first code example outputs 100 rows, the
+   second outputs 1000 rows, and the third outputs all rows.
+5. Update the Roxygen documentation to include the new `max_rows`
+   argument and its description. You can copy and paste the existing
+   line with the `@param` for `file_path` and then modify it for
+   `max_rows`.
+6. Run `{styler}` while in the `docs/learning.qmd` file with
    {{< var keybind.style >}}.
-5. Render the Quarto document with {{< var keybind.render >}}.
-6. Finally, **add and commit** the changes to the Git history, using
+7. Render the Quarto document with {{< var keybind.render >}}.
+8. Finally, **add and commit** the changes to the Git history, using
    {{< var keybind.commit >}}. Then push to GitHub.
 
-<!-- TODO: The function might be the same as cgm... might revise once all sessions are done -->
+```{r solution-read-max-rows}
+#| echo: false
+#' Read in one nurses' stress data file.
+#'
+#' @param file_path Path to the data file.
+#' @param max_rows Maximum number of rows to read.
+#'
+#' @returns Outputs a data frame/tibble.
+#'
+read <- function(file_path, max_rows = 100) {
+  data <- file_path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = max_rows
+    )
+  return(data)
+}
+```
 
 {{< text_snippet sticky_up >}}
 
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
-Mention that the `import_sleep()` function is identical to the
-`import_cgm()`. Briefly say that in the next session we will go over
-making more general functions.
+Go over this solution with everyone as we will use it in the next session.
 :::
+
+## :speech_balloon: Discussion activity: What are some tasks that could be functions?
+
+**Time: \~6 minutes.**
+
+As we prepare for the next session and the break, get up, walk around,
+and discuss with your neighbour some of the following questions:
+
+- What are some tasks you do that are repetitive or that you do multiple
+  times with very small changes each time you do the task?
+- How might you use functions in your work? Can you think of specific
+  tasks or situations where you could use one?
 
 ## Key takeaways
 
@@ -547,18 +597,6 @@ discussion activity.
 - Document functions by using Roxygen.
 - Keep functions small and simple, so it is easier to test and fix them.
 - Use few arguments in functions to reduce cognitive load.
-
-## :speech_balloon: Discussion activity: What are some tasks that could be functions?
-
-**Time: \~6 minutes.**
-
-As we prepare for the next session and the break, get up, walk around,
-and discuss with your neighbour some of the following questions:
-
-- What are some tasks you do that are repetitive or that you do multiple
-  times with very small changes each time you do the task?
-- How might you use functions in your work? Can you think of specific
-  tasks or situations where you could use one?
 
 ```{r admin-store-session-code}
 #| include: false
