@@ -265,7 +265,7 @@ To remove this message, there are two things we can do:
 So in the code, we will add `show_col_types = FALSE` to `read_csv()` and
 then run the code:
 
-```{r quiet-import-message-cgm-101}
+```{r quiet-read-message-cgm-101}
 #| filename: "docs/learning.qmd"
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(show_col_types = FALSE)
@@ -368,7 +368,7 @@ good to get enough data that `read_csv()` can effectively guess the
 columns data types but not so large as to slow things down. In the code
 we've already written, add `n_max = 100` to the `read_csv()` function:
 
-```{r import-fewer-rows-prototyping}
+```{r read-fewer-rows-prototyping}
 #| filename: "docs/learning.qmd"
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(
