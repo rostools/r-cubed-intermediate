@@ -302,37 +302,16 @@ that you should *not* directly edit your raw data. Instead, let code do
 it for you so you have a record of what happened. When you have raw data
 for a specific project, store it in the `data-raw/` folder.
 
-Eventually, you will use R code to "untar" the file, but the way that R
-works is if you untar to an already existing folder, there can be some
-issues or errors. And if you `source()` or re-run your code multiple
-times, it will always untar the file. So before we begin, you'll write
-code to always first delete that untarred output folder. In order to
-delete the folder, you'll use the `{fs}` package to handle filesystem
-actions. Load the `{fs}` package with `library()` right below the other
-`library()` function at the top of the script:
-
-```{r}
-#| filename: "data-raw/nurses-stress.R"
-library(here)
-library(fs)
-```
-
-Now you can untar the tar files by using the `untar()` function by
-writing it in `data-raw/nurses-stress.R`. The first argument of
-`untar()` is the tar file you want to untar and the other important
-argument is called `exdir` that tells `untar()` which folder you want to
-extract the files to. You'll want to save the output of the tar file to
+You can untar the tar files by using the `untar()` function by writing
+it in `data-raw/nurses-stress.R`. The first argument of `untar()` is the
+tar file you want to untar and the other important argument is called
+`exdir` that tells `untar()` which folder you want to extract the files
+to. You'll want to save the output of the tar file to
 `data-raw/nurses-stress/`, so write this code at the bottom of the
 `data-raw/nurses-stress.R` script:
 
-```{r admin-nurses-stress-dir-exists}
-#| include: false
-skip <- !fs::dir_exists(here::here("data-raw/nurses-stress/"))
-```
-
 ```{r untar-nurses-stress-file}
 #| filename: "data-raw/nurses-stress.R"
-#| eval: !expr skip
 untar(
   here("data-raw/nurses-stress.tar"),
   exdir = here("data-raw/nurses-stress/")
@@ -368,8 +347,8 @@ a good chance to become more familiar with it.
 To make sure you're aligned with what is described in this pre-workshop
 tasks, let's check to make sure your files and folders in `data-raw/`
 align with the files and folders that should be there. You can do this
-by either running the `dir_tree()` function from the `{fs}` package or you
-can manually check the files by using the RStudio file pane or by
+by either running the `dir_tree()` function from the `{fs}` package or
+you can manually check the files by using the RStudio file pane or by
 using your file browser.
 
 ```{r print-tree-data-raw}
