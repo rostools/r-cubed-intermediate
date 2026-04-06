@@ -483,14 +483,52 @@ Now that we have a working function, run `{styler}` with
 then add and commit the changes to the Git history with
 {{< var keybind.commit >}} before then pushing to GitHub.
 
+## :book: Reading task: Principles to make general-purpose and reusable functions
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Briefly reinforce what they read by slowly going through these points
+below about making generalised functions. Emphasise the principles
+below, especially the "do one thing" and "keep it small".
+:::
+
+**Time: \~3 minutes.**
+
+There are a few ways to make a function more general-purpose and
+reusable, while still being useful for your specific purposes. These
+principles are:
+
+1. Have the function's input (the arguments) be generic enough to take
+   different types of objects as long as they are the same "type". In
+   our case, we have a function that takes a path "type". A path is a
+   very general input, so we can keep it as is.
+2. Have the function's output be a common "type", like a vector or data
+   frame. When working in R, it's a very good practice to have functions
+   output a data frame, since many functions, especially in the
+   `{tidyverse}`, take a data frame as input.
+3. Make the first argument of the function be something that can be
+   "pipe-able". That way you can chain together your functions with the
+   `|>` operator. In general, if the function does some action to a data
+   frame, then the data frame should be the first argument called `data`
+   so that it works well with piping from `{tidyverse}` functions.
+4. Make your function do one conceptual thing well. For example, read
+   data from a file and make it cleaner. Or convert all columns that are
+   characters into numbers.
+5. Keep the function small. It is easier to be reused, easier to test,
+   and easier to debug when it has fewer lines of code.
+
+{{< text_snippet sticky_up >}}
+
 ## :technologist: Exercise: Add another function argument to read different number of rows
 
 **Time: \~10 minutes.**
 
 We've converted the code to read in different data files from the
-nurses' stress dataset into a function. Now, let's modify it so that we
-can also test out reading in different number of rows so we don't have
-to keep changing the `n_max` value inside of the function.
+nurses' stress dataset into a function. Now, let's modify it to be a bit
+more general-purpose so that we can also test out reading in different
+number of rows so we don't have to keep changing the `n_max` value
+inside of the function.
 
 Use the `read()` function code we wrote above and revise it so it can be
 used like the below:

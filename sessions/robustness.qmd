@@ -21,41 +21,14 @@ untar(
 
 {{< include /includes/objectives/_robustness.qmd >}}
 
-## :speech_balloon: Discussion activity: How might you make your functions more general-purpose?
-
-**Time: \~8 minutes.**
-
-One of the more powerful features of making functions is that you can
-easily reuse them in other sections of the file or in other files, which
-we will cover how to do later in this session. Part of that power comes
-from knowing how to make functions that are general enough to be used in
-other settings too.
-
-From the previous session, we made the `import_cgm()` function together
-and in the exercises you made the `import_sleep()` function. These two
-functions basically do the same thing. So why have two? We don't need
-two! So let's refactor the `import_cgm()` function so it is clearer what
-it does and can do.
-
-The first step is to look at the code to see what it does and see how
-you can modify it to be more general-purpose.
-
-1. Take 2 minutes to look over the two functions you made and think
-   about what you could do to make it more general-purpose.
-2. Take 3 minutes to discuss with your neighbour what you think could be
-   done to make it more general-purpose and try to come to a conclusion.
-3. Then all together and in the remaining time, everyone will share what
-   they've thought of.
-
-Try not to look ahead 😜 We won't generalise the function yet, first we
-will make it more robust, and then we will generalise it.
-
 ## :book: Reading task: Making your function more robust with explicit dependencies
 
 **Time: \~10 minutes.**
 
-Before we make the function more general-purpose, this is a good time to
-talk about package dependencies and making your function more robust and
+Our `read()` function works fine right now, but there's a problem with
+it: it is fragile. That's because it relies on us loading the packages
+it uses first before we can use it. So this is a good time to learn
+about package dependencies and making your function more robust and
 trust-worthy.
 
 So what is a package dependency and how do you manage it? Whenever you
@@ -108,8 +81,8 @@ Where are these package dependencies listed in the `DESCRIPTION` file?
 Open up your `DESCRIPTION` file, which you can do quickly with
 {{< var keybind.open-file >}}, typing the file name out, and hitting
 enter to open it. Your file may or may not look like the below text. If
-it doesn't, it isn't a problem as the text is just to give you an idea
-of what it might look like.
+it doesn't, that's ok as the below text is just to give you an idea of
+what it might look like.
 
 ```{r admin-print-desc}
 #| echo: false
@@ -217,8 +190,10 @@ usethis::with_project(
 )
 ```
 
-If you look in the `DESCRIPTION` file now, you see that the new
-`Depends` field has been added with `{tidyverse}` right below it.
+The `usethis::use_package()` still gives us a warning, but it isn't an
+error so we can ignore it. If you look in the `DESCRIPTION` file now,
+you see that the new `Depends` field has been added with `{tidyverse}`
+right below it.
 
 ```{r admin-print-desc-add-tidyverse}
 #| echo: false
@@ -251,7 +226,7 @@ comes from inside our own functions.
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
-Put on the project the callout block below and explain why we want to
+Put on the projector the callout block below and explain why we want to
 make dependencies within functions more explicit and why using
 `library()` and `require()` is a bad idea.
 :::
@@ -326,14 +301,14 @@ case, it is `{readr}`. So, we can update our function to use
 `readr::read_csv()` instead of just `read_csv()`:
 
 ```{r import-cgm-function}
-import_cgm <- function(file_path) {
-  cgm <- file_path |>
+read <- function(file_path, max_rows = 100) {
+  data <- file_path |>
     readr::read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
-      n_max = 100
+      n_max = max_rows
     )
-  return(cgm)
+  return(data)
 }
 ```
 
@@ -344,158 +319,45 @@ There is still more to do, but now it's your turn to try.
 **Time: \~10 minutes.**
 
 In this exercise, you will finish setting the dependencies for the
-`import_cgm()` function as well as the `DESCRIPTION` file.
+`read()` function as well as the `DESCRIPTION` file.
 
 1. While we added `{readr}` to the function, we haven't added it to the
    `DESCRIPTION` file yet. In the **Console**, use
    `usethis::use_package()` to add the `{readr}` package to the
    `DESCRIPTION` file.
-2. There is one other function we use in the `import_cgm()` function.
-   Find it, figure out what package it comes from, use `::` to
-   explicitly state the package, and add it to `DESCRIPTION` file using
+2. There is one other function we use in the `read()` function. Find it,
+   figure out what package it comes from, use `::` to explicitly state
+   the package, and add it to `DESCRIPTION` file using
    `usethis::use_package()` in the **Console**.
-3. There is one other package we've used that we haven't added to the
-   `DESCRIPTION` file. We used the package in the `data-raw/dime.R`
-   file. Open that file, which you can do with
-   {{< var keybind.open-file >}} and typing "dime.R" and selecting the
-   file from the menu. In that file, find the package we used and add it
-   to the `DESCRIPTION` file using `usethis::use_package()` in the
-   **Console**.
-4. Finally, style the code using {{< var keybind.style >}}, render the
+3. Finally, style the code using {{< var keybind.style >}}, render the
    `docs/learning.qmd` file with {{< var keybind.render >}} to test that
    everything still works, and then add and commit the changes to Git
    with {{< var keybind.commit >}}. While in the interface, push to
    GitHub.
 
-{{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
-
-{{< text_snippet sticky_up >}}
-
-## :book: Reading task: Principles to make general-purpose and reusable functions
-
-::: {.callout-note collapse="true"}
-## :teacher: Teacher note
-
-Briefly reinforce what they read by slowly going through these points
-below about making generalised functions. Emphasise the principles
-below, especially the "do one thing" and "keep it small".
-:::
-
-**Time: \~3 minutes.**
-
-Recall from our discussion at the start of this session about making our
-`import_cgm()` function more general. There are a few ways we could do
-it, before first, let's go over some general principles of making
-functions that are more general-purpose and reusable. These principles
-are:
-
-1. Have the function's input (the arguments) be generic enough to take
-   different types of objects as long as they are the same "type". In
-   our case, we have two functions that both take a path "type". A path
-   is a very general input, so we can keep it as is.
-2. Have the function's output be a common "type", like a vector or data
-   frame. When working in R, it's a very good practice to have functions
-   output a data frame, since many functions, especially in the
-   `{tidyverse}`, take a data frame as input.
-3. Make the first argument of the function be something that can be
-   "pipe-able". That way you can chain together your functions with the
-   `|>` operator. In this case, either always have `data` as the first
-   argument to work well with piping from `{tidyverse}` functions.
-4. Make your function do one conceptual thing well. For example, read
-   data from a file and make it cleaner. Or convert all columns that are
-   characters into numbers.
-5. Keep the function small. It is easier to be reused, easier to test,
-   and easier to debug when it has fewer lines of code.
-
-{{< text_snippet sticky_up >}}
-
-## Generalising our import function
-
-So, let's make our `import_cgm()` function more general-purpose. We know
-that both the `import_cgm()` and `import_sleep()` functions do basically
-the same thing:
-
-1. Have a file path as an argument.
-2. Read in the path to a CSV file with `readr::read_csv()`.
-3. Convert column names to snake case with `snakecase::to_snake_case()`.
-4. Limit the number of rows imported with `n_max`.
-5. Quiet the message about the column types with
-   `show_col_types = FALSE`.
-6. Output the imported data frame.
-
-So, we can combine the two functions into one function that does all of
-these things. We could call the function a lot of different names
-(naming is really hard in coding), but let's keep it simple and call it
-`import_dime()`. We want this function to be able to import different
-CSV files, for example:
-
-```{r import-dime-generic}
-#| filename: "docs/learning.qmd"
+```{r solution-add-project-dependencies}
+#| filename: Console
+#| echo: false
 #| eval: false
-here("data-raw/dime/cgm/101.csv") |>
-  import_dime()
-here("data-raw/dime/sleep/101.csv") |>
-  import_dime()
+usethis::use_package("readr")
+usethis::use_package("snakecase")
 ```
 
-Let's generalise the function! Rather than internally say `cgm` or
-`sleep`, we can keep it simple can call it `data`. Create a new header
-at the bottom of the `docs/learning.qmd` file called
-`## Import DIME data function` and create a code chunk with
-{{< var keybind.chunk >}}. Then we'll write the new function from
-scratch:
-
-```{r import-dime-data-function}
-#| filename: "docs/learning.qmd"
-import_dime <- function(file_path) {
+```{r solution-set-function-dependencies}
+#| filename: docs/learning.qmd
+#| echo: false
+read <- function(file_path, max_rows = 100) {
   data <- file_path |>
     readr::read_csv(
       show_col_types = FALSE,
       name_repair = snakecase::to_snake_case,
-      n_max = 100
+      n_max = max_rows
     )
   return(data)
 }
 ```
 
-Before testing it out, let's make the Roxygen documentation for it with
-{{< var keybind.roxygen >}}:
-
-```{r import-dime-roxygen}
-#| filename: "docs/learning.qmd"
-#' Import data from the DIME study dataset.
-#'
-#' @param file_path Path to the CSV file.
-#'
-#' @returns A data frame.
-#'
-import_dime <- function(file_path) {
-  data <- file_path |>
-    readr::read_csv(
-      show_col_types = FALSE,
-      name_repair = snakecase::to_snake_case,
-      n_max = 100
-    )
-  return(data)
-}
-```
-
-Below the function, write out these two lines of code to test that it
-works:
-
-```{r test-import-dime}
-#| filename: "docs/learning.qmd"
-here("data-raw/dime/cgm/101.csv") |>
-  import_dime()
-here("data-raw/dime/sleep/101.csv") |>
-  import_dime()
-```
-
-This should work without any problems :tada: Let's style the code with
-{{< var keybind.style >}} and then render the document with
-{{< var keybind.render >}} to test that everything works. If everything
-works, let's add and commit the changes to the Git history using
-{{< var keybind.commit >}}. Then, push to GitHub.
+{{< text_snippet sticky_up >}}
 
 ## :book: Reading task: Easily reuse stable, robust functions by storing them in the `R/` folder
 
@@ -568,18 +430,19 @@ The code in the `R/functions.R` file should now look like this:
 
 ```{r import-dime-functions-r-file}
 #| filename: "R/functions.R"
-#' Import data from the DIME study dataset.
+#' Read in one nurses' stress data file.
 #'
-#' @param file_path Path to the CSV file.
+#' @param file_path Path to the data file.
+#' @param max_rows Maximum number of rows to read.
 #'
-#' @returns A data frame.
+#' @returns Outputs a data frame/tibble.
 #'
-import_dime <- function(file_path) {
+read <- function(file_path, max_rows = 100) {
   data <- file_path |>
     readr::read_csv(
       show_col_types = FALSE,
       name_repair = snakecase::to_snake_case,
-      n_max = 100
+      n_max = max_rows
     )
   return(data)
 }
@@ -603,60 +466,36 @@ rendered. This means that we can use the functions in the
 `R/functions.R` file without having the actual code be in the Quarto
 document.
 
+While we're there, let's remove the `library(snakecase)` since we've
+explicitly called it in our function with `snakecase::to_snake_case()`.
 The `setup` code chunk should look like this now:
 
 ```` markdown
 ```{{r setup}}
 library(tidyverse)
 library(here)
-library(snakecase)
 source(here("R/functions.R"))
 ```
 ````
 
-And the bottom of the Quarto document should still have the code:
+Then, in the code chunks in the Quarto document where you've written the
+`read()` function (if you didn't *cut and paste* it into
+`R/functions.R`), let's stop Quarto from running it by adding
+`eval: false` to the code chunk options. That way, you can keep the code
+in your `docs/learning.qmd` file for reference, but it won't be run when
+you render the document. For those code chunks, it should look like:
 
-```{r}
-#| filename: "docs/learning.qmd"
-#| output: false
-here("data-raw/dime/cgm/101.csv") |>
-  import_dime()
-here("data-raw/dime/sleep/101.csv") |>
-  import_dime()
+```` markdown
+```{{r}}
+#| eval: false
+# Code ...
 ```
-
-But **not** have the code to make the `import_dime()` in the Quarto
-document.
+````
 
 Let's test it that it works. Render the document with
 {{< var keybind.render >}} and check that it works. If it does, then we
 can add and commit the changes to both the `docs/learning.qmd` and
 `R/functions.R` file before then pushing to GitHub.
-
-## Key takeaways
-
-::: {.callout-note appearance="minimal" collapse="true"}
-## Teacher note
-
-Quickly cover this and get them to do the survey before moving on to the
-discussion activity.
-:::
-
-- Make it easier to collaborate with yourself in the future and with
-  others by explicitly setting which packages your project depends on.
-  Use `usethis::use_package()` to set the dependency for you in the
-  `DESCRIPTION` file.
-- Create more re-usable and easier to test and debug functions by
-  keeping them small (few lines of code) and that do one (conceptual)
-  thing at a time. Less is more!
-- Make your function more robust by explicitly stating which packages
-  the code you use in your function comes from by using
-  `package_name::function_name()`.
-  - Don't use `library()` or `require()` *within* your functions.
-- Keep your stable, robust functions in a separate file for easier
-  re-use across your files, for instance, in the `R/functions.R` file.
-  You can re-use the functions by using `source(here("R/functions.R"))`
-  in your Quarto documents.
 
 ## :speech_balloon: Discussion activity: How robust might your code be or code that you've read?
 
@@ -684,6 +523,31 @@ others' code, and try to improve it.
 2. Together with your neighbour, discuss some of these things you've
    thought about. Try to find out if you have similar thoughts or ideas
    on how to improve things.
+
+## Key takeaways
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Quickly cover this and get them to do the survey before moving on to the
+discussion activity.
+:::
+
+- Make it easier to collaborate with yourself in the future and with
+  others by explicitly setting which packages your project depends on.
+  Use `usethis::use_package()` to set the dependency for you in the
+  `DESCRIPTION` file.
+- Create more re-usable and easier to test and debug functions by
+  keeping them small (few lines of code) and that do one (conceptual)
+  thing at a time. Less is more!
+- Make your function more robust by explicitly stating which packages
+  the code you use in your function comes from by using
+  `package_name::function_name()`.
+  - Don't use `library()` or `require()` *within* your functions.
+- Keep your stable, robust functions in a separate file for easier
+  re-use across your files, for instance, in the `R/functions.R` file.
+  You can re-use the functions by using `source(here("R/functions.R"))`
+  in your Quarto documents.
 
 ```{r admin-save-session-code}
 #| include: false

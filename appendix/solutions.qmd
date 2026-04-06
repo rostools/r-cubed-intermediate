@@ -15,14 +15,6 @@ This document contains the solutions, or in many ways potentials
 solutions, to the exercises throughout the workshop. They are hidden by
 default so you don't accidentally see solutions for the other exercises.
 
-## Making robust and general-purpose functions {.unnumbered}
-
-### :technologist: Exercise: Finish setting the dependencies {.unnumbered}
-
-::: {.callout-tip collapse="true"}
-{{< include /includes/solutions/_robustness-set-dependencies.qmd >}}
-:::
-
 ## Doing many things at once with functionals {.unnumbered}
 
 ### :technologist: Exercise: Convert into a function to use it on the sleep data {.unnumbered}
