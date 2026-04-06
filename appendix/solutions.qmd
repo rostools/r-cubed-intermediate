@@ -17,12 +17,6 @@ default so you don't accidentally see solutions for the other exercises.
 
 ## Pre-process data as you import it {.unnumbered}
 
-### :technologist: Exercise: Import participant 101's sleep data {.unnumbered}
-
-::: {.callout-tip collapse="true"}
-{{< include /includes/solutions/_importing-sleep-on-101.qmd >}}
-:::
-
 ### Bundling code into functions {.unnumbered}
 
 #### :technologist: Exercise: Convert the sleep code into a function {.unnumbered}
