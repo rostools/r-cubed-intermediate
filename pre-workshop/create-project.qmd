@@ -3,6 +3,8 @@
 ```{r setup}
 #| include: false
 library(here)
+# To trigger auto-linking
+library(prodigenr)
 library(fs)
 temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")

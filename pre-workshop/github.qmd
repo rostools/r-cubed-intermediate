@@ -3,7 +3,9 @@
 ```{r}
 #| include: false
 # To trigger auto-linking
-library(downlit)
+library(usethis)
+library(gert)
+library(gitcreds)
 ```
 
 ## The basics of GitHub

@@ -5,7 +5,8 @@
 ```{r}
 #| include: false
 # To trigger auto-linking
-library(downlit)
+library(pak)
+library(remotes)
 ```
 
 We will be using specific R packages for the workshop, so you will need

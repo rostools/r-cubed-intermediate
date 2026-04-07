@@ -1,5 +1,12 @@
 # Syllabus {#sec-syllabus}
 
+```{r}
+#| include: false
+# To trigger linking.
+library(purrr)
+library(dplyr)
+```
+
 Reproducibility and open scientific practices are increasingly demanded
 of, and needed by, scientists and researchers in our modern research
 environments. We increasingly produce larger and more complex amounts of

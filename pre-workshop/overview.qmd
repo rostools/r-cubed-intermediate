@@ -3,7 +3,7 @@
 ```{r setup}
 #| include: false
 # To trigger linking.
-
+library(here)
 ```
 
 In order to participate in this workshop, you must complete everything
