@@ -113,13 +113,13 @@ to them for their involvement, support, and sponsorship!
 [Aarhus University](https://international.au.dk/) employs Luke, who is
 the lead teacher and educational resource developer.
 
-::: {layout-ncol="3"}
+::: {layout="[33,33,33]"}
 ![](/images/logo-ddea.png){width="220px" fig-align="center"
 fig-alt="Danish Diabetes and Endocrinology Academy logo"}
 
 ![](/images/logo-sdca.png){width="110px" fig-align="center"
 fig-alt="Steno Diabetes Center Aarhus logo"}
 
-![](/images/logo-au.png){width="110px" fig-align="center"
+![](/images/logo-au.png){width="200px" fig-align="center"
 fig-alt="Aarhus University logo"}
 :::
