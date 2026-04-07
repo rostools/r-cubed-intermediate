@@ -264,6 +264,18 @@ error prone and harder to write and read compared to these other tools.
 For some alternative explanations of this, see
 @sec-alternative-loop-explanation.
 
+This approach of doing an action on each item in a set of items also
+allows us to use another powerful "design pattern": If you make a
+function to do something to one item, you can do it for all items. So
+your focus on writing code should try to aim on building a solid, robust
+function for one thing, and then use functionals to very easily apply
+that to many things at once with nearly no extra effort. For example, do
+you have a dozen different models to run on the same data? Focus on
+building a solid, robust function that runs one model, then arrange the
+input to be a list of the different model formulas, and then use
+functionals to run all your models at once. There are many other ways of
+applying this thinking to designing and writing your code.
+
 {{< text_snippet sticky_up >}}
 
 ## Using functionals to import multiple datasets
