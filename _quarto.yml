@@ -54,7 +54,6 @@ book:
       - sessions/what-next.qmd
   appendices:
     - appendix/extras.qmd
-    - appendix/solutions.qmd
     - appendix/for-teachers.qmd
     - appendix/references.qmd
     - CHANGELOG.md
