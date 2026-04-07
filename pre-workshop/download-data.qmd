@@ -233,29 +233,28 @@ we actually want from that folder. This might not make sense yet, but as
 we go through the workshop, you will see why this is important to
 consider.
 
-Alright, the next step is to download the dataset. Paste this code into
-the `data-raw/nurses-stress.R` script that has the URL to the dataset
-(stored on
-[Proton Drive, a secure EU cloud storage service](https://proton.me/)):
+Alright, the next step is to download the dataset. Sharing large files
+isn't easy, so we've put it on [Proton Drive](https://proton.me/)),
+which is a secure EU cloud storage service. Unfortunately, it also means
+you can't directly download the data using R. Instead, you have to
+manually open the link and download the file to your R Project's
+`data-raw/` folder. But, we still want to have a record of where the
+data came from. So, open up the `data-raw/nurses-stress.R` script and
+paste in this comment below the `library(here)` line.
 
 ```{r nurses-stress-data-link}
 #| filename: "data-raw/nurses-stress.R"
-#| eval: false
-nurses_stress_link <- "https://drive.proton.me/urls/ZHZ6TCAN2W#e5D5U4IajdYp"
+# The dataset can be downloaded manually from
+# <https://drive.proton.me/urls/ZHZ6TCAN2W#e5D5U4IajdYp>.
+# Make sure to save this file to the `data-raw/` folder with the name
+# `nurses-stress.tar`.
 ```
 
-Right below this line, write out the function `download.file()` to
-download and save the nurses' stress dataset
-[tar](https://en.wikipedia.org/wiki/Tar_(computing)) file. We're going
-to save the tar file to `data-raw/nurses-stress.tar` with the `destfile`
-argument. This code should be written in the `data-raw/nurses-stress.R`
-file. Run all the lines of code in this script to download the dataset.
-
-```{r download-data}
-#| filename: "data-raw/nurses-stress.R"
-#| eval: false
-download.file(nurses_stress_link, destfile = here("data-raw/nurses-stress.tar"))
-```
+Then, open the
+[link to the dataset](https://drive.proton.me/urls/ZHZ6TCAN2W#e5D5U4IajdYp)
+and download the [tar](https://en.wikipedia.org/wiki/Tar_(computing))
+file to your R Project's `data-raw/` folder with the name
+`nurses-stress.tar` (which should be the default).
 
 ```{r admin-copy-tar-data}
 #| include: false
