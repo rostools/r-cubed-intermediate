@@ -523,7 +523,195 @@ function that you can re-use.
    Git history, using {{< var keybind.commit >}} and then push to
    GitHub.
 
+```{r}
+#| label: solution-read-multiple-files
+#| echo: false
+#' Read all `.csv.gz` files in the `stress/` folder into one data frame.
+#'
+#' @param filename The name of files in the sub-folders that we
+#'    want to read in.
+#'
+#' @returns A single data frame/tibble.
+#'
+read_all <- function(filename) {
+  files <- here::here("data-raw/stress/") |>
+    fs::dir_ls(regexp = filename, recurse = TRUE)
+
+  data <- files |>
+    purrr::map(read) |>
+    purrr::list_rbind(names_to = "file_path_id")
+
+  return(data)
+}
+
+read_all("HR.csv.gz")
+read_all("IBI.csv.gz")
+```
+
 {{< text_snippet sticky_up >}}
+
+## :technologist: Extra exercise: Include a new `max_rows` argument to `read_all()`
+
+**Time: ~10 minutes.**
+
+If you finished the previous exercise early, you can try this exercise,
+which is much harder. To make it a bit harder, we also won't provide a
+scaffold.
+
+Right now, the `read_all()` can only read in the first 100 rows of each
+file, because we've put the default value of `max_rows` in `read()` to
+100. If we wanted to read in all the data, we would have to change that
+default value, which isn't ideal nor robust of a feature for
+`read_all()`. Instead, it would be nice if we could set the `max_rows`
+argument in `read_all()`, like:
+
+```r
+read_all("HR.csv.gz", max_rows = 1000)
+read_all("HR.csv.gz", max_rows = 10)
+read_all("HR.csv.gz", max_rows = Inf)
+```
+
+In the `R/functions.R` file, complete these tasks of updating the
+`read_all()` function while using the workflow of editing,
+`source()`'ing the `R/functions.R` file, and testing the function in the
+**Console**. Complete these tasks:
+
+1. Add a new argument to the `read_all()` function in the
+   `function(...)` called `max_rows` with a default value of 100.
+2. Review the section you read at the start of this session on
+   functionals and "anonymous functions".
+3. Use an anonymous function in the `map()` code to give the `max_rows`
+   argument to the `read()` function's `max_rows` argument. You will
+   need to use the `\(x)` syntax for this. Instead of `x`, call it
+   `file` to be more descriptive. In the anonymous function, you will
+   need to use both `file` and `max_rows` in `read()`.
+4. Test that `read_all("HR.csv.gz", max_rows = 10)` works (in the
+   **Console**) and only reads in 10 rows of each file, by
+   `source()`'ing the `R/functions.R` file with
+   {{< var keybind.source >}} whenever you make a change to the
+   `read_all()` function.
+5. Once it works, update the Roxygen docs by adding `@params max_rows`
+   to the `read_all()` documentation.
+6. Render the `docs/learning.qmd` file to check that it works in the
+   document with {{< var keybind.render >}}.
+7. Style the `R/functions.R` file with {{< var keybind.style >}}.
+8. Lastly, commit your changes to Git with {{< var keybind.commit >}}
+   and push to GitHub.
+
+```{r}
+#| label: solution-read-all-max-rows
+#| echo: false
+#' Read all `.csv.gz` files in the `stress/` folder into one data frame.
+#'
+#' @param filename The name of files in the sub-folders that we
+#'    want to read in.
+#' @param max_rows The maximum number of rows to read in for each file.
+#'
+#' @returns A single data frame/tibble.
+#'
+read_all <- function(filename, max_rows = 100) {
+  files <- here::here("data-raw/stress/") |>
+    fs::dir_ls(regexp = filename, recurse = TRUE)
+
+  data <- files |>
+    purrr::map(\(file) read(file, max_rows = max_rows)) |>
+    purrr::list_rbind(names_to = "file_path_id")
+
+  return(data)
+}
+
+read_all("HR.csv.gz", max_rows = 10)
+read_all("HR.csv.gz", max_rows = 1000)
+```
+
+{{< text_snippet sticky_up >}}
+
+## :technologist: Extra exercise: Move the `here::here()` path out of the function
+
+**Time: ~5 minutes.**
+
+If you finished the previous exercise early, you can try this exercise,
+which is much harder. Like with the extra exercise above, to make it a
+bit harder, we won't provide a scaffold.
+
+In general, it isn't good practice to hard code things in functions, as
+it makes them less robust to changes. For instance, if we ever renamed
+the `data-raw/` folder or the `nurses-stress/` folder, the `read_all()`
+function (and any other function that might use `here::here()` to those
+folders) would break and stop working. So instead, it is better to move
+those types of things out of the function and into a common location in
+the "global" environment (meaning outside of a function). That way, if
+you ever need to change the path, you only need to change the value of
+that one variable. So in this exercise, you will move that
+`here::here()` path out of the function and into a variable in the
+global environment, and then use that variable in the function. All
+while the function continues to work as usual.
+
+While this approach is quite powerful when there are some variables that
+many functions use, it can also cause some problems as you might
+accidentally create a variable with the same name as the one you used in
+the function. We can avoid this by using a specific naming style for
+"global" variables by capitalising them and to hide them by using a `.`
+at the start of the variable name. So try it out by following these
+steps:
+
+1. Open the `R/functions.R` file and at the top of the file, create a
+   new "section" with a header called `# Global variables -----`. The
+   `-----` is a common style to make it easier to visually see the
+   section in the code and to make it appear in the "Document Outline"
+   in RStudio.
+2. Below that header, create a new variable called `.DATASET_DIR` and
+   assign it the value of `here::here("data-raw/stress/")`. The `.` at
+   the start of the variable name makes it hidden in the environment and
+   harder to accidentally change or use again. The capitalisation makes
+   it clear that it is a "global" variable that is used inside functions
+   and isn't just a variable for one function.
+3. Go into the `read_all()` function body and replace the
+   `here::here("data-raw/stress/")` with the new variable
+   `.DATASET_DIR`.
+4. Test that `read_all()` works (in the **Console**) by `source()`'ing
+   the `R/functions.R` file with {{< var keybind.source >}} and running
+   `read_all("HR.csv.gz")` whenever you make a change to the
+   `read_all()` function.
+5. When it works, style the `R/functions.R` file with
+   {{< var keybind.style >}}.
+6. Lastly, commit your changes to Git with {{< var keybind.commit >}}
+   and push to GitHub.
+
+::: {.callout-note collapse="true"}
+```{r}
+#| label: solution-read-multiple-files
+#| echo: false
+.DATASET_DIR <- here::here("data-raw/stress/") # <1>
+
+# In the function body of `read_all()`.
+read_all <- function(filename, max_rows = 100) {
+  files <- .DATASET_DIR |> # <2>
+    fs::dir_ls(regexp = filename, recurse = TRUE)
+
+  data <- files |>
+    purrr::map(\(file) read(file, max_rows = max_rows)) |>
+    purrr::list_rbind(names_to = "file_path_id")
+
+  return(data)
+}
+
+read_all("HR.csv.gz", max_rows = 10)
+read_all("HR.csv.gz", max_rows = 1000)
+```
+
+1. Place it at the top of `R/functions.R` so that it can be used by
+   other functions below it. Use a `.` at the start to make it hidden so
+   it isn't visible in the environment and so is harder to accidentally
+   change or use again. Capitalise it to make it clear that it is a
+   "global" variable that is used inside functions and isn't just a
+   variable for one function.
+2. Replace the `here::here()` in the function body with the new variable
+   `.DATASET_DIR`. This way, if we ever need to change the path to the
+   data, we only need to change it in one place, which is more robust
+   and easier to maintain.
+
+:::
 
 ## Key takeaways
 
