@@ -172,6 +172,21 @@ we do *not* want R to do the action *yet*, we want R to use the action
 on each item in the `map()`. In order for `map()` to do that, you need
 to give the function as an object so it can do the action later.
 
+::: callout-tip
+A useful analogy here is imagine one person writing instructions on
+several pieces of paper along with box of things related to the
+instructions. This person then gives each other person in a group one
+piece of paper and one thing inside the box. Both the box, *as well as*
+the piece of paper are objects, since no action has happened yet. But
+once each person gets the box and the piece of paper and reads the
+instructions, they will then do an action based on the instructions to
+the thing from the box.
+
+That piece of paper is like a function without the `()`, and when the
+person reads it and follows the instructions, the function becomes an
+action with `()`.
+:::
+
 Let's say we wanted to paste together the number with the sentence
 "seconds have passed". Normally it would look like:
 
