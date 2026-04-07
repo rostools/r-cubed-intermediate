@@ -398,8 +398,22 @@ usethis::with_project(
 )
 ```
 
-You now have the data ready for the workshop! At this point, please run
-this function in the Console:
+You now have the data ready for the workshop! Now, before continuing,
+commit your changes to the Git history with {{< var keybind.commit >}}
+and then push those changes to your GitHub by clicking the "Push" button
+in the Git interface or with the Command Palette with
+{{< var keybind.palette >}} and then typing "push". Alternatively, you
+can run this code in the Console to commit and push your changes:
+
+```{r commit-and-push}
+#| filename: "Console"
+#| eval: false
+gert::git_add(".")
+gert::git_commit("Download nurses stress data and save to data-raw/")
+gert::git_push()
+```
+
+Next step is to please run this function in the Console:
 
 ```{r check-project-setup}
 #| filename: "Console"
