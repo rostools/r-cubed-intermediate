@@ -62,9 +62,17 @@ check-urls:
     --exclude-path "_badges.qmd"
 
 # Format all R code
-format-r:
+format-r: _format-r-styler _format-r-air
+
+# Air is better, but doesn't style Qmd files
+@_format-r-air:
   # Need to install air first
   air format .
+
+# Styler formats Qmd files
+@_format-r-styler:
+  #!/usr/bin/Rscript
+  styler::style_dir()
 
 # Format Markdown files
 format-md:
