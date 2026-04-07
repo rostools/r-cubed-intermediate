@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 # Joining data together {#sec-joins}
 
 ```{r setup}
@@ -107,6 +112,13 @@ they don't match with the other data frame."}
 
 {{< text_snippet sticky_up >}}
 
+::: callout-caution
+:construction_worker: This part is being updated. Once ready, it will be
+shown here.
+:::
+
+::: content-hidden
+
 ## Joining with dplyr functions
 
 ::: {.callout-note collapse="true"}
@@ -136,13 +148,15 @@ participant_details
 cgm_data
 ```
 
+<!-- TODO: Fix the `r` situation -->
+
 Notice the number of rows in each dataset. The `participant_details`
-dataset has `r nrow(participant_details)` rows and the `cgm_data`
-dataset has `r nrow(cgm_data)` rows. When we `left_join()` them, there
-should no more than `r nrow(participant_details) + nrow(cgm_data)` rows
-(`cgm_data` plus `participant_details`) in the output. There will likely
-be less because, remember, we have only imported the first 100 rows of
-each dataset. Let's join them with `left_join()`.
+dataset has `nrow(participant_details)` rows and the `cgm_data` dataset
+has `nrow(cgm_data)` rows. When we `left_join()` them, there should no
+more than `nrow(participant_details) + nrow(cgm_data)` rows (`cgm_data`
+plus `participant_details`) in the output. There will likely be less
+because, remember, we have only imported the first 100 rows of each
+dataset. Let's join them with `left_join()`.
 
 ```{r left-join}
 #| filename: "docs/learning.qmd"
@@ -153,18 +167,18 @@ participant_details |>
 Here, because `cgm_data` has the `hour` column, that means it expands
 all the data from `participant_details` for the dates that it joins by.
 The number of rows now is
-`r nrow(left_join(participant_details, cgm_data))`, which is slightly
-less than we expected but it also isn't surprising. Some rows in
-`cgm_data` got dropped because we haven't yet imported all the data.
+`nrow(left_join(participant_details, cgm_data))`, which is slightly less
+than we expected but it also isn't surprising. Some rows in `cgm_data`
+got dropped because we haven't yet imported all the data.
 
 Because theoretically, the same `id` and `date` values should be present
 in both `cgm_data` and `participant_details`, using either `left_join()`
 or `full_join()` should be similar results. It should *not* give more
-than `r nrow(participant_details) + nrow(cgm_data)` rows though.
+than `nrow(participant_details) + nrow(cgm_data)` rows though.
 
 But let's try `right_join()` first to see what happens. This is simpler,
 since it will only join what is in the right side, e.g. `cgm_data`. That
-means there should be exactly `r nrow(cgm_data)` rows in the output.
+means there should be exactly `nrow(cgm_data)` rows in the output.
 
 ```{r right-join}
 #| filename: "docs/learning.qmd"
@@ -183,7 +197,7 @@ be more than the sum of the number of rows in both datasets. But it can
 be less, since, by joining there will be overlap between the two
 datasets. At a minimum, there can not be less rows than the largest of
 the two datasets, which is in this case `participant_details` at
-`r nrow(participant_details)` rows. Let's try `full_join()` to see what
+`nrow(participant_details)` rows. Let's try `full_join()` to see what
 happens.
 
 ```{r full-join}
@@ -193,7 +207,7 @@ participant_details |>
 ```
 
 We can see that the number of rows is
-`r nrow(full_join(participant_details, cgm_data))`, which is still less
+`nrow(full_join(participant_details, cgm_data))`, which is still less
 than the sum of the two datasets. But again, it isn't surprising to us
 here, since we know there is some overlap between the two datasets.
 
@@ -281,6 +295,8 @@ Now, in the `docs/learning.qmd` file, render the document with
 and save it to the `data/` folder. Once that is done, we will finish
 with committing the changes with {{< var keybind.commit >}} and then
 pushing to GitHub.
+
+:::
 
 ## Key takeaways
 

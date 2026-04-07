@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 # Pivoting your data from and to long or wide {#sec-pivots}
 
 ```{r setup}
@@ -123,6 +128,13 @@ learn more, read up on the
 [documentation](https://tidyr.tidyverse.org/articles/pivot.html) for it.
 
 {{< text_snippet sticky_up >}}
+
+::: callout-caution
+:construction_worker: This section is being updated. Once ready, it will
+be shown here.
+:::
+
+::: content-hidden
 
 ## Pivot to long form
 
@@ -470,6 +482,7 @@ used before to make a function:
     {{< var keybind.commit >}} and push it to your GitHub.
 
 {{< text_snippet sticky_up >}}
+:::
 
 ## Key takeaways
 

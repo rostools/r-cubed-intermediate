@@ -5,6 +5,13 @@
 library(downlit)
 ```
 
+::: callout-caution
+:construction_worker: This session is being actively developed and
+edited. Once the session is finished being edited, the content will be
+added here.
+:::
+
+::: content-hidden
 > [**Introduction slides**](/slides/introduction.html)
 
 <div>
@@ -227,3 +234,5 @@ for another 4 minutes. This time, talk about these questions:
 
 1. How do you perceive your skill in R?
 2. How much time do you spend *processing data* in R?
+
+:::

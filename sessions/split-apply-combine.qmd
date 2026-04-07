@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 # Using split-apply-combine to help in processing {#sec-split-apply-combine}
 
 ```{r setup}
@@ -10,6 +15,14 @@ load(here("_temp/characters-dates.RData"))
 ## Learning objectives
 
 {{< include /includes/objectives/_split-apply-combine.qmd >}}
+
+::: callout-caution
+:construction_worker: This session is being actively developed and
+edited. Once the session is finished being edited, the content will be
+added here.
+:::
+
+::: content-hidden
 
 ## :book: Reading task: Split-apply-combine technique and functionals
 
@@ -586,3 +599,5 @@ save.image(here::here("_temp/split-apply-combine.RData"))
 ```
 
 {{< include /includes/_code-appendix.qmd >}}
+
+:::

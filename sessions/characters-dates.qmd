@@ -1,3 +1,8 @@
+---
+execute:
+  eval: false
+---
+
 # Cleaning characters and dates {#sec-characters-dates}
 
 ```{r setup}
@@ -9,9 +14,16 @@ load(here("_temp/functionals.RData"))
 source(here("R/functions.R"))
 ```
 
+::: callout-caution
+:construction_worker: This session is being actively developed and
+edited. It will be added here once it is done and ready.
+:::
+
 ## Learning objectives
 
 {{< include /includes/objectives/_characters-dates.qmd >}}
+
+::: content-hidden
 
 ## :speech_balloon: Discussion activity: Why can't we join datasets together yet?
 
@@ -119,8 +131,8 @@ like:
 
 ::: callout-note
 The `\` string is a special string in regex, but in R it means "escape
-or use this as the string". For instance, `\"` in R means "use the `"`
-string", like if you wanted to write a message like:
+or use this literally as the string". For instance, `\"` in R means "use
+the `"` string", like if you wanted to write a message like:
 
 ```{r}
 print("Analysis has \"nearly\" finished.")
@@ -745,3 +757,5 @@ save.image(here::here("_temp/characters-dates.RData"))
 ```
 
 {{< include /includes/_code-appendix.qmd >}}
+
+:::
