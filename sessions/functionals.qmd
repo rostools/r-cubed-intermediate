@@ -269,13 +269,12 @@ For some alternative explanations of this, see
 ## Using functionals to import multiple datasets
 
 But what does functionals have to do with what we are doing now? Well,
-we have the `import_dime()` that only imports one CSV file. But we have
-many more! Well, we can use functionals to import them all at once
-:grin:
+we have `read()` that only reads in one CSV file. But we have many more!
+Well, we can use functionals to read them all at once :grin:
 
 Before we can use `map()` though, we need to have a vector or list of
-the file paths for all the CSV files we want to import. For that, we can
-use the `{fs}` package, which has a function called `dir_ls()` that
+the file paths for all the CSV files we want to read in. For that, we
+can use the `{fs}` package, which has a function called `dir_ls()` that
 finds files in a folder (directory).
 
 So, let's add `library(fs)` to the `setup` code chunk. Then, go to the
@@ -283,49 +282,63 @@ bottom of the `docs/learning.qmd` document, create a new header called
 `## Using map`, and create a code chunk below that with
 {{< var keybind.chunk >}}
 
-The `dir_ls()` function takes the path that we want to search, in this
-case `data-raw/dime/cgm` and has an argument called `glob` to tell it
-what type of files to search for. In our case, we want to search for all
-CSV files in the `data-raw/dime/cgm/` folder. So we will pipe the output
-of the path to the CGM folder with `here()` into `dir_ls()`:
+The `dir_ls()` function, which stands for "directory list", takes the
+path that we want to search, in this case `data-raw/nurses-stress/`, an
+argument to search all sub-folders with `recurse = TRUE`, and has an
+argument called `regexp` to tell it what type of files to search for.
+This `regexp` argument is short for "regular expression", which we will
+cover a bit more in a later session. Regular expressions are very
+powerful pattern finding tools, but they can also get very complicated.
+Thankfully in our case, we only want to find all CSV files in the
+`data-raw/nurses-stress/` folder that are called `HR.csv.gz`. So we can
+use that in `regexp`. Let's pipe the output of the `here()` path to the
+stress folder into `dir_ls()` by assigning it to a new variable
+`hr_file` so we can use it later.
 
-```{r list-cgm-files}
+```{r list-hr-files}
 #| filename: "docs/learning.qmd"
-cgm_files <- here("data-raw/dime/cgm/") |>
-  dir_ls(glob = "*.csv")
+hr_files <- here("data-raw/nurses-stress/") |>
+  dir_ls(regexp = "HR.csv.gz", recurse = TRUE)
 ```
 
-Then we can see what the output is. The paths you see on your computer
+Let's see what the output looks like. The paths you see on your computer
 will be different from what are shown here (it is a different computer).
-Plus to keep it simpler, on the website we will only show the first 6
+Plus to keep it simpler, on the website we will only show the first 3
 files.
 
-```{r list-cgm-files-show}
+```{r list-hr-files-show}
 #| filename: "docs/learning.qmd"
 #| eval: false
-cgm_files
+hr_files
 ```
 
 ```{r admin-list-files-for-book}
 #| echo: false
-head(gsub(".*\\/data-raw", "data-raw", cgm_files), 3)
+head(gsub(".*\\/data-raw", "data-raw", hr_files), 3)
 ```
 
-Alright, we now have all the files ready to give to `map()`.
+So we have a list of all the CSV files we want to read in. Alright, we
+now have all the files ready to give to `map()`, so let's read in
+**all** HR files into R!
 
-```{r map-import-cgm}
+```{r map-read-hr}
 #| filename: "docs/learning.qmd"
-cgm_data <- cgm_files |>
-  map(import_dime)
+hr_data <- hr_files |>
+  map(read)
 ```
+
+Notice that we give `map()` the function `read` *without* the `()`.
+That's because we need to give the functional `map()` the function as
+*an object*, not as an *action*. After you run it, `map()` will take the
+`read` function as an object and apply it to each HR file as an action.
 
 Remember, that `map()` always outputs a list, so when we look into this
-object, it will give us `r length(cgm_data)` tibbles (data frames). For
+object, it will give us `r length(hr_data)` tibbles (data frames). For
 the website we'll only show the first two tibbles:
 
-```{r map-import-cgm-show}
+```{r map-import-hr-show}
 #| filename: "docs/learning.qmd"
-cgm_data[1:2]
+hr_data[1:2]
 ```
 
 ::: {.callout-note collapse="true"}
@@ -353,10 +366,10 @@ code we wrote into `list_rbind()`.
 
 ```{r use-list-rbind}
 #| filename: "docs/learning.qmd"
-cgm_data <- cgm_files |>
-  map(import_dime) |>
+hr_data <- hr_files |>
+  map(read) |>
   list_rbind()
-cgm_data
+hr_data
 ```
 
 But, hmm, we don't have the participant ID in the data frame. This is
@@ -373,28 +386,34 @@ data frame as a new column called `file_path_id`. So we will add the
 
 ```{r use-list-rbind-with-paths}
 #| filename: "docs/learning.qmd"
-cgm_data <- cgm_files |>
-  map(import_dime) |>
+hr_data <- hr_files |>
+  map(read) |>
   list_rbind(names_to = "file_path_id")
 ```
 
-And then look at it by running `cgm_data` below the code:
+And then look at it by running `hr_data` below the code:
 
 ```{r use-list-rbind-with-paths-show}
 #| filename: "docs/learning.qmd"
 #| eval: false
-cgm_data
+hr_data
 ```
 
 ```{r admin-show-rbind-with-path-for-book}
 #| echo: false
-cgm_data |>
+hr_data |>
   trim_filepath_for_book()
 ```
 
 The `file_path_id` variable will look different on everyone's computer.
 Don't worry, we're going to tidy up the `file_path_id` variable later in
-another session.
+another session. Looking at the code and thinking about our "design
+pattern" of "do something to one thing, then do it for all things", we
+can see that if we wanted to read in the `IBI` or `BVP` or other files
+found inside `stress/`, we would only need to make one change to the
+code above, which is to change the `regexp` argument in `dir_ls()` to
+find the files we want. So, it's your turn to try to convert it to a
+function and read in the other datasets.
 
 Before moving on to the exercise, let's style with
 {{< var keybind.style >}} the document, render with
@@ -402,7 +421,7 @@ Before moving on to the exercise, let's style with
 to the Git history using {{< var keybind.commit >}} before pushing to
 GitHub.
 
-## :technologist: Exercise: Convert into a function to use it on the sleep data
+## :technologist: Exercise: Convert the map with reading code into a function
 
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
@@ -412,54 +431,63 @@ exercise, walk through with them the solution. So that we are all on the
 same page.
 :::
 
-**Time: \~20 minutes.**
+**Time: \~15 minutes.**
+
+::: callout-tip
+As you add more code and text to your `docs/learning.qmd` file, it will
+start to get longer. A helpful tip to move around a Quarto or R script
+more easily is to open up the "Document Outline" on the side by clicking
+the button in the top right corner of the Quarto pane or by using
+{{< var keybind.outline >}}.
+:::
 
 We've made some code that does what we want, now the next step is to
-convert it into a function so we can use it on both the `cgm` and
-`sleep` datasets. The code we've written to import only the `cgm` data
+convert it into a function so we can use it on the other datasets within
+`stress/`. The code we've written only reads the `HR` data and it so far
 looks like this:
 
 ```{r}
 #| eval: false
-cgm_files <- here("data-raw/dime/cgm/") |>
-  dir_ls(glob = "*.csv")
-cgm_data <- cgm_files |>
-  map(import_dime) |>
+hr_files <- here("data-raw/nurses-stress/") |>
+  dir_ls(regexp = "HR.csv.gz", recurse = TRUE)
+
+hr_data <- hr_files |>
+  map(read) |>
   list_rbind(names_to = "file_path_id")
-cgm_data
+
+hr_data
 ```
 
-We want to be able to do the same thing for the `sleep` data, but we
-don't want to repeat ourselves. What we want is a new function that
-looks like the code chunk below and that outputs a similar data frame,
-though the `file_path_id` values will be different:
-
-{{< include /includes/solutions/_functionals-import-multiple-files.qmd >}}
+We want to be able to do the same thing for the other datasets like
+`BVP` or `IBI`, but we don't want to repeat ourselves. What we want is a
+new function that looks like the code chunk below that we can use to
+import the other datasets.
 
 ```{r}
 #| eval: false
-here("data-raw/dime/cgm/") |>
-  import_csv_files()
-here("data-raw/dime/sleep/") |>
-  import_csv_files()
+hr_data <- read_all("HR.csv.gz")
+ibi_data <- read_all("IBI.csv.gz")
+bvp_data <- read_all("BVP.csv.gz")
 ```
 
-```{r}
-#| echo: false
+Recall that the structure of making functions below and use this template to help you get started:
 
-here("data-raw/dime/cgm/") |>
-  import_csv_files() |>
-  trim_filepath_for_book()
-here("data-raw/dime/sleep/") |>
-  import_csv_files() |>
-  trim_filepath_for_book()
+``` r
+___ <- function(___) {
+  # Code that does something
+  ___ <- ___
+
+  ___ <- ___
+
+  return(___)
+}
 ```
 
-Complete the tasks below to convert this code into a stable, robust
+Complete the tasks below to convert the code into a stable, robust
 function that you can re-use.
 
-1. We've used two packages here, `{fs}` and `{purrr}`. You will first
-   need to add these packages to the `DESCRIPTION` file by using
+1. We've used two new packages in this session, `{fs}` and `{purrr}`.
+   First add these packages to the `DESCRIPTION` file by using
    `usethis::use_package()` in the **Console**.
 2. In the bottom of `docs/learning.qmd`, create a new header
    `## Exercise: Convert map to function and use on sleep`.
@@ -468,26 +496,27 @@ function that you can re-use.
 4. As you've already done in the previous sessions, convert this code
    into a function. You can always refer to the @sec-functions and
    @sec-robustness sessions.
-   - Name the function `import_csv_files`.
+   - Name the function `read_all`.
    - Use the `function() { ... }` code to create a new function
-   - Inside `function()`, add an argument called `folder_path`.
+   - Inside `function()`, add an argument called `filename`.
    - Paste the code into the function body.
-   - Replace `here("data-raw/dime/cgm")` with `folder_path`.
-   - Rename `cgm_files` to `files`.
-   - Rename `cgm_data` to `data`.
+   - Rename `hr_files` to simply `files`.
+   - Rename `hr_data` to simply `data`.
    - Include a `return()` at the end.
    - Add `package_name::` to the individual functions used. To find
      which package a function comes from, use `?functionname` to see the
-     help documentation.
+     help documentation (there is four functions to add `::` to).
    - Create and write Roxygen documentation to describe the new function
      by using {{< var keybind.roxygen >}}.
-   - Run it and check that it works using the code shown above.
+   - Run it and check that it works using the code shown above e.g.
+     `read_all("HR.csv.gz")`.
 5. Render the document with {{< var keybind.render >}} to check that the
    function works.
 6. **Cut** and paste the function into the `R/functions.R` file. Then go
    back to the `docs/learning.qmd` file and (making sure the old
-   function is deleted), render again with {{< var keybind.render >}} to
-   check that the function works after moving it.
+   function is deleted or the code chunk with it has `eval: false`),
+   render again with {{< var keybind.render >}} to check that the
+   function works after moving it.
 7. Run `{styler}` while in the `R/functions.R` file with
    {{< var keybind.style >}}.
 8. Once done, **add** the changes you've made and **commit** them to the
