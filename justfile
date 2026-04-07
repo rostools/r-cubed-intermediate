@@ -36,7 +36,7 @@ update-quarto-theme:
   # Will also add if it isn't already installed.
   quarto update rostools/rostools-theme --no-prompt
 
-# Check spelling
+# Check spelling with typos
 check-spelling:
   uvx typos
 
@@ -54,7 +54,7 @@ check-commits:
   fi
 
 # Install lychee from https://lychee.cli.rs/guides/getting-started/
-# Check that URLs work
+# Check that URLs work with lychee
 check-urls:
   lychee . \
     --verbose \
