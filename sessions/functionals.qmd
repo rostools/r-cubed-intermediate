@@ -544,9 +544,12 @@ discussion activity.
 - Thinking in terms of declaratively telling a computer to do actions,
   rather than telling a computer how to do things step-by-step, is a
   powerful way to think about programming, especially in R.
-- in terms taking an object like a data frame or list, doing an action,
-  outputting a data frame or list, and doing more actions on that output
-  is
+- Design how you write your code by making functions to do an action to
+  one type of object (like a data frame), putting similar types of
+  objects (like a data frame or vector) into a list, and then using
+  functionals like `map()` to do the action to all of them at once, to
+  be effective and efficient with doing lots of things with very little
+  code.
 - Use the `{purrr}` package and its function `map()` when you want to
   repeat a function on multiple items at once.
 - Use `list_rbind()` to combine multiple data frames into one data frame
