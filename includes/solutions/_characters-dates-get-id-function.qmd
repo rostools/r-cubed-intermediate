@@ -1,6 +1,5 @@
 ```{r}
 #| label: solution-participant-id-function
-#| echo: !expr 'show_solutions'
 #' Get the participant ID from the file path column.
 #'
 #' @param data Data with `file_path_id` column.

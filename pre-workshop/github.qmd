@@ -309,7 +309,7 @@ history, you can use the "Push" command to send your history of changes
 to GitHub. The diagram in @fig-local-vs-remote shows how it conceptually
 looks like.
 
-```{mermaid fig-local-vs-remote}
+```{mermaid}
 %%| label: fig-local-vs-remote
 %%| fig-cap: Schematic showing a local repository connected to GitHub's remote repository.
 %%| fig-alt: Flow diagram with two boxes, one for the local repository and one for the remote repository on GitHub. An arrow labeled "Push" goes from the local to GitHub, and an arrow labeled "Pull" goes from GitHub to the local.
@@ -329,7 +329,7 @@ thousands of workers use Git and services like GitHub to work together
 on massive projects. The way collaboration works would conceptually look
 like:
 
-```{mermaid fig-local-collab-and-remote}
+```{mermaid}
 %%| label: fig-local-collab-and-remote
 %%| fig-cap: Schematic showing a local repository, GitHub's remote repository, and a collaborator's repository.
 graph TB;

@@ -10,7 +10,8 @@ prodigenr::setup_project(project_path)
 usethis::with_project(
   path = project_path,
   {
-    r3::create_qmd_doc()
+    r3::create_learning_qmd()
+    r3::create_cleaning_qmd()
   }
 )
 usethis::with_project(

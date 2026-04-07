@@ -569,7 +569,7 @@ function that you can re-use.
 #' @returns A single data frame/tibble.
 #'
 read_all <- function(filename) {
-  files <- here::here("data-raw/stress/") |>
+  files <- here::here("data-raw/nurses-stress/") |>
     fs::dir_ls(regexp = filename, recurse = TRUE)
 
   data <- files |>
@@ -645,7 +645,7 @@ In the `R/functions.R` file, complete these tasks of updating the
 #' @returns A single data frame/tibble.
 #'
 read_all <- function(filename, max_rows = 100) {
-  files <- here::here("data-raw/stress/") |>
+  files <- here::here("data-raw/nurses-stress/") |>
     fs::dir_ls(regexp = filename, recurse = TRUE)
 
   data <- files |>
@@ -715,9 +715,9 @@ steps:
 
 ::: {.callout-note collapse="true"}
 ```{r}
-#| label: solution-read-multiple-files
+#| label: solution-data-dir-global-var
 #| echo: false
-.DATASET_DIR <- here::here("data-raw/stress/") # <1>
+.DATASET_DIR <- here::here("data-raw/nurses-stress/") # <1>
 
 # In the function body of `read_all()`.
 read_all <- function(filename, max_rows = 100) {

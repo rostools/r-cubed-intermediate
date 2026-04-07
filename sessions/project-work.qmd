@@ -175,7 +175,7 @@ It will be added here once done.
 ### Regularly style your code
 
 Make sure your code is styled correctly by regularly using
-{{< var keybind.styler >}} to style your code as you work in your Quarto
+{{< var keybind.style >}} to style your code as you work in your Quarto
 document. Nicely formatted code is just as important as code that runs,
 as it makes it easier to read and understand. So practice styling your
 code often! It might help to run `styler::style_dir()` on your whole

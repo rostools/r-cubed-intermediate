@@ -1,6 +1,5 @@
 ```{r}
 #| label: solution-prepare-dates-nse
-#| echo: !expr 'show_solutions'
 #' Prepare the date columns in DIME CGM and sleep data for joining.
 #'
 #' @param data The data that has the datetime column.
