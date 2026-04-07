@@ -11,24 +11,25 @@ library(downlit)
 We will be using specific R packages for the workshop, so you will need
 to install them. To make it easier, we've created a custom R package
 called `r3` that will install all the necessary packages for you for
-this workshop. Run these two functions in the Console to install our
-custom `r3` package as well as the `{tidyverse}` package.
+this workshop. Run these two functions in the Console by copying and
+pasting them to install our custom `r3` package as well as the
+`{tidyverse}` package.
 
 ``` {.r filename="Console"}
 install.packages("r3", repos = c("https://rostools.r-universe.dev", "https://cloud.r-project.org"))
 install.packages("tidyverse")
 ```
 
-::: {.callout-warning appearance="default"}
+::: {.callout-tip appearance="default"}
 Installing packages is tricky, especially on some work laptops, and
 doesn't always work as expected. Here are some other methods to try if
 you have trouble installing the packages with the code above.
 
 For Windows users, you may have to install
 [RTools](https://cran.r-project.org/bin/windows/Rtools/) to use either
-the `pak` or `remotes` method. The version of RTools you install must
-match the version of R that you have installed. For example, if you have
-R version 4.4, you need to install RTools 4.4.
+the `{pak}` or `{remotes}` method. The version of RTools you install
+must match the version of R that you have installed. For example, if you
+have R version 4.4, you need to install RTools 4.4.
 
 First, try installing the `r3` package directly from GitHub with
 `{pak}`:

@@ -11,25 +11,28 @@ below. If not, you will need to update them.
 1. [R](https://cloud.r-project.org/bin/windows/base/): Any version above
    {{< meta versions.r >}}. If you have used R before, you can confirm
    the version by running `R.version.string` in the Console.
+
 2. [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
    Any version above {{< meta versions.rstudio >}}. If you have
    installed it before, check the current version by going to the menu
    "Help -> About RStudio".
+
 3. [Git](https://git-scm.com/download/win): Select the "Click here to
    download" link. Git is used throughout many sessions in the workshop.
    When installing, it will ask for a selecting a "Text Editor" and
    while we won't be using this in the workshop, Git needs to know this
    information so choose Notepad.
 
-### MacOS
+## MacOS
 
 1. [R](https://cloud.r-project.org/bin/macosx/): Any version above
    {{< meta versions.r >}}. If you have used R before, you can confirm
    the version by running `R.version.string` in the Console. If you use
-   [Homebrew](https://brew.sh/), installing R is as easy as opening a
-   Terminal and running:
+   [Homebrew](https://brew.sh/) (which we strongly recommend installing
+   and using), installing R is as easy as opening a Terminal and
+   running:
 
-    ``` bash
+    ```text
     brew install --cask r
     ```
 
@@ -38,24 +41,24 @@ below. If not, you will need to update them.
    installed it before, check the current version by going to the menu
    "Help -> About RStudio". With Homebrew:
 
-    ``` bash
+    ```text
     brew install --cask rstudio
     ```
 
 3. [Git](https://git-scm.com/download/mac): Git is used throughout many
    sessions in the workshop. With Homebrew:
 
-    ``` bash
+    ```text
     brew install git
     ```
 
-### Linux (Ubuntu)
+## Linux (Ubuntu)
 
 1. [R](https://cloud.r-project.org/bin/linux/ubuntu/): Any version above
    {{< meta versions.r >}}. If you have used R before, you can confirm
    the version by running `R.version.string` in the Console.
 
-    ``` bash
+    ```text
     sudo apt -y install r-base
     ```
 
@@ -67,7 +70,7 @@ below. If not, you will need to update them.
 3. [Git](https://git-scm.com/download/mac): Git is used throughout many
    sessions in the workshop.
 
-    ``` bash
+    ```text
     sudo apt install git
     ```
 :::

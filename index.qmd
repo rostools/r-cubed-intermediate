@@ -17,12 +17,13 @@ environments. As our tools for generating data become more sophisticated
 and powerful, we also need to use more sophisticated and powerful tools
 for processing the data. Training on how to use these tools and how to
 build modern data processing skills is lacking for researchers, even
-though this work is extremely time-consuming and technical. As a
-consequence of this lack of awareness for the need of these skills, how
-*exactly* data is processed is poorly, if at all, described in
-scientific studies. This hidden aspect of research could have major
-impacts on the reproducibility of studies. This workshop is therefore
-aimed to specifically start addressing these types of problems.
+though this work takes up a large amount of researchers' time and is
+extremely time-consuming and technical. As a consequence of this lack of
+awareness for the need of these skills, how *exactly* data is processed
+is poorly, if at all, described in scientific studies. This hidden
+aspect of research could have major impacts on the reproducibility of
+studies. This workshop is therefore aimed to specifically start
+addressing these types of problems.
 
 This 3-day long workshop is designed to do participatory live-typing,
 where the teacher demonstrates the tasks on their computer connected to

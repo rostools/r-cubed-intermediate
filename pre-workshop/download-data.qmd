@@ -50,7 +50,7 @@ To most effectively demonstrate the concepts in the workshop, it's best
 to use a real dataset to apply what you're going to learn. So for this
 workshop, you're going to use an openly licensed dataset from a study
 assessing physiological stress in nurses during the COVID-19 pandemic,
-which is called the [Nurses' Stress](https://zenodo.org/records/5514277)
+which is called the [nurses' stress](https://zenodo.org/records/5514277)
 dataset [@Hosseini2021].
 
 Unfortunately, like most research data, it isn't very tidy. So we've
@@ -203,10 +203,10 @@ withr::with_dir(
 )
 ```
 
-::: {.callout-note collapsed="true"}
+::: {.callout-note collapse="true"}
 ## Code to print file tree
 
-You don't need to run the below code. But if you want to see the
+You don't need to run the below code, but if you wanted to see the
 structure and content of a directory, you can use the `dir_tree()`
 function from the `{fs}` package, which means "filesystem", by running
 the following code in the R Console:
@@ -222,16 +222,16 @@ fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 If we open up RStudio with the `LearnR3.Rproj` file and run code in the
 `data-raw/nurses-stress.R`, R runs the commands assuming everything
 starts in the `LearnR3/` folder. But! If we run the code that is in the
-`nurses-stress.R` script by, e.g. not while in RStudio, not in the R
-Project, or using `source()`, R runs the code in that file by assuming
-the working directory is the folder that the file is in, which is in the
-`data-raw/` folder. So if you try to load in data in another folder like
-`data/`, R will *think* you mean the `data/` folder in the `data-raw/`
-folder, which doesn't exist! So this can make things tricky. What
-`here()` does is to tell R to first look for the `.Rproj` file and then
-start looking for the file we actually want. This might not make sense
-yet, but as we go through the workshop, you will see why this is
-important to consider.
+`nurses-stress.R` script when not in, e.g., RStudio or the R Project, R
+runs the code in that file by assuming the working directory is the
+folder that the file is in, which is in the `data-raw/` folder. So if
+you try to load in data in another folder like `data/`, R will *think*
+you mean the `data/` folder in the `data-raw/` folder, which doesn't
+exist! So this can make things tricky. What `here()` does is to tell R
+to first look for the `.Rproj` file and then start looking for the file
+we actually want from that folder. This might not make sense yet, but as
+we go through the workshop, you will see why this is important to
+consider.
 
 Alright, the next step is to download the dataset. Paste this code into
 the `data-raw/nurses-stress.R` script that has the URL to the dataset
@@ -332,6 +332,10 @@ usethis::with_project(
 )
 ```
 
+If you haven't already, run the code in the `data-raw/nurses-stress.R`
+script either line by line by using {{< var keybind.run-code >}} or by
+`source()`'ing with {{< var keybind.source >}}.
+
 Notice the indentation and spacing of the code. Like writing any
 language, code should follow a
 [style guide](https://style.tidyverse.org). An easy way of following a
@@ -355,7 +359,7 @@ using your file browser.
 ```{r print-tree-data-raw}
 #| filename: "Console"
 #| eval: false
-fs::dir_tree("data-raw/")
+fs::dir_tree("data-raw/", recurse = 2)
 ```
 
 ```{r admin-print-data-raw-after-untar}
@@ -365,7 +369,7 @@ fs::dir_tree("data-raw/")
 usethis::with_project(
   path = project_path,
   {
-    fs::dir_tree("data-raw")
+    fs::dir_tree("data-raw", recurse = 2)
   }
 )
 ```

@@ -11,14 +11,14 @@ to no training and support provided for it. This has led to minimal
 attention, scrutiny, and rigour in describing, detailing, and reviewing
 these procedures in studies, and contributes to the systemic lack of
 code sharing among researchers. All together, this aspect of research is
-often completely hidden and may likely to be the source of many
+often completely hidden and may likely be the source of many
 irreproducible results.
 
 In this workshop we aim to begin addressing this gap. We use a highly
 practical, mixed-methods, hands-on approach to learning that revolves
 around code-along sessions (teacher and you, the learner, coding
 together), hands-on exercises, discussion activities, reading tasks, and
-group project work. This workshop is designed for to be done over 3 full
+team project work. This workshop is designed for to be done over 3 full
 days in person, following the [schedule](/overview/schedule.qmd) listed
 in @sec-schedule.
 

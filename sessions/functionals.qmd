@@ -696,13 +696,13 @@ steps:
    section in the code and to make it appear in the "Document Outline"
    in RStudio.
 2. Below that header, create a new variable called `.DATASET_DIR` and
-   assign it the value of `here::here("data-raw/stress/")`. The `.` at
-   the start of the variable name makes it hidden in the environment and
-   harder to accidentally change or use again. The capitalisation makes
-   it clear that it is a "global" variable that is used inside functions
-   and isn't just a variable for one function.
+   assign it the value of `here::here("data-raw/nurses-stress/")`. The
+   `.` at the start of the variable name makes it hidden in the
+   environment and harder to accidentally change or use again. The
+   capitalisation makes it clear that it is a "global" variable that is
+   used inside functions and isn't just a variable for one function.
 3. Go into the `read_all()` function body and replace the
-   `here::here("data-raw/stress/")` with the new variable
+   `here::here("data-raw/nurses-stress/")` with the new variable
    `.DATASET_DIR`.
 4. Test that `read_all()` works (in the **Console**) by `source()`'ing
    the `R/functions.R` file with {{< var keybind.source >}} and running

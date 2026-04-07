@@ -269,7 +269,9 @@ finally close the Git interface.
 **If you have never used the Git interface before**, you can instead use
 R functions to do the same thing. In the Console, run:
 
-```{.r filename="Console"}
+```{r add-to-git-history}
+#| filename: "Console"
+#| eval: false
 gert::git_add(".")
 gert::git_commit("Setting up the project")
 ```
@@ -281,7 +283,9 @@ After adding the changes to the Git history, this should be the first
 commit for everyone. You're now ready to connect your project to GitHub.
 In the Console, run:
 
-``` {.r filename="Console"}
+```{r use-github}
+#| filename: "Console"
+#| eval: false
 usethis::use_github()
 ```
 

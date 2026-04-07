@@ -1,18 +1,14 @@
 # Survey {#sec-survey}
 
-We have a [Code of Conduct](/pre-workshop/code-of-conduct.qmd)
-(@sec-code-of-conduct). If you haven't read it, **read it now**. The
-survey involves a question about Conduct. We want to make sure this
-workshop is a supportive and safe environment for learning, so this Code
-of Conduct is quite important.
-
 If you haven't read the sections under
 ["Overview"](/overview/syllabus.qmd) (starting at @sec-syllabus) and
 done the ["Pre-workshop tasks"](/pre-workshop/overview.qmd) (starting at
 @sec-pre-workshop), **please do that before doing the survey**. There
 are some questions in the survey that ask about these sections, such as
-in ["Is this workshop for you?"](/overview/is-this-for-you.qmd)
-(@sec-is-this-for-you), as well as to copy and paste output from some R
+in ["Is this workshop for you?"](/overview/is-this-for-you.qmd) (in
+@sec-is-this-for-you) and the
+[Code of Conduct](/pre-workshop/code-of-conduct.qmd) (in
+@sec-code-of-conduct), as well as to copy and paste output from some R
 functions into the survey. To remind you, the functions for the survey
 are:
 
