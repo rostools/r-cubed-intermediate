@@ -43,7 +43,7 @@ spread across the workshop's sessions. The workshop will enable you to:
 
 {{< include /includes/objectives/_functions.qmd >}}
 
-[Making robust and general-purpose functions](/sessions/robustness.qmd)
+[Making robust and reusable functions](/sessions/robustness.qmd)
 
 {{< include /includes/objectives/_robustness.qmd >}}
 

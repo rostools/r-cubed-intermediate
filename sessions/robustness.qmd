@@ -1,4 +1,4 @@
-# Making robust and general-purpose functions {#sec-robustness}
+# Making robust and reusable functions {#sec-robustness}
 
 ```{r setup}
 #| include: false

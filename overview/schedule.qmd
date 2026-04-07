@@ -18,18 +18,18 @@ and overview.
 ::: panel-tabset
 ## Day 1 {.unnumbered}
 
-| Time  | Session topic                                                                                  |
-|:------|:-----------------------------------------------------------------------------------------------|
-| 9:00  | {{< fa mug-hot >}} Arrival; Coffee and light breakfast                                         |
-| 9:30  | {{< fa person-chalkboard >}} [Introduction to the workshop](/sessions/introduction.qmd)        |
-| 10:15 | {{< fa laptop-code >}} [Pre-process data as you import it](/sessions/importing.qmd)            |
-| 11:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})           |
-| 12:00 | {{< fa utensils >}} Lunch                                                                      |
-| 12:45 | {{< fa laptop-code >}} [Bundling code into functions](/sessions/functions.qmd)                 |
-| 13:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})           |
-| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                                |
-| 14:15 | {{< fa laptop-code >}} [Making robust and general-purpose functions](/sessions/robustness.qmd) |
-| 16:15 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})           |
+| Time  | Session topic                                                                           |
+|:------|:----------------------------------------------------------------------------------------|
+| 9:00  | {{< fa mug-hot >}} Arrival; Coffee and light breakfast                                  |
+| 9:30  | {{< fa person-chalkboard >}} [Introduction to the workshop](/sessions/introduction.qmd) |
+| 10:15 | {{< fa laptop-code >}} [Pre-process data as you import it](/sessions/importing.qmd)     |
+| 11:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})    |
+| 12:00 | {{< fa utensils >}} Lunch                                                               |
+| 12:45 | {{< fa laptop-code >}} [Bundling code into functions](/sessions/functions.qmd)          |
+| 13:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})    |
+| 14:00 | {{< fa mug-hot >}} Break with coffee and snacks                                         |
+| 14:15 | {{< fa laptop-code >}} [Making robust and reusable functions](/sessions/robustness.qmd) |
+| 16:15 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})    |
 
 ## Day 2 {.unnumbered}
 
