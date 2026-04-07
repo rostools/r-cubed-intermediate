@@ -7,6 +7,12 @@ library(here)
 library(snakecase)
 ```
 
+Before you can do anything to data in R, you need to actually get it
+into R in the first place! This session is all about reading in one data
+file and doing some very simple cleaning to it as we read it in. Keeping
+in mind, there are nearly 3000 CSV files to read in, so aiming to do
+things efficiently is very important here.
+
 ## Learning objectives
 
 {{< include /includes/objectives/_importing.qmd >}}

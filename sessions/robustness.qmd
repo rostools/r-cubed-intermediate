@@ -17,6 +17,12 @@ untar(
 )
 ```
 
+While we made a simple function for some simple code, reusing that
+function to read in data from other files while using it in other Quarto
+documents or R scripts means it needs to be robust enough and accessible
+to be used in those other places. This session we'll make our functions
+more robust, reusable, and accessible.
+
 ## Learning objectives
 
 {{< include /includes/objectives/_robustness.qmd >}}

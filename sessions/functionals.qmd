@@ -16,6 +16,14 @@ Briefly go over the bigger picture (found in the introduction section)
 and remind everyone the 'what' and 'why' of what we are doing.
 :::
 
+We've made a simple but robust function to help us read in our data more
+easily and with less code. But we still have a problem of having nearly
+3000 CSV files to read in. Even if we just used our simple function,
+that would still be 3000 lines of copy and pasted code. That's not very
+efficient and also sounds like an anxiety-inducing situation to be in.
+So in this session, we'll go over using things called "functionals" to
+do many things at once with minimal extra code.
+
 ## Learning objectives
 
 {{< include /includes/objectives/_functionals.qmd >}}

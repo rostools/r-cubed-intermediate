@@ -8,6 +8,13 @@ library(snakecase)
 library(here)
 ```
 
+We've written simple code that reads in one of our data files and does
+some simple cleaning to it. But we have about 2000 CSV files to read in.
+So even with our simple code, isn't going to be very efficient if we
+just copy and paste that code to read in all those files. This session
+is about bundling our code into functions that will make it easier to
+read more files with less code.
+
 ## Learning objectives
 
 {{< include /includes/objectives/_functions.qmd >}}
