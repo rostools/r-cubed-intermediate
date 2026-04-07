@@ -10,6 +10,7 @@ URL: https://r-cubed-intermediate.rostools.org
 Depends:
     R (>= 4.0.0)
 Imports:
+    remotes,
     snakecase,
     styler,
     desc,
