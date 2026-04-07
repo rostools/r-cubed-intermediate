@@ -1,126 +1,241 @@
-# Group project work {#sec-project-work}
+# Project work {#sec-project-work}
 
-::: {.callout-note collapse="true"}
-## :teacher: Teacher note
+In this last session of the workshop, you will take what you learned and
+apply it to create a reproducible project while working in a team (of 2
+or 3 people). This will help you reinforce what you learned in the
+previous sessions.
 
-Walk-through with them for tasks 1 to 5.
+The aim of this project is to produce two files that are stored on GitHub:
 
-Get them to decide on who will be the "owner" and who will be the
-"collaborator". Then, use the "add collaborator" section of GitHub to
-get them all to add their team member who is the collaborator to the
-repository of the owner.
+- A reproducible Quarto file in `docs/cleaning.qmd` that cleans the
+  data.
+- A generated `data/cleaned-dime.csv` file that is created by the
+  `docs/cleaning.qmd` file.
 
-Then walk through with the collaborator how to clone the owner's
-repository to their computer. Walk through with them how to open the
-project in RStudio.
+During the project, we want you to:
 
-After that, walk through having them create a new Quarto document for
-each team member, named after their own name. Commit and push those
-changes so that they can all get started sooner.
+- Create and use functions that process the data.
+- Store those functions in the `R/functions.R` file and using `source()`
+  to use them in your Quarto document.
+- Use functionals to apply those functions to the data.
+- Process and join together the data into one dataset that can help
+  answer a research question.
+- Use Git and GitHub to keep track of changes to your project's files
+  and to collaborate together.
+- Use `docs/cleaning.qmd` as the main file that only contains the code
+  to clean and process the data. It shouldn't be used for testing out
+  code or doing exploration, that's what the `docs/sandbox-*.qmd` files
+  are for.
 
-Maybe walk through the code used to initially process and clean the data.
-:::
+During the last 15-20 minutes of this session, the lead teacher will
+download your project from GitHub and re-generate your report to check
+that it is reproducible. The teacher will run approximately these
+functions after downloading your project:
 
-::: callout-caution
-This is a new section, so it might not be very smooth yet. Any issues
-that come up we will share with the group and update this page
-immediately. So we will be co-creating this section together!! :tada:
-:grin:
-:::
+- `styler::style_dir()` to check that your code is styled.
+- `quarto::quarto_render(here::here("docs/cleaning.qmd"))` to check that
+  your Quarto file is reproducible/can run.
+- `fs::file_exists(here::here("data/cleaned-dime.csv"))` to check that
+  the cleaned dataset was created.
 
-It's time to try what you've learned from this workshop on a new
-dataset! We've taken the dataset from this
-[Zenodo record](https://zenodo.org/records/5514277) and tidied it up a
-bit for you, as it was bit difficult to work with in its original form.
-And it was a bit big. So, work through these tasks in teams of 2-3:
+## Specific tasks
 
-1. Using the same repository has you have been using for this workshop,
-   we're going to make a small change. Instead of there being only one
-   person on the project, we will get you to add a collaborator so you
-   can work together. Follow the instructions from the teacher for this
-   step.
+You will be collaborating as a team using Git and GitHub. We will have
+set up the project with Git and GitHub for you before the session, so
+you can quickly start collaborating together on the project. You will be
+pushing and pulling a lot of content, so you will need to maintain
+regular and open communication with your team member(s).
 
-2. Every team member should then clone this new repository to their own
-   computer. Again, follow the instructions from the teacher for this
-   step.
+Below is a list of tasks to complete in order.
+**Read through all the tasks first before starting any of them**.
 
-3. Every team member should open up this project in RStudio. Then
-   download this
-   [link](https://drive.google.com/file/d/1lBq6tTSb55b2OIGPqmYF07ZEhaEdSjUP/view?usp=drive_link)
-   from Google Drive to your computer. Yes, it's less then ideal to use
-   Google Drive, but it's an easy way to get the data to you.
+### Clone team repository
 
-4. Once you have downloaded it, save the file in the `data-raw/` folder
-   of your project. **This next step is important!** *One* team member
-   should run `usethis::use_git_ignore("data-raw/nurses-stress*")` so
-   that you don't accidentally save the zip file to your Git repository.
-   The team member should then commit the changes to Git and push the
-   changes up to GitHub. Then each team member should pull the changes
-   from GitHub to their own computer. If you opened the `.gitignore`
-   file, you should see that the `data-raw/nurses-stress*` file is now
-   ignored by Git. This means that it won't be included in your Git
-   repository, which is good because it's a big file and we don't want
-   to include it in our project.
+All team members need to clone (download) your team's repository to
+their own computer. The lead teacher will walk you through where to find
+your repository.
 
-5. Then, each team member should create a new Quarto document for
-   themselves, with their name, in the `docs/` folder. For example, if
-   Luke was in your group, he would create a file called
-   `docs/luke.qmd`. Use the menu buttons: File \> New File \> Quarto
-   Document. Commit the new file to Git. From now on, you will each work
-   separately in this document, while pushing and pulling the changes to
-   GitHub for the others to see.
+The steps to clone the repository are to:
 
-6. Look over the documentation of the
-   [dataset](https://zenodo.org/records/5514277). I have only done some
-   minimal tidying of the data, mainly adding a timestamp column and
-   converted the files into more compressed file formats. I've also only
-   included the HR, TEMP, and EDA data files, as well as the main
-   participant data file (`survey_results.csv`).
+1. Copy the URL for your team's repository from the team's repository
+   page on GitHub.
+2. Open RStudio and go to the "File" menu on the top menu bar.
+3. In the "File" menu, click "New Project...", select "Version Control",
+   and then click "Git".
+4. In the next screen, paste your team's repository URL that you copied
+   into the "Repository URL" box. Don't change the name of the project
+   in the "Project directory name".
+5. Select the "Browse..." button next to the "Create project as
+   subdirectory of" box and choose to save the project to your
+   `Desktop/` folder.
+6. Click the "Create Project".
 
-7. Unzip the file you downloaded. You can do this manually. Unzip it to
-   the `data-raw/` folder, with the same name as the zip file. Look
-   through the files. The first folders you find are labeled by the
-   participant ID and sub-folders in them follow the pattern
-   `ID_TIME-IN-SECONDS`. For instance `15_1594140175` means participant
-   15, and the time in seconds is 1594140175, which is the time that has
-   passed since 1970-01-01 (the "origin"). Inside those folders are the
-   data files for that participant, stored as `.parquet` files.
-   [Parquet](https://parquet.apache.org/) is a data format that is very
-   efficient for storing large amounts of data. You can load them into R
-   using the `arrow` package, with `arrow::read_parquet()`. You will
-   need to install the `arrow` package and set the dependency with
-   `usethis::use_package("arrow")`.
+After clicking it, RStudio will clone the repository to your computer
+and should then open it as an R project.
 
-8. Using the same functions and workflows we covered in the workshop,
-   what you want to end up with is a single dataset that has all the HR,
-   TEMP, and EDA data for each participant so that you can (eventually)
-   analyse it.
+### Read the documentation of the dataset
 
-9. As a group, discuss some ways to do this. One idea is to do this in
-   stages. First, discuss how you will go about exploring the data and
-   identifying what the issues are. Then afterwards, get into the
-   details of fixing those issues.
+The dataset you will work with for this project is a study that examined
+how bioactive components in food impact our glucose levels and sleep.
+The study is called the [DIME](https://zenodo.org/records/8268744) study
+[@Traka2023].
 
-10. Here's some things to get you started with the exploration tasks:
+The original dataset is a bit messy and difficult to initially work
+with. I've had to do some simple cleaning of the dataset to make it
+easier for you to start working with. If you want to see what cleaning I
+did, check out the
+[`clean.R`](https://github.com/rostools/r-cubed-intermediate/blob/main/data-raw/dime-cleaning/clean.R)
+file on the workshop repository. It uses many of the same functions,
+style, and processes that we've covered in this workshop.
 
-    1. Getting a list of all the files that end in `.parquet` in the
-       `data-raw/` folder. Tip: In `dir_ls()` there is the `regexp`
-       argument that allows you to use regular expressions. For example,
-       if you wanted to find only the `HR.parquet` files, you could use
-       `regexp = "HR\\.parquet"`.
-    2.  Read in one of those files using `arrow::read_parquet()`.
-    3. After reading in, keep only the first 1000 rows of the data using
-       `slice_head(n = 1000)` from the `{dplyr}` package.
-    4. Then, identify how you want to join all the data together. This
-       will probably require that you import each of the HR, TEMP, and
-       EDA files to see what they have inside them.
-    5. You will also need to import the `survey_results.csv` file, which
-       will probably need some cleaning up too.
+Read the description of the DIME dataset that was taken from the
+[DIME](https://zenodo.org/records/8268744) dataset page:
+
+> "The DIME study consists of a randomised 2x2 cross-over human
+> intervention where healthy participants (n = 20) are subjected to a
+> diet high in bioactive-rich food for two weeks and a diet low in
+> bioactive-rich food. There is a four-week washout between the two
+> interventions.
+>
+> The continuous glucose monitoring was achieved using the Abbott
+> freestyle libre flash glucose device. The baseline of the participants
+> were determined 7 days before the start of the intervention, followed
+> by the first arm and second arm. The period between the two arms
+> (washout) was not recorded.
+>
+> We also included sleep data which consists of the amount of time spent
+> in bed and during that time the amount of time spent in light, deep
+> and rem in all 20 participants during the course of the dietary
+> intervention, both the high and low bioactive diet. that was captured
+> using FitBit wearables during both stages of the dietary
+> intervention".
+
+### Download the dataset
+
+All team members should now go back to the RStudio R project of your
+team's repository. Then, open the `data-raw/dime.R` file. I've included
+code to download and unzip the data into a new folder for you. All team
+members should `source()` this file with {{< var keybind.source >}}.
+This will download the dataset and save it to `data-raw/dime/`. Inside
+this folder, it should look a bit like:
+
+```text
+data-raw/
+├── dime/
+│   ├── cgm/
+│   ├── sleep/
+│   └── participant_details.csv
+├── dime.zip
+├── dime.R
+└── README.md
+```
+
+### Brainstorm a design for the flow of data processing
+
+Like we did at the start of the workshop, take some time to think,
+brainstorm, design, and plan what needs to be processed and how you
+might do that. You can use pen and paper for this if you want.
+
+To help you focus on the processing stage, these would be the research
+questions we want you to try to answer:
+
+1. How do glucose levels over time compare the baseline and the
+   different treatments, after controlling for gender and age?
+2. How do glucose levels over time compare between the two treatments,
+   after controlling for gender and age?
+3. How does sleep quality impact this relationship between glucose
+   levels and the different treatments?
+
+From these questions, brainstorm how the data should look like
+*as a single dataset* in order to answer the research questions. Then
+investigate how the data looks like right now and identify what tasks
+generally need to be done to get from the current state of the data to
+the state that would allow you to answer the research questions.
 
 ::: callout-tip
-If you'd like to see how this data was tidied up, check out this
-[script](https://github.com/rostools/r-cubed-intermediate/blob/main/data-raw/nurses-stress.R).
-It uses almost all the same functions and processes we've covered in
-this workshop, plus some extra ones to help speed things up (since
-processing all these large data can take some time if done "normally").
+The final dataset should have one row per participant per time point
+(e.g. every minute/half-hour), along with the necessary columns to
+answer the research questions above.
 :::
+
+Compare this hypothetical dataset to the current state of the different
+data files. Now, try to list out and identify the different processing
+tasks that need to be done to get it from the current state to the ideal
+state.
+
+### Coordinate tasks so `docs/cleaning.qmd` creates a final cleaned dataset
+
+<!-- TODO: Add steps and help instructions -->
+
+::: callout-caution
+:construction_worker: This part is being actively developed and edited.
+It will be added here once done.
+:::
+
+### Regularly style your code
+
+Make sure your code is styled correctly by regularly using
+{{< var keybind.styler >}} to style your code as you work in your Quarto
+document. Nicely formatted code is just as important as code that runs,
+as it makes it easier to read and understand. So practice styling your
+code often! It might help to run `styler::style_dir()` on your whole
+project as you get closer to finishing the project, so that everything
+is styled correctly.
+
+### Regularly commit the changes
+
+Use the "Git workflow" we've used throughout this workshop by adding to
+the staged area, committing, pushing, and pulling the changes that you
+and your teammate will make. You may encounter merge conflicts. If you
+do, get one of the helpers or teachers to help you out!
+
+### Regularly render the Quarto document
+
+Render your Quarto document to HTML often to ensure reproducibility of
+your document. You don't need to commit the rendered HTML file if you
+don't want to, it will be automatically ignored by Git because we added
+it to the `.gitignore` file for you when we set the project up.
+
+## Quick "checklist" for a good project
+
+- Project used Git and is on GitHub.
+- Used Quarto for testing out code and prototyping how you would process
+  the data.
+- Created functions and stored them in the `R/functions.R` file.
+- Used functionals to apply functions to chunks or groups of data.
+- Used `{tidyverse}` for data processing.
+- Code is correctly styled.
+
+## Checking reproducibility
+
+At the end, the lead teacher will download each of the teams' projects
+from GitHub and will test the reproducibility of the projects. As
+mentioned above, the teacher will run these functions after downloading
+your project:
+
+- `styler::style_dir()`
+- `quarto::quarto_render(here::here("docs/cleaning.qmd"))`
+- `fs::file_exists(here::here("data/cleaned-dime.csv"))`
+
+## Expectations for the project
+
+What we expect you to do for the team project:
+
+- Use Git and GitHub throughout your work.
+- Work collaboratively as a team and share responsibilities and tasks.
+- Use as much of what we covered in the workshop to practice what you
+  learned.
+
+What we don't expect:
+
+- Complicated analysis or coding. The simpler it is, the easier is to
+  for you to do the coding and understand what is going on. It also
+  helps us to see that you've practiced what you've learned.
+- Clever or overly concise code. Clearly written and readable code is
+  *always* better than clever or concise code. Keep it simple and
+  understandable!
+
+Essentially, the team project is a way to reinforce what you learned
+during the workshop, but in a more relaxed and collaborative setting.
+The point is give you space and time to practice what you learned, not
+to create a perfect (or even reproducible) project.
