@@ -54,4 +54,4 @@ jobs:
         uses: quarto-dev/quarto-actions/publish@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
         with:
           target: netlify
-          NETLIFY_AUTH_TOKEN: ${{ secrets.netlify-token }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
