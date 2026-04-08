@@ -258,20 +258,25 @@ file to your R Project's `data-raw/` folder with the name
 
 ```{r admin-copy-tar-data}
 #| include: false
-# To the temporary project, to test how this works there.
-fs::file_copy(
-  here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
-  fs::path(project_path, "data-raw", "nurses-stress.tar"),
-  overwrite = TRUE
-)
+# Only run this when there is the cleaning folder (e.g. not when rendering
+# on the GitHub workflow).
+cleaning_path <- here::here("data-raw/nurses-stress-cleaning")
+if (fs::dir_exists(cleaning_path)) {
+  # To the temporary project, to test how this works there.
+  fs::file_copy(
+    here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
+    fs::path(project_path, "data-raw", "nurses-stress.tar"),
+    overwrite = TRUE
+  )
 
-# To make the next code works as we've kept it in `data-raw/nurses-stress/`,
-# but below we do it in `data-raw/`.
-fs::file_copy(
-  here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
-  here::here("data-raw", "nurses-stress.tar"),
-  overwrite = TRUE
-)
+  # To make the next code works as we've kept it in `data-raw/nurses-stress/`,
+  # but below we do it in `data-raw/`.
+  fs::file_copy(
+    here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
+    here::here("data-raw", "nurses-stress.tar"),
+    overwrite = TRUE
+  )
+}
 ```
 
 Because the original dataset is stored elsewhere online, you don't need
