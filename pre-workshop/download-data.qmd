@@ -260,20 +260,32 @@ file to your R Project's `data-raw/` folder with the name
 #| include: false
 # Only run this when there is the cleaning folder (e.g. not when rendering
 # on the GitHub workflow).
-cleaning_path <- here::here("data-raw/nurses-stress-cleaning")
+cleaning_tar_path <- here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar")
+data_raw_tar_path <- here::here("data-raw/nurses-stress.tar")
+temp_proj_tar_path <- fs::path(project_path, "data-raw", "nurses-stress.tar")
 if (fs::dir_exists(cleaning_path)) {
   # To the temporary project, to test how this works there.
   fs::file_copy(
-    here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
-    fs::path(project_path, "data-raw", "nurses-stress.tar"),
+    cleaning_tar_path,
+    temp_proj_tar_path,
     overwrite = TRUE
   )
 
   # To make the next code works as we've kept it in `data-raw/nurses-stress/`,
   # but below we do it in `data-raw/`.
   fs::file_copy(
-    here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar"),
-    here::here("data-raw", "nurses-stress.tar"),
+    cleaning_tar_path,
+    data_raw_tar_path,
+    overwrite = TRUE
+  )
+}
+
+# Only copy to temp project if tar file doesn't exist there (e.g. when running on
+# the GitHub workflow).
+if (!fs::file_exists(temp_proj_tar_path)) {
+  fs::file_copy(
+    data_raw_tar_path,
+    temp_proj_tar_path,
     overwrite = TRUE
   )
 }
