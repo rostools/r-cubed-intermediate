@@ -10,8 +10,48 @@ permissions: read-all
 
 jobs:
   build-website:
-    uses: rostools/.github/.github/workflows/reusable-build-website-r.yml@main
-    secrets:
-      netlify-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      # This is to allow using `gh` CLI
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
+        with:
+          egress-policy: audit
+
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Spell check repo
+        uses: crate-ci/typos@02ea592e44b3a53c302f697cddca7641cd051c3d # v1.45.0
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@6f6e5bc62fba3a704f74e7ad7ef7676c5c6a2590
+        with:
+          use-public-rspm: true
+
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@6f6e5bc62fba3a704f74e7ad7ef7676c5c6a2590
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
+        with:
+          # Install a specific version of uv.
+          version: "0.11.4"
+
+        # Need to download the dataset before rendering and it's too big to store in the repo.
+        # So it has to be downloaded from somewhere else. I put it in my Google Drive and made the
+        # file public. The gdown tool makes it easy to download from Google Drive, but it isn't
+        # often updated and hasn't bee active for a while. But for now, and for this purpose,
+        # it's fine.
+      - name: Download dataset
+        run: |
+          cd data-raw
+          uvx gdown 'https://drive.google.com/uc?id=18-pm89Smtu5h7vzb5nyODTrKO-h1b9Xe'
+
+      - name: Publish to Netlify (and render)
+        uses: quarto-dev/quarto-actions/publish@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+        with:
+          target: netlify
+          NETLIFY_AUTH_TOKEN: ${{ secrets.netlify-token }}
