@@ -263,7 +263,7 @@ file to your R Project's `data-raw/` folder with the name
 cleaning_tar_path <- here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar")
 data_raw_tar_path <- here::here("data-raw/nurses-stress.tar")
 temp_proj_tar_path <- fs::path(project_path, "data-raw", "nurses-stress.tar")
-if (fs::dir_exists(cleaning_path)) {
+if (fs::file_exists(cleaning_tar_path)) {
   # To the temporary project, to test how this works there.
   fs::file_copy(
     cleaning_tar_path,
