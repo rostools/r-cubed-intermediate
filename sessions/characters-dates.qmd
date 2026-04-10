@@ -563,157 +563,19 @@ Roxygen documentation, and then test it out as shown in the code below.
 #'
 prepare_dates <- function(data, column) {
   prepared_dates <- data |>
+    # Rename to so they both use the same name.
+    dplyr::rename(datetime = column) |>
     dplyr::mutate(
-      date = lubridate::as_date(column),
-      hour = lubridate::hour(column),
+      date = lubridate::as_date(datetime),
+      hour = lubridate::hour(datetime),
       .before = column
     )
   return(prepared_dates)
 }
 cgm_data |>
-  prepare_dates(device_timestamp)
+  prepare_dates("device_timestamp")
 ```
 
-Hmmm, we encountered an error! This error is something that you would
-very quickly encounter as you make functions using `{tidyverse}`
-functions. Read the next section to learn about what is happening.
-
-## :book: Reading task: Non-standard evaluation (NSE)
-
-::: {.callout-note collapse="true"}
-## :teacher: Teacher note
-
-After they've read it, briefly review it again and try to explain what
-NSE is in a slightly different way. Try to emphasise that NSE is
-built-in to so many functions in R and that using `{{{ }}}` with
-`{tidyverse}` functions can help with using it in their own functions.
-:::
-
-**Time: \~5 minutes.**
-
-As you have noticed, we encountered an error when trying to write, what
-we think, is correct code in our function. This error,
-`"object not found"` is not easy to figure out. The error occurs because
-of something called
-"[non-standard evaluation](https://adv-r.hadley.nz/metaprogramming.html)"
-(or NSE). NSE is a feature of R and is used quite a lot throughout R
-(e.g. `library()`). The `{tidyverse}` packages in particular use it
-quite a lot. It is a concept that isn't commonly found in other
-programming language.
-
-In R, NSE is what allows you to use formulas (e.g. `y ~ x + x2`) in
-statistical models or allows you to type out `select(Gender, BMI)` or
-`library(purrr)`. In "standard evaluation", these would instead be
-`select("Gender", "BMI")` or `library("purrr")`. So NSE gives
-flexibility and ease of use for the user (we don't have to type quotes
-every time) when doing data analysis, but can be quite a headache when
-trying to program in R, like when making functions. There's more detail
-about this on the
-[dplyr website](https://dplyr.tidyverse.org/articles/programming.html#warm-up),
-which will give a few options to deal with NSE while programming with
-`{tidyverse}` packages. The simplest way to use NSE in your own
-functions when using `{tidyverse}` packages is to wrap the variable with
-`{{{ }}}` (called "curly-curly"). For example, using a simplified
-version of the code we wrote above, instead of this:
-
-```{r}
-#| eval: false
-prepare_dates <- function(data, column) {
-  data |>
-    mutate(date = as_date(column))
-}
-```
-
-You would use this:
-
-```{r}
-#| eval: false
-prepare_dates <- function(data, column) {
-  data |>
-    mutate(date = as_date({{ column }}))
-}
-```
-
-By wrapping `column` with `{{{ }}}`, we are telling R that we are giving
-it an unquoted variable and to give that variable to the `as_date()`
-function as the name of the column. It gets very technical very quickly,
-but the main thing to remember is that when you make functions that use
-`{tidyverse}` functions and you get this type of error, it is likely
-because of NSE. So you can use `{{{ }}}` to wrap the variable name in
-your function.
-
-{{< text_snippet sticky_up >}}
-
-## :technologist: Exercise: Using NSE in your function
-
-**Time: \~10 minutes.**
-
-Using what you just read about NSE, fix the `prepare_dates()` to
-correctly use the `column` argument.
-
-Before fixing the function though, you'll need to fix the `sleep_data`
-date column. We made `prepare_dates()` to create a new column called
-`date` and `hour`, but the sleep data already has a column called
-`date`. But, this name is incorrect, since it actually contains datetime
-data. So you need to rename it to `datetime`. To do this, you can use
-the `rename()` function from the `{dplyr}` package. So, in the `setup`
-code chunk in `docs/learning.qmd`, add a pipe after
-`get_participant_id()` into `rename(datetime = date)`, like:
-
-```{r rename-sleep-date-setup}
-#| filename: "docs/learning.qmd"
-sleep_data <- here("data-raw/dime/sleep") |>
-  import_csv_files() |>
-  get_participant_id() |>
-  rename(datetime = date)
-```
-
-At the end of this exercise, the `setup` code chunk should look like
-this:
-
-{{< include /includes/solutions/_characters-dates-using-nse.qmd >}}
-
-```{r setup-cgm-sleep-with-nse}
-#| filename: "docs/learning.qmd"
-cgm_data <- here("data-raw/dime/cgm") |>
-  import_csv_files() |>
-  get_participant_id() |>
-  prepare_dates(device_timestamp)
-
-sleep_data <- here("data-raw/dime/sleep") |>
-  import_csv_files() |>
-  get_participant_id() |>
-  rename(datetime = date) |>
-  prepare_dates(datetime)
-```
-
-And if you were to run the `cgm_data` and `sleep_data` in the
-**Console**, it should look something like:
-
-```{r show-cgm-sleep-with-dates}
-#| filename: "Console"
-cgm_data
-sleep_data
-```
-
-To get to that point, complete these tasks:
-
-1. Wrap `column` with `{{{ }}}` the three times it is used *inside* the
-   function *body*.
-2. Test that the function works by using
-   `prepare_dates(cgm_data, device_timestamp)` and
-   `prepare_dates(sleep_data, datetime)`.
-3. Cut and paste the function into `R/functions.R`.
-4. Run `{styler}` on both `R/functions.R` and `docs/learning.qmd` with
-   {{< var keybind.style >}}.
-5. Render the `docs/learning.qmd` file to make sure things remain
-   reproducible with {{< var keybind.render >}}.
-6. Restart your R session with {{< var keybind.restart-r >}} so that
-   your environment is cleaned up and empty.
-7. Add and commit the changes to the Git history with
-   {{< var keybind.commit >}} and then push to GitHub.
-
-{{< text_snippet sticky_up >}}
 
 ## Key takeaways
 
@@ -734,22 +596,6 @@ discussion activity.
 - Use the `{lubridate}` package when working with dates and times, as
   there are many functions in it to help simplify date processing, like
   `as_date()` or `hour()`.
-- Non-standard evaluation (NSE) is a great feature of R but also can be
-  frustrating. When using `{tidyverse}` functions in your own function,
-  use `{{}}` to wrap the variable that gives the error to fix the
-  problem and use NSE correctly.
-
-## :speech_balloon: Discussion activity: How have you worked with dates and characters?
-
-**Time: \~10 minutes.**
-
-As we prepare for the next thing (either lunch or the next session), get
-up (and if it's nice, go outside), and discuss with your neighbour or
-group the following questions:
-
-1. Have you worked with characters and/or dates before in your work? How
-   was that experience? Easy, hard?
-2. Can you see some useful ways you could use regex in your work?
 
 ```{r admin-store-session-code}
 #| include: false
