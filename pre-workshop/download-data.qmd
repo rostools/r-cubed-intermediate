@@ -234,13 +234,13 @@ we go through the workshop, you will see why this is important to
 consider.
 
 Alright, the next step is to download the dataset. Sharing large files
-isn't easy, so we've put it on [Proton Drive](https://proton.me/)),
-which is a secure EU cloud storage service. Unfortunately, it also means
-you can't directly download the data using R. Instead, you have to
-manually open the link and download the file to your R Project's
-`data-raw/` folder. But, we still want to have a record of where the
-data came from. So, open up the `data-raw/nurses-stress.R` script and
-paste in this comment below the `library(here)` line.
+isn't easy, so we've put it on [Proton Drive](https://proton.me/), which
+is a secure EU cloud storage service. Unfortunately, it also means you
+can't directly download the data using R. Instead, you have to manually
+open the link and download the file to your R Project's `data-raw/`
+folder. But, we still want to have a record of where the data came from.
+So, open up the `data-raw/nurses-stress.R` script and paste in this
+comment below the `library(here)` line.
 
 ```{r nurses-stress-data-link}
 #| filename: "data-raw/nurses-stress.R"

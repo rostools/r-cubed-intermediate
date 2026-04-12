@@ -196,8 +196,8 @@ usethis::create_github_token()
 This function sends you to the GitHub "Generate new token" webpage with
 all the necessary settings checked. Set the "Expiry date" to 90 days
 (this is a good security feature). Then, click the green button at the
-bottom called "Generate token" and you'll have a very long string
-generated for you that starts with `ghp_`.
+bottom called "Generate token" and you'll have a very long string of
+letters and numbers generated for you that starts with `ghp_`.
 **Save this token in your password manager** (see note above).
 
 This is the token you will use every time you open up RStudio and
