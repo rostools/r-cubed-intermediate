@@ -3,7 +3,7 @@ execute:
   eval: false
 ---
 
-# Cleaning characters and dates {#sec-characters-dates}
+# Processing strings with regular expressions {#sec-regex}
 
 ```{r setup}
 #| include: false
@@ -28,7 +28,7 @@ want to join them together, but the question is, how do we do that?
 
 ## Learning objectives
 
-{{< include /includes/objectives/_characters-dates.qmd >}}
+{{< include /includes/objectives/_regex.qmd >}}
 
 ## :technologist: Exercise: Inspect and compare the data frames
 

@@ -9,7 +9,7 @@ execute:
 #| include: false
 library(here)
 library(tidyverse)
-load(here("_temp/characters-dates.RData"))
+load(here("_temp/regex.RData"))
 ```
 
 ## Learning objectives

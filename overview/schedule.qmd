@@ -38,7 +38,7 @@ and overview.
 | 9:00  | {{< fa laptop-code >}} [Doing many things at once with functionals](/sessions/functionals.qmd)              |
 | 10:25 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                             |
-| 10:45 | {{< fa laptop-code >}} [Cleaning characters and dates](/sessions/characters-dates.qmd)                      |
+| 10:45 | {{< fa laptop-code >}} [Processing strings with regular expressions](/sessions/regex.qmd)                      |
 | 11:55 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
 | 12:00 | {{< fa utensils >}} Lunch                                                                                   |
 | 12:45 | {{< fa laptop-code >}} [Using split-apply-combine to help in processing](/sessions/split-apply-combine.qmd) |

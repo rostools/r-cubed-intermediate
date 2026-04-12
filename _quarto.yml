@@ -43,7 +43,7 @@ book:
       - sessions/functions.qmd
       - sessions/robustness.qmd
       - sessions/functionals.qmd
-      - sessions/characters-dates.qmd
+      - sessions/regex.qmd
       - sessions/split-apply-combine.qmd
       - sessions/pivots.qmd
       - sessions/joins.qmd
