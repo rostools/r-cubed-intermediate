@@ -505,7 +505,8 @@ ibi_data <- read_all("IBI.csv.gz")
 bvp_data <- read_all("BVP.csv.gz")
 ```
 
-Recall that the structure of making functions below and use this template to help you get started:
+Recall that the structure of making functions below and use this
+template to help you get started:
 
 ``` r
 ___ <- function(___) {

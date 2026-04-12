@@ -5,7 +5,8 @@ apply it to create a reproducible project while working in a team (of 2
 or 3 people). This will help you reinforce what you learned in the
 previous sessions.
 
-The aim of this project is to produce two files that are stored on GitHub:
+The aim of this project is to produce two files that are stored on
+GitHub:
 
 - A reproducible Quarto file in `docs/cleaning.qmd` that cleans the
   data.

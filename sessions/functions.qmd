@@ -606,7 +606,8 @@ read <- function(file_path, max_rows = 100) {
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
-Go over this solution with everyone as we will use it in the next session.
+Go over this solution with everyone as we will use it in the next
+session.
 :::
 
 ## :speech_balloon: Discussion activity: What are some tasks that could be functions?
