@@ -67,7 +67,7 @@ format-r: _format-r-styler _format-r-air
 # Air is better, but doesn't style Qmd files
 @_format-r-air:
   # Need to install air first
-  air format .
+  uvx --from air-formatter air format .
 
 # Styler formats Qmd files
 @_format-r-styler:
