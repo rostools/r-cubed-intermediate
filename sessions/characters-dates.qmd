@@ -12,68 +12,87 @@ library(fs)
 library(tidyverse)
 load(here("_temp/functionals.RData"))
 source(here("R/functions.R"))
+hr_data <- read_all("HR.csv.gz")
+survey_data <- here("data-raw/nurses-stress/survey-results.csv.gz") |>
+  read()
 ```
 
-::: callout-caution
-:construction_worker: This session is being actively developed and
-edited. It will be added here once it is done and ready.
-:::
+We've read a lot of our data into R so far. But we now have several
+individual data frames that we want to be able to analyse together. If
+you recall from the discussion activity we had in the introduction
+session, we want to have a single data frame that has variables for data
+like HR and BVP as well as the nurses' stress levels and other details.
+That way, we can analyse the relationships between these variables. For
+example, what is the relationship between HR and stress? Which means we
+want to join them together, but the question is, how do we do that?
 
 ## Learning objectives
 
 {{< include /includes/objectives/_characters-dates.qmd >}}
 
-::: content-hidden
+## :technologist: Exercise: Inspect and compare the data frames
+
+**Time: ~5 minutes.**
+
+You haven't yet read in the `survey-results.csv.gz` file, which is the
+main file that connects everything else together. So, read it into R and
+compare the data values and structure to the HR data. Try to identify
+the issues that prevent you from joining the datasets together right
+now. Use this code as a scaffold.
+
+```r
+hr_data <- read_all("HR.csv.gz")
+
+survey_data <- ___("___") |>
+  ___()
+
+hr_data
+survey_data
+```
+
+1. In your `docs/learning.qmd` file, go to the bottom of the file and
+   create a new header called `## Inspecting the data`. Then create a
+   new code chunk below that with {{< var keybind.chunk >}}.
+2. Copy and paste the code scaffold above into the code chunk you
+   created.
+3. Fill in the blanks to `read()` in the
+   `data-raw/nurses-stress/survey-results.csv.gz` file and assign it to
+   an object called `survey_data`.
+4. Run the code to see the two data frames in the **Console** and
+   compare them to identify the issues that prevent you from joining
+   them together right now.
+
+{{< text_snippet sticky_up >}}
 
 ## :speech_balloon: Discussion activity: Why can't we join datasets together yet?
 
 ::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
-The issues are related to the:
+The issues stopping us from joining the datasets together are:
 
-- IDs, where the CGM and sleep data have `file_path_id` while
-  `participant_details.csv` has `id`.
-- Dates, where the CGM data has `device_timestamp`, the sleep data has
-  `date`, and the `participant_details.csv` has `start_date` and
-  `end_date`.
-- Both the CGM and sleep data is measured at different times, but the
-  same date, so a direct join wouldn't work.
-- The participant details dates are in two columns rather than one.
+- HR-type data doesn't have an `id`, but does have a `file_path_id` with
+  the participant ID contained within it.
+- HR-type data has `collection_datetime` in long format, but the survey
+  data has `start_time`, `end_time`, and `date`, but all in one row in
+  wide format.
+- The survey data `date` is a character, not a date.
+- The survey data time columns have the smallest unit of time in minutes
+  but the HR-type data has the smallest unit of time in seconds.
+- The HR-type data is in long format but the survey data is in wide
+  format.
 
 :::
 
-**Time: \~8 minutes.**
+**Time: \~6 minutes.**
 
-We now have a function that imports all our CGM and sleep data, as well
-as `read()` that could read in the `data-raw/nurses-stress/survey-results.csv.gz` file.
-The next direction we want to go to is to join them in some way so that
-we can be able to analyse them together. But right now, we can't really
-do that. There are two main reasons. Look at the data below and try to
-identify them---don't peek ahead! :grin: Then discuss with a neighbour
-to see if you can come to a consensus.
+You've inspected the data frames to try and identify why we can't join
+them together right now. With a neighbour, discuss what you've found and
+see if you can come to a consensus on what the issues are. Then we will
+share together.
 
-```{r admin-display-all-data}
-#| echo: false
-cat("CGM data")
-read_all("HR.csv.gz") |>
-  trim_filepath_for_book() |>
-  print(n = 6)
-cat("Sleep data")
-here("data-raw/dime/sleep") |>
-  import_csv_files() |>
-  trim_filepath_for_book() |>
-  print(n = 6)
-cat("Participant details")
-here("data-raw/nurses-stress/survey-results.csv.gz") |>
-  read() |>
-  print(n = 6)
-```
-
-1. For 1 minute, look at the above data and try to identify the reasons
-   why we can't (easily) join the datasets together right now.
-2. For \~4 minutes, discuss what you've thought about with your
-   neighbour
+2. For about 3 minutes, discuss what you've found when comparing the
+   datasets with your neighbour
 3. Then for about 3 minutes we will all share and discuss together.
 
 ## :book: Reading task: Cleaning character data with regular expressions
@@ -93,40 +112,47 @@ defined as any collection of character objects. So we will be using
 
 The main "engine" behind the functions in `{stringr}` is called
 [regular expressions](https://en.wikipedia.org/wiki/Regular_expression)
-(or regex for short). These expressions are powerful, very concise ways
-of finding patterns in text. But they are also *very very difficult* to
-learn, write, and read, even for experienced users. That's because
-certain strings like `[` or `?` have special meanings. For instance,
-`[aeiou]` is regex for "find one string in the object that is either a,
-e, i, o, or u". The `[]` in this case means "find the string in between
-the two brackets". We won't cover regex too much in this workshop, but
-some great resources for learning them are the
+(or regex for short). You've already used regex when you used `dir_ls()`
+with the `regexp` argument in the previous session. These expressions
+are powerful, very concise ways of finding patterns in text. But they
+are also *very very difficult* to learn, write, and read, even for
+experienced users. That's because certain strings like `[` or `?` have
+special meanings. For instance, `[aeiou]` is regex for "find one string
+in the object that is either a, e, i, o, or u". The `[]` in this case
+means "find the string in between the two brackets". We won't cover
+regex too much in this workshop, but some great resources for learning
+them are the
 [R for Data Science regex section](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions),
 the
 [stringr regex page](https://stringr.tidyverse.org/articles/regular-expressions.html),
 as well as in the help doc `?regex`. There's also a nice
 [cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)
 on it. But we will cover some of the more commonly used regex patterns,
-like:
+like in @tab-regex:
 
-| regex       | Meaning                                                                                                         |
-|-------------|-----------------------------------------------------------------------------------------------------------------|
-| `\\d`       | find one digit (0-9)                                                                                            |
-| `\\D`       | find one non-digit                                                                                              |
-| `[0-9]`     | find one digit between 0 and 9 (the `-` is a range)                                                             |
-| `[a-z]`     | find one letter between a and z                                                                                 |
-| `[A-Z]`     | find one letter between A and Z                                                                                 |
-| `[a-zA-Z]`  | find one letter between a and z or A and Z                                                                      |
-| `\\.`       | find one dot string                                                                                             |
-| `$`         | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                       |
-| `^`         | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                         |
-| `?`         | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                    |
-| `*`         | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
-| `+`         | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other    |
-| `{n}`       | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other             |
-| `[:alpha:]` | find one letter (a-z or A-Z)                                                                                    |
-| `[:digit:]` | find one digit (0-9)                                                                                            |
-| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9)                                                                           |
+| regex       | Meaning                                                                                                                         |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `\\d`       | find one digit (0-9)                                                                                                            |
+| `\\D`       | find one non-digit                                                                                                              |
+| `[0-9]`     | find one digit between 0 and 9 (the `-` is a range)                                                                             |
+| `[a-z]`     | find one letter between a and z (lowercase)                                                                                     |
+| `[A-Z]`     | find one letter between A and Z (uppercase)                                                                                     |
+| `[a-zA-Z]`  | find one letter between a and z or A and Z                                                                                      |
+| `\\.`       | find one dot string                                                                                                             |
+| `$`         | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                                       |
+| `^`         | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                                         |
+| `?`         | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                                    |
+| `*`         | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other                 |
+| `+`         | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other                    |
+| `{n}`       | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other                             |
+| `[:alpha:]` | find one letter (a-z or A-Z)                                                                                                    |
+| `[:digit:]` | find one digit (0-9)                                                                                                            |
+| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9)                                                                                           |
+| `[:upper:]` | find one uppercase letter (A-Z)                                                                                                 |
+| `[:lower:]` | find one lowercase letter (a-z)                                                                                                 |
+| `(A|B)`     | find *either* `A` or `B` (`|` means "or" and the `()` groups them), e.g., `(\\D|\\d)` means find either a non-digit or a digit. |
+
+: A list of some common regex patterns and their meanings. {#tab-regex}
 
 ::: callout-note
 The `\` string is a special string in regex, but in R it means "escape
@@ -154,7 +180,7 @@ means "find a non-digit". So when using it in R, it would be `\\d` and
 
 {{< text_snippet sticky_up >}}
 
-## :speech_balloon: Discussion activity: Brainstorm a regex that will get the participant ID
+## :speech_balloon: Discussion activity: Brainstorm a regex for getting the participant ID
 
 **Time: \~8 minutes.**
 
@@ -163,45 +189,47 @@ get the participant ID from the file path. Try not to look ahead nor at
 the potential solutions! :grin: :wink:
 
 When the time is up, we'll share some ideas and go over what the regex
-*could* be (there is actually many different ways to do this). With your
+*could* be (there are a few different ways to do this). With your
 neighbour, do the following tasks:
 
 1. Looking at the `file_path_id` column, list what is similar in the
    user ID between rows and what is different.
 2. Discuss and verbally describe (in English, not regex) what text
    pattern you might use to extract the user ID.
-3. Use the list below to think about how you might convert the English
-   description of the text pattern to a regex. This will probably be
-   very hard, but try anyway.
-   - When strings are written as is, regex will find those strings, e.g.
-     `user` will find only `user`.
+3. Using what you just read about regex and the tips below, think about
+   how you might convert the English description of the text pattern to
+   a regex. This will probably be very hard, but try anyway.
    - Use `[]` to find one possible string of the several between the
      brackets. E.g. `[12]` means 1 *or* 2 or `[ab]` means "a" or "b". To
      find a range of numbers or letters, use `-` in between the start
      and end ranges, e.g. `[1-3]` means 1 to 3 or `[a-c]` means "a" to
      "c".
-   - Use `?` if the string might be there or not. E.g. `ab?` means "a"
-     and maybe "b" follows it or `1[1-2]?` means 1 and maybe 1 or 2 will
-     follow it.
+   - Use `{n}` to find exactly `n` occurrences of the previous pattern.
+     E.g. `a{2}` means "aa" or `\\d{3}` means three digits in a row.
 
 Once you've done these tasks, we'll discuss all together and go over
-what the regex would be to extract the user ID.
+what the regex could be to extract the user ID.
 
 ::: {.callout-note appearance="minimal" collapse="true"}
 ## Potential regex solutions
 
-- `[0-9][0-9][0-9]\\.csv$`
-- `[0-9]+\\.csv$`
-- `[0-9]{3}\\.csv$`
-- `\\d+\\.csv$`
-- `\\d{3}\\.csv$`
-- `[:digit:]+\\.csv$`
-- `[:digit:]{3}\\.csv$`
+- `(\\d|\\D)+`
+- `(\\d|\\D){2}`
+- `[0-9A-Z]+`
+- `[0-9A-Z]{2}`
+- `[:alnum:]+`
+- `[:alnum:]{2}`
+- `([:upper:]|[:digit:]){2}`
 
-For the rest of the workshop, we will use the regex `[:digit:]+\\.csv$`
-to get the participant ID from the file path. We use this one because it
-is more readable than the others and it allows us to get participant IDs
-that are one to many digits long.
+To be very explicit and certain, we could add `/stress/` to the start of
+the regex and `/` to the end to make certain we get the correct part of
+the path that has the ID. The simplest one from above is `[:alnum:]{2}`
+since it is easier to read compared to the others. With the `/stress/`
+and `/` added, it would be `/stress/[:alnum:]{2}/`. Adding those things
+at the start and end does mean we will need to have a couple other steps
+to remove those after extracting the ID. But there are nice functions
+from `{stringr}` to help out.
+
 :::
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -215,34 +243,23 @@ concept of regex, but not to really teach it since that is well beyond
 the scope of this workshop and this time frame.
 
 Go over the solution. The explanation is that the pattern will find
-anything that has `\\.csv$` at the end that is preceded by some numbers.
+anything that has two of a letter and/or a number that is preceded by
+`/stress/` and followed by `/`.
 :::
 
 ## Using regular expressions to extract text
 
 Now that we've identified a possible regex to use to extract the
-participant ID, let's try it out on the `cgm_data`. Before we do though,
-let's make it easier on us to use the `cgm_data` in our Quarto document
-by importing it in the `setup` chunk. So, in the `docs/learning.qmd`
-file, go to the top of the file, find the `setup` chunk, and in the
-bottom of it below the `library()` functions, add the following code:
-
-```{r add-cgm-data-to-setup}
-#| filename: "docs/learning.qmd"
-cgm_data <- here("data-raw/dime/cgm") |>
-  import_csv_files()
-```
-
-Then we can run this code chunk by using {{< var keybind.run-code >}} so
-that we have the `cgm_data` object available to us to work with. Then we
-can continue!
+participant ID, let's try it out on the `hr_data`.
 
 We want to create a new column called `id` for the participant ID rather
 than modify the current `file_path_id` column, so we will use the
 `mutate()` function from the `{dplyr}` package to create this new
 column. We'll use the `str_extract()` function from the `{stringr}`
-package to "extract a string" by using the regex `[:digit:]+\\.csv$`
-that we discussed from the activity above.
+package to "extract a string" by using the regex `/stress/[:alnum:]{2}/`
+that we discussed from the activity above. We'll also use a few
+`str_remove()` functions to remove the `/stress/` and `/` from the
+extracted string so that we just have the ID.
 
 We're also using an argument to `mutate()` you might not have seen
 previously, called `.before`. This will insert the new `id` column
@@ -259,20 +276,21 @@ Walk through writing this code, briefly explain/remind how to use
 mutate, and about the `{stringr}` function.
 :::
 
-First we'll pipe `cgm_data` into `mutate()` to create a new column
-called `id` that will contain the participant ID. We'll use the
+First we'll pipe `hr_data` into `mutate()` to create a new column called
+`id` that will contain the participant ID. We'll start with using the
 `str_extract()` function to extract the participant ID from the
-`file_path_id` column using the regex `[:digit:]+\\.csv$`.
+`file_path_id` column using the regex `/stress/[:alnum:]{2}/`.
 
 ```{r get-id}
 #| filename: "docs/learning.qmd"
 #| eval: false
 # Note: your file paths and data may look slightly different.
-cgm_data |>
+hr_data |>
   mutate(
     id = str_extract(
       file_path_id,
-      "[:digit:]+\\.csv$"
+      # "/stress/[:alnum:]{2}/"
+      "(?<=/stress/)[:alnum:]{2}(?=/)"
     ),
     .before = file_path_id
   )
@@ -280,99 +298,66 @@ cgm_data |>
 
 ```{r admin-get-id}
 #| echo: false
-cgm_data |>
+hr_data |>
   trim_filepath_for_book() |>
   mutate(
     id = str_extract(
       file_path_id,
-      "[:digit:]+\\.csv$"
+      "/stress/[:alnum:]{2}/"
     ),
     .before = file_path_id
   )
 ```
 
-Cool! But we have `.csv` at the end that we don't want. We can use the
-`str_remove()` function to remove the `.csv` from the string. So we can
-pipe our output into that function:
+Cool! But we have the `/stress/` and `/` that we don't want. We can use
+the `str_remove()` function to remove both from the string. So we can
+pipe our output into that function (twice):
 
 ```{r get-id-remove-csv}
 #| filename: "docs/learning.qmd"
 #| eval: false
-cgm_data |>
+hr_data |>
   mutate(
     id = str_extract(
       file_path_id,
-      "[:digit:]+\\.csv$"
+      "/stress/[:alnum:]{2}/"
     ) |>
-      str_remove("\\.csv$"),
+      str_remove("/stress/") |>
+      str_remove("/"),
     .before = file_path_id
   )
 ```
 
 ```{r admin-get-id-remove-csv}
 #| echo: false
-cgm_data |>
+hr_data |>
   trim_filepath_for_book() |>
   mutate(
     id = str_extract(
       file_path_id,
-      "[:digit:]+\\.csv$"
+      "stress/[:alnum:]{2}/"
     ) |>
-      str_remove("\\.csv$"),
+      str_remove("stress/") |>
+      str_remove("/"),
     .before = file_path_id
   )
 ```
 
-Nice! Almost there though. The `id` column is actually set as a
-character type, but we will need it as an integer to join with
-`participant_details.csv`. So we can use the `as.integer()` function to
-convert it to an integer:
-
-```{r get-id-as-integer}
-#| filename: "docs/learning.qmd"
-#| eval: false
-cgm_data |>
-  mutate(
-    id = str_extract(
-      file_path_id,
-      "[:digit:]+\\.csv$"
-    ) |>
-      str_remove("\\.csv$") |>
-      as.integer(),
-    .before = file_path_id
-  )
-```
-
-```{r admin-get-id-as-integer}
-#| echo: false
-cgm_data |>
-  trim_filepath_for_book() |>
-  mutate(
-    id = str_extract(
-      file_path_id,
-      "[:digit:]+\\.csv$"
-    ) |>
-      str_remove("\\.csv$") |>
-      as.integer(),
-    .before = file_path_id
-  )
-```
-
-Finally, we don't actually want to keep the `file_path_id` column, so we
-can use the `select()` function to drop it. We can do this by using the
-`-` operator to drop the column. So we can pipe our output into that
-function:
+Nice! Almost there. We don't actually want to keep the `file_path_id`
+column, so we can use the `select()` function to drop it. We can do this
+by using the `-` operator to drop the column. So we can pipe our output
+into that function:
 
 ```{r drop-file-path-id}
 #| filename: "docs/learning.qmd"
-cgm_data |>
+hr_data |>
   mutate(
     id = str_extract(
       file_path_id,
-      "[:digit:]+\\.csv$"
+      "/stress/[:alnum:]{2}/"
     ) |>
-      str_remove("\\.csv$") |>
-      as.integer(),
+      str_remove("/stress/") |>
+      str_remove("/"),
     .before = file_path_id
   ) |>
   select(-file_path_id)
@@ -384,37 +369,23 @@ a function!
 
 ## :technologist: Exercise: Convert 'get ID' code into a function
 
-**Time: \~15 minutes.**
+**Time: \~10 minutes.**
 
 You now have code that takes the data that has the `file_path_id` column
 and gets the participant ID from it. You want to be able to easily use
-that on the sleep data too. So, as you've done, convert this code in the
-`docs/learning.qmd` file into a function.
+that on any of the HR-type data frames. So, as you've done, convert this
+code in the `docs/learning.qmd` file into a function.
 
-{{< include /includes/solutions/_characters-dates-get-id-function.qmd >}}
-
-By the end of this exercise, the code to import both the CGM and sleep
-data should look like this in the `setup` chunk of the
-`docs/learning.qmd` file:
+By the end of this exercise, the code to read in any of the HR-type data
+should look like this:
 
 ```{r get-participant-id-interface}
-# CGM data
-cgm_data <- here("data-raw/dime/cgm") |>
-  import_csv_files() |>
+# eval: false
+hr_data |>
   get_participant_id()
-# Sleep data
-sleep_data <- here("data-raw/dime/sleep") |>
-  import_csv_files() |>
+# Or with one of the other datasets:
+read_all("BVP.csv.gz") |>
   get_participant_id()
-```
-
-And when you run the `cgm_data` and `sleep_data` in the **Console**, it
-should look something like:
-
-```{r show-cgm-sleep-with-id}
-#| filename: "Console"
-cgm_data
-sleep_data
 ```
 
 So, convert the code we just wrote into a function by following these
@@ -434,25 +405,97 @@ steps:
    Remember that you can find which package a function belongs by using
    the `?` help documentation and looking at the very top to see the
    package name.
-5. Test that the function works by using `get_participant_id(cgm_data)`
-   or `get_participant_id(sleep_data)`.
+5. Test that the function works by using `get_participant_id(hr_data)`.
 6. After creating the function and testing that it works, move (**cut**
    and paste) the function into `R/functions.R`.
 7. Run `{styler}` in both the `R/functions.R` file and
    `docs/learning.qmd` with {{< var keybind.style >}}.
-8. In the `setup` chunk in the `docs/learning.qmd` file, pipe `|>` the
-   output of `import_csv_files()` into the `get_participant_id()`
-   function for both the CGM and sleep data (as shown above).
-9. Render the `docs/learning.qmd` file to make sure things remain
+8. Render the `docs/learning.qmd` file to make sure things remain
    reproducible with {{< var keybind.render >}}.
-10. Restart your R session with {{< var keybind.restart-r >}} to make
-    sure later work is in a clean state.
-11. Add and commit the changes to the Git history with
+9. Restart your R session with {{< var keybind.restart-r >}} to make
+   sure later work is in a clean state.
+10. Add and commit the changes to the Git history with
     {{< var keybind.commit >}}. Then push to GitHub.
 
 {{< text_snippet sticky_up >}}
 
+```{r}
+#| label: solution-participant-id-function
+#' Get the participant ID from the file path column.
+#'
+#' @param data Data with `file_path_id` column.
+#'
+#' @returns A data frame/tibble.
+#'
+get_participant_id <- function(data) {
+  data_with_id <- data |>
+    dplyr::mutate(
+      id = stringr::str_extract(
+        file_path_id,
+        "/stress/[:alnum:]{2}/"
+      ) |>
+        stringr::str_remove("/stress/") |>
+        stringr::str_remove("/"),
+      .before = file_path_id
+    ) |>
+    dplyr::select(-file_path_id)
+  return(data_with_id)
+}
 
+# How it will be used.
+get_participant_id(hr_data)
+```
+
+## :technologist: Extra exercise: Simplify the regex with look arounds
+
+**Time: ~8 minutes.**
+
+If you finished the previous exercise early, you can try this more
+challenging exercise. Try to simplify the regex so that it only extracts
+the two alphanumeric characters without also getting the `/stress/` and
+`/`. That way, you won't need to use the `str_remove()` functions to
+remove those parts afterwards. This requires looking in the regex
+documentation about something called
+[look arounds](https://stringr.tidyverse.org/articles/regular-expressions.html#look-arounds).
+Modify the internals of `get_participant_id()` to use these look arounds
+so that you only use one `str_extract()` function and no `str_remove()`
+functions. The output should be the same as before, but the code should
+be simpler.
+
+1. Look up the documentation for regex look arounds and try to
+   understand how they work.
+2. Modify the regex in the `str_extract()` function to use look arounds
+   so that it finds the two alphanumeric characters that are preceded by
+   `/stress/` (look behind) and followed by `/` (look ahead), without
+   including those in the output.
+3. Remove the two `str_remove()` functions since they should no longer
+   be needed.
+4. Test out the updates to the function by `source()`'ing the
+   `R/functions.R` file with {{< var keybind.source >}} and running
+   `get_participant_id(hr_data)` in the **Console**.
+5. Once it works, add and commit the changes to the Git history with
+   {{< var keybind.commit >}}. Then push to GitHub.
+
+```{r}
+#| label: solution-look-arounds
+get_participant_id <- function(data) {
+  data_with_id <- data |>
+    dplyr::mutate(
+      id = stringr::str_extract(
+        file_path_id,
+        "(?<=/stress/)[:alnum:]{2}(?=/)"
+      ),
+      .before = file_path_id
+    ) |>
+    dplyr::select(-file_path_id)
+  return(data_with_id)
+}
+
+# How it will be used.
+get_participant_id(hr_data)
+```
+
+{{< text_snippet sticky_up >}}
 
 ## Key takeaways
 
@@ -471,12 +514,9 @@ discussion activity.
   functions to help use regex to process string data, like
   `str_extract()` or `str_remove()`.
 
-
 ```{r admin-store-session-code}
 #| include: false
-save.image(here::here("_temp/characters-dates.RData"))
+save.image(here::here("_temp/regex.RData"))
 ```
 
 {{< include /includes/_code-appendix.qmd >}}
-
-:::
