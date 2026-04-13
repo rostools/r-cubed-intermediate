@@ -17,7 +17,7 @@ repos:
       - id: end-of-file-fixer
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.13.9
+    rev: v4.13.10
     hooks:
       - id: commitizen
 
@@ -25,11 +25,11 @@ repos:
   # sub-packages, which confuses pre-commit when it tries to find the latest
   # version
   - repo: https://github.com/adhtruong/mirrors-typos
-    rev: v1.44.0
+    rev: v1.45.0
     hooks:
       - id: typos
 
   - repo: https://github.com/rvben/rumdl-pre-commit
-    rev: v0.1.62
+    rev: v0.1.71
     hooks:
       - id: rumdl-fmt # Auto-format
