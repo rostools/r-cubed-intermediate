@@ -13,7 +13,7 @@ Release](https://img.shields.io/github/v/release/rostools/r-cubed-intermediate.s
 website](https://github.com/rostools/r-cubed-intermediate/actions/workflows/build-website.yml/badge.svg)](https://github.com/rostools/r-cubed-intermediate/actions/workflows/build-website.yml)
 [![pre-commit.ci
 status](https://results.pre-commit.ci/badge/github/rostools/r-cubed-intermediate/main.svg)](https://results.pre-commit.ci/latest/github/rostools/r-cubed-intermediate/main)
-[![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
