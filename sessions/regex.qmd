@@ -374,8 +374,7 @@ code in the `docs/learning.qmd` file into a function.
 By the end of this exercise, the code to read in any of the HR-type data
 should look like this:
 
-```{r get-participant-id-interface}
-# eval: false
+```r
 hr_data |>
   get_participant_id()
 # Or with one of the other datasets:
