@@ -21,6 +21,23 @@ If you attended a workshop or used the workshop material as some point
 in time, you can always refer to this changelog page to find out what
 has been changed since you last used it.
 
+## 8.1.2 (2026-04-17)
+
+### Fix
+
+- **sessions**: :pencil2: correct broken links
+- **pre-workshop**: :pencil2: edit minor typos in pre-workshop tasks
+- **sessions**: :fire: no longer cover NSE
+
+### Refactor
+
+- **sessions**: :recycle: switch to using nurses stress data in SAC session
+- **sessions**: :recycle: execute code in `regex.qmd`
+- **sessions**: :truck: rename to `regex` to focus on regular expressions
+- **sessions**: :recycle: switch to nurses stress data in characters session
+- **sessions**: :truck: split session to be on regex, move dates into later session
+- **sessions**: :fire: remove NSE content, not needed and is too complicated
+
 ## 8.1.1 (2026-04-07)
 
 ### Fix
