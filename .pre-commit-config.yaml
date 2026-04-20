@@ -25,11 +25,11 @@ repos:
   # sub-packages, which confuses pre-commit when it tries to find the latest
   # version
   - repo: https://github.com/adhtruong/mirrors-typos
-    rev: v1.45.0
+    rev: v1.45.1
     hooks:
       - id: typos
 
   - repo: https://github.com/rvben/rumdl-pre-commit
-    rev: v0.1.71
+    rev: v0.1.76
     hooks:
       - id: rumdl-fmt # Auto-format
