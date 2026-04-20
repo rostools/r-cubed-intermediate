@@ -31,12 +31,17 @@ has been changed since you last used it.
 
 ### Refactor
 
-- **sessions**: :recycle: switch to using nurses stress data in SAC session
+- **sessions**: :recycle: switch to using nurses stress data in SAC
+  session
 - **sessions**: :recycle: execute code in `regex.qmd`
-- **sessions**: :truck: rename to `regex` to focus on regular expressions
-- **sessions**: :recycle: switch to nurses stress data in characters session
-- **sessions**: :truck: split session to be on regex, move dates into later session
-- **sessions**: :fire: remove NSE content, not needed and is too complicated
+- **sessions**: :truck: rename to `regex` to focus on regular
+  expressions
+- **sessions**: :recycle: switch to nurses stress data in characters
+  session
+- **sessions**: :truck: split session to be on regex, move dates into
+  later session
+- **sessions**: :fire: remove NSE content, not needed and is too
+  complicated
 
 ## 8.1.1 (2026-04-07)
 
