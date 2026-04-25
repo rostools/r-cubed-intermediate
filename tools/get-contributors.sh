@@ -13,6 +13,7 @@ contributors=$(gh api \
   /repos/$repo_spec/contributors \
   --template '{{range .}}[\@{{.login}}]({{.html_url}}){{"\n"}}{{end}}' | \
   grep -v "\[bot\]" | \
+  sort | \
   tr '\n' ', ' | \
   sed -e 's/,$/\n/' | \
   sed -e 's/,/,\n/g'
