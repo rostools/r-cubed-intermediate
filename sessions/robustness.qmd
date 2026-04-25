@@ -277,7 +277,7 @@ and is out of the scope of this workshop.
 The correct way to explicitly use a function from a package is using
 something we've already used before with `usethis::use_package()`: By
 using `::`! For every function inside your package, aside from functions
-that come from `{base}`, use `package_name::function_name()`.
+that come from base R, use `package_name::function_name()`.
 
 When we use `package_name::function_name` for each function in our
 function, we are explicitly telling R (and us the readers) where the

@@ -4,6 +4,7 @@
 #| include: false
 library(here)
 library(tidyverse)
+library(purrr)
 library(fs)
 source(here("R/functions.R"))
 load(here("_temp/robustness.RData"))
@@ -107,7 +108,7 @@ vectorization.
 
 ![A function using vectorization. Notice how a set of items is included *all at once* in the `func()` function and outputs a single item on the right. Modified from the [Posit purrr cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
 Image license is CC-BY-SA
-4.0.](/images/vectorization.png){#fig-vectorization width="45%"}
+4.0.](/images/vectorization.svg){#fig-vectorization width="45%"}
 
 For example, in R, there is a vectorized function called `sum()` that
 takes the entire vector of `values` and outputs the total sum.
@@ -154,7 +155,7 @@ map: To use a function on each item in a set of items.
 
 ![A functional, in this case `map()`, applies a function to each item in a vector. Notice how each of the green coloured boxes are placed into the `func()` function and outputs the same number of blue boxes as there are green boxes. Modified from the [Posit purrr cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
 Image license is CC-BY-SA
-4.0.](/images/functionals.png){#fig-functionals width="90%"}
+4.0.](/images/functionals.svg){#fig-functionals width="90%"}
 
 Here's a simple example to show how it works. We'll use `paste()` on
 each item of `1:5` to simple output the same number as the input. We
