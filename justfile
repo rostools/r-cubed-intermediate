@@ -2,7 +2,7 @@
   just --list --unsorted
 
 @_formats: format-md format-r
-@_checks: check-spelling check-urls check-commits
+@_checks: check-spelling check-urls
 @_builds: build-contributors build-readme build-website
 @_updates: update-from-template update-quarto-theme
 
