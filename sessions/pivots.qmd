@@ -1,38 +1,32 @@
----
-execute:
-  eval: false
----
-
 # Pivoting your data from and to long or wide {#sec-pivots}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 # Used this only during writing to run code dependent on previous chapters.
 library(here)
 library(tidyverse)
 load(here("_temp/split-apply-combine.RData"))
+# hr_data <- read_all("HR.csv.gz") |>
+#   get_participant_id() |>
+#   summarise_by_datetime()
 ```
+
+In the HR-type datasets, we now have the participant ID that matches the
+participant ID in the survey results data. We also have minutes as the
+unit of time for the datetime column that matches the unit of time in
+the time columns of the survey results data. But, the HR data is in a
+longer format, where there are multiple rows for each participant, while
+the survey result data is in wider format but also has multiple rows per
+participant. Right now, we are not able to (meaningfully) join these
+datasets together because of this incompatibility in the format of the
+data. So in this session we will go over how to pivot data between
+long(er) and wide(r) formats.
 
 ## Learning objectives
 
 {{< include /includes/objectives/_pivots.qmd >}}
-
-## :speech_balloon: Discussion activity: Recall and share what you've learned so far
-
-**Time: \~6 minutes.**
-
-A very effective way to learn is to recall and describe to someone else
-what you've learned. So before we continue this session, take some time
-to think about what you've learned in the last two days.
-
-1. Take 1-2 minute and try to recall as much as you can about what you'd
-   done over the last two days. Without looking at your notes or the
-   other sections of the website, try to remember things about
-   importing, robust functions, functionals, regex, and
-   split-apply-combine.
-2. Then, for 4-5 minutes, share with your neighbour what you remember
-   and try to describe it to each other. Maybe you will each remember
-   different things.
 
 ## :book: Reading task: Pivoting data for easier wrangling
 
@@ -56,38 +50,46 @@ combinations of this.
 
 The `{tidyr}` package within the `{tidyverse}` contains two wonderful
 functions for pivoting: `pivot_longer()` and `pivot_wider()`. There is a
-well written documentation on pivoting in the
-[tidyr website](https://tidyr.tidyverse.org/articles/pivot.html) that
-can explain more about it that you can read at another time.
+well written documentation on pivoting in the [tidyr
+website](https://tidyr.tidyverse.org/articles/pivot.html) that can
+explain more about it that you can read at another time.
 
 Most use cases of pivoting are to convert to the longer form, which you
 can do with `pivot_longer()` and is what we will cover first in this
 session. There are many reasons pivoting longer is the most common pivot
 direction.
 
-An example is if you ever need to enter data. Entering data, especially
-in a spreadsheet tool, in the wide form is much easier and more time
-efficient than entering data in long form. Consider the scenario where
-you are entering data from a participant for glucose values that were
-measured every 30 minutes. So you might enter data like this:
+An example of why you often need to pivot longer is because data entry
+is easier to do in the wider format. Entering data, especially through a
+spreadsheet tool like Excel, is so much easier in the wider format and
+more time efficient than entering data in long form. Consider the
+scenario where you are entering data from a participant for glucose
+values that were measured every 30 minutes. So you might enter data like
+this:
 
-| person_id | glucose_0 | glucose_30 | glucose_60 |
-|:----------|:----------|:-----------|:-----------|
-| 1         | 5.6       | 7.8        | 4.5        |
-| 2         | 4.7       | 9.5        | 5.3        |
-| 3         | 5.1       | 10.2       | 4.2        |
+  | person_id | glucose_0 | glucose_30 | glucose_60 |
+  | :-------- | :-------- | :--------- | :--------- |
+  | 1         | 5.6       | 7.8        | 4.5        |
+  | 2         | 4.7       | 9.5        | 5.3        |
+  | 3         | 5.1       | 10.2       | 4.2        |
 
-: This is a **wide** dataset that is useful for data entry.
+  : This is a **wide** dataset that is useful for data entry.
 
-If working with a spreadsheet, is this is to use tab to move to the next
-cell and continue entering the data. However, when it comes time to
-analyze the data, this wide form is very inefficient and difficult to
+If you are working with a spreadsheet, you might enter the glucose value
+for one participant at one time point, then hit the tab key to move to
+the next cell and add the next glucose value. Even outside of a
+spreadsheet, the way data is structured from survey software is often
+also in the wide format. However, when it comes time to analyze the
+data, this wide format is very inefficient and difficult to
 computationally and statistically work with. So, we do data entry in
-wide and use functions like `pivot_longer()` to get the data ready for
-analysis. See @fig-pivot-longer below that visually shows what happens
-when you pivot from wide to long.
+wide format and use functions like `pivot_longer()` to get the data
+ready for analysis. See @fig-pivot-longer below that visually shows what
+happens when you pivot from wide to long.
 
-![Pivot longer in `{tidyr}`. New columns are called `name` and `value`. Notice how the values in `A` and `B` columns are stacked on top of each other in the newly created `V` column.](/images/pivot-longer.png){#fig-pivot-longer
+![Pivot longer in `{tidyr}`. New columns are called `name` and `value`.
+Notice how the values in `A` and `B` columns are stacked on top of each
+other in the newly created `V`
+column.](/images/pivot-longer.svg){#fig-pivot-longer
 width="90%" fig-alt="A diagram showing the use of the pivot longer
 function, where a table with two columns, A and B, is converted to a
 table with two columns, name and value. The original columns values are
@@ -97,7 +99,11 @@ in the name column."}
 If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
-![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are called `name` and `value`, as well as the old `id` column. Notice how, unlike the previous image, the `id` column is excluded when pivoting into the data on the right.](/images/pivot-longer-id.png){#fig-pivot-longer-id
+![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are
+called `name` and `value`, as well as the old `id` column. Notice how,
+unlike the previous image, the `id` column is excluded when pivoting
+into the data on the
+right.](/images/pivot-longer-id.svg){#fig-pivot-longer-id
 width="90%" fig-alt="A diagram showing the use of the pivot longer
 function, where a table with three columns, id, A and B, is converted to
 a table with three columns, id, name and value. The original columns
@@ -106,17 +112,17 @@ are stacked in the name column, but the original id column remains, but
 with the ids stacked on top of each other."}
 
 Pivoting is a conceptually challenging thing to grasp, so don't be
-discouraged if you can't understand how it works yet or of the ways you
-could use. As you practice using it, you will slowly begin to understand
-it. With `pivot_longer()`, the first argument is the data itself. The
-other arguments are:
+discouraged if you don't understand how it works yet or of the ways you
+could use it. As you practice using it, you will slowly begin to
+understand it. With `pivot_longer()`, the first argument is the data
+itself. The other arguments are:
 
-1. `cols`: The columns to use to convert to long form. The input is a
-   vector made using `c()` that contains the column names, like you
-   would use in `select()` (e.g. you can use the `select_helpers` like
+1. `cols`: The columns to convert to long form. The input is a vector
+   made using `c()` that contains the column names, like you would use
+   in `select()` (e.g. you can use the `{tidyselect}` helpers like
    `starts_with()`, or `-` minus to exclude).
-2. `names_to`: Optional, the default is `name`. If provided, it will be
-   the name of the newly created column (as a quoted character) that
+2. `names_to`: Optional, the default is `name`. If given, it will be the
+   name of the newly created column (as a quoted character) that
    contains the original column names.
 3. `values_to`: Optional, the default is `value`. Like `names_to`, sets
    the name of the new columns.
@@ -129,13 +135,6 @@ learn more, read up on the
 
 {{< text_snippet sticky_up >}}
 
-::: callout-caution
-:construction_worker: This section is being updated. Once ready, it will
-be shown here.
-:::
-
-::: content-hidden
-
 ## Pivot to long form
 
 ::: {.callout-note collapse="true"}
@@ -144,191 +143,467 @@ be shown here.
 Emphasise that there are a lot of really powerful ways you can use
 `pivot_longer()` and to point out looking to the documentation to see
 some examples of that.
+
+There are several code chunks below. You should **not** create a new
+code chunk for each one. Instead, write the code within a single chunk
+while teaching, unless the text explicitly says otherwise.
 :::
 
-Our CGM data is already in a long format, but we eventually want to join
-it with the participant details data. The participant details data is in
-a wide format. Let's start with importing it in the `setup` code chunk
-of our `docs/learning.qmd` file:
+Over the last few sessions, we have prepared our HR-type data. But it is
+in long format, which in this case is in a tidy format (where each value
+in a row and column represents a distinct observation at a given time).
+And while our survey results data is also in a tidy format, it is in a
+wider format and doesn't allow us to join with the HR-type data.
 
-```{r import-participant-details}
+While everyone read in the `survey-results.csv.gz` data in a previous
+session's exercise, let's make sure we're all together and read it in
+again. So, go to the bottom of the `docs/learning.qmd` file and create a
+new header called `## Pivot longer`. Below that, create a new code chunk
+with {{< var keybind.chunk >}}. Then, in that code chunk, read in the
+survey results data again with and run the code with
+{{< var keybind.run-code >}}:
+
+```{r}
+#| label: read-survey-results
 #| filename: "docs/learning.qmd"
-participant_details <- here("data-raw/dime/participant_details.csv") |>
-  import_dime()
+
+survey_data <- here("data-raw/nurses-stress/survey-results.csv.gz") |>
+  read()
+survey_data
 ```
 
-Run the code in the `setup` code chunk by running each line with
-{{< var keybind.run-code >}}. Then, let's move to the end of our
-`docs/learning.qmd` file and create a new header called
-`## Pivot longer`. Below that, create a new code chunk with
-{{< var keybind.chunk >}}. We'll start with seeing what the data looks
-like:
+Let's examine the data and make some observations about it. We see that
+each participant has potentially multiple rows of data, one row for
+times when they were surveyed on their stress levels. There are also
+multiple date and time columns: `start_time`, `end_time`, `duration`,
+and `date`. After that are columns for the responses to the survey
+questions for that survey time period.
 
-```{r show-participant-details}
+What we want is to have a single column for the ID and a single column
+for a combined datetime in a way that matches the format of the HR-type
+data. That means we have to pivot the date and time columns into a long
+format and then expand them so that we have a row for each minute within
+the start and end time. Before we can pivot though, we need to process
+the data a bit. First, the `date` column is actually a character column.
+So we need to convert that to an actual date. Second, because we want a
+datetime column, we will need to create two new columns for
+`start_datetime` and `end_datetime`. Let's fix the date first.
+
+```{r}
+#| label: convert-date-column
 #| filename: "docs/learning.qmd"
-participant_details
+
+survey_data |>
+  mutate(date = as_date(date))
 ```
 
-You can see that the data, while the data has the `intervention` column
-in the long format, the dates are in the wide format, with `start_date`
-and `end_date`. Our CGM and sleep only has a single `date` column, so we
-can't yet join these datasets with `participant_details`. We first need
-to pivot the data to the long format. Let's add a pipe to
-`participant_details` to output into `pivot_longer()`:
+Hmm, that didn't work as expected, now the dates are all `NA`! Dates are
+really tricky to work with and this is an example of that. The reason it
+didn't work is because the `date` column is in the format of
+`month/day/year`, but the `as_date()` function is expecting it to be in
+the format of `year-month-day`. Thankfully, the `{lubridate}` package
+has the `mdy()` function (for month-day-year) that can handle this
+format. So we can use that instead.
 
-```{r try-pivot-longer}
+```{r}
+#| label: convert-date-column-fixed
+#| filename: "docs/learning.qmd"
+
+survey_data |>
+  mutate(date = mdy(date))
+```
+
+Nice! Ok, let's create those datetime columns now. We can use the
+`as_datetime()` function to convert the date and time columns into
+datetimes. Within `as_datetime()`, we can use `paste()` to combine the
+date and time columns together into a single character string, which can
+then be converted to a datetime. Let's do that for both the start and
+end datetime columns. We'll use the `.before` argument to place the new
+columns before the `start_time` column, mostly to make it easier to see
+them.
+
+```{r}
+#| label: create-datetime-columns
+#| filename: "docs/learning.qmd"
+
+survey_data |>
+  mutate(
+    date = mdy(date),
+    start_datetime = as_datetime(paste(date, start_time)),
+    end_datetime = as_datetime(paste(date, end_time)),
+    .before = start_time
+  )
+```
+
+Great, we've combined them together. Now we don't need the `date`,
+`start_time`, and `end_time` columns anymore since we combined them
+together, so we can drop those. And since the start and end datetimes
+provide the same information as `duration`, we can drop that. But we
+still have some unique way of identify each observation of participant
+at a given time. So let's add an explicit copy of `start_datetime` and
+call it `datetime_id`, to ensure we always have an explicit unique set
+of identifiers for later processing. Let's also assign the data to a new
+variable called `survey_tidy` so we can work on this data frame for the
+rest of the session.
+
+```{r}
+#| label: keep-only-datetime-columns
+#| filename: "docs/learning.qmd"
+
+survey_tidy <- survey_data |>
+  mutate(
+    date = mdy(date),
+    start_datetime = as_datetime(paste(date, start_time)),
+    end_datetime = as_datetime(paste(date, end_time)),
+    datetime_id = start_datetime,
+    .before = start_time
+  ) |>
+  select(-c(date, start_time, end_time, duration))
+```
+
+Great, we have the datetimes in the format we want and no columns that
+we don't need. But now, we need to get the data into the format to match
+the HR-type data. We'll need at least a column for the participant ID
+and a column for the datetime, which includes both start and end time.
+Since we want to have a common dataset to join all data together, let's
+select only the columns we need for that, which are the `id`,
+`datetime_id`, `start_datetime`, and `end_datetime` columns. It also
+makes it easier to see what we're pivoting.
+
+```{r}
+#| label: select-for-pivoting
+#| filename: "docs/learning.qmd"
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime)
+```
+
+And then we can trying to pivot the data longer:
+
+```{r}
+#| label: try-pivot-longer
 #| filename: "docs/learning.qmd"
 #| error: true
-participant_details |>
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime) |>
   pivot_longer()
 ```
 
 This give an error because we haven't told it which columns to use yet.
-We want to pivot only the date columns. We can do this using
-`{tidyselect}` helpers, for instance the helper function `ends_with()`
-is perfect for this case, since both date columns end with `date`.
+We want to pivot only the date columns. We can do this by using `c()`
+for each of the columns we want to pivot.
 
-```{r pivot-only-date-columns}
+```{r}
+#| label: pivot-only-date-columns
 #| filename: "docs/learning.qmd"
-participant_details |>
-  pivot_longer(ends_with("date"))
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime) |>
+  pivot_longer(c(start_datetime, end_datetime))
 ```
 
-Awesome! We now have a long format with dates in a single column. But we
-also have new column names that are a bit ambiguous, like `name` and
-`value`. We can tell `pivot_longer()` to give them more descriptive
-names with `names_to` and `values_to`. But, we also don't need the
-`name` column, since implicitly we know that the last date is the end
-date and the first date is the start date. So, we can set
-`names_to = NULL` to drop the new `name` column from being created.
+It seems to have worked. We see that there are two new columns created
+called `name` and `value`. These aren't very descriptive names though.
+If we look at the help documentation for `pivot_longer()`, we can see
+that it has an argument called `names_to` and `values_to` that allow use
+to rename these new columns to something else. If we look at the `name`
+column, it contains the original column names `start_datetime` and
+`end_datetime`. With the `id`, the `value` (which is the actual datetime
+value), and the `duration` column, we have a unique "key" for each
+observation of a participant at a given date and time. So we don't
+actually need the `name` column. With `names_to` we can set it to `NULL`
+so it doesn't create it. Let's do that. We'll have to remove the `name`
+value in the `relocate()` function too.
 
-```{r pivot-only-date-columns-renamed}
+```{r}
+#| label: pivot-only-date-columns-no-name
 #| filename: "docs/learning.qmd"
-participant_details |>
-  pivot_longer(ends_with("date"), names_to = NULL, values_to = "date")
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime) |>
+  pivot_longer(c(start_datetime, end_datetime), names_to = NULL)
 ```
 
-Great! But, maybe you may have noticed something else here. If we want
-to join this data with the CGM data, we need to have a single row for
-each day of the study that the participant has data for. Right now, the
-`participant_details` data has only the date for the first day and for
-the last day. So if we join the CGM or sleep data, we would only get the
-data for those two dates. What we want is to have all the days included
-between the start and end date for each participant. The `{tidyr}`
-package has many wonderful functions that help tidy up data, including a
-function for this particular situation! The function is called
-`complete()` because it will fill in data where you want a sequence with
-the missing dates in that sequence. For our situation, that is filling
-in all the missing dates between the start and end date for each
-participant.
+Better, but let's rename the `value` column to `collection_datetime`, to
+match the other HR-type datasets. We can do that with the `values_to`
+argument in `pivot_longer()`.
 
-Since we want to complete the data for each participant for each
-intervention, we will need to group the data. We could select each
-column to group by, but we could also use the `pick()` function we used
-before to select all the columns except for the `date` column.
-
-```{r group-pivoted-data}
+```{r}
+#| label: pivot-only-date-columns-rename-value
 #| filename: "docs/learning.qmd"
-participant_details |>
-  pivot_longer(ends_with("date"), names_to = NULL, values_to = "date") |>
-  group_by(pick(-date))
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime) |>
+  pivot_longer(c(start_datetime, end_datetime), names_to = NULL, values_to = "collection_datetime")
 ```
 
-We can now use `complete()` to fill in the dates. The `complete()`
-function is used like `mutate()` or `summarise()`. Unlike these other
-functions, you need to provide it with a column that exists, and you
-can't create new columns. And you also need to provide it with the
-values that you want completed. In our case, we want each date from the
-start date to the end date, one for each day. We can use the `seq()`
-function to create a sequence of dates, from the `min()` to the `max()`.
-Since we don't want the grouping to be included afterwards, we'll also
-end with `ungroup()`. So we'd write it like:
+We're getting there. But our HR-type data has rows in minutes, but here
+we only have the start and end times. So now we need to convert the
+`collection_datetime` column so that it has rows per minute, from the
+start time to the end time. The `{tidyr}` package has many wonderful
+functions that help tidy up data, including a function for this
+particular situation. The `complete()` function will "complete" (fill
+in) the columns you give it, converting implicit missing values to
+explicit missing values. This is exactly what we're "missing" here: the
+rows for each minute for each participant. Like `mutate()` and
+`summarise()`, the `complete()` function works by assigning values to
+columns. But unlike `mutate()` and `summarise()`, you can't create new
+columns with `complete()`. You have to apply it to an existing column,
+which is the `collection_datetime` column.
 
-```{r complete-dates}
+We also need to give this function the actual values that should be
+present in the specific column, which is the sequence of datetimes from
+the start to the end time by 1 minute. In this case, we can use the
+`seq()` function from the start time (`min()`) to the end time
+(`max()`), with a step of 60 seconds (since `seq()` interprets a
+datetime as seconds). Let's try it out:
+
+```{r}
+#| label: complete-dates-seconds
 #| filename: "docs/learning.qmd"
-participant_details |>
-  pivot_longer(ends_with("date"), names_to = NULL, values_to = "date") |>
-  group_by(pick(-date)) |>
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime) |>
+  pivot_longer(
+c(start_datetime, end_datetime),
+    names_to = NULL,
+    values_to = "collection_datetime"
+  ) |>
   complete(
-    date = seq(min(date), max(date), by = "1 day")
+    collection_datetime = seq(
+      min(collection_datetime),
+      max(collection_datetime),
+      by = 60
+    )
+  )
+```
+
+Ok, so it made a row for each minute, but now we have a lot of other
+missing data. And it seems that it took the `min()` and `max()` of
+**all** the datetime values, rather than the min and max for each
+participant. We want to fill in the missing datetimes for each
+participant for each period of time. So we can use `group_by()` to group
+the data for everything except the `collection_datetime` column, which
+is the column we want to complete. Rather than writing out all the
+columns to group by, we can use the `pick()` function from `{dplyr}` to
+select all the columns except for the `collection_datetime` column.
+We'll also `ungroup()` afterwards:
+
+```{r}
+#| label: group-and-complete
+#| filename: "docs/learning.qmd"
+
+survey_tidy |>
+  select(id, datetime_id, start_datetime, end_datetime) |>
+  pivot_longer(
+    c(start_datetime, end_datetime),
+    names_to = NULL,
+    values_to = "collection_datetime"
+  ) |>
+  group_by(pick(-collection_datetime)) |>
+  complete(
+    collection_datetime = seq(
+      min(collection_datetime),
+      max(collection_datetime),
+      by = 60
+    )
   ) |>
   ungroup()
 ```
 
-We now have a dataset that we can join with the other datasets! Time to
-make it into a function :grin:
+Nice! We now have our dataset in a format that allows us to join it with
+the other datasets, including both the original survey results data and
+the HR-type data. Time to make it into a function and include within the
+`docs/cleaning.qmd` file.
 
-## Converting the date completion code into a function
+## :technologist: Exercise: Convert into two new functions
 
-Since we've used the `{tidyr}` package, let's add it as a package
-dependency. Open the **Console** and run:
+**Time: \~20 minutes.**
 
-```{r add-tidyr-dependency}
+Time to convert the code into functions. There were two distinct "steps"
+we did to the survey data. The first was tidying up the dates and times
+to prepare it for pivoting and the second was pivoting into a longer
+format. So convert those into two separate functions. They should be
+used as shown below:
+
+```r
+survey_tidy <- tidy_survey_dates(survey_data)
+survey_long <- survey_to_long(survey_tidy)
+```
+
+You'll eventually take those functions, put them into `R/functions.R`
+and use them in the `docs/cleaning.qmd` file to process the survey data.
+Start with the date-tidying code:
+
+1. As you've done throughout this workshop, convert the code into a
+   function called `tidy_survey_dates`, with one argument `data` inside
+   `function()`.
+2. Copy and paste the code we just wrote into the body of the function.
+   Replace the dataset name `survey_data` with the `data` argument and
+   assign the output to `tidied`.
+3. Explicitly link each function you use inside the function to its
+   packages with `::`. There should be three packages used within the
+   function.
+4. There's one package you haven't added to the dependencies. Add it
+   with `usethis::use_package()`.
+5. Add Roxygen documentation with {{< var keybind.roxygen >}}.
+6. Run `{styler}` in your `docs/learning.qmd` with
+   {{< var keybind.style >}}.
+7. Run the function with {{< var keybind.run-code >}} and test it out in
+   the Console with `tidy_survey_dates(survey_data)`. It should give you
+   the same output as before.
+8. Once it works fine, cut and paste the function into `R/functions.R`.
+9. Add and commit the changes to the Git history with
+   {{< var keybind.commit >}}. Then push to GitHub.
+
+Now do the same thing for the pivoting code:
+
+1. Convert the code into a function called `survey_to_long()`, with one
+   argument `data` inside `function()`.
+2. Copy and paste the code we just wrote into the body of the function.
+   Replace the dataset name `survey_tidy` with the `data` argument and
+   assign the output to `longer`.
+3. Link the two packages used to the functions with `::`.
+4. Add Roxygen documentation with {{< var keybind.roxygen >}}.
+5. Run `{styler}` in your `docs/learning.qmd` with
+   {{< var keybind.style >}}.
+6. Run the function with {{< var keybind.run-code >}} and test it out in
+   the Console with `survey_to_long(survey_tidy)`. It should give you
+7. Cut and paste the function into `R/functions.R`.
+8. Add and commit the changes to the Git history with
+   {{< var keybind.commit >}}. Then push to GitHub.
+
+In the next exercise, you'll use these new functions in the
+`docs/cleaning.qmd` file to process the survey data.
+
+```{r}
+#| label: solution-add-tidyr
 #| filename: "Console"
 #| eval: false
+
 usethis::use_package("tidyr")
 ```
 
-Now, we can make the function. In the `docs/learning.qmd` file, go to
-the bottom of the file where we wrote the code to clean the participant
-details. At the bottom of the chunk, we'll create a new function named
-`clean_participant_details` by assigning `function()` to it. We'll only
-have one argument called `data`. Then we'll cut and paste the cleaning
-code into the function. After that we will replace the
-`participant_details` variable with the `data` argument. Finally, we
-will assign the cleaned data to a new variable called `cleaned` and
-`return()` it at the end of the function.
+```{r}
+#| label: solution-tidy-survey-dates
+#| output: false
 
-Next we'll go through and add the `::` to the functions used, which are
-`tidyr::`, `tidyselect::`, and `dplyr::`. After that, we will make an
-Roxygen documentation with {{< var keybind.roxygen >}}.
-
-```{r clean-participant-details}
-#| filename: "docs/learning.qmd"
-#' Convert the participant details data to long and clean it up.
+#' Tidy up the dates in the survey results
 #'
-#' @param data The DIME participant details data.
+#' @param data A data frame of the survey results data.
+#'
+#' @return A data frame.
+tidy_survey_dates <- function(data) {
+  tidied <- data |>
+  dplyr::mutate(
+    date = lubridate::mdy(date),
+    start_datetime = lubridate::as_datetime(paste(date, start_time)),
+    end_datetime = lubridate::as_datetime(paste(date, end_time)),
+    datetime_id = start_datetime,
+    .before = start_time
+  ) |>
+  dplyr::select(-c(date, start_time, end_time, duration))
+  return(tidied)
+}
+
+survey_data |>
+  tidy_survey_dates()
+```
+
+```{r}
+#| label: solution-survey-to-long
+#| output: false
+
+#' Pivot survey data to longer format, with only IDs and datetimes
+#'
+#' @param data A data frame of the data from `tidy_survey_dates()`.
 #'
 #' @returns A data frame.
-#'
-clean_participant_details <- function(data) {
-  cleaned <- data |>
+survey_to_long <- function(data) {
+  longer <- data |>
+    dplyr::select(id, datetime_id, start_datetime, end_datetime) |>
     tidyr::pivot_longer(
-      tidyselect::ends_with("date"),
-      names_to = NULL, values_to = "date"
+      c(start_datetime, end_datetime),
+      names_to = NULL,
+      values_to = "collection_datetime"
     ) |>
-    dplyr::group_by(dplyr::pick(-date)) |>
+    dplyr::group_by(dplyr::pick(-collection_datetime)) |>
     tidyr::complete(
-      date = seq(min(date), max(date), by = "1 day")
+      collection_datetime = seq(
+        min(collection_datetime),
+        max(collection_datetime),
+        by = 60
+      )
     ) |>
     dplyr::ungroup()
-  return(cleaned)
+  return(longer)
 }
+
+survey_data |>
+  tidy_survey_dates() |>
+  survey_to_long()
 ```
 
-Run the function in the code chunk with {{< var keybind.run-code >}} and
-then test it out by going to the **Console** and running:
+{{< text_snippet sticky_up >}}
 
-```{r test-clean-participant-details}
-#| filename: "Console"
-clean_participant_details(participant_details)
+## :technologist: Exercise: Add survey processing to `docs/cleaning.qmd`
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+Once everyone has finished this exercise, walkthrough it to make sure
+everyone is aligned and briefly explain again why we use the
+`docs/cleaning.qmd` file (because it's the more "central" file to clean
+and prepare the data, while the `docs/learning.qmd` file is more to use
+as a sandbox).
+:::
+
+**Time: \~10 minutes.**
+
+Now that you've tidying up the next piece, time to build up the
+`docs/cleaning.qmd` more. So, open up the `docs/cleaning.qmd` file (you
+can open files quickly with {{< var keybind.open-file >}}).
+
+1. On the bottom of `docs/cleaning.qmd`, create a new header called
+   `## Process survey data`. Create a new code chunk below that with
+   {{< var keybind.chunk >}}.
+2. In that code chunk, pipe `here::here()` to the
+   `survey-results.csv.gz` file into `read()`, then pipe that into
+   `tidy_survey_dates()`. Assign the output to `survey_tidy`.
+3. Then below that code, pipe `survey_tidy` into `survey_to_long()`, and
+   assign that to `survey_long`.
+4. Style the code with {{< var keybind.style >}}.
+5. Render the Quarto document with {{< var keybind.render >}} to confirm
+   that everything works.
+6. Once it works fine, add and commit the changes to the Git history
+   with {{< var keybind.commit >}}. Then push to GitHub.
+
+```{r}
+#| label: solution-add-survey-processing
+#| filename: "docs/cleaning.qmd"
+
+survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |>
+  read() |>
+  tidy_survey_dates()
+
+survey_long <- survey_tidy |>
+  survey_to_long()
 ```
 
-Nice! It works! Once it works as intended, cut and paste it over into
-`R/functions.R`. Then, go to the `docs/learning.qmd` file and in the
-`setup` code chunk, add a pipe to the end of `import_dime()` for the
-`participant_details` object into `clean_participant_details()`. It
-should look like this:
+{{< text_snippet sticky_up >}}
 
-```{r clean-participant-details-setup}
-#| filename: "docs/learning.qmd"
-participant_details <- here("data-raw/dime/participant_details.csv") |>
-  import_dime() |>
-  clean_participant_details()
-```
+## :technologist: Extra exercise: Simplify code with `{tidyselect}` helpers
 
-Then to check the reproducibility, render the document with
-{{< var keybind.render >}} to make sure it all works. Woohoo :tada:
+**Time: \~5 minutes.**
+
+If you've finished the previous exercises early and have some time, try
+simplify the code in the `survey_to_long()` function by using
+`{tidyselect}` helpers rather than writing out the column names with
+`c()`. To make it more challenging, we won't give anymore hints nor
+solution code.
+
+{{< text_snippet sticky_up >}}
 
 ## :book: Reading task: Pivoting data to a wider form
 
@@ -342,18 +617,14 @@ making use of the graphs to help illustrate what is happening.
 
 **Time: \~10 minutes.**
 
-Working in long form can be really useful when doing certain types of
-wrangling, like you've seen and read about above. The majority of the
-time, you probably will only ever use `pivot_longer()`. But, sometimes
-you need to pivot to a form that is a bit wider to do, for example, when
-doing certain types of joins or processing.
-
-For us, the sleep data is in a very long form, where each hour of sleep
-has several rows for the different types of sleep. Joining the data in
-this form to the other datasets, while possible, won't produce usable
-output. We want to convert it so there is only one row per hour of a
-participant's day, rather than multiple rows per hour. For that, we need
-to convert to the wider form.
+While we won't use this function in this workshop, it's still useful to
+read of `pivot_longer()`'s opposite function, `pivot_wider()`, which
+converts to the wider format. Working in long form can be really useful
+when doing certain types of wrangling, like you've read about above and
+actually used. The majority of the time, you probably will only ever use
+`pivot_longer()` and this is part of the reason why we don't cover it.
+But, sometimes you need to pivot to a form that is a bit wider to do,
+for example, when doing certain types of joins or processing.
 
 The arguments for `pivot_wider()` are very similar to those in
 `pivot_longer()`, except instead of `names_to` and `values_to`, they are
@@ -381,7 +652,12 @@ functions, the first argument is the data and the other arguments are:
 @fig-pivot-wider visually shows what's happening when using
 `pivot_wider()`.
 
-![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data on the left are placed side-by-side as new columns in the output data on the right. Notice how the values in the column `N`, which is used in the `names_from` argument, are used as the names for the new columns `A` and `B` in the new data.](/images/pivot-wider.png){#fig-pivot-wider
+![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data
+on the left are placed side-by-side as new columns in the output data on
+the right. Notice how the values in the column `N`, which is used in the
+`names_from` argument, are used as the names for the new columns `A` and
+`B` in the new
+data.](/images/pivot-wider.svg){#fig-pivot-wider
 width="90%" fig-alt="A diagram showing the use of the pivot wider
 function, where a table with three columns, id, name, and value, is
 converted to a table with three columns, id, A and B. The values in the
@@ -389,100 +665,6 @@ column name are now the names of the columns in the new table: A and B.
 The original id column still exists."}
 
 {{< text_snippet sticky_up >}}
-
-## :technologist: Exercise: Create a new function to pivot sleep to wider
-
-**Time: \~25 minutes.**
-
-{{< include /includes/solutions/_pivots-sleep-types-to-wider.qmd >}}
-
-This will a bit more of a challenging exercise since we haven't used the
-`pivot_wider()` function before. But the way you use it is very similar
-to `pivot_longer()`. We've had you practice the process many times and
-this will be an exercise to really challenge what you've learned so far!
-Which is part of the learning journey :grin:
-
-For this exercise, you will create a new function that converts the
-sleep data into a wider form. To test it out, it should look like this
-and should output something similar:
-
-```{r}
-#| filename: "docs/learning.qmd"
-sleep_data |>
-  sleep_types_to_wider()
-```
-
-Once you've made this new function, move it into the `clean_sleep()` so
-it looks like:
-
-```{r admin-explanation-clean-sleep}
-#| filename: "R/functions.R"
-clean_sleep <- function(data) {
-  cleaned <- data |>
-    get_participant_id() |>
-    dplyr::rename(datetime = date) |>
-    prepare_dates(datetime) |>
-    # The function used to sum summarise may be different for you.
-    summarise_column(seconds, list(sum = sum)) |>
-    # This is the new function you will add below.
-    sleep_types_to_wider()
-  return(cleaned)
-}
-```
-
-Then, you go to your `setup` code chunk in `docs/learning.qmd` and run
-all the code in it, especially:
-
-```{r}
-#| filename: "docs/learning.qmd"
-sleep_data <- here("data-raw/dime/sleep/") |>
-  import_csv_files() |>
-  clean_sleep()
-```
-
-It should like this if you run it in the **Console**:
-
-```{r}
-#| filename: "Console"
-sleep_data
-```
-
-1. Look into the documentation for `pivot_wider()` to get a better idea
-   for how it works.
-2. Create a new header called `## Pivot wider` in the
-   `docs/learning.qmd` file, then create a new code chunk below it with
-   {{< var keybind.chunk >}}.
-3. Before making the function, prototype and test out code by piping the
-   `sleep_data` into `pivot_wider()`. Try using `names_from` and
-   `values_from` to get the right output. You can use the argument
-   `names_prefix` to add text to the start of the new `names` columns.
-
-After you've written some code that works, use the same process you've
-used before to make a function:
-
-1. Create a new function called `sleep_types_to_wider` and assign
-   `function()` to it.
-2. Include `data` as an argument in `function()`.
-3. Replace the `sleep_data` variable with the `data` argument.
-4. Assign it to a new variable called `wider` and `return()` it at the
-   end of the function.
-5. Explicitly indicate the package the function uses by using `tidyr::`.
-6. Create Roxygen documentation for the function with
-   {{< var keybind.roxygen >}}.
-7. Test that the code works by running the function, using it like
-   `sleep_types_to_wider(sleep_data)`.
-8. When it works, cut and paste it over into `R/functions.R`.
-9. Include the new function in the `clean_sleep()` function in
-   `R/functions.R` so that it looks like the above.
-10. Style both `R/functions.R` and `docs/learning.qmd` with
-    {{< var keybind.style >}}.
-11. Render the document with {{< var keybind.render >}} to make sure it
-    all works.
-12. And lastly, commit your changes to the Git history with
-    {{< var keybind.commit >}} and push it to your GitHub.
-
-{{< text_snippet sticky_up >}}
-:::
 
 ## Key takeaways
 
@@ -506,8 +688,10 @@ activity this time.
   has many very helpful functions for tidying up data such as the
   `complete()` function.
 
-```{r admin-save-session-code}
+```{r}
+#| label: admin-save-session-code
 #| include: false
+
 save.image(here::here("_temp/pivots.RData"))
 ```
 
