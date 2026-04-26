@@ -67,7 +67,7 @@ spread across the workshop's sessions. The workshop will enable you to:
 
 {{< include /includes/objectives/_split-apply-combine.qmd >}}
 
-[Pivoting your data from and to long or wide](/sessions/pivots.qmd)
+[Pivoting your data between long and wide](/sessions/pivots.qmd)
 
 {{< include /includes/objectives/_pivots.qmd >}}
 

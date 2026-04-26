@@ -1,4 +1,4 @@
-# Pivoting your data from and to long or wide {#sec-pivots}
+# Pivoting your data between long and wide {#sec-pivots}
 
 ```{r}
 #| label: setup
