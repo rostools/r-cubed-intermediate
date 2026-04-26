@@ -32,25 +32,25 @@ below. If not, you will need to update them.
    and using), installing R is as easy as opening a Terminal and
    running:
 
-    ```text
-    brew install --cask r
-    ```
+   ```text
+      brew install --cask r
+   ```
 
 2. [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
    Any version above {{< meta versions.rstudio >}}. If you have
    installed it before, check the current version by going to the menu
    "Help -> About RStudio". With Homebrew:
 
-    ```text
-    brew install --cask rstudio
-    ```
+   ```text
+      brew install --cask rstudio
+   ```
 
 3. [Git](https://git-scm.com/download/mac): Git is used throughout many
    sessions in the workshop. With Homebrew:
 
-    ```text
-    brew install git
-    ```
+   ```text
+      brew install git
+   ```
 
 ## Linux (Ubuntu)
 
@@ -58,9 +58,9 @@ below. If not, you will need to update them.
    {{< meta versions.r >}}. If you have used R before, you can confirm
    the version by running `R.version.string` in the Console.
 
-    ```text
-    sudo apt -y install r-base
-    ```
+   ```text
+      sudo apt -y install r-base
+   ```
 
 2. [RStudio](https://www.rstudio.com/products/rstudio/download/#download):
    Any version above {{< meta versions.rstudio >}}. If you have
@@ -70,9 +70,9 @@ below. If not, you will need to update them.
 3. [Git](https://git-scm.com/download/mac): Git is used throughout many
    sessions in the workshop.
 
-    ```text
-    sudo apt install git
-    ```
+   ```text
+      sudo apt install git
+   ```
 :::
 
 All these programs are required for the workshop, even Git. Git, which

@@ -1,7 +1,9 @@
 # Doing many things at once with functionals {#sec-functionals}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(here)
 library(tidyverse)
 library(purrr)
@@ -225,6 +227,7 @@ it! For instance:
 
 ```{r}
 #| output: false
+
 function(number) {
   paste(number, "seconds have passed")
 }
@@ -234,6 +237,7 @@ There is a shortened version of this using `\(x)`:
 
 ```{r}
 #| output: false
+
 \(number) paste(number, "seconds have passed")
 ```
 
@@ -331,8 +335,10 @@ use that in `regexp`. Let's pipe the output of the `here()` path to the
 stress folder into `dir_ls()` by assigning it to a new variable
 `hr_file` so we can use it later.
 
-```{r list-hr-files}
+```{r}
+#| label: list-hr-files
 #| filename: "docs/learning.qmd"
+
 hr_files <- here("data-raw/nurses-stress/") |>
   dir_ls(regexp = "HR.csv.gz", recurse = TRUE)
 ```
@@ -342,14 +348,18 @@ will be different from what are shown here (it is a different computer).
 Plus to keep it simpler, on the website we will only show the first 3
 files.
 
-```{r list-hr-files-show}
+```{r}
+#| label: list-hr-files-show
 #| filename: "docs/learning.qmd"
 #| eval: false
+
 hr_files
 ```
 
-```{r admin-list-files-for-book}
+```{r}
+#| label: admin-list-files-for-book
 #| echo: false
+
 head(gsub(".*\\/data-raw", "data-raw", hr_files), 3)
 ```
 
@@ -357,8 +367,10 @@ So we have a list of all the CSV files we want to read in. Alright, we
 now have all the files ready to give to `map()`, so let's read in
 **all** HR files into R!
 
-```{r map-read-hr}
+```{r}
+#| label: map-read-hr
 #| filename: "docs/learning.qmd"
+
 hr_data <- hr_files |>
   map(read)
 ```
@@ -372,8 +384,10 @@ Remember, that `map()` always outputs a list, so when we look into this
 object, it will give us `r length(hr_data)` tibbles (data frames). For
 the website we'll only show the first two tibbles:
 
-```{r map-import-hr-show}
+```{r}
+#| label: map-import-hr-show
 #| filename: "docs/learning.qmd"
+
 hr_data[1:2]
 ```
 
@@ -400,8 +414,10 @@ the data frames by columns. In our case, we want to bind (stack) by
 rows, so we will use `list_rbind()` by piping the output of the `map()`
 code we wrote into `list_rbind()`.
 
-```{r use-list-rbind}
+```{r}
+#| label: use-list-rbind
 #| filename: "docs/learning.qmd"
+
 hr_data <- hr_files |>
   map(read) |>
   list_rbind()
@@ -420,8 +436,10 @@ it later. But first, let's start with adding this information to the
 data frame as a new column called `file_path_id`. So we will add the
 `names_to` argument to the code we've already written.
 
-```{r use-list-rbind-with-paths}
+```{r}
+#| label: use-list-rbind-with-paths
 #| filename: "docs/learning.qmd"
+
 hr_data <- hr_files |>
   map(read) |>
   list_rbind(names_to = "file_path_id")
@@ -429,14 +447,18 @@ hr_data <- hr_files |>
 
 And then look at it by running `hr_data` below the code:
 
-```{r use-list-rbind-with-paths-show}
+```{r}
+#| label: use-list-rbind-with-paths-show
 #| filename: "docs/learning.qmd"
 #| eval: false
+
 hr_data
 ```
 
-```{r admin-show-rbind-with-path-for-book}
+```{r}
+#| label: admin-show-rbind-with-path-for-book
 #| echo: false
+
 hr_data |>
   trim_filepath_for_book()
 ```
@@ -484,6 +506,7 @@ looks like this:
 
 ```{r}
 #| eval: false
+
 hr_files <- here("data-raw/nurses-stress/") |>
   dir_ls(regexp = "HR.csv.gz", recurse = TRUE)
 
@@ -501,6 +524,7 @@ import the other datasets.
 
 ```{r}
 #| eval: false
+
 hr_data <- read_all("HR.csv.gz")
 ibi_data <- read_all("IBI.csv.gz")
 bvp_data <- read_all("BVP.csv.gz")
@@ -509,7 +533,7 @@ bvp_data <- read_all("BVP.csv.gz")
 Recall that the structure of making functions below and use this
 template to help you get started:
 
-``` r
+```r
 ___ <- function(___) {
   # Code that does something
   ___ <- ___
@@ -563,6 +587,7 @@ function that you can re-use.
 ```{r}
 #| label: solution-read-multiple-files
 #| echo: false
+
 #' Read all `.csv.gz` files in the `stress/` folder into one data frame.
 #'
 #' @param filename The name of files in the sub-folders that we
@@ -589,7 +614,7 @@ read_all("IBI.csv.gz")
 
 ## :technologist: Extra exercise: Include a new `max_rows` argument to `read_all()`
 
-**Time: ~10 minutes.**
+**Time: \~10 minutes.**
 
 If you finished the previous exercise early, you can try this exercise,
 which is much harder. To make it a bit harder, we also won't provide a
@@ -638,6 +663,7 @@ In the `R/functions.R` file, complete these tasks of updating the
 ```{r}
 #| label: solution-read-all-max-rows
 #| echo: false
+
 #' Read all `.csv.gz` files in the `stress/` folder into one data frame.
 #'
 #' @param filename The name of files in the sub-folders that we
@@ -665,7 +691,7 @@ read_all("HR.csv.gz", max_rows = 1000)
 
 ## :technologist: Extra exercise: Move the `here::here()` path out of the function
 
-**Time: ~5 minutes.**
+**Time: \~5 minutes.**
 
 If you finished the previous exercise early, you can try this exercise,
 which is much harder. Like with the extra exercise above, to make it a
@@ -719,6 +745,7 @@ steps:
 ```{r}
 #| label: solution-data-dir-global-var
 #| echo: false
+
 .DATASET_DIR <- here::here("data-raw/nurses-stress/") # <1>
 
 # In the function body of `read_all()`.
@@ -794,8 +821,10 @@ discuss with your neighbour or group the following questions:
   your work? How might you change existing code to use them? Might it be
   a lot of work?
 
-```{r admin-store-session-code}
+```{r}
+#| label: admin-store-session-code
 #| include: false
+
 save.image(here::here("_temp/functionals.RData"))
 ```
 

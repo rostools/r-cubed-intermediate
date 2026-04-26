@@ -25,6 +25,7 @@ function:
 
 ```{r}
 #| eval: false
+
 test_debugging <- function(number) {
   browser()
   new_number <- number + number

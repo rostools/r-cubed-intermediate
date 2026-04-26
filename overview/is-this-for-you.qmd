@@ -10,10 +10,9 @@ We assume you can relate to one or more of the following:
   (ranging from experimental to clinical to epidemiological).
 - You currently are or will soon do quantitative data analysis.
 - You either:
-  - have taken the
-    [introduction to Reproducible Research in R workshop](https://r-cubed-intro.rostools.org/),
-    as this intermediate workshop is a natural extension to that the
-    introduction one;
+  - have taken the [introduction to Reproducible Research in R
+    workshop](https://r-cubed-intro.rostools.org/), as this intermediate
+    workshop is a natural extension to that the introduction one;
   - know a *little* to a *moderate* amount of R (or computing in
     general);
   - know how to use R and have *some* familiarity with the

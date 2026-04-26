@@ -1,7 +1,9 @@
 # Download the data {#sec-download-data}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(here)
 library(fs)
 temp_path <- fs::path_temp()
@@ -86,23 +88,23 @@ taken from the
 [nurses' stress study](https://zenodo.org/records/5514277) dataset page:
 
 > "Advances in wearable technologies provide the opportunity to monitor
-many physiological variables continuously. Stress detection has gained
-increased attention in recent years, especially because early stress
-detection can help individuals better manage health to minimize the
-negative impacts of long-term stress exposure. This paper provides a
-unique stress detection dataset created in a natural working
-environment in a hospital. This dataset is a collection of biometric
-data of nurses during the COVID-19 outbreak. Studying stress in a work
-environment is complex due to the influence of many social, cultural,
-and individuals experience in dealing with stressful conditions. In
-order to address these concerns, we captured both the physiological
-data and associated context pertaining to the stress events. We
-monitored specific physiological variables, including electrodermal
-activity, heart rate, skin temperature, and accelerometer data of the
-nurse subjects. A periodic smartphone-administered survey also
-captured the contributing factors for the detected stress events. A
-database containing the signals, stress events, and survey responses
-is available upon request."
+> many physiological variables continuously. Stress detection has gained
+> increased attention in recent years, especially because early stress
+> detection can help individuals better manage health to minimize the
+> negative impacts of long-term stress exposure. This paper provides a
+> unique stress detection dataset created in a natural working
+> environment in a hospital. This dataset is a collection of biometric
+> data of nurses during the COVID-19 outbreak. Studying stress in a work
+> environment is complex due to the influence of many social, cultural,
+> and individuals experience in dealing with stressful conditions. In
+> order to address these concerns, we captured both the physiological
+> data and associated context pertaining to the stress events. We
+> monitored specific physiological variables, including electrodermal
+> activity, heart rate, skin temperature, and accelerometer data of the
+> nurse subjects. A periodic smartphone-administered survey also
+> captured the contributing factors for the detected stress events. A
+> database containing the signals, stress events, and survey responses
+> is available upon request."
 
 ::: callout-note
 You may be wondering, how can we be using this dataset that has human
@@ -130,14 +132,18 @@ to the `data-raw/` folder. There is a helper function for that from
 `{usethis}`. While in your `LearnR3` R Project, go to the R Console pane
 in RStudio and type out:
 
-```{r use-data-raw-nurses-stress}
+```{r}
+#| label: use-data-raw-nurses-stress
 #| filename: "Console"
 #| eval: false
+
 usethis::use_data_raw("nurses-stress")
 ```
 
-```{r admin-create-data-raw}
+```{r}
+#| label: admin-create-data-raw
 #| include: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -158,9 +164,11 @@ The first thing you want do is **delete all the code in the script**
 that is added there by default. Then write this `library()` function at
 the top of the file:
 
-```{r data-raw-script-add-here}
+```{r}
+#| label: data-raw-script-add-here
 #| filename: "data-raw/nurses-stress.R"
 #| output: false
+
 library(here)
 ```
 
@@ -193,8 +201,10 @@ searching for files from the `.Rproj` location.
 Let's use an example. Below is the list of the folders and files you
 have so far in your R Project.
 
-```{r admin-print-dir-tree}
+```{r}
+#| label: admin-print-dir-tree
 #| echo: false
+
 withr::with_dir(
   new = project_path,
   {
@@ -211,9 +221,11 @@ structure and content of a directory, you can use the `dir_tree()`
 function from the `{fs}` package, which means "filesystem", by running
 the following code in the R Console:
 
-```{r print-dir-tree-project}
+```{r}
+#| label: print-dir-tree-project
 #| filename: "Console"
 #| eval: false
+
 # To print the file list.
 fs::dir_tree("~/Desktop/LearnR3", recurse = 1)
 ```
@@ -242,8 +254,10 @@ folder. But, we still want to have a record of where the data came from.
 So, open up the `data-raw/nurses-stress.R` script and paste in this
 comment below the `library(here)` line.
 
-```{r nurses-stress-data-link}
+```{r}
+#| label: nurses-stress-data-link
 #| filename: "data-raw/nurses-stress.R"
+
 # The dataset can be downloaded manually from
 # <https://drive.proton.me/urls/ZHZ6TCAN2W#e5D5U4IajdYp>.
 # Make sure to save this file to the `data-raw/` folder with the name
@@ -256,8 +270,10 @@ and download the [tar](https://en.wikipedia.org/wiki/Tar_(computing))
 file to your R Project's `data-raw/` folder with the name
 `nurses-stress.tar` (which should be the default).
 
-```{r admin-copy-tar-data}
+```{r}
+#| label: admin-copy-tar-data
 #| include: false
+
 # Only run this when there is the cleaning folder (e.g. not when rendering
 # on the GitHub workflow).
 cleaning_tar_path <- here::here("data-raw/nurses-stress-cleaning/nurses-stress.tar")
@@ -296,14 +312,18 @@ to save it to your Git history. Add the tar file to the Git ignore list
 by typing out and running this code in the Console. You only need to do
 this once.
 
-```{r use-git-ignore-nurses-stress-tar}
+```{r}
+#| label: use-git-ignore-nurses-stress-tar
 #| filename: "Console"
 #| eval: false
+
 usethis::use_git_ignore("data-raw/nurses-stress.tar")
 ```
 
-```{r admin-ignore-nurses-stress-tar}
+```{r}
+#| label: admin-ignore-nurses-stress-tar
 #| include: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -327,16 +347,20 @@ to. You'll want to save the output of the tar file to
 `data-raw/nurses-stress/`, so write this code at the bottom of the
 `data-raw/nurses-stress.R` script:
 
-```{r untar-nurses-stress-file}
+```{r}
+#| label: untar-nurses-stress-file
 #| filename: "data-raw/nurses-stress.R"
+
 untar(
   here("data-raw/nurses-stress.tar"),
   exdir = here("data-raw/nurses-stress/")
 )
 ```
 
-```{r admin-untar-nurses-stress-file}
+```{r}
+#| label: admin-untar-nurses-stress-file
 #| include: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -372,16 +396,20 @@ by either running the `dir_tree()` function from the `{fs}` package or
 you can manually check the files by using the RStudio file pane or by
 using your file browser.
 
-```{r print-tree-data-raw}
+```{r}
+#| label: print-tree-data-raw
 #| filename: "Console"
 #| eval: false
+
 fs::dir_tree("data-raw/", recurse = 2)
 ```
 
-```{r admin-print-data-raw-after-untar}
+```{r}
+#| label: admin-print-data-raw-after-untar
 #| echo: false
 #| message: false
 #| warning: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -399,14 +427,18 @@ Since you have an R script that downloads the data and processes it for
 you, you don't need to have Git track it. So, in the Console, type out
 and run this command:
 
-```{r use-git-ignore-data-raw-nurses-stress}
+```{r}
+#| label: use-git-ignore-data-raw-nurses-stress
 #| filename: "Console"
 #| eval: false
+
 usethis::use_git_ignore("data-raw/nurses-stress/")
 ```
 
-```{r admin-git-ignore-nurses-stress}
+```{r}
+#| label: admin-git-ignore-nurses-stress
 #| include: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -422,9 +454,11 @@ in the Git interface or with the Command Palette with
 {{< var keybind.palette >}} and then typing "push". Alternatively, you
 can run this code in the Console to commit and push your changes:
 
-```{r commit-and-push}
+```{r}
+#| label: commit-and-push
 #| filename: "Console"
 #| eval: false
+
 gert::git_add(".")
 gert::git_commit("Download nurses stress data and save to data-raw/")
 gert::git_push()
@@ -432,9 +466,11 @@ gert::git_push()
 
 Next step is to please run this function in the Console:
 
-```{r check-project-setup}
+```{r}
+#| label: check-project-setup
 #| filename: "Console"
 #| eval: false
+
 r3::check_project_setup_intermediate()
 ```
 
@@ -468,8 +504,10 @@ doesn't, start over by deleting all *but* the `nurses-stress.R` and
 If your output looks a bit like this, then copy and paste the output
 from the check into the survey question at the end.
 
-```{r admin-save-project}
+```{r}
+#| label: admin-save-project
 #| include: false
+
 withr::with_dir(
   project_path,
   {

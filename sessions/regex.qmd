@@ -1,7 +1,9 @@
 # Processing strings with regular expressions {#sec-regex}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(here)
 library(fs)
 library(tidyverse)
@@ -27,7 +29,7 @@ want to join them together, but the question is, how do we do that?
 
 ## :technologist: Exercise: Inspect and compare the data frames
 
-**Time: ~5 minutes.**
+**Time: \~5 minutes.**
 
 You haven't yet read in the `survey-results.csv.gz` file, which is the
 main file that connects everything else together. So, read it into R and
@@ -125,29 +127,30 @@ as well as in the help doc `?regex`. There's also a nice
 on it. But we will cover some of the more commonly used regex patterns,
 like in @tab-regex:
 
-| regex       | Meaning                                                                                                                         |
-|-------------|---------------------------------------------------------------------------------------------------------------------------------|
-| `\\d`       | find one digit (0-9)                                                                                                            |
-| `\\D`       | find one non-digit                                                                                                              |
-| `[0-9]`     | find one digit between 0 and 9 (the `-` is a range)                                                                             |
-| `[a-z]`     | find one letter between a and z (lowercase)                                                                                     |
-| `[A-Z]`     | find one letter between A and Z (uppercase)                                                                                     |
-| `[a-zA-Z]`  | find one letter between a and z or A and Z                                                                                      |
-| `\\.`       | find one dot string                                                                                                             |
-| `$`         | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                                       |
-| `^`         | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                                         |
-| `?`         | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                                    |
-| `*`         | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other                 |
-| `+`         | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other                    |
-| `{n}`       | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other                             |
-| `[:alpha:]` | find one letter (a-z or A-Z)                                                                                                    |
-| `[:digit:]` | find one digit (0-9)                                                                                                            |
-| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9)                                                                                           |
-| `[:upper:]` | find one uppercase letter (A-Z)                                                                                                 |
-| `[:lower:]` | find one lowercase letter (a-z)                                                                                                 |
-| `(A|B)`     | find *either* `A` or `B` (`|` means "or" and the `()` groups them), e.g., `(\\D|\\d)` means find either a non-digit or a digit. |
+| regex             | Meaning                                                                                                                             |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `\\d`             | find one digit (0-9)                                                                                                                |
+| `\\D`             | find one non-digit                                                                                                                  |
+| `[0-9]`           | find one digit between 0 and 9 (the `-` is a range)                                                                                 |
+| `[a-z]`           | find one letter between a and z (lowercase)                                                                                         |
+| `[A-Z]`           | find one letter between A and Z (uppercase)                                                                                         |
+| `[a-zA-Z]`        | find one letter between a and z or A and Z                                                                                          |
+| `\\.`             | find one dot string                                                                                                                 |
+| `$`               | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                                           |
+| `^`               | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                                             |
+| `?`               | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                                        |
+| `*`               | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other                     |
+| `+`               | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other                        |
+| `{n}`             | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other                                 |
+| `[:alpha:]`       | find one letter (a-z or A-Z)                                                                                                        |
+| `[:digit:]`       | find one digit (0-9)                                                                                                                |
+| `[:alnum:]`       | find one alphanumeric (a-z, A-Z, 0-9)                                                                                               |
+| `[:upper:]`       | find one uppercase letter (A-Z)                                                                                                     |
+| `[:lower:]`       | find one lowercase letter (a-z)                                                                                                     |
+| `(A         | B)` | find *either* `A` or `B` (` | ` means "or" and the `()` groups them), e.g., `(\\D | \\d)` means find either a non-digit or a digit. |
 
-: A list of some common regex patterns and their meanings. {#tab-regex}
+  : A list of some common regex patterns and their meanings.
+    {#tab-regex}
 
 ::: callout-note
 The `\` string is a special string in regex, but in R it means "escape
@@ -160,7 +163,7 @@ print("Analysis has \"nearly\" finished.")
 
 Without the `\`, R would see this instead:
 
-``` r
+```r
 print("Analysis has "nearly" finished.")
 ```
 
@@ -276,9 +279,11 @@ First we'll pipe `hr_data` into `mutate()` to create a new column called
 `str_extract()` function to extract the participant ID from the
 `file_path_id` column using the regex `/stress/[:alnum:]{2}/`.
 
-```{r get-id}
+```{r}
+#| label: get-id
 #| filename: "docs/learning.qmd"
 #| eval: false
+
 # Note: your file paths and data may look slightly different.
 hr_data |>
   mutate(
@@ -291,8 +296,10 @@ hr_data |>
   )
 ```
 
-```{r admin-get-id}
+```{r}
+#| label: admin-get-id
 #| echo: false
+
 hr_data |>
   trim_filepath_for_book() |>
   mutate(
@@ -308,9 +315,11 @@ Cool! But we have the `/stress/` and `/` that we don't want. We can use
 the `str_remove()` function to remove both from the string. So we can
 pipe our output into that function (twice):
 
-```{r get-id-remove-csv}
+```{r}
+#| label: get-id-remove-csv
 #| filename: "docs/learning.qmd"
 #| eval: false
+
 hr_data |>
   mutate(
     id = str_extract(
@@ -323,8 +332,10 @@ hr_data |>
   )
 ```
 
-```{r admin-get-id-remove-csv}
+```{r}
+#| label: admin-get-id-remove-csv
 #| echo: false
+
 hr_data |>
   trim_filepath_for_book() |>
   mutate(
@@ -343,8 +354,10 @@ column, so we can use the `select()` function to drop it. We can do this
 by using the `-` operator to drop the column. So we can pipe our output
 into that function:
 
-```{r drop-file-path-id}
+```{r}
+#| label: drop-file-path-id
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   mutate(
     id = str_extract(
@@ -415,6 +428,7 @@ steps:
 
 ```{r}
 #| label: solution-participant-id-function
+
 #' Get the participant ID from the file path column.
 #'
 #' @param data Data with `file_path_id` column.
@@ -442,7 +456,7 @@ get_participant_id(hr_data)
 
 ## :technologist: Extra exercise: Simplify the regex with look arounds
 
-**Time: ~8 minutes.**
+**Time: \~8 minutes.**
 
 If you finished the previous exercise early, you can try this more
 challenging exercise. Try to simplify the regex so that it only extracts
@@ -472,6 +486,7 @@ be simpler.
 
 ```{r}
 #| label: solution-look-arounds
+
 get_participant_id <- function(data) {
   data_with_id <- data |>
     dplyr::mutate(
@@ -508,8 +523,10 @@ discussion activity.
   functions to help use regex to process string data, like
   `str_extract()` or `str_remove()`.
 
-```{r admin-store-session-code}
+```{r}
+#| label: admin-store-session-code
 #| include: false
+
 save.image(here::here("_temp/regex.RData"))
 ```
 

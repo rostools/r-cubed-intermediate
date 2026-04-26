@@ -2,8 +2,10 @@
 
 {{< include /includes/_badges.qmd >}}
 
-```{r write-packages-to-bib}
+```{r}
+#| label: write-packages-to-bib
 #| include: false
+
 # automatically create a bib database for R packages
 knitr::write_bib(
   unique(desc::desc_get_deps()$package[-1]),
@@ -56,8 +58,8 @@ This website and its content are targeted to three groups:
 
 1. For the **learners** to use during the workshop, both to follow along
    and also to use as a reference after the workshop ends. A more
-   detailed description of who the learner is can be found in the
-   [Is this for you?](/overview/is-this-for-you.qmd) section
+   detailed description of who the learner is can be found in the [Is
+   this for you?](/overview/is-this-for-you.qmd) section
    (@sec-is-this-for-you).
 2. For the **teachers** to use as a guide for when they do the
    type-along sessions.
@@ -102,7 +104,8 @@ The workshop material draws inspiration from these excellent resources:
 - [R for Data Science](https://r4ds.had.co.nz/)
 - [Advanced R](https://adv-r.hadley.nz/)
 - [R Packages](https://r-pkgs.org/)
-- [UofTCoders Reproducible Quantitative Methods for EEB](https://uoftcoders.github.io/rcourse/)
+- [UofTCoders Reproducible Quantitative Methods for
+  EEB](https://uoftcoders.github.io/rcourse/)
 - [Software and Data Carpentry](https://carpentries.org/) workshop
   material
 

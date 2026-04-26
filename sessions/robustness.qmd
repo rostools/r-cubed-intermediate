@@ -1,7 +1,9 @@
 # Making robust and reusable functions {#sec-robustness}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(fs)
 library(tidyverse)
 library(snakecase)
@@ -74,9 +76,11 @@ So, if you or someone else wants to install all the packages your
 project depends on, all you or they have to do is go to the **Console**
 and type out (you don't need to do this right now):
 
-```{r pak-pak}
+```{r}
+#| label: pak-pak
 #| filename: "Console"
 #| eval: false
+
 pak::pak()
 ```
 
@@ -90,9 +94,11 @@ enter to open it. Your file may or may not look like the below text. If
 it doesn't, that's ok as the below text is just to give you an idea of
 what it might look like.
 
-```{r admin-print-desc}
+```{r}
+#| label: admin-print-desc
 #| echo: false
 #| comment: ""
+
 usethis::with_project(
   path = project_path,
   {
@@ -122,14 +128,18 @@ dependency. Go to the **Console** and let's type out how to add it.
 Don't write this code in your Quarto document, since you don't want to
 run it every time you render the document.
 
-```{r use-package-here}
+```{r}
+#| label: use-package-here
 #| filename: "Console"
 #| eval: false
+
 usethis::use_package("here")
 ```
 
-```{r admin-use-package-here}
+```{r}
+#| label: admin-use-package-here
 #| echo: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -142,9 +152,11 @@ usethis::with_project(
 You will see a bunch of text about adding it to `Imports`. If you look
 in your `DESCRIPTION` file now, you'll see something like:
 
-```{r admin-print-desc-add-here}
+```{r}
+#| label: admin-print-desc-add-here
 #| echo: false
 #| comment: ""
+
 usethis::with_project(
   path = project_path,
   {
@@ -157,15 +169,19 @@ usethis::with_project(
 Since we will also make use of the `{tidyverse}` set of packages later
 in the workshop, we'll also add `{tidyverse}` as a dependency.
 
-```{r use-package-tidyverse}
+```{r}
+#| label: use-package-tidyverse
 #| filename: "Console"
 #| eval: false
+
 usethis::use_package("tidyverse")
 ```
 
-```{r admin-use-packages-tidyverse}
+```{r}
+#| label: admin-use-packages-tidyverse
 #| echo: false
 #| error: true
+
 usethis::with_project(
   path = project_path,
   {
@@ -179,14 +195,18 @@ This gives an error though. That's because the `{tidyverse}` is a large
 collection of packages, so as stated by the message, the recommended way
 to add this particular dependency is with:
 
-```{r use-package-tidyverse-depends}
+```{r}
+#| label: use-package-tidyverse-depends
 #| filename: "Console"
 #| eval: false
+
 usethis::use_package("tidyverse", type = "Depends")
 ```
 
-```{r admin-use-packages-tidyverse-depends}
+```{r}
+#| label: admin-use-packages-tidyverse-depends
 #| echo: false
+
 usethis::with_project(
   path = project_path,
   {
@@ -201,9 +221,11 @@ error so we can ignore it. If you look in the `DESCRIPTION` file now,
 you see that the new `Depends` field has been added with `{tidyverse}`
 right below it.
 
-```{r admin-print-desc-add-tidyverse}
+```{r}
+#| label: admin-print-desc-add-tidyverse
 #| echo: false
 #| comment: ""
+
 usethis::with_project(
   path = project_path,
   {
@@ -250,7 +272,7 @@ to do it and can often give completely wrong results without giving any
 error or warning. Sometimes, on some websites and help forums, you may
 see code that looks like this:
 
-``` r
+```r
 add_numbers <- function(num1, num2) {
   library(package_name)
   ...code...
@@ -260,7 +282,7 @@ add_numbers <- function(num1, num2) {
 
 Or:
 
-``` r
+```r
 add_numbers <- function(num1, num2) {
   require(package_name)
   ...code...
@@ -294,9 +316,11 @@ package a function comes from, but we can easily find that out. Let's
 start with the first action in our function: `read_csv()`. In the
 **Console**:
 
-```{r help-read-csv}
+```{r}
+#| label: help-read-csv
 #| filename: "Console"
 #| eval: false
+
 ?read_csv
 ```
 
@@ -306,7 +330,9 @@ at the top left corner, you'll see the package name in curly brackets
 case, it is `{readr}`. So, we can update our function to use
 `readr::read_csv()` instead of just `read_csv()`:
 
-```{r import-cgm-function}
+```{r}
+#| label: read-function
+
 read <- function(file_path, max_rows = 100) {
   data <- file_path |>
     readr::read_csv(
@@ -341,17 +367,21 @@ In this exercise, you will finish setting the dependencies for the
    with {{< var keybind.commit >}}. While in the interface, push to
    GitHub.
 
-```{r solution-add-project-dependencies}
+```{r}
+#| label: solution-add-project-dependencies
 #| filename: Console
 #| echo: false
 #| eval: false
+
 usethis::use_package("readr")
 usethis::use_package("snakecase")
 ```
 
-```{r solution-set-function-dependencies}
+```{r}
+#| label: solution-set-function-dependencies
 #| filename: docs/learning.qmd
 #| echo: false
+
 read <- function(file_path, max_rows = 100) {
   data <- file_path |>
     readr::read_csv(
@@ -373,7 +403,7 @@ read <- function(file_path, max_rows = 100) {
 Briefly explain the workflow a bit more, highlighting the diagram.
 :::
 
-**Time: ~5 minutes.**
+**Time: \~5 minutes.**
 
 While you use Quarto to test out and prototype code, you'll use R
 scripts, like `R/functions.R`, to keep the code you have already tested
@@ -434,8 +464,10 @@ Roxygen documentation, open the `R/functions.R` with
 
 The code in the `R/functions.R` file should now look like this:
 
-```{r import-dime-functions-r-file}
+```{r}
+#| label: import-dime-functions-r-file
 #| filename: "R/functions.R"
+
 #' Read in one nurses' stress data file.
 #'
 #' @param file_path Path to the data file.
@@ -476,7 +508,7 @@ While we're there, let's remove the `library(snakecase)` since we've
 explicitly called it in our function with `snakecase::to_snake_case()`.
 The `setup` code chunk should look like this now:
 
-```` markdown
+````markdown
 ```{{r setup}}
 library(tidyverse)
 library(here)
@@ -491,7 +523,7 @@ Then, in the code chunks in the Quarto document where you've written the
 in your `docs/learning.qmd` file for reference, but it won't be run when
 you render the document. For those code chunks, it should look like:
 
-```` markdown
+````markdown
 ```{{r}}
 #| eval: false
 # Code ...
@@ -555,8 +587,10 @@ discussion activity.
   You can re-use the functions by using `source(here("R/functions.R"))`
   in your Quarto documents.
 
-```{r admin-save-session-code}
+```{r}
+#| label: admin-save-session-code
 #| include: false
+
 save.image(here::here("_temp/robustness.RData"))
 ```
 

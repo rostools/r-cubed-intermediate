@@ -28,7 +28,7 @@ started.
 It's easiest to [install uv](https://docs.astral.sh/uv/) first and then
 install justfile using uv. Then, to install justfile, run:
 
-``` bash
+```bash
 uv tool install rust-just
 ```
 
@@ -36,7 +36,7 @@ We keep all our development workflows in the `justfile`, so you can
 explore it to see what commands are available. To see a list of commands
 available, run:
 
-``` bash
+```bash
 just
 ```
 
@@ -44,7 +44,7 @@ As you contribute, make sure your changes will pass our checks by
 opening a terminal so that the working directory is the root of this
 workshop's parent/root folder and running:
 
-``` bash
+```bash
 just run-all
 ```
 

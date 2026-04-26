@@ -60,8 +60,8 @@ follows the file and folder structure conventions from that package.
 ## Support and infrastructure files
 
 - `.copier-answers.yml`: Contains the answers you gave when copying the
-  project from the template.
-  **You should not modify this file directly.**
+  project from the template. **You should not modify this file
+  directly.**
 - `.cz.toml`:
   [Commitizen](https://commitizen-tools.github.io/commitizen/)
   configuration file for managing versions and changelogs.

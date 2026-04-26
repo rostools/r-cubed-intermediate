@@ -1,7 +1,9 @@
 # Pre-process data as you import it {#sec-importing}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(readr)
 library(here)
 library(snakecase)
@@ -169,10 +171,12 @@ already in the file. This code chunk is where we will put the
 `{readr}` bundled with it, as well as `library(here)`. It should look
 like this:
 
+````markdown
 ```{{r setup}}
 library(tidyverse)
 library(here)
 ```
+````
 
 This `setup` code chunk is a special, named code chunk. Whenever you
 first open a Quarto file or after you restart your R session and then
@@ -243,8 +247,10 @@ space and the folder naming scheme is `<id>_<Epoch timestamp>`.
 represent time as a number of seconds since January 1, 1970 and is a
 common, though imperfect, way to store timestamps in many systems.
 
-```{r first-load-cgm-101}
+```{r}
+#| label: first-load-cgm-101
 #| filename: "docs/learning.qmd"
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv()
 ```
@@ -271,8 +277,10 @@ To remove this message, there are two things we can do:
 So in the code, we will add `show_col_types = FALSE` to `read_csv()` and
 then run the code:
 
-```{r quiet-read-message-cgm-101}
+```{r}
+#| label: quiet-read-message-cgm-101
 #| filename: "docs/learning.qmd"
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(show_col_types = FALSE)
 ```
@@ -306,11 +314,13 @@ Since we will make use of the `{snakecase}` package, let's load it with
 `library()`. We'll put it into our `setup` code chunk, so go to the top
 of your `docs/learning.qmd` file and add it there:
 
+````markdown
 ```{{r setup}}
 library(tidyverse)
 library(here)
 library(snakecase)
 ```
+````
 
 Now we can run this code with {{< var keybind.run-code >}}. This loads
 the `{snakecase}` package and makes it available for us to use in our
@@ -323,8 +333,10 @@ names to snake case, we would add `name_repair = to_snake_case` to the
 code. Notice the lack of `()` when using the `to_snake_case()` function.
 We'll explain more about this in later sessions, so ignore it for now.
 
-```{r use-name-repair}
+```{r}
+#| label: use-name-repair
 #| filename: "docs/learning.qmd"
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(
     show_col_types = FALSE,
@@ -374,8 +386,10 @@ good to get enough data that `read_csv()` can effectively guess the
 columns data types but not so large as to slow things down. In the code
 we've already written, add `n_max = 100` to the `read_csv()` function:
 
-```{r read-fewer-rows-prototyping}
+```{r}
+#| label: read-fewer-rows-prototyping
 #| filename: "docs/learning.qmd"
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(
     show_col_types = FALSE,
@@ -411,7 +425,7 @@ read in a few other data files. Start with reading in without using
 difference. Use the code template below to copy and paste into your
 `docs/learning.qmd` file to help you get started:
 
-``` {.r filename="docs/learning.qmd"}
+```r
 here("___") |>
   ___(
     ___ = ___,
@@ -452,6 +466,7 @@ here("___") |>
 #| label: solution-read-other-data
 #| echo: false
 #| output: false
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
   read_csv(
     show_col_types = FALSE,

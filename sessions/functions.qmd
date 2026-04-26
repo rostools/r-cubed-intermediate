@@ -1,7 +1,9 @@
 # Bundling code into functions {#sec-functions}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(fs)
 library(tidyverse)
 library(snakecase)
@@ -51,7 +53,7 @@ function name with `<-`, it uses `function()` to give it its parameters
 or arguments, and it has the internal sequence of steps called the
 function body that are wrapped in `{}`:
 
-``` {.r filename="Console"}
+```r
 function_name <- function(argument1, argument2) {
   # body of function with R code
 }
@@ -72,8 +74,10 @@ the function name without the `()` into the **Console** and run it. If
 we do it with the function `sd()` which calculates the standard
 deviation, we see:
 
-```{r show-sd-internals}
+```{r}
+#| label: show-sd-internals
 #| filename: "Console"
+
 sd
 ```
 
@@ -91,8 +95,10 @@ assignment operator, because it assigns something to a new object. To
 see how they work internally, you would wrap
 \` around the operator. So for `+` or `<-` it would be:
 
-```{r show-operators-internals}
+```{r}
+#| label: show-operators-internals
 #| filename: "Console"
+
 `+`
 `<-`
 ```
@@ -105,7 +111,9 @@ and so we won't go into what that means and why.
 To show that they are a function, you can even use them with their `()`
 version like this:
 
-```{r show-how-operators-work}
+```{r}
+#| label: show-how-operators-work
+
 1 + 2
 `+`(1, 2)
 
@@ -151,7 +159,7 @@ to get the job done. Part of making functions is to reduce your own and
 others cognitive load when working with or reading code. The fewer
 arguments you use, the lower the cognitive load. So, the structure is:
 
-``` r
+```r
 name <- function(argument1, argument2) {
     # body of function
     output <- ... code ....
@@ -189,8 +197,10 @@ a new Markdown header called `## Making a function to add numbers` and
 create a code chunk below that with {{< var keybind.chunk >}}. Then,
 inside the code chunk, we'll write this code:
 
-```{r create-add-function}
+```{r}
+#| label: create-add-function
 #| filename: "docs/learning.qmd"
+
 add_numbers <- function(num1, num2) {
   added <- num1 + num2
   return(added)
@@ -200,8 +210,10 @@ add_numbers <- function(num1, num2) {
 You can use the new function by running the above code and writing out
 your new function, with arguments to give it.
 
-```{r call-function}
+```{r}
+#| label: call-function
 #| filename: "docs/learning.qmd"
+
 add_numbers(1, 2)
 ```
 
@@ -214,8 +226,10 @@ template documentation right above the function. Make sure your cursor
 is within the function in order for the Roxygen template to be added to
 your function. It looks like:
 
-```{r roxygen-docs-1}
+```{r}
+#| label: roxygen-docs-1
 #| filename: "docs/learning.qmd"
+
 #' Title
 #'
 #' @param num1
@@ -247,8 +261,10 @@ are:
   really in this case. So we'll delete it. Let's write out some
   documentation for this function:
 
-```{r roxygen-docs-2}
+```{r}
+#| label: roxygen-docs-2
 #| filename: "docs/learning.qmd"
+
 #' Add two numbers together.
 #'
 #' @param num1 A number here.
@@ -364,9 +380,11 @@ So, step one. Let's copy and paste the code we previously for importing
 the `HR.csv.gz` data from participant `5C` and convert that as a
 function:
 
-```{r function-creation-step-1}
+```{r}
+#| label: function-creation-step-1
 #| filename: "docs/learning.qmd"
 #| output: false
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read_csv(
     show_col_types = FALSE,
@@ -388,9 +406,11 @@ shows you documentation, then it is used and it's best to use another
 name for our function.
 :::
 
-```{r function-creation-step-2}
+```{r}
+#| label: function-creation-step-2
 #| filename: "docs/learning.qmd"
 #| eval: false
+
 read <- function() {
   here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
     read_csv(
@@ -414,9 +434,11 @@ with the correct path in the function argument.
 
 So we would replace `here("...")` with `file_path`:
 
-```{r function-creation-step-3}
+```{r}
+#| label: function-creation-step-3
 #| filename: "docs/learning.qmd"
 #| eval: false
+
 read <- function(file_path) {
   file_path |>
     read_csv(
@@ -434,8 +456,10 @@ read in. Since we haven't assigned the output of the `read_csv()` to an
 object, let's do that first and than use `return()` to output that
 object at the end. Let's keep it generic again and call it `data`:
 
-```{r function-creation-step-4}
+```{r}
+#| label: function-creation-step-4
 #| filename: "docs/learning.qmd"
+
 read <- function(file_path) {
   data <- file_path |>
     read_csv(
@@ -450,8 +474,10 @@ read <- function(file_path) {
 Great! Now we need to test it out. Let's try it on two `HR.csv.gz`
 datasets from `5C`:
 
-```{r function-creation-step-5}
+```{r}
+#| label: function-creation-step-5
 #| filename: "docs/learning.qmd"
+
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
   read()
 here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
@@ -461,8 +487,10 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 Awesome! It works :tada: The final stage is to add the Roxygen
 documentation.
 
-```{r function-creation-step-6}
+```{r}
+#| label: function-creation-step-6
 #| filename: "docs/learning.qmd"
+
 #' Read in one nurses' stress data file.
 #'
 #' @param file_path Path to the data file.
@@ -540,8 +568,10 @@ inside of the function.
 Use the `read()` function code we wrote above and revise it so it can be
 used like the below:
 
-```{r exercise-read-max-rows}
+```{r}
+#| label: exercise-read-max-rows
 #| eval: false
+
 # Outputs only 100 rows
 here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
   read()
@@ -581,8 +611,10 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 8. Finally, **add and commit** the changes to the Git history, using
    {{< var keybind.commit >}}. Then push to GitHub.
 
-```{r solution-read-max-rows}
+```{r}
+#| label: solution-read-max-rows
 #| echo: false
+
 #' Read in one nurses' stress data file.
 #'
 #' @param file_path Path to the data file.
@@ -644,8 +676,10 @@ discussion activity.
 - Keep functions small and simple, so it is easier to test and fix them.
 - Use few arguments in functions to reduce cognitive load.
 
-```{r admin-store-session-code}
+```{r}
+#| label: admin-store-session-code
 #| include: false
+
 save.image(here::here("_temp/functions.RData"))
 ```
 

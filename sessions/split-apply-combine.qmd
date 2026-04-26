@@ -1,7 +1,9 @@
 # Using split-apply-combine to help in processing {#sec-split-apply-combine}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(here)
 library(tidyverse)
 load(here("_temp/regex.RData"))
@@ -153,8 +155,10 @@ we're using the same data, let's read in the HR data and run
 `## Summarising with across` and create a code chunk below that with
 {{< var keybind.chunk >}}.
 
-```{r read-hr-with-id}
+```{r}
+#| label: read-hr-with-id
 #| filename: "docs/learning.qmd"
+
 hr_data <- read_all("HR.csv.gz") |>
   get_participant_id()
 ```
@@ -162,8 +166,10 @@ hr_data <- read_all("HR.csv.gz") |>
 Then, below that, we will do a very simple example of using `across()`
 to calculate the mean of the `hr` values.
 
-```{r simple-summarise-mean}
+```{r}
+#| label: simple-summarise-mean
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   summarise(across(hr, mean))
 ```
@@ -172,8 +178,10 @@ This is nice, but let's try also calculating the median. The help
 documentation of `across()` says that you have to wrap multiple
 functions into a `list()`. Let's try that:
 
-```{r summarise-mean-median}
+```{r}
+#| label: summarise-mean-median
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   summarise(across(hr, list(mean, median)))
 ```
@@ -191,8 +199,10 @@ what the code means and does, while showing the output. Same with the
 code below with the anonymous function.
 :::
 
-```{r named-list-console}
+```{r}
+#| label: named-list-console
 #| filename: "Console"
+
 list(mean = mean)
 # or
 list(average = mean)
@@ -207,16 +217,20 @@ also give it anonymous functions if our function is a bit more complex.
 For instance, if we needed to remove `NA` values from the calculations,
 we would do:
 
-```{r named-list-console-anonymous}
+```{r}
+#| label: named-list-console-anonymous
 #| filename: "Console"
+
 list(mean = \(x) mean(x, na.rm = TRUE))
 ```
 
 For now, we don't need to use anonymous functions. Let's all try using a
 named list with only one function, like `list(mean = mean)`:
 
-```{r example-summarise-mean-named-list}
+```{r}
+#| label: example-summarise-mean-named-list
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   summarise(across(hr, list(mean = mean)))
 ```
@@ -224,8 +238,10 @@ hr_data |>
 Then, we can add more functions to the named list. Let's add the median
 and standard deviation:
 
-```{r example-summarise-multiple-functions}
+```{r}
+#| label: example-summarise-multiple-functions
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   summarise(
     across(
@@ -246,8 +262,10 @@ numeric, we can use the `where()` function with `is.numeric` (notice the
 lack of `()`). Let's try it out by replacing `hr` with
 `where(is.numeric)`:
 
-```{r use-where}
+```{r}
+#| label: use-where
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   summarise(
     across(
@@ -296,7 +314,9 @@ even be used to round to the nearest 5 minutes (by using `"5 mins"`) or
 30 seconds (with `"30 secs"`). Let's round to the nearest minute by
 using `round_date()` with the `unit` argument set to `"minute"`:
 
-```{r round-date-minute}
+```{r}
+#| label: round-date-minute
+
 hr_data |>
   mutate(
     datetime = lubridate::round_date(collection_datetime, unit = "minute"),
@@ -308,9 +328,11 @@ Our next step is to summarise by this new `datetime` column, so we have
 the measurement values per minute rather than per second. First, let's
 add `{lubridate}` as a package dependency:
 
-```{r add-lubridate-dependency}
+```{r}
+#| label: add-lubridate-dependency
 #| filename: Console
 #| eval: false
+
 usethis::use_package("lubridate")
 ```
 
@@ -351,8 +373,10 @@ set it to `collection_datetime`. This will split the data up by the
 group, and then combine the results back together to then output that
 new data frame.
 
-```{r remove-device-timestamp}
+```{r}
+#| label: remove-device-timestamp
 #| filename: "docs/learning.qmd"
+
 hr_data |>
   mutate(
     collection_datetime = lubridate::round_date(collection_datetime, unit = "minute")
@@ -381,7 +405,7 @@ and push to GitHub.
 
 ## :technologist: Exercise: Convert the summarising code into a function
 
-**Time: ~10 minutes.**
+**Time: \~10 minutes.**
 
 It's your turn to convert the code into a function so that you can use
 it on the other datasets. It should be able to work like this for the HR
@@ -398,7 +422,7 @@ TEMP, BVP, and EDA) using this function.
 
 Here's a scaffold of the function to help you get started:
 
-``` r
+```r
 summarise_by_datetime <- function(___) {
   summarised_data <- ___ |>
     # Fill in below with the code we just wrote.
@@ -427,7 +451,8 @@ summarise_by_datetime <- function(___) {
 10. Add and commit the changes to the Git history with
     {{< var keybind.commit >}}. Then push to GitHub.
 
-```{r solution-summarise-by-datetime-function}
+```{r}
+#| label: solution-summarise-by-datetime-function
 #| echo: true
 
 # Add the package dependency for tidyselect
@@ -460,7 +485,7 @@ summarise_by_datetime <- function(data) {
 
 ## :technologist: Exercise: Start filling in `docs/cleaning.qmd`
 
-**Time: ~10 minutes.**
+**Time: \~10 minutes.**
 
 You're now at a point where you have functions to read in and process
 all of the HR-type data. So let's start filling in the
@@ -472,7 +497,7 @@ with {{< var keybind.open-file >}}).
 1. In the `setup` code chunk, add the
    `source(here::here("R/functions.R"))` line to load in the functions
    you have created so far.
-2. On the bottom of the file, create a new header called
+2. On the bottom of `docs/cleaning.qmd`, create a new header called
    `## Prepare HR data`. Create a new code chunk below that with
    {{< var keybind.chunk >}}.
 3. In that code chunk, use `read_all()`, `get_participant_id()`, and
@@ -500,7 +525,7 @@ together.
 
 ## :technologist: Extra exercise: Modify the function so you can set your own unit of time
 
-**Time: ~5 minutes.**
+**Time: \~5 minutes.**
 
 If you've finished the previous exercises early and want to do something
 a bit harder, try out this exercise. Modify the
@@ -520,7 +545,7 @@ include a solution for this exercise.
 
 ## :technologist: Extra exercise: Modify the function so you can set your own summarising functions
 
-**Time: ~5 minutes.**
+**Time: \~5 minutes.**
 
 If you've finished the previous exercises and the optional extra
 exercise and there's some time left, try out this exercise if you want
@@ -529,7 +554,7 @@ to try something harder. Modify the `summarise_by_datetime()` in the
 To make it challenging, we won't give you more hints aside from showing
 you how this function might look like when you use it:
 
-``` r
+```r
 summarise_by_datetime(
   data = hr_data,
   fns = list(median = median)
@@ -572,8 +597,10 @@ discussion activity.
   there are many functions in it to help simplify date processing, like
   `round_date()`.
 
-```{r admin-store-session-code}
+```{r}
+#| label: admin-store-session-code
 #| include: false
+
 save.image(here::here("_temp/split-apply-combine.RData"))
 ```
 

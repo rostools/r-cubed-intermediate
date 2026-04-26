@@ -29,7 +29,10 @@ After reading them, open up your RStudio and type out (or paste) this
 function in the R Console, then run it by pressing Enter. This function
 should open up a pop-up window to type in your name and email:
 
-```{.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 r3::setup_git_config()
 ```
 
@@ -44,7 +47,10 @@ Since you will be using Git regularly throughout the workshop, please
 run this check to ensure everything is setup correctly. Type and run
 this function in the R Console of RStudio:
 
-```{.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 r3::check_setup()
 ```
 

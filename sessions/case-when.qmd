@@ -1,7 +1,9 @@
 # Using nested conditionals to help clean columns {#sec-case-when}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(here)
 library(tidyverse)
 load(here("_temp/joins.RData"))
@@ -42,6 +44,7 @@ output won't be overridden by later conditions. The general form of
 
 ```{r}
 #| eval: false
+
 case_when(
   variable1 == condition1 ~ output,
   variable2 == condition2 ~ output,
@@ -59,6 +62,7 @@ used then by default, the final output would be a missing value. A
 
 ```{r}
 #| eval: false
+
 case_when(
   age > 20 ~ "old",
   age <= 20 ~ "young",
@@ -73,6 +77,7 @@ character data):
 
 ```{r}
 #| eval: false
+
 case_when(
   age > 20 ~ "old",
   age <= 20 ~ NA_character_,
@@ -86,6 +91,7 @@ the end (instead of `"unborn!"`), we would exclude the final condition:
 
 ```{r}
 #| eval: false
+
 case_when(
   age > 20 ~ "old",
   age <= 20 ~ "young"
@@ -137,8 +143,10 @@ Before we do that, let's check what values are in the `sleep_type`
 column. We can do this by using the `count()` function. This will give
 us a count of each unique value in the column.
 
-```{r count-sleep-type}
+```{r}
+#| label: count-sleep-type
 #| filename: "docs/learning.qmd"
+
 here("data-raw/dime/sleep/") |>
   import_csv_files() |>
   count(sleep_type)
@@ -152,8 +160,10 @@ the same as light. So let's try using `case_when()` to do this. Let's
 create a new line above `count()` and do a `mutate()` there. First we'll
 make "wake" to be "awake".
 
-```{r case-when-awake}
+```{r}
+#| label: case-when-awake
 #| filename: "docs/learning.qmd"
+
 here("data-raw/dime/sleep/") |>
   import_csv_files() |>
   mutate(
@@ -167,8 +177,10 @@ here("data-raw/dime/sleep/") |>
 This removed all the other values! Let's put the final `TRUE` in next so
 we don't have everything removed.
 
-```{r case-when-ending-true}
+```{r}
+#| label: case-when-ending-true
 #| filename: "docs/learning.qmd"
+
 here("data-raw/dime/sleep/") |>
   import_csv_files() |>
   mutate(
@@ -182,8 +194,10 @@ here("data-raw/dime/sleep/") |>
 
 Nice. Ok, let's merge the other ones now:
 
-```{r case-when-sleep-types}
+```{r}
+#| label: case-when-sleep-types
 #| filename: "docs/learning.qmd"
+
 here("data-raw/dime/sleep/") |>
   import_csv_files() |>
   mutate(
@@ -212,8 +226,10 @@ into a function and add it to the `clean_sleep()` function. The new
 function should be called `fix_sleep_types()` and be put into the
 `clean_sleep()` (found in the `R/functions.R` file) like shown below:
 
-```{r admin-explanation-clean-sleep}
+```{r}
+#| label: admin-explanation-clean-sleep
 #| filename: "R/functions.R"
+
 clean_sleep <- function(data) {
   cleaned <- data |>
     get_participant_id() |>

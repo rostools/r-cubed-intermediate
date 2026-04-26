@@ -2,6 +2,7 @@
 
 ```{r}
 #| include: false
+
 # To trigger auto-linking
 library(usethis)
 library(gert)
@@ -169,7 +170,10 @@ You might have created a token if you took the introductory workshop.
 You can check if you have a token already set by using the `{usethis}`
 package. Open up RStudio and in the Console type:
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 usethis::gh_token_help()
 ```
 
@@ -189,7 +193,10 @@ that means you need to make Git and `{usethis}` aware of the token on
 your computer. You do that by typing the next function in the Console to
 create the token on GitHub (if you haven't created one already).
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 usethis::create_github_token()
 ```
 
@@ -209,7 +216,10 @@ computer.
 
 In the Console, run:
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 gitcreds::gitcreds_set()
 ```
 
@@ -227,7 +237,10 @@ changes) that you are who you claim to digitally be.
 There is another great helper function that runs a lot of checks and
 gives some advice when it finds potential problems.
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 usethis::git_sitrep()
 ```
 
@@ -248,9 +261,11 @@ your changes to Git, so that you can eventually push them to GitHub.
 While in the `LearnR3` repository in RStudio, go to the Console and run
 this function to ignore the auto-generated Quarto files.
 
-```{r ignore-html-files}
+```{r}
+#| label: ignore-html-files
 #| filename: "Console"
 #| eval: false
+
 usethis::use_git_ignore(c("*.html", "*_files"))
 ```
 
@@ -271,9 +286,11 @@ finally close the Git interface.
 **If you have never used the Git interface before**, you can instead use
 R functions to do the same thing. In the Console, run:
 
-```{r add-to-git-history}
+```{r}
+#| label: add-to-git-history
 #| filename: "Console"
 #| eval: false
+
 gert::git_add(".")
 gert::git_commit("Setting up the project")
 ```
@@ -285,9 +302,11 @@ After adding the changes to the Git history, this should be the first
 commit for everyone. You're now ready to connect your project to GitHub.
 In the Console, run:
 
-```{r use-github}
+```{r}
+#| label: use-github
 #| filename: "Console"
 #| eval: false
+
 usethis::use_github()
 ```
 

@@ -1,5 +1,3 @@
-
-
 # An intermediate workshop on modern approaches and workflows to processing data
 
 <!-- TODO: DOI here -->
@@ -14,7 +12,7 @@ website](https://github.com/rostools/r-cubed-intermediate/actions/workflows/buil
 [![pre-commit.ci
 status](https://results.pre-commit.ci/badge/github/rostools/r-cubed-intermediate/main.svg)](https://results.pre-commit.ci/latest/github/rostools/r-cubed-intermediate/main)
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![Project Status: Active – The project has reached a stable, usable
+[![Project Status: Active -- The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 

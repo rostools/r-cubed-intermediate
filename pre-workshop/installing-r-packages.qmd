@@ -4,6 +4,7 @@
 
 ```{r}
 #| include: false
+
 # To trigger auto-linking
 library(pak)
 library(remotes)
@@ -16,7 +17,10 @@ this workshop. Run these two functions in the Console by copying and
 pasting them to install our custom `r3` package as well as the
 `{tidyverse}` package.
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 install.packages("r3", repos = c("https://rostools.r-universe.dev", "https://cloud.r-project.org"))
 install.packages("tidyverse")
 ```
@@ -35,14 +39,20 @@ have R version 4.4, you need to install RTools 4.4.
 First, try installing the `r3` package directly from GitHub with
 `{pak}`:
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 install.packages("pak")
 pak::pak("rostools/r3")
 ```
 
 If that doesn't work, try with `{remotes}`:
 
-``` {.r filename="Console"}
+```{r}
+#| eval: false
+#| filename: "Console"
+
 install.packages("remotes")
 remotes::install_github("rostools/r3")
 ```
