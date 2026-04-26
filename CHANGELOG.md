@@ -21,6 +21,18 @@ If you attended a workshop or used the workshop material as some point
 in time, you can always refer to this changelog page to find out what
 has been changed since you last used it.
 
+## 8.1.3 (2026-04-26)
+
+### Fix
+
+- :pencil2: small fixes from build
+
+### Refactor
+
+- **sessions**: :pencil2: simplify pivot session name
+- **overview**: :recycle: update schedule to match venue
+- **sessions**: :recycle: switch to using nurses stress in pivots
+
 ## 8.1.2 (2026-04-17)
 
 ### Fix
