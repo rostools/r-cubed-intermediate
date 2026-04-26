@@ -1,3 +1,5 @@
+
+
 # An intermediate workshop on modern approaches and workflows to processing data
 
 <!-- TODO: DOI here -->
@@ -12,7 +14,7 @@ website](https://github.com/rostools/r-cubed-intermediate/actions/workflows/buil
 [![pre-commit.ci
 status](https://results.pre-commit.ci/badge/github/rostools/r-cubed-intermediate/main.svg)](https://results.pre-commit.ci/latest/github/rostools/r-cubed-intermediate/main)
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![Project Status: Active -- The project has reached a stable, usable
+[![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
@@ -114,28 +116,14 @@ this project, you agree to abide by its terms.
 These are the people who have contributed by submitting changes through
 pull requests :tada:
 
-[@lwjohnst86](https://github.com/lwjohnst86),
-[@signekb](https://github.com/signekb),
 [@AndersAskeland](https://github.com/AndersAskeland),
-[@MaleneRevsbech](https://github.com/MaleneRevsbech),
 [@hchats](https://github.com/hchats),
+[@krauthn](https://github.com/krauthn),
 [@LouiseEB](https://github.com/LouiseEB),
-[@StineScheuer](https://github.com/StineScheuer),
-[@krauthn](https://github.com/krauthn)
-
-### Contributors
-
-These are the people who have contributed by submitting changes through
-pull requests :tada:
-
 [@lwjohnst86](https://github.com/lwjohnst86),
-[@signekb](https://github.com/signekb),
-[@AndersAskeland](https://github.com/AndersAskeland),
 [@MaleneRevsbech](https://github.com/MaleneRevsbech),
-[@hchats](https://github.com/hchats),
-[@LouiseEB](https://github.com/LouiseEB),
-[@StineScheuer](https://github.com/StineScheuer),
-[@krauthn](https://github.com/krauthn)
+[@signekb](https://github.com/signekb),
+[@StineScheuer](https://github.com/StineScheuer)
 
 ## Licensing
 

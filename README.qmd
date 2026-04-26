@@ -103,10 +103,6 @@ being involved in this project, you agree to abide by its terms.
 
 {{< include /includes/_contributors.qmd >}}
 
-### Contributors
-
-{{< include /includes/_contributors.qmd >}}
-
 ## Licensing
 
 This project is licensed under the [CC-BY-4.0 License](LICENSE.md).
