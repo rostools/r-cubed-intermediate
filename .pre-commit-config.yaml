@@ -16,11 +16,6 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
 
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.13.10
-    hooks:
-      - id: commitizen
-
   # Use the mirror since the main `typos` repo has tags for different
   # sub-packages, which confuses pre-commit when it tries to find the latest
   # version
