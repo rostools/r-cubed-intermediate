@@ -12,7 +12,8 @@
     "github.vscode-github-actions",
     "redhat.vscode-yaml",
     "eamodio.gitlens",
-    "rvben.rumdl"
+    "rvben.rumdl",
+    "jolars.panache"
   ],
   "unwantedRecommendations": []
 }

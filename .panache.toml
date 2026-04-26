@@ -1,0 +1,21 @@
+flavor = "quarto"
+line-width = 72
+exclude = [
+  ".git/",
+  ".github/",
+  "LICENSE.md",
+  "slides/*.qmd"
+]
+
+[format]
+tab-width = 2
+
+[flavor-overrides]
+"README.md" = "gfm"
+
+[extensions]
+# This stops formatting of `@` eg `@sec-`
+example-lists = false
+
+[linters]
+r = "jarl"

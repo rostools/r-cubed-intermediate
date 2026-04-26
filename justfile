@@ -21,10 +21,10 @@ list-todos:
 install-precommit:
   # Install pre-commit hooks
   uvx pre-commit install
-  # Run pre-commit hooks on all files
-  uvx pre-commit run --all-files
   # Update versions of pre-commit hooks
   uvx pre-commit autoupdate
+  # Run pre-commit hooks on all files
+  uvx pre-commit run --all-files
 
 # Install package dependencies
 install-dependencies:
@@ -61,21 +61,13 @@ check-urls:
     --extensions md,qmd \
     --exclude-path "_badges.qmd"
 
-# Format all R code
-format-r: _format-r-styler _format-r-air
-
-# Air is better, but doesn't style Qmd files
-@_format-r-air:
-  # Need to install air first
+# Format R code
+format-r:
   uvx --from air-formatter air format .
-
-# Styler formats Qmd files
-@_format-r-styler:
-  #!/usr/bin/Rscript
-  styler::style_dir()
 
 # Format Markdown files
 format-md:
+  panache format .
   uvx rumdl fmt --silent
 
 # Build Quarto website
