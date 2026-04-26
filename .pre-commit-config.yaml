@@ -31,11 +31,6 @@ repos:
       # Run the formatter
       - id: air-format
 
-  - repo: https://github.com/jolars/panache
-    rev: panache-formatter-v0.2.1
-    hooks:
-      - id: panache-format
-
   - repo: https://github.com/rvben/rumdl-pre-commit
     rev: v0.1.82
     hooks:
