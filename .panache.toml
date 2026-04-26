@@ -4,14 +4,12 @@ exclude = [
   ".git/",
   ".github/",
   "LICENSE.md",
-  "slides/*.qmd"
+  "slides/*.qmd",
+  "README.md"
 ]
 
 [format]
 tab-width = 2
-
-[flavor-overrides]
-"README.md" = "gfm"
 
 [extensions]
 # This stops formatting of `@` eg `@sec-`
