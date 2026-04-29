@@ -35,7 +35,12 @@ repos:
       # Run the formatter
       - id: air-format
 
-  - repo: https://github.com/rvben/rumdl-pre-commit
-    rev: v0.1.83
+  # - repo: https://github.com/rvben/rumdl-pre-commit
+  #   rev: v0.1.83
+  #   hooks:
+  #     - id: rumdl-fmt # Auto-format
+
+  - repo: https://github.com/jolars/panache
+    rev: v2.41.0
     hooks:
-      - id: rumdl-fmt # Auto-format
+      - id: panache-format
