@@ -41,7 +41,7 @@ update-quarto-theme:
   # Will also add if it isn't already installed.
   quarto update rostools/rostools-theme --no-prompt
   # Soft link so Revealjs slides can use the extension.
-  ln -s _extensions/ slides/
+  ln -nrsf _extensions/ slides/
 
 # Check spelling with typos
 check-spelling:
