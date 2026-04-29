@@ -78,12 +78,12 @@ below. If not, you will need to update them.
 All these programs are required for the workshop, even Git. Git, which
 is a software program to formally manage versions of files, is used
 because of it's popularity and the amount of documentation available for
-it. Check out the online book
-[Happy Git with R](https://happygitwithr.com/), especially the "Why Git"
-section, for an understanding on why we are teaching Git. Windows users
-tend to have more trouble with installing Git than macOS or Linux users.
-See the section on
-[Installing Git for Windows](https://happygitwithr.com/install-git.html#install-git-windows)
+it. Check out the online book [Happy Git with
+R](https://happygitwithr.com/), especially the "Why Git" section, for an
+understanding on why we are teaching Git. Windows users tend to have
+more trouble with installing Git than macOS or Linux users. See the
+section on [Installing Git for
+Windows](https://happygitwithr.com/install-git.html#install-git-windows)
 for help.
 
 ::: {.callout-note appearance="default"}
@@ -109,16 +109,16 @@ for the workshop, so please make sure to give IT enough time to be able
 to install it for you prior to the workshop.
 :::
 
-Once R, RStudio, and Git have been installed, open RStudio.
-*If you encounter any troubles during these pre-workshop tasks*, try as
-best as you can to complete the task and then let us know about the
-issues in the pre-workshop survey. If you continue having problems,
-indicate on the survey that you need help and we can try to book a quick
-video call to fix the problem. Otherwise, you can come to the workshop
-15-20 minutes earlier to get help.
+Once R, RStudio, and Git have been installed, open RStudio. *If you
+encounter any troubles during these pre-workshop tasks*, try as best as
+you can to complete the task and then let us know about the issues in
+the pre-workshop survey. If you continue having problems, indicate on
+the survey that you need help and we can try to book a quick video call
+to fix the problem. Otherwise, you can come to the workshop 15-20
+minutes earlier to get help.
 
 If you're unable to complete the setup procedure due to unfixable
 technical issues, you can use Posit Cloud (to use RStudio on the cloud)
 as a final solution in order to participate in the workshop. For help
-setting up Posit Cloud for this workshop, refer to the
-[Posit Cloud setup guide](https://guides.rostools.org/posit-cloud).
+setting up Posit Cloud for this workshop, refer to the [Posit Cloud
+setup guide](https://guides.rostools.org/posit-cloud).

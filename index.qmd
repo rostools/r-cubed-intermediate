@@ -69,12 +69,12 @@ This website and its content are targeted to three groups:
 
 ## Re-use and licensing
 
-The workshop material is licensed under the
-[Creative Commons Attribution 4.0 License](LICENSE.md), so the material
-can be used, re-used, and modified, as long as there is attribution to
-this source. Check out the [For teachers](/appendix/for-teachers.qmd)
-section (@sec-for-teachers) for more details and tips on using this
-material for teaching.
+The workshop material is licensed under the [Creative Commons
+Attribution 4.0 License](LICENSE.md), so the material can be used,
+re-used, and modified, as long as there is attribution to this source.
+Check out the [For teachers](/appendix/for-teachers.qmd) section
+(@sec-for-teachers) for more details and tips on using this material for
+teaching.
 
 ## Contributing
 
@@ -91,8 +91,8 @@ to get started.
 The workshop material is created using [Quarto](https://quarto.org) to
 write the material and create the book format,
 [GitHub](https://github.com/) to host the [Git](https://git-scm.com/)
-repository of the material, and
-[GitHub Actions](https://github.com/features/actions) with
+repository of the material, and [GitHub
+Actions](https://github.com/features/actions) with
 [Netlify](https://www.netlify.com/) to build and host the website. The
 original source material for this workshop is found on the
 [`{{< meta gh.repo >}}`]({{< meta links.github >}}) GitHub repository.
@@ -111,10 +111,10 @@ The workshop material draws inspiration from these excellent resources:
 
 The [Danish Diabetes and Endocrinology Academy](https://ddeacademy.dk/)
 hosted, organized, and sponsored this workshop many times. A huge thanks
-to them for their involvement, support, and sponsorship!
-[Steno Diabetes Center Aarhus](https://www.stenoaarhus.dk/) and
-[Aarhus University](https://international.au.dk/) employs Luke, who is
-the lead teacher and educational resource developer.
+to them for their involvement, support, and sponsorship! [Steno Diabetes
+Center Aarhus](https://www.stenoaarhus.dk/) and [Aarhus
+University](https://international.au.dk/) employs Luke, who is the lead
+teacher and educational resource developer.
 
 ::: {layout="[33,33,33]"}
 ![](/images/logo-ddea.png){width="220px" fig-align="center"

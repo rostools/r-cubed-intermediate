@@ -124,8 +124,8 @@ GitHub. So if you can, you should try to be more secure with what you
 send across the internet. In fact, most functions that relate to Git or
 using GitHub *require* using more secure features in order to work.
 `{usethis}` simplifies this with some helper functions. The `{usethis}`
-website has a really
-[well written guide](https://usethis.r-lib.org/articles/articles/git-credentials.html)
+website has a really [well written
+guide](https://usethis.r-lib.org/articles/articles/git-credentials.html)
 on being more secure when working with GitHub. Here is a very simplified
 version of what they recommend that is relevant for what we are doing in
 this course.
@@ -204,8 +204,8 @@ This function sends you to the GitHub "Generate new token" webpage with
 all the necessary settings checked. Set the "Expiry date" to 90 days
 (this is a good security feature). Then, click the green button at the
 bottom called "Generate token" and you'll have a very long string of
-letters and numbers generated for you that starts with `ghp_`.
-**Save this token in your password manager** (see note above).
+letters and numbers generated for you that starts with `ghp_`. **Save
+this token in your password manager** (see note above).
 
 This is the token you will use every time you open up RStudio and
 interact with GitHub through R. You do **not** need to create a new

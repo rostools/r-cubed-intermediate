@@ -1,7 +1,7 @@
 # Changelog
 
-Since we follow
-[Conventional Commits](https://decisions.seedcase-project.org/why-conventional-commits/)
+Since we follow [Conventional
+Commits](https://decisions.seedcase-project.org/why-conventional-commits/)
 when writing commit messages, we're able to automatically create formal
 "releases" of the workshop based on the commit messages. Releases in the
 context of workshops are simply snapshots in time of the workshop

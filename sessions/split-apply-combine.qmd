@@ -399,9 +399,9 @@ Amazing! Before continuing to the exercise, let's run `{styler}` with
 {{< var keybind.style >}} on both `docs/learning.qmd` and on
 `R/functions.R`. Then we will render the Quarto document with
 {{< var keybind.render >}} to confirm that everything runs as it should.
-If the rendering works, switch to the Git interface and
-**add and commit** the changes so far with {{< var keybind.commit >}}
-and push to GitHub.
+If the rendering works, switch to the Git interface and **add and
+commit** the changes so far with {{< var keybind.commit >}} and push to
+GitHub.
 
 ## :technologist: Exercise: Convert the summarising code into a function
 

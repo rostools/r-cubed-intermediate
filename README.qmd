@@ -17,8 +17,8 @@ especially on the data processing side of an analysis.
 This repository contains the lesson, lecture, and assignment material
 for the workshop, including the website source files and other
 associated workshop administration and development files. For more
-detail on the workshop, check out the
-[welcome page]({{< meta links.site >}}).
+detail on the workshop, check out the [welcome
+page]({{< meta links.site >}}).
 
 ::: callout-tip
 This workshop repository was generated from the
@@ -61,12 +61,12 @@ follows the file and folder structure conventions from that package.
 
 If you are interested in contributing to the workshop material, please
 refer to the [contributing guidelines](CONTRIBUTING.md). For guidelines
-on how to be a helper or teacher, check out the
-[For teachers](https://guides.rostools.org/instructors) page.
+on how to be a helper or teacher, check out the [For
+teachers](https://guides.rostools.org/instructors) page.
 
-Please note that the project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to or
-being involved in this project, you agree to abide by its terms.
+Please note that the project is released with a [Contributor Code of
+Conduct](CODE_OF_CONDUCT.md). By contributing to or being involved in
+this project, you agree to abide by its terms.
 
 ### Contributors
 

@@ -92,8 +92,8 @@ end of the name. But there are special functions, like `+`, `[]`, or
 even `<-`, that do an action but that don't have `()` at the end. These
 are called *operator* functions. Which is why the `<-` is called the
 assignment operator, because it assigns something to a new object. To
-see how they work internally, you would wrap
-\` around the operator. So for `+` or `<-` it would be:
+see how they work internally, you would wrap \` around the operator. So
+for `+` or `<-` it would be:
 
 ```{r}
 #| label: show-operators-internals

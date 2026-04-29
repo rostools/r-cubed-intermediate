@@ -50,9 +50,9 @@ combinations of this.
 
 The `{tidyr}` package within the `{tidyverse}` contains two wonderful
 functions for pivoting: `pivot_longer()` and `pivot_wider()`. There is a
-well written documentation on pivoting in the
-[tidyr website](https://tidyr.tidyverse.org/articles/pivot.html) that
-can explain more about it that you can read at another time.
+well written documentation on pivoting in the [tidyr
+website](https://tidyr.tidyverse.org/articles/pivot.html) that can
+explain more about it that you can read at another time.
 
 Most use cases of pivoting are to convert to the longer form, which you
 can do with `pivot_longer()` and is what we will cover first in this
@@ -67,11 +67,11 @@ scenario where you are entering data from a participant for glucose
 values that were measured every 30 minutes. So you might enter data like
 this:
 
-| person_id | glucose_0 | glucose_30 | glucose_60 |
-|:----------|:----------|:-----------|:-----------|
-| 1         | 5.6       | 7.8        | 4.5        |
-| 2         | 4.7       | 9.5        | 5.3        |
-| 3         | 5.1       | 10.2       | 4.2        |
+  | person_id | glucose_0 | glucose_30 | glucose_60 |
+  | :-------- | :-------- | :--------- | :--------- |
+  | 1         | 5.6       | 7.8        | 4.5        |
+  | 2         | 4.7       | 9.5        | 5.3        |
+  | 3         | 5.1       | 10.2       | 4.2        |
 
   : This is a **wide** dataset that is useful for data entry.
 
@@ -86,7 +86,10 @@ wide format and use functions like `pivot_longer()` to get the data
 ready for analysis. See @fig-pivot-longer below that visually shows what
 happens when you pivot from wide to long.
 
-![Pivot longer in `{tidyr}`. New columns are called `name` and `value`. Notice how the values in `A` and `B` columns are stacked on top of each other in the newly created `V` column.](/images/pivot-longer.svg){#fig-pivot-longer
+![Pivot longer in `{tidyr}`. New columns are called `name` and `value`.
+Notice how the values in `A` and `B` columns are stacked on top of each
+other in the newly created `V`
+column.](/images/pivot-longer.svg){#fig-pivot-longer
 width="90%" fig-alt="A diagram showing the use of the pivot longer
 function, where a table with two columns, A and B, is converted to a
 table with two columns, name and value. The original columns values are
@@ -96,7 +99,11 @@ in the name column."}
 If you had, for instance, an ID column for each participant, the
 pivoting would look like what is shown in @fig-pivot-longer-id.
 
-![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are called `name` and `value`, as well as the old `id` column. Notice how, unlike the previous image, the `id` column is excluded when pivoting into the data on the right.](/images/pivot-longer-id.svg){#fig-pivot-longer-id
+![Pivot longer in `{tidyr}`, excluding an `id` column. New columns are
+called `name` and `value`, as well as the old `id` column. Notice how,
+unlike the previous image, the `id` column is excluded when pivoting
+into the data on the
+right.](/images/pivot-longer-id.svg){#fig-pivot-longer-id
 width="90%" fig-alt="A diagram showing the use of the pivot longer
 function, where a table with three columns, id, A and B, is converted to
 a table with three columns, id, name and value. The original columns
@@ -645,7 +652,12 @@ functions, the first argument is the data and the other arguments are:
 @fig-pivot-wider visually shows what's happening when using
 `pivot_wider()`.
 
-![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data on the left are placed side-by-side as new columns in the output data on the right. Notice how the values in the column `N`, which is used in the `names_from` argument, are used as the names for the new columns `A` and `B` in the new data.](/images/pivot-wider.svg){#fig-pivot-wider
+![Pivot wider in `{tidyr}`, where a set of stacked "groups" in the data
+on the left are placed side-by-side as new columns in the output data on
+the right. Notice how the values in the column `N`, which is used in the
+`names_from` argument, are used as the names for the new columns `A` and
+`B` in the new
+data.](/images/pivot-wider.svg){#fig-pivot-wider
 width="90%" fig-alt="A diagram showing the use of the pivot wider
 function, where a table with three columns, id, name, and value, is
 converted to a table with three columns, id, A and B. The values in the

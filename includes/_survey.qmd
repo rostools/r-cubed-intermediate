@@ -1,2 +1,3 @@
-[Feedback survey! :tada:]({{< meta surveys.feedback >}}){.btn
+[Feedback survey!
+:tada:]({{< meta surveys.feedback >}}){.btn
 .btn-primary role="button"}

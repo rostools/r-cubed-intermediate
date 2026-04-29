@@ -108,7 +108,10 @@ an entire vector (e.g. `c(1, 2, 3, 4)`) and R will know what to do with
 it. @fig-vectorization shows how a function conceptually uses
 vectorization.
 
-![A function using vectorization. Notice how a set of items is included *all at once* in the `func()` function and outputs a single item on the right. Modified from the [Posit purrr cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
+![A function using vectorization. Notice how a set of items is included
+*all at once* in the `func()` function and outputs a single item on the
+right. Modified from the [Posit purrr cheat
+sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
 Image license is CC-BY-SA
 4.0.](/images/vectorization.svg){#fig-vectorization width="45%"}
 
@@ -155,7 +158,11 @@ of those items, and outputting the results from each function. The name
 `map()` doesn't mean a geographic map, it is the mathematical meaning of
 map: To use a function on each item in a set of items.
 
-![A functional, in this case `map()`, applies a function to each item in a vector. Notice how each of the green coloured boxes are placed into the `func()` function and outputs the same number of blue boxes as there are green boxes. Modified from the [Posit purrr cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
+![A functional, in this case `map()`, applies a function to each item in
+a vector. Notice how each of the green coloured boxes are placed into
+the `func()` function and outputs the same number of blue boxes as there
+are green boxes. Modified from the [Posit purrr cheat
+sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf).
 Image license is CC-BY-SA
 4.0.](/images/functionals.svg){#fig-functionals width="90%"}
 
@@ -285,12 +292,11 @@ a different data type. If we look into the help documentation with
 
 This is the basics of functionals like `map()`. Functions,
 vectorization, and functionals provide expressive and powerful
-approaches to a simple task:
-*Doing an action on each item in a set of items*. And while technically
-using a for loop lets you "not repeat yourself", they tend to be more
-error prone and harder to write and read compared to these other tools.
-For some alternative explanations of this, see
-@sec-alternative-loop-explanation.
+approaches to a simple task: *Doing an action on each item in a set of
+items*. And while technically using a for loop lets you "not repeat
+yourself", they tend to be more error prone and harder to write and read
+compared to these other tools. For some alternative explanations of
+this, see @sec-alternative-loop-explanation.
 
 This approach of doing an action on each item in a set of items also
 allows us to use another powerful "design pattern": If you make a

@@ -6,11 +6,10 @@ done the ["Pre-workshop tasks"](/pre-workshop/overview.qmd) (starting at
 @sec-pre-workshop), **please do that before doing the survey**. There
 are some questions in the survey that ask about these sections, such as
 in ["Is this workshop for you?"](/overview/is-this-for-you.qmd) (in
-@sec-is-this-for-you) and the
-[Code of Conduct](/pre-workshop/code-of-conduct.qmd) (in
-@sec-code-of-conduct), as well as to copy and paste output from some R
-functions into the survey. To remind you, the functions for the survey
-are:
+@sec-is-this-for-you) and the [Code of
+Conduct](/pre-workshop/code-of-conduct.qmd) (in @sec-code-of-conduct),
+as well as to copy and paste output from some R functions into the
+survey. To remind you, the functions for the survey are:
 
 ```r
 r3::check_setup()
@@ -20,7 +19,8 @@ r3::check_project_setup_intermediate()
 You're almost done! Please fill out the pre-workshop survey to finish
 this section:
 
-[Pre-workshop survey :tada:]({{< meta surveys.pre-workshop >}}){.btn
+[Pre-workshop survey
+:tada:]({{< meta surveys.pre-workshop >}}){.btn
 .btn-primary role="button"}
 
 See you at the workshop! :wave:

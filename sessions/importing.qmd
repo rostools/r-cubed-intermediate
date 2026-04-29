@@ -242,8 +242,8 @@ There's a lot of data we could import, so let's start with importing one
 data file that contains the heart rate data in `HR.csv.gz` for
 participant `5C` in the folder `5C_1586886626/`. As we mentioned in the
 introduction session, the data is stored in the gzipped format to save
-space and the folder naming scheme is `<id>_<Epoch timestamp>`.
-[Epoch timestamp](https://en.wikipedia.org/wiki/Unix_time) is a way to
+space and the folder naming scheme is `<id>_<Epoch timestamp>`. [Epoch
+timestamp](https://en.wikipedia.org/wiki/Unix_time) is a way to
 represent time as a number of seconds since January 1, 1970 and is a
 common, though imperfect, way to store timestamps in many systems.
 
@@ -297,9 +297,9 @@ space between words makes it easier to read and `PascalCase` has no
 spaces between words. So, we will need to fix the column names up and
 use a common style that is easier to read. That style is called
 `snake_case` and it uses `_` for spaces and is all lower case. Snake
-case is recommended in the
-[tidyverse style guide](https://style.tidyverse.org/) and there's even a
-package called `{snakecase}` that can help us with this!
+case is recommended in the [tidyverse style
+guide](https://style.tidyverse.org/) and there's even a package called
+`{snakecase}` that can help us with this!
 
 But how do we fix this as we import the data? Let's look at the help
 docs of `{readr}`: `?read_csv`. Scroll down in the help document and we

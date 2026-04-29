@@ -47,8 +47,8 @@ you can quickly start collaborating together on the project. You will be
 pushing and pulling a lot of content, so you will need to maintain
 regular and open communication with your team member(s).
 
-Below is a list of tasks to complete in order.
-**Read through all the tasks first before starting any of them**.
+Below is a list of tasks to complete in order. **Read through all the
+tasks first before starting any of them**.
 
 ### Clone team repository
 
@@ -147,8 +147,8 @@ questions we want you to try to answer:
 3. How does sleep quality impact this relationship between glucose
    levels and the different treatments?
 
-From these questions, brainstorm how the data should look like
-*as a single dataset* in order to answer the research questions. Then
+From these questions, brainstorm how the data should look like *as a
+single dataset* in order to answer the research questions. Then
 investigate how the data looks like right now and identify what tasks
 generally need to be done to get from the current state of the data to
 the state that would allow you to answer the research questions.

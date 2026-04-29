@@ -1,11 +1,11 @@
 # Contributing
 
-Check out the
-[Contributing Guide](https://guides.rostools.org/contributing) for more
-details on how to contribute. For guidelines on how to be a helper or
-teacher, check out the
-[For teachers](https://guides.rostools.org/instructors) page. As always,
-make sure to adhere to the [Code of Conduct](CODE_OF_CONDUCT.md).
+Check out the [Contributing
+Guide](https://guides.rostools.org/contributing) for more details on how
+to contribute. For guidelines on how to be a helper or teacher, check
+out the [For teachers](https://guides.rostools.org/instructors) page. As
+always, make sure to adhere to the [Code of
+Conduct](CODE_OF_CONDUCT.md).
 
 ## :bug: Issues and bugs
 
@@ -26,7 +26,7 @@ started.
 It's easiest to [install uv](https://docs.astral.sh/uv/) first and then
 install justfile using uv. Then, to install justfile, run:
 
-``` bash
+```bash
 uv tool install rust-just
 ```
 
@@ -34,7 +34,7 @@ We keep all our development workflows in the `justfile`, so you can
 explore it to see what commands are available. To see a list of commands
 available, run:
 
-``` bash
+```bash
 just
 ```
 
@@ -42,12 +42,12 @@ As you contribute, make sure your changes will pass our checks by
 opening a terminal so that the working directory is the root of this
 workshop's parent/root folder and running:
 
-``` bash
+```bash
 just run-all
 ```
 
-When committing changes, please try to follow
-[Conventional Commits](https://decisions.seedcase-project.org/why-conventional-commits/)
+When committing changes, please try to follow [Conventional
+Commits](https://decisions.seedcase-project.org/why-conventional-commits/)
 as Git messages. Using this convention allows us to be able to
 automatically create a release based on the commit message by using
 [Commitizen](https://decisions.seedcase-project.org/why-semantic-release-with-commitizen/).
@@ -59,8 +59,8 @@ request will be squashed into one commit.
 ## :file_folder: Support and infrastructure files
 
 - `.copier-answers.yml`: Contains the answers you gave when copying the
-  project from the template.
-  **You should not modify this file directly.**
+  project from the template. **You should not modify this file
+  directly.**
   - `.cz.toml`:
     [Commitizen](https://commitizen-tools.github.io/commitizen/)
     configuration file for managing versions and changelogs.

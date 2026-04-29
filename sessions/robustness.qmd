@@ -411,8 +411,8 @@ out already and are fairly confident that it works as intended. This
 workflow, of creating code and converting it into a function, is called
 a "function-based workflow". This is an incredibly common workflow in R
 projects and forms the basis for many other workflows and tools, such as
-ones that are covered in the
-[advanced workshop](https://r-cubed-advanced.rostools.org).
+ones that are covered in the [advanced
+workshop](https://r-cubed-advanced.rostools.org).
 
 So you'll use Quarto (`docs/learning.qmd`) to write and test out code,
 convert it into a function (that we will cover in this workshop), and

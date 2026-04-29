@@ -15,10 +15,11 @@ project_path <- fs::path(temp_path, "LearnR3")
 One of the first, basic steps to ensuring a reproducible and modern data
 analysis workflow is to keep everything self-contained in a single
 location. In RStudio, this is done by using R Projects. Read all of this
-[reading task](https://r-cubed-intro.rostools.org/sessions/setup-project#reading-task-what-is-a-project-and-why-use-it)
+[reading
+task](https://r-cubed-intro.rostools.org/sessions/setup-project#reading-task-what-is-a-project-and-why-use-it)
 from the introduction workshop to learn about R Projects and how they
-help keeping things self-contained.
-*You don't need to do any of the exercises or activities*.
+help keeping things self-contained. *You don't need to do any of the
+exercises or activities*.
 
 <!-- TODO: Convert this into a snippet? -->
 

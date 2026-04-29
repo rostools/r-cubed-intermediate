@@ -19,20 +19,19 @@ We assume you can relate to one or more of the following:
     [tidyverse](https://tidyverse.org/) and
     [RStudio](https://posit.co/products/open-source/rstudio/?sid=1).
 
-Considering that this is a natural extension of the
-[introductory r-cubed workshop](https://r-cubed-intro.rostools.org/),
-this workshop incorporates tools learned during that workshop, including
-basic Git usage as well as the use of RStudio R Projects. If you
-*do not* have familiarity with these tools, you will need to go over the
-material from the introduction workshop beforehand (more details about
-pre-workshop tasks will be sent out a couple of weeks before the
-workshop).
+Considering that this is a natural extension of the [introductory
+r-cubed workshop](https://r-cubed-intro.rostools.org/), this workshop
+incorporates tools learned during that workshop, including basic Git
+usage as well as the use of RStudio R Projects. If you *do not* have
+familiarity with these tools, you will need to go over the material from
+the introduction workshop beforehand (more details about pre-workshop
+tasks will be sent out a couple of weeks before the workshop).
 
 We make these assumptions about you as the learner to help focus the
 content of the workshop, however, if you have an interest in learning R
-but don't fit any of the above assumptions,
-**you are still welcome to attend the workshop**! We welcome everyone,
-that is until the workshop capacity is reached.
+but don't fit any of the above assumptions, **you are still welcome to
+attend the workshop**! We welcome everyone, that is until the workshop
+capacity is reached.
 
 In addition to the assumptions above, the workshop also has a fairly
 focused scope, which may also help you decide if this workshop is for

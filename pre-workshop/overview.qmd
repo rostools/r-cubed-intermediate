@@ -9,13 +9,12 @@ library(here)
 ```
 
 In order to participate in this workshop, you must complete everything
-in this section and finish with
-**completing the [survey](survey.qmd) (@sec-survey)** at the end. These
-tasks are meant to provide everyone with the necessary setup and a
-shared foundation for the workshop so that we have a smooth(er) start to
-the workshop. For some of the tasks, you may not understand why you need
-to do them, but we hope by the start of the workshop (and by the end)
-that you understand them better.
+in this section and finish with **completing the [survey](survey.qmd)
+(@sec-survey)** at the end. These tasks are meant to provide everyone
+with the necessary setup and a shared foundation for the workshop so
+that we have a smooth(er) start to the workshop. For some of the tasks,
+you may not understand why you need to do them, but we hope by the start
+of the workshop (and by the end) that you understand them better.
 
 The pre-workshop tasks are designed not just to ensure everyone has
 everything set up for the workshop, but also as a learning activity on
@@ -56,10 +55,10 @@ pre-workshop tasks and that you start them sooner than later.
 If you haven't already, go through the workshop overview section,
 including the [Syllabus](/overview/syllabus.qmd) in @sec-syllabus, the
 [Is this for you?](/overview/is-this-for-you.qmd) found in
-@sec-is-this-for-you, and
-[Learning design](/overview/learning-design.qmd) in @sec-learning-design
-to get an overview of what this workshop contains and the learning
-design behind the workshop material.
+@sec-is-this-for-you, and [Learning
+design](/overview/learning-design.qmd) in @sec-learning-design to get an
+overview of what this workshop contains and the learning design behind
+the workshop material.
 
 After that, please go through the the pre-workshop tasks designed to
 establish a shared foundation for the start of the workshop. This

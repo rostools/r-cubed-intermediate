@@ -1,6 +1,8 @@
 # Introduction to workshop {#sec-introduction}
 
-```{r, include=FALSE}
+```{r}
+#| include: false
+
 # To trigger downlit usage.
 library(downlit)
 ```
@@ -22,21 +24,21 @@ added here.
 
 </div>
 
-::: {.callout-note collapse="true"}
+::::: {.callout-note collapse="true"}
 ## Teacher note
 
 The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
-:::
+:::::
 
 ## :book: Reading task: Our roadmap
 
-::: {.callout-note appearance="minimal" collapse="true"}
+::::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
 Go over the text again and use the diagrams to reinforce what our
 roadmap is.
-:::
+:::::
 
 **Time: \~15 minutes.**
 
@@ -137,7 +139,7 @@ in the `data/` folder is the final dataset we will be creating, and the
 new HTML file in the `docs/` folder is the rendered Quarto document that
 we will be creating.
 
-::: {layout-ncol="2"}
+::::: {layout-ncol="2"}
 ### Currently looks like: {.unnumbered}
 
 ```text
@@ -193,7 +195,7 @@ LearnR3
 ├── README.md
 └── TODO.md
 ```
-:::
+:::::
 
 This structure, particularly the use of the `.Rproj` file and the
 `DESCRIPTION` file (that we will cover in this workshop) are part of a
@@ -204,11 +206,11 @@ having a `DESCRIPTION` metadata file, keeping raw data in the
 want to keep things structured to make it easier for others and
 ourselves to reproduce the work.
 
-::: callout-note
+::::: callout-note
 During the code-alongs, we will be working with the CGM and participant
 details data. For the exercises, you will practice what you've learned
 on the sleep data.
-:::
+:::::
 
 {{< text_snippet sticky_up >}}
 

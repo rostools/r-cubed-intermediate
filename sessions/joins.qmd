@@ -5,8 +5,10 @@ execute:
 
 # Joining data together {#sec-joins}
 
-```{r setup}
+```{r}
+#| label: setup
 #| include: false
+
 library(here)
 library(tidyverse)
 load(here("_temp/pivots.RData"))
@@ -65,8 +67,12 @@ used. These are `left_join()`, `right_join()`, and `full_join()`.
     rows are not included, and so are assigned `NA` values in the output
     data.
 
-![Left joining in `{dplyr}`. Notice how the last row in the blue data (the row with `d` in column `A`) is not included in the outputted data on the right. Modified from the Posit `{dplyr}` [cheat sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
-Image license is CC-BY-SA.](/images/left-join.png){#fig-left-join
+![Left joining in `{dplyr}`. Notice how the last row in the blue data
+(the row with `d` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}` [cheat
+sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
+Image license is
+CC-BY-SA.](/images/left-join.png){#fig-left-join
 width="90%" fig-alt="A diagram showing two data frames, one green and
 one blue, with three columns each. Each data frame has one different
 column and one different row. The output data frame shows that all
@@ -85,8 +91,12 @@ frame (the green one) are included in the output."}
     data in a sequence of steps and want to continue piping but join a
     different way then `left_join()`.
 
-![Right joining in `{dplyr}`. Notice how the last row in the green data (the row with `c` in column `A`) is not included in the outputted data on the right. Modified from the Posit `{dplyr}` [cheat sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
-Image license is CC-BY-SA.](/images/right-join.png){#fig-right-join
+![Right joining in `{dplyr}`. Notice how the last row in the green data
+(the row with `c` in column `A`) is not included in the outputted data
+on the right. Modified from the Posit `{dplyr}` [cheat
+sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
+Image license is
+CC-BY-SA.](/images/right-join.png){#fig-right-join
 width="90%" fig-alt="A diagram showing two data frames, one green and
 one blue, with three columns each. Each data frame has one different
 column and one different row. The output data frame shows that all
@@ -102,8 +112,13 @@ frame (the blue one) are included in the output."}
     datasets, even if it results in more missing values in the output
     data.
 
-![Full joining in `{dplyr}`. Notice how all rows and columns are included in the outputted data on the right, and that some missingness is introduced because those values don't exist when the data are combined in this way. Modified from the Posit `{dplyr}` [cheat sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
-Image license is CC-BY-SA.](/images/full-join.png){#fig-full-join
+![Full joining in `{dplyr}`. Notice how all rows and columns are
+included in the outputted data on the right, and that some missingness
+is introduced because those values don't exist when the data are
+combined in this way. Modified from the Posit `{dplyr}` [cheat
+sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
+Image license is
+CC-BY-SA.](/images/full-join.png){#fig-full-join
 width="90%" fig-alt="A diagram showing two data frames, one green and
 one blue, with three columns each. Each data frame has one different
 column and one different row. The output data frame shows that all
@@ -121,7 +136,7 @@ shown here.
 
 ## Joining with dplyr functions
 
-::: {.callout-note collapse="true"}
+::::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
 Remind everyone that there will be some things that look odd when
@@ -130,7 +145,7 @@ from all the data files.
 
 Walk through the code, the output, and highlight what remains after the
 join.
-:::
+:::::
 
 Let's use some of `{dplyr}`'s join functions! We'll join the
 `participant_details` and `cgm_data` datasets together. We'll probably
@@ -144,6 +159,7 @@ First, let's look at the two datasets before joining them.
 
 ```{r}
 #| filename: "docs/learning.qmd"
+
 participant_details
 cgm_data
 ```
@@ -158,8 +174,10 @@ plus `participant_details`) in the output. There will likely be less
 because, remember, we have only imported the first 100 rows of each
 dataset. Let's join them with `left_join()`.
 
-```{r left-join}
+```{r}
+#| label: left-join
 #| filename: "docs/learning.qmd"
+
 participant_details |>
   left_join(cgm_data)
 ```
@@ -180,8 +198,10 @@ But let's try `right_join()` first to see what happens. This is simpler,
 since it will only join what is in the right side, e.g. `cgm_data`. That
 means there should be exactly `nrow(cgm_data)` rows in the output.
 
-```{r right-join}
+```{r}
+#| label: right-join
 #| filename: "docs/learning.qmd"
+
 participant_details |>
   right_join(cgm_data)
 ```
@@ -200,8 +220,10 @@ the two datasets, which is in this case `participant_details` at
 `nrow(participant_details)` rows. Let's try `full_join()` to see what
 happens.
 
-```{r full-join}
+```{r}
+#| label: full-join
 #| filename: "docs/learning.qmd"
+
 participant_details |>
   full_join(cgm_data)
 ```
@@ -218,8 +240,10 @@ values as extra information.
 
 Let's code assign this output to a new object called `dime_data`.
 
-```{r assign-full-join}
+```{r}
+#| label: assign-full-join
 #| filename: "docs/learning.qmd"
+
 dime_data <- participant_details |>
   full_join(cgm_data)
 dime_data
@@ -227,8 +251,10 @@ dime_data
 
 And then we can continue with adding the sleep data to it.
 
-```{r sleep-full-join}
+```{r}
+#| label: sleep-full-join
 #| filename: "docs/learning.qmd"
+
 dime_data <- participant_details |>
   full_join(cgm_data) |>
   full_join(sleep_data)
@@ -241,6 +267,7 @@ Let's check the data out a bit more. Using the Console do:
 ```{r}
 #| filename: "Console"
 #| eval: false
+
 View(dime_data)
 ```
 
@@ -260,8 +287,10 @@ We are finally at the point where we can put it all together and make a
 single dataset! Let's cut the join code we wrote in the previous section
 and paste it into the `setup` code chunk of `docs/learning.qmd`.
 
-```{r join-all-datasets-setup}
+```{r}
+#| label: join-all-datasets-setup
 #| filename: "docs/learning.qmd"
+
 dime_data <- participant_details |>
   full_join(cgm_data) |>
   full_join(sleep_data)
@@ -276,17 +305,21 @@ the dataset to use, not the data in the `data-raw/` folder. So, open up
 `docs/learning.qmd` so we can save it as a CSV file with `write_csv()`.
 In the last line of the `setup` code chunk, do:
 
-```{r save-data}
+```{r}
+#| label: save-data
 #| filename: "docs/learning.qmd"
+
 write_csv(dime_data, here("data/dime.csv"))
 ```
 
 Since we don't want to track this file in Git, let's end this with
 ignoring it by running in the Console:
 
-```{r ignore-data}
+```{r}
+#| label: ignore-data
 #| filename: "Console"
 #| eval: false
+
 usethis::use_git_ignore("data/dime.csv")
 ```
 
@@ -313,8 +346,10 @@ discussion activity.
 - Use `left_join()`, `right_join()`, and `full_join()` to join two
   datasets together.
 
-```{r store-session-code}
+```{r}
+#| label: store-session-code
 #| include: false
+
 save.image(here::here("_temp/joins.RData"))
 ```
 

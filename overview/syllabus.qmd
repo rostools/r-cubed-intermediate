@@ -63,7 +63,8 @@ spread across the workshop's sessions. The workshop will enable you to:
 
 {{< include /includes/objectives/_regex.qmd >}}
 
-[Using split-apply-combine to help in processing](/sessions/split-apply-combine.qmd)
+[Using split-apply-combine to help in
+processing](/sessions/split-apply-combine.qmd)
 
 {{< include /includes/objectives/_split-apply-combine.qmd >}}
 

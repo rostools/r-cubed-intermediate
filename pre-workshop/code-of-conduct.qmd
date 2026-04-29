@@ -86,7 +86,7 @@ Thank you for helping make this a welcoming, friendly workshop for all
 
 ::: {.callout-note appearance="default"}
 *Acknowledgements*: Large portions of this code of conduct were taken
-and modified from other codes of conduct, specifically
-[Software Carpentry](https://docs.carpentries.org/policies/coc/) and
+and modified from other codes of conduct, specifically [Software
+Carpentry](https://docs.carpentries.org/policies/coc/) and
 [UofTCoders](https://github.com/UofTCoders/studyGroup/blob/gh-pages/codeOfConduct.md).
 :::

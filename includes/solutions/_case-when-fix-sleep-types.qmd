@@ -1,5 +1,6 @@
 ```{r}
 #| label: solution-case-when-sleep-types
+
 fix_sleep_types <- function(data) {
   fix_sleep <- data |>
     dplyr::mutate(
