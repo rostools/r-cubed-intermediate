@@ -1,5 +1,5 @@
-These are the people who have contributed by submitting changes through
-pull requests :tada:
+The following people have contributed to this project by submitting pull
+requests :tada:
 
 [\@AndersAskeland](https://github.com/AndersAskeland),
 [\@hchats](https://github.com/hchats),

@@ -2,11 +2,10 @@ gh:
   org: "rostools"
   repo: "r-cubed-intermediate"
 
-titles:
-  full: "An intermediate workshop on modern approaches and workflows to processing data"
+tagline: "An intermediate workshop on modern approaches and workflows to processing data"
 
 links:
-  home: "https://r-cubed-intermediate.rostools.org"
+  site: "https://r-cubed-intermediate.rostools.org"
   github: "https://github.com/rostools/r-cubed-intermediate"
 
 surveys:

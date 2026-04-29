@@ -69,37 +69,6 @@ The teaching material is found mainly in these locations:
 The website is generated with [Quarto](https://quarto.org/), so it
 follows the file and folder structure conventions from that package.
 
-## Support and infrastructure files
-
-- `.copier-answers.yml`: Contains the answers you gave when copying the
-  project from the template. **You should not modify this file
-  directly.**
-- `.cz.toml`:
-  [Commitizen](https://commitizen-tools.github.io/commitizen/)
-  configuration file for managing versions and changelogs.
-- `.pre-commit-config.yaml`: [Pre-commit](https://pre-commit.com/)
-  configuration file for managing and running checks before each commit.
-- `.typos.toml`: [typos](https://github.com/crate-ci/typos) spell
-  checker configuration file.
-- `.zenodo.json`: Structured citation metadata for your project when
-  archived on [Zenodo](https://zenodo.org/). This is used to add the
-  metadata to Zenodo when a GitHub release has been uploaded to Zenodo.
-- `justfile`: [`just`](https://just.systems/man/en/) configuration file
-  for scripting project tasks.
-- `.editorconfig`: Editor configuration file for
-  [EditorConfig](https://editorconfig.org/) to maintain consistent
-  coding styles across different editors and IDEs.
-- `CHANGELOG.md`: Changelog file for tracking changes in the project.
-- `CONTRIBUTING.md`: Guidelines for contributing to the project.
-- `.github/`: Contains GitHub-specific files, such as issue and pull
-  request templates, workflows,
-  [dependabot](https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/dependabot-quickstart-guide)
-  configuration, pull request templates, and a
-  [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
-  file.
-- `.rumdl.toml`: [rumdl](https://rumdl.dev/) configuration file for
-  formatting Markdown files.
-
 ## Contributing
 
 If you are interested in contributing to the workshop material, please
@@ -113,8 +82,8 @@ this project, you agree to abide by its terms.
 
 ### Contributors
 
-These are the people who have contributed by submitting changes through
-pull requests :tada:
+The following people have contributed to this project by submitting pull
+requests :tada:
 
 [@AndersAskeland](https://github.com/AndersAskeland),
 [@hchats](https://github.com/hchats),
