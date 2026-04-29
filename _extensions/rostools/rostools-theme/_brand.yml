@@ -23,13 +23,70 @@ typography:
 defaults:
   bootstrap:
     defaults:
-      mermaid-edge-color: "gray"
+      mermaid-edge-color: var(--quarto-scss-export-gray-800)
+      # Set code background colour variable so all inline code has the same colour
+      # including headers with inline code.
+      # This colour is the default background colour for inline code.
+      code-bg: var(--brand-code-bg)
     rules: |
-        .slide-deck {
-          border: 3px solid #203C6E;
-          width: 100%;
-          height: 425px;
-        }
-        kbd {
-          padding: .15rem .15rem;
-        }
+      .slide-deck {
+        border: 3px solid #203C6E;
+        width: 100%;
+        height: 425px;
+      }
+      kbd {
+        padding: .15rem .15rem;
+      }
+
+      .cell-output pre code {
+        white-space: pre-wrap;
+      }
+
+      .navbar {
+        border-bottom: var(--quarto-scss-export-gray-300) 1px solid;
+      }
+
+      svg {
+          display: block;
+          max-width: 100%;
+          margin: 0 auto;
+          height: auto !important;
+          width: auto !important;
+      }
+
+      li {
+          margin: 5px 0;
+      }
+
+      figcaption {
+          text-align: center;
+      }
+
+      .callout-body {
+          font-weight: 300 !important;
+      }
+
+      code {
+        color: $primary;
+      }
+
+      :is(h3, h4, h5, h6, dt) code {
+        font-weight: bold;
+      }
+
+      // Color built-ins the same as regular variables
+      // since we sometimes use built-in names as parameter names
+      span.bu {
+        color: inherit !important
+      }
+      // Color terminal executables the same as regular variables
+      // since the default has low contrast and is hard to see
+      span.ex {
+        color: inherit !important
+      }
+
+      // To have more separation between the description and the rest of the content.
+      .description {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: .5rem;
+      }
