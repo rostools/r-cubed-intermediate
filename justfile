@@ -3,7 +3,7 @@
 
 
 # Run all recipes
-run-all: install-deps format-all check-all build-all update-all
+run-all: install-deps update-all format-all check-all build-all
 
 # Run all formatting
 format-all: format-md format-r
@@ -15,7 +15,7 @@ check-all: check-spelling check-urls
 build-all: build-contributors build-readme build-website
 
 # Run all updates
-update-all: update-from-template update-quarto-theme
+update-all: update-quarto-theme
 
 # List all TODOs in the repository.
 list-todos:
