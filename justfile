@@ -1,13 +1,21 @@
 @_default:
   just --list --unsorted
 
-@_formats: format-md format-r
-@_checks: check-spelling check-urls check-commits
-@_builds: build-contributors build-readme build-website
-@_updates: update-from-template update-quarto-theme
 
 # Run all recipes
-run-all: install-deps _formats _checks _builds
+run-all: install-deps format-all check-all build-all update-all
+
+# Run all formatting
+format-all: format-md format-r
+
+# Run all checks
+check-all: check-spelling check-urls
+
+# Run all builds
+build-all: build-contributors build-readme build-website
+
+# Run all updates
+update-all: update-from-template update-quarto-theme
 
 # List all TODOs in the repository.
 list-todos:
@@ -42,10 +50,12 @@ check-spelling:
 # Install lychee from https://lychee.cli.rs/guides/getting-started/
 # Check that URLs work with lychee
 check-urls:
+  # Ignore GitHub links since they can be rate limited and cause false positives.
   lychee . \
     --verbose \
     --extensions md,qmd \
-    --exclude-path "_badges.qmd"
+    --exclude-path "_badges.qmd" \
+    --exclude "github\.com"
 
 # Format all R code
 format-r:
