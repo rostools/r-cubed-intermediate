@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+# Limit token permissions for security
+permissions: read-all
+
+jobs:
+  release:
+    if: "!startsWith(github.event.head_commit.message, 'build: 🔖 update version')"
+    runs-on: ubuntu-latest
+    # To generate releases, this job needs write access to the repository contents.
+    permissions:
+      contents: write
+    # Can only release one version at a time, so need to stop any other jobs that
+    # are also trying to release, to prevent conflicts.
+    concurrency:
+      group: release-group
+      cancel-in-progress: true
+    # Outputs for potential next jobs.
+    outputs:
+      previous_version: ${{ steps.version-var.outputs.previous_version }}
+      current_version: ${{ steps.version-var.outputs.current_version }}
+    steps:
+      # This is a useful security step to check for unexpected outbound calls from the runner,
+      # which could indicate a compromised token or runner.
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+
+      # Using this security pattern for GitHub Apps is recommended by GitHub and ensures that
+      # the token is only available for a short time and has limited permissions. Check out
+      # <https://guidebook.seedcase-project.org/operations/security> for more details.
+      - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        id: app-token
+        with:
+          client-id: ${{ vars.UPDATE_VERSION_APP_ID }}
+          private-key: ${{ secrets.UPDATE_VERSION_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          # Only need the last commit from the repo.
+          fetch-depth: 0
+          # Requires the token in order to push changes to the repo for the release.
+          token: ${{ steps.app-token.outputs.token }}
+
+      # Set this for the bot user who will make the release commit.
+      - name: Set bot user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # This step outputs `REVISION` and `PREVIOUS_REVISION` env variables.
+      - id: cz
+        name: Update version and changelog
+        uses: commitizen-tools/commitizen-action@338bbd841b75aaee6bf5340e1fa12f6ab58ff9ff # 0.27.1
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+          changelog: true
+          changelog_increment_filename: "changelog_notes.md"
+
+      - name: Create GitHub release
+        if: ${{ env.PREVIOUS_REVISION != env.REVISION }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create $REVISION \
+            --notes-file changelog_notes.md \
+            --fail-on-no-commits \
+            --verify-tag
+
+      # Need to output this to tell any potential next job that a release was made.
+      - id: version-var
+        name: Output version variable
+        run: |
+          echo "previous_version=$PREVIOUS_REVISION" >> "$GITHUB_OUTPUT"
+          echo "current_version=$REVISION" >> "$GITHUB_OUTPUT"

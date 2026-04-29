@@ -11,7 +11,15 @@ permissions: read-all
 jobs:
   build-website:
     runs-on: ubuntu-latest
+    # Stop builds from running more than one at a time, to save resources and also
+    # to limit conflicts when uploading to the hosting provider.
+    concurrency:
+      group: build-website-group
+      cancel-in-progress: true
+
     steps:
+      # This is a useful security step to check for unexpected outbound calls from the runner,
+      # which could indicate a compromised token or runner.
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
         with:
@@ -40,11 +48,11 @@ jobs:
           # Install a specific version of uv.
           version: "0.11.4"
 
-        # Need to download the dataset before rendering and it's too big to store in the repo.
-        # So it has to be downloaded from somewhere else. I put it in my Google Drive and made the
-        # file public. The gdown tool makes it easy to download from Google Drive, but it isn't
-        # often updated and hasn't bee active for a while. But for now, and for this purpose,
-        # it's fine.
+      # Need to download the dataset before rendering and it's too big to store in the repo.
+      # So it has to be downloaded from somewhere else. I put it in my Google Drive and made the
+      # file public. The gdown tool makes it easy to download from Google Drive, but it isn't
+      # often updated and hasn't bee active for a while. But for now, and for this purpose,
+      # it's fine.
       - name: Download dataset
         run: |
           cd data-raw

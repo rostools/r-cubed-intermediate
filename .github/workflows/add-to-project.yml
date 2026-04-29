@@ -14,15 +14,43 @@ on:
 # Limit token permissions for security
 permissions: read-all
 
+env:
+  BOARD_NUMBER: "12"
+
 jobs:
   add-to-project:
-    uses: seedcase-project/.github/.github/workflows/reusable-add-to-project.yml@main
-    # Need write permissions to add PRs to the board
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    with:
-      board-number: 12
-      app-id: ${{ vars.ADD_TO_BOARD_APP_ID }}
-    secrets:
-      add-to-board-token: ${{ secrets.ADD_TO_BOARD }}
-      gh-token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      # This is a useful security step to check for unexpected outbound calls from the runner,
+      # which could indicate a compromised token or runner.
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+
+      # Using this security pattern for GitHub Apps is recommended by GitHub and ensures that
+      # the token is only available for a short time and has limited permissions. Check out
+      # <https://guidebook.seedcase-project.org/operations/security> for more details.
+      - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        id: app-token
+        with:
+          client-id: ${{ vars.ADD_TO_BOARD_APP_ID }}
+          private-key: ${{ secrets.ADD_TO_BOARD }}
+
+      - name: Add issue or PR to project board
+        uses: actions/add-to-project@244f685bbc3b7adfa8466e08b698b5577571133e # v1.0.2
+        with:
+          project-url: "https://github.com/orgs/${{ github.repository_owner }}/projects/${{ env.BOARD_NUMBER }}"
+          github-token: ${{ steps.app-token.outputs.token }}
+
+      - name: Assign PR to creator
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          gh pr edit $PR --add-assignee $AUTHOR --repo $REPO
+        env:
+          REPO: ${{ github.repository }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
