@@ -2,12 +2,12 @@
   just --list --unsorted
 
 @_formats: format-md format-r
-@_checks: check-spelling check-urls
+@_checks: check-spelling check-urls check-commits
 @_builds: build-contributors build-readme build-website
 @_updates: update-from-template update-quarto-theme
 
 # Run all recipes
-run-all: install-dependencies _formats _checks _builds
+run-all: install-deps _formats _checks _builds
 
 # List all TODOs in the repository.
 list-todos:
@@ -19,15 +19,12 @@ list-todos:
 
 # Install or update the pre-commit hooks
 install-precommit:
-  # Install pre-commit hooks
   uvx pre-commit install
-  # Update versions of pre-commit hooks
   uvx pre-commit autoupdate
-  # Run pre-commit hooks on all files
   uvx pre-commit run --all-files
 
-# Install package dependencies
-install-dependencies:
+# Install workshop's package dependencies
+install-deps:
   #!/usr/bin/Rscript
   pak::pak(ask = FALSE)
 
@@ -35,6 +32,8 @@ install-dependencies:
 update-quarto-theme:
   # Will also add if it isn't already installed.
   quarto update rostools/rostools-theme --no-prompt
+  # Soft link so Revealjs slides can use the extension.
+  ln -s _extensions/ slides/
 
 # Check spelling with typos
 check-spelling:
@@ -48,14 +47,14 @@ check-urls:
     --extensions md,qmd \
     --exclude-path "_badges.qmd"
 
-# Format R code
+# Format all R code
 format-r:
   uvx --from air-formatter air format .
 
 # Format Markdown files
 format-md:
-  panache format .
   uvx rumdl fmt --silent
+  uvx --from panache-cli panache format . --quiet
 
 # Build Quarto website
 build-website:

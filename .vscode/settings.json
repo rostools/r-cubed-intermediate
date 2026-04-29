@@ -1,10 +1,5 @@
 {
-  "files.autoSave": "onFocusChange",
-  "editor.tabSize": 2,
-  "editor.wordWrap": "off",
   "editor.formatOnSave": true,
-  "git.autofetch": false,
-  "editor.tabCompletion": "on",
   "editor.snippetSuggestions": "inline",
   "conventional-branch.type": [
     "build",
@@ -20,17 +15,13 @@
     "revert"
   ],
   "conventional-branch.format": "{Type}/{Branch}",
-  "files.insertFinalNewline": true,
-  "conventionalCommits.scopes": [
-    "overview",
-    "pre-workshop",
-    "sessions",
-    "appendix"
-  ],
   "[r]": {
     "editor.defaultFormatter": "Posit.air-vscode"
   },
-  "[quarto]": {
+  "[quarto][md][qmd]": {
     "editor.defaultFormatter": "jolars.panache"
   },
+  "files.insertFinalNewline": true,
+  "conventionalCommits.emojiFormat": "emoji",
+  "conventionalCommits.promptScopes": false
 }

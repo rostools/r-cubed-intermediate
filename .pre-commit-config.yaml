@@ -1,8 +1,8 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 ci:
-  autofix_commit_msg: "chore(pre-commit): :pencil2: automatic fixes"
-  autoupdate_commit_msg: "ci(pre-commit): :construction_worker: update pre-commit CI version"
+  autofix_commit_msg: "chore: ✏️ automatic pre-commit hook fixes"
+  autoupdate_commit_msg: "ci: 👷 update pre-commit CI version"
 
 repos:
   - repo: https://github.com/gitleaks/gitleaks
@@ -15,6 +15,10 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [ --fix=lf ]
+      - id: check-merge-conflict
+        args: [ --assume-in-merge ]
 
   # Use the mirror since the main `typos` repo has tags for different
   # sub-packages, which confuses pre-commit when it tries to find the latest
