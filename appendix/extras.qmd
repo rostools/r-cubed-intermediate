@@ -135,3 +135,100 @@ function with `\()` (or either `function()` or `~`).
 # Anonymous function
 map(numbers, \(x) if (x > 5) TRUE else FALSE)
 ```
+
+## Using `case_when()` for nested conditionals
+
+For simple fixes of categorical variables or for creating simple
+categorical variables from existing ones, you would usually use
+`if_else()`. But when it becomes more complex or when you think you need
+to use nested `if_else()` statements, you should probably switch to
+using `case_when()`.
+
+This function works by giving it a series of logical conditions and an
+associated output if the condition is true. Each condition is processed
+*sequentially*, meaning that if a condition is `TRUE`, the output won't
+be overridden by later conditions. The general form of `case_when()`
+looks like:
+
+```{r}
+#| eval: false
+
+case_when(
+  variable1 == condition1 ~ output,
+  variable2 == condition2 ~ output,
+  # (Optional) Otherwise
+  TRUE ~ final_output
+)
+```
+
+The optional ending is only necessary if you want a certain output if
+none of your conditions are met. Because conditions are processed
+*sequentially* and because it is the *last* condition, by setting the
+final condition to be `TRUE`, the `final_output` will used (in this
+case). If this last `TRUE` condition is not used, then by default the
+final output would be a missing value. A (silly) example using age might
+be:
+
+```{r}
+#| eval: false
+
+case_when(
+  age > 20 ~ "old",
+  age <= 20 ~ "young",
+  # For final condition
+  TRUE ~ "unborn!"
+)
+```
+
+If instead you want one of the conditions to be `NA`, you need to set
+the appropriate `NA` value (in this example, `NA_character_` is for
+character data):
+
+```{r}
+#| eval: false
+
+case_when(
+  age > 20 ~ "old",
+  age <= 20 ~ NA_character_,
+  # For final condition
+  TRUE ~ "unborn!"
+)
+```
+
+Alternatively, if we want missing age values to output `NA` values at
+the end (instead of `"unborn!"`), we would exclude the final condition:
+
+```{r}
+#| eval: false
+
+case_when(
+  age > 20 ~ "old",
+  age <= 20 ~ "young"
+)
+```
+
+With `{dplyr}` functions like `case_when()`, it requires you be explicit
+about the type of output each condition has since all the outputs must
+match (e.g. all character or all numeric). This prevents you from
+accidentally mixing e.g. numeric output with character output. Missing
+values also have data types:
+
+- `NA_character_` (character)
+- `NA_real_` (numeric)
+- `NA_integer_` (integer)
+
+## Key takeaways
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Teacher note
+
+Quickly cover this before finishing the session and getting them to do
+the survey.
+:::
+
+- Instead of using multiple `if_else()` statements, you can use
+  `case_when()` to make your code cleaner and easier to read.
+- Save final datasets into the `data/` to communicate to yourself and
+  others that this is data to work with, not the data in `data-raw/`.
+
+{{< include /includes/_code-appendix.qmd >}}
