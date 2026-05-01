@@ -20,45 +20,44 @@ knitr:
 Ask if learners can put their laptop lids down, so you have their full
 attention.
 
-True reproducibility means being able to re-create the results on *any*
-computer at any point in the near future. But with different software
-versions, unmaintained or difficult to install dependencies, constant
-updates, differences between operating systems, and data sharing (which
-is a bit of a joke in health research). Reproducibility quickly becomes
-impossible. Hence why focusing on being reproducible at the time of
-publication or at the very least focus on ensuring your data analysis is
-"inspectable", meaning that someone can come and read your code and
-understand the logic of what you are doing, even if they can't directly
-reproduce the results.
+True reproducibility means being able to re-create the results on *any* computer
+at any point in the near future. But with different software versions,
+unmaintained or difficult to install dependencies, constant updates, differences
+between operating systems, and data sharing (which is a bit of a joke in health
+research). Reproducibility quickly becomes impossible. Hence why focusing on
+being reproducible at the time of publication or at the very least focus on
+ensuring your data analysis is "inspectable", meaning that someone can come and
+read your code and understand the logic of what you are doing, even if they
+can't directly reproduce the results.
 :::
 
 ## Few share code within health sciences [@Considine2017a, @Rauh2019, @Evans2019, @Rauh2019a, @Hughes2019, @Peng2006a, @Seibold2021] {.center}
 
 ::: notes
--   Estimating the reproducibility of scientific studies is currently
-    very difficult because of:
-    -   Nearly non-existent publishing of code/data
-    -   General lack of awareness of and training in it
+- Estimating the reproducibility of scientific studies is currently very
+  difficult because of:
+  - Nearly non-existent publishing of code/data
+  - General lack of awareness of and training in it
 :::
 
 ## How can we check reproducibility if no code is given? {.center}
 
 ::: notes
-But that doesn't even matter, because we can't have reproducibility if
-no one shares their code!
+But that doesn't even matter, because we can't have reproducibility if no one
+shares their code!
 
-And this is no joke. Getting data on this is difficult, but the research
-that has been done shows that almost no one is sharing their code. The
-estimates range between fields in health science from zero to maybe five
-percent of published studies. The only area that is doing pretty well is
-bioinformatics, at about 60% of published studies.
+And this is no joke. Getting data on this is difficult, but the research that
+has been done shows that almost no one is sharing their code. The estimates
+range between fields in health science from zero to maybe five percent of
+published studies. The only area that is doing pretty well is bioinformatics, at
+about 60% of published studies.
 
-We as researchers try to find our niche, make our own space in the
-research world. Sometimes its a real struggle to find that niche.. but
-guys! No one is doing this, no one is sharing their code! You start
-doing the simplest thing of sharing your code and you will be one of
-very very few people who do. And this isn't a niche, this is a gaping
-hole in our modern scientific process. A huge hole.
+We as researchers try to find our niche, make our own space in the research
+world. Sometimes its a real struggle to find that niche.. but guys! No one is
+doing this, no one is sharing their code! You start doing the simplest thing of
+sharing your code and you will be one of very very few people who do. And this
+isn't a niche, this is a gaping hole in our modern scientific process. A huge
+hole.
 :::
 
 # Multiple benefits, from personal to philosophical
@@ -73,23 +72,20 @@ hole in our modern scientific process. A huge hole.
 
 ## Easier and quicker collaboration (aside from the learning part) {.center}
 
-## More productive as you can more easily work on your own project {.center}
-
 ## Finding better opportunities outside of academia {.center}
 
 ::: notes
-And the last one is that one reason you don't see a lot of researchers
-sharing their code or being more reproducible is.. they end up getting
-picked up by industry and paid really well or decide to leave academia
-because of the barriers.
+And the last one is that one reason you don't see a lot of researchers sharing
+their code or being more reproducible is.. they end up getting picked up by
+industry and paid really well or decide to leave academia because of the
+barriers.
 
-Just as an example, I found a Norwegian group who had a really
-inefficient workflow and decided to re-build their workflow to make use
-of programming, to be reproducible, to have a pipeline. I looked up the
-lead author as well as several other of the co-authors and guess what...
-many of them now work in really great companies as data scientists or
-software engineers, probably making a lot of money and having
-potentially a less stressful life.
+Just as an example, I found a Norwegian group who had a really inefficient
+workflow and decided to re-build their workflow to make use of programming, to
+be reproducible, to have a pipeline. I looked up the lead author as well as
+several other of the co-authors and guess what... many of them now work in
+really great companies as data scientists or software engineers, probably making
+a lot of money and having potentially a less stressful life.
 :::
 
 # Strong institutional barriers, such as ... {.center}
@@ -101,53 +97,51 @@ You will encounter a lot of resistance, a lot of barriers and hardship.
 ## Lack of adequate awareness, support, infrastructure, training {.center}
 
 ::: notes
-At the institutional level, there is no real awareness of this, no
-support or infrastructure. You're basically doing this on your own.
-Which probably isn't that uncommon anyway.
+At the institutional level, there is no real awareness of this, no support or
+infrastructure. You're basically doing this on your own. Which probably isn't
+that uncommon anyway.
 
-Your organization is moving in the right direction to resolve this
-issue, but actions tell more than words.
+Your organization is moving in the right direction to resolve this issue, but
+actions tell more than words.
 :::
 
 ## Research culture values publications over all else {.center}
 
-What would you spend your time on if we didn't have this
-publication-obsession?
+What would you spend your time on if we didn't have this publication-obsession?
 
 ::: notes
-Research culture and incentives pretty much only care about publishing
-journal articles. Creating software tools or datasets to be shared, meh.
-Making teaching materials to help other researchers, meh. Communicating
-your science to the public and doing outreach, meh. Doing actual science
-that might take years and not lead to any "hard papers", meh.
+Research culture and incentives pretty much only care about publishing journal
+articles. Creating software tools or datasets to be shared, meh. Making teaching
+materials to help other researchers, meh. Communicating your science to the
+public and doing outreach, meh. Doing actual science that might take years and
+not lead to any "hard papers", meh.
 
-Imagine if the number of publications and where you published didn't
-matter for getting funding or getting a research job. What would you
-spend your time on? What would you do differently compared to now?
+Imagine if the number of publications and where you published didn't matter for
+getting funding or getting a research job. What would you spend your time on?
+What would you do differently compared to now?
 :::
 
 ## Legal and privacy concerns about sharing data, intellectual property protection, patents {.center}
 
 ::: notes
-Legal and privacy concerns are big topics that institutions in
-particular focus on a lot, about ownership and so on, since research can
-lead to commercialization and the potential for profit. For individual
-researchers, we often worry about these concerns too much and sometimes
-stops us from doing work because we're afraid we're doing something
-wrong
+Legal and privacy concerns are big topics that institutions in particular focus
+on a lot, about ownership and so on, since research can lead to
+commercialization and the potential for profit. For individual researchers, we
+often worry about these concerns too much and sometimes stops us from doing work
+because we're afraid we're doing something wrong
 :::
 
 # Strong personal barriers like ... {.center}
 
 ## Fear of ... {.center}
 
--   Fear of being scooped or ideas being stolen
--   Errors and public humiliation
+- Fear of being scooped or ideas being stolen
+- Errors and public humiliation
 
 ::: notes
-And there aren't just institutional barriers. We as researchers have
-fears of being scooped, of embarrassment and humiliation for your
-methods being *gasp* wrong. Which is actually just part of science.
+And there aren't just institutional barriers. We as researchers have fears of
+being scooped, of embarrassment and humiliation for your methods being *gasp*
+wrong. Which is actually just part of science.
 :::
 
 ## Overwhelmed with everything that we *should* do better {.center}
@@ -155,11 +149,10 @@ methods being *gasp* wrong. Which is actually just part of science.
 Strongly rewarded to get things done, not get things right.
 
 ::: notes
-It is also really overwhelming, having so many things to think about to
-make sure you're doing solid science. No researcher in the past had to
-consider and think and know as much as we have to know and to do.
-Another reason why we need more team science, to distribute the tasks
-and skills.
+It is also really overwhelming, having so many things to think about to make
+sure you're doing solid science. No researcher in the past had to consider and
+think and know as much as we have to know and to do. Another reason why we need
+more team science, to distribute the tasks and skills.
 :::
 
 ## Need to constantly stay updated {.center}
@@ -172,34 +165,33 @@ You also have to constantly stay updated, and that can be tiring.
 
 ## Follow some core principles {.center}
 
--   Use open source tools wherever possible
+- Use open source tools wherever possible
 
--   Use plain text as often as possible
+- Use plain text as often as possible
 
--   Upload and share publicly early and often (e.g. to GitHub or
-    [Zenodo](https://zenodo.org))
+- Upload and share publicly early and often (e.g. to GitHub or
+  [Zenodo](https://zenodo.org))
 
--   Upload and share publicly as many things as possible
+- Upload and share publicly as many things as possible
 
 ## Use social actions to be more open {.center}
 
--   Do code/paper reviews through *through GitHub*
+- Do code/paper reviews through *through GitHub*
 
--   Require writing *everything* in Markdown
+- Require writing *everything* in Markdown
 
--   Agree on a standard folder and file structure for projects
+- Agree on a standard folder and file structure for projects
 
 ## Teach others! {.center}
 
 It's also a great way to learn :wink: :wink:
 
 ::: notes
-Lastly.. you can teach. Teach others. Use these teaching materials. Or
-get involved with this workshop next year. Or now. Actually, several
-participants from the beginner workshop are or will soon be helping to
-improve the material for next year. There are also so many other things
-you can get involved in, aside from this workshop. Let me know if you're
-interested!
+Lastly.. you can teach. Teach others. Use these teaching materials. Or get
+involved with this workshop next year. Or now. Actually, several participants
+from the beginner workshop are or will soon be helping to improve the material
+for next year. There are also so many other things you can get involved in,
+aside from this workshop. Let me know if you're interested!
 :::
 
 # References
