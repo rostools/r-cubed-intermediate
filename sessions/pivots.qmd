@@ -477,16 +477,22 @@ Now do the same thing for the pivoting code:
 In the next exercise, you'll use these new functions in the
 `docs/cleaning.qmd` file to process the survey data.
 
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+First run the code below to add the dependency for `{tidyr}`.
+
 ```{r}
 #| label: solution-add-tidyr
 #| filename: "Console"
-#| eval: false
+#| output: false
 
 usethis::use_package("tidyr")
 ```
 
+And the function should look like this in the `R/functions.R` file:
+
 ```{r}
 #| label: solution-tidy-survey-dates
+#| filename: "R/functions.R"
 #| output: false
 
 #' Tidy up the dates in the survey results
@@ -506,13 +512,26 @@ tidy_survey_dates <- function(data) {
   dplyr::select(-c(date, start_time, end_time, duration))
   return(tidied)
 }
+```
+
+You should be able to use it like this in either the Console or in the
+`docs/learning.qmd` file:
+
+```{r}
+#| label: solution-use-tidy-function
+#| filename: "Console"
+#| output: false
 
 survey_data |>
   tidy_survey_dates()
 ```
 
+And for the other function, it should look like this in the
+`R/functions.R` file:
+
 ```{r}
 #| label: solution-survey-to-long
+#| filename: "R/functions.R"
 #| output: false
 
 #' Pivot survey data to longer format, with only IDs and datetimes
@@ -539,11 +558,21 @@ survey_to_long <- function(data) {
     dplyr::ungroup()
   return(longer)
 }
+```
+
+You should be able to use it like this in either the Console or in the
+`docs/learning.qmd` file:
+
+```{r}
+#| label: solution-use-pivot-function
+#| filename: "Console"
+#| output: false
 
 survey_data |>
   tidy_survey_dates() |>
   survey_to_long()
 ```
+:::
 
 {{< text_snippet sticky_up >}}
 
@@ -579,9 +608,11 @@ can open files quickly with {{< var keybind.open-file >}}).
 6. Once it works fine, add and commit the changes to the Git history
    with {{< var keybind.commit >}}. Then push to GitHub.
 
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
 ```{r}
 #| label: solution-add-survey-processing
 #| filename: "docs/cleaning.qmd"
+#| output: false
 
 survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |>
   read() |>
@@ -590,6 +621,7 @@ survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |>
 survey_long <- survey_tidy |>
   survey_to_long()
 ```
+:::
 
 {{< text_snippet sticky_up >}}
 

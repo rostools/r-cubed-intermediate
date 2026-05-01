@@ -451,12 +451,23 @@ summarise_by_datetime <- function(___) {
 10. Add and commit the changes to the Git history with
     {{< var keybind.commit >}}. Then push to GitHub.
 
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+Add the package dependency for `{tidyselect}`:
+
 ```{r}
 #| label: solution-summarise-by-datetime-function
-#| echo: true
+#| output: false
+#| eval: false
 
-# Add the package dependency for tidyselect
-# usethis::use_package("tidyselect")
+usethis::use_package("tidyselect")
+```
+
+The function should look like this in the `R/functions.R` file:
+
+```{r}
+#| label: solution-summarise-by-datetime-function
+#| filename: "R/functions.R"
+#| output: false
 
 #' Summarise values in a data frame by a rounded datetime
 #'
@@ -479,12 +490,20 @@ summarise_by_datetime <- function(data) {
     )
   return(summarised_data)
 }
+```
+
+And you should be able to use it like this in either the Console or in
+the `docs/learning.qmd` file:
+
+```{r}
+#| label: solution-use-summarise-by-datetime-console
+#| output: false
 
 hr_data <- read_all("HR.csv.gz") |>
   get_participant_id() |>
   summarise_by_datetime()
-
 ```
+:::
 
 {{< text_snippet sticky_up >}}
 
@@ -524,11 +543,44 @@ In later exercises, you'll come back to this `docs/cleaning.qmd` file to
 add more code to continue processing the data and eventually join it all
 together.
 
-<!-- TODO: Add solution chunk -->
+::: callout-note
+Just remember that we are only importing the first 100 rows of each
+dataset, so if it is confusing why data may look a bit different or that
+it's too small, this is the reason why. We do this to more quickly
+prototype and test code out.
+:::
+
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+```{r}
+#| label: solution-read-all-hr-type-data
+#| filename: "docs/cleaning.qmd"
+#| output: false
+
+hr_data <- read_all("HR.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+ibi_data <- read_all("IBI.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+temp_data <- read_all("TEMP.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+bvp_data <- read_all("BVP.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+eda_data <- read_all("EDA.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+```
+:::
 
 {{< text_snippet sticky_up >}}
 
-## :technologist: Exercise: Create a function to read in any HR-type dataset
+## :technologist: Extra exercise: Create a function to read in any HR-type dataset
 
 **Time: \~10 minutes.**
 
@@ -554,7 +606,29 @@ styling the R code, testing the code, committing, and pushing to GitHub.
 Because this is an optional, extra exercise, we don't include a solution
 for this exercise.
 
-<!-- TODO: Add potential solution -->
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+```{r}
+#| label: solution-read-sensor-data
+#| filename: "R/functions.R"
+#| output: false
+#| eval: false
+
+read_sensor_data <- function(filename) {
+  data <- read_all(filename) |>
+    get_participant_id() |>
+    summarise_by_datetime()
+  return(data)
+}
+
+# Or if you added the max_rows argument to read_all():
+read_sensor_data <- function(filename, max_rows = 100) {
+  data <- read_all(filename, max_rows = max_rows) |>
+    get_participant_id() |>
+    summarise_by_datetime()
+  return(data)
+}
+```
+:::
 
 {{< text_snippet sticky_up >}}
 
@@ -582,7 +656,21 @@ workshop: styling the R code, testing the code, committing, and pushing
 to GitHub. Because this is an optional, extra exercise, we don't include
 a solution for this exercise.
 
-<!-- TODO: Add potential solution -->
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+```{r}
+#| label: solution-read-sensor-data-with-time-unit
+#| filename: "R/functions.R"
+#| output: false
+#| eval: false
+
+read_sensor <- function(filename, max_rows = 100, unit = "minute") {
+  data <- read_all(filename, max_rows = max_rows) |>
+    get_participant_id() |>
+    summarise_by_datetime(unit = unit)
+  return(data)
+}
+```
+:::
 
 {{< text_snippet sticky_up >}}
 

@@ -72,7 +72,8 @@
     "prefix": "solution_chunk",
     "body": [
       "::: {.callout-note collapse=\"true\" appearance=\"minimal\" title=\"**Click for the solution**. Only click if you are struggling or are out of time.\"}",
-      "```{r solution-{0:chunk-name}",
+      "```{r}",
+      "#| label: solution-{0:chunk-name}",
       "#| output: false",
       "${1:Text body}",
       "```",

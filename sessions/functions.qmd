@@ -611,9 +611,10 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 8. Finally, **add and commit** the changes to the Git history, using
    {{< var keybind.commit >}}. Then push to GitHub.
 
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
 ```{r}
 #| label: solution-read-max-rows
-#| echo: false
+#| output: false
 
 #' Read in one nurses' stress data file.
 #'
@@ -632,6 +633,7 @@ read <- function(file_path, max_rows = 100) {
   return(data)
 }
 ```
+:::
 
 {{< text_snippet sticky_up >}}
 

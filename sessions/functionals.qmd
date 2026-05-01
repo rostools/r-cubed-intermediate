@@ -590,9 +590,10 @@ function that you can re-use.
    Git history, using {{< var keybind.commit >}} and then push to
    GitHub.
 
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
 ```{r}
+#| output: false
 #| label: solution-read-multiple-files
-#| echo: false
 
 #' Read all `.csv.gz` files in the `stress/` folder into one data frame.
 #'
@@ -615,6 +616,7 @@ read_all <- function(filename) {
 read_all("HR.csv.gz")
 read_all("IBI.csv.gz")
 ```
+:::
 
 {{< text_snippet sticky_up >}}
 
@@ -666,9 +668,11 @@ In the `R/functions.R` file, complete these tasks of updating the
 8. Lastly, commit your changes to Git with {{< var keybind.commit >}}
    and push to GitHub.
 
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
 ```{r}
 #| label: solution-read-all-max-rows
-#| echo: false
+#| output: false
+#| eval: false
 
 #' Read all `.csv.gz` files in the `stress/` folder into one data frame.
 #'
@@ -692,6 +696,7 @@ read_all <- function(filename, max_rows = 100) {
 read_all("HR.csv.gz", max_rows = 10)
 read_all("HR.csv.gz", max_rows = 1000)
 ```
+:::
 
 {{< text_snippet sticky_up >}}
 
@@ -747,10 +752,11 @@ steps:
 6. Lastly, commit your changes to Git with {{< var keybind.commit >}}
    and push to GitHub.
 
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
 ```{r}
 #| label: solution-data-dir-global-var
-#| echo: false
+#| eval: false
+#| output: false
 
 .DATASET_DIR <- here::here("data-raw/nurses-stress/") # <1>
 
@@ -780,7 +786,6 @@ read_all("HR.csv.gz", max_rows = 1000)
    `.DATASET_DIR`. This way, if we ever need to change the path to the
    data, we only need to change it in one place, which is more robust
    and easier to maintain.
-
 :::
 
 ## Key takeaways
