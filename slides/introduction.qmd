@@ -1,16 +1,14 @@
 ---
 search: false
 format: rostools-theme-revealjs
-bibliography: "../includes/references.bib"
-csl: "../includes/vancouver.csl"
 ---
 
 # Welcome to the Intermediate R^3^ workshop!
 
--   :heavy_check_mark: Accept the GitHub Organization invite
--   :heavy_check_mark: Pick a group from the basket and go to that table
--   :heavy_check_mark: Introduce yourself to your table mates
--   :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project
+- :heavy_check_mark: Accept the GitHub Organization invite
+- :heavy_check_mark: Pick a group from the basket and go to that table
+- :heavy_check_mark: Introduce yourself to your table mates
+- :heavy_check_mark: Open your `LearnR3.Rproj` RStudio project
 
 ::: notes
 Introduce teachers and helpers.
@@ -18,23 +16,21 @@ Introduce teachers and helpers.
 
 # Motivation for this workshop {.center}
 
-## How do you *exactly* do data analysis? What's the workflow? :thinking: {.center}
+## How do you *exactly* do data processing and analysis? What's the actual workflow? :thinking: {.center}
 
 ::: notes
-When I started out doing research during my Masters, I always wondered
-*how* do researchers go about doing data analysis... what was their
-workflow *exactly* like. No one ever really taught that. Even on online
-tutorials, mostly pieces of code or how to use code are taught... but
-never teaching the bigger picture... How do researchers in their daily
-work write R code and do their data analysis?
+When I started out doing research during my Masters, I always wondered *how* do
+researchers go about doing data analysis... what was their workflow *exactly*
+like. No one ever really taught that. Even on online tutorials, mostly pieces of
+code or how to use code are taught... but never teaching the bigger picture...
+How do researchers in their daily work write R code and do their data analysis?
 
-This question is the reason why the overall workflow is the primary
-focus in this workshop and partly with the beginner one. I try to focus
-on the bigger picture and the overall workflow you would do for doing
-data analysis.
+This question is the reason why the overall workflow is the primary focus in
+this workshop and partly with the beginner one. I try to focus on the bigger
+picture and the overall workflow you would do for doing data analysis.
 
-So, why is it that there isn't much information on how researchers do
-data analysis?
+So, why is it that there isn't much information on how researchers do data
+analysis?
 :::
 
 # :shrug::confused:...Because code sharing is almost non-existent in science {.center}
@@ -42,49 +38,47 @@ data analysis?
 Very few papers provide code [@Leek2017a, @Considine2017a]
 
 ::: notes
-It's because code sharing basically doesn't exist in the vast majority
-of scientific fields. You've probably read a methods section in a paper
-and wondered how exactly they did it.
+It's because code sharing basically doesn't exist in the vast majority of
+scientific fields. You've probably read a methods section in a paper and
+wondered how exactly they did it.
 :::
 
 ## Code sharing: From scientific principle of "reproducibility" {.center}
 
-...often confused with "replicability" [@Plesser2018a] (see also
-American Statistical Association
+...often confused with "replicability" [@Plesser2018a] (see also American
+Statistical Association
 [statement](https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf))
 
 . . .
 
-::::: columns
-::: {.column width="50%"}
+::: columns
+::::: {.column width="50%"}
 ### Replicability
 
--   Repeating a study by *independently* performing another identical
-    study
--   Linked to the "irreproducibility crisis" (aka "irreplicability
-    crisis")
-:::
+- Repeating a study by *independently* performing another identical study
+- Linked to the "irreproducibility crisis" (aka "irreplicability crisis")
+:::::
 
-::: {.column width="50%"}
+::::: {.column width="50%"}
 ### Reproducibility
 
--   Generating the exact same results when using the same data and code
--   *Question*: If we can't even *reproduce* a study's results, how can
-    we expect to replicate it?
-:::
+- Generating the exact same results when using the same data and code
+- *Question*: If we can't even *reproduce* a study's results, how can we expect
+  to replicate it?
 :::::
+:::
 
 ## How can we check reproducibility if no code is given? {.center}
 
-This is a little bit of a rhetorical question
-:stuck_out_tongue_closed_eyes:
+This is a little bit of a rhetorical question :stuck_out_tongue_closed_eyes:
 
-## Very low reproducibility in most of science [@Samuel2024] {.smaller}
+## Very low reproducibility in most of science [@Samuel2024, @Trisovic2022] {.smaller}
 
 ::: {layout-ncol="2"}
 ```{r}
 #| echo: false
 #| fig-height: 6
+
 library(tidyverse)
 theme_set(
   theme_minimal() +
@@ -115,6 +109,7 @@ ggplot(search, aes(y = item, x = value, label = value)) +
 ```{r}
 #| echo: false
 #| fig-height: 6
+
 repro_results <- tribble(
   ~item, ~description, ~value, ~order,
   "Total notebooks", "Total notebook files found in all the repositories", 27271, 1,
@@ -134,39 +129,138 @@ ggplot(repro_results, aes(y = item, x = value, label = percent)) +
 ```
 :::
 
-## Even in institutional code and data archive, *executability* is low! [@Trisovic2022] {.center}
+## Scientific culture is not well-prepared for analytic and computation era {.center}
 
--   Code taken from [Harvard Dataverse Project](https://dataverse.org/)
-    data repositories
--   Only 25% could be *executed* without some "cleaning up"
--   After some automatic cleaning, \~50% could *execute*
+Especially with the rise of "AI" tools
+
+## With "AI" tools, generating (or "vibing") lots of code is easy... but... {.center}
+
+## Writing code has never been the hard part {.center}
+
+Designing, knowing what to do, planning, making decisions with trade-offs, etc have always been the hard parts.
 
 ::: notes
-Recent large study on general reproducibility of projects that shared
-code.
-
-Initially only 25% of the R scripts could be *executed* (doesn't mean
-results were reproduced though). After doing automatic and some manual
-code cleaning, than about half could be executed. That's not bad.
-
-Since scripts were taken from Dataverse.org, researchers who upload
-their code and projects to it probably are a bit more aware and
-knowledgeable about general reproducibility and coding then the average
-researcher, so the results are a bit biased.
+I want to stress this part... As beginner just learning how to write code, it
+feels like writing code is the hard part. But as you get more experienced, you
+realise that writing code is actually the easy part. The hard part is all the
+other things...  designing, planning, communication, making decisions that come
+with trade-offs, and even just knowing what you want.
 :::
 
-## Scientific culture is not well-prepared for analytic and computation era {.center}
+## LLM tools are just tools, that predict an output based on an average of their data {.center}
+
+::: notes
+Do we want to be aiming for and happy with average?
+:::
+
+## If you aren't experienced in code, how can you assess it? {.center}
+
+::: notes
+Problem with AI tools, it predicts the average next items. Key word,
+average. Do you want to go for average? Is average code even good?
+There's a lot of shit code in the world, that, the AI has been trained
+on.
+:::
 
 ## These issues can be fixed by creating and nurturing a culture of openness {.center}
 
 ::: notes
-All of this is because of a problem with our culture in research. We
-aren't open, we don't really share, and don't often follow basic
-principles of science. To fix this, we need to start creating and
-nurturing a better and healthier culture. We all can be involved in
-that, we all have that power to do something, even if its small thing.
+All of this is because of a problem with our culture in research. We aren't
+open, we don't really share, and don't often follow basic principles of science.
+To fix this, we need to start creating and nurturing a better and healthier
+culture. We all can be involved in that, we all have that power to do something,
+even if its small thing.
 :::
+
 
 ## Goal of this course: Start changing the culture by providing the training {.center}
 
-# References
+# Workshop overview
+
+## Where does this course fit in the research lifecycle? {.center}
+
+```{mermaid}
+flowchart LR
+  Collection --> Processing:::focus --> Analysis --> Writing --> Publishing
+  classDef focus stroke:#f96,stroke-width:4px;
+```
+
+## Setup and layout {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+- Workshop is mix of:
+    - "Code-alongs" (we type and explain, you type along)
+    - Hands-on coding, discussing, and reading exercises
+    - Extra hands-on exercises (we'll move on once everyone finished the main ones)
+    - A team project at the end
+-   Less about coding, more about:
+    - Connecting and collaborating with others
+    - Thinking about designing first, coding second
+:::
+
+::: {.column width="50%"}
+- Networking and connecting:
+    - Draw table name from bowl each morning
+    - Introduce yourself to those at your table
+    - During lunch, sit beside someone you don't know
+    - Discussion activities
+- Feedback survey for every session
+:::
+:::::
+
+::: notes
+Explain a bit more about the reading, why doing it, and that this workshop in
+particular has a lot more of it than more advanced workshops.
+
+Since this is also a space to socialise and network, we strongly encourage you
+to sit besides someone you don't know during lunch. This is also why we have you
+pick a piece of paper that has a table name on it every day, so that you can sit
+with different people each day.
+
+We collect feedback at the end of each session through the survey. It is
+extremely helpful and has greatly improved the workshop material over the years.
+So please, give us feedback!! We're all in this together, learning and improving
+:grin:
+:::
+
+## Getting or asking for help :raising_hand_woman:
+
+::::: columns
+::: {.column width="50%"}
+- Put the origami hat :tophat: on your laptop to get help
+- There are lots of helpers
+- Table mates, help out too
+:::
+
+::: {.column width="50%"}
+- We're all learning here!
+- This is a supportive and safe environment
+- Remember our **Code of Conduct**
+:::
+:::::
+
+## Practice using origami hats: Have you opened RStudio to `LearnR3.Rproj`? {.center}
+
+# Activities
+
+## :walking_woman::walking_man: How do you perceive your skill in R? {.center}
+
+::: notes
+Along the wall, arrange to one side is "novice/basic" and other side is
+"advanced".
+:::
+
+## :walking_woman::walking_man: What percent of time do you spend doing data processing (if you do any)? {.center}
+
+::: notes
+Along the wall, arrange to one side is "0%" and other side is "100%".
+
+If you don't do any go to the 0% side.
+:::
+
+## :walking_woman::walking_man: Do you wish you did more or less data processing? {.center}
+
+## Alright, return to your seats! :chair: {.center}
+
+# References {.smaller}
