@@ -353,4 +353,6 @@ discussion activity.
 save.image(here::here("_temp/joins.RData"))
 ```
 
+{{< include /includes/_survey.qmd >}}
+
 {{< include /includes/_code-appendix.qmd >}}

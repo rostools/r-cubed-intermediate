@@ -536,4 +536,6 @@ discussion activity.
   `n_max =` to quickly iterate and test code before reading the full
   dataset.
 
+{{< include /includes/_survey.qmd >}}
+
 {{< include /includes/_code-appendix.qmd >}}

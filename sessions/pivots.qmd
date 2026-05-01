@@ -695,4 +695,6 @@ activity this time.
 save.image(here::here("_temp/pivots.RData"))
 ```
 
+{{< include /includes/_survey.qmd >}}
+
 {{< include /includes/_code-appendix.qmd >}}

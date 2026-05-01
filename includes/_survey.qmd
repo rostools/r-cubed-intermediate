@@ -1,3 +1,7 @@
+## Survey
+
+Please complete the survey for this session:
+
 [Feedback survey!
 :tada:]({{< meta surveys.feedback >}}){.btn
 .btn-primary role="button"}

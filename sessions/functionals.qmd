@@ -834,4 +834,6 @@ discuss with your neighbour or group the following questions:
 save.image(here::here("_temp/functionals.RData"))
 ```
 
+{{< include /includes/_survey.qmd >}}
+
 {{< include /includes/_code-appendix.qmd >}}

@@ -652,4 +652,6 @@ discussion activity.
 save.image(here::here("_temp/split-apply-combine.RData"))
 ```
 
+{{< include /includes/_survey.qmd >}}
+
 {{< include /includes/_code-appendix.qmd >}}

@@ -36,3 +36,5 @@ involved with this workshop next year. Or now! Several participants from
 these workshops are or will soon be helping to improve the material for
 next year. There are also so many other things you can get involved in,
 aside from this workshop. Let us know if you're interested!
+
+{{< include /includes/_survey.qmd >}}
