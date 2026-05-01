@@ -7,13 +7,6 @@
 library(downlit)
 ```
 
-::: callout-caution
-:construction_worker: This session is being actively developed and
-edited. Once the session is finished being edited, the content will be
-added here.
-:::
-
-::: content-hidden
 > [**Introduction slides**](/slides/introduction.html)
 
 <div>
@@ -24,123 +17,98 @@ added here.
 
 </div>
 
-::::: {.callout-note collapse="true"}
+::: {.callout-note collapse="true"}
 ## Teacher note
 
 The slides contain speaking notes that you can view by pressing 'S' on
 the keyboard.
-:::::
+:::
 
-## :book: Reading task: Our roadmap
+## Background and context
 
-::::: {.callout-note appearance="minimal" collapse="true"}
+### Hypothetical research questions {.unnumbered}
+
+::: {.callout-note appearance="minimal" collapse="true"}
 ## Teacher note
 
 Go over the text again and use the diagrams to reinforce what our
 roadmap is.
-:::::
+:::
 
-**Time: \~15 minutes.**
+Imagine that you are a researcher who wants to do a study. You're
+interested in how physiological measures get impacted by stress. You
+work in a hospital and have many nurses and other health professionals
+around you, who regularly experience stress. So you came up with these
+research questions:
 
-This section provides a bigger picture view and roadmap of what we will
-be doing, a bit on why we want to do it, and what it will look like in
-the end. The overall practical aim or "destination" of this workshop is:
+1. How might stress during a nurse's shift impact some simple
+   physiological indicators, like heart rate?
+2. Will these physiological indicators be noticeably different during a
+   stressful shift compared to less stressful shifts?
+3. Does the type of stress matter impact when it comes to the impact on
+   physiological indicators?
 
-*To apply a reproducible and programmatic approach to efficiently
-downloading a dataset that has multiple data files, then processing and
-cleaning them all, and saving them as a single data file to use for
-later analysis.*
+### Actual scenario {.unnumbered}
 
-In our case, during the workshop we want to process the DIME data so
-that we have a single dataset to work with for later (hypothetical)
-analyses. We have one CGM file and one sleep file for each participant,
-as well as a single participant details file.
+The nurse's stress study is a real study that some researchers did. They
+collected physiological data from sensors worn by nurses during their
+shifts for several days in a row, each device (or device's specific
+measurement) collecting data several times every second. They also had
+the nurses fill out a survey about their self-reported stress levels,
+where they think the stress came from, and when they experienced the
+stress during their shifts.
 
-To get to a single dataset, let's work backwards:
+## :speech_balloon: Discussion activity: What should the data look like to answer our research questions?
 
-1. To get one final dataset, we need to join the CGM, sleep, and
-   participant data together and in a way that makes sense.
-2. To join all the datasets together, they all need to be in a format
-   that can be joinable. So they need to be cleaned.
-3. We need to clean the participant details data.
-4. We need to clean the CGM and sleep data.
-5. To clean the CGM data, we need to have one single CGM data frame to
-   be able to clean on, but we currently have many. So we need to join
-   ('bind') all the CGM data into one. This also applies to the sleep
-   data.
-6. To get one CGM or sleep data frame, we need to first import it from
-   each raw file.
+**Time: \~12 minutes.**
 
-Breaking these steps down visually, let's start with the final joining:
+Think about the research questions. Now try to think how that dataset
+might look like (as a single, "rectangular" dataset with columns and
+rows like a typical spreadsheet) that would allow you to answer those
+research questions.
 
-```{mermaid}
-%%| label: "fig-roadmap-joined-data"
-%%| fig-cap: "Roadmap for the workshop: Joining all the data into one."
-%%| fig-alt: "A diagram representing the flow of nodes with arrows. Nodes on the left are the three data frames, with arrows into a join action node, and finally an arrow to the final data frame."
-flowchart LR
-  cgm[/"CGM<br>data frame"/]
-  sleep[/"Sleep<br>data frame"/]
-  participants[/"Participant details<br>data frame"/]
-  join(Join together)
-  final_data[/"One data frame<br>ready for analysis"/]
+1. What might the columns be in order to answer the questions?
+2. What might the rows be or represent to answer the questions? Per
+   nurse? Per timepoint? Per shift?
+3. How might these rows relate to the columns?
+4. What might the values be in the cells? What do they represent?
+5. How big might the data be?
 
-  cgm & sleep & participants --> join
-  join --> final_data
-```
+Now take a look at the current state of the data. How is it different
+from what the ideal would be?
 
-Going backwards, to get to the single CGM data frame, we will need to
-import all the files, 'bind' them together, and then clean them. The
-same applies to the sleep. Visualised below for both CGM and sleep data:
+We have the questions, now, what would the data *exactly* look like to
+be able to answer these questions? How is it structured?
 
-```{mermaid}
-%%| label: "fig-roadmap-cgm"
-%%| fig-cap: "Roadmap for the workshop: Importing and cleaning all the CGM (or sleep) data files."
-%%| fig-alt: "A diagram representing the flow of nodes with arrows. Nodes on the left are the individual files for CGM, that point into an import and binding action, that then move into cleaning, and finally to a single CGM data frame."
-flowchart LR
-  cgm_a[/"data-raw/dime/cgm/101.csv"/]
-  cgm_etc[/"data-raw/dime/cgm/*.csv"/]
-  cgm_z[/"data-raw/dime/cgm/127.csv"/]
-  cgm[/"CGM<br>data frame"/]
-  import(Import then<br>'bind' together)
-  clean(Clean data)
+1. For 4 minutes, think about these questions on your own, writing down
+   notes if you like. Try sketching out with pen and paper what the data
+   might look like.
+2. For next 4 minutes, discuss with a neighbour and compare your ideas.
+3. For the last 4 minutes, we'll all share our ideas with the group and
+   discuss.
 
-  cgm_a & cgm_etc & cgm_z --> import
-  import --> clean
-  clean --> cgm
-```
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
 
-And for the participant details flow, it would be:
+Try to come to a concrete idea of what the data might look like. If you
+are able to, use a whiteboard or flipchart to write down what they
+share.
+:::
 
-```{mermaid}
-%%| label: "fig-roadmap-participant-details"
-%%| fig-cap: "Roadmap for the workshop: Importing and cleaning the participant details data file."
-%%| fig-alt: "A diagram representing the overall flow from start to end of the workshop, with nodes for files pointing into code and outputting a final dataframe."
-flowchart TB
-  participant_details[/"data-raw/dime/participant_details.csv"/]
-  import(Import data)
-  clean(Clean data)
-  output[/"Participant details<br>data frame"/]
+## A brief overview of the data
 
-  participant_details --> import
-  import --> clean
-  clean --> output
-```
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
 
-We also want to make sure that whatever processing we do to the data is
-reproducible, so we'll be writing the code in a way that enables and
-enforces reproducibility of the code.
+Go through the data files and structure on the projector in RStudio, but
+they don't need to follow along on their own computer for this part.
+Just show them the file tree and explain the data in a bit more detail.
+Especially remind them about the `.gz` part.
+:::
 
-So, how will we do this, specifically? At the highest level, everything
-revolves around files and folders. Below is what the project currently
-looks like and what it will look like at the end of the workshop.
-Notice, the only differences here are the addition of a new file in the
-`data/` folder and a new HTML file in the `docs/` folder. The new file
-in the `data/` folder is the final dataset we will be creating, and the
-new HTML file in the `docs/` folder is the rendered Quarto document that
-we will be creating.
-
-::::: {layout-ncol="2"}
-### Currently looks like: {.unnumbered}
+Now that we've discussed what the data might look like, let's take a
+look at how the data actually is structured. Below is a file tree of the
+entire project.
 
 ```text
 LearnR3
@@ -148,14 +116,14 @@ LearnR3
 │   └── README.md
 ├── data-raw/
 │   ├── README.md
-│   ├── dime.zip
-│   ├── dime/
-│   │  ├── cgm/
-│   │  ├── sleep/
-│   │  └── participant_details.csv
-│   └── dime.R
+│   ├── nurses-stress.tar
+│   ├── nurses-stress/
+│   │  ├── stress/
+│   │  └── survey-results.csv.gz
+│   └── nurses-stress.R
 ├── docs/
 │   ├── README.md
+│   ├── cleaning.qmd
 │   └── learning.qmd
 ├── R/
 │   ├── functions.R
@@ -167,23 +135,96 @@ LearnR3
 └── TODO.md
 ```
 
-### End of workshop: {.unnumbered}
+When we open up the `data-raw/nurses-stress/` folder, we see the
+`survey-results.csv.gz` file and `nurses-stress/` folder. The
+`survey-results.csv.gz` file is a compressed (gzipped) CSV file that
+contains the events when nurses experienced stress (or were asked to
+fill in the survey). In the `stress/` folder are more folders, one for
+each participant. Inside each of the participants' folder are folders
+for each date they wore the device(s) and inside those are the raw data
+files for each physiological measurement. Those raw `.csv.gz` files
+could be for a full day, or a few hours, or even less than an hour,
+depending on multiple factors like the participant, their shift, or
+whether the device was working properly.
+
+::: callout-warning
+While this dataset is one of the cleanest/tidiest open datasets I've
+found that nicely aligns with the learning outcomes of this workshop, it
+is still quite messy and some parts don't make a lot of sense. The
+documentation for the dataset is incomplete and there are some issues
+that only those with knowledge specific to this study could answer.
+Unfortunately, if you spend any time working with real-world data, this
+messiness and lack of documentation is very common.
+:::
+
+## :speech_balloon: Discussion activity: What are some steps we might take to get our final dataset?
+
+**Time: \~10 minutes.**
+
+Now that you have a better idea of the data, let's brainstorming some
+steps we might need to take to get the data from the current state to
+the single dataset that we can use to answer our research questions.
+While you haven't yet *seen* the actual data, you can still brainstorm
+and consider some potential steps to take.
+
+1. For 2 minutes, on your own, think about some steps to take to get
+   that single dataset.
+2. For the next 4 minutes, discuss with your neighbour and compare your
+   ideas.
+3. For the last 4 minutes, we'll share our ideas with the group and
+   discuss.
+
+::: {.callout-note collapse="true"}
+## :teacher: Teacher note
+
+After they've discussed this, come up with a relatively concrete, though
+high-level, list of steps that we need to take to get from the start to
+the end. In general, it might be something like this:
+
+1. Read in and process each heart rate (HR)-type data file.
+2. Merge all the HR-type data files together into a single dataset.
+3. Read in and process the survey results data file.
+4. Merge the HR-type datasets with the survey results dataset into a
+   single dataset.
+:::
+
+## Workshop's main "destination"
+
+We use the nurse's stress dataset as a case study to demonstrate the
+main "destination" of the workshop, which is not the final dataset
+itself. Instead, the core "destination" of the workshop is:
+
+*To apply a reproducible and programmatic approach to efficiently
+processing, cleaning, wrangling, and joining multiple data files into a
+single data file that is ready for use to do analysis on.*
+
+We'll achieve this by using a "project-based workflow" (that we covered
+in the [introduction
+workshop](https://r-cubed-intro.rostools.org/sessions/setup-project)),
+using a "function-oriented workflow" (that we will cover and use
+throughout the workshop), and use Quarto documents for prototyping as
+well as for our final document that contains the code to generate the
+final dataset.
+
+By the end, the files and folders in our project should looke like the
+below:
 
 ```text
 LearnR3
 ├── data/
 │   ├── README.md
-│   └── dime.csv <- Added
+│   └── nurses-stress.csv <- Added
 ├── data-raw/
 │   ├── README.md
-│   ├── dime.zip
-│   ├── dime/
-│   │  ├── cgm/
-│   │  ├── sleep/
-│   │  └── participant_details.csv
-│   └── dime.R
+│   ├── nurses-stress.tar
+│   ├── nurses-stress/
+│   │  ├── stress/
+│   │  └── survey-results.csv.gz
+│   └── nurses-stress.R
 ├── docs/
 │   ├── README.md
+│   ├── cleaning.html <- Added
+│   ├── cleaning.qmd
 │   ├── learning.html <- Added
 │   └── learning.qmd
 ├── R/
@@ -195,46 +236,12 @@ LearnR3
 ├── README.md
 └── TODO.md
 ```
-:::::
 
 This structure, particularly the use of the `.Rproj` file and the
-`DESCRIPTION` file (that we will cover in this workshop) are part of a
-"project-based workflow" that is commonly used. We use this type of
-workflow because we want to follow some standard conventions in R, like
-having a `DESCRIPTION` metadata file, keeping raw data in the
-`data-raw/` folder, and keeping (most) R scripts in the `R/`. We also
-want to keep things structured to make it easier for others and
-ourselves to reproduce the work.
-
-::::: callout-note
-During the code-alongs, we will be working with the CGM and participant
-details data. For the exercises, you will practice what you've learned
-on the sleep data.
-:::::
-
-{{< text_snippet sticky_up >}}
-
-## :speech_balloon: Discussion activity: Warm-up questions
-
-**Time: \~8 minutes.**
-
-A big part of learning is social. We are in a classroom and you are
-listening to and interacting with the teacher (at least in some way).
-But it also with your peers.
-
-So, to help you feel more comfortable in this new physical and social
-space, for the next 4 minutes, get up and chat with your neighbour about
-the questions below:
-
-1. Who are you?
-2. Why are you here?
-3. What do you want to learn?
-
-Make sure to share the time equally between each other. Then, after 4
-minutes, chat with another neighbour at your table (or a table nearby)
-for another 4 minutes. This time, talk about these questions:
-
-1. How do you perceive your skill in R?
-2. How much time do you spend *processing data* in R?
-
-:::
+`DESCRIPTION` file (that we will cover in this workshop) are expansions
+of the "project-based workflow" that is commonly used in R projects. We
+use this type of workflow because we want to follow some standard
+conventions in R, like having a `DESCRIPTION` metadata file, keeping raw
+data in the `data-raw/` folder, and keeping (most) R scripts in the
+`R/`. We also want to keep things structured to make it easier for
+others and ourselves to reproduce the work.
