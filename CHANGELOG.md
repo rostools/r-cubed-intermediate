@@ -21,6 +21,25 @@ If you attended a workshop or used the workshop material as some point
 in time, you can always refer to this changelog page to find out what
 has been changed since you last used it.
 
+## 8.3.0 (2026-05-01)
+
+### Feat
+
+- ✨ use callout blocks as solution chunks
+- ✨ add button link to feedback survey
+- ✨ add slides about AI and some walking activities
+- 📝 add 404 page
+
+### Fix
+
+- 🐛 need to group by `id` and `datetime` when summarising
+
+### Refactor
+
+- 🎨 reformat slides
+- ♻️ update intro session to add discussion about design
+- 🚚 move case when content into extras appendix
+
 ## 8.2.0 (2026-05-01)
 
 ## 8.1.3 (2026-04-26)
