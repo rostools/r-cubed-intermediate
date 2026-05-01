@@ -361,17 +361,17 @@ You can learn more about `.by` in the help page by running `?dplyr_by`
 in the Console.
 :::
 
-Let's combine what we did with `roud_date()` and what we did using
+Let's combine what we did with `round_date()` and what we did using
 `summarise()` and `across()`. At the bottom of the `docs/learning.qmd`
 file, create a new header called `## Summarising by groups` and create a
 code chunk below that with {{< var keybind.chunk >}}. Rather than create
 a new column for a variable called `datetime`, let's replace the
 existing `collection_datetime` column with the rounded version. And at
 the end of the `summarise()` function, let's add the `.by` argument and
-set it to `collection_datetime`. This will split the data up by the
-`collection_datetime` column, apply the summary statistics to each
-group, and then combine the results back together to then output that
-new data frame.
+set it to both `id` and `collection_datetime` within `c()`. This will
+split the data up by the `id` and `collection_datetime` columns, apply
+the summary statistics to each group, and then combine the results back
+together to then output that new data frame.
 
 ```{r}
 #| label: remove-device-timestamp
@@ -386,7 +386,7 @@ hr_data |>
       where(is.numeric),
       list(mean = mean, sd = sd, median = median)
     ),
-    .by = collection_datetime
+    .by = c(id, collection_datetime)
   )
 ```
 
@@ -475,10 +475,15 @@ summarise_by_datetime <- function(data) {
         tidyselect::where(is.numeric),
         list(mean = mean, sd = sd, median = median)
       ),
-      .by = collection_datetime
+      .by = c(id, collection_datetime)
     )
   return(summarised_data)
 }
+
+hr_data <- read_all("HR.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
 ```
 
 {{< text_snippet sticky_up >}}
@@ -523,9 +528,39 @@ together.
 
 {{< text_snippet sticky_up >}}
 
+## :technologist: Exercise: Create a function to read in any HR-type dataset
+
+**Time: \~10 minutes.**
+
+If you've finished the previous exercises early and want to do something
+a bit harder, try out this exercise. You might have noticed that the
+code you wrote above to read in each of the HR-type datasets is very
+similar. The only thing that changes is the filename. So, you can create
+a function that takes in a filename as an argument and then reads in the
+data, adds the participant id, and summarises it by datetime. This
+function should be able to work with any of the HR-type datasets. Name
+the new function `read_sensor_data()`.
+
+::: callout-tip
+If you did the extra exercise in one of the previous sessions and added
+the `max_rows` argument to the `read_all()` function, add that argument
+to this new function as well and set it to `100` by default. Make sure
+to pass this argument to the `read_all()` function within the body of
+the new function.
+:::
+
+Make sure to follow workflows we've been using throughout this workshop:
+styling the R code, testing the code, committing, and pushing to GitHub.
+Because this is an optional, extra exercise, we don't include a solution
+for this exercise.
+
+<!-- TODO: Add potential solution -->
+
+{{< text_snippet sticky_up >}}
+
 ## :technologist: Extra exercise: Modify the function so you can set your own unit of time
 
-**Time: \~5 minutes.**
+**Time: \~8 minutes.**
 
 If you've finished the previous exercises early and want to do something
 a bit harder, try out this exercise. Modify the
@@ -536,10 +571,18 @@ adding a new argument to the function called `unit` and then using that
 argument in the `round_date()` function. This new argument should have a
 default value of `"minute"` so that when we eventually join the datasets
 together later on, than you don't have issues with the datasets not
-matching up. Make sure to follow workflows we've been using throughout
-this workshop: styling the R code, testing the code, committing, and
-pushing to GitHub. Because this is an optional, extra exercise, we don't
-include a solution for this exercise.
+matching up.
+
+Make sure to add this new argument to the `read_sensor_data()` function
+as well, so you can set the unit of time from there as you read in the
+data.
+
+Make sure to follow the workflows we've been using throughout this
+workshop: styling the R code, testing the code, committing, and pushing
+to GitHub. Because this is an optional, extra exercise, we don't include
+a solution for this exercise.
+
+<!-- TODO: Add potential solution -->
 
 {{< text_snippet sticky_up >}}
 
@@ -570,6 +613,11 @@ summarise_by_datetime(
   fns = list(max = max, min = min)
 )
 ```
+
+Make sure to follow workflows we've been using throughout this workshop:
+styling the R code, testing the code, committing, and pushing to GitHub.
+Because this is an optional, extra exercise, we don't include a solution
+for this exercise.
 
 Good luck! :tada:
 
