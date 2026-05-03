@@ -161,9 +161,9 @@ arguments you use, the lower the cognitive load. So, the structure is:
 
 ```r
 name <- function(argument1, argument2) {
-    # body of function
-    output <- ... code ....
-    return(output)
+  # body of function
+  output <- ...
+  return(output)
 }
 ```
 

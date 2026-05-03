@@ -335,7 +335,11 @@ argument in `pivot_longer()`.
 
 survey_tidy |>
   select(id, datetime_id, start_datetime, end_datetime) |>
-  pivot_longer(c(start_datetime, end_datetime), names_to = NULL, values_to = "collection_datetime")
+  pivot_longer(
+    c(start_datetime, end_datetime),
+    names_to = NULL,
+    values_to = "collection_datetime"
+  )
 ```
 
 We're getting there. But our HR-type data has rows in minutes, but here
@@ -366,7 +370,7 @@ datetime as seconds). Let's try it out:
 survey_tidy |>
   select(id, datetime_id, start_datetime, end_datetime) |>
   pivot_longer(
-c(start_datetime, end_datetime),
+    c(start_datetime, end_datetime),
     names_to = NULL,
     values_to = "collection_datetime"
   ) |>
@@ -502,14 +506,14 @@ And the function should look like this in the `R/functions.R` file:
 #' @return A data frame.
 tidy_survey_dates <- function(data) {
   tidied <- data |>
-  dplyr::mutate(
-    date = lubridate::mdy(date),
-    start_datetime = lubridate::as_datetime(paste(date, start_time)),
-    end_datetime = lubridate::as_datetime(paste(date, end_time)),
-    datetime_id = start_datetime,
-    .before = start_time
-  ) |>
-  dplyr::select(-c(date, start_time, end_time, duration))
+    dplyr::mutate(
+      date = lubridate::mdy(date),
+      start_datetime = lubridate::as_datetime(paste(date, start_time)),
+      end_datetime = lubridate::as_datetime(paste(date, end_time)),
+      datetime_id = start_datetime,
+      .before = start_time
+    ) |>
+    dplyr::select(-c(date, start_time, end_time, duration))
   return(tidied)
 }
 ```

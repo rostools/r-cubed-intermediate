@@ -73,7 +73,6 @@ survey_data <- here("data-raw/nurses-stress/survey-results.csv.gz") |>
 
 hr_data
 survey_data
-
 ```
 :::
 

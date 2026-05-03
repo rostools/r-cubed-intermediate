@@ -379,7 +379,10 @@ together to then output that new data frame.
 
 hr_data |>
   mutate(
-    collection_datetime = lubridate::round_date(collection_datetime, unit = "minute")
+    collection_datetime = lubridate::round_date(
+      collection_datetime,
+      unit = "minute"
+    )
   ) |>
   summarise(
     across(
@@ -455,7 +458,7 @@ summarise_by_datetime <- function(___) {
 Add the package dependency for `{tidyselect}`:
 
 ```{r}
-#| label: solution-summarise-by-datetime-function
+#| label: solution-add-tidyselect-dependency
 #| output: false
 #| eval: false
 
@@ -479,7 +482,10 @@ The function should look like this in the `R/functions.R` file:
 summarise_by_datetime <- function(data) {
   summarised_data <- data |>
     dplyr::mutate(
-      collection_datetime = lubridate::round_date(collection_datetime, unit = "minute")
+      collection_datetime = lubridate::round_date(
+        collection_datetime,
+        unit = "minute"
+      )
     ) |>
     dplyr::summarise(
       dplyr::across(
