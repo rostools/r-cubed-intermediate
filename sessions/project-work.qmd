@@ -292,3 +292,18 @@ Essentially, the team project is a way to reinforce what you learned
 during the workshop, but in a more relaxed and collaborative setting.
 The point is give you space and time to practice what you learned, not
 to create a perfect (or even reproducible) project.
+
+## Want to see how it could be done? {.appendix}
+
+If you're really stuck or if you're just curious to see how we might
+resolve this problem, you can check out the code on the GitHub
+repository in
+[`data-raw/dime.R`](https://github.com/rostools/r-cubed-intermediate/blob/main/data-raw/dime.R).
+**Only look at this code after you've worked on the project in your team
+for a while**. The point of this team project is to give you a chance to
+practice what you learned and solidify your understanding of the
+different concepts and tools we covered in the workshop. The code linked
+above is only an example of what could be done. It doesn't include all
+the things we covered in this workshop, nor does it fix all the
+potential issues with the data. But it can be helpful to see how you
+could solve some of these problems.
