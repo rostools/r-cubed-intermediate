@@ -1,8 +1,3 @@
----
-execute:
-  eval: false
----
-
 # Joining data together {#sec-joins}
 
 ```{r}
@@ -11,6 +6,8 @@ execute:
 
 library(here)
 library(tidyverse)
+# To trigger downlit
+library(dplyr)
 load(here("_temp/pivots.RData"))
 ```
 
@@ -25,6 +22,22 @@ we are at.
 ## Learning objectives
 
 {{< include /includes/objectives/_joins.qmd >}}
+
+## :speech_balloon: Discussion activity: Recall and share what you've learned so far
+
+**Time: \~6 minutes.**
+
+A very effective way to learn is to recall and describe to someone else
+what you've learned. So before we continue this session, take some time
+to think about what you've learned from yesterday.
+
+1. Take 1-2 minute and try to recall as much as you can about what you'd
+   done over the last two days. Without looking at your notes or the
+   other sections of the website, try to remember things about importing
+   and robust functions.
+2. Then, for 4-5 minutes, share with your neighbour what you remember
+   and try to describe it to each other. Maybe you will each remember
+   different things.
 
 ## :book: Reading task: The many ways to join data
 
@@ -72,7 +85,7 @@ used. These are `left_join()`, `right_join()`, and `full_join()`.
 on the right. Modified from the Posit `{dplyr}` [cheat
 sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
 Image license is
-CC-BY-SA.](/images/left-join.png){#fig-left-join
+CC-BY-SA.](/images/left-join.svg){#fig-left-join
 width="90%" fig-alt="A diagram showing two data frames, one green and
 one blue, with three columns each. Each data frame has one different
 column and one different row. The output data frame shows that all
@@ -96,7 +109,7 @@ frame (the green one) are included in the output."}
 on the right. Modified from the Posit `{dplyr}` [cheat
 sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
 Image license is
-CC-BY-SA.](/images/right-join.png){#fig-right-join
+CC-BY-SA.](/images/right-join.svg){#fig-right-join
 width="90%" fig-alt="A diagram showing two data frames, one green and
 one blue, with three columns each. Each data frame has one different
 column and one different row. The output data frame shows that all
@@ -118,7 +131,7 @@ is introduced because those values don't exist when the data are
 combined in this way. Modified from the Posit `{dplyr}` [cheat
 sheet](https://opensource.posit.co/resources/cheatsheets/data-transformation/data-transformation.pdf).
 Image license is
-CC-BY-SA.](/images/full-join.png){#fig-full-join
+CC-BY-SA.](/images/full-join.svg){#fig-full-join
 width="90%" fig-alt="A diagram showing two data frames, one green and
 one blue, with three columns each. Each data frame has one different
 column and one different row. The output data frame shows that all
@@ -127,16 +140,9 @@ they don't match with the other data frame."}
 
 {{< text_snippet sticky_up >}}
 
-::: callout-caution
-:construction_worker: This part is being updated. Once ready, it will be
-shown here.
-:::
-
-::: content-hidden
-
 ## Joining with dplyr functions
 
-::::: {.callout-note collapse="true"}
+::: {.callout-note collapse="true"}
 ## :teacher: Teacher note
 
 Remind everyone that there will be some things that look odd when
@@ -145,10 +151,10 @@ from all the data files.
 
 Walk through the code, the output, and highlight what remains after the
 join.
-:::::
+:::
 
-Let's use some of `{dplyr}`'s join functions! We'll join the
-`participant_details` and `cgm_data` datasets together. We'll probably
+Let's use some of `{dplyr}`'s join functions! We'll start by joining the
+`survey_long` with the `survey_tidy` datasets together. We'll probably
 want to use `full_join()`, but let's test out the other two joins first.
 In your `docs/learning.qmd` file, go to the bottom of the file and make
 a new header called `## Joining datasets`. Below that make a new code
@@ -160,176 +166,277 @@ First, let's look at the two datasets before joining them.
 ```{r}
 #| filename: "docs/learning.qmd"
 
-participant_details
-cgm_data
+survey_long
+survey_tidy
 ```
 
-<!-- TODO: Fix the `r` situation -->
-
-Notice the number of rows in each dataset. The `participant_details`
-dataset has `nrow(participant_details)` rows and the `cgm_data` dataset
-has `nrow(cgm_data)` rows. When we `left_join()` them, there should no
-more than `nrow(participant_details) + nrow(cgm_data)` rows (`cgm_data`
-plus `participant_details`) in the output. There will likely be less
-because, remember, we have only imported the first 100 rows of each
-dataset. Let's join them with `left_join()`.
+Notice the number of rows in each dataset. The `survey_long` dataset has
+`r nrow(survey_long)` rows and the `survey_tidy` dataset has
+`r nrow(survey_tidy)` rows. When we `left_join()` them, there should no
+more than `r nrow(survey_long) + nrow(survey_tidy)` rows (`survey_tidy`
+plus `survey_long`) in the output. There will likely be less because,
+remember, we have only imported the first 100 rows of each dataset.
+Let's join them with `left_join()`.
 
 ```{r}
 #| label: left-join
 #| filename: "docs/learning.qmd"
 
-participant_details |>
-  left_join(cgm_data)
+survey_long |>
+  left_join(survey_tidy)
 ```
 
-Here, because `cgm_data` has the `hour` column, that means it expands
-all the data from `participant_details` for the dates that it joins by.
-The number of rows now is
-`nrow(left_join(participant_details, cgm_data))`, which is slightly less
-than we expected but it also isn't surprising. Some rows in `cgm_data`
-got dropped because we haven't yet imported all the data.
+Ok, we got a warning about "many-to-many" joins. When you get this
+warning, this means there are duplicate ID values. This type of thing
+usually requires manual investigation and correction. For now, let's
+just identify which IDs are the duplicates. A very easy way to check
+that is by combining `count()` and `filter()` from `{dplyr}`. Let's
+check for duplicates in the `id` and `datetime_id` columns, since those
+are our unique observational identifiers. Let's start with the
+`count()`.
 
-Because theoretically, the same `id` and `date` values should be present
-in both `cgm_data` and `participant_details`, using either `left_join()`
-or `full_join()` should be similar results. It should *not* give more
-than `nrow(participant_details) + nrow(cgm_data)` rows though.
+```{r}
+#| label: count-ids
 
-But let's try `right_join()` first to see what happens. This is simpler,
-since it will only join what is in the right side, e.g. `cgm_data`. That
-means there should be exactly `nrow(cgm_data)` rows in the output.
+survey_tidy |>
+  count(id, datetime_id)
+```
+
+See how all the `n` values that we can see are `1`? That means for that
+combination of `id` and `datetime_id`, there is only one. Which is what
+we want. To find which are duplicates we use `filter()` to find any rows
+where `n > 1`.
+
+```{r}
+#| label: check-ids
+
+survey_tidy |>
+  count(id, datetime_id) |>
+  filter(n > 1)
+```
+
+Alright, it seems we have some duplicate identifiers. For this workshop,
+we won't do anything about it, as it requires reviewing the
+documentation, understanding the context that the data was created in,
+and then deciding how to handle those duplicates. But this information
+tells us *why* we are receiving the warning. We'll just ignore the
+warnings for now.
+
+Let's continue and try with the `right_join()`. This should give us
+about the same number of rows as `survey_tidy`, which is
+`r nrow(survey_tidy)`, plus those duplicates.
 
 ```{r}
 #| label: right-join
 #| filename: "docs/learning.qmd"
 
-participant_details |>
-  right_join(cgm_data)
+survey_long |>
+  right_join(survey_tidy)
 ```
 
-We see that, yes, it does have the same number of rows. We also see that
-there are no missing values in the glucose columns. That's because the
-`participant_details` dataset doesn't have glucose data and we know
-there is no missing values in `cgm_data` for it. So there will be no
-missing values in the output.
+We see that it has the same number of rows as when using `left_join()`.
+This isn't always the case, but in our case it is.
 
-Lastly, we'll fully join. Like `left_join()`, the number of rows can not
-be more than the sum of the number of rows in both datasets. But it can
-be less, since, by joining there will be overlap between the two
-datasets. At a minimum, there can not be less rows than the largest of
-the two datasets, which is in this case `participant_details` at
-`nrow(participant_details)` rows. Let's try `full_join()` to see what
-happens.
+Lastly, we'll use `full_join()`. Like `left_join()`, the number of rows
+can not be more than the sum of the number of rows in both datasets. But
+it can be less, since, by joining there will be overlap between the two
+datasets. At a minimum, there can not be fewer rows in the joined data
+than in the largest of the two datasets, which is in this case
+`survey_long` at `r nrow(survey_long)` rows. Let's try `full_join()` to
+see what happens.
 
 ```{r}
 #| label: full-join
 #| filename: "docs/learning.qmd"
 
-participant_details |>
-  full_join(cgm_data)
+survey_long |>
+  full_join(survey_tidy)
 ```
 
 We can see that the number of rows is
-`nrow(full_join(participant_details, cgm_data))`, which is still less
-than the sum of the two datasets. But again, it isn't surprising to us
-here, since we know there is some overlap between the two datasets.
+`nrow(full_join(survey_long, survey_tidy))`, which is still less than
+the sum of the two datasets. We know from the warnings that there are
+some duplicates, but we'll keep ignoring those for now.
 
 The `full_join()` function is most often used because we often want to
 see all the data we have, even if there are some missing values.
 Especially considering that some statistical models can use missing
-values as extra information.
-
-Let's code assign this output to a new object called `dime_data`.
+values as extra information. Let's continue the pipe and join the
+`hr_data` dataset as well.
 
 ```{r}
 #| label: assign-full-join
 #| filename: "docs/learning.qmd"
 
-dime_data <- participant_details |>
-  full_join(cgm_data)
-dime_data
+survey_long |>
+  full_join(survey_tidy) |>
+  full_join(hr_data)
 ```
 
-And then we can continue with adding the sleep data to it.
+We now have the start of a single dataset that we can eventually use for
+analyses. Let's do some checks first to make sure everything joined
+together as we expect. Let's assign the output of the joins to
+`nurses_stress` and then use `arrange()` of the `id` and
+`collection_datetime` columns before piping to `View()` to make it
+easier to check the data.
 
 ```{r}
-#| label: sleep-full-join
+#| label: check-joined-data
 #| filename: "docs/learning.qmd"
 
-dime_data <- participant_details |>
-  full_join(cgm_data) |>
-  full_join(sleep_data)
-dime_data
+nurses_stress <- survey_long |>
+  full_join(survey_tidy) |>
+  full_join(hr_data)
+
+nurses_stress |>
+  arrange(id, collection_datetime) |>
+  View()
 ```
 
-Woooo! :tada: We now are at the point of having only one data frame!
-Let's check the data out a bit more. Using the Console do:
+Ok, it looks like we have a lot of missing values. Do we expect that?
+Maybe. So far we've only read in the first 100 rows the HR-type data, so
+this could be the reason. Until we read in everything, we won't
+completely know. But there might also be missing values given that the
+HR-type data was recorded for many days in a row, while the survey data
+seems to only contain data on dates that the survey was filled out. But
+remember, at this stage, we're only prototyping and testing out the
+code, it doesn't have to make sense just yet, as long as the code runs.
+For now it's time for you to create the final dataset and then you can
+check it out in more detail.
+
+## :technologist: Exercise: Join the rest of the data together
+
+**Time: \~10 minutes.**
+
+Time to put it all together in the `docs/cleaning.qmd` file.
+
+1. Restart your R session with {{< var keybind.restart >}} to clear your
+   environment and make sure you have a clean slate.
+2. Open up the `docs/cleaning.qmd` file and scroll down to the bottom of
+   the file. Make a new header called `## Joining datasets`.
+3. Below that, make a new code chunk with {{< var keybind.chunk >}}.
+4. In that code chunk, copy and paste the `full_join()` code you just
+   wrote to join the `survey_long`, `survey_tidy`, and `hr_data`
+   datasets together.
+5. Continue the pipe and using `full_join()` to join the rest of the
+   datasets, which are `ibi_data`, `temp_data`, `bvp_data`, and
+   `eda_data`.
+6. Assign the output of the joins to `nurses_stress`.
+7. Run the code in `docs/cleaning.qmd` from beginning to end, then run
+   `View(nurses_stress)` in the Console to check the data.
+8. Style the with `styler::style_file()`.
+9. Render the document with {{< var keybind.render >}} to make sure
+   everything runs.
+10. Commit the changes with {{< var keybind.commit >}} and push to
+    GitHub.
+
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+```{r}
+#| label: admin-read-hr-type-data
+#| include: false
+
+hr_data <- read_all("HR.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+ibi_data <- read_all("IBI.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+temp_data <- read_all("TEMP.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+bvp_data <- read_all("BVP.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+
+eda_data <- read_all("EDA.csv.gz") |>
+  get_participant_id() |>
+  summarise_by_datetime()
+```
+
+This should be at the bottom of the `docs/cleaning.qmd` file.
 
 ```{r}
+#| label: solution-join-all
+#| output: false
+#| filename: "docs/cleaning.qmd"
+
+nurses_stress <- survey_long |>
+  full_join(survey_tidy) |>
+  full_join(hr_data) |>
+  full_join(ibi_data) |>
+  full_join(temp_data) |>
+  full_join(bvp_data) |>
+  full_join(eda_data)
+```
+
+And then run the code to check the data in the Console.
+
+```{r}
+#| label: solution-check-joined-data
 #| filename: "Console"
 #| eval: false
 
-View(dime_data)
+View(nurses_stress)
 ```
-
-Let's do some basic checks. Notice the column names, they seem to be
-repeats but with different names, like `awake` and `wake`. Also, the
-seconds sleeping per hour is more seconds than exist in an hour. We
-don't know why there are these issues as it isn't explained in the
-documentation.
-
-Keep in mind, since we only imported the first 100 rows, there will be
-some things that don't match up. But even with this, there are odd
-things that we will need to address.
-
-## Putting it all together: Save a final dataset
-
-We are finally at the point where we can put it all together and make a
-single dataset! Let's cut the join code we wrote in the previous section
-and paste it into the `setup` code chunk of `docs/learning.qmd`.
-
-```{r}
-#| label: join-all-datasets-setup
-#| filename: "docs/learning.qmd"
-
-dime_data <- participant_details |>
-  full_join(cgm_data) |>
-  full_join(sleep_data)
-```
-
-Then, open up the `R/functions.R` file and look at the `import_dime()`
-function. Find the line that says `n_max = 100` and delete it.
-
-The last step... saving the dataset to the `data/` folder! Why save it
-there? That way you communicate to yourself (and others) that this is
-the dataset to use, not the data in the `data-raw/` folder. So, open up
-`docs/learning.qmd` so we can save it as a CSV file with `write_csv()`.
-In the last line of the `setup` code chunk, do:
-
-```{r}
-#| label: save-data
-#| filename: "docs/learning.qmd"
-
-write_csv(dime_data, here("data/dime.csv"))
-```
-
-Since we don't want to track this file in Git, let's end this with
-ignoring it by running in the Console:
-
-```{r}
-#| label: ignore-data
-#| filename: "Console"
-#| eval: false
-
-usethis::use_git_ignore("data/dime.csv")
-```
-
-Now, in the `docs/learning.qmd` file, render the document with
-{{< var keybind.render >}}. This will reproducibly create the dataset
-and save it to the `data/` folder. Once that is done, we will finish
-with committing the changes with {{< var keybind.commit >}} and then
-pushing to GitHub.
-
 :::
+
+{{< text_snippet sticky_up >}}
+
+## :technologist: Exercise: Save the final dataset to the `data/` folder
+
+**Time: \~10 minutes.**
+
+The final step is to save the dataset to the `data/` folder. But, we
+also have to make sure to now read in all the data, not just the first
+100 rows.
+
+1. At the bottom of the last code chunk in the `docs/cleaning.qmd` file,
+   add the code to save the `nurses_stress` dataset to the `data/`
+   folder with `write_csv()`. Use the `here()` function to specify the
+   path to save it to. Save it to `data/nurses-stress.csv`. Why save it
+   there? So that you know that that is the "ready data" and not the raw
+   data. Run the code to make sure that it saves correctly.
+2. Since we don't want to track this file in Git, run the code in the
+   Console to ignore it with `usethis::use_git_ignore()`.
+3. Open up the `R/functions.R` file and find the `read()` function. Find
+   the line that says `max_rows = 100` and replace it with
+   `max_rows = Inf` to read in all the data. (If you did one of the
+   previous exercises to add `max_rows` argument to `read_all()`, then
+   you will need to change that instead.)
+4. Go back into `docs/cleaning.qmd` and render the `docs/cleaning.qmd`
+   file with {{< var keybind.render >}} to make sure everything runs and
+   the dataset is saved correctly. **WARNING**: This will take a long
+   time to run, so make sure this is the last thing you do here. If your
+   computer isn't fast enough or powerful enough, you can change the
+   `max_rows` to `10000` or something similar so that you can at least
+   running all the code and output a large dataset.
+5. Commit the changes with {{< var keybind.commit >}} and push to
+   GitHub.
+
+::: {.callout-note collapse="true" appearance="minimal" title="**Click for the solution**. Only click if you are struggling or are out of time."}
+```{r}
+#| label: solution-save-nurses-stress
+#| eval: false
+#| filename: "docs/cleaning.qmd"
+
+write_csv(nurses_stress, here("data/nurses-stress.csv"))
+```
+
+And run the code in the Console to ignore the file.
+
+```{r}
+#| label: solution-ignore-nurses-stress
+#| eval: false
+#| filename: "Console"
+
+usethis::use_git_ignore("data/nurses-stress.csv")
+```
+:::
+
+{{< text_snippet sticky_up >}}
 
 ## Key takeaways
 
@@ -345,13 +452,6 @@ discussion activity.
   of unexpected issues later on if not done well or not checked.
 - Use `left_join()`, `right_join()`, and `full_join()` to join two
   datasets together.
-
-```{r}
-#| label: store-session-code
-#| include: false
-
-save.image(here::here("_temp/joins.RData"))
-```
 
 {{< include /includes/_survey.qmd >}}
 
