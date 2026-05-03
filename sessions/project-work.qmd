@@ -5,19 +5,19 @@ apply it to create a reproducible project while working in a team (of 2
 or 3 people). This will help you reinforce what you learned in the
 previous sessions.
 
-The aim of this project is to produce two files that are stored on
-GitHub:
+The aim of this project is to produce two files, one that is stored on
+GitHub and the other is ignored by Git:
 
 - A reproducible Quarto file in `docs/cleaning.qmd` that cleans the
   data.
 - A generated `data/cleaned-dime.csv` file that is created by the
-  `docs/cleaning.qmd` file.
+  `docs/cleaning.qmd` file, but that is not stored on GitHub.
 
 During the project, we want you to:
 
 - Create and use functions that process the data.
-- Store those functions in the `R/functions.R` file and using `source()`
-  to use them in your Quarto document.
+- Store those functions in each of your `R/functions-*.R` files and use
+  `source()` to use them in your Quarto document.
 - Use functionals to apply those functions to the data.
 - Process and join together the data into one dataset that can help
   answer a research question.
@@ -26,7 +26,8 @@ During the project, we want you to:
 - Use `docs/cleaning.qmd` as the main file that only contains the code
   to clean and process the data. It shouldn't be used for testing out
   code or doing exploration, that's what the `docs/sandbox-*.qmd` files
-  are for.
+  are for. It should source both of your `R/functions-*.R` files to use
+  the functions you created in those files.
 
 During the last 15-20 minutes of this session, the lead teacher will
 download your project from GitHub and re-generate your report to check
@@ -140,7 +141,7 @@ might do that. You can use pen and paper for this if you want.
 To help you focus on the processing stage, these would be the research
 questions we want you to try to answer:
 
-1. How do glucose levels over time compare the baseline and the
+1. How do glucose levels over time compare between the baseline and the
    different treatments, after controlling for gender and age?
 2. How do glucose levels over time compare between the two treatments,
    after controlling for gender and age?
@@ -166,11 +167,62 @@ state.
 
 ### Coordinate tasks so `docs/cleaning.qmd` creates a final cleaned dataset
 
-<!-- TODO: Add steps and help instructions -->
+This project is fairly open-ended but here are some potential steps or
+tasks to do:
 
-::: callout-caution
-:construction_worker: This part is being actively developed and edited.
-It will be added here once done.
+1. Before starting to code, brainstorm and decide on how the final
+   dataset should look like in order to answer the research questions.
+   Think and be explicit about what the columns are, what the rows are,
+   and so on.
+
+2. Open up the raw DIME data files in a spreadsheet or with a simple
+   `read_csv()` to better understand how the data looks like right now.
+   As you do, brainstorm and design what potential processing steps
+   might be needed to get the data into the right format and structure
+   to answer the research questions.
+
+3. In each team members own `docs/sandbox-*.qmd` file, start to code so
+   that you can read in the data and to do some of the processing steps
+   you brainstormed. Use what we covered in the workshop. Remember: "if
+   you can do it for one, you can do it for all". Start with reading in
+   one file, tidying it up if you need to, and then write a function
+   that does the reading for the one file. Then, use functionals to
+   apply that function to all the files in the folder. Do this for each
+   of the different data files.
+
+4. Communicate and coordinate with your team member(s) when you make
+   functions and add them into each of your `R/functions-*.R` files, so
+   that you can re-use each other's functions in your
+   `docs/sandbox-*.qmd` files by using `source()`.
+
+5. In your `docs/cleaning.qmd` file, use `source()` to source both of
+   your `R/functions-*.R` files, so that you can use the functions you
+   created in those files in your `docs/cleaning.qmd` file.
+
+6. As you build and tidy up the dataset, move your finalized code into
+   `docs/cleaning.qmd` and make sure it runs and creates the cleaned
+   dataset in `data/cleaned-dime.csv`. You can use `View()` to check how
+   the data looks like at each step. Make sure to communicate with your
+   team member(s) as you move code into `docs/cleaning.qmd`.
+
+::: callout-tip
+You might need to use `pivot_wider()` to tidy up the sleep data.
+:::
+
+::: callout-tip
+You might need to summarise by day for the sleep and glucose data in
+order to effectively join them together, especially for joining with the
+participant details data.
+:::
+
+::: callout-tip
+You might need to `complete()` the participant details by `"1 day"` in
+order to effectively join it with the sleep and glucose data.
+:::
+
+::: callout-tip
+As you prototype, you can pipe into `View()` to check how the data looks
+like at each step.
 :::
 
 ### Regularly style your code
@@ -202,7 +254,7 @@ it to the `.gitignore` file for you when we set the project up.
 - Project used Git and is on GitHub.
 - Used Quarto for testing out code and prototyping how you would process
   the data.
-- Created functions and stored them in the `R/functions.R` file.
+- Created functions and stored them in the `R/functions-*.R` files.
 - Used functionals to apply functions to chunks or groups of data.
 - Used `{tidyverse}` for data processing.
 - Code is correctly styled.
