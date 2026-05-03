@@ -25,7 +25,9 @@ easily and with less code. But we still have a problem of having nearly
 that would still be 3000 lines of copy and pasted code. That's not very
 efficient and also sounds like an anxiety-inducing situation to be in.
 So in this session, we'll go over using things called "functionals" to
-do many things at once with minimal extra code.
+do many things at once with minimal extra code. Remember what we said:
+"If you can do it for one, you can do it for all". This is the part
+where we "do it for all".
 
 ## Learning objectives
 
@@ -95,8 +97,9 @@ Functional programming, in R, is programming that:
   - Vectors are multiple items, like a sequence of numbers from 1 to 5,
     that are bundled together, for instance a column for body weight in
     a dataset is a vector of numbers.
-- Can use functions as input to other functions to then output a vector
-  (called a [functional](https://adv-r.hadley.nz/functionals.html) or
+- Can use functions as input to other functions to then use that
+  function on each item in a set of items (called a
+  [functional](https://adv-r.hadley.nz/functionals.html) or
   "higher-order function").
 
 We've already covered functions. You've definitely already used

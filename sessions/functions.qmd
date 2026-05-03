@@ -11,11 +11,13 @@ library(here)
 ```
 
 We've written simple code that reads in one of our data files and does
-some simple cleaning to it. But we have about 2000 CSV files to read in.
-So even with our simple code, isn't going to be very efficient if we
-just copy and paste that code to read in all those files. This session
-is about bundling our code into functions that will make it easier to
-read more files with less code.
+some simple cleaning to it. But we have nearly 3000 CSV files to read
+in. So even with our simple code, it isn't going to be very efficient if
+we just copy and paste that code to read in all those files. But one
+powerful concept to use in R is: "if you can do it for one, you can do
+it for all". This session is about bundling our code into functions to
+"do it for one" that will make it easier to later "do it for all", while
+using less code.
 
 ## Learning objectives
 
@@ -587,7 +589,7 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 
 1. In the `read()` function, add a new argument called `max_rows` after
    the `file_path` argument inside `function()`. We'll called it
-   `max_rows` because that's a more descriptive name for it that
+   `max_rows` because that's a more descriptive name for it than
    `n_max`.
 2. Inside the function body, replace the `n_max = 100` with
    `n_max = max_rows` so that the function will use the value given in
@@ -644,18 +646,6 @@ Go over this solution with everyone as we will use it in the next
 session.
 :::
 
-## :speech_balloon: Discussion activity: What are some tasks that could be functions?
-
-**Time: \~6 minutes.**
-
-As we prepare for the next session and the break, get up, walk around,
-and discuss with your neighbour some of the following questions:
-
-- What are some tasks you do that are repetitive or that you do multiple
-  times with very small changes each time you do the task?
-- How might you use functions in your work? Can you think of specific
-  tasks or situations where you could use one?
-
 ## Key takeaways
 
 ::: {.callout-note appearance="minimal" collapse="true"}
@@ -686,5 +676,17 @@ save.image(here::here("_temp/functions.RData"))
 ```
 
 {{< include /includes/_survey.qmd >}}
+
+## :speech_balloon: Discussion activity: What are some tasks that could be functions?
+
+**Time: \~6 minutes.**
+
+As we prepare for the next session and the break, get up, walk around,
+and discuss with your neighbour some of the following questions:
+
+- What are some tasks you do that are repetitive or that you do multiple
+  times with very small changes each time you do the task?
+- How might you use functions in your work? Can you think of specific
+  tasks or situations where you could use one?
 
 {{< include /includes/_code-appendix.qmd >}}

@@ -21,7 +21,7 @@ untar(
 
 While we made a simple function for some simple code, reusing that
 function to read in data from other files while using it in other Quarto
-documents or R scripts means it needs to be robust enough and accessible
+documents or R scripts means it needs to be robust and accessible enough
 to be used in those other places. This session we'll make our functions
 more robust, reusable, and accessible.
 
@@ -470,7 +470,7 @@ Roxygen documentation, open the `R/functions.R` with
 The code in the `R/functions.R` file should now look like this:
 
 ```{r}
-#| label: import-dime-functions-r-file
+#| label: read-functions-r-file
 #| filename: "R/functions.R"
 
 #' Read in one nurses' stress data file.
@@ -566,6 +566,8 @@ others' code, and try to improve it.
 2. Together with your neighbour, discuss some of these things you've
    thought about. Try to find out if you have similar thoughts or ideas
    on how to improve things.
+3. Then, as a group, we will briefly share some of the things you
+   thought about and discussed with your neighbour.
 
 ## Key takeaways
 

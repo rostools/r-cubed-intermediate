@@ -28,13 +28,6 @@ the keyboard.
 
 ### Hypothetical research questions {.unnumbered}
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Teacher note
-
-Go over the text again and use the diagrams to reinforce what our
-roadmap is.
-:::
-
 Imagine that you are a researcher who wants to do a study. You're
 interested in how physiological measures get impacted by stress. You
 work in a hospital and have many nurses and other health professionals
@@ -74,11 +67,8 @@ research questions.
 4. What might the values be in the cells? What do they represent?
 5. How big might the data be?
 
-Now take a look at the current state of the data. How is it different
-from what the ideal would be?
-
-We have the questions, now, what would the data *exactly* look like to
-be able to answer these questions? How is it structured?
+We have the research questions. Now, what would the data *exactly* look
+like to be able to answer these questions? How is it structured?
 
 1. For 4 minutes, think about these questions on your own, writing down
    notes if you like. Try sketching out with pen and paper what the data
@@ -202,9 +192,9 @@ We'll achieve this by using a "project-based workflow" (that we covered
 in the [introduction
 workshop](https://r-cubed-intro.rostools.org/sessions/setup-project)),
 using a "function-oriented workflow" (that we will cover and use
-throughout the workshop), and use Quarto documents for prototyping as
-well as for our final document that contains the code to generate the
-final dataset.
+throughout the workshop), and using Quarto documents for prototyping as
+well as for our final document that will contain the code to generate
+the final dataset.
 
 By the end, the files and folders in our project should looke like the
 below:

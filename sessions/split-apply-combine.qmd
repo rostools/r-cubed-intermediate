@@ -52,8 +52,8 @@ So when you split data into multiple groups, you create a list (or a
 statistical technique to each group through *vectorization*, and where
 you finally combine (e.g. with join that we will cover later or with
 `list_rbind()`). This technique works really well for a range of tasks,
-including for our task of summarizing some of the DIME data so we can
-merge it all into one dataset.
+including for our task of summarizing some of the data so we can merge
+it all into one dataset.
 
 ![A diagram showing how a data frame is split up, an action is applied to the splits that outputs a new result, and the results are combined back together. Taken from [Software Carpentries R for Reproducible Scientific Analysis](https://unlhcc.github.io/r-novice-gapminder/16-plyr/).](/images/split-apply-combine.png)
 
@@ -76,8 +76,8 @@ previous sessions with `map()`, where they take functions as input. For
 instance, `summarise()` uses several functional programming concepts:
 Create a new column using an action that may or may not be based on
 other columns and output a single value from that action. Using an
-example with our DIME data, to calculate the mean of a column and create
-a new column from that mean for the glucose values, you would do:
+example with our data, to calculate the mean of a column and create a
+new column from that mean for the glucose values, you would do:
 
 ```{r}
 hr_data |>
