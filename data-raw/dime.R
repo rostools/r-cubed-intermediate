@@ -1,6 +1,11 @@
 library(here)
 library(tidyverse)
 
+#' Read a CSV file and use snake case.
+#'
+#' @param path Path to CSV file.
+#'
+#' @returns Tibble.
 read <- function(path) {
   readr::read_csv(
     path,
@@ -9,12 +14,22 @@ read <- function(path) {
   )
 }
 
+#' Read all CSV files in a directory and combine into one tibble.
+#'
+#' @param path Path to directory containing CSV files.
+#'
+#' @returns Tibble.
 read_all <- function(path) {
   fs::dir_ls(path, glob = "*.csv") |>
     purrr::map(read) |>
     purrr::list_rbind(names_to = "path")
 }
 
+#' Get the participant ID from the file path and add it as a column.
+#'
+#' @param data The tibble with a file path column.
+#'
+#' @returns Tibble with participant ID column.
 get_participant_id <- function(data) {
   data |>
     dplyr::mutate(
@@ -27,6 +42,11 @@ get_participant_id <- function(data) {
     dplyr::select(-path)
 }
 
+#' Tidy up CGM data, like renaming columns, making a date column, and summarise by day.
+#'
+#' @param data The tibble with CGM data.
+#'
+#' @returns Tibble with tidy CGM data.
 tidy_cgm <- function(data) {
   data |>
     dplyr::rename(
@@ -44,6 +64,11 @@ tidy_cgm <- function(data) {
     )
 }
 
+#' Tidy up sleep data, like renaming columns, making a date column, and pivoting wider.
+#'
+#' @param data The tibble with sleep data.
+#'
+#' @returns Tibble with tidy sleep data.
 tidy_sleep <- function(data) {
   data |>
     dplyr::rename(datetime = date) |>
@@ -68,6 +93,11 @@ tidy_sleep <- function(data) {
     )
 }
 
+#' Tidy up participant details data, like pivoting longer and completing dates.
+#'
+#' @param data The tibble with participant details data.
+#'
+#' @returns Tibble with tidy participant details data.
 tidy_participant_details <- function(data) {
   data |>
     tidyr::pivot_longer(
