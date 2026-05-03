@@ -15,5 +15,8 @@ tab-width = 2
 # This stops formatting of `@` eg `@sec-`
 example-lists = false
 
+[formatters]
+r = "air"
+
 [linters]
 r = "jarl"
