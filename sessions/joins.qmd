@@ -276,9 +276,7 @@ survey_long |>
 We now have the start of a single dataset that we can eventually use for
 analyses. Let's do some checks first to make sure everything joined
 together as we expect. Let's assign the output of the joins to
-`nurses_stress` and then use `arrange()` of the `id` and
-`collection_datetime` columns before piping to `View()` to make it
-easier to check the data.
+`nurses_stress`.
 
 ```{r}
 #| label: check-joined-data
@@ -287,6 +285,15 @@ easier to check the data.
 nurses_stress <- survey_long |>
   full_join(survey_tidy) |>
   full_join(hr_data)
+```
+
+Then use `arrange()` of the `id` and `collection_datetime` columns
+before piping to `View()` to make it easier to check the data.
+
+```{r}
+#| label: view-joined-data
+#| eval: false
+#| filename: "docs/learning.qmd"
 
 nurses_stress |>
   arrange(id, collection_datetime) |>
@@ -310,8 +317,8 @@ check it out in more detail.
 
 Time to put it all together in the `docs/cleaning.qmd` file.
 
-1. Restart your R session with {{< var keybind.restart >}} to clear your
-   environment and make sure you have a clean slate.
+1. Restart your R session with {{< var keybind.restart-r >}} to clear
+   your environment and make sure you have a clean slate.
 2. Open up the `docs/cleaning.qmd` file and scroll down to the bottom of
    the file. Make a new header called `## Joining datasets`.
 3. Below that, make a new code chunk with {{< var keybind.chunk >}}.

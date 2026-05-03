@@ -30,7 +30,8 @@ Imports:
     vroom,
     withr,
     readr,
-    roxygen2
+    roxygen2,
+    tidyr
 Suggests:
     prodigenr,
     tidyverse

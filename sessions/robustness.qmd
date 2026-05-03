@@ -373,7 +373,6 @@ You add `{readr}` and `{snakecase}` to the `DESCRIPTION` file with:
 ```{r}
 #| label: solution-add-project-dependencies
 #| filename: Console
-#| echo: false
 #| eval: false
 
 usethis::use_package("readr")
