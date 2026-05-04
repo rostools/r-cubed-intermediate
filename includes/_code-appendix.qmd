@@ -13,7 +13,7 @@ the code from the exercises.
 #| label: code-appendix
 #| echo: true
 #| eval: false
-#| ref-label: !expr 'stringr::str_subset(knitr::all_labels(), "^(unnamed-chunk-.*|purl-only-.*|setup|admin-.*|fig-.*)", negate = TRUE)'
+#| ref-label: !expr 'stringr::str_subset(knitr::all_labels(), "^(unnamed-chunk-.*|purl-only-.*|setup|extra-.*|admin-.*|fig-.*)", negate = TRUE)'
 ```
 
 <!-- panache-ignore-format-end -->

@@ -519,7 +519,7 @@ be simpler.
 The function should look like this in the `R/functions.R` file:
 
 ```{r}
-#| label: solution-look-arounds
+#| label: extra-solution-look-arounds
 #| filename: "R/functions.R"
 #| output: false
 
@@ -540,7 +540,7 @@ get_participant_id <- function(data) {
 It should still be usable in the same way as before:
 
 ```{r}
-#| label: solution-use-look-arounds
+#| label: extra-solution-use-look-arounds
 #| filename: "Console"
 #| output: false
 
