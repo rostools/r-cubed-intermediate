@@ -21,6 +21,15 @@ If you attended a workshop or used the workshop material as some point
 in time, you can always refer to this changelog page to find out what
 has been changed since you last used it.
 
+## 8.5.1 (2026-05-04)
+
+### Fix
+
+- ✏️ forgot to remove the lookaround regex
+- 💄 wider first column in regex table
+- 🐛 don't show extra solutions in code appendix
+- 🐛 small fixes to svg images, they're comma's were offset
+
 ## 8.5.0 (2026-05-03)
 
 ### Feat
