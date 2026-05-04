@@ -24,7 +24,7 @@ repos:
   # sub-packages, which confuses pre-commit when it tries to find the latest
   # version
   - repo: https://github.com/adhtruong/mirrors-typos
-    rev: v1.45.1
+    rev: v1.46.0
     hooks:
       - id: typos
 
@@ -41,6 +41,6 @@ repos:
   #     - id: rumdl-fmt # Auto-format
 
   - repo: https://github.com/jolars/panache
-    rev: v2.41.0
+    rev: panache-formatter-v0.4.1
     hooks:
       - id: panache-format
