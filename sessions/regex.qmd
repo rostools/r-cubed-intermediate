@@ -306,8 +306,7 @@ hr_data |>
   mutate(
     id = str_extract(
       file_path_id,
-      # "/stress/[:alnum:]{2}/"
-      "(?<=/stress/)[:alnum:]{2}(?=/)"
+      "/stress/[:alnum:]{2}/"
     ),
     .before = file_path_id
   )
