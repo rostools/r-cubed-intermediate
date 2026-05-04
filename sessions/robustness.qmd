@@ -12,6 +12,10 @@ library(here)
 load(here("_temp/functions.RData"))
 temp_path <- fs::path_temp()
 project_path <- fs::path(temp_path, "LearnR3")
+untar(
+  tarfile = here::here("_temp", "project.tar.gz"),
+  exdir = project_path
+)
 ```
 
 While we made a simple function for some simple code, reusing that
