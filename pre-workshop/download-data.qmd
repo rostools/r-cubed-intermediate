@@ -377,7 +377,7 @@ usethis::with_project(
       "data-raw/nurses-stress.tar",
       exdir = "data-raw/nurses-stress/"
     )' |>
-      writeLines(here::here("data-raw/nurses-stress.R"))
+      writeLines("data-raw/nurses-stress.R")
   }
 )
 ```
