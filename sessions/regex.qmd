@@ -166,8 +166,8 @@ like in @tab-regex:
   | `[:lower:]` | find one lowercase letter (a-z)                                                                                 |
   | `(A         | B)`                                                                                                             | find *either* `A` or `B` (` | ` means "or" and the `()` groups them), e.g., `(\\D | \\d)` means find either a non-digit or a digit. |
 
-  : A list of some common regex patterns and their meanings.
-    {#tab-regex}
+  : A list of some common regex patterns and their meanings. {#tab-regex
+    tbl-colwidths="[30,70]"}
 
 ::: callout-note
 The `\` string is a special string in regex, but in R it means "escape
