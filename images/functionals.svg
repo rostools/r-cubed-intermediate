@@ -28,14 +28,14 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="3.9967051"
-     inkscape:cx="103.83553"
-     inkscape:cy="36.655193"
+     inkscape:cx="103.96063"
+     inkscape:cy="37.155606"
      inkscape:window-width="3400"
      inkscape:window-height="1371"
      inkscape:window-x="40"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g72" /><metadata
+     inkscape:current-layer="g78" /><metadata
      id="metadata2"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
@@ -78,7 +78,7 @@
          y="-664.87659"
          fill="#404040"
          stroke-width="0.75px"
-         id="tspan12">map(       , func)</tspan></text><g
+         id="tspan12">map(        , func)</tspan></text><g
        transform="translate(77.052,-89.515)"
        id="g28"><rect
          transform="scale(1,-1)"
@@ -175,7 +175,7 @@
          stroke="#404040"
          stroke-width="0.74998"
          id="rect40" /></g><g
-       transform="translate(-70.763608,23.951)"
+       transform="translate(-69.26357,23.951)"
        id="g72"><text
          transform="scale(1,-1)"
          x="-206.41005"
@@ -281,7 +281,7 @@
            fill="#404040"
            stroke-width="0.75px"
            id="tspan66">func(     )</tspan></text></g><path
-       d="m -302.8274,667.79926 18.452,-0.10917"
+       d="m -298.32728,667.79926 18.452,-0.10917"
        fill="none"
        marker-end="url(#Arrow1Mend)"
        stroke="#404040"
