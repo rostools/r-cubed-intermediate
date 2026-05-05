@@ -537,9 +537,10 @@ reusable, while still being useful for your specific purposes. These
 principles are:
 
 1. Have the function's input (the arguments) be generic enough to take
-   different types of objects as long as they are the same "type". In
-   our case, we have a function that takes a path "type". A path is a
-   very general input, so we can keep it as is.
+   objects of the same "type" but that have different values (e.g. a
+   number type, but any number is allowed). In our case, we have a
+   function that takes a path "type". A path is a very general input, so
+   we can keep it as is.
 2. Have the function's output be a common "type", like a vector or data
    frame. When working in R, it's a very good practice to have functions
    output a data frame, since many functions, especially in the
