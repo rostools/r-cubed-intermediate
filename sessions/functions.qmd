@@ -33,7 +33,7 @@ structure, that all actions are functions, and all functions are objects
 (but not that all objects are functions).
 :::
 
-**Time: \~5 minutes.**
+**Time: \~8 minutes.**
 
 The first thing to know about R is that everything is an "object" and
 that some objects can do an action. These objects that do an action are
