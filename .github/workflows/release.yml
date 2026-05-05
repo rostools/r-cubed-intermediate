@@ -71,7 +71,6 @@ jobs:
         run: |
           gh release create $REVISION \
             --notes-file changelog_notes.md \
-            --fail-on-no-commits \
             --verify-tag
 
       # Need to output this to tell any potential next job that a release was made.
