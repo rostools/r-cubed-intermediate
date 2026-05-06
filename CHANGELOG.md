@@ -21,6 +21,14 @@ If you attended a workshop or used the workshop material as some point
 in time, you can always refer to this changelog page to find out what
 has been changed since you last used it.
 
+## 8.5.3 (2026-05-06)
+
+### Fix
+
+- ✏️ should be called `collection_datetime`
+- 🐛 fix table formatting
+- ✏️ clarify different values as input but same type
+
 ## 8.5.2 (2026-05-05)
 
 ### Fix
