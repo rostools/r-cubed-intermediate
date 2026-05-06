@@ -67,13 +67,17 @@ scenario where you are entering data from a participant for glucose
 values that were measured every 30 minutes. So you might enter data like
 this:
 
-  | person_id | glucose_0 | glucose_30 | glucose_60 |
-  | :-------- | :-------- | :--------- | :--------- |
-  | 1         | 5.6       | 7.8        | 4.5        |
-  | 2         | 4.7       | 9.5        | 5.3        |
-  | 3         | 5.1       | 10.2       | 4.2        |
+<!-- panache-ignore-format-start -->
 
-  : This is a **wide** dataset that is useful for data entry.
+| person_id | glucose_0 | glucose_30 | glucose_60 |
+|:----------|:----------|:-----------|:-----------|
+| 1         | 5.6       | 7.8        | 4.5        |
+| 2         | 4.7       | 9.5        | 5.3        |
+| 3         | 5.1       | 10.2       | 4.2        |
+
+: This is a **wide** dataset that is useful for data entry.
+
+<!-- panache-ignore-format-end -->
 
 If you are working with a spreadsheet, you might enter the glucose value
 for one participant at one time point, then hit the tab key to move to

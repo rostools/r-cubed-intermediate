@@ -144,30 +144,33 @@ sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) on
 it. But we will cover some of the more commonly used regex patterns,
 like in @tab-regex:
 
-  | regex       | Meaning                                                                                                         |
-  | ----------- | --------------------------------------------------------------------------------------------------------------- | --------------------------- | --------------------------------------------------- | ----------------------------------------------- |
-  | `\\d`       | find one digit (0-9)                                                                                            |
-  | `\\D`       | find one non-digit                                                                                              |
-  | `[0-9]`     | find one digit between 0 and 9 (the `-` is a range)                                                             |
-  | `[a-z]`     | find one letter between a and z (lowercase)                                                                     |
-  | `[A-Z]`     | find one letter between A and Z (uppercase)                                                                     |
-  | `[a-zA-Z]`  | find one letter between a and z or A and Z                                                                      |
-  | `\\.`       | find one dot string                                                                                             |
-  | `$`         | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                       |
-  | `^`         | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                         |
-  | `?`         | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                    |
-  | `*`         | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other |
-  | `+`         | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other    |
-  | `{n}`       | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other             |
-  | `[:alpha:]` | find one letter (a-z or A-Z)                                                                                    |
-  | `[:digit:]` | find one digit (0-9)                                                                                            |
-  | `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9)                                                                           |
-  | `[:upper:]` | find one uppercase letter (A-Z)                                                                                 |
-  | `[:lower:]` | find one lowercase letter (a-z)                                                                                 |
-  | `(A         | B)`                                                                                                             | find *either* `A` or `B` (` | ` means "or" and the `()` groups them), e.g., `(\\D | \\d)` means find either a non-digit or a digit. |
+<!-- panache-ignore-format-start -->
 
-  : A list of some common regex patterns and their meanings. {#tab-regex
-    tbl-colwidths="[30,70]"}
+| regex       | Meaning                                                                                                                         |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `\\d`       | find one digit (0-9)                                                                                                            |
+| `\\D`       | find one non-digit                                                                                                              |
+| `[0-9]`     | find one digit between 0 and 9 (the `-` is a range)                                                                             |
+| `[a-z]`     | find one letter between a and z (lowercase)                                                                                     |
+| `[A-Z]`     | find one letter between A and Z (uppercase)                                                                                     |
+| `[a-zA-Z]`  | find one letter between a and z or A and Z                                                                                      |
+| `\\.`       | find one dot string                                                                                                             |
+| `$`         | find the end of the string, e.g. `\\.$` means find a dot that is at the end of the string                                       |
+| `^`         | find the start of the string, e.g. `^\\d` means find a digit at the start of the string                                         |
+| `?`         | maybe find the string before the `?`, e.g. `\\d?` means maybe find one digit                                                    |
+| `*`         | find the string before it, but maybe many times, e.g. `\\d*` means find zero or many digits one after the other                 |
+| `+`         | find the string one or more times before `{}`, e.g. `\\d+` means find one or more digits one after the other                    |
+| `{n}`       | find the same string `n` times before `{}`, e.g. `\\d{2}` means find two digits one after the other                             |
+| `[:alpha:]` | find one letter (a-z or A-Z)                                                                                                    |
+| `[:digit:]` | find one digit (0-9)                                                                                                            |
+| `[:alnum:]` | find one alphanumeric (a-z, A-Z, 0-9)                                                                                           |
+| `[:upper:]` | find one uppercase letter (A-Z)                                                                                                 |
+| `[:lower:]` | find one lowercase letter (a-z)                                                                                                 |
+| `(A|B)`     | find *either* `A` or `B` (`|` means "or" and the `()` groups them), e.g., `(\\D|\\d)` means find either a non-digit or a digit. |
+
+: A list of some common regex patterns and their meanings. {#tab-regex tbl-colwidths="[30,70]"}
+
+<!-- panache-ignore-format-end -->
 
 ::: callout-note
 The `\` string is a special string in regex, but in R it means "escape
