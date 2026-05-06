@@ -319,14 +319,13 @@ using `round_date()` with the `unit` argument set to `"minute"`:
 
 hr_data |>
   mutate(
-    datetime = lubridate::round_date(collection_datetime, unit = "minute"),
-    .before = collection_datetime
+    collection_datetime = round_date(collection_datetime, unit = "minute")
   )
 ```
 
-Our next step is to summarise by this new `datetime` column, so we have
-the measurement values per minute rather than per second. First, let's
-add `{lubridate}` as a package dependency:
+Our next step is to summarise by this `collection_datetime` column, so
+we have the measurement values per minute rather than per second. First,
+let's add `{lubridate}` as a package dependency:
 
 ```{r}
 #| label: add-lubridate-dependency
@@ -379,7 +378,7 @@ together to then output that new data frame.
 
 hr_data |>
   mutate(
-    collection_datetime = lubridate::round_date(
+    collection_datetime = round_date(
       collection_datetime,
       unit = "minute"
     )
