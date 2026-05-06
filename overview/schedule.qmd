@@ -21,7 +21,7 @@ and overview.
 ## Day 1 {.unnumbered}
 
 | Time  | Session topic                                                                           |
-| :---- | :-------------------------------------------------------------------------------------- |
+|:------|:----------------------------------------------------------------------------------------|
 | 9:00  | {{< fa mug-hot >}} Arrival; Coffee and light breakfast                                  |
 | 9:30  | {{< fa person-chalkboard >}} [Introduction to the workshop](/sessions/introduction.qmd) |
 | 10:15 | {{< fa laptop-code >}} [Pre-process data as you import it](/sessions/importing.qmd)     |
@@ -36,7 +36,7 @@ and overview.
 ## Day 2 {.unnumbered}
 
 | Time  | Session topic                                                                                               |
-| :---- | :---------------------------------------------------------------------------------------------------------- |
+|:------|:------------------------------------------------------------------------------------------------------------|
 | 9:00  | {{< fa laptop-code >}} [Doing many things at once with functionals](/sessions/functionals.qmd)              |
 | 10:25 | {{< fa comment-dots >}} [End of session short survey]({{< meta surveys.feedback >}})                        |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                             |
@@ -52,7 +52,7 @@ and overview.
 ## Day 3 {.unnumbered}
 
 | Time  | Session topic                                                                                      |
-| :---- | :------------------------------------------------------------------------------------------------- |
+|:------|:---------------------------------------------------------------------------------------------------|
 | 9:00  | {{< fa laptop-code >}} [Joining data together](/sessions/joins.qmd)                                |
 | 10:30 | {{< fa mug-hot >}} Break with coffee and snacks                                                    |
 | 10:45 | {{< fa laptop-code >}} Continuing the last session                                                 |
