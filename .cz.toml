@@ -1,5 +1,5 @@
 [tool.commitizen]
-version = "8.5.3"
+version = "8.5.4"
 bump_message = "build: 🔖 update version from $current_version to $new_version"
 version_schema = "semver"
 version_provider = "commitizen"
