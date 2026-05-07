@@ -234,6 +234,12 @@ survey_long |>
 We see that it has the same number of rows as when using `left_join()`.
 This isn't always the case, but in our case it is.
 
+::: callout-note
+The reason they are the same is because both the `survey_long` and
+`survey_tidy` both come from the same source `survey_data`. So our joins
+will all be the same.
+:::
+
 Lastly, we'll use `full_join()`. Like `left_join()`, the number of rows
 can not be more than the sum of the number of rows in both datasets. But
 it can be less, since, by joining there will be overlap between the two
@@ -251,7 +257,7 @@ survey_long |>
 ```
 
 We can see that the number of rows is
-`nrow(full_join(survey_long, survey_tidy))`, which is still less than
+`r nrow(full_join(survey_long, survey_tidy))`, which is still less than
 the sum of the two datasets. We know from the warnings that there are
 some duplicates, but we'll keep ignoring those for now.
 
@@ -262,7 +268,7 @@ values as extra information. Let's continue the pipe and join the
 `hr_data` dataset as well.
 
 ```{r}
-#| label: assign-full-join
+#| label: view-full-join
 #| filename: "docs/learning.qmd"
 
 survey_long |>
@@ -270,13 +276,28 @@ survey_long |>
   full_join(hr_data)
 ```
 
+Here we can try out how the `left_join()` and `full_join()` can give
+different results.
+
+```{r}
+#| label: view-left-join
+#| filename: "docs/learning.qmd"
+
+survey_long |>
+  full_join(survey_tidy) |>
+  left_join(hr_data)
+```
+
+In our case, we want all the data from both the survey and the sensor
+data, since the sensor data will contain more data than the survey data.
+
 We now have the start of a single dataset that we can eventually use for
 analyses. Let's do some checks first to make sure everything joined
 together as we expect. Let's assign the output of the joins to
 `nurses_stress`.
 
 ```{r}
-#| label: check-joined-data
+#| label: assign-joined-data
 #| filename: "docs/learning.qmd"
 
 nurses_stress <- survey_long |>
