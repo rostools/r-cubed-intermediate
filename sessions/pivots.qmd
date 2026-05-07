@@ -450,7 +450,7 @@ Start with the date-tidying code:
    Replace the dataset name `survey_data` with the `data` argument and
    assign the output to `tidied`.
 3. Explicitly link each function you use inside the function to its
-   packages with `::`. There should be three packages used within the
+   packages with `::`. There should be two packages used within the
    function.
 4. There's one package you haven't added to the dependencies. Add it
    with `usethis::use_package()`.
