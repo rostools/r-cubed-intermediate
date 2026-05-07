@@ -11,13 +11,10 @@ library(dplyr)
 load(here("_temp/pivots.RData"))
 ```
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## Teacher note
-
-Briefly go over the bigger picture (found in the introduction section)
-and remind everyone the 'what' and 'why' of what we are doing, and where
-we are at.
-:::
+We now have several datasets that have a common set of columns, like
+`id` and `datetime_id`, along with the a common datetime unit (minutes).
+Now we can actually join all the datasets together into a single
+dataset, which is what we will do during this session.
 
 ## Learning objectives
 
