@@ -65,11 +65,11 @@ hole.
 
 ## Learning more from others: For PhD students to senior researchers {.center}
 
-## More exposure and visibility: More output to show and be seen {.center}
-
 ## So few are doing open science, this is a great niche! {.center}
 
 ## Easier and quicker collaboration (aside from the learning part) {.center}
+
+(especially when done through GitHub)
 
 ## Finding better opportunities outside of academia {.center}
 
@@ -132,10 +132,7 @@ because we're afraid we're doing something wrong
 
 # Strong personal barriers like ... {.center}
 
-## Fear of ... {.center}
-
-- Fear of being scooped or ideas being stolen
-- Errors and public humiliation
+## Fear of being scooped or ideas being stolen {.center}
 
 ::: notes
 And there aren't just institutional barriers. We as researchers have fears of
