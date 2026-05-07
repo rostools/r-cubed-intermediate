@@ -116,10 +116,12 @@ Read the description of the DIME dataset that was taken from the
 
 All team members should now go back to the RStudio R project of your
 team's repository. Then, open the `data-raw/dime.R` file. I've included
-code to download and unzip the data into a new folder for you. All team
-members should `source()` this file with {{< var keybind.source >}}.
-This will download the dataset and save it to `data-raw/dime/`. Inside
-this folder, it should look a bit like:
+a TODO task to manually download, along with code to unzip the data into
+a new folder for you. All team members should manually download the data
+into `data-raw/` and save the file as `dime.zip`. Then run `source()` on
+the `data-raw/dime.R` file with {{< var keybind.source >}}. This will
+download the dataset and save it to `data-raw/dime/`. Inside this
+folder, it should look a bit like:
 
 ```text
 data-raw/
