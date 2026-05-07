@@ -407,7 +407,7 @@ GitHub.
 
 ## :technologist: Exercise: Convert the summarising code into a function
 
-**Time: \~10 minutes.**
+**Time: \~15 minutes.**
 
 It's your turn to convert the code into a function so that you can use
 it on the other datasets. It should be able to work like this for the HR
@@ -514,7 +514,7 @@ hr_data <- read_all("HR.csv.gz") |>
 
 ## :technologist: Exercise: Start filling in `docs/cleaning.qmd`
 
-**Time: \~10 minutes.**
+**Time: \~15 minutes.**
 
 You're now at a point where you have functions to read in and process
 all of the HR-type data. So let's start filling in the
