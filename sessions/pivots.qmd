@@ -314,11 +314,10 @@ that it has an argument called `names_to` and `values_to` that allow use
 to rename these new columns to something else. If we look at the `name`
 column, it contains the original column names `start_datetime` and
 `end_datetime`. With the `id`, the `value` (which is the actual datetime
-value), and the `duration` column, we have a unique "key" for each
+value) and the `datetime_id` column, we have a unique "key" for each
 observation of a participant at a given date and time. So we don't
 actually need the `name` column. With `names_to` we can set it to `NULL`
-so it doesn't create it. Let's do that. We'll have to remove the `name`
-value in the `relocate()` function too.
+so it doesn't create it. Let's do that.
 
 ```{r}
 #| label: pivot-only-date-columns-no-name
