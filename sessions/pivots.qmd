@@ -595,7 +595,7 @@ and prepare the data, while the `docs/learning.qmd` file is more to use
 as a sandbox).
 :::
 
-**Time: \~10 minutes.**
+**Time: \~15 minutes.**
 
 Now that you've tidying up the next piece, time to build up the
 `docs/cleaning.qmd` more. So, open up the `docs/cleaning.qmd` file (you
