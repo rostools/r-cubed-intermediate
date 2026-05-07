@@ -1,6 +1,7 @@
 ---
 search: false
 format: rostools-theme-revealjs
+bibliography: "../includes/references.bib"
 ---
 
 # Welcome to the Intermediate R^3^ workshop!
