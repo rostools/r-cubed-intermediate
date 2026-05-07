@@ -309,3 +309,5 @@ above is only an example of what could be done. It doesn't include all
 the things we covered in this workshop, nor does it fix all the
 potential issues with the data. But it can be helpful to see how you
 could solve some of these problems.
+
+{{< include /includes/_survey.qmd >}}
