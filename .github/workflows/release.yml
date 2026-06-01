@@ -35,7 +35,7 @@ jobs:
       # Using this security pattern for GitHub Apps is recommended by GitHub and ensures that
       # the token is only available for a short time and has limited permissions. Check out
       # <https://guidebook.seedcase-project.org/operations/security> for more details.
-      - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: app-token
         with:
           client-id: ${{ vars.UPDATE_VERSION_APP_ID }}
