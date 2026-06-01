@@ -21,6 +21,8 @@ If you attended a workshop or used the workshop material as some point
 in time, you can always refer to this changelog page to find out what
 has been changed since you last used it.
 
+## 8.7.0 (2026-06-01)
+
 ## 8.6.2 (2026-05-07)
 
 ### Fix
