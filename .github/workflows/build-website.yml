@@ -32,7 +32,7 @@ jobs:
         uses: crate-ci/typos@4d9c206a77c041268485162b8e2579ad7a5cb9a3 # v1.50.0
 
       - name: Setup R
-        uses: r-lib/actions/setup-r@d3c5be51b12e724e68f33216ca3c148b66d5f0b6
+        uses: r-lib/actions/setup-r@465b7d8e732ca3921382b1674c59bada9cbf3399
         with:
           use-public-rspm: true
 
